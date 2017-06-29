@@ -1,5 +1,5 @@
 //
-//  UIViewController+Base.m
+//  UIViewController+LoginAndAlert.m
 //  CollagePicture
 //
 //  Created by simon on 15/7/6.
@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+LoginAndAlert.h"
-#import "UserInfoUDManager.h"
+#import <objc/runtime.h>
 
 static  NSString *const sbLoginStoryboard=@"RegisterLogin";
 static  NSString *const sbLoginNavControllerID = @"sLoginNavControllerID" ;
@@ -21,10 +21,9 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 
 
 
-
-- (BOOL)zh_performIsLoginActionWithPopAlertView:(BOOL)flag
+- (BOOL)zh_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag
 {
-    if (![UserInfoUDManager isLogin])
+    if (!isLogin)
     {
         if (flag)
         {
@@ -41,9 +40,9 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 
 
 
-- (void)zh_performIsLoginActionWithSelector:(SEL)action withPopAlertView:(BOOL)flag
+- (void)zh_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)action withPopAlertView:(BOOL)flag
 {
-    if ([UserInfoUDManager isLogin])
+    if (isLogin)
     {
         IMP imp = [self methodForSelector:action];
         void(*func)(id,SEL) = (void *)imp;
@@ -63,18 +62,27 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 }
 
 
-- (void)zh_performLoginAlertViewWithSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2
+- (void)zh_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)aSelector withObject:(id)object1 withObject:(id)object2 withPopAlertView:(BOOL)flag
 {
     
-    if ([UserInfoUDManager isLogin])
+    if (isLogin)
     {
         [self performSelector:aSelector withObject:object1 withObject:object2];
     }
     else
     {
-        [self addAlertController];
+        if (flag)
+        {
+            [self addAlertController];
+        }
+        else
+        {
+            [self zh_presentLoginController];
+        }
     }
 }
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(alertView.tag ==100)
@@ -110,7 +118,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
         {
             class_addProtocol([self class], @protocol(UIAlertViewDelegate));
         }
-
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有登录，是否需要登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.tag =100;
         [alert show];

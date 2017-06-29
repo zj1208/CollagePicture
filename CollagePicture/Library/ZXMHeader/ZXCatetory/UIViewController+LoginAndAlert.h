@@ -1,5 +1,5 @@
 //
-//  UIViewController+Base.h
+//  UIViewController+LoginAndAlert.h
 //  CollagePicture
 //
 //  Created by simon on 15/7/6.
@@ -15,25 +15,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  判断是否有登录过，如果没有登录则弹出登录界面
-
+ 
  @param flag 是否需要弹出警告提示
  @return 返回是否登录过；
  */
-- (BOOL)zh_performIsLoginActionWithPopAlertView:(BOOL)flag;
+
+- (BOOL)zh_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag;
 
 /**
  判断是否有登录过，如果没有登录弹出登录界面； 如果登录过则执行action事件
-
+ 
  @param action 如果是登录的，则执行这个事件；
  */
-- (void)zh_performIsLoginActionWithSelector:(SEL)action withPopAlertView:(BOOL)flag;
 
-
-- (void)zh_performLoginAlertViewWithSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2;
+- (void)zh_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)action withPopAlertView:(BOOL)flag;
 
 
 
-//- (void)pushBaseGeneralDyanmicControllerWithRequestUrlString:(NSString *)urlString title:(NSString *)aTitle;
+- (void)zh_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)aSelector withObject:(id)object1 withObject:(id)object2 withPopAlertView:(BOOL)flag;
+
+
 
 
 - (void)zh_presentLoginController;
