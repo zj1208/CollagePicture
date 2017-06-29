@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>copyrightList</key>
+	<array>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/matej/MBProgressHUD</string>
+			<key>name</key>
+			<string>MBProgressHUD</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/rs/SDWebImage</string>
+			<key>name</key>
+			<string>SDWebImage</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/AFNetworking/AFNetworking</string>
+			<key>name</key>
+			<string>AFNetworking</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/cloudkite/Masonry</string>
+			<key>name</key>
+			<string>Masonry</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/Mantle/Mantle</string>
+			<key>name</key>
+			<string>Mantle</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/CoderMJLee/MJRefresh</string>
+			<key>name</key>
+			<string>MJRefresh</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/AFNetworking/AFNetworking</string>
+			<key>name</key>
+			<string>MWPhotoBrowser</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>MIT License</string>
+			<key>homepage</key>
+			<string>https://github.com/tumblr/TMCache</string>
+			<key>name</key>
+			<string>TMCache</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>Apache v2.0</string>
+			<key>homepage</key>
+			<string>http://www.bmob.cn</string>
+			<key>name</key>
+			<string>BmobSDK</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>Apache v2.0</string>
+			<key>homepage</key>
+			<string>https://github.com/aliyun/AliyunOSSiOS</string>
+			<key>name</key>
+			<string>AliyunOSSiOS</string>
+		</dict>
+		<dict>
+			<key>license</key>
+			<string>Apache v2.0</string>
+			<key>homepage</key>
+			<string>http://www.jpush.cn/</string>
+			<key>name</key>
+			<string>JPush</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SubViewArray</key>
+	<array>
+		<dict>
+			<key>layoutArray</key>
+			<array>
+				<real>101.5</real>
+				<integer>99</integer>
+				<integer>49</integer>
+				<string>358.5</string>
+			</array>
+		</dict>
+		<dict>
+			<key>layoutArray</key>
+			<array>
+				<integer>36</integer>
+				<real>282.5</real>
+				<integer>41</integer>
+				<string>36</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

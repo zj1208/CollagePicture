@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WYMicroPaveViewController"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ZXAddProPicView">
+            <rect key="frame" x="0.0" y="0.0" width="223" height="203"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MjI-vr-3X0">
+                    <rect key="frame" x="0.0" y="18" width="205" height="185"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TUA-7o-ERK" userLabel="containerView">
+                    <rect key="frame" x="63" y="66" width="80" height="90"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="拍照" translatesAutoresizingMaskIntoConstraints="NO" id="mci-vj-58G">
+                            <rect key="frame" x="15" y="0.0" width="50" height="48"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传细节图" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7F-Ig-HtK">
+                            <rect key="frame" x="4" y="63" width="72" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.95294117649999999" green="0.074509803920000006" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.99607843139999996" green="0.6705882353" blue="0.031372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="8L8-au-7zS"/>
+                        <constraint firstItem="mci-vj-58G" firstAttribute="top" secondItem="TUA-7o-ERK" secondAttribute="top" id="I8l-fu-X51"/>
+                        <constraint firstItem="mci-vj-58G" firstAttribute="centerX" secondItem="TUA-7o-ERK" secondAttribute="centerX" id="LZs-Iw-Pnc"/>
+                        <constraint firstItem="Z7F-Ig-HtK" firstAttribute="top" secondItem="mci-vj-58G" secondAttribute="bottom" constant="15" id="WJn-B4-nCk"/>
+                        <constraint firstItem="Z7F-Ig-HtK" firstAttribute="centerX" secondItem="mci-vj-58G" secondAttribute="centerX" id="gZi-2L-2do"/>
+                        <constraint firstAttribute="width" constant="80" id="r9f-SB-9T3"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOG-ts-PpG">
+                    <rect key="frame" x="187" y="0.0" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="PCM-yL-Q2A"/>
+                        <constraint firstAttribute="width" constant="36" id="ueJ-f9-8th"/>
+                    </constraints>
+                    <state key="normal" image="删除照片"/>
+                    <connections>
+                        <action selector="deleteBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="aZc-wW-Pnj"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="TUA-7o-ERK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="9" id="2z6-i7-H33"/>
+                <constraint firstItem="MjI-vr-3X0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="N45-bh-MJS"/>
+                <constraint firstAttribute="bottom" secondItem="MjI-vr-3X0" secondAttribute="bottom" id="aVH-Ec-k8r"/>
+                <constraint firstItem="EOG-ts-PpG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="d64-Ya-Cei"/>
+                <constraint firstAttribute="trailing" secondItem="MjI-vr-3X0" secondAttribute="trailing" constant="18" id="i4a-18-Fkc"/>
+                <constraint firstItem="TUA-7o-ERK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-9" id="kAP-xb-p4r"/>
+                <constraint firstItem="MjI-vr-3X0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="nUJ-GP-bc3"/>
+                <constraint firstAttribute="trailing" secondItem="EOG-ts-PpG" secondAttribute="trailing" id="xEv-OQ-Qx3"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="deleteBtn" destination="EOG-ts-PpG" id="smk-TN-R63"/>
+                <outlet property="origContainerView" destination="TUA-7o-ERK" id="DIu-aD-KF1"/>
+                <outlet property="origTitleLab" destination="Z7F-Ig-HtK" id="Xwa-dX-qXc"/>
+                <outlet property="picBtn" destination="MjI-vr-3X0" id="2MM-vI-n7L"/>
+            </connections>
+            <point key="canvasLocation" x="-42.5" y="156.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="删除照片" width="44" height="44"/>
+        <image name="拍照" width="50" height="48"/>
+    </resources>
+</document>
