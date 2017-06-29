@@ -18,7 +18,7 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 
 
 
-+ (void)zx_presentAlertInViewController:(UIViewController *)viewController
++ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
                               withTitle:(nullable NSString *)title
                                 message:(nullable NSString *)message
                       cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler
@@ -139,7 +139,7 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 
 
 
-+ (instancetype)zx_presentAlertInViewController:(UIViewController *)viewController
++ (instancetype)zx_presentCustomAlertInViewController:(UIViewController *)viewController
                                       withTitle:(nullable NSString *)title
                                         message:(nullable NSString *)message
                               cancelButtonTitle:(nullable NSString *)cancelButtonTitle

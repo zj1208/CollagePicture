@@ -40,7 +40,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param doButtonTitle 另外一个按钮文本
  @param doHandler 另外一个按钮的点击事件回调；默认取消事件－dismiss；
  */
-+ (void)zx_presentAlertInViewController:(UIViewController *)viewController
++ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
                               withTitle:(nullable NSString *)title
                                 message:(nullable NSString *)message
                       cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler
@@ -66,7 +66,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param tapBlock 点击各种按钮的block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
  @return 返回AlertController
  */
-+ (instancetype)zx_presentAlertInViewController:(UIViewController *)viewController
++ (instancetype)zx_presentCustomAlertInViewController:(UIViewController *)viewController
                                       withTitle:(nullable NSString *)title
                                         message:(nullable NSString *)message
                               cancelButtonTitle:(nullable NSString *)cancelButtonTitle
@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_END
     
  
     WS(weakSelf);
-    [UIAlertController zx_presentAlertInViewController:self withTitle:@"确认产品转移为公开上架吗？" message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"公开上架"] tapBlock:^(UIAlertController * _Nonnull controller, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+    [UIAlertController zx_presentCustomAlertInViewController:self withTitle:@"确认产品转移为公开上架吗？" message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"公开上架"] tapBlock:^(UIAlertController * _Nonnull controller, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         
         if (buttonIndex ==controller.firstOtherButtonIndex)
         {

@@ -137,7 +137,7 @@
 - (void)showCacheAlertView
 {
     WS(weakSelf);
-    [UIAlertController zx_presentAlertInViewController:self withTitle:@"通知" message:@"要清除所有缓存数据吗" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction * _Nonnull action) {
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"通知" message:@"要清除所有缓存数据吗" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction * _Nonnull action) {
     
         [weakSelf clearedMemoryUpdateUI];
         }];
@@ -168,7 +168,7 @@
 - (void)zxCheckVersionWithNewVersion:(CheckVersionAPI *)versionAPI
 {
     WS(weakSelf);
-    [UIAlertController zx_presentAlertInViewController:self withTitle:APP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
         
         [weakSelf goAppStore];
 
@@ -177,7 +177,7 @@
 
 - (void)zxCheckVersionWithNoNewVersion:(CheckVersionAPI *)versionAPI
 {
-    [UIAlertController zx_presentAlertInViewController:self withTitle:APP_Name message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
 }
 
 /*

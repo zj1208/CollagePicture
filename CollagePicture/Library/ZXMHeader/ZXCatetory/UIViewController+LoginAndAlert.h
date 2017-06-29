@@ -13,9 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (LoginAndAlert)
 
-//适用于最多2个按钮的警告框
-- (void)zh_presentAlertControllerStyleAlertInitWithTitle:(nullable NSString *)title message:(nullable NSString *)message cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler doButtonTitle:(nullable NSString *)doButtonTitle doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler;
-
 /**
  判断是否有登录过，如果没有登录则弹出登录界面
 

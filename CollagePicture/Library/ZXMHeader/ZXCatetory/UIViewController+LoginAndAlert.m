@@ -20,27 +20,6 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 @implementation UIViewController (LoginAndAlert)
 
 
-- (void)zh_presentAlertControllerStyleAlertInitWithTitle:(nullable NSString *)title message:(nullable NSString *)message cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler doButtonTitle:(nullable NSString *)doButtonTitle doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
-{
-    NSString *aTitle = NSLocalizedString(title, nil);
-    NSString *aMessage = NSLocalizedString(message, nil);
-    NSString *aCancelButtonTitle = NSLocalizedString(cancelButtonTitle, nil);
-    NSString *otherButtonTitle = NSLocalizedString(doButtonTitle, nil);
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
-    
-    if (cancelButtonTitle.length >0)
-    {
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:aCancelButtonTitle style:UIAlertActionStyleCancel handler:handler];
-        [alertController addAction:cancelAction];
-    }
-    if (doButtonTitle.length>0)
-    {
-        UIAlertAction *doAction = [UIAlertAction actionWithTitle:otherButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
-        [alertController addAction:doAction];
-    }
-    [self presentViewController:alertController animated:YES completion:nil];
-}
 
 
 - (BOOL)zh_performIsLoginActionWithPopAlertView:(BOOL)flag
