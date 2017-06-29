@@ -6,11 +6,11 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "BaseCollectionViewCell.h"
+#import <UIKit/UIKit.h>
 
 static NSString *nibName_LabelCell = @"LabelCell";
 
-@interface LabelCell : BaseCollectionViewCell
+@interface LabelCell : UICollectionViewCell
 
 @property (nonatomic, copy) NSString *title;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;

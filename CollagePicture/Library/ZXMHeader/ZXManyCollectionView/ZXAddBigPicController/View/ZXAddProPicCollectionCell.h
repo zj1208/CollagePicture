@@ -6,7 +6,7 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "BaseCollectionViewCell.h"
+#import <UIKit/UIKit.h>
 #import "ZXAddProPicView.h"
 //图片模型
 #import "ZXPhoto.h"
