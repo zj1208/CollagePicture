@@ -8,6 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		20B72D866FA5EC63817C0FE7 /* libPods-CollagePicture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5662408ACF5CCAEC62AADB /* libPods-CollagePicture.a */; };
+		A55A8D131F05F7B5009ADCE9 /* Lettery_3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = A55A8D121F05F7B5009ADCE9 /* Lettery_3DView.m */; };
+		A55A8D151F05F7CA009ADCE9 /* LetteryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A55A8D141F05F7CA009ADCE9 /* LetteryView.xib */; };
+		A55A8D181F05F90A009ADCE9 /* Lettery_11xuan5View.m in Sources */ = {isa = PBXBuildFile; fileRef = A55A8D171F05F909009ADCE9 /* Lettery_11xuan5View.m */; };
+		A55A8D1B1F05FB81009ADCE9 /* UIView+UIViewCategoty.m in Sources */ = {isa = PBXBuildFile; fileRef = A55A8D1A1F05FB81009ADCE9 /* UIView+UIViewCategoty.m */; };
+		A55A8D1E1F06039D009ADCE9 /* Lettery_shuangseqiuView.m in Sources */ = {isa = PBXBuildFile; fileRef = A55A8D1D1F06039D009ADCE9 /* Lettery_shuangseqiuView.m */; };
+		A55A8D211F06082B009ADCE9 /* Lettery_daletouView.m in Sources */ = {isa = PBXBuildFile; fileRef = A55A8D201F06082B009ADCE9 /* Lettery_daletouView.m */; };
+		A5AA2F071F04E95600A49A1E /* HLFoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EDE1F04E95600A49A1E /* HLFoundViewController.m */; };
+		A5AA2F081F04E95600A49A1E /* HLNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EE01F04E95600A49A1E /* HLNewsViewController.m */; };
+		A5AA2F091F04E95600A49A1E /* HLChooseScrollCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EE31F04E95600A49A1E /* HLChooseScrollCollectionCell.m */; };
+		A5AA2F0A1F04E95600A49A1E /* HLChooseScrollCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AA2EE41F04E95600A49A1E /* HLChooseScrollCollectionCell.xib */; };
+		A5AA2F0B1F04E95600A49A1E /* HLChooseScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EE61F04E95600A49A1E /* HLChooseScrollView.m */; };
+		A5AA2F0C1F04E95600A49A1E /* HLNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EE81F04E95600A49A1E /* HLNewsCell.m */; };
+		A5AA2F0D1F04E95600A49A1E /* HLNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AA2EE91F04E95600A49A1E /* HLNewsCell.xib */; };
+		A5AA2F0E1F04E95600A49A1E /* HLThreeDimensionalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EEE1F04E95600A49A1E /* HLThreeDimensionalViewController.m */; };
+		A5AA2F0F1F04E95600A49A1E /* HLHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EF11F04E95600A49A1E /* HLHomePageViewController.m */; };
+		A5AA2F101F04E95600A49A1E /* HLLotteryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EF41F04E95600A49A1E /* HLLotteryModel.m */; };
+		A5AA2F111F04E95600A49A1E /* HLHomePageADHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EF71F04E95600A49A1E /* HLHomePageADHeaderView.m */; };
+		A5AA2F121F04E95600A49A1E /* HLHomePageLotteryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EF91F04E95600A49A1E /* HLHomePageLotteryCell.m */; };
+		A5AA2F131F04E95600A49A1E /* HLHomePageLotteryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AA2EFA1F04E95600A49A1E /* HLHomePageLotteryCell.xib */; };
+		A5AA2F141F04E95600A49A1E /* HLIssueSelectedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2EFE1F04E95600A49A1E /* HLIssueSelectedViewController.m */; };
+		A5AA2F151F04E95600A49A1E /* HLMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2F021F04E95600A49A1E /* HLMineViewController.m */; };
+		A5AA2F161F04E95600A49A1E /* HLMineTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2F051F04E95600A49A1E /* HLMineTableHeaderView.m */; };
+		A5AA2F171F04E95600A49A1E /* HLMineTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AA2F061F04E95600A49A1E /* HLMineTableHeaderView.xib */; };
+		A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AA2F181F04E9CE00A49A1E /* Lottery.storyboard */; };
+		A5AA2F201F04EDA200A49A1E /* HLLotteryInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AA2F1F1F04EDA200A49A1E /* HLLotteryInfoViewController.m */; };
 		F40228CA1EF2923E00E3D07E /* BaseHttpAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228C91EF2923E00E3D07E /* BaseHttpAPI.m */; };
 		F40228CD1EF2924700E3D07E /* ZXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228CC1EF2924700E3D07E /* ZXWebViewController.m */; };
 		F40228D01EF2926000E3D07E /* OrientationNaController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228CF1EF2926000E3D07E /* OrientationNaController.m */; };
@@ -270,6 +295,50 @@
 		4D5662408ACF5CCAEC62AADB /* libPods-CollagePicture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollagePicture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72325D5ACA75F5B1FAD0340F /* Pods-CollagePicture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollagePicture.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollagePicture/Pods-CollagePicture.release.xcconfig"; sourceTree = "<group>"; };
 		95B7574EC0BB9FEAB5E48F09 /* Pods-CollagePicture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollagePicture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollagePicture/Pods-CollagePicture.debug.xcconfig"; sourceTree = "<group>"; };
+		A55A8D111F05F7B5009ADCE9 /* Lettery_3DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lettery_3DView.h; sourceTree = "<group>"; };
+		A55A8D121F05F7B5009ADCE9 /* Lettery_3DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lettery_3DView.m; sourceTree = "<group>"; };
+		A55A8D141F05F7CA009ADCE9 /* LetteryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LetteryView.xib; sourceTree = "<group>"; };
+		A55A8D161F05F909009ADCE9 /* Lettery_11xuan5View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lettery_11xuan5View.h; sourceTree = "<group>"; };
+		A55A8D171F05F909009ADCE9 /* Lettery_11xuan5View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lettery_11xuan5View.m; sourceTree = "<group>"; };
+		A55A8D191F05FB81009ADCE9 /* UIView+UIViewCategoty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+UIViewCategoty.h"; path = "CollagePicture/Sections/Homepage/LotteryInfo/View/UIView+UIViewCategoty.h"; sourceTree = SOURCE_ROOT; };
+		A55A8D1A1F05FB81009ADCE9 /* UIView+UIViewCategoty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+UIViewCategoty.m"; path = "CollagePicture/Sections/Homepage/LotteryInfo/View/UIView+UIViewCategoty.m"; sourceTree = SOURCE_ROOT; };
+		A55A8D1C1F06039D009ADCE9 /* Lettery_shuangseqiuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lettery_shuangseqiuView.h; sourceTree = "<group>"; };
+		A55A8D1D1F06039D009ADCE9 /* Lettery_shuangseqiuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lettery_shuangseqiuView.m; sourceTree = "<group>"; };
+		A55A8D1F1F06082B009ADCE9 /* Lettery_daletouView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lettery_daletouView.h; sourceTree = "<group>"; };
+		A55A8D201F06082B009ADCE9 /* Lettery_daletouView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lettery_daletouView.m; sourceTree = "<group>"; };
+		A5AA2EDD1F04E95600A49A1E /* HLFoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLFoundViewController.h; sourceTree = "<group>"; };
+		A5AA2EDE1F04E95600A49A1E /* HLFoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLFoundViewController.m; sourceTree = "<group>"; };
+		A5AA2EDF1F04E95600A49A1E /* HLNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLNewsViewController.h; sourceTree = "<group>"; };
+		A5AA2EE01F04E95600A49A1E /* HLNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLNewsViewController.m; sourceTree = "<group>"; };
+		A5AA2EE21F04E95600A49A1E /* HLChooseScrollCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLChooseScrollCollectionCell.h; sourceTree = "<group>"; };
+		A5AA2EE31F04E95600A49A1E /* HLChooseScrollCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLChooseScrollCollectionCell.m; sourceTree = "<group>"; };
+		A5AA2EE41F04E95600A49A1E /* HLChooseScrollCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLChooseScrollCollectionCell.xib; sourceTree = "<group>"; };
+		A5AA2EE51F04E95600A49A1E /* HLChooseScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLChooseScrollView.h; sourceTree = "<group>"; };
+		A5AA2EE61F04E95600A49A1E /* HLChooseScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLChooseScrollView.m; sourceTree = "<group>"; };
+		A5AA2EE71F04E95600A49A1E /* HLNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLNewsCell.h; sourceTree = "<group>"; };
+		A5AA2EE81F04E95600A49A1E /* HLNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLNewsCell.m; sourceTree = "<group>"; };
+		A5AA2EE91F04E95600A49A1E /* HLNewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLNewsCell.xib; sourceTree = "<group>"; };
+		A5AA2EED1F04E95600A49A1E /* HLThreeDimensionalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLThreeDimensionalViewController.h; sourceTree = "<group>"; };
+		A5AA2EEE1F04E95600A49A1E /* HLThreeDimensionalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLThreeDimensionalViewController.m; sourceTree = "<group>"; };
+		A5AA2EF01F04E95600A49A1E /* HLHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLHomePageViewController.h; sourceTree = "<group>"; };
+		A5AA2EF11F04E95600A49A1E /* HLHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLHomePageViewController.m; sourceTree = "<group>"; };
+		A5AA2EF31F04E95600A49A1E /* HLLotteryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLLotteryModel.h; sourceTree = "<group>"; };
+		A5AA2EF41F04E95600A49A1E /* HLLotteryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLLotteryModel.m; sourceTree = "<group>"; };
+		A5AA2EF61F04E95600A49A1E /* HLHomePageADHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLHomePageADHeaderView.h; sourceTree = "<group>"; };
+		A5AA2EF71F04E95600A49A1E /* HLHomePageADHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLHomePageADHeaderView.m; sourceTree = "<group>"; };
+		A5AA2EF81F04E95600A49A1E /* HLHomePageLotteryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLHomePageLotteryCell.h; sourceTree = "<group>"; };
+		A5AA2EF91F04E95600A49A1E /* HLHomePageLotteryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLHomePageLotteryCell.m; sourceTree = "<group>"; };
+		A5AA2EFA1F04E95600A49A1E /* HLHomePageLotteryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLHomePageLotteryCell.xib; sourceTree = "<group>"; };
+		A5AA2EFD1F04E95600A49A1E /* HLIssueSelectedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLIssueSelectedViewController.h; sourceTree = "<group>"; };
+		A5AA2EFE1F04E95600A49A1E /* HLIssueSelectedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLIssueSelectedViewController.m; sourceTree = "<group>"; };
+		A5AA2F011F04E95600A49A1E /* HLMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLMineViewController.h; sourceTree = "<group>"; };
+		A5AA2F021F04E95600A49A1E /* HLMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLMineViewController.m; sourceTree = "<group>"; };
+		A5AA2F041F04E95600A49A1E /* HLMineTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLMineTableHeaderView.h; sourceTree = "<group>"; };
+		A5AA2F051F04E95600A49A1E /* HLMineTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLMineTableHeaderView.m; sourceTree = "<group>"; };
+		A5AA2F061F04E95600A49A1E /* HLMineTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HLMineTableHeaderView.xib; sourceTree = "<group>"; };
+		A5AA2F181F04E9CE00A49A1E /* Lottery.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Lottery.storyboard; sourceTree = "<group>"; };
+		A5AA2F1E1F04EDA200A49A1E /* HLLotteryInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLLotteryInfoViewController.h; sourceTree = "<group>"; };
+		A5AA2F1F1F04EDA200A49A1E /* HLLotteryInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLLotteryInfoViewController.m; sourceTree = "<group>"; };
 		F40228C81EF2923E00E3D07E /* BaseHttpAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseHttpAPI.h; sourceTree = "<group>"; };
 		F40228C91EF2923E00E3D07E /* BaseHttpAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseHttpAPI.m; sourceTree = "<group>"; };
 		F40228CB1EF2924700E3D07E /* ZXWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWebViewController.h; sourceTree = "<group>"; };
@@ -748,6 +817,190 @@
 				72325D5ACA75F5B1FAD0340F /* Pods-CollagePicture.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A5AA2EDA1F04E95600A49A1E /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EDB1F04E95600A49A1E /* Found */,
+				A5AA2EEA1F04E95600A49A1E /* Homepage */,
+				A5AA2EFF1F04E95600A49A1E /* Mine */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		A5AA2EDB1F04E95600A49A1E /* Found */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EDC1F04E95600A49A1E /* Controller */,
+				A5AA2EE11F04E95600A49A1E /* View */,
+			);
+			path = Found;
+			sourceTree = "<group>";
+		};
+		A5AA2EDC1F04E95600A49A1E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EDD1F04E95600A49A1E /* HLFoundViewController.h */,
+				A5AA2EDE1F04E95600A49A1E /* HLFoundViewController.m */,
+				A5AA2EDF1F04E95600A49A1E /* HLNewsViewController.h */,
+				A5AA2EE01F04E95600A49A1E /* HLNewsViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5AA2EE11F04E95600A49A1E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EE21F04E95600A49A1E /* HLChooseScrollCollectionCell.h */,
+				A5AA2EE31F04E95600A49A1E /* HLChooseScrollCollectionCell.m */,
+				A5AA2EE41F04E95600A49A1E /* HLChooseScrollCollectionCell.xib */,
+				A5AA2EE51F04E95600A49A1E /* HLChooseScrollView.h */,
+				A5AA2EE61F04E95600A49A1E /* HLChooseScrollView.m */,
+				A5AA2EE71F04E95600A49A1E /* HLNewsCell.h */,
+				A5AA2EE81F04E95600A49A1E /* HLNewsCell.m */,
+				A5AA2EE91F04E95600A49A1E /* HLNewsCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5AA2EEA1F04E95600A49A1E /* Homepage */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2F1B1F04ED9100A49A1E /* LotteryInfo */,
+				A5AA2EEB1F04E95600A49A1E /* 3d */,
+				A5AA2EEF1F04E95600A49A1E /* home */,
+				A5AA2EFB1F04E95600A49A1E /* Other */,
+			);
+			path = Homepage;
+			sourceTree = "<group>";
+		};
+		A5AA2EEB1F04E95600A49A1E /* 3d */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EEC1F04E95600A49A1E /* Controller */,
+			);
+			path = 3d;
+			sourceTree = "<group>";
+		};
+		A5AA2EEC1F04E95600A49A1E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EED1F04E95600A49A1E /* HLThreeDimensionalViewController.h */,
+				A5AA2EEE1F04E95600A49A1E /* HLThreeDimensionalViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5AA2EEF1F04E95600A49A1E /* home */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EF01F04E95600A49A1E /* HLHomePageViewController.h */,
+				A5AA2EF11F04E95600A49A1E /* HLHomePageViewController.m */,
+				A5AA2EF21F04E95600A49A1E /* Model */,
+				A5AA2EF51F04E95600A49A1E /* View */,
+			);
+			path = home;
+			sourceTree = "<group>";
+		};
+		A5AA2EF21F04E95600A49A1E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EF31F04E95600A49A1E /* HLLotteryModel.h */,
+				A5AA2EF41F04E95600A49A1E /* HLLotteryModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5AA2EF51F04E95600A49A1E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EF61F04E95600A49A1E /* HLHomePageADHeaderView.h */,
+				A5AA2EF71F04E95600A49A1E /* HLHomePageADHeaderView.m */,
+				A5AA2EF81F04E95600A49A1E /* HLHomePageLotteryCell.h */,
+				A5AA2EF91F04E95600A49A1E /* HLHomePageLotteryCell.m */,
+				A5AA2EFA1F04E95600A49A1E /* HLHomePageLotteryCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5AA2EFB1F04E95600A49A1E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EFC1F04E95600A49A1E /* Controller */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		A5AA2EFC1F04E95600A49A1E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2EFD1F04E95600A49A1E /* HLIssueSelectedViewController.h */,
+				A5AA2EFE1F04E95600A49A1E /* HLIssueSelectedViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5AA2EFF1F04E95600A49A1E /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2F001F04E95600A49A1E /* Controller */,
+				A5AA2F031F04E95600A49A1E /* View */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		A5AA2F001F04E95600A49A1E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2F011F04E95600A49A1E /* HLMineViewController.h */,
+				A5AA2F021F04E95600A49A1E /* HLMineViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5AA2F031F04E95600A49A1E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2F041F04E95600A49A1E /* HLMineTableHeaderView.h */,
+				A5AA2F051F04E95600A49A1E /* HLMineTableHeaderView.m */,
+				A5AA2F061F04E95600A49A1E /* HLMineTableHeaderView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5AA2F1B1F04ED9100A49A1E /* LotteryInfo */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2F1C1F04ED9100A49A1E /* Controller */,
+				A5AA2F1D1F04ED9100A49A1E /* View */,
+			);
+			path = LotteryInfo;
+			sourceTree = "<group>";
+		};
+		A5AA2F1C1F04ED9100A49A1E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA2F1E1F04EDA200A49A1E /* HLLotteryInfoViewController.h */,
+				A5AA2F1F1F04EDA200A49A1E /* HLLotteryInfoViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5AA2F1D1F04ED9100A49A1E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A55A8D141F05F7CA009ADCE9 /* LetteryView.xib */,
+				A55A8D111F05F7B5009ADCE9 /* Lettery_3DView.h */,
+				A55A8D121F05F7B5009ADCE9 /* Lettery_3DView.m */,
+				A55A8D161F05F909009ADCE9 /* Lettery_11xuan5View.h */,
+				A55A8D171F05F909009ADCE9 /* Lettery_11xuan5View.m */,
+				A55A8D1F1F06082B009ADCE9 /* Lettery_daletouView.h */,
+				A55A8D201F06082B009ADCE9 /* Lettery_daletouView.m */,
+				A55A8D1C1F06039D009ADCE9 /* Lettery_shuangseqiuView.h */,
+				A55A8D1D1F06039D009ADCE9 /* Lettery_shuangseqiuView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		F40228D51EF293E600E3D07E /* JPush */ = {
@@ -1518,6 +1771,7 @@
 		F461821A1D8129490015BC84 /* CollagePicture */ = {
 			isa = PBXGroup;
 			children = (
+				A5AA2EDA1F04E95600A49A1E /* Sections */,
 				F4F38B111EA645BD007606F9 /* BaseClasses */,
 				F49E19A71DF1876B00676396 /* Marcoes */,
 				F49E196E1DF1875900676396 /* Controllers */,
@@ -1590,6 +1844,8 @@
 		F461826E1D813BCB0015BC84 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A55A8D191F05FB81009ADCE9 /* UIView+UIViewCategoty.h */,
+				A55A8D1A1F05FB81009ADCE9 /* UIView+UIViewCategoty.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1804,6 +2060,7 @@
 		F4EB2FAB1D8FCF3D00F5B70B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5AA2F181F04E9CE00A49A1E /* Lottery.storyboard */,
 				F4F38B5B1EA64CBF007606F9 /* litteMoney.gif */,
 				F4374B101E0973CA00081502 /* UserServiceAgreement.txt */,
 				F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */,
@@ -2125,6 +2382,7 @@
 				F43029351F038AF1007C38F9 /* WYTitleView.xib in Resources */,
 				F43029221F038AF1007C38F9 /* zxPhoto_delete@3x.png in Resources */,
 				F43029281F038AF1007C38F9 /* blackArrow@2x.png in Resources */,
+				A55A8D151F05F7CA009ADCE9 /* LetteryView.xib in Resources */,
 				F43029121F038AF1007C38F9 /* ZXAddPicViewCell.xib in Resources */,
 				F43028DB1F038AF1007C38F9 /* ZXAdvModalController.xib in Resources */,
 				F43029391F038AF1007C38F9 /* ZXCenterTitleView.xib in Resources */,
@@ -2165,6 +2423,7 @@
 				F49E19CE1DF543DF00676396 /* ZXPrivacyPolicy.json in Resources */,
 				F4EB2FD11D8FCF7300F5B70B /* album_a6@2x.png in Resources */,
 				F430292F1F038AF1007C38F9 /* whiteArrow@2x.png in Resources */,
+				A5AA2F0D1F04E95600A49A1E /* HLNewsCell.xib in Resources */,
 				F4EB2FD51D8FCF7300F5B70B /* albumA_style_1.plist in Resources */,
 				F430291E1F038AF1007C38F9 /* photo_delete@3x.png in Resources */,
 				F43029021F038AF1007C38F9 /* guide_2@2x.png in Resources */,
@@ -2182,15 +2441,19 @@
 				F4EB2FDD1D8FCF7300F5B70B /* albumA_style_5.plist in Resources */,
 				F4EB2FDA1D8FCF7300F5B70B /* albumA_style_2.plist in Resources */,
 				F4EB2FCD1D8FCF7300F5B70B /* album_a2@2x.png in Resources */,
+				A5AA2F171F04E95600A49A1E /* HLMineTableHeaderView.xib in Resources */,
 				F4EB2FD91D8FCF7300F5B70B /* albumA_style_13.plist in Resources */,
 				F43028BE1F038AF0007C38F9 /* cities.txt in Resources */,
 				F4EB2FD61D8FCF7300F5B70B /* albumA_style_10.plist in Resources */,
 				F46182261D8129490015BC84 /* Main.storyboard in Resources */,
 				F40228DA1EF293E600E3D07E /* sound.caf in Resources */,
+				A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */,
+				A5AA2F131F04E95600A49A1E /* HLHomePageLotteryCell.xib in Resources */,
 				F430291F1F038AF1007C38F9 /* zxPhoto_addImage@2x.png in Resources */,
 				F44DAECB1DC8D188000D9311 /* WeiboSDK.bundle in Resources */,
 				F430292C1F038AF1007C38F9 /* grayArrow@2x.png in Resources */,
 				F4EB2FDF1D8FCF7300F5B70B /* albumA_style_7.plist in Resources */,
+				A5AA2F0A1F04E95600A49A1E /* HLChooseScrollCollectionCell.xib in Resources */,
 				F43028D91F038AF1007C38F9 /* 叉叉@3x.png in Resources */,
 				F43029201F038AF1007C38F9 /* zxPhoto_addImage@3x.png in Resources */,
 				F43028BD1F038AF0007C38F9 /* area.plist in Resources */,
@@ -2272,6 +2535,8 @@
 				F43029041F038AF1007C38F9 /* ZXGuideViewController.m in Sources */,
 				F43029001F038AF1007C38F9 /* ZXEmptyViewController.m in Sources */,
 				F43028C71F038AF1007C38F9 /* ZXOverlay.m in Sources */,
+				A55A8D1B1F05FB81009ADCE9 /* UIView+UIViewCategoty.m in Sources */,
+				A5AA2F161F04E95600A49A1E /* HLMineTableHeaderView.m in Sources */,
 				F430290A1F038AF1007C38F9 /* ZXLocalNotification.m in Sources */,
 				F43028BC1F038AF0007C38F9 /* ADCustomTableView.m in Sources */,
 				F46182291D8129490015BC84 /* CollagePicture.xcdatamodeld in Sources */,
@@ -2279,7 +2544,9 @@
 				F49E19A51DF1875900676396 /* ShopCarController.m in Sources */,
 				F43028E81F038AF1007C38F9 /* NSString+ZXEntension.m in Sources */,
 				F40228EA1EF2A02B00E3D07E /* UserModelAPI.m in Sources */,
+				A5AA2F101F04E95600A49A1E /* HLLotteryModel.m in Sources */,
 				F43028EE1F038AF1007C38F9 /* UIButton+ZXHelper.m in Sources */,
+				A55A8D181F05F90A009ADCE9 /* Lettery_11xuan5View.m in Sources */,
 				F40228D01EF2926000E3D07E /* OrientationNaController.m in Sources */,
 				F43028C21F038AF0007C38F9 /* HZLocation.m in Sources */,
 				F43028C51F038AF0007C38F9 /* KxMenuItem.m in Sources */,
@@ -2289,6 +2556,7 @@
 				F43028CA1F038AF1007C38F9 /* NewFunctionController.m in Sources */,
 				F43028FC1F038AF1007C38F9 /* UIViewController+ZXHelper.m in Sources */,
 				F430290F1F038AF1007C38F9 /* ZXAddBigPicCollectionView.m in Sources */,
+				A5AA2F141F04E95600A49A1E /* HLIssueSelectedViewController.m in Sources */,
 				F4374B5D1E0A6C8400081502 /* LoginViewController.m in Sources */,
 				F43029171F038AF1007C38F9 /* WaterfallFlowLayout.m in Sources */,
 				F43029181F038AF1007C38F9 /* ZXCeilingFlowLayout.m in Sources */,
@@ -2300,6 +2568,7 @@
 				F40228CD1EF2924700E3D07E /* ZXWebViewController.m in Sources */,
 				F44DAED41DC8D188000D9311 /* UMShareMenuSelectionView.m in Sources */,
 				F4F38B2B1EA645BD007606F9 /* PageModel.m in Sources */,
+				A5AA2F0C1F04E95600A49A1E /* HLNewsCell.m in Sources */,
 				F43028EA1F038AF1007C38F9 /* NSURL+ZXCategory.m in Sources */,
 				F43028D51F038AF1007C38F9 /* ShareInfo.m in Sources */,
 				F44DAED31DC8D188000D9311 /* UMShareMenuItem.m in Sources */,
@@ -2309,6 +2578,7 @@
 				F4F38B501EA6492C007606F9 /* TemplateListCell.m in Sources */,
 				F4F38B4F1EA6492C007606F9 /* ShareViewController.m in Sources */,
 				F43028F81F038AF1007C38F9 /* UIView+ViewHelper.m in Sources */,
+				A5AA2F111F04E95600A49A1E /* HLHomePageADHeaderView.m in Sources */,
 				F49E19D91DF5472500676396 /* PrivacyListController.m in Sources */,
 				F43029131F038AF1007C38F9 /* LabelCell.m in Sources */,
 				F43028FE1F038AF1007C38F9 /* UIViewController+MBProgressHUD.m in Sources */,
@@ -2335,9 +2605,12 @@
 				F43028F21F038AF1007C38F9 /* UIImage+ZXImageHelper.m in Sources */,
 				F43028F11F038AF1007C38F9 /* UIImage+ZXGIF.m in Sources */,
 				F45B7C011ECFE7B100763568 /* OSSPicInfoRequest.m in Sources */,
+				A5AA2F091F04E95600A49A1E /* HLChooseScrollCollectionCell.m in Sources */,
 				F43028E21F038AF1007C38F9 /* UIScrollView+AssistiveTouch.m in Sources */,
 				F452F6D21ECE870800DC4439 /* BaseTableViewCell.m in Sources */,
 				F43028DC1F038AF1007C38F9 /* ZXAdvModel.m in Sources */,
+				A5AA2F0F1F04E95600A49A1E /* HLHomePageViewController.m in Sources */,
+				A55A8D211F06082B009ADCE9 /* Lettery_daletouView.m in Sources */,
 				F43028E41F038AF1007C38F9 /* ZXBadgeIconButton.m in Sources */,
 				F49E194D1DF1863000676396 /* AppAPIHelper.m in Sources */,
 				F43028D71F038AF1007C38F9 /* UncaughtException.m in Sources */,
@@ -2353,6 +2626,7 @@
 				F461821D1D8129490015BC84 /* main.m in Sources */,
 				F40228CA1EF2923E00E3D07E /* BaseHttpAPI.m in Sources */,
 				F43028E31F038AF1007C38F9 /* ZXAssistiveTouch.m in Sources */,
+				A55A8D131F05F7B5009ADCE9 /* Lettery_3DView.m in Sources */,
 				F43028DF1F038AF1007C38F9 /* ZXTransitionAlphaDelegate.m in Sources */,
 				F430293C1F038D2B007C38F9 /* CheckVersionAPI.m in Sources */,
 				F43029271F038AF1007C38F9 /* ZXProgressView.m in Sources */,
@@ -2363,13 +2637,18 @@
 				F43028D41F038AF1007C38F9 /* ShareHelper.m in Sources */,
 				F4F38B4E1EA6492C007606F9 /* MakingPhotoController.m in Sources */,
 				F43028E61F038AF1007C38F9 /* NSDate+ZXExtension.m in Sources */,
+				A5AA2F071F04E95600A49A1E /* HLFoundViewController.m in Sources */,
 				F44401311E9B677E00734D24 /* GetIDFA.m in Sources */,
+				A5AA2F151F04E95600A49A1E /* HLMineViewController.m in Sources */,
 				F43028DA1F038AF1007C38F9 /* ZXAdvModalController.m in Sources */,
 				F43028F61F038AF1007C38F9 /* UIScrollView+ZXMJRefreshing.m in Sources */,
+				A5AA2F0E1F04E95600A49A1E /* HLThreeDimensionalViewController.m in Sources */,
 				F4F38B2A1EA645BD007606F9 /* BaseModel.m in Sources */,
 				F43028CB1F038AF1007C38F9 /* ZXNewFunctionController.m in Sources */,
 				F4730CDF1EA064A200952AF1 /* AddProductModel.m in Sources */,
 				F43029251F038AF1007C38F9 /* ZXPhotosView.m in Sources */,
+				A5AA2F201F04EDA200A49A1E /* HLLotteryInfoViewController.m in Sources */,
+				A5AA2F081F04E95600A49A1E /* HLNewsViewController.m in Sources */,
 				F43029231F038AF1007C38F9 /* ZXPhoto.m in Sources */,
 				F43028F41F038AF1007C38F9 /* UINavigationBar+ShadeColor.m in Sources */,
 				F43028E01F038AF1007C38F9 /* ZXModalAnimation.m in Sources */,
@@ -2383,14 +2662,17 @@
 				F430290B1F038AF1007C38F9 /* AddProductPicController.m in Sources */,
 				F43028CF1F038AF1007C38F9 /* UploadGrowOperation.m in Sources */,
 				F430290C1F038AF1007C38F9 /* ZXAddProPicCollectionCell.m in Sources */,
+				A55A8D1E1F06039D009ADCE9 /* Lettery_shuangseqiuView.m in Sources */,
 				F40228E71EF29FB300E3D07E /* WYUserDefaultManager.m in Sources */,
 				F43029341F038AF1007C38F9 /* WYTitleView.m in Sources */,
+				A5AA2F121F04E95600A49A1E /* HLHomePageLotteryCell.m in Sources */,
 				F49E19A01DF1875900676396 /* CategoryHomeController.m in Sources */,
 				F43029101F038AF1007C38F9 /* ZXAddPicCollectionView.m in Sources */,
 				F43028DE1F038AF1007C38F9 /* ZXPresentAlphaTransitioning.m in Sources */,
 				F4F38B5F1EA64EC9007606F9 /* TMDiskManager.m in Sources */,
 				F4F38B2C1EA645BD007606F9 /* UserModel.m in Sources */,
 				F43028C01F038AF0007C38F9 /* HZAreaPickerView.m in Sources */,
+				A5AA2F0B1F04E95600A49A1E /* HLChooseScrollView.m in Sources */,
 				F43028D01F038AF1007C38F9 /* UploadOperationModel.m in Sources */,
 				F49E19B21DF1903F00676396 /* CopyrightCell.m in Sources */,
 				F43028E91F038AF1007C38F9 /* NSURL+OSSImage.m in Sources */,

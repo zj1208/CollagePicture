@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YFG-Du-iEM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YFG-Du-iEM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,7 +32,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="365" height="136"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="7D6091AB-AE72-4377-921F-CB82E991DDBA" translatesAutoresizingMaskIntoConstraints="NO" id="D9O-Fb-7Yz">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:D9O-Fb-7Yz:image" translatesAutoresizingMaskIntoConstraints="NO" id="D9O-Fb-7Yz">
                                             <rect key="frame" x="0.0" y="0.0" width="365" height="136"/>
                                         </imageView>
                                     </subviews>
@@ -294,7 +294,7 @@
                                         <rect key="frame" x="0.0" y="209" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aGJ-e6-eDa" id="vVs-ls-E54">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_iconAlbum" translatesAutoresizingMaskIntoConstraints="NO" id="4nt-aN-afY">
@@ -336,15 +336,58 @@
                                             <segue destination="UjY-Yx-CMC" kind="show" id="PNq-hK-9iF"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="VI4-HM-rQ1">
+                                        <rect key="frame" x="0.0" y="253" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VI4-HM-rQ1" id="y6N-h4-8yp">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_iconAlbum" translatesAutoresizingMaskIntoConstraints="NO" id="KDf-Hi-U1v">
+                                                    <rect key="frame" x="10" y="12" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="KDf-Hi-U1v" secondAttribute="height" multiplier="1:1" id="dwi-WR-lGP"/>
+                                                        <constraint firstAttribute="width" constant="20" id="yUI-FV-J7b"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="dwi-WR-lGP"/>
+                                                            <exclude reference="yUI-FV-J7b"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="彩票" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69X-77-2ZX">
+                                                    <rect key="frame" x="50" y="13" width="31" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="KDf-Hi-U1v" firstAttribute="top" secondItem="y6N-h4-8yp" secondAttribute="top" constant="5" id="24V-iN-6Dz"/>
+                                                <constraint firstItem="69X-77-2ZX" firstAttribute="leading" secondItem="KDf-Hi-U1v" secondAttribute="trailing" constant="20" id="AWY-Yv-iqq"/>
+                                                <constraint firstItem="69X-77-2ZX" firstAttribute="leading" secondItem="y6N-h4-8yp" secondAttribute="leading" constant="50" id="NBl-I8-9m1"/>
+                                                <constraint firstItem="KDf-Hi-U1v" firstAttribute="centerY" secondItem="y6N-h4-8yp" secondAttribute="centerY" id="QwN-FX-gZw"/>
+                                                <constraint firstItem="69X-77-2ZX" firstAttribute="centerY" secondItem="KDf-Hi-U1v" secondAttribute="centerY" id="g7z-Kd-OSO"/>
+                                                <constraint firstItem="KDf-Hi-U1v" firstAttribute="leading" secondItem="y6N-h4-8yp" secondAttribute="leading" constant="10" id="lC5-10-Abh"/>
+                                                <constraint firstItem="KDf-Hi-U1v" firstAttribute="centerY" secondItem="y6N-h4-8yp" secondAttribute="centerY" id="vA3-88-v5y"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="24V-iN-6Dz"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="jfa-TC-388">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="m3y-iE-bL0">
-                                        <rect key="frame" x="0.0" y="289" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="333" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m3y-iE-bL0" id="CKO-IO-z0e">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_set" translatesAutoresizingMaskIntoConstraints="NO" id="sDy-OE-jMS">
@@ -409,7 +452,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="7D6091AB-AE72-4377-921F-CB82E991DDBA" width="510" height="510">
+        <image name="Sina_" width="36" height="36"/>
+        <image name="imageView:D9O-Fb-7Yz:image" width="510" height="510">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -13486,7 +13530,6 @@ XAAL9mEAC/ZwAAv2dAAL9nsAC/aDAAv2kAAL9pUAC/aXAAv2mQAL9p4AC/amAAv2qQAL9q4AC/a2AAv2
 uQAL9ssAC/bOAAv20wAAAAAAAAQBAAAAAAAAAD4AAAAAAAAAAAAAAAAAC/bVA
 </mutableData>
         </image>
-        <image name="Sina_" width="36" height="36"/>
         <image name="m_iconAlbum" width="20" height="20"/>
         <image name="m_set" width="30" height="30"/>
         <image name="placeholdPhoto" width="64" height="64"/>

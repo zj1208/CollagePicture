@@ -32,7 +32,7 @@ static NSString * const reuseIdentifier1 = @"Cell1";
 //    NSDictionary *section2 =@{@"奖励":@"resume_"};
 //    NSDictionary *section3 =@{@"活动":@"activity_",@"收藏":@"attention_",@"待请":@"Stay_please_"};
 //    NSDictionary *section4 =@{@"礼物":@"gift_",@"动态":@"dynamic_condition_"};
-//    NSDictionary *section5 =@{@"设置":@"set_"};
+//    NSDictionary *section5 =@{ :@"set_"};
 //    
 //    self.dataArray =@[section1,section2,section3,section4,section5];
     
