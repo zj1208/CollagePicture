@@ -44,13 +44,13 @@
 
 - (MBProgressHUD *)zhHUD_showErrorWithStatus:(NSString *)aText
 {
-    return [self zhHUD_showText:aText customIcon:nil afterDelay:2.f];
+    return [self zhHUD_showText:aText customIcon:nil afterDelay:1.f];
 }
 
 
 - (void)zhHUD_showSuccessWithStatus:(NSString *)aText
 {
-    [self zhHUD_showSuccessWithStatus:aText afterDelay:2.f];
+    [self zhHUD_showSuccessWithStatus:aText afterDelay:1.f];
 }
 
 

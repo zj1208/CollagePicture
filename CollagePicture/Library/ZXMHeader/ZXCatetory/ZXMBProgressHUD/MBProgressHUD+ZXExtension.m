@@ -74,7 +74,7 @@
     {
         hud.mode = MBProgressHUDModeText;
     }
-    [hud hideAnimated:YES afterDelay:2.f];
+    [hud hideAnimated:YES afterDelay:1.f];
     return hud;
 }
 
