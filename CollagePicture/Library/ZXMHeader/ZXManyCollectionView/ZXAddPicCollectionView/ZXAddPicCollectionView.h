@@ -113,12 +113,12 @@ typedef NS_ENUM(NSInteger, ZXAddPicCellEditingStyle) {
 {
     
     ZXAddPicCollectionView *picView = [[ZXAddPicCollectionView alloc] init];
-    picView.maxItemCount = 5;
+    picView.maxItemCount = 9;
     //增大间距，来减下平均item宽度
-    picView.minimumInteritemSpacing = 17.f;
+    picView.minimumInteritemSpacing = 10.f;
     picView.photosState = ZXPhotosViewStateDidCompose;
-    picView.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    picView.picItemWidth = [picView getItemAverageWidthInTotalWidth:LCDW itemCount:5 sectionInset:picView.sectionInset interitemSpacing:picView.minimumInteritemSpacing];
+    picView.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+    picView.picItemWidth = [picView getItemAverageWidthInTotalWidth:LCDW itemCount:4 sectionInset:picView.sectionInset interitemSpacing:picView.minimumInteritemSpacing];
     picView.picItemHeight = picView.picItemWidth;
     
     self.picsCollectionView = picView;
@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, ZXAddPicCellEditingStyle) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // self.label.text = [NSString stringWithFormat:@"请上传3张真实的工厂照片\n让采购商更清楚您的实力"];
+    // self.label.text = [NSString stringWithFormat:@"请上传9张真实的工厂照片\n让采购商更清楚您的实力"];
     _photosMArray =[self setupZXPhotoModelArray:mode.picArray];
 }
 
@@ -231,6 +231,8 @@ typedef NS_ENUM(NSInteger, ZXAddPicCellEditingStyle) {
         self.photoCell.picsCollectionView.hidden = !self.photoCell.containerView.hidden;
 
     }
+    [self.tableView reloadData];
+
 }
 
  //点击图片查看大图
@@ -284,6 +286,8 @@ typedef NS_ENUM(NSInteger, ZXAddPicCellEditingStyle) {
              {
                  [weakSelf zhHUD_hideHUDForView:weakSelf.view];
                  [self.photoCell.picsCollectionView setData:_photosMArray];
+                 [self.tableView reloadData];
+
              }
          
          } failure:^(NSError *error) {

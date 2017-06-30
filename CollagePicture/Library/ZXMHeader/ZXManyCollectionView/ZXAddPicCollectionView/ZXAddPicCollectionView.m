@@ -16,9 +16,9 @@ static CGFloat ZXAddPicItemWidth = 60.f;
 static CGFloat ZXAddPicItemHeight = 60.f;
 
 NSInteger const ZXAddPicMaxColoum = 3;  // 图片每行默认最多个数
-//设置的时候，xib也要同时调整；
-static CGFloat ZXDeleteBtnWidth =  30.f;
-static CGFloat ZXDeleteBtnHeight = 30.f;
+//设置的时候，xib也要同时调整；与删除按钮有关；
+static CGFloat ZXPicItemLayoutTop =  10.f;
+static CGFloat ZXPicItemLayoutRight = 10.f;
 
 static NSString * const reuseCell = @"Cell";
 
@@ -114,26 +114,29 @@ static NSString * const reuseCell = @"Cell";
 
 - (void)setMinimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 {
-    CGFloat itemSpace = minimumInteritemSpacing-ZXDeleteBtnWidth/2;
+    CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutTop;
     itemSpace = itemSpace>0?itemSpace:0;
     _minimumInteritemSpacing = itemSpace;
 }
 
 - (void)setPicItemWidth:(CGFloat)picItemWidth
 {
-    _picItemWidth = picItemWidth +ZXDeleteBtnWidth/2;
+    _picItemWidth = picItemWidth +ZXPicItemLayoutRight;
 }
 
 - (void)setMinimumLineSpacing:(CGFloat)minimumLineSpacing
 {
-    CGFloat space = self.minimumInteritemSpacing-ZXDeleteBtnHeight/2;
+    CGFloat space = self.minimumInteritemSpacing-ZXPicItemLayoutTop;
     space = space>0?space:0;
     _minimumLineSpacing = space;
 }
 
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth itemCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset interitemSpacing:(CGFloat)minimumInteritemSpacing
 {
-    return (totalWidth - (count-1)*minimumInteritemSpacing-inset.left-inset.right)/count-ZXDeleteBtnWidth/2;
+    CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutRight;
+    itemSpace = itemSpace>0?itemSpace:0;
+
+    return (totalWidth - (count-1)*itemSpace-inset.left-inset.right)/count-ZXPicItemLayoutRight;
 }
 
 
@@ -185,6 +188,7 @@ static NSString * const reuseCell = @"Cell";
 //    cell.backgroundColor = [UIColor redColor];
     [cell.deleteBtn addTarget:self action:@selector(deleteAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.delegate = self;
+    NSLog(@"indexPath=%ld",indexPath.item);
     //添加图片按钮
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
     {
@@ -344,11 +348,11 @@ static NSString * const reuseCell = @"Cell";
     {
         [self setData:data];
         //由于整个view被tableViewCell重用了，所以他只会记得init初始化的值；
-        [self layoutIfNeeded];
+//        [self layoutIfNeeded];
         NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
         NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:totalItem-1 inSection:0];
         UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
-        CGFloat height = CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom+ZXDeleteBtnHeight/2;
+        CGFloat height = CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom+ZXPicItemLayoutTop;
         return ceilf(height);
     }
 }

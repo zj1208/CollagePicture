@@ -129,9 +129,6 @@
 		F430290D1F038AF1007C38F9 /* ZXAddProPicView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43028681F038AF0007C38F9 /* ZXAddProPicView.m */; };
 		F430290E1F038AF1007C38F9 /* ZXAddProPicView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43028691F038AF0007C38F9 /* ZXAddProPicView.xib */; };
 		F430290F1F038AF1007C38F9 /* ZXAddBigPicCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F430286B1F038AF0007C38F9 /* ZXAddBigPicCollectionView.m */; };
-		F43029101F038AF1007C38F9 /* ZXAddPicCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F430286E1F038AF0007C38F9 /* ZXAddPicCollectionView.m */; };
-		F43029111F038AF1007C38F9 /* ZXAddPicViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F43028701F038AF0007C38F9 /* ZXAddPicViewCell.m */; };
-		F43029121F038AF1007C38F9 /* ZXAddPicViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43028711F038AF0007C38F9 /* ZXAddPicViewCell.xib */; };
 		F43029131F038AF1007C38F9 /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F43028741F038AF0007C38F9 /* LabelCell.m */; };
 		F43029141F038AF1007C38F9 /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43028751F038AF0007C38F9 /* LabelCell.xib */; };
 		F43029151F038AF1007C38F9 /* ZXLabelsInputTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43028781F038AF0007C38F9 /* ZXLabelsInputTagsView.m */; };
@@ -172,6 +169,12 @@
 		F43029381F038AF1007C38F9 /* ZXCenterTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43028BA1F038AF0007C38F9 /* ZXCenterTitleView.m */; };
 		F43029391F038AF1007C38F9 /* ZXCenterTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43028BB1F038AF0007C38F9 /* ZXCenterTitleView.xib */; };
 		F430293C1F038D2B007C38F9 /* CheckVersionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F430293B1F038D2B007C38F9 /* CheckVersionAPI.m */; };
+		F4302B0D1F065E9D007C38F9 /* ZXAddPicCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4302B091F065E9D007C38F9 /* ZXAddPicCollectionView.m */; };
+		F4302B0E1F065E9D007C38F9 /* ZXAddPicViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4302B0B1F065E9D007C38F9 /* ZXAddPicViewCell.m */; };
+		F4302B0F1F065E9D007C38F9 /* ZXAddPicViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4302B0C1F065E9D007C38F9 /* ZXAddPicViewCell.xib */; };
+		F4302B181F065ECA007C38F9 /* ZXCenterBottomToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4302B131F065ECA007C38F9 /* ZXCenterBottomToolView.m */; };
+		F4302B191F065ECA007C38F9 /* ZXCenterBottomToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4302B141F065ECA007C38F9 /* ZXCenterBottomToolView.xib */; };
+		F4302B1A1F065ECA007C38F9 /* ZXTowBtnBottomToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4302B171F065ECA007C38F9 /* ZXTowBtnBottomToolView.m */; };
 		F4374B111E0973CA00081502 /* UserServiceAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4374B101E0973CA00081502 /* UserServiceAgreement.txt */; };
 		F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4374B591E0A6C6900081502 /* RegisterViewController.m */; };
 		F4374B5D1E0A6C8400081502 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4374B5C1E0A6C8400081502 /* LoginViewController.m */; };
@@ -516,11 +519,6 @@
 		F43028691F038AF0007C38F9 /* ZXAddProPicView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXAddProPicView.xib; sourceTree = "<group>"; };
 		F430286A1F038AF0007C38F9 /* ZXAddBigPicCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAddBigPicCollectionView.h; sourceTree = "<group>"; };
 		F430286B1F038AF0007C38F9 /* ZXAddBigPicCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAddBigPicCollectionView.m; sourceTree = "<group>"; };
-		F430286D1F038AF0007C38F9 /* ZXAddPicCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAddPicCollectionView.h; sourceTree = "<group>"; };
-		F430286E1F038AF0007C38F9 /* ZXAddPicCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAddPicCollectionView.m; sourceTree = "<group>"; };
-		F430286F1F038AF0007C38F9 /* ZXAddPicViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAddPicViewCell.h; sourceTree = "<group>"; };
-		F43028701F038AF0007C38F9 /* ZXAddPicViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAddPicViewCell.m; sourceTree = "<group>"; };
-		F43028711F038AF0007C38F9 /* ZXAddPicViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXAddPicViewCell.xib; sourceTree = "<group>"; };
 		F43028731F038AF0007C38F9 /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
 		F43028741F038AF0007C38F9 /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
 		F43028751F038AF0007C38F9 /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
@@ -581,6 +579,16 @@
 		F43028BB1F038AF0007C38F9 /* ZXCenterTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCenterTitleView.xib; sourceTree = "<group>"; };
 		F430293A1F038D2B007C38F9 /* CheckVersionAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckVersionAPI.h; sourceTree = "<group>"; };
 		F430293B1F038D2B007C38F9 /* CheckVersionAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckVersionAPI.m; sourceTree = "<group>"; };
+		F4302B081F065E9D007C38F9 /* ZXAddPicCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAddPicCollectionView.h; sourceTree = "<group>"; };
+		F4302B091F065E9D007C38F9 /* ZXAddPicCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAddPicCollectionView.m; sourceTree = "<group>"; };
+		F4302B0A1F065E9D007C38F9 /* ZXAddPicViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAddPicViewCell.h; sourceTree = "<group>"; };
+		F4302B0B1F065E9D007C38F9 /* ZXAddPicViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAddPicViewCell.m; sourceTree = "<group>"; };
+		F4302B0C1F065E9D007C38F9 /* ZXAddPicViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXAddPicViewCell.xib; sourceTree = "<group>"; };
+		F4302B121F065ECA007C38F9 /* ZXCenterBottomToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCenterBottomToolView.h; sourceTree = "<group>"; };
+		F4302B131F065ECA007C38F9 /* ZXCenterBottomToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCenterBottomToolView.m; sourceTree = "<group>"; };
+		F4302B141F065ECA007C38F9 /* ZXCenterBottomToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCenterBottomToolView.xib; sourceTree = "<group>"; };
+		F4302B161F065ECA007C38F9 /* ZXTowBtnBottomToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTowBtnBottomToolView.h; sourceTree = "<group>"; };
+		F4302B171F065ECA007C38F9 /* ZXTowBtnBottomToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTowBtnBottomToolView.m; sourceTree = "<group>"; };
 		F4374B101E0973CA00081502 /* UserServiceAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserServiceAgreement.txt; sourceTree = "<group>"; };
 		F4374B581E0A6C6900081502 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		F4374B591E0A6C6900081502 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
@@ -1034,6 +1042,7 @@
 		F43027B21F038AF0007C38F9 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
+				F4302B101F065ECA007C38F9 /* ZXBottomToolView */,
 				F43027B31F038AF0007C38F9 /* ADCustomTableView */,
 				F43027B61F038AF0007C38F9 /* APPCommonDef.h */,
 				F43027B71F038AF0007C38F9 /* areapicker */,
@@ -1408,8 +1417,8 @@
 		F43028601F038AF0007C38F9 /* ZXManyCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				F4302B071F065E9D007C38F9 /* ZXAddPicCollectionView */,
 				F43028611F038AF0007C38F9 /* ZXAddBigPicController */,
-				F430286C1F038AF0007C38F9 /* ZXAddPicCollectionView */,
 				F43028721F038AF0007C38F9 /* ZXLabelsCollectionView */,
 			);
 			path = ZXManyCollectionView;
@@ -1437,18 +1446,6 @@
 				F43028691F038AF0007C38F9 /* ZXAddProPicView.xib */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		F430286C1F038AF0007C38F9 /* ZXAddPicCollectionView */ = {
-			isa = PBXGroup;
-			children = (
-				F430286D1F038AF0007C38F9 /* ZXAddPicCollectionView.h */,
-				F430286E1F038AF0007C38F9 /* ZXAddPicCollectionView.m */,
-				F430286F1F038AF0007C38F9 /* ZXAddPicViewCell.h */,
-				F43028701F038AF0007C38F9 /* ZXAddPicViewCell.m */,
-				F43028711F038AF0007C38F9 /* ZXAddPicViewCell.xib */,
-			);
-			path = ZXAddPicCollectionView;
 			sourceTree = "<group>";
 		};
 		F43028721F038AF0007C38F9 /* ZXLabelsCollectionView */ = {
@@ -1623,6 +1620,46 @@
 				F43028BB1F038AF0007C38F9 /* ZXCenterTitleView.xib */,
 			);
 			path = ZXTableViewTitleView;
+			sourceTree = "<group>";
+		};
+		F4302B071F065E9D007C38F9 /* ZXAddPicCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				F4302B081F065E9D007C38F9 /* ZXAddPicCollectionView.h */,
+				F4302B091F065E9D007C38F9 /* ZXAddPicCollectionView.m */,
+				F4302B0A1F065E9D007C38F9 /* ZXAddPicViewCell.h */,
+				F4302B0B1F065E9D007C38F9 /* ZXAddPicViewCell.m */,
+				F4302B0C1F065E9D007C38F9 /* ZXAddPicViewCell.xib */,
+			);
+			path = ZXAddPicCollectionView;
+			sourceTree = "<group>";
+		};
+		F4302B101F065ECA007C38F9 /* ZXBottomToolView */ = {
+			isa = PBXGroup;
+			children = (
+				F4302B111F065ECA007C38F9 /* ZXCenterBottomToolView */,
+				F4302B151F065ECA007C38F9 /* ZXTowBtnBottomToolView */,
+			);
+			path = ZXBottomToolView;
+			sourceTree = "<group>";
+		};
+		F4302B111F065ECA007C38F9 /* ZXCenterBottomToolView */ = {
+			isa = PBXGroup;
+			children = (
+				F4302B121F065ECA007C38F9 /* ZXCenterBottomToolView.h */,
+				F4302B131F065ECA007C38F9 /* ZXCenterBottomToolView.m */,
+				F4302B141F065ECA007C38F9 /* ZXCenterBottomToolView.xib */,
+			);
+			path = ZXCenterBottomToolView;
+			sourceTree = "<group>";
+		};
+		F4302B151F065ECA007C38F9 /* ZXTowBtnBottomToolView */ = {
+			isa = PBXGroup;
+			children = (
+				F4302B161F065ECA007C38F9 /* ZXTowBtnBottomToolView.h */,
+				F4302B171F065ECA007C38F9 /* ZXTowBtnBottomToolView.m */,
+			);
+			path = ZXTowBtnBottomToolView;
 			sourceTree = "<group>";
 		};
 		F4374B571E0A6C6900081502 /* LoginRegisterController */ = {
@@ -2374,6 +2411,7 @@
 				F44DAECF1DC8D188000D9311 /* README.txt in Resources */,
 				F461822E1D8129490015BC84 /* LaunchScreen.storyboard in Resources */,
 				F43029371F038AF1007C38F9 /* ZXActionTitleView.xib in Resources */,
+				F4302B0F1F065E9D007C38F9 /* ZXAddPicViewCell.xib in Resources */,
 				F430292D1F038AF1007C38F9 /* grayArrowLoadMore@2x.png in Resources */,
 				F4F38B5C1EA64CBF007606F9 /* litteMoney.gif in Resources */,
 				F4EB2FCF1D8FCF7300F5B70B /* album_a4@2x.png in Resources */,
@@ -2383,7 +2421,6 @@
 				F43029221F038AF1007C38F9 /* zxPhoto_delete@3x.png in Resources */,
 				F43029281F038AF1007C38F9 /* blackArrow@2x.png in Resources */,
 				A55A8D151F05F7CA009ADCE9 /* LetteryView.xib in Resources */,
-				F43029121F038AF1007C38F9 /* ZXAddPicViewCell.xib in Resources */,
 				F43028DB1F038AF1007C38F9 /* ZXAdvModalController.xib in Resources */,
 				F43029391F038AF1007C38F9 /* ZXCenterTitleView.xib in Resources */,
 				F4EB2FD21D8FCF7300F5B70B /* album_a7@2x.png in Resources */,
@@ -2438,6 +2475,7 @@
 				F49E19451DF1734C00676396 /* copyright.plist in Resources */,
 				F4EB2FDE1D8FCF7300F5B70B /* albumA_style_6.plist in Resources */,
 				F43029291F038AF1007C38F9 /* blackArrowLoadMore@2x.png in Resources */,
+				F4302B191F065ECA007C38F9 /* ZXCenterBottomToolView.xib in Resources */,
 				F4EB2FDD1D8FCF7300F5B70B /* albumA_style_5.plist in Resources */,
 				F4EB2FDA1D8FCF7300F5B70B /* albumA_style_2.plist in Resources */,
 				F4EB2FCD1D8FCF7300F5B70B /* album_a2@2x.png in Resources */,
@@ -2605,6 +2643,7 @@
 				F43028F21F038AF1007C38F9 /* UIImage+ZXImageHelper.m in Sources */,
 				F43028F11F038AF1007C38F9 /* UIImage+ZXGIF.m in Sources */,
 				F45B7C011ECFE7B100763568 /* OSSPicInfoRequest.m in Sources */,
+				F4302B181F065ECA007C38F9 /* ZXCenterBottomToolView.m in Sources */,
 				A5AA2F091F04E95600A49A1E /* HLChooseScrollCollectionCell.m in Sources */,
 				F43028E21F038AF1007C38F9 /* UIScrollView+AssistiveTouch.m in Sources */,
 				F452F6D21ECE870800DC4439 /* BaseTableViewCell.m in Sources */,
@@ -2635,8 +2674,10 @@
 				F43028E11F038AF1007C38F9 /* ZXTransitionModalDelegate.m in Sources */,
 				F43029381F038AF1007C38F9 /* ZXCenterTitleView.m in Sources */,
 				F43028D41F038AF1007C38F9 /* ShareHelper.m in Sources */,
+				F4302B1A1F065ECA007C38F9 /* ZXTowBtnBottomToolView.m in Sources */,
 				F4F38B4E1EA6492C007606F9 /* MakingPhotoController.m in Sources */,
 				F43028E61F038AF1007C38F9 /* NSDate+ZXExtension.m in Sources */,
+				F4302B0E1F065E9D007C38F9 /* ZXAddPicViewCell.m in Sources */,
 				A5AA2F071F04E95600A49A1E /* HLFoundViewController.m in Sources */,
 				F44401311E9B677E00734D24 /* GetIDFA.m in Sources */,
 				A5AA2F151F04E95600A49A1E /* HLMineViewController.m in Sources */,
@@ -2658,6 +2699,7 @@
 				F43028D21F038AF1007C38F9 /* QYHelpFunction.m in Sources */,
 				F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */,
 				F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */,
+				F4302B0D1F065E9D007C38F9 /* ZXAddPicCollectionView.m in Sources */,
 				F430291A1F038AF1007C38F9 /* ZXMPickerView.m in Sources */,
 				F430290B1F038AF1007C38F9 /* AddProductPicController.m in Sources */,
 				F43028CF1F038AF1007C38F9 /* UploadGrowOperation.m in Sources */,
@@ -2667,7 +2709,6 @@
 				F43029341F038AF1007C38F9 /* WYTitleView.m in Sources */,
 				A5AA2F121F04E95600A49A1E /* HLHomePageLotteryCell.m in Sources */,
 				F49E19A01DF1875900676396 /* CategoryHomeController.m in Sources */,
-				F43029101F038AF1007C38F9 /* ZXAddPicCollectionView.m in Sources */,
 				F43028DE1F038AF1007C38F9 /* ZXPresentAlphaTransitioning.m in Sources */,
 				F4F38B5F1EA64EC9007606F9 /* TMDiskManager.m in Sources */,
 				F4F38B2C1EA645BD007606F9 /* UserModel.m in Sources */,
@@ -2685,7 +2726,6 @@
 				F43028E71F038AF1007C38F9 /* NSObject+ZXRuntime.m in Sources */,
 				F43028C41F038AF0007C38F9 /* KxMenu.m in Sources */,
 				F43028CC1F038AF1007C38F9 /* NoMenuTextField.m in Sources */,
-				F43029111F038AF1007C38F9 /* ZXAddPicViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

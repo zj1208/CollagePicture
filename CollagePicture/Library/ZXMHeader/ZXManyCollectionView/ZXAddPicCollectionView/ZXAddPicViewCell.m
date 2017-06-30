@@ -14,10 +14,10 @@
     [super awakeFromNib];
     // Initialization code
     self.deleteBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
-
-    self.imageView.contentMode =UIViewContentModeScaleAspectFill;
+//    [self.deleteBtn setBackgroundColor:[UIColor blueColor]];
     
-    [self setView:self.imageView cornerRadius:5.f borderWidth:1.f borderColor:nil];
+    self.imageView.contentMode =UIViewContentModeScaleAspectFill;
+    [self setView:self.imageView cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDidClicked:)];
     [self.imageView addGestureRecognizer:singleTap];
