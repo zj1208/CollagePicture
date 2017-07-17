@@ -1,5 +1,5 @@
 //
-//  UIImage+ZXImageHelper.h
+//  UIImage+ZXHelper.h
 //  CollagePicture
 //
 //  Created by simon on 15/6/25.
@@ -8,20 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIImage (ZXImageHelper)
 
 
 /**
- @brief  用color 和 size 创建 image；
- 生成全透明的图片：
+  根据一个color颜色创建一个UIImage对象；
+  其实调用了zh_imageWithColor: andSize:opaque:;
+  opaque＝NO；
+ 例如：生成全透明图片
+
  UIImage *backgroundImage = [UIImage zh_imageWithColor:[UIColor clearColor] andSize:CGSizeMake(LCDW, 30.f)];
- 
+
+ @param color color对象
+ @param size image的大小尺寸
+ @return 返回一个绘制后的图片；
  */
 + (UIImage *)zh_imageWithColor:(UIColor *)color andSize:(CGSize)size;
 
 
 /**
-
+ 根据一个color颜色创建一个UIImage对象；
 
  @param color 颜色
  @param size size尺寸
@@ -88,12 +96,25 @@
 + (UIImage *)zh_scaleImage:(UIImage *)image toScale:(float)scaleSize;
 
 /**
- 把某个view绘画到image上下文中；
+ 把某个view绘画到上下文中生成一个image图片；
 
- @param view 如果要整个屏幕,用self.view.window；
+ @param  view 可以是整个屏幕
  @return image
  */
-+ (UIImage *)zh_getContextImageFromView: (UIView *)view;
++ (UIImage *)zh_getContextImageFromView:(UIView *)view;
+
+
+
+/**
+ 判断图片是否是有效的位图
+
+ @param imageData 图片数据
+ @return 是否是有效的JPG图片
+ */
++ (BOOL)zh_checkIsValidJPGImageByImageData:(nullable NSData *)imageData;
+
 
 - (void)zh_saveImageWithName:(NSString *)imageName;
 @end
+
+NS_ASSUME_NONNULL_END

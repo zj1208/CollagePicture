@@ -70,6 +70,9 @@
 
 - (void)updateNewData:(id)sender
 {
+    [self hideEmptyViewInController:self.parentViewController hasLocalData:YES];
+//    [MBProgressHUD zx_showLoadingWithStatus:@"正在加载..." toView:nil];
+
     if ([self.delegate respondsToSelector:@selector(zxEmptyViewUpdateAction)])
     {
         [self.delegate zxEmptyViewUpdateAction];
@@ -78,31 +81,72 @@
 
 - (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     NSLog(@"%@",NSStringFromCGRect(self.view.frame));
     //海狮解决办法：
 //    ZXEmptyViewController *emptyVC =[[ZXEmptyViewController alloc] init];
 //    emptyVC.delegate = self;
 //    emptyVC.view.frame = CGRectMake(0, 64, LCDW, LCDH);
     
-
+    
     [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
        
         make.size.mas_equalTo(_imageView.image.size);
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.centerY.mas_equalTo (self.view.mas_centerY).offset(-_imageView.image.size.height);
     }];
-    if (self.OnlyImage) {
+    
+    
+    if (self.label.text.length>0 )
+    {
+        CGRect rect = [self.label.text boundingRectWithSize:CGSizeMake(LCDW-24, LCDH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.label.font} context:nil];
+
+        CGFloat otherContentHeight = 0.f;
+        if (!self.updateBtn.hidden)
+        {
+            otherContentHeight = 12+rect.size.height+40+LCDScale_iphone6_Width(30);
+        }
+        else
+        {
+            otherContentHeight = 12+rect.size.height;
+        }
+        
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
-            make.size.mas_equalTo(_imageView.image.size);
-            make.centerX.mas_equalTo(self.view.mas_centerX);
-            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-_imageView.image.size.height*0.3);
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64);
         }];
+
     }
+    if (self.label.text.length==0 && !self.updateBtn.hidden)
+    {
+        CGFloat otherContentHeight = 12+40+LCDScale_iphone6_Width(30);
+        [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
+            
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64);
+        }];
+
+    }
+    if (self.label.text.length==0 && self.updateBtn.hidden)
+    {
+        [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
+            
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-64);
+        }];
+        
+    }
+
+//    if (self.OnlyImage) {
+//        [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            
+//            make.size.mas_equalTo(_imageView.image.size);
+//            make.centerX.mas_equalTo(self.view.mas_centerX);
+//            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-_imageView.image.size.height*0.3);
+//        }];
+//    }
     
     [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
        
         make.top.mas_equalTo(_imageView.mas_bottom).offset(12);
+        make.left.mas_equalTo(self.view.mas_left).offset(12);
         make.centerX.mas_equalTo(self.view.mas_centerX);
 
     }];
@@ -116,13 +160,14 @@
         
     }];
     
-    [super viewDidLayoutSubviews];
 
 }
 
 - (void)addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide
 {
-    if ([NSString zhIsBlankString:title]) { 
+//    [MBProgressHUD zx_hideHUDForView:nil];
+
+    if ([NSString zhIsBlankString:title]) {
         self.OnlyImage = YES;
     }else{
         self.OnlyImage = NO; //接生意与我相关切换时没数据的氛围图有文字
@@ -133,12 +178,12 @@
         NSLog(@"%@",error);
         if (error.code ==kAPPErrorCode_Token)
         {
-            [MBProgressHUD zx_showError:[error localizedDescription] toView:self.view];
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
             return;
         }
     }
 
-    //如果本来是有数据的
+    //如果有数据的
     if (flag)
     {
         [self localHasDataInController:viewController error:error];
@@ -146,11 +191,26 @@
     //如果是没有数据的
     else
     {
+        //有不足的地方，没法更灵活添加到某区域；是直接加入到控制器的view上，导致tabViewController，或者隐藏导航条等地方，不能正常显示；
         if (![viewController.childViewControllers containsObject:self])
         {
+            
             [viewController addChildViewController:self];
             [viewController.view addSubview:self.view];
-        }
+            self.view.alpha = 0;
+            [self beginAppearanceTransition:YES animated:YES];
+            
+            WS(weakSelf);
+            [UIView animateWithDuration:0.3 animations:^{
+                weakSelf.view.alpha = 1;
+            } completion:^(BOOL finished) {
+                
+                [weakSelf endAppearanceTransition];
+                [weakSelf didMoveToParentViewController:viewController];
+                
+            }];
+
+         }
         self.label.text = title;
         self.updateBtn.hidden = hide;
         self.imageView.image = emptyImage;
@@ -164,15 +224,27 @@
 {
     if (error)
     {
-        [MBProgressHUD zx_showError:[error localizedDescription] toView:self.view];
+        if ([viewController isKindOfClass:[UITableViewController class]] ||[viewController isKindOfClass:[UICollectionViewController class]])
+        {
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+        }
+        else
+        {
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:viewController.view];
+        }
     }
     //如果没有错误，则隐藏
     else
     {
+  
         if ([viewController.childViewControllers containsObject:self])
         {
-            [self removeFromParentViewController];
+            [self willMoveToParentViewController:nil];
+            [self beginAppearanceTransition:NO animated:YES];
+            
             [self.view removeFromSuperview];
+            [self removeFromParentViewController];
+            [self endAppearanceTransition];
         }
     }
 }
@@ -180,15 +252,22 @@
 
 - (void)hideEmptyViewInController:(UIViewController *)viewController  hasLocalData:(BOOL)flag
 {
+//    [MBProgressHUD zx_hideHUDForView:nil];
     if (flag)
     {
+        
         if ([viewController.childViewControllers containsObject:self])
         {
-            [self removeFromParentViewController];
+            [self willMoveToParentViewController:nil];
+            [self beginAppearanceTransition:NO animated:YES];
+            
             [self.view removeFromSuperview];
+            [self removeFromParentViewController];
+            [self endAppearanceTransition];
         }
  
     }
+
 }
 
 - (void)didReceiveMemoryWarning {

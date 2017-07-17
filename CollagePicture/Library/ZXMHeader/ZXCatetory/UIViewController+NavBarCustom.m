@@ -398,27 +398,6 @@
 
 
 
-//- (CGFloat)topOfViewOffset
-//{
-//    CGFloat top = 0;
-//    if ([self respondsToSelector:@selector(topLayoutGuide)])
-//    {
-//        top = self.topLayoutGuide.length;
-//    }
-//    return top;
-//}
-//
-//- (CGFloat)bottomOfViewOffset
-//{
-//    CGFloat top = 0;
-//    if ([self respondsToSelector:@selector(bottomLayoutGuide)])
-//    {
-//        top = self.bottomLayoutGuide.length;
-//    }
-//    return top;
-//    
-//}
-
 
 - (void)zhTabBarController_tabBarItem_ImageArray:(nullable NSArray *)aArray selectImages:(nullable NSArray *)selectArray slectedItemTintColor:(nullable UIColor *)aSleColor unselectedItemTintColor:(nullable UIColor *)unSleColor;
 {

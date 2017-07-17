@@ -58,18 +58,8 @@
         NewFunctionController *vc = [sb instantiateViewControllerWithIdentifier:SBID_NewFunctionController];
         vc.delegate = self;
         
-        if (Device_Version<8.0)
-        {
-            vc.modalPresentationStyle = UIModalPresentationCustom;
-            vc.transitioningDelegate = self.transitionDelegate;
-        }
-        else
-        {
-            vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            vc.providesPresentationContextTransitionStyle = YES;
-            vc.definesPresentationContext = YES;
-            vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        }
+        vc.modalPresentationStyle = UIModalPresentationCustom;
+        vc.transitioningDelegate = self.transitionDelegate;
         [self presentViewController:vc animated:YES completion:nil];
     }
 }

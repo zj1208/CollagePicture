@@ -22,7 +22,7 @@
 {
     [self setCornerRadius:5 borderWidth:1 borderColor:[UIColor clearColor]];
     NSString *string = [data objectForKey:@"picUrl"];
-    NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w820_hX relativeToImgPath:string];
+    NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w828_hX relativeToImgPath:string];
       
     [self.imgView sd_setImageWithURL:url placeholderImage:AppPlaceholderImage];
 

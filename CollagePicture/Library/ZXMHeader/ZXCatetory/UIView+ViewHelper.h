@@ -44,11 +44,11 @@
 
 /**
   递归获取所有子视图
-
+例如： [UIView zhNSLogGetSubFromView:self.navigationController.navigationBar andLevel:1];
  @param view 要遍历的view
  @param level 从第几级开始遍历
  */
-- (void)zhNSLogGetSubFromView:(UIView *)view andLevel:(NSInteger)level;
++ (void)zhNSLogSubviewsFromView:(UIView *)view andLevel:(NSInteger)level;
 #pragma mark-dissmissKeyboard
 /**
  * @brief 关闭键盘方法；

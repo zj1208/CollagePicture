@@ -235,7 +235,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)zhGetJSONSerializationObjectByJsonData:(nullable NSData *)data;
 
 + (id)zhGetJSONSerializationObjectFormContentsOfFile:(NSString *)path;
-
+/**
+字典转Json字符串
+ 
+ @param dict 字典
+ @return Json字符串
+ */
++(NSString *)convertToJsonData:(NSDictionary *)dict;
 /**
  *	@brief	根据jsonSerialization方法把json格式（NSArray／NSDictionary）对象转换为字符串
  */
@@ -244,6 +250,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；
 + (NSString *)zhGetUDIDString;
+
+
 
 @end
 

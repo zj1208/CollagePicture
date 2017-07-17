@@ -41,14 +41,20 @@
     NSString *processStr =[baseString stringByAppendingString:@"?x-oss-process=image/resize,"];
     switch (resizeType)
     {
-        case OSSImageResizeType_w700_hX:
-            return [NSURL URLWithString:[processStr stringByAppendingString:@"w_700"]];
-            break;
+
+
         case OSSImageResizeType_w600_hX:
             return [NSURL URLWithString:[processStr stringByAppendingString:@"w_600"]];
             break;
-        case OSSImageResizeType_w820_hX:
-            return [NSURL URLWithString:[processStr stringByAppendingString:@"w_820"]];
+
+        case OSSImageResizeType_w700_hX:
+            return [NSURL URLWithString:[processStr stringByAppendingString:@"w_700"]];
+            break;
+        case OSSImageResizeType_w414_hX:
+            return  [NSURL URLWithString:[processStr stringByAppendingString:@"w_414"]];
+            break;
+        case OSSImageResizeType_w828_hX:
+            return [NSURL URLWithString:[processStr stringByAppendingString:@"w_828"]];
             break;
         case OSSImageResizeType_w100_hX:
             return [NSURL URLWithString:[processStr stringByAppendingString:@"w_100"]];

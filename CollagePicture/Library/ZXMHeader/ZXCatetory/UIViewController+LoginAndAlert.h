@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  判断是否有登录过，如果没有登录则弹出登录界面
- 
+
  @param flag 是否需要弹出警告提示
  @return 返回是否登录过；
  */
@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  判断是否有登录过，如果没有登录弹出登录界面； 如果登录过则执行action事件
- 
+
  @param action 如果是登录的，则执行这个事件；
  */
 

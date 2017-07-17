@@ -54,7 +54,6 @@
     hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
     hud.bezelView.color = [UIColor colorWithWhite:0 alpha:0.75f];
     hud.contentColor = UIColorFromRGB_HexValue(0xffffff);
-
     if (aText.length>12)
     {
         hud.detailsLabel.text= NSLocalizedString(aText, nil);

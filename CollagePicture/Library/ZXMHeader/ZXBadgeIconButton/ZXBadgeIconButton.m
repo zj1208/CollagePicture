@@ -71,7 +71,7 @@
 - (void)maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font badgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor
 {
     self.maginY = aMaginY;
-    self.badgeFont = font?font:[UIFont systemFontOfSize:12];
+    self.badgeFont = font?font:[UIFont systemFontOfSize:11];
     UIColor *titleColor = aTitleColor?aTitleColor:[UIColor whiteColor];
     self.badgeLab.textColor = titleColor;
     

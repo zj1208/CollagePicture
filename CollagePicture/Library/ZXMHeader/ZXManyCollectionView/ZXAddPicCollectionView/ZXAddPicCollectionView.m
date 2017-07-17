@@ -33,6 +33,8 @@ static NSString * const reuseCell = @"Cell";
 
 @implementation ZXAddPicCollectionView
 
+@synthesize picItemHeight = _picItemHeight;
+
 - (BOOL)isExistInputItem
 {
     return _existInputItem;
@@ -80,9 +82,10 @@ static NSString * const reuseCell = @"Cell";
 }
 - (void)commonInit
 {
-    self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.sectionInset = UIEdgeInsetsMake(5, 15, 5, 15);
     self.picItemWidth = ZXAddPicItemWidth;
     self.picItemHeight = ZXAddPicItemHeight;
+    self.picItemSize = CGSizeMake(ZXAddPicItemWidth, ZXAddPicItemHeight);
     self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
     self.minimumLineSpacing = ZXMinimumLineSpacing;
     self.existInputItem = YES;//添加图片按钮默认存在
@@ -108,21 +111,34 @@ static NSString * const reuseCell = @"Cell";
     
     [self.collectionView registerNib:[UINib nibWithNibName:nib_ZXAddPicViewCell bundle:nil] forCellWithReuseIdentifier:reuseCell];
     self.collectionView.scrollEnabled = NO;
+    
+    
 }
 
 // 重写行间距，item宽度，item之间间距；
 
 - (void)setMinimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 {
-    CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutTop;
+    CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutRight;
     itemSpace = itemSpace>0?itemSpace:0;
     _minimumInteritemSpacing = itemSpace;
 }
 
-- (void)setPicItemWidth:(CGFloat)picItemWidth
-{
-    _picItemWidth = picItemWidth +ZXPicItemLayoutRight;
-}
+//- (void)setPicItemSize:(CGSize)picItemSize
+//{
+//    _picItemSize = CGSizeMake(picItemSize.width+ZXPicItemLayoutRight, picItemSize.height+ZXPicItemLayoutTop);
+//}
+
+//- (void)setPicItemWidth:(CGFloat)aPicItemWidth
+//{
+//    _picItemWidth = aPicItemWidth +ZXPicItemLayoutRight;
+//}
+//
+//- (void)setPicItemHeight:(CGFloat)aPicItemHeight
+//{
+//    _picItemHeight = aPicItemHeight +ZXPicItemLayoutTop;
+//}
+
 
 - (void)setMinimumLineSpacing:(CGFloat)minimumLineSpacing
 {
@@ -131,12 +147,19 @@ static NSString * const reuseCell = @"Cell";
     _minimumLineSpacing = space;
 }
 
+- (void)setSectionInset:(UIEdgeInsets)sectionInset
+{
+    CGFloat right = sectionInset.right-ZXPicItemLayoutRight>0?sectionInset.right-ZXPicItemLayoutRight:0;
+    _sectionInset = UIEdgeInsetsMake(sectionInset.top, sectionInset.left, sectionInset.top, right);
+    self.collectionFlowLayout.sectionInset = _sectionInset;
+}
+
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth itemCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset interitemSpacing:(CGFloat)minimumInteritemSpacing
 {
     CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutRight;
     itemSpace = itemSpace>0?itemSpace:0;
-
-    return (totalWidth - (count-1)*itemSpace-inset.left-inset.right)/count-ZXPicItemLayoutRight;
+    CGFloat itemWidth =  (totalWidth - (count-1)*itemSpace-inset.left-inset.right)/count-ZXPicItemLayoutRight;
+    return floorf(itemWidth);
 }
 
 
@@ -154,6 +177,7 @@ static NSString * const reuseCell = @"Cell";
     
     [self.dataMArray addObjectsFromArray:data];
     [self.collectionView reloadData];
+    
 }
 
 
@@ -251,7 +275,7 @@ static NSString * const reuseCell = @"Cell";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
 
-    return self.minimumInteritemSpacing;
+    return self.minimumInteritemSpacing-ZXPicItemLayoutRight;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
@@ -266,7 +290,8 @@ static NSString * const reuseCell = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(_picItemWidth, _picItemHeight);
+    
+    return CGSizeMake(_picItemWidth+ZXPicItemLayoutRight, _picItemHeight+ZXPicItemLayoutTop);
 
 }
 
@@ -346,13 +371,21 @@ static NSString * const reuseCell = @"Cell";
     }
     else
     {
+        if ([data count] ==0)
+        {
+            return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+_picItemHeight+2*ZXPicItemLayoutTop;
+        }
         [self setData:data];
+
         //由于整个view被tableViewCell重用了，所以他只会记得init初始化的值；
 //        [self layoutIfNeeded];
         NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
         NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:totalItem-1 inSection:0];
         UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
         CGFloat height = CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom+ZXPicItemLayoutTop;
+        
+        self.collectionView.zx_height = height;
+
         return ceilf(height);
     }
 }

@@ -20,7 +20,7 @@
 {
     if (self.type ==ZXAnimationTypePresent)
     {
-        return 1.0f;
+        return 0.3f;
     }
     else if (self.type ==ZXAnimationTypeDismiss)
     {
@@ -45,6 +45,7 @@
         {
             _coverView = [[UIView alloc] initWithFrame:containerView.frame];
             _coverView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
+            _coverView.alpha = 0;
         }
         else
         {
@@ -59,31 +60,41 @@
 
 //        toVC.view.translatesAutoresizingMaskIntoConstraints = NO;
         //添加整个控制器的view，且让它是透明的；
-        [containerView addSubview:toVC.view];
         toVC.view.frame =containerView.frame;
         toVC.view.backgroundColor = [UIColor clearColor];
-
-        //设置frame的原点位置，在屏幕外
+        [containerView addSubview:toVC.view];
+        toVC.view.alpha = 0.f;
  
-        CGRect endFrame = toVC.view.frame;
-        NSLog(@"%@",NSStringFromCGRect(endFrame));
-        toVC.view.frame = CGRectMake(0, -CGRectGetHeight(endFrame), CGRectGetWidth(endFrame), CGRectGetHeight(endFrame));
-   
         //控制用户交互
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-
-        //这个从上往下走的动画，是整个控制器view弹簧动画的，所以背景半透明要自己自定义一个背景view，额外加上，不然效果不好；
-        [UIView animateWithDuration:2.0f delay:0 usingSpringWithDamping:0.7f initialSpringVelocity:0.3f options:UIViewAnimationOptionLayoutSubviews animations:^{
+        [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.f options:UIViewAnimationOptionCurveEaseIn animations:^{
             
-            toVC.view.frame = endFrame;
             _coverView.alpha = 1.0f;
-            
+            toVC.view.alpha = 1.f;
+
         } completion:^(BOOL finished) {
-            
             [transitionContext completeTransition:YES];
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
 
         }];
+        //设置frame的原点位置，在屏幕外
+
+//        CGRect endFrame = toVC.view.frame;
+//        NSLog(@"%@",NSStringFromCGRect(endFrame));
+//        toVC.view.frame = CGRectMake(0, -CGRectGetHeight(endFrame), CGRectGetWidth(endFrame), CGRectGetHeight(endFrame));
+   
+        //这个从上往下走的动画，是整个控制器view弹簧动画的，所以背景半透明要自己自定义一个背景view，额外加上，不然效果不好；
+//        [UIView animateWithDuration:2.0f delay:0 usingSpringWithDamping:0.7f initialSpringVelocity:0.3f options:UIViewAnimationOptionLayoutSubviews animations:^{
+//            
+//            toVC.view.frame = endFrame;
+//            _coverView.alpha = 1.0f;
+//            
+//        } completion:^(BOOL finished) {
+//            
+//            [transitionContext completeTransition:YES];
+//            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+//
+//        }];
        
     }
     else if (self.type ==ZXAnimationTypeDismiss)
@@ -183,7 +194,5 @@
 //                                coverView.alpha = 0.0;
 //                            }];
 }
-
-
 
 @end

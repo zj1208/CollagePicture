@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, OSSImageStyle) {
 } __TVOS_PROHIBITED;
 
 
-//SDWebImage本来就会压缩一半，所以要弄实际尺寸的2倍，才会不糊；
+//如果是用SDWebImage下载的，它会压缩一半，所以要弄实际尺寸的2倍，才会不糊；
 typedef NS_ENUM(NSInteger, OSSImageResizeType) {
     
     OSSImageResizeType_w100_hX =0,
@@ -24,8 +24,11 @@ typedef NS_ENUM(NSInteger, OSSImageResizeType) {
     OSSImageResizeType_w300_hX =2,
     OSSImageResizeType_w600_hX =3,
     OSSImageResizeType_w700_hX =4,
-    OSSImageResizeType_w820_hX =5,
-    OSSImageResizeType_w1600_hX = 6,
+    
+    OSSImageResizeType_w414_hX =5, //屏幕宽度；6plus414
+    OSSImageResizeType_w828_hX =6, //双倍屏幕宽度；6plus414
+    
+    OSSImageResizeType_w667_hX =7, //横屏宽度；
     
 };
 //文件链接完整域名：https://${bucket}.${region}.aliyuncs.com/
@@ -47,6 +50,13 @@ typedef NS_ENUM(NSInteger, OSSImageResizeType) {
 //+ (NSURL *)ossImageWithStyleType:(OSSImageStyle)style relativeToImgPath:(NSString *)baseString;
 
 
+/**
+ 通过样式来处理图片访问规则
+
+ @param resizeType OSSImageResizeType
+ @param baseURL 可以传URL对象，也可以传NSString对象；
+ @return 返回URL
+ */
 + (NSURL *)ossImageWithResizeType:(OSSImageResizeType)resizeType relativeToImgPath:(id)baseURL;
 @end
 

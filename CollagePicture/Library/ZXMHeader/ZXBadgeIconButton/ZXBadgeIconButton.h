@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_END
 - (void)setUI{
     
     [_messageBadgeButton setImage:[UIImage imageNamed:@"icon_meassage_white"]];
-    [_messageBadgeButton maginY:2.5f badgeFont:[UIFont systemFontOfSize:12] badgeTitleColor:[UIColor orangeColor] badgeBackgroundColor:[UIColor whiteColor]];
+    [_messageBadgeButton maginY:2.5f badgeFont:[UIFont systemFontOfSize:11] badgeTitleColor:[UIColor orangeColor] badgeBackgroundColor:[UIColor whiteColor]];
 }
 
 

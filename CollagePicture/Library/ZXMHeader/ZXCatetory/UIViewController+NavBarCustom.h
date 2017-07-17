@@ -191,15 +191,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zhNavigationBar_titleView_Logo_Label_title:(nullable NSString*)aTitle font:(NSInteger)aFont titleColor:(UIColor*)aColor;
 
 
-///**
-// *@brief 只有在viewWillAppear后才能计算出这个自动布局的storyboard结果；尽量所有frame都写在- (void)viewDidLayoutSubviews
-// ＊例如：self.collectionView.frame =CGRectMake(0, self.topOfViewOffset, CGRectGetWidth(self.view.frame), LCDH_TabNoNav);
-// 
-// */
-//- (CGFloat)topOfViewOffset;
-//
-////如果用于兼容ios6，则很难用于；
-//- (CGFloat)bottomOfViewOffset;
 
 /**
  * @brief 自定义设置tabBarController中tabBarItem选择状态的图片,不用系统的tintColor自动着色。

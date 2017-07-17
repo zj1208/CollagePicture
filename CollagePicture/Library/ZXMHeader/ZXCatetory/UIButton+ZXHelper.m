@@ -8,7 +8,7 @@
 
 #import "UIButton+ZXHelper.h"
 #import"APPCommonDef.h"
-#import "UIImage+ZXImageHelper.h"
+#import "UIImage+ZXHelper.h"
 
 @implementation UIButton (ZXHelper)
 

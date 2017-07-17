@@ -26,7 +26,7 @@
 #import "UIButton+ZXHelper.h"
 #import "UILabel+ZXExtension.h"
 #import "UIImage+ZXGIF.h"
-#import "UIImage+ZXImageHelper.h"
+#import "UIImage+ZXHelper.h"
 #import "UIView+ZXChangeSize.h"
 #import "UIScrollView+ZXMJRefreshing.h"
 #import "UINavigationItem+ZXSpace.h"

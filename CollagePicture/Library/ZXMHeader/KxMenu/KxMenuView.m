@@ -9,7 +9,7 @@
 #import "KxMenuView.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import "UIImage+ZXImageHelper.h"
+#import "UIImage+ZXHelper.h"
 
 const CGFloat kArrowSize = 7.f;//箭头大小
 const CGFloat kMarginX = 5; //button 按钮左右边距

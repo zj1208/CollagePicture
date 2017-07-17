@@ -87,7 +87,7 @@
 
 
 
-- (void)zhNSLogGetSubFromView:(UIView *)view andLevel:(NSInteger)level
++ (void)zhNSLogSubviewsFromView:(UIView *)view andLevel:(NSInteger)level
 {
     NSArray *subviews = [view subviews];
     // 如果没有子视图就直接返回
@@ -102,7 +102,7 @@
         // 打印子视图类名,不能用这个函数宏，无法打包
 //        NSLitLog(@"%@%ld: %@", blank, level, subview.class);
         // 递归获取此视图的子视图
-        [self zhNSLogGetSubFromView:subview andLevel:(level+1)];
+        [self zhNSLogSubviewsFromView:subview andLevel:(level+1)];
         
     }
 }

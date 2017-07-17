@@ -86,6 +86,8 @@ typedef NS_ENUM(NSInteger, ZXAddPicCellEditingStyle) {
 @property (nonatomic, assign) CGFloat picItemWidth;
 @property (nonatomic, assign) CGFloat picItemHeight;
 
+@property (nonatomic, assign) CGSize picItemSize;
+
 //自适应屏幕宽度：计算出来后用于设置一个总宽度（比如屏幕宽度）的平均item宽度；
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth itemCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset interitemSpacing:(CGFloat)minimumInteritemSpacing
 ;

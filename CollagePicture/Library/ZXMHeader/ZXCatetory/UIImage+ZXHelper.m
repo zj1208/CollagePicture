@@ -1,12 +1,12 @@
 //
-//  UIImage+ZXImageHelper.m
+//  UIImage+ZXHelper.m
 //  CollagePicture
 //
 //  Created by simon on 15/6/25.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
 
-#import "UIImage+ZXImageHelper.h"
+#import "UIImage+ZXHelper.h"
 
 @implementation UIImage (ZXImageHelper)
 
@@ -128,6 +128,23 @@
     UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return theImage;
+}
+
+
++ (BOOL)zh_checkIsValidJPGImageByImageData:(nullable NSData *)imageData
+{
+    UIImage *image = [UIImage imageWithData:imageData];
+    if (!imageData || !image)
+    {
+        return NO;
+    }
+    NSData *jpgData = UIImageJPEGRepresentation(image, 1);
+    NSData *pngData = UIImagePNGRepresentation(image);
+    if (!jpgData && !pngData)
+    {
+        return NO;
+    }
+    return YES;
 }
 
 

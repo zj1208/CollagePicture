@@ -83,7 +83,6 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 }
 
 
-
 - (void)addAlertController
 {
     if (__IPHONE_8_0)
@@ -107,7 +106,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 //        {
 //            class_addProtocol([self class], @protocol(UIAlertViewDelegate));
 //        }
-//        
+//
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有登录，是否需要登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 //        alert.tag =100;
 //        [alert show];

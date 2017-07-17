@@ -98,7 +98,7 @@ NS_CLASS_AVAILABLE_IOS(3_0) @interface InfiniteScrollView : UIView
         [model.advArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             advArrModel *advItemModel = (advArrModel *)obj;
-            NSURL *picUrl = [NSURL ossImageWithResizeType:OSSImageResizeType_w820_hX relativeToImgPath:advItemModel.pic];
+            NSURL *picUrl = [NSURL ossImageWithResizeType:OSSImageResizeType_w828_hX relativeToImgPath:advItemModel.pic];
             ZXADBannerModel *advModel = [[ZXADBannerModel alloc] initWithDesc:nil picString:picUrl.absoluteString url:advItemModel.url advId:nil];
             
             [_infiniteDataMArray addObject:adBanner];

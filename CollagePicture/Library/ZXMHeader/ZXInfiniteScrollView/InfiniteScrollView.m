@@ -18,7 +18,7 @@ static NSString *const kPlaceholderImage = @"bannerPlaceholder";
 
 static const NSTimeInterval timeInterval= 3.f;
 
-@interface InfiniteScrollView ()<UIScrollViewDelegate>
+@interface InfiniteScrollView ()<UIScrollViewDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic,strong) UIScrollView *scrollView;
 @property(nonatomic,strong) UIPageControl *pageControl;
 
@@ -117,6 +117,7 @@ static const NSTimeInterval timeInterval= 3.f;
         contentView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapAction:)];
         [tapGesture requireGestureRecognizerToFail:self.scrollView.panGestureRecognizer];
+        tapGesture.delegate =self;
         [contentView addGestureRecognizer:tapGesture];
         
         contentView.contentMode = UIViewContentModeScaleAspectFill;
@@ -272,6 +273,8 @@ static const NSTimeInterval timeInterval= 3.f;
 #pragma mark-layoutSubviews
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
+
     self.scrollView.frame = self.bounds;
     if (self.itmesArray.count>0)
     {
@@ -304,7 +307,6 @@ static const NSTimeInterval timeInterval= 3.f;
         });
 
     }
-    [super layoutSubviews];
 
 }
 
@@ -452,19 +454,42 @@ static const NSTimeInterval timeInterval= 3.f;
 
 - (void)contentViewTapAction:(UITapGestureRecognizer *)tap
 {
+//    NSLog(@"tap = %@",tap);
     if ([self.delegate respondsToSelector:@selector(infiniteScrollView:didSelectRowAtIndex:)])
     {
         [self.delegate infiniteScrollView:self didSelectRowAtIndex:self.currentPageIndex];
     }
-    
     if ([self.delegate respondsToSelector:@selector(infiniteScrollView:didSelectModel:)])
     {
         [self.delegate infiniteScrollView:self didSelectModel:[self.itmesArray objectAtIndex:self.currentPageIndex]];
     }
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    NSLog(@"%@", NSStringFromClass([touch.view class]));
+    NSLog(@"%@",@(gestureRecognizer.state));
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    return YES;
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceivePress:(UIPress *)press
+{
+    NSLog(@"Press:%@",@(gestureRecognizer.state));
 
-
+    return YES;
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    NSLog(@"gestureRecognizer=%@, otherGestureRecognizer=%@",gestureRecognizer,otherGestureRecognizer);
+    
+    return YES;
+}
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+//{
+//    return YES;
+//}
 -(void)dealloc
 {
     if ([self.timer isValid])

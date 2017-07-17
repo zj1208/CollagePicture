@@ -106,9 +106,9 @@
             {
 //                image =[ZSimageUtil imageWithImageSimple:image compressionRatio:0.3];
             }
-            [cache storeImage:image forKey:key completion:^{
-                
-            }];
+            [cache storeImage:image forKey:key completion:nil];
+//            [cache storeImage:image forKey:key];
+            
             GrowthSavePhotoModel *model = [[GrowthSavePhotoModel alloc] init];
             model.uploadId =operationModel.operationId;
             model.sort = @(idx);
@@ -127,7 +127,9 @@
 //    cache.shouldCacheImagesInMemory=YES;
     UIImage *firstImg =[UIImage imageWithCGImage:[[assets firstObject]aspectRatioThumbnail]];
     NSString *key = [GrowthDataManager getSDImageCacheSmallImgKey:operationModel.operationId sortId:@(0)];
+//    [cache storeImage:firstImg forKey:key toDisk:YES];
     [cache storeImage:firstImg forKey:key toDisk:YES completion:nil];
+
     //把所有GrowthSavePhotoModel保存在本地
     [[GrowthDataManager getInstance]insertData:uploadArray withAlbumId:operationModel.operationId];
     
@@ -215,9 +217,8 @@
         //上传完一张，删除一张
         GrowthSavePhotoModel *saveModel = (GrowthSavePhotoModel *)model;
         [growthManager removePhotoModel:saveModel withAlbumId:saveModel.uploadId];
-        [[SDImageCache sharedImageCache]removeImageForKey:saveModel.imagePath withCompletion:^{
-            
-        }];
+//        [[SDImageCache sharedImageCache]removeImageForKey:saveModel.imagePath];
+        [[SDImageCache sharedImageCache]removeImageForKey:saveModel.imagePath withCompletion:nil];
         
     } allCompleted:^(NSProgress* progress) {
         

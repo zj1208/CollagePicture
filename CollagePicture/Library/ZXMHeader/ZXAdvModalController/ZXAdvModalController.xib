@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N61-MT-jNx">
-                    <rect key="frame" x="37" y="84" width="300" height="400"/>
+                    <rect key="frame" x="37" y="105.5" width="300" height="400"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="N61-MT-jNx" secondAttribute="height" multiplier="3:4" id="ScJ-Ad-HH1"/>
                     </constraints>
@@ -34,7 +34,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xve-Qc-YTz">
-                    <rect key="frame" x="165" y="496" width="44" height="44"/>
+                    <rect key="frame" x="165" y="517.5" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="xve-Qc-YTz" secondAttribute="height" multiplier="1:1" id="5nQ-dX-2hO"/>
                         <constraint firstAttribute="width" constant="44" id="yhv-ad-GAl"/>
@@ -48,7 +48,7 @@
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="0.94999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="N61-MT-jNx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="37" id="6EU-0o-ir6"/>
-                <constraint firstItem="N61-MT-jNx" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-50" id="Fns-Pl-tja"/>
+                <constraint firstItem="N61-MT-jNx" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-28" id="Fns-Pl-tja"/>
                 <constraint firstItem="xve-Qc-YTz" firstAttribute="top" secondItem="N61-MT-jNx" secondAttribute="bottom" constant="12" id="VjW-ak-uBq"/>
                 <constraint firstItem="xve-Qc-YTz" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gNi-Hw-25Y"/>
                 <constraint firstItem="N61-MT-jNx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xYV-1o-FkA"/>
