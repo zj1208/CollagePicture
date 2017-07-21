@@ -7,6 +7,8 @@
 //
 
 #import "ZXManyImgIconsView.h"
+#import "UIImageView+WebCache.h"
+#import "UIView+ZXChangeSize.h"
 
 
 static CGFloat const  ZXPhotoMargin = 6;   // 图片之间的默认间距
@@ -14,6 +16,13 @@ static CGFloat const  ZXPhotoWidth = 15;    // 图片的默认宽度
 static CGFloat const  ZXPhotoHeight = 15;   // 图片的默认高度
 static NSInteger const ZXPhotosMaxColoum = 10;  // 图片每行默认最多个数
 static NSInteger const ZXPhotoMaxCount = 9; //默认最多显示9张
+
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#endif
 
 @interface ZXManyImgIconsView ()
 
@@ -94,6 +103,10 @@ static NSInteger const ZXPhotoMaxCount = 9; //默认最多显示9张
             NSString * urlStr = [self.thumbnailUrlsArray objectAtIndex:idx];
             NSURL *url = [NSURL URLWithString:urlStr];
             [imageView sd_setImageWithURL:url];
+            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//            });
             
         }else{
             imageView.hidden = YES;

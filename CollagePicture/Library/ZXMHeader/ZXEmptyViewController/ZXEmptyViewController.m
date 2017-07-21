@@ -7,6 +7,23 @@
 //
 
 #import "ZXEmptyViewController.h"
+#import "MBProgressHUD+ZXExtension.h"
+
+#ifndef UIColorFromRGB_HexValue
+#define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
+
+#define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
+#endif
+
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#endif
+
+static NSInteger  kAPPErrorCode_Token2 = 5001;
+
 
 @interface ZXEmptyViewController ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -15,7 +32,7 @@
 
 @property (nonatomic, strong)UIButton *updateBtn;
 
-@property(nonatomic,assign)BOOL OnlyImage;
+//@property(nonatomic,assign)BOOL OnlyImage;
 @end
 
 @implementation ZXEmptyViewController
@@ -58,13 +75,24 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"点击加载" forState:UIControlStateNormal];
-    [btn setCornerRadius:5.f borderWidth:1.f borderColor:[UIColor colorWithWhite:0.8 alpha:1]];
+    [self setView:btn cornerRadius:5.f borderWidth:1.f borderColor:[UIColor colorWithWhite:0.8 alpha:1]];
     [btn setTitleColor:[UIColor colorWithWhite:0.3 alpha:1] forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn addTarget:self action:@selector(updateNewData:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:btn];
     self.updateBtn = btn;
+}
+
+
+//设置圆角
+- (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
+{
+    view.layer.masksToBounds = YES;
+    view.layer.cornerRadius = radius;
+    view.layer.borderWidth = width;
+    
+    view.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
 }
 
 
@@ -167,16 +195,16 @@
 {
 //    [MBProgressHUD zx_hideHUDForView:nil];
 
-    if ([NSString zhIsBlankString:title]) {
-        self.OnlyImage = YES;
-    }else{
-        self.OnlyImage = NO; //接生意与我相关切换时没数据的氛围图有文字
-    }
+//    if ([NSString zhIsBlankString:title]) {
+//        self.OnlyImage = YES;
+//    }else{
+//        self.OnlyImage = NO; //接生意与我相关切换时没数据的氛围图有文字
+//    }
     
     if (error)
     {
         NSLog(@"%@",error);
-        if (error.code ==kAPPErrorCode_Token)
+        if (error.code ==kAPPErrorCode_Token2)
         {
             [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
             return;
@@ -200,7 +228,7 @@
             self.view.alpha = 0;
             [self beginAppearanceTransition:YES animated:YES];
             
-            WS(weakSelf);
+            __weak __typeof(self) weakSelf = self;
             [UIView animateWithDuration:0.3 animations:^{
                 weakSelf.view.alpha = 1;
             } completion:^(BOOL finished) {

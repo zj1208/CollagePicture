@@ -27,7 +27,7 @@ pod 'Mantle'
 
 #刷新
 pod 'SVPullToRefresh', '~> 0.4.1'
-pod 'MJRefresh', '~> 3.0.8'
+pod 'MJRefresh', '~> 3.1.12'
 
 #第三方平台
 
@@ -36,7 +36,7 @@ pod 'BmobSDK'
 #'~> 2.1.4'－2.6.0
 pod 'AliyunOSSiOS'
 #4.0.4－4.2.4
-pod 'UMengAnalytics'
+pod 'UMengAnalytics', '~> 4.2.4'
 # U-Share SDK UI模块（分享面板，建议添加）
 #pod 'UMengUShare/UI'
 ## 集成新浪微博

@@ -7,7 +7,6 @@
 //
 
 #import "MorePickerVCManager.h"
-#import "OrientationNaController.h"
 #include <MobileCoreServices/UTCoreTypes.h>
 
 

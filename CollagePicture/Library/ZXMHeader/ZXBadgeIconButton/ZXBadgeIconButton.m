@@ -135,7 +135,7 @@
     
     CGFloat maginY = aMaginY<2.5?2.5:aMaginY;
     CGFloat btnHeight = ceilf(titleFitSize.height)+2*maginY;
-    CGFloat btnWidth ;
+    CGFloat btnWidth =0.f;
     //高度 height
     NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.badgeLab attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:btnHeight];
     [self.badgeLab addConstraint:constraint1];

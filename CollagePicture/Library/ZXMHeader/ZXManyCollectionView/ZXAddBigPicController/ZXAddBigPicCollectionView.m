@@ -9,13 +9,20 @@
 #import "ZXAddBigPicCollectionView.h"
 
 
-#define DeleteBtnWidth  36.f
-#define DeleteBtnHeight 36.f
-#define Section1InsetMagin   89.f
-#define Section2InsetMagin   26.f
-#define Section2PicToPicMangin 50.f
-#define Section1HeaderHeight   18.f
-#define Section2HeaderHeight   32.f
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#endif
+
+static CGFloat DeleteBtnWidth = 36.f;
+static CGFloat DeleteBtnHeight = 36.f;
+static CGFloat Section1InsetMagin = 89.f;
+static CGFloat Section2InsetMagin = 26.f;
+static CGFloat Section2PicToPicMangin = 50.f;
+static CGFloat Section1HeaderHeight = 18.f;
+static CGFloat Section2HeaderHeight = 32.f;
+
 
 #ifndef UIColorFromRGB_HexValue
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
@@ -150,10 +157,15 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
+#pragma mark - 删除
+
 - (void)zxDeleteBtnAction:(UIButton *)sender
 {
     NSLog(@"删除照片1");
-    NSIndexPath *indexPath = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self];
+    CGPoint point = sender.center;
+    point = [sender convertPoint:point fromView:sender.superview];
+    NSIndexPath* indexPath = [self indexPathForItemAtPoint:point];
+    
     if (indexPath.section ==0)
     {
         [_section1MArray removeAllObjects];
@@ -181,10 +193,17 @@ static NSString * const reuseIdentifier = @"Cell";
     [super reloadData];
 }
 
+
+#pragma mark - 上传事件
+
 - (void)uploadPic:(UIButton *)sender
 {
-    NSIndexPath *index = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self];
-    self.editIndexPath = index;
+
+    CGPoint point = sender.center;
+    point = [sender convertPoint:point fromView:sender.superview];
+    NSIndexPath* indexPath = [self indexPathForItemAtPoint:point];
+    
+    self.editIndexPath = indexPath;
     NSLog(@"indexPath =%@,section:%ld,row=%ld",self.editIndexPath,(long)self.editIndexPath.section,self.editIndexPath.item);
     if (_uploadPicBtnActionBlock)
     {

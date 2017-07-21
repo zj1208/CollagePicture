@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OSSUploadManager.h"
 
 //#import "ImagePickerViewController.h"
 

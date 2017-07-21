@@ -14,7 +14,7 @@
 {
     NSArray *oldItems = [super layoutAttributesForElementsInRect:rect];
     //    NSLog(@"%@",oldItems);
-    WS(weakSelf);
+    __weak __typeof(self)weakSelf = self;
     [oldItems enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         [weakSelf recomputeCellAttributesFrame:obj];

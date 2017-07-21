@@ -1,12 +1,12 @@
 //
-//  KxMenuOverlay.m
+//  ZXOverlay.m
 //  Baby
 //
 //  Created by simon on 16/1/21.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
-#import "ZxOverlay.h"
+#import "ZXOverlay.h"
 
 
 #define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]

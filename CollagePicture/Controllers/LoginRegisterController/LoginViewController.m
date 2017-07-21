@@ -133,11 +133,11 @@
     NSString *passError = [UITextField zhu_TextFieldPassword:password];
     if (![UITextField zhu_validatePhoneNumber:userName])
     {
-        [self zhHUD_showErrorWithStatus:@"您输入的手机号码错误，请核实后重新输入"];
+      [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }
     else if (passError.length>0)
     {
-        [self zhHUD_showErrorWithStatus:passError];
+        [MBProgressHUD zx_showError:passError toView:self.view];
     }
     else
     {

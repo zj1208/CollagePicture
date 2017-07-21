@@ -7,14 +7,12 @@
 //
 
 #import "UIViewController+NavBarCustom.h"
+#import "UIButton+ZXHelper.h"
+//#import "APPCommonDef.h"
 
-#import "APPCommonDef.h"
+
 @implementation UIViewController (NavBarCustom)
-#pragma mark
-#pragma mark NavigationBar有关
-/******************************
- NavigationBar有关
- ******************************/
+
 
 #pragma mark-LeftBarBut
 
@@ -40,19 +38,6 @@
     [backButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backBar = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backBar;
-//    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 50.0, 44)];
-//    //    backView.backgroundColor = [UIColor grayColor];
-//    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    UIImage *image = [UIImage imageNamed:imageName];
-//    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    [leftBtn setImage:image forState:UIControlStateNormal];
-//    //    leftBtn.frame = CGRectMake(-40.0, 0.0, 90.0, LCDNH);
-//    leftBtn.frame = CGRectMake(-30, 0, 70, LCDNH);
-//    //    [leftBtn setBackgroundColor:[UIColor blueColor]];
-//    [leftBtn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-//    [backView addSubview:leftBtn];
-//    UIBarButtonItem *backBar = [[UIBarButtonItem alloc]initWithCustomView:backView];
-//    self.navigationItem.leftBarButtonItem = backBar;
 }
 
 
@@ -113,11 +98,11 @@
 }
 
 
-- (void)zhNavigationBar_UIBarButtonItem_appearance_systemBack_background_Test
-{
-    UIImage *backImage = [UIImage zh_imageWithColor:[UIColor orangeColor] andSize:CGSizeMake(10, 10)];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-}
+//- (void)zhNavigationBar_UIBarButtonItem_appearance_systemBack_background_Test
+//{
+//    UIImage *backImage = [UIImage zh_imageWithColor:[UIColor orangeColor] andSize:CGSizeMake(10, 10)];
+//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//}
 
 /**
  *  @brief set all navigationBar 's 系统返回按钮为没有文字； 把文字移至看不到; 注意: storyboard中遇到很长文字的时候，中间标题会受影响，必须改变前面控制器返回按钮的文字为空，才能解决；

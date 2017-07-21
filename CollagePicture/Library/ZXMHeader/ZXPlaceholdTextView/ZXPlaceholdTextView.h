@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class ZXPlaceholdTextView;
 
 typedef void (^TextDidChangeBlock)(ZXPlaceholdTextView *textView,NSUInteger remainCount);
@@ -16,16 +18,18 @@ typedef void (^TextDidChangeBlock)(ZXPlaceholdTextView *textView,NSUInteger rema
 
 
 
-@property (nonatomic, copy) NSString *placeholder;
+@property (nonatomic, copy, nullable) NSString *placeholder;
 
-@property (nonatomic, strong) UIColor *placeholderColor;
+@property (nonatomic, strong, nullable) UIColor *placeholderColor;
 
 @property (nonatomic, assign) NSUInteger maxCharacters;
 
 
 -(void)setMaxCharacters:(NSUInteger)maxLength textDidChange:(TextDidChangeBlock)limitBlock;
+
 @end
 
+NS_ASSUME_NONNULL_END
 /*
 - (void)viewDidLoad
 {

@@ -8,10 +8,11 @@
 
 #import "UIViewController+ZXHelper.h"
 #import "APPCommonDef.h"
+#import "MBProgressHUD+ZXExtension.h"
 
 @implementation UIViewController (ZXHelper)
 
-- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(NSDictionary *)data
+- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(nullable NSDictionary *)data
 {
     UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:segue];
     if (controller)
@@ -80,7 +81,7 @@
 
 
 #pragma mark - SKStoreProductViewController
-- (void)goAppStore
+- (void)goAppStoreWithAppId:(NSString *)appId
 {
     Class skStore = NSClassFromString(@"SKStoreProductViewController");
     UIDevice *device = [UIDevice currentDevice];
@@ -89,11 +90,11 @@
     if (device.isProximityMonitoringEnabled && skStore)
     {
         [MBProgressHUD zx_showLoadingWithStatus:@"正在载入" toView:self.view];
-        WS(weakSelf);
+        __weak __typeof(self)weakSelf = self;
         
         SKStoreProductViewController *skStoreProductVC = [[SKStoreProductViewController alloc] init];
         skStoreProductVC.delegate = self;
-        [skStoreProductVC loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:kAPPID} completionBlock:^(BOOL result, NSError *error) {
+        [skStoreProductVC loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:appId} completionBlock:^(BOOL result, NSError *error) {
             
             [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
             if (result)
@@ -109,7 +110,7 @@
     }
     else
     {
-        NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ITUNESLINK,kAPPID]];
+        NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ITUNESLINK,appId]];
         
         if ([[UIApplication sharedApplication] canOpenURL:url])
         {

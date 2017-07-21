@@ -35,19 +35,27 @@
 
 - (void)awakeFromNib
 {
-//    [self commonInit];
+//  [self commonInit];
     [super awakeFromNib];
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
-    [self commonInit];
+    if (self)
+    {
+        [self commonInit];
+    }
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
     self = [super initWithCoder:aDecoder];
-    [self commonInit];
+    if (self)
+    {
+        [self commonInit];
+    }
     return self;
 }
 
@@ -57,13 +65,12 @@
     // 默认字体
     self.font = [UIFont systemFontOfSize:15];
     // 默认的占位文字颜色
-    // self.placeholderColor = [UIColor grayColor];
+    self.placeholderColor = [UIColor colorWithRed:194.f/255.0f green:194.f/255.0f blue:194.f/255.0f alpha:1.0f];
     // 监听文字改变
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextViewTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textBeginAndEndEditing:) name:UITextViewTextDidBeginEditingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textBeginAndEndEditing:) name:UITextViewTextDidEndEditingNotification object:nil];
     [self setupViews];
-//    [self layoutIfNeeded];
 }
 
 - (void)setupViews
@@ -71,39 +78,37 @@
     UILabel *placeholderLabel = [[UILabel alloc] init];
     placeholderLabel.numberOfLines = 0;
     placeholderLabel.font = self.font;
-    
-    //        placeholderLabel.zx_x = 4;
-    //        placeholderLabel.zx_y = 7;
     [self addSubview:placeholderLabel];
+    
     _placeholderLabel = placeholderLabel;
-//    _placeholderLabel.text = @"uoruoiureour";
     // 默认的占位文字颜色
-    _placeholderLabel.textColor = UIColorFromRGB_HexValue(0xC2C2C2);
+    _placeholderLabel.textColor =self.placeholderColor;
+    
+    [self addConstraint:_placeholderLabel toSuperviewItem:self];
+
+}
+
+- (void)addConstraint:(UIView *)item toSuperviewItem:(UIView *)superView
+{
+    item.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1 constant:10];
+    [self addConstraint:constraint1];
+    
+    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    [self addConstraint:constraint2];
+
+    
+    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeft multiplier:1 constant:5];
+    [self addConstraint:constraint3];
+    
+    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    [self addConstraint:constraint4];
     
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    [_placeholderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.mas_equalTo(self.mas_top).offset(7);
-        make.left.mas_equalTo(self.mas_left).offset(4);
-        make.centerX.mas_equalTo(self.mas_centerX);
-        make.width.mas_equalTo(100);
-        
-    }];
-
-//    [_countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.bottom.mas_equalTo(self.mas_bottom).offset(-7);
-//        make.left.mas_equalTo(self.mas_left).offset(10);
-//        make.centerX.mas_equalTo(self.mas_centerX);
-//        
-//        
-//    }];
-
 }
 
 -(void)setMaxCharacters:(NSUInteger)maxLength textDidChange:(TextDidChangeBlock)limitBlock

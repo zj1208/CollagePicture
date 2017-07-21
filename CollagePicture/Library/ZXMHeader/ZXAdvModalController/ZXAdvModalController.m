@@ -11,6 +11,10 @@
 #import "NSURL+OSSImage.h"
 #import "UIButton+WebCache.h"
 
+#ifndef LCDScale_iphone6_Width
+#define LCDScale_iphone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
+#endif
+
 
 @interface ZXAdvModalController ()
 
@@ -45,9 +49,9 @@
 
 - (void)viewDidLayoutSubviews
 {
+    [super viewDidLayoutSubviews];
     self.dismissBtnLayoutWidth.constant = LCDScale_iphone6_Width(44.f);
     self.leftMaginLayout.constant = LCDScale_iphone6_Width(35.f);
-    [super viewDidLayoutSubviews];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,7 +62,7 @@
 
 - (IBAction)advPicBtnAction:(UIButton *)sender {
     
-    WS(weakSelf);
+    __weak __typeof(self)weakSelf = self;
     if (self.presentingViewController)
     {
         [self dismissViewControllerAnimated:NO completion:^{

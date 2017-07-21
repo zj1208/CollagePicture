@@ -6,11 +6,11 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "BaseModel.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZXAdvModel : BaseModel
+@interface ZXAdvModel : NSObject
 
 @property (nonatomic, copy,nullable) NSString *pic;
 @property (nonatomic, copy,nullable) NSString *desc;

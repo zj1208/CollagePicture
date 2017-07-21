@@ -71,7 +71,10 @@ static CGFloat ZXProgressHeight =2;
     
     if (self.cornerRaidius)
     {
-          [self setCornerRadius:self.progressHeight/2 borderWidth:1.f borderColor:nil];
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = self.progressHeight/2;
+        self.layer.borderWidth = 1.f;
+        self.layer.borderColor =[UIColor clearColor].CGColor;
     }
     
     if (self.zxTrackImage)

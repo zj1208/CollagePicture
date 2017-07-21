@@ -9,10 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-#ifndef LCDW
-#define LCDW [[UIScreen mainScreen]bounds].size.width
-#define LCDScale_iphone6_Width(X)    X*LCDW/375
-#endif
 
 
 FOUNDATION_EXPORT CGFloat const ZXPhotoMargin;   // 图片之间的默认间距
@@ -25,4 +21,19 @@ FOUNDATION_EXPORT NSInteger const  ZXImagesMaxCountWhenWillCompose; // 在发布
 static NSString *const ZXAddImageName = @"zxPhoto_addImage";
 static NSString *const ZXDeleteImageName = @"zxPhoto_deleteimage";
 
+
+
+#ifndef UIColorFromRGB
+#define UIColorFromRGB(R,G,B)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
+#define UIColorFromRGBA(R,G,B,A)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
+#endif
+
+#ifndef LCDW
+#define LCDW [[UIScreen mainScreen]bounds].size.width
+#define LCDScale_iphone6_Width(X)    X*LCDW/375
+#endif
+
+#ifndef AppPlaceholderImage
+#define AppPlaceholderImage [UIImage imageNamed:@"默认图正方形"]
+#endif
 

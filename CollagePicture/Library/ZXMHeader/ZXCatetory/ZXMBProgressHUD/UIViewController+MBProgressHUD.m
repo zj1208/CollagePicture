@@ -8,6 +8,12 @@
 
 #import "UIViewController+MBProgressHUD.h"
 
+#import "UIImage+ZXGIF.h"
+
+#ifndef UIColorFromRGB_HexValue
+#define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
+#endif
+
 @implementation UIViewController (MBProgressHUD)
 
 //UIView *  aView = [[[UIApplication sharedApplication]delegate]window];

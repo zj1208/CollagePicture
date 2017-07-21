@@ -10,6 +10,8 @@
 #import <StoreKit/StoreKit.h>
 #import "UIViewController+ZXSystemBackButtonAction.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIViewController (ZXHelper)<SKStoreProductViewControllerDelegate,UIActionSheetDelegate>
 /**
  *  storyboard跳转
@@ -18,7 +20,7 @@
  *  @param segue  storyboardID
  *  @param data  参数－dictionary格式
  */
-- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(NSDictionary *)data;
+- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(nullable NSDictionary *)data;
 
 
 -(UIViewController *)getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(NSString *)segue;
@@ -34,7 +36,7 @@
 /**
  去appStore
  */
-- (void)goAppStore;
+- (void)goAppStoreWithAppId:(NSString *)appId;
 
 
 /**
@@ -48,3 +50,7 @@
 - (void)zhCallIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController;
 
 @end
+
+
+NS_ASSUME_NONNULL_END
+

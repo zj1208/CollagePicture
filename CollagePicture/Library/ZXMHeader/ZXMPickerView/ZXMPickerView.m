@@ -9,10 +9,13 @@
 #import "ZXMPickerView.h"
 
 
-#define LCDSize [[UIScreen mainScreen] bounds]
-#define LCDW LCDSize.size.width
-#define LCDH LCDSize.size.height
-#define LCDScale_5Equal6_To6plus(X) [[UIScreen mainScreen]bounds].size.width>=621?X*LCDW/375:X
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#endif
+
 
 @interface ZXMPickerView ()
 @property (nonatomic , assign) int row;
@@ -71,13 +74,13 @@
     
     UIToolbar *toolbar=[[UIToolbar alloc] init];
 //    toolbar.barTintColor = [UIColor blueColor];
-    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,LCDScale_5Equal6_To6plus(44.f));
+    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,LCDScale_iphone6_Width(48));
     [self addSubview:toolbar];
     
     UIBarButtonItem *lefttem=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker)];
     lefttem.tintColor =[UIColor blackColor];
     UIBarButtonItem *borderSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    borderSpace.width = LCDScale_5Equal6_To6plus(8.f);
+    borderSpace.width = LCDScale_iphone6_Width(9);
     
     UIBarButtonItem *centerSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     

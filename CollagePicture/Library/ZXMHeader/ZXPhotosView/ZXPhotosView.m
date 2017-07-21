@@ -9,7 +9,8 @@
 #import "ZXPhotosView.h"
 #import <UIButton+WebCache.h>
 
-
+#import "APPCommonDef.h"
+#import "UIView+ZXChangeSize.h"
 @interface ZXPhotosView ()
 
 /** 添加图片按钮*/
@@ -397,12 +398,12 @@
 
         self.addImageButton.frame = CGRectMake(floorf(zx_x), floorf(zx_y), floorf(_photoWidth), floorf(_photoHeight));
         
-        [self.promptLab mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.centerY.mas_equalTo(_addImageButton.mas_centerY);
-            make.left.mas_equalTo(_addImageButton.mas_right).with.offset(12);
-            
-        }];
+//        [self.promptLab mas_makeConstraints:^(MASConstraintMaker *make) {
+//            
+//            make.centerY.mas_equalTo(_addImageButton.mas_centerY);
+//            make.left.mas_equalTo(_addImageButton.mas_right).with.offset(12);
+//            
+//        }];
 
     }
     

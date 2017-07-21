@@ -1,9 +1,9 @@
 //
 //  InfiniteScrollView.h
-//  ICBC
+//  baohuai_iPhone
 //
-//  Created by 朱新明 on 15/3/2.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by 朱新明 on 14/5/2.
+//  Copyright (c) 2014年 朱新明. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -47,7 +47,7 @@ NS_CLASS_AVAILABLE_IOS(3_0) @interface InfiniteScrollView : UIView
  @param array 网络图片数组
  @param placeholderImage 占位图
  */
-- (void)setImageURLStrings:(NSMutableArray *)array placeholderImage:(UIImage *)placeholderImage;
+//- (void)setImageURLStrings:(NSMutableArray *)array placeholderImage:(UIImage *)placeholderImage;
 
 
 - (void)reloadData;

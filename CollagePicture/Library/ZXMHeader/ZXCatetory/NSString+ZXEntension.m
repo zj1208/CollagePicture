@@ -10,6 +10,7 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
+#define SECONDS_PER_HOUR (60*60)
 #define SECONDS_PER_DAY (24*60*60)
 #define SECONDS_PER_MONTH (30*24*60*60)
 #define SECONDS_PER_YEAR (365*24*60*60)
@@ -17,11 +18,8 @@
 static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 
 @implementation NSString (CustomNSString)
-//+ (NSString *)zhuDate_getStringFromDate:(NSDate*)date
-//{
-//    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
-//    NSDate
-//}
+
+
 +(NSString *)zhuDate_switchDateString:(NSString *)dateString withDateFormat:(NSString *)format toDateFormat:(NSString *)aDateFormat;
 {
     NSDateFormatter *dateFor = [[NSDateFormatter alloc] init];

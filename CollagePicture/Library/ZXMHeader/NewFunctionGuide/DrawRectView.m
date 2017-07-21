@@ -8,6 +8,11 @@
 
 #import "DrawRectView.h"
 
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+#endif
+
 @implementation DrawRectView
 
 - (instancetype)initWithFrame:(CGRect)frame

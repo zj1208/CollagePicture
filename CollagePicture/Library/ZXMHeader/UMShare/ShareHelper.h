@@ -8,25 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "ShareInfo.h"
-//#import "UMSocial.h"
+
 
 #import <UMSocialCore/UMSocialCore.h>
 
 #pragma mark -UM
-/**
- *  友盟的key
- */
+// 友盟的key
 static NSString *kUMAppKey = @"555daf0767e58e8c7100260f";
-/**
- *  微信
- * url scheme:appId
- */
+// 微信url scheme:appId
 static NSString *kWeChat_AppId=@"wx0d4c10b45e46d89c";
 static NSString *kWeChat_AppSecret=@"83d977878367c60d240e17e526111ebb";
-/**
- *  新浪微博
- *  url scheme:wb+appkey
- */
+
+//新浪微博 url scheme:wb+appkey
 static NSString *kSina_AppId = @"3381787410";
 static NSString *kSina_AppSecret =@"b496454d3f86f3b7d33b3fb25bcd6fdd";
 

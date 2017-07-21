@@ -7,6 +7,12 @@
 //
 
 #import "ZXAddPicCollectionView.h"
+#import "UIView+ZXChangeSize.h"
+#import "UIImageView+WebCache.h"
+
+#ifndef AppPlaceholderImage
+#define AppPlaceholderImage [UIImage imageNamed:@"默认图正方形"]
+#endif
 
 static NSInteger ZXMaxItemCount = 3;
 
@@ -246,16 +252,6 @@ static NSString * const reuseCell = @"Cell";
     return cell;
 }
 
-//删除
-- (void)deleteAction:(UIButton *)sender
-{
-    NSIndexPath *indexPath = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.collectionView];
-    
-    [self addPicCollectionView:self commitEditingStyle:ZXAddPicCellEditingStyleDelete forRowAtIndexPath:indexPath];
-}
-
-
-
 
 
 
@@ -315,6 +311,21 @@ static NSString * const reuseCell = @"Cell";
 
 
 #pragma mark - 添加，删除item 编辑事件
+
+
+//删除
+- (void)deleteAction:(UIButton *)sender
+{
+    
+    CGPoint point = sender.center;
+    point = [sender convertPoint:point fromView:sender.superview];
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:point];
+    
+    [self addPicCollectionView:self commitEditingStyle:ZXAddPicCellEditingStyleDelete forRowAtIndexPath:indexPath];
+}
+
+
+
 - (void)addPicCollectionView:(ZXAddPicCollectionView *)collectionView commitEditingStyle:(ZXAddPicCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle ==ZXAddPicCellEditingStyleDelete)

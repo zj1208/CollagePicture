@@ -106,7 +106,7 @@
             {
 //                image =[ZSimageUtil imageWithImageSimple:image compressionRatio:0.3];
             }
-            [cache storeImage:image forKey:key completion:nil];
+//            [cache storeImage:image forKey:key completion:nil];
 //            [cache storeImage:image forKey:key];
             
             GrowthSavePhotoModel *model = [[GrowthSavePhotoModel alloc] init];

@@ -1,9 +1,9 @@
 //
 //  InfiniteScrollView.m
-//  ICBC
+//  baohuai_iPhone
 //
-//  Created by 朱新明 on 15/3/2.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by 朱新明 on 14/5/2.
+//  Copyright (c) 2014年 朱新明. All rights reserved.
 //
 
 #import "InfiniteScrollView.h"
@@ -480,12 +480,16 @@ static const NSTimeInterval timeInterval= 3.f;
 
     return YES;
 }
+
+
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     NSLog(@"gestureRecognizer=%@, otherGestureRecognizer=%@",gestureRecognizer,otherGestureRecognizer);
     
     return YES;
 }
+
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 //{
 //    return YES;

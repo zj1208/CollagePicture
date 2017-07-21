@@ -1,9 +1,9 @@
 //
 //  ZXADBannerModel.m
-//  ICBC
+//  baohuai_iPhone
 //
-//  Created by 朱新明 on 15/3/20.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by 朱新明 on 14/5/2.
+//  Copyright (c) 2014年 朱新明. All rights reserved.
 //
 
 #import "ZXADBannerModel.h"
