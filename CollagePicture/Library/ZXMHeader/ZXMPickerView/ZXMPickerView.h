@@ -31,7 +31,8 @@
  *  @param picker picker description
  *  @param title  pickerView选择的title
  */
-- (void)zx_pickerDidDoneStatus:(ZXMPickerView *)picker itemTitle:(NSString *)title;
+
+- (void)zx_pickerDidDoneStatus:(ZXMPickerView *)picker index:(NSUInteger)index itemTitle:(NSString *)title;
 
 /**
  *  点击取消的代理回调

@@ -193,9 +193,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * @brief 自定义设置tabBarController中tabBarItem选择状态的图片,不用系统的tintColor自动着色。
+ * @brief 自定义设置tabBarController中tabBarItem选择状态的图片,因为用的是原图绘画模式，所以系统的tintColor自动着色无法改变图片颜色，只能改变title文本颜色。用2种颜色的原图片，不用tintColor改变，这是一种更有效的做法；
  * @param aArray  图片数组，要求图片必须是着色的，用于直接显示的；
- * @param aSleColor  用于显示tabBarItem选中文字，图片颜色;
+ * @param aSleColor  用于显示tabBarItem选中文字颜色;因为图片用的是原图，所以无法改变图片颜色；
  系统的自动着色:如果是统一的颜色,可以用tabBar的tintColor方法
  UITabBarController *tab =(UITabBarController *)self.window.rootViewController;
  ZX_UITabBar_TintColor(tab.tabBar) = [UIColor redColor];

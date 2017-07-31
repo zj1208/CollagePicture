@@ -170,9 +170,9 @@
 {
     NSString *tit = [self.dataArray objectAtIndex:_row];
     
-    if ([self.delegate respondsToSelector:@selector(zx_pickerDidDoneStatus:itemTitle:)])
+    if ([self.delegate respondsToSelector:@selector(zx_pickerDidDoneStatus:index:itemTitle:)])
     {
-        [self.delegate zx_pickerDidDoneStatus:self itemTitle:tit];
+        [self.delegate zx_pickerDidDoneStatus:self index:_row itemTitle:tit];
     }
     [self cancelPicker];
 }
@@ -209,12 +209,12 @@
     [view addSubview:overlay];
     
     
-    self.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
+    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
 
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
         
-        self.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds) - CGRectGetHeight(self.frame), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
+        self.frame = CGRectMake(0, CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
 
     } completion:^(BOOL finished) {
         

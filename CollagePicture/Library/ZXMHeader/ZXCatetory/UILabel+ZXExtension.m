@@ -11,10 +11,10 @@
 @implementation UILabel (ZXExtension)
 
 
-- (void)zh_digitalIconWithBadgeValue:(NSString *)aDigitalTitle maginY:(CGFloat)aMaginY badgeFont:(UIFont *)font titleColor:(nullable UIColor *)aTitleColor backgroundColor:(nullable UIColor*)aBgColor
+- (void)zh_digitalIconWithBadgeValue:(NSString *)aDigitalTitle maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font titleColor:(nullable UIColor *)aTitleColor backgroundColor:(nullable UIColor*)aBgColor
 {
     self.textAlignment = NSTextAlignmentCenter;
-    self.font = font;
+    self.font =font?font:[UIFont systemFontOfSize:11];
     if ([aDigitalTitle integerValue]>99)
     {
         aDigitalTitle = @"99+";

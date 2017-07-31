@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief  设置一个icon,在数字小于2位数的时候,是圆标记; 如果大于等于2位数,是2边半圆+中间长方形; 可以根据maginY调节文字与垂直边界的距离;
  */
-- (void)zh_digitalIconWithBadgeValue:(NSString *)aDigitalTitle maginY:(CGFloat)aMaginY badgeFont:(UIFont *)font titleColor:(nullable UIColor *)aTitleColor backgroundColor:(nullable UIColor*)aBgColor;
+- (void)zh_digitalIconWithBadgeValue:(NSString *)aDigitalTitle maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font titleColor:(nullable UIColor *)aTitleColor backgroundColor:(nullable UIColor*)aBgColor;
 
 @end
 

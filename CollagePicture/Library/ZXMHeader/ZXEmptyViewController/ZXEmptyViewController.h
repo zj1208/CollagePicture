@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#define ZXEmptyRequestFaileImage  [UIImage imageNamed:@"加载失败"]
+#define ZXEmptyRequestFaileImage  [UIImage imageNamed:@"reqeustFailure"]
 
 static NSString * ZXEmptyRequestFaileTitle = @"数据加载失败~ ";
 
