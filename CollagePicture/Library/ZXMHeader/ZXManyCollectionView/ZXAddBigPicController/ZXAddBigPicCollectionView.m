@@ -163,7 +163,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     NSLog(@"删除照片1");
     CGPoint point = sender.center;
-    point = [sender convertPoint:point fromView:sender.superview];
+    point = [self convertPoint:point fromView:sender.superview];
     NSIndexPath* indexPath = [self indexPathForItemAtPoint:point];
     
     if (indexPath.section ==0)

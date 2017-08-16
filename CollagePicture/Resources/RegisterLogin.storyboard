@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YrM-rm-3Lg">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YrM-rm-3Lg">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -110,6 +110,9 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -238,7 +241,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="WgR-gc-7aI">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="WgR-gc-7aI" customClass="UIControl">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="505"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -249,7 +252,7 @@
                                             <rect key="frame" x="15" y="15" width="11" height="15"/>
                                         </imageView>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4Zz-O9-ezq" customClass="NoMenuTextField">
-                                            <rect key="frame" x="41" y="13" width="255" height="19"/>
+                                            <rect key="frame" x="41" y="2" width="255" height="41"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -258,6 +261,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="4Zz-O9-ezq" secondAttribute="trailing" constant="8" id="8wM-XB-8oi"/>
+                                        <constraint firstItem="4Zz-O9-ezq" firstAttribute="top" secondItem="583-t8-q3F" secondAttribute="top" constant="2" id="ATq-7E-q1X"/>
                                         <constraint firstItem="CRV-6I-huM" firstAttribute="centerY" secondItem="583-t8-q3F" secondAttribute="centerY" id="Meb-81-0PD"/>
                                         <constraint firstItem="CRV-6I-huM" firstAttribute="top" secondItem="583-t8-q3F" secondAttribute="top" constant="15" id="POO-eD-1II"/>
                                         <constraint firstAttribute="height" constant="45" id="aBw-Lm-XEO"/>
@@ -272,17 +276,21 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_key" translatesAutoresizingMaskIntoConstraints="NO" id="Ynp-YO-r8F">
                                             <rect key="frame" x="15" y="16" width="11" height="14"/>
                                         </imageView>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="6-12位密码" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0ll-9c-uZu">
-                                            <rect key="frame" x="41" y="14" width="255" height="19"/>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="6-12位密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0ll-9c-uZu">
+                                            <rect key="frame" x="41" y="2" width="255" height="43"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            <connections>
+                                                <action selector="keywordReturnAction:" destination="Hq3-Je-QfR" eventType="editingDidEndOnExit" id="5BL-B0-FGB"/>
+                                            </connections>
                                         </textField>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="0ll-9c-uZu" firstAttribute="leading" secondItem="Ynp-YO-r8F" secondAttribute="trailing" constant="15" id="1Pf-AA-Eyl"/>
                                         <constraint firstItem="Ynp-YO-r8F" firstAttribute="centerY" secondItem="x9c-Ja-iDx" secondAttribute="centerY" id="JU8-zL-CaG"/>
+                                        <constraint firstItem="0ll-9c-uZu" firstAttribute="top" secondItem="x9c-Ja-iDx" secondAttribute="top" constant="2" id="diB-gO-yQu"/>
                                         <constraint firstAttribute="trailing" secondItem="0ll-9c-uZu" secondAttribute="trailing" constant="8" id="e9W-eJ-fFf"/>
                                         <constraint firstItem="Ynp-YO-r8F" firstAttribute="leading" secondItem="x9c-Ja-iDx" secondAttribute="leading" constant="15" id="hLW-nJ-Iud"/>
                                         <constraint firstAttribute="height" constant="45" id="ixh-qk-qiQ"/>
@@ -292,8 +300,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIo-Mc-bmG" userLabel="验证码">
                                     <rect key="frame" x="8" y="63" width="304" height="45"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入收到的验证码" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2Yq-6P-LKZ">
-                                            <rect key="frame" x="42" y="13" width="154" height="19"/>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入收到的验证码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2Yq-6P-LKZ">
+                                            <rect key="frame" x="42" y="2" width="154" height="41"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -325,6 +333,7 @@
                                         <constraint firstItem="4Lj-nd-WiT" firstAttribute="centerY" secondItem="QIo-Mc-bmG" secondAttribute="centerY" id="Jqg-lV-9xL"/>
                                         <constraint firstItem="4Lj-nd-WiT" firstAttribute="top" secondItem="QIo-Mc-bmG" secondAttribute="top" constant="5" id="Tmn-Jl-rt0"/>
                                         <constraint firstAttribute="trailing" secondItem="4Lj-nd-WiT" secondAttribute="trailing" constant="8" id="ejs-Oh-3vz"/>
+                                        <constraint firstItem="2Yq-6P-LKZ" firstAttribute="top" secondItem="QIo-Mc-bmG" secondAttribute="top" constant="2" id="kTp-Fz-pAf"/>
                                         <constraint firstItem="4Lj-nd-WiT" firstAttribute="leading" secondItem="2Yq-6P-LKZ" secondAttribute="trailing" constant="20" id="nBs-qx-FUd"/>
                                         <constraint firstAttribute="height" constant="45" id="uTu-bW-fTf"/>
                                         <constraint firstItem="2Yq-6P-LKZ" firstAttribute="centerY" secondItem="QIo-Mc-bmG" secondAttribute="centerY" id="vvo-Dn-qGV"/>
@@ -336,11 +345,14 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_key" translatesAutoresizingMaskIntoConstraints="NO" id="Ww6-yY-dZO">
                                             <rect key="frame" x="15" y="15" width="11" height="14"/>
                                         </imageView>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入密码" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zfT-Yb-imb">
-                                            <rect key="frame" x="41" y="13" width="255" height="19"/>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zfT-Yb-imb">
+                                            <rect key="frame" x="41" y="2" width="255" height="41"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            <connections>
+                                                <action selector="keywordReturnAction:" destination="Hq3-Je-QfR" eventType="editingDidEndOnExit" id="vtb-vP-ema"/>
+                                            </connections>
                                         </textField>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -348,6 +360,7 @@
                                         <constraint firstItem="Ww6-yY-dZO" firstAttribute="centerY" secondItem="Dog-7O-5aH" secondAttribute="centerY" id="3SJ-Vc-izJ"/>
                                         <constraint firstItem="zfT-Yb-imb" firstAttribute="centerY" secondItem="Ww6-yY-dZO" secondAttribute="centerY" id="61h-Gg-VuF"/>
                                         <constraint firstItem="zfT-Yb-imb" firstAttribute="leading" secondItem="Ww6-yY-dZO" secondAttribute="trailing" constant="15" id="M2b-cd-PFE"/>
+                                        <constraint firstItem="zfT-Yb-imb" firstAttribute="top" secondItem="Dog-7O-5aH" secondAttribute="top" constant="2" id="Wlu-zf-tUj"/>
                                         <constraint firstAttribute="height" constant="45" id="Zfm-bW-hZN"/>
                                         <constraint firstAttribute="trailing" secondItem="zfT-Yb-imb" secondAttribute="trailing" constant="8" id="c3G-UW-x6R"/>
                                         <constraint firstItem="Ww6-yY-dZO" firstAttribute="leading" secondItem="Dog-7O-5aH" secondAttribute="leading" constant="15" id="fPt-9G-mKf"/>
@@ -429,6 +442,9 @@
                                 <constraint firstItem="x9c-Ja-iDx" firstAttribute="width" secondItem="583-t8-q3F" secondAttribute="width" id="zDR-yj-jxI"/>
                                 <constraint firstItem="QIo-Mc-bmG" firstAttribute="top" secondItem="583-t8-q3F" secondAttribute="bottom" constant="10" id="zHY-tP-khT"/>
                             </constraints>
+                            <connections>
+                                <action selector="touchDownAction:" destination="Hq3-Je-QfR" eventType="touchDown" id="qcN-SL-ayS"/>
+                            </connections>
                         </view>
                         <sections>
                             <tableViewSection id="3IK-Gt-Esk">

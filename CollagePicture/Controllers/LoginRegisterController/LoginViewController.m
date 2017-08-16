@@ -11,6 +11,10 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import "UserModel.h"
 #import "AppDelegate.h"
+
+
+static NSInteger const PHONE_MAXLENGTH  = 11 ;
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgViewLayoutHeight;
@@ -37,11 +41,11 @@
     self.loginBtnLayoutHeight.constant = LCDScale_5Equal6_To6plus(40.f);
 }
 
+
 #pragma mark - setUI
 
 - (void)setUI
 {
-    
     [(AppDelegate *)APP_Delegate setApperanceForSigleNavController:self];
     
     [self.loginBtn zh_userInteractionEnabledWithAlpha:NO];
@@ -60,13 +64,16 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(signInBtnChangeAlpha:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
+
 - (void)signInBtnChangeAlpha:(NSNotification *)notification
 {
     NSString *str = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
     [self.loginBtn zh_userInteractionEnabledWithAlpha:str.length==11&&self.passwordTextField.text.length>3?YES:NO];
 }
 
-#define PHONE_MAXLENGTH 11
+
+
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if ([textField isEqual:self.userNameField])
@@ -87,7 +94,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+   [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 /*
 #pragma mark - Navigation
@@ -162,7 +169,7 @@
             }
             else
             {
-                [MBProgressHUD zx_showError:@"手机号或密码错误，请重新输入" toView:nil];
+                [MBProgressHUD zx_showError:@"您输入的用户名或密码错误，请重新输入" toView:nil];
             }
         }];
     }

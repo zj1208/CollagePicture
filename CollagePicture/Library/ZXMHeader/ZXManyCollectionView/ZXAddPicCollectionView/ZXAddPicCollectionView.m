@@ -318,7 +318,7 @@ static NSString * const reuseCell = @"Cell";
 {
     
     CGPoint point = sender.center;
-    point = [sender convertPoint:point fromView:sender.superview];
+    point = [self.collectionView convertPoint:point fromView:sender.superview];
     NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:point];
     
     [self addPicCollectionView:self commitEditingStyle:ZXAddPicCellEditingStyleDelete forRowAtIndexPath:indexPath];

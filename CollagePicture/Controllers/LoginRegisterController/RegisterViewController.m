@@ -9,6 +9,12 @@
 #import "RegisterViewController.h"
 #import "FullTextViewController.h"
 #import "UserModel.h"
+
+
+static NSInteger const PHONE_MAXLENGTH  = 11 ;
+static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
+
+
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (nonatomic,strong)NSTimer *smsDownTimer;
 @property (nonatomic,assign)NSInteger smsDownSeconds;
@@ -32,8 +38,7 @@
 }
 
 
-#define PHONE_MAXLENGTH 11
-#define VerfiCode_MAXLENGTH 6
+
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -78,6 +83,7 @@
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     // Configure the cell...
@@ -131,20 +137,16 @@
 */
 
 
-- (IBAction)touchDownAction:(UIControl *)sender {
-    
-    [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
-}
-
 
 #pragma mark - 请求验证码
 
 - (IBAction)requestSmsCodeBtnAction:(UIButton *)sender {
+    
     NSString *mobilePhoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
 
     if (![UITextField zhu_validatePhoneNumber:mobilePhoneNumber])
     {
-        [self zhHUD_showErrorWithStatus:@"请输入正确的手机号码"];
+        [MBProgressHUD zx_showError:@"请您输入正确的手机号码" toView:nil];
         return;
     }
     //我暂时没有自定义模版，用系统短信
@@ -153,7 +155,7 @@
         
         if (error)
         {
-            [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
         }
         else
         {
@@ -166,6 +168,7 @@
 
 
 #pragma mark - 验证码获取成功后执行
+
 - (void)smsCodeRequestSuccess
 {
     self.verfiCodeBtn.enabled = NO;
@@ -205,55 +208,60 @@
     NSString *passwordError = [UITextField zhu_TextFieldPassword:self.passwordField.text];
     if (![UITextField zhu_validatePhoneNumber:mobilePhoneNumer])
     {
-        [self zhHUD_showErrorWithStatus:@"您输入的手机号码错误，请核实后重新输入"];
+        [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }
     else if ([NSString zhFilterInputTextWithWittespaceAndLine:self.verificationCodeField.text].length==0)
     {
-         [self zhHUD_showErrorWithStatus:@"请输入验证码"];
+        [MBProgressHUD zx_showError:@"请输入验证码" toView:self.view];
     }
     else if (passwordError.length>0)
     {
-        [self zhHUD_showErrorWithStatus:passwordError];
-        
+        [MBProgressHUD zx_showError:passwordError toView:self.view];
     }
     else if (![self.passwordField.text isEqualToString:self.passwordAgainField.text])
     {
-         [self zhHUD_showErrorWithStatus:@"二次密码不一样，请重新输入"];
+        [MBProgressHUD zx_showError:@"二次密码不一样，请重新输入" toView:self.view];
     }
     else
     {
         [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
       
-        
-        [self zhHUD_showHUDAddedTo:self.view labelText:@"正在注册"];
-        [self findAccountIsRegister];
+        [self requestFindAccountIsRegister];
     }
 }
 
 
 #pragma mark - 请求判断这个手机号是否已经注册过
 
-- (void)findAccountIsRegister
+- (void)requestFindAccountIsRegister
 {
+    
+    [MBProgressHUD zx_showLoadingWithStatus:@"正在注册..." toView:nil];
+
     WS(weakSelf);
-    
-    
     BmobQuery *query = [BmobQuery queryForUser];
     [query whereKey:@"username" equalTo:self.userNameField.text];
     [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error)
         {
-            NSLog(@"%@",[error localizedDescription]);
+            if (error.code ==20002)
+            {
+                [MBProgressHUD zx_showError:@"您的网络出问题了" toView:nil];
+            }
+            else
+            {
+                [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+            }
         }
         else
         {
             if (array.count>0)
             {
-                [weakSelf zhHUD_showErrorWithStatus:@"这个手机号已经注册过了"];
+                [MBProgressHUD zx_showError:@"这个手机号已经注册过了" toView:nil];
             }
             else
             {
-                [weakSelf registerAccount];
+                [weakSelf requestRegisterAccount];
             }
             
         }
@@ -264,7 +272,7 @@
 
 #pragma mark - 注册
 
-- (void)registerAccount
+- (void)requestRegisterAccount
 {
     
     WS(weakSelf);
@@ -282,19 +290,26 @@
             [UserInfoUDManager setUserData:userModel];
             [UserInfoUDManager loginIn];
 
-            [weakSelf zhHUD_showSuccessWithStatus:@"注册成功"];
+            [MBProgressHUD zx_showSuccess:@"注册成功" toView:nil];
             
             [weakSelf performSelector:@selector(registerSuccess) withObject:nil afterDelay:2.f];
-            
         }
         else
         {
-            [weakSelf zhHUD_showErrorWithStatus:@"验证码有误"];
+            if (error.code==207)
+            {
+                [MBProgressHUD zx_showError:@"验证码有误" toView:nil];
+            }
+            else
+            {
+                [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+            }
         }
     }];
 
 }
 
+//15757126387
 - (void)registerSuccess
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -310,4 +325,20 @@
     [textViewVC loadUserServiceAgreementPathOfResource:@"UserServiceAgreement" ofType:@"txt" company:@"美颜拼图公司" appName:APP_Name];
     [self.navigationController pushViewController:textViewVC animated:YES];
 }
+
+
+//移除第一响应事件
+- (IBAction)touchDownAction:(UIControl *)sender {
+    
+    [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+}
+
+
+//点击完成键盘
+- (IBAction)keywordReturnAction:(UITextField *)sender {
+    
+    [sender resignFirstResponder];
+//    [self.loginBtn sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
 @end

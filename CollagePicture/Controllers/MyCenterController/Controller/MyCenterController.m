@@ -33,7 +33,7 @@ static NSInteger IndexSection_Set =1;
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = YES;
 
-    [self setUpUI];
+    [self setUI];
     [self setUpData];
     [self requestMyInfomation];
     
@@ -103,7 +103,7 @@ static NSInteger IndexSection_Set =1;
 
 #pragma mark - UI
 
-- (void)setUpUI
+- (void)setUI
 {
     [APP_Delegate setApperanceForSigleNavController:self];
 
@@ -252,7 +252,7 @@ static NSInteger IndexSection_Set =1;
 {
      if (indexPath.section==IndexSection_Set)
     {
-           [self pushStoryboardViewControllerWithStoryboardName:sb_SetStoryboard identifier:SBID_SetControllerID withData:nil];
+        [self pushStoryboardViewControllerWithStoryboardName:sb_SetStoryboard identifier:SBID_SetControllerID withData:nil];
     }
     
     if (indexPath.section == 0 && indexPath.row == 1) {

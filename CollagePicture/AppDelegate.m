@@ -82,7 +82,6 @@
 
 - (void)setApperanceForSigleNavController:(UIViewController *)viewController
 {
-    
     [viewController zhNavigationBar_Single_BackIndicatorImage:@"back" isOriginalImage:YES];
     [viewController zhNavigationBar_barItemColor:UIColorFromRGB_HexValue(0x525252)];
 }
@@ -104,14 +103,6 @@
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                           UIUserNotificationTypeSound |
                                                           UIUserNotificationTypeAlert)
-                                              categories:nil];
-    }
-    else
-    {
-        //categories 必须为nil
-        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                          UIRemoteNotificationTypeSound |
-                                                          UIRemoteNotificationTypeAlert)
                                               categories:nil];
     }
 }
@@ -138,9 +129,7 @@
 {
     UMConfigInstance.appKey = kUMAppKey;
     UMConfigInstance.channelId = @"App Store";
-    //UMConfigInstance.eSType = E_UM_GAME; // 仅适用于游戏场景，应用统计不用设置
     [MobClick startWithConfigure:UMConfigInstance];
-//   设置version版本标识， 为了兼容Xcode3的工程，默认取的是Build号
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
 //  使用集成测试之后，所有测试数据不会进入应用正式的统计后台，只能在“管理--集成测试--实时日志”里查看
@@ -377,6 +366,9 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler
 {
+    // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);
+
     NSDictionary * userInfo = notification.request.content.userInfo;
     // 收到推送的请求
     UNNotificationRequest *request = notification.request;
@@ -405,13 +397,13 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
         // 判断为本地通知
         NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
-    // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
-    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);
 }
 
 //iOS10 在非激活模式，用户响应推送通知栏的 打开应用，关闭通知，响应用户通知事件，都会回调这个代理方法；这个代理方法必须在applicationDidFinishLaunching:启动完成之前设置好；
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
     
+    completionHandler();  // 系统要求执行这个方法
+
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     // 收到推送的请求
     UNNotificationRequest *request = response.notification.request;
@@ -438,7 +430,6 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
         // 判断为本地通知
         NSLog(@"iOS10 收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
-    completionHandler();  // 系统要求执行这个方法
 }
 #endif
 
