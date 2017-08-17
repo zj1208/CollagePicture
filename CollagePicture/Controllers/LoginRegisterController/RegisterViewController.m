@@ -46,13 +46,11 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
     if ([textField isEqual:self.userNameField]||[textField isEqual:self.verificationCodeField])
     {
        maxLength =[textField isEqual:self.userNameField]? PHONE_MAXLENGTH:VerfiCode_MAXLENGTH;
-        if (range.location>= maxLength) //输入文字/删除文字后,但还没有改变textField时候的改变;
+        if (range.location>= maxLength)
         {
             textField.text = [textField.text substringToIndex:maxLength];
             return NO;
         }
-
-
     }
        return YES;
 }
@@ -322,7 +320,7 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
 - (IBAction)userAgreementAction:(UIButton *)sender {
     
     FullTextViewController *textViewVC = [[FullTextViewController alloc] initWithBarTitle:@"用户服务协议"];
-    [textViewVC loadUserServiceAgreementPathOfResource:@"UserServiceAgreement" ofType:@"txt" company:@"美颜拼图公司" appName:APP_Name];
+    [textViewVC loadLocalUserServiceAgreementOfFixResourceWithCompany:@"美颜拼图公司" appName:APP_Name];
     [self.navigationController pushViewController:textViewVC animated:YES];
 }
 

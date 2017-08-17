@@ -9,19 +9,32 @@
 //主要用于显示用户协议等本地文件文本用的
 #import <UIKit/UIKit.h>
 
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface FullTextViewController : UIViewController
 
-- (instancetype)initWithBarTitle:(NSString *)aTitle;
+
+- (instancetype)initWithBarTitle:(nullable NSString *)aTitle;
 
 
 //@"test.wps" :@"application/msword"
-- (void)loadTextPathOfResource:(NSString *)name ofType:(NSString *)ext;
+- (void)loadTextPathOfResource:(nullable NSString *)name ofType:(nullable NSString *)ext;
 
-//加载用户服务协议  资源名， 公司名，app名
-- (void)loadUserServiceAgreementPathOfResource:(NSString *)name ofType:(NSString *)ext company:(NSString *)company appName:(NSString *)aAppName;
+
+
+/**
+ 加载本地指定用户服务协议文件：UserServiceAgreement.txt;可以替换公司名，app名字；
+
+ @param company 公司名
+ @param aAppName app名
+ */
+- (void)loadLocalUserServiceAgreementOfFixResourceWithCompany:(nullable NSString *)company appName:(nullable NSString *)aAppName;
+
+
 @end
 
-
+NS_ASSUME_NONNULL_END
 
 /**
 

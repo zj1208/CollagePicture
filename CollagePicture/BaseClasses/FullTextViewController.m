@@ -9,49 +9,37 @@
 #import "FullTextViewController.h"
 
 @interface FullTextViewController ()
-@property (nonatomic,strong)UITextView *textView;
+
+@property (nonatomic, strong) UITextView *textView;
 /**
  *  标题
  */
-@property(nonatomic,copy)NSString *barTitle;
+@property (nonatomic, copy) NSString *barTitle;
+
 @end
 
 @implementation FullTextViewController
 
-- (instancetype)initWithBarTitle:(NSString *)aTitle{
+- (instancetype)initWithBarTitle:(nullable NSString *)aTitle{
     self = [super init];
     if (self)
     {
         self.barTitle = aTitle;
         [self addTextView];
-        
     }
     return self;
 }
 
 //@"test.wps" :@"application/msword"
-- (void)loadTextPathOfResource:(NSString *)name ofType:(NSString *)ext
+- (void)loadTextPathOfResource:(nullable NSString *)name ofType:(nullable NSString *)ext
 {
-    if (!name)
-    {
-        NSLog(@"参数不够");
-        return;
-    }
-    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
-    NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    NSString *content = [self getStringWithContentsOfResource:name ofType:ext];
     self.textView.text = content;
-   
 }
 
-- (void)loadUserServiceAgreementPathOfResource:(NSString *)name ofType:(NSString *)ext company:(NSString *)company appName:(NSString *)aAppName
+- (void)loadLocalUserServiceAgreementOfFixResourceWithCompany:(nullable NSString *)company appName:(nullable NSString *)aAppName
 {
-    if (!name)
-    {
-        NSLog(@"参数不够");
-        return;
-    }
-    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
-    NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    NSString *content = [self getStringWithContentsOfResource:@"UserServiceAgreement" ofType:@"txt"];
     NSString *newContent = [content copy];
     if (company)
     {
@@ -61,9 +49,30 @@
     {
           newContent = [newContent stringByReplacingOccurrencesOfString:@"我请客" withString:aAppName];
     }
-   
     self.textView.text = newContent;
-    
+    [self.textView scrollRangeToVisible:NSMakeRange(0, 0)];
+}
+
+
+- (NSString *)getStringWithContentsOfResource:(nullable NSString *)name ofType:(nullable NSString *)ext
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
+    if (!path)
+    {
+        NSLog(@"没有这个路径的文件");
+        return nil;
+    }
+    NSError *error = nil;
+    NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    if (!error)
+    {
+        return content;
+    }
+    else
+    {
+        NSLog(@"%@",[error localizedDescription]);
+    }
+    return nil;
 }
 
 - (void)viewDidLoad {
@@ -79,6 +88,7 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:self.view.frame textContainer:nil];
     textView.dataDetectorTypes = UIDataDetectorTypeAll;
     textView.editable = NO;
+    textView.font = [UIFont systemFontOfSize:14];
     self.textView = textView;
     [self.view addSubview:self.textView];
     
