@@ -12,17 +12,27 @@
 #import "HLHomePageViewController.h"
 #import "AppDelegate.h"
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+#import <UserNotifications/UserNotifications.h>
+#endif
+
+#import "ZXModalAnimation.h"
+#import "ZXTransitionModalDelegate.h"
+#import "ZXAdvModalController.h"
 
 static NSInteger IndexSection_Set =1;
 
 
-@interface MyCenterController ()
+@interface MyCenterController ()<UIViewControllerTransitioningDelegate,ZXAdvModalControllerDelegate>
 
 //导航条按钮
 @property (nonatomic,strong) UIBarButtonItem *backButtonItem;
 
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 
+//广告弹窗
+@property (nonatomic, strong) ZXModalAnimation *modalAnimation;
+@property (nonatomic, strong) ZXTransitionModalDelegate *transitonModelDelegate;
 
 @end
 
@@ -75,6 +85,14 @@ static NSInteger IndexSection_Set =1;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        [self lauchPopoverView];
+        
+    });
+
 }
 
 
@@ -357,4 +375,131 @@ static NSInteger IndexSection_Set =1;
     UINavigationController *loginViewController = [sb instantiateInitialViewController];
     [self presentViewController:loginViewController animated:YES completion:nil];
 }
+
+
+
+#pragma mark - 请求广告图
+- (void)lauchPopoverView
+{
+    self.transitonModelDelegate = [[ZXTransitionModalDelegate alloc] init];
+    
+    [WYUserDefaultManager addTodayAppLanchAdvTimes];
+    if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(8)])
+    {
+        ZXAdvModel *zxModel =[[ZXAdvModel alloc]initWithDesc:@"义乌市场导航图免费招商" picString:@"http://public-read-bkt.microants.cn/4/adv/JepEashhh5rQ4F2CpGBQWfdJSTz6af4G.jpg" url:@"https://mp.weixin.qq.com/s/bySiG3U8ku0MFixAsee8fQ" advId:@(75)];
+//        advArrModel *advItemModel = [_advmodel.advArr firstObject];
+        [self firstNewFunction:zxModel];
+    }
+    else
+    {
+        [self addUNNotificationAlert];
+    }
+
+//    [[[AppAPIHelper shareInstance] getMessageAPI] GetAdvWithType:@1005 success:^(id data) {
+//
+//        _advmodel = (AdvModel *)data;
+//        if (_advmodel.advArr.count>0)
+//        {
+//                        [WYUserDefaultManager addTodayAppLanchAdvTimes];
+//                        if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(_advmodel.num)])
+//                        {
+//            advArrModel *advItemModel = [_advmodel.advArr firstObject];
+//            [self firstNewFunction:advItemModel];
+//                        }
+//                        else
+//                        {
+//                            [self addUNNotificationAlert];
+//                        }
+//        }
+//        else
+//        {
+//            [self addUNNotificationAlert];
+//        }
+//        
+//    } failure:^(NSError *error) {
+//        
+//        [self addUNNotificationAlert];
+//    }];
+}
+
+#pragma mark-广告图动画UIViewControllerTransitionDelegate
+
+- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    self.modalAnimation.type = ZXAnimationTypePresent;
+    return self.modalAnimation;
+}
+- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    self.modalAnimation.type = ZXAnimationTypeDismiss;
+    return self.modalAnimation;
+}
+
+
+- (void)firstNewFunction:(ZXAdvModel *)model
+{
+    self.modalAnimation = [[ZXModalAnimation alloc] init];
+
+    ZXAdvModalController *vc = [[ZXAdvModalController alloc] initWithNibName:nil bundle:nil];
+    vc.btnActionDelegate = self;
+    vc.modalPresentationStyle = UIModalPresentationCustom;
+    vc.transitioningDelegate = self;
+    vc.advModel = model;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma  mark -  广告图按钮点击回调代理
+- (void)zx_advModalController:(ZXAdvModalController *)controller advItem:(ZXAdvModel *)advModel
+{
+//    [MobClick event:kUM_c_indexbanner];
+    NSString *advid = [NSString stringWithFormat:@"%@",advModel.advId];
+//    [self requestClickAdvWithAreaId:@2006 advId:advid];
+    //业务逻辑的跳转
+//    [[WYUtility dataUtil]cheackAdvURLToControllerWithSoureController:self.navigationController advUrlString:advModel.url];
+}
+
+#pragma mark - 检查用户通知关闭 及提示
+
+- (void)addUNNotificationAlert
+{
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0)
+    {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            
+            if (settings.authorizationStatus ==UNAuthorizationStatusDenied)
+            {
+                [self presentNotiAlert];
+            }
+        }];
+    }
+    else
+    {
+        UIUserNotificationSettings * notiSettings = [[UIApplication sharedApplication]currentUserNotificationSettings];
+        if (notiSettings.types == UIUserNotificationTypeNone)
+        {
+            [self presentNotiAlert];
+        }
+    }
+}
+- (void)presentNotiAlert
+{
+    if ([WYUserDefaultManager isCanPresentAlertWithIntervalDay:7])
+    {
+        NSString *title = [NSString stringWithFormat:@"您忘了开启通知\n赚钱的好机会没法告诉你"];
+        [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:title message:nil cancelButtonTitle:@"暂不打开" cancleHandler:nil doButtonTitle:@"立即开启" doHandler:^(UIAlertAction * _Nonnull action) {
+            
+            NSURL *openUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            if ([[UIApplication sharedApplication]respondsToSelector:@selector(openURL:options:completionHandler:)])
+            {
+                [[UIApplication sharedApplication] openURL:openUrl options:@{} completionHandler:nil];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:openUrl];
+            }
+        }];
+    }
+}
+
 @end

@@ -11,7 +11,7 @@
 
 @implementation UITextField (ZXHelper)
 
-+ (BOOL)zhu_validateEmail:(nullable NSString *)email
++ (BOOL)zh_validateEmail:(nullable NSString *)email
 {
     if ([email rangeOfString:@"@"].length != 0 && [email rangeOfString:@"."].length !=0)
     {
@@ -51,7 +51,7 @@
 }
 
 
-+ (BOOL)zhu_validateEmail2:(nullable NSString *)email
++ (BOOL)zh_validateEmail2:(nullable NSString *)email
 {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
@@ -59,14 +59,14 @@
 }
 
 
-+ (BOOL)zhu_validatePhoneNumber:(nullable NSString *)phone
++ (BOOL)zh_validatePhoneNumber:(nullable NSString *)phone
 {
     NSString *number = @"^1[3|4|5|7|8][0-9]\\d{8}$";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
     return [emailTest evaluateWithObject:phone];
 }
 
-+ (BOOL)zhu_validatePassword:(NSString *)pass
++ (BOOL)zh_validatePassword:(NSString *)pass
 {
     NSString *number = @"^[A-Za-z0-9]+$";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
@@ -74,90 +74,27 @@
 }
 
 
-/** //有问题:出来的时候,慢一点; 不能同步
- *	@brief	自定义数字键盘,在数字键盘添加完成按钮; 先遍历windows获取键盘所在的window,然后在windows遍历view获得view(UIInputSetContainerView,frame是整个windows大小)
- */
-
-- (void)zhu_keyboardToAddFinishButton
++ (BOOL)zh_validateURL:(NSString *)url
 {
-    // create custom button
-    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    //最好用2张图片替换/不然有点不混合;
-    [doneButton setTitle:@"完成" forState:UIControlStateNormal];
-    [doneButton setTintColor:[UIColor blackColor]];
+    NSError *error;
+    // 正则1
+    NSString *regulaStr =@"\\bhttps?://[a-zA-Z0-9\\-.]+(?::(\\d+))?(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?";
     
-    [doneButton addTarget:self action:@selector(finishSelectedAction:) forControlEvents:UIControlEventTouchUpInside];
+//    // 正则2
+//    regulaStr =@"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
     
-    __block UIWindow* keyboardWindow = nil;
-    NSArray* windows = [[UIApplication sharedApplication] windows];
-    [windows enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        NSString *str =  [[obj class] description];
-        if ([str isEqualToString:@"UIRemoteKeyboardWindow"])
-        {
-            keyboardWindow = (UIWindow *)obj;
-        }
-    }];
-    
-    
-    [[keyboardWindow subviews] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        NSString *str =  [[obj class] description];
-        if ([str isEqualToString:@"UIInputSetContainerView"]||[str isEqualToString:@"UIPeripheralHostView"])
-        {
-            UIView* containerView = (UIView *)obj;
-            [containerView addSubview:doneButton];
-            
-            [UIView animateKeyframesWithDuration:0.2f delay:0.f options:UIViewKeyframeAnimationOptionLayoutSubviews  animations:^{
-                if (__IPHONE_8_0)
-                {
-                    doneButton.frame = CGRectMake(0, CGRectGetMaxY(containerView.frame)-53, 106, 53);
-                }
-                else
-                {
-                    doneButton.frame = CGRectMake(0, 163, 106, 53);
-                }
-                
-                
-            } completion:nil];
-            
-            
-        }
-    }];
-    
-}
-
-
-- (void)finishSelectedAction:(UIButton *)sender
-{
-    [sender removeFromSuperview];
-    [self resignFirstResponder];
-}
-
-
-
-+ (NSString *)zhu_TextFieldPassword:(NSString *)str
-{
-    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:str];
-    NSString *reTitle = nil;
-    if (password.length==0)
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regulaStr
+                                                                          options:NSRegularExpressionCaseInsensitive
+                                                                            error:&error];
+    NSArray *arrayOfAllMatches = [regex matchesInString:url options:0 range:NSMakeRange(0,[url length])];
+    for (NSTextCheckingResult *match in arrayOfAllMatches)
     {
-        reTitle= @"密码不能为空";
+        NSString* substringForMatch = [url substringWithRange:match.range];
+        NSLog(@"匹配:%@",substringForMatch);
+        return YES;
     }
-    else if (password.length<4 ||password.length>12)
-    {
-        reTitle= @"请填写有效的密码长度";
-    }
-    else if (![UITextField zhu_validatePassword:password])
-    {
-        reTitle= @"请使用数字或字母的密码";
-    }
-//    else if ([NSString zhuIsScanInt:password])
-//    {
-//        reTitle=@"您的密码过于简单，请使用数字+字母的组合";
-//    }
-    return reTitle;
-
+    
+    return NO;
 }
 
 
@@ -165,7 +102,7 @@
 #define myDotNumbers @"0123456789.\n"
 #define myNumbers   @"0123456789\n"
 
-+ (BOOL)zhLimitPayMoneyDot:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string dotPreBits:(int)dotPreBits dotAfterBits:(int)dotAfterBits
++ (BOOL)zh_limitPayMoneyDot:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string dotPreBits:(int)dotPreBits dotAfterBits:(int)dotAfterBits
 
 {
     //数字键盘是没有"\n"和""的
@@ -221,7 +158,7 @@
 }
 
 
-+ (BOOL)zhLimitRemainText:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string maxLength:(NSInteger)maxLength remainTextNum:(void(^)(NSInteger remainLength))remainTextBlock
++ (BOOL)zh_limitRemainText:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string maxLength:(NSInteger)maxLength remainTextNum:(void(^)(NSInteger remainLength))remainTextBlock
 {
     //如果是删除键,删除range的长度；即使选中1个以上字符删除，length也会增加；
     if ([string length] == 0 && range.length > 0)
@@ -279,5 +216,96 @@
     return YES;
     
 }
+
+
+
+
+
+/** //有问题:出来的时候,慢一点; 不能同步
+ *	@brief	自定义数字键盘,在数字键盘添加完成按钮; 先遍历windows获取键盘所在的window,然后在windows遍历view获得view(UIInputSetContainerView,frame是整个windows大小)
+ */
+
+- (void)zh_keyboardToAddFinishButton
+{
+    // create custom button
+    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    //最好用2张图片替换/不然有点不混合;
+    [doneButton setTitle:@"完成" forState:UIControlStateNormal];
+    [doneButton setTintColor:[UIColor blackColor]];
+    
+    [doneButton addTarget:self action:@selector(finishSelectedAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    __block UIWindow* keyboardWindow = nil;
+    NSArray* windows = [[UIApplication sharedApplication] windows];
+    [windows enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString *str =  [[obj class] description];
+        if ([str isEqualToString:@"UIRemoteKeyboardWindow"])
+        {
+            keyboardWindow = (UIWindow *)obj;
+        }
+    }];
+    
+    
+    [[keyboardWindow subviews] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString *str =  [[obj class] description];
+        if ([str isEqualToString:@"UIInputSetContainerView"]||[str isEqualToString:@"UIPeripheralHostView"])
+        {
+            UIView* containerView = (UIView *)obj;
+            [containerView addSubview:doneButton];
+            
+            [UIView animateKeyframesWithDuration:0.2f delay:0.f options:UIViewKeyframeAnimationOptionLayoutSubviews  animations:^{
+                if (__IPHONE_8_0)
+                {
+                    doneButton.frame = CGRectMake(0, CGRectGetMaxY(containerView.frame)-53, 106, 53);
+                }
+                else
+                {
+                    doneButton.frame = CGRectMake(0, 163, 106, 53);
+                }
+                
+                
+            } completion:nil];
+            
+            
+        }
+    }];
+    
+}
+
+
+- (void)finishSelectedAction:(UIButton *)sender
+{
+    [sender removeFromSuperview];
+    [self resignFirstResponder];
+}
+
+
+
++ (NSString *)zh_TextFieldPassword:(NSString *)str
+{
+    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:str];
+    NSString *reTitle = nil;
+    if (password.length==0)
+    {
+        reTitle= @"密码不能为空";
+    }
+    else if (password.length<4 ||password.length>12)
+    {
+        reTitle= @"请填写有效的密码长度";
+    }
+    else if (![UITextField zh_validatePassword:password])
+    {
+        reTitle= @"请使用数字或字母的密码";
+    }
+    //    else if ([NSString zhuIsScanInt:password])
+    //    {
+    //        reTitle=@"您的密码过于简单，请使用数字+字母的组合";
+    //    }
+    return reTitle;
+    
+}
+
 
 @end

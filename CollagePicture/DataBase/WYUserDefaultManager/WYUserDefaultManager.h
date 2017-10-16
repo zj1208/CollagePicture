@@ -17,9 +17,12 @@ static NSString *kOnlineGtAppId  =@"nI9gJsDGb99qGnwylak4I1";
 static NSString *kOnlineGtAppKey = @"8lEwqfov90AKQziEqSvd31";
 static NSString *kOnlineGtAppSecret = @"zR9M7HHU3X6k64XZiJ7sh6";
 
+//接生意设置第一次点击
+static NSString * const isFirstTouchSetBtn = @"isFirstTouchSetBtn";
 
 
 extern NSString *const kNotificationUserChangeDomain;
+
 
 typedef NS_ENUM(NSInteger, WYTargetRoleType)
 {
@@ -27,6 +30,19 @@ typedef NS_ENUM(NSInteger, WYTargetRoleType)
     WYTargetRoleType_buyer = 2//买家
 };
 
+
+typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
+    
+    // 这个应用有权限发送用户通知；
+    UDAuthorizationStatusAuthorized =0,
+    
+    // 这个应用没有权限发送用户通知；
+    UDAuthorizationStatusDenied =1,
+        
+    // 还不知道是否允许用户推送通知，因为可能是异步获取，但及时要用；
+    UDAuthorizationStatusNotDetermined = 2,
+
+};
 
 
 @interface WYUserDefaultManager : NSObject
@@ -52,7 +68,7 @@ typedef NS_ENUM(NSInteger, WYTargetRoleType)
 
 
 
-
+#pragma mark -采购商首页再次判断一天弹三次的广告
 //添加一次今天的弹框次数；会判断本地已经保存的是否是同一天，如果不是则清理之前的重新存储；
 + (void)baddTodayAppLanchAdvTimes;
 
@@ -64,6 +80,18 @@ typedef NS_ENUM(NSInteger, WYTargetRoleType)
  */
 + (BOOL)bisCanLanchAdvWithMaxTimes:(NSNumber *)maxTimes;
 
+
+#pragma mark - 隔多少天允许执行一次
++ (BOOL)isCanPresentAlertWithIntervalDay:(NSInteger)interval;
+
+
+
+#pragma mark - 设置用户推送通知的允许，不允许，还不知道三种状态；
+//0允许，1不允许；2还没有获取回来不知道；
+
++ (void)setMyAppUserNotificationOpenType:(UDAuthorizationStatus)type;
+
++ (NSInteger)getMyAppUserNotificationOpenType;
 
 #pragma mark - 收到通知再启动app的通知处理
 //远程推送，点击通知再开机启动时候的 url传值；
@@ -137,6 +165,10 @@ typedef NS_ENUM(NSInteger, WYTargetRoleType)
 
 + (void)setNewFunctionGuide_MineV1;
 + (BOOL)getNewNewFunctionGuide_MineV1;
+
++ (void)setNewFunctionGuide_ExtendV1;
++ (BOOL)getNewNewFunctionGuide_ExtendV1;
+
 @end
 
 

@@ -18,4 +18,8 @@
 #import "UIImageView+WebCache.h"
 #import "BaseHttpAPI.h"
 #import <BmobSDK/Bmob.h>
+#import "UserInfoUDManager.h"
+#import "WYUserDefaultManager.h"
+#import "UIButton+WebCache.h"
+#import "UIImageView+WebCache.h"
 #endif

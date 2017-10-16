@@ -15,7 +15,8 @@ static NSString  *kbaseUrl = @"baseURL";
 static NSString  *kh5URL = @"h5URL";
 static NSString  *kWxAppId = @"kWxAppID";
 
-
+//用户通知允许状态
+static NSString *const ud_userNotificationType = @"ud_UserNotificationType";
 
 
 
@@ -169,6 +170,51 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 }
 
 
+#pragma mark - 隔多少天允许执行一次
++ (BOOL)isCanPresentAlertWithIntervalDay:(NSInteger)interval
+{
+//    id object = [UserDefault objectForKey:@"LastPresentAlertDate"];
+//    NSLog(@"%@",object);
+    if ([UserDefault objectForKey:@"LastPresentAlertDate"])
+    {
+        NSDate *lastDate = [UserDefault objectForKey:@"LastPresentAlertDate"];
+        NSDate *nowDate = [NSDate date];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        unsigned int unitFlags = NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitMinute;
+        NSDateComponents *comps = [calendar components:unitFlags fromDate:lastDate toDate:nowDate options:0];
+        if (comps.day >interval||comps.month>0)
+        {
+            [UserDefault setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
+            [UserDefault synchronize];
+            return YES;
+        }
+        return NO;
+
+    }
+    else
+    {
+        [UserDefault setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
+        [UserDefault synchronize];
+    }
+    return YES;
+}
+
+
+
+#pragma mark - 设置用户推送通知的允许，不允许，还不知道三种状态；
+
++ (void)setMyAppUserNotificationOpenType:(UDAuthorizationStatus)type
+{
+    [UserDefault setInteger:type forKey:ud_userNotificationType];
+    [UserDefault synchronize];
+}
+
++ (NSInteger)getMyAppUserNotificationOpenType
+{
+    return [UserDefault integerForKey:ud_userNotificationType];
+}
+
+#pragma mark -
 
 + (void)setDidFinishLaunchRemoteNoti:(NSString *)url
 {
@@ -362,6 +408,18 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 + (BOOL)getNewNewFunctionGuide_MineV1
 {
     return [UserDefault boolForKey:@"NewFunctionGuide_MineV1"];
+}
+
+
++ (void)setNewFunctionGuide_ExtendV1
+{
+    [UserDefault setBool:YES forKey:@"NewFunctionGuide_ExtendV1"];
+    [UserDefault synchronize];
+}
+
++ (BOOL)getNewNewFunctionGuide_ExtendV1
+{
+    return [UserDefault boolForKey:@"NewFunctionGuide_ExtendV1"];
 }
 
 @end

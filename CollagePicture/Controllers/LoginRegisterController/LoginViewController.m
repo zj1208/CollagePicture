@@ -137,8 +137,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 {
     NSString *userName = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
     NSString *password = self.passwordTextField.text;
-    NSString *passError = [UITextField zhu_TextFieldPassword:password];
-    if (![UITextField zhu_validatePhoneNumber:userName])
+    NSString *passError = [UITextField zh_TextFieldPassword:password];
+    if (![UITextField zh_validatePhoneNumber:userName])
     {
       [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }

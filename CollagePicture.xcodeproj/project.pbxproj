@@ -39,7 +39,6 @@
 		F40228D91EF293E600E3D07E /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F40228D61EF293E600E3D07E /* jpush-ios-2.2.0.a */; };
 		F40228DA1EF293E600E3D07E /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = F40228D81EF293E600E3D07E /* sound.caf */; };
 		F40228E41EF29F3C00E3D07E /* UserInfoUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228E31EF29F3C00E3D07E /* UserInfoUDManager.m */; };
-		F40228E71EF29FB300E3D07E /* WYUserDefaultManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228E61EF29FB300E3D07E /* WYUserDefaultManager.m */; };
 		F40228EA1EF2A02B00E3D07E /* UserModelAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228E91EF2A02B00E3D07E /* UserModelAPI.m */; };
 		F40228EE1EF371E800E3D07E /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228ED1EF371E800E3D07E /* WelcomeViewController.m */; };
 		F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228F41EF37CA400E3D07E /* CopyrightController.m */; };
@@ -102,7 +101,6 @@
 		F40892861F21DCC200C99F93 /* UINavigationBar+ShadeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891BF1F21DCC200C99F93 /* UINavigationBar+ShadeColor.m */; };
 		F40892871F21DCC200C99F93 /* UINavigationItem+ZXSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891C11F21DCC200C99F93 /* UINavigationItem+ZXSpace.m */; };
 		F40892881F21DCC200C99F93 /* UIScrollView+ZXMJRefreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891C31F21DCC200C99F93 /* UIScrollView+ZXMJRefreshing.m */; };
-		F40892891F21DCC200C99F93 /* UITextField+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891C51F21DCC200C99F93 /* UITextField+ZXHelper.m */; };
 		F408928A1F21DCC200C99F93 /* UIView+ViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891C71F21DCC200C99F93 /* UIView+ViewHelper.m */; };
 		F408928B1F21DCC200C99F93 /* UIView+ZXChangeSize.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891C91F21DCC200C99F93 /* UIView+ZXChangeSize.m */; };
 		F408928C1F21DCC200C99F93 /* UIViewController+LoginAndAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F40891CB1F21DCC200C99F93 /* UIViewController+LoginAndAlert.m */; };
@@ -227,6 +225,9 @@
 		F49E19CE1DF543DF00676396 /* ZXPrivacyPolicy.json in Resources */ = {isa = PBXBuildFile; fileRef = F49E19CD1DF543DF00676396 /* ZXPrivacyPolicy.json */; };
 		F49E19D61DF546D600676396 /* PrivacyPolicyController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19D51DF546D600676396 /* PrivacyPolicyController.m */; };
 		F49E19D91DF5472500676396 /* PrivacyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19D81DF5472500676396 /* PrivacyListController.m */; };
+		F4ACE1181F4D7591006FC573 /* UITextField+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ACE1171F4D7591006FC573 /* UITextField+ZXHelper.m */; };
+		F4ACE1B31F4FDE6D006FC573 /* TemplateListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ACE1B21F4FDE6D006FC573 /* TemplateListCell.m */; };
+		F4ACE1B61F4FE093006FC573 /* WYUserDefaultManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ACE1B51F4FE093006FC573 /* WYUserDefaultManager.m */; };
 		F4B4DF981DB9273F00EC90CB /* ossImage.json in Resources */ = {isa = PBXBuildFile; fileRef = F4B4DF971DB9273F00EC90CB /* ossImage.json */; };
 		F4B9D8791DD48C5B008F895A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B9D8781DD48C5B008F895A /* CFNetwork.framework */; };
 		F4B9D87B1DD48C71008F895A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B9D87A1DD48C71008F895A /* CoreFoundation.framework */; };
@@ -270,7 +271,6 @@
 		F4F38B4D1EA6492C007606F9 /* ImageEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B3E1EA6492C007606F9 /* ImageEditView.m */; };
 		F4F38B4E1EA6492C007606F9 /* MakingPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B401EA6492C007606F9 /* MakingPhotoController.m */; };
 		F4F38B4F1EA6492C007606F9 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B431EA6492C007606F9 /* ShareViewController.m */; };
-		F4F38B501EA6492C007606F9 /* TemplateListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B461EA6492C007606F9 /* TemplateListCell.m */; };
 		F4F38B511EA6492C007606F9 /* TemplateListController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B481EA6492C007606F9 /* TemplateListController.m */; };
 		F4F38B521EA6492C007606F9 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B4B1EA6492C007606F9 /* HeaderView.m */; };
 		F4F38B5C1EA64CBF007606F9 /* litteMoney.gif in Resources */ = {isa = PBXBuildFile; fileRef = F4F38B5B1EA64CBF007606F9 /* litteMoney.gif */; };
@@ -353,8 +353,6 @@
 		F40228D81EF293E600E3D07E /* sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound.caf; sourceTree = "<group>"; };
 		F40228E21EF29F3C00E3D07E /* UserInfoUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoUDManager.h; sourceTree = "<group>"; };
 		F40228E31EF29F3C00E3D07E /* UserInfoUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoUDManager.m; sourceTree = "<group>"; };
-		F40228E51EF29FB300E3D07E /* WYUserDefaultManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUserDefaultManager.h; sourceTree = "<group>"; };
-		F40228E61EF29FB300E3D07E /* WYUserDefaultManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserDefaultManager.m; sourceTree = "<group>"; };
 		F40228E81EF2A02B00E3D07E /* UserModelAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModelAPI.h; sourceTree = "<group>"; };
 		F40228E91EF2A02B00E3D07E /* UserModelAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModelAPI.m; sourceTree = "<group>"; };
 		F40228EC1EF371E800E3D07E /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
@@ -471,8 +469,6 @@
 		F40891C11F21DCC200C99F93 /* UINavigationItem+ZXSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+ZXSpace.m"; sourceTree = "<group>"; };
 		F40891C21F21DCC200C99F93 /* UIScrollView+ZXMJRefreshing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ZXMJRefreshing.h"; sourceTree = "<group>"; };
 		F40891C31F21DCC200C99F93 /* UIScrollView+ZXMJRefreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXMJRefreshing.m"; sourceTree = "<group>"; };
-		F40891C41F21DCC200C99F93 /* UITextField+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+ZXHelper.h"; sourceTree = "<group>"; };
-		F40891C51F21DCC200C99F93 /* UITextField+ZXHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+ZXHelper.m"; sourceTree = "<group>"; };
 		F40891C61F21DCC200C99F93 /* UIView+ViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewHelper.h"; sourceTree = "<group>"; };
 		F40891C71F21DCC200C99F93 /* UIView+ViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewHelper.m"; sourceTree = "<group>"; };
 		F40891C81F21DCC200C99F93 /* UIView+ZXChangeSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXChangeSize.h"; sourceTree = "<group>"; };
@@ -691,6 +687,12 @@
 		F49E19D51DF546D600676396 /* PrivacyPolicyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyPolicyController.m; sourceTree = "<group>"; };
 		F49E19D71DF5472500676396 /* PrivacyListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivacyListController.h; sourceTree = "<group>"; };
 		F49E19D81DF5472500676396 /* PrivacyListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyListController.m; sourceTree = "<group>"; };
+		F4ACE1161F4D7591006FC573 /* UITextField+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+ZXHelper.h"; sourceTree = "<group>"; };
+		F4ACE1171F4D7591006FC573 /* UITextField+ZXHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+ZXHelper.m"; sourceTree = "<group>"; };
+		F4ACE1B11F4FDE6D006FC573 /* TemplateListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateListCell.h; sourceTree = "<group>"; };
+		F4ACE1B21F4FDE6D006FC573 /* TemplateListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateListCell.m; sourceTree = "<group>"; };
+		F4ACE1B41F4FE093006FC573 /* WYUserDefaultManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUserDefaultManager.h; sourceTree = "<group>"; };
+		F4ACE1B51F4FE093006FC573 /* WYUserDefaultManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserDefaultManager.m; sourceTree = "<group>"; };
 		F4B4DF971DB9273F00EC90CB /* ossImage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ossImage.json; sourceTree = "<group>"; };
 		F4B9D8731DD46B33008F895A /* CollagePicture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollagePicture.entitlements; sourceTree = "<group>"; };
 		F4B9D8781DD48C5B008F895A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -745,8 +747,6 @@
 		F4F38B401EA6492C007606F9 /* MakingPhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakingPhotoController.m; sourceTree = "<group>"; };
 		F4F38B421EA6492C007606F9 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		F4F38B431EA6492C007606F9 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
-		F4F38B451EA6492C007606F9 /* TemplateListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateListCell.h; sourceTree = "<group>"; };
-		F4F38B461EA6492C007606F9 /* TemplateListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateListCell.m; sourceTree = "<group>"; };
 		F4F38B471EA6492C007606F9 /* TemplateListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateListController.h; sourceTree = "<group>"; };
 		F4F38B481EA6492C007606F9 /* TemplateListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateListController.m; sourceTree = "<group>"; };
 		F4F38B4A1EA6492C007606F9 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
@@ -1322,8 +1322,8 @@
 				F40891C11F21DCC200C99F93 /* UINavigationItem+ZXSpace.m */,
 				F40891C21F21DCC200C99F93 /* UIScrollView+ZXMJRefreshing.h */,
 				F40891C31F21DCC200C99F93 /* UIScrollView+ZXMJRefreshing.m */,
-				F40891C41F21DCC200C99F93 /* UITextField+ZXHelper.h */,
-				F40891C51F21DCC200C99F93 /* UITextField+ZXHelper.m */,
+				F4ACE1161F4D7591006FC573 /* UITextField+ZXHelper.h */,
+				F4ACE1171F4D7591006FC573 /* UITextField+ZXHelper.m */,
 				F40891C61F21DCC200C99F93 /* UIView+ViewHelper.h */,
 				F40891C71F21DCC200C99F93 /* UIView+ViewHelper.m */,
 				F40891C81F21DCC200C99F93 /* UIView+ZXChangeSize.h */,
@@ -1911,8 +1911,8 @@
 		F4730CDB1EA064A200952AF1 /* WYUserDefaultManager */ = {
 			isa = PBXGroup;
 			children = (
-				F40228E51EF29FB300E3D07E /* WYUserDefaultManager.h */,
-				F40228E61EF29FB300E3D07E /* WYUserDefaultManager.m */,
+				F4ACE1B41F4FE093006FC573 /* WYUserDefaultManager.h */,
+				F4ACE1B51F4FE093006FC573 /* WYUserDefaultManager.m */,
 			);
 			path = WYUserDefaultManager;
 			sourceTree = "<group>";
@@ -2071,6 +2071,15 @@
 				F49E19D81DF5472500676396 /* PrivacyListController.m */,
 			);
 			path = PrivacyListController;
+			sourceTree = "<group>";
+		};
+		F4ACE1B01F4FDE6D006FC573 /* TemplateMake */ = {
+			isa = PBXGroup;
+			children = (
+				F4ACE1B11F4FDE6D006FC573 /* TemplateListCell.h */,
+				F4ACE1B21F4FDE6D006FC573 /* TemplateListCell.m */,
+			);
+			path = TemplateMake;
 			sourceTree = "<group>";
 		};
 		F4B1D7911EB3177600B5AB8D /* OSSUploadRequest */ = {
@@ -2264,8 +2273,6 @@
 		F4F38B441EA6492C007606F9 /* TemplateListController */ = {
 			isa = PBXGroup;
 			children = (
-				F4F38B451EA6492C007606F9 /* TemplateListCell.h */,
-				F4F38B461EA6492C007606F9 /* TemplateListCell.m */,
 				F4F38B471EA6492C007606F9 /* TemplateListController.h */,
 				F4F38B481EA6492C007606F9 /* TemplateListController.m */,
 			);
@@ -2275,6 +2282,7 @@
 		F4F38B491EA6492C007606F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F4ACE1B01F4FDE6D006FC573 /* TemplateMake */,
 				F4F38B4A1EA6492C007606F9 /* HeaderView.h */,
 				F4F38B4B1EA6492C007606F9 /* HeaderView.m */,
 			);
@@ -2597,7 +2605,6 @@
 				F408928E1F21DCC200C99F93 /* UIViewController+ZXHelper.m in Sources */,
 				F40892A81F21DCC200C99F93 /* ZXLabelsInputTagsView.m in Sources */,
 				F4F38B511EA6492C007606F9 /* TemplateListController.m in Sources */,
-				F4F38B501EA6492C007606F9 /* TemplateListCell.m in Sources */,
 				F408925C1F21DCC200C99F93 /* NewFunctionController.m in Sources */,
 				F40892B61F21DCC200C99F93 /* ZXPhoto.m in Sources */,
 				F40892521F21DCC200C99F93 /* HZAreaPickerView.m in Sources */,
@@ -2615,6 +2622,7 @@
 				F40892C51F21DCC200C99F93 /* UIScrollView+ZXRefreshHView.m in Sources */,
 				F408925F1F21DCC200C99F93 /* GrowthDataManager.m in Sources */,
 				F40228E41EF29F3C00E3D07E /* UserInfoUDManager.m in Sources */,
+				F4ACE1B61F4FE093006FC573 /* WYUserDefaultManager.m in Sources */,
 				F40228EE1EF371E800E3D07E /* WelcomeViewController.m in Sources */,
 				F408928B1F21DCC200C99F93 /* UIView+ZXChangeSize.m in Sources */,
 				F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */,
@@ -2622,7 +2630,6 @@
 				F44DAED51DC8D188000D9311 /* UMSocialShareScrollView.m in Sources */,
 				F40892551F21DCC200C99F93 /* ChineseToPinyin.m in Sources */,
 				F49E199F1DF1875900676396 /* FourViewController.m in Sources */,
-				F40892891F21DCC200C99F93 /* UITextField+ZXHelper.m in Sources */,
 				F40892771F21DCC200C99F93 /* NSArray+Log.m in Sources */,
 				F45B7C011ECFE7B100763568 /* OSSPicInfoRequest.m in Sources */,
 				A5AA2F091F04E95600A49A1E /* HLChooseScrollCollectionCell.m in Sources */,
@@ -2652,6 +2659,7 @@
 				F40892A31F21DCC200C99F93 /* ZXAddPicCollectionView.m in Sources */,
 				F408929C1F21DCC200C99F93 /* ZXInputBarView.m in Sources */,
 				F40892851F21DCC200C99F93 /* UILabel+ZXExtension.m in Sources */,
+				F4ACE1181F4D7591006FC573 /* UITextField+ZXHelper.m in Sources */,
 				F44401311E9B677E00734D24 /* GetIDFA.m in Sources */,
 				F40892641F21DCC200C99F93 /* QYHelpFunction.m in Sources */,
 				F40892751F21DCC200C99F93 /* ZXAssistiveTouch.m in Sources */,
@@ -2670,7 +2678,6 @@
 				F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */,
 				A55A8D1E1F06039D009ADCE9 /* Lettery_shuangseqiuView.m in Sources */,
 				F40892801F21DCC200C99F93 /* UIButton+ZXHelper.m in Sources */,
-				F40228E71EF29FB300E3D07E /* WYUserDefaultManager.m in Sources */,
 				F40892AC1F21DCC200C99F93 /* ZXManyImgIconsView.m in Sources */,
 				F40892671F21DCC200C99F93 /* ShareInfo.m in Sources */,
 				F40892791F21DCC200C99F93 /* NSObject+ZXRuntime.m in Sources */,
@@ -2680,6 +2687,7 @@
 				A5AA2F121F04E95600A49A1E /* HLHomePageLotteryCell.m in Sources */,
 				F49E19A01DF1875900676396 /* CategoryHomeController.m in Sources */,
 				F40892901F21DCC200C99F93 /* MBProgressHUD+ZXExtension.m in Sources */,
+				F4ACE1B31F4FDE6D006FC573 /* TemplateListCell.m in Sources */,
 				F40892871F21DCC200C99F93 /* UINavigationItem+ZXSpace.m in Sources */,
 				F40892831F21DCC200C99F93 /* UIImage+ZXGIF.m in Sources */,
 				F4F38B5F1EA64EC9007606F9 /* TMDiskManager.m in Sources */,
