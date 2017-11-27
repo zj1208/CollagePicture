@@ -10,14 +10,14 @@
 
 @interface ZXBadgeIconButton ()
 
-@property (nonatomic, strong)UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageView;
 
-@property (nonatomic, strong)UILabel *badgeLab;
+@property (nonatomic, strong) UILabel *badgeLab;
 
+@property (nonatomic, assign) BOOL autoFit;
 
-
-@property (nonatomic, assign)CGFloat maginY;
-@property (nonatomic, strong)UIFont *badgeFont;
+@property (nonatomic, assign) CGFloat maginY;
+@property (nonatomic, strong) UIFont *badgeFont;
 @end
 
 @implementation ZXBadgeIconButton
@@ -52,21 +52,48 @@
     return self;
 }
 
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    _autoFit = YES;
+}
+
 - (void)setUI
 {
     self.backgroundColor = [UIColor clearColor];
+    _badgeValue = 0;
+
+    
     UIImageView *imageView = [[UIImageView alloc] init];
     [self addSubview:imageView];
     self.imageView = imageView;
     
-
     UILabel *label = [[UILabel alloc] init];
     [self addSubview:label];
-    
+    label.translatesAutoresizingMaskIntoConstraints = YES;
     self.badgeLab = label;
     
-    _badgeValue = 0;
+    [self setBadgeTitleColor:[UIColor whiteColor] badgeBackgroundColor:[UIColor redColor]];
 }
+
+- (void)setBadgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor
+{
+    UIColor *titleColor = aTitleColor?aTitleColor:[UIColor whiteColor];
+    self.badgeLab.textColor = titleColor;
+    
+    UIColor *bgColor = aBgColor?aBgColor:[UIColor redColor];
+    [self.badgeLab setBackgroundColor:bgColor];
+}
+
+
+- (void)setBadgeContentInsetY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font
+{
+    self.maginY = aMaginY;
+    self.badgeFont = font?font:[UIFont systemFontOfSize:11];
+
+    [self layoutIfNeeded];
+}
+
 
 - (void)maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font badgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor
 {
@@ -99,6 +126,7 @@
 - (void)setBadgeValue:(NSInteger)badgeValue
 {
     _badgeValue = badgeValue;
+    
     [self layoutSubviews];
 }
 
@@ -111,6 +139,12 @@
     CGSize size = [self zh_digitalIconWithBadgeValue:self.badgeValue maginY:_maginY badgeFont:self.badgeFont];
     self.badgeLab.frame = CGRectMake(CGRectGetMaxX(self.imageView.frame)-12, CGRectGetMinY(self.imageView.frame), size.width, size.height);
     
+    if (_autoFit)
+    {
+        CGRect rect  = self.frame;
+        rect.size.width = CGRectGetWidth(self.badgeLab.frame)+CGRectGetWidth(self.imageView.frame);
+        self.frame = rect;
+    }
 }
 
 
@@ -133,27 +167,17 @@
     CGRect titleRect = [aDigitalTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics attributes:@{NSFontAttributeName:self.badgeLab.font} context:nil];
     CGSize titleFitSize = titleRect.size;
     
-    CGFloat maginY = aMaginY<2.5?2.5:aMaginY;
+    CGFloat maginY = aMaginY+2.5;
     CGFloat btnHeight = ceilf(titleFitSize.height)+2*maginY;
     CGFloat btnWidth =0.f;
-    //高度 height
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.badgeLab attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:btnHeight];
-    [self.badgeLab addConstraint:constraint1];
-    
-    
+//    高度 height
     if (self.badgeLab.text.length==1)
     {
         btnWidth = btnHeight;
-        NSLayoutConstraint *constraintWidth = [NSLayoutConstraint constraintWithItem:self.badgeLab attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:btnHeight];
-        [self.badgeLab addConstraint:constraintWidth];
     }
     else if (self.badgeLab.text.length>=2)
     {
         btnWidth = ceilf(titleFitSize.width)+ceilf(btnHeight/2);
-        //宽度 width
-        NSLayoutConstraint *constraintWidth = [NSLayoutConstraint constraintWithItem:self.badgeLab attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:btnWidth];
-        [self.badgeLab addConstraint:constraintWidth];
-        
     }
     self.badgeLab.layer.masksToBounds = YES;
     self.badgeLab.layer.cornerRadius = btnHeight/2;

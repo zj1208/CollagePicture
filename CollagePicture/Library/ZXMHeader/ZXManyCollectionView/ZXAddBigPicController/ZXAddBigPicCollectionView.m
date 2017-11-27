@@ -16,7 +16,7 @@
 #endif
 
 static CGFloat DeleteBtnWidth = 36.f;
-static CGFloat DeleteBtnHeight = 36.f;
+//static CGFloat DeleteBtnHeight = 36.f;
 static CGFloat Section1InsetMagin = 89.f;
 static CGFloat Section2InsetMagin = 26.f;
 static CGFloat Section2PicToPicMangin = 50.f;
@@ -209,7 +209,7 @@ static NSString * const reuseIdentifier = @"Cell";
     {
         _uploadPicBtnActionBlock(self.editIndexPath);
     }
-//    [self.morePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+//    [self.imagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
 }
 
 

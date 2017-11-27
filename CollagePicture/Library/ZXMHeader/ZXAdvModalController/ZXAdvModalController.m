@@ -26,16 +26,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
-    [self.advPicBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:nil];
+    [self setUI];
+
+}
+
+- (void)setUI
+{
+    self.advPicBtn.imageView.backgroundColor = [UIColor whiteColor];
     self.advPicBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.advPicBtn.contentHorizontalAlignment= UIControlContentHorizontalAlignmentFill;
     self.advPicBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
     
     [self setView:self.advPicBtn cornerRadius:8.f borderWidth:1.f borderColor:nil];
+    
+    NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
+    
+    self.dismissBtn.hidden = YES;
+    
+    [self.advPicBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        _dismissBtn.hidden = NO;
+    }];
 }
-
-
 //设置圆角
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
 {

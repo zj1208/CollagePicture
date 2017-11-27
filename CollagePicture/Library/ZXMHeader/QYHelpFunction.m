@@ -254,24 +254,6 @@ NSString *const QYHelpFunctionVersion = @"v2.0  2015-03-20";
 
 
 
-#pragma mark-获取from 到 to之间的随机整数。
--(int)zhuGetRandomNumber:(int)from to:(int)to
-{
-    //  arc4random() % 5： 获取0－4之间的随机数
-    // arc4random_uniform(5):同上
-    return (int)(from + (arc4random() % (to-from + 1)));
-    
-}
-
-
-- (NSString *)zhgetRandomNumber:(int)length
-{
-    NSString *result=@"";
-    for (int i=0; i<length; i++) {
-        result = [result stringByAppendingFormat:@"%d",arc4random()%10];
-    }
-    return result;
-}
 
 
 

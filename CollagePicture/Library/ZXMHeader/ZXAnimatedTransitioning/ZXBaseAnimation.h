@@ -19,5 +19,5 @@ typedef NS_ENUM(NSInteger,ZXAnimationType)
 
 @interface ZXBaseAnimation : NSObject<UIViewControllerAnimatedTransitioning>
 
-@property(nonatomic,assign) ZXAnimationType type;
+@property (nonatomic, assign) ZXAnimationType type;
 @end

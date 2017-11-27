@@ -7,6 +7,8 @@
     NSMutableString *strM = [NSMutableString stringWithString:@"(\n"];
     
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+   
+        
         [strM appendFormat:@"\t%@,\n", obj];
     }];
     
@@ -24,7 +26,8 @@
     NSMutableString *strM = [NSMutableString stringWithString:@"{\n"];
     
     [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [strM appendFormat:@"\t%@ = %@;\n", key, obj];
+        
+            [strM appendFormat:@"\t%@ = %@;\n", key, obj];
     }];
     
     [strM appendString:@"}\n"];

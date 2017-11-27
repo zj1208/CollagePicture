@@ -25,9 +25,17 @@ NS_ASSUME_NONNULL_BEGIN
 //失败提示；会自动隐藏
 + (void)zx_showError:(nullable NSString *)error toView:(nullable UIView *)view;
 
+//提示，带图片属性
++ (MBProgressHUD *)zx_showText:(nullable NSString *)aText customIcon:(nullable NSString *)imageName view:(nullable UIView *)view;
 
 //gif图提示:@"litteMoney"
 + (void)zx_showGifWithGifName:(NSString *)gifName toView:(nullable UIView *)view;
+
+//自定义加载动画
++ (void)zx_showGifWithGifName:(NSString *)gifName Text:(nullable NSString *)aText toView:(nullable UIView *)view;
+
+//自定义加载动画 显示时间
++ (void)zx_showGifWithGifName:(NSString *)gifName Text:(nullable NSString *)aText time:(CGFloat)time toView:(nullable UIView *)view;
 
 //隐藏hud
 + (BOOL)zx_hideHUDForView:(nullable UIView *)view;

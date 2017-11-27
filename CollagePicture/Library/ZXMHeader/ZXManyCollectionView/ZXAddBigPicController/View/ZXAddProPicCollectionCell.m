@@ -46,7 +46,7 @@
 
 - (void)addProductPicView
 {
-    ZXAddProPicView * titleView1 = [[[NSBundle mainBundle] loadNibNamed:AddProductPicViewNib owner:self options:nil] lastObject];
+    ZXAddProPicView * titleView1 = [[[NSBundle mainBundle] loadNibNamed:AddProductPicViewNib owner:self options:nil] firstObject];
     [self addSubview:titleView1];
     [titleView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         

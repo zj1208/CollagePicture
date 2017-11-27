@@ -204,7 +204,7 @@
 controller.h-用tableViewController做
  
 #import "AddProLabelsController.h"
-#import "WYTitleView.h"
+#import "ZXTitleView.h"
 #import "ProductMdoleAPI.h"
 #import "AddProLabelTagCell.h"
 #import "AddProRecdLabelCell.h"
@@ -386,7 +386,7 @@ static NSString *editTagsCell = @"editTagsCell";
 {
     if (section ==0)
     {
-        WYTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_WYTitleView owner:self options:nil] lastObject];
+        ZXTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_ZXTitleView owner:self options:nil] firstObject];
         view.titleLab.text =@"*每个最多10个字，最多可以输入10个标签";
         view.titleLab.font = [UIFont systemFontOfSize:12];
         view.titleLab.textColor = [UIColor redColor];
@@ -413,7 +413,7 @@ static NSString *editTagsCell = @"editTagsCell";
 {
     if (section ==2)
     {
-        WYTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_WYTitleView owner:self options:nil] lastObject];
+        ZXTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_ZXTitleView owner:self options:nil] firstObject];
         view.titleLab.text =@"常用标签";
         view.titleLab.font = [UIFont systemFontOfSize:14];
         view.backgroundColor =WYUISTYLE.colorBGgrey;
@@ -507,7 +507,7 @@ static NSString *editTagsCell = @"editTagsCell";
 
 #import "TMDiskManager.h"
 #import "ManageMainProCell.h"
-#import "WYTitleView.h"
+#import "ZXTitleView.h"
 
 @interface ManageBrandController ()<ZXLabelsInputTagsViewDelegate>
 
@@ -609,7 +609,7 @@ static NSString *editTagsCell = @"editTagsCell";
 {
     if (section ==0)
     {
-        WYTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_WYTitleView owner:self options:nil] lastObject];
+        ZXTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_ZXTitleView owner:self options:nil] firstObject];
         view.titleLab.text =@"最多输入5个品牌";
         view.titleLab.font = [UIFont systemFontOfSize:12];
         view.titleLab.textColor = [UIColor redColor];

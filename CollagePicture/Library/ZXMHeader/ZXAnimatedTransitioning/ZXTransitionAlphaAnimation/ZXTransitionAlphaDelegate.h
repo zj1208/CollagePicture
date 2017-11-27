@@ -74,10 +74,10 @@
     {
         return;
     }
-    [self.morePickerVCManager zxPresentActionSheetToMoreUIImagePickerController:self];
+    [self.ZXImagePickerVCManager zxPresentActionSheetToMoreUIImagePickerController:self];
     ThemeListModel *model = [self.dataMArray objectAtIndex:0];
-    self.morePickerVCManager.type =UploadOperationType_SystemTheme;
-    self.morePickerVCManager.subjectId = model.themeId;
+    self.ZXImagePickerVCManager.type =UploadOperationType_SystemTheme;
+    self.ZXImagePickerVCManager.subjectId = model.themeId;
     
 }
 

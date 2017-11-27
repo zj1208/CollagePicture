@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZXNotiAlertViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4F5-KR-JaI">
+                    <rect key="frame" x="62.5" y="183.5" width="250" height="300"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="7L7-T1-41a">
+                            <rect key="frame" x="0.0" y="0.0" width="250" height="200"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="2m4-Gy-u02"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic_btn.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Jd-Sp-BPW">
+                            <rect key="frame" x="0.0" y="200" width="250" height="100"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clF-yt-AbS">
+                            <rect key="frame" x="0.0" y="200" width="125" height="100"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <state key="normal" title="暂不打开">
+                                <color key="titleColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCi-QB-4Bi">
+                            <rect key="frame" x="125" y="200" width="125" height="100"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                            <state key="normal" title="立即开启">
+                                <color key="titleColor" red="0.99923402070999146" green="0.17287006974220276" blue="0.23768466711044312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="clF-yt-AbS" firstAttribute="leading" secondItem="4F5-KR-JaI" secondAttribute="leading" id="2NZ-DB-xrX"/>
+                        <constraint firstItem="7L7-T1-41a" firstAttribute="leading" secondItem="4F5-KR-JaI" secondAttribute="leading" id="2hR-EG-zDd"/>
+                        <constraint firstItem="gCi-QB-4Bi" firstAttribute="centerY" secondItem="clF-yt-AbS" secondAttribute="centerY" id="9rZ-lC-oZk"/>
+                        <constraint firstItem="8Jd-Sp-BPW" firstAttribute="leading" secondItem="4F5-KR-JaI" secondAttribute="leading" id="BQZ-Cy-gAg"/>
+                        <constraint firstItem="gCi-QB-4Bi" firstAttribute="leading" secondItem="clF-yt-AbS" secondAttribute="trailing" id="I39-dj-cn8"/>
+                        <constraint firstAttribute="bottom" secondItem="8Jd-Sp-BPW" secondAttribute="bottom" id="IYd-YT-BgD"/>
+                        <constraint firstItem="clF-yt-AbS" firstAttribute="top" secondItem="7L7-T1-41a" secondAttribute="bottom" id="LI9-zO-CW9"/>
+                        <constraint firstItem="8Jd-Sp-BPW" firstAttribute="centerX" secondItem="4F5-KR-JaI" secondAttribute="centerX" id="N81-3o-jda"/>
+                        <constraint firstAttribute="trailing" secondItem="7L7-T1-41a" secondAttribute="trailing" id="NNr-jm-mgR"/>
+                        <constraint firstAttribute="height" constant="300" id="Vxz-aA-VgK"/>
+                        <constraint firstItem="7L7-T1-41a" firstAttribute="top" secondItem="4F5-KR-JaI" secondAttribute="top" id="ZJN-EM-flT"/>
+                        <constraint firstAttribute="width" constant="250" id="elG-s5-9yt"/>
+                        <constraint firstItem="gCi-QB-4Bi" firstAttribute="height" secondItem="clF-yt-AbS" secondAttribute="height" id="hwB-A2-qJ4"/>
+                        <constraint firstAttribute="bottom" secondItem="clF-yt-AbS" secondAttribute="bottom" id="mkC-Mz-JGu"/>
+                        <constraint firstItem="gCi-QB-4Bi" firstAttribute="width" secondItem="clF-yt-AbS" secondAttribute="width" id="n6v-FU-jpE"/>
+                        <constraint firstAttribute="trailing" secondItem="gCi-QB-4Bi" secondAttribute="trailing" id="rR7-QW-GdA"/>
+                        <constraint firstItem="8Jd-Sp-BPW" firstAttribute="top" secondItem="7L7-T1-41a" secondAttribute="bottom" id="zVp-Md-TXb"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="4F5-KR-JaI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1VE-GH-Ph3"/>
+                <constraint firstItem="4F5-KR-JaI" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="PpX-Ac-R7c"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="pic_bg.png" width="530" height="448"/>
+        <image name="pic_btn.png" width="530" height="164"/>
+    </resources>
+</document>

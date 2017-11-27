@@ -14,17 +14,17 @@
 #define AppPlaceholderImage [UIImage imageNamed:@"默认图正方形"]
 #endif
 
-static NSInteger ZXMaxItemCount = 3;
+static NSInteger const ZXMaxItemCount = 3;
 
-static CGFloat ZXMinimumInteritemSpacing = 10.f;//item之间最小间隔
-static CGFloat ZXMinimumLineSpacing = 10.f; //最小行间距
-static CGFloat ZXAddPicItemWidth = 60.f;
-static CGFloat ZXAddPicItemHeight = 60.f;
+static CGFloat const ZXMinimumInteritemSpacing = 10.f;//item之间最小间隔
+static CGFloat const ZXMinimumLineSpacing = 10.f; //最小行间距
+static CGFloat const ZXAddPicItemWidth = 60.f;
+static CGFloat const ZXAddPicItemHeight = 60.f;
 
 NSInteger const ZXAddPicMaxColoum = 3;  // 图片每行默认最多个数
 //设置的时候，xib也要同时调整；与删除按钮有关；
-static CGFloat ZXPicItemLayoutTop =  10.f;
-static CGFloat ZXPicItemLayoutRight = 10.f;
+static CGFloat const ZXPicItemLayoutTop =  10.f;
+static CGFloat const ZXPicItemLayoutRight = 10.f;
 
 static NSString * const reuseCell = @"Cell";
 
@@ -183,7 +183,6 @@ static NSString * const reuseCell = @"Cell";
     
     [self.dataMArray addObjectsFromArray:data];
     [self.collectionView reloadData];
-    
 }
 
 
@@ -217,7 +216,6 @@ static NSString * const reuseCell = @"Cell";
     ZXAddPicViewCell *cell = (ZXAddPicViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseCell forIndexPath:indexPath];
 //    cell.backgroundColor = [UIColor redColor];
     [cell.deleteBtn addTarget:self action:@selector(deleteAction:) forControlEvents:UIControlEventTouchUpInside];
-    cell.delegate = self;
     NSLog(@"indexPath=%ld",indexPath.item);
     //添加图片按钮
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
@@ -316,7 +314,6 @@ static NSString * const reuseCell = @"Cell";
 //删除
 - (void)deleteAction:(UIButton *)sender
 {
-    
     CGPoint point = sender.center;
     point = [self.collectionView convertPoint:point fromView:sender.superview];
     NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:point];
@@ -333,43 +330,23 @@ static NSString * const reuseCell = @"Cell";
         //当需要动态“添加图片”按钮但而且已经到最大个数，按钮已经隐藏，；
         if (_dataMArray.count == self.maxItemCount && self.isExistInputItem)
         {
-            //        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:_dataMArray.count inSection:0];
-            //        [collectionView insertItemsAtIndexPaths:@[lastIndexPath]];
-            
             [self.dataMArray removeObjectAtIndex:indexPath.item];
-            //        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
             [self.collectionView reloadData];
         }
-
         //不需要动态“添加图片”按钮，或有动态“添加图片”按钮且当前显示，点击删除按钮
         else
         {
             [self.dataMArray removeObjectAtIndex:indexPath.item];
             [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
         }
-        //删除事件
-        if ([self.delegate respondsToSelector:@selector(zx_addPicCollectionView:didDeletedWithTags:forRowAtIndexPath:)])
-        {
-            NSMutableArray *tagsArray = [_dataMArray mutableCopy];
-            [self.delegate zx_addPicCollectionView:self didDeletedWithTags:tagsArray forRowAtIndexPath:indexPath];
-        }
     }
-    else
+    if ([self.delegate respondsToSelector:@selector(zx_addPicCollectionView:commitEditingStyle:forRowAtIndexPath:)])
     {
-        if ([self.delegate respondsToSelector:@selector(zx_addPicCollectionView:didSelectAddBtnItemAtIndexPath:didAddTags:)])
-        {
-            
-            [self.delegate zx_addPicCollectionView:self didSelectAddBtnItemAtIndexPath:indexPath didAddTags:_dataMArray];
-        }
+        [self.delegate zx_addPicCollectionView:self commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
     }
-}
-
-
-
-- (void)zxDidSingleImageClick:(ZXAddPicViewCell *)photoView
-{
     
 }
+
 
 //计算collectionView的总高度
 

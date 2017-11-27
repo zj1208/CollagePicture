@@ -12,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXAdvModel : NSObject
 
-@property (nonatomic, copy,nullable) NSString *pic;
-@property (nonatomic, copy,nullable) NSString *desc;
-@property (nonatomic, copy,nullable) NSString *url;
-@property (nonatomic, strong,nullable) NSNumber *advId;
+@property (nonatomic, copy, nullable) NSString *pic;
+@property (nonatomic, copy, nullable) NSString *desc;
+@property (nonatomic, copy, nullable) NSString *url;
+@property (nonatomic, strong, nullable) NSNumber *advId;
 
 - (instancetype)initWithDesc:(nullable NSString *)desc picString:(nullable NSString *)picString url:(nullable NSString *)url advId:(nullable NSNumber *)aId;
 @end

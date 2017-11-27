@@ -31,8 +31,6 @@ static NSString *AddProductPicViewNib = @"ZXAddProPicView";
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 
-@property (nonatomic, copy) void(^myBlock)();
-
 
 
 - (IBAction)deleteBtnAction:(UIButton *)sender;

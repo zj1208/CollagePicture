@@ -7,14 +7,14 @@
 //
 /*
 #import "AddProductPicController.h"
-#import "MorePickerVCManager.h"
+#import "ZXImagePickerVCManager.h"
 #import "TMDiskManager.h"
 #import "CommonModel.h"
 #import "OSSUploadManager.h"
  
-@interface AddProductPicController ()<MorePickerVCManagerDelegate,ZXAddBigPicCollectionViewDataSource>
+@interface AddProductPicController ()<ZXImagePickerVCManagerDelegate,ZXAddBigPicCollectionViewDataSource>
 
-@property (nonatomic ,strong)MorePickerVCManager *morePickerVCManager;
+@property (nonatomic ,strong)ZXImagePickerVCManager *imagePickerVCManager;
 
 @property (nonatomic, strong)NSMutableArray *section1MArray;
 @property (nonatomic, strong)NSMutableArray *section2MArray;
@@ -32,9 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    MorePickerVCManager *pickerVCManager = [[MorePickerVCManager alloc] init];
+    ZXImagePickerVCManager *pickerVCManager = [[ZXImagePickerVCManager alloc] init];
     pickerVCManager.morePickerActionDelegate = self;
-    self.morePickerVCManager = pickerVCManager;
+    self.imagePickerVCManager = pickerVCManager;
     
     //初始化oss上传
     [[OSSUploadManager getInstance] initOSSStsTokenCredential];
@@ -72,7 +72,7 @@
     
     self.collectionView.uploadPicBtnActionBlock = ^(NSIndexPath *editPath)
     {
-          [self.morePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+          [self.imagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
     };
 }
 

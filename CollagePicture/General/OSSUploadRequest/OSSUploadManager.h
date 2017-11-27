@@ -150,9 +150,9 @@ NS_ASSUME_NONNULL_END
 
 /*
 //初始化照片／拍照选择
-MorePickerVCManager *pickerVCManager = [[MorePickerVCManager alloc] init];
+ZXImagePickerVCManager *pickerVCManager = [[ZXImagePickerVCManager alloc] init];
 pickerVCManager.morePickerActionDelegate = self;
-self.morePickerVCManager = pickerVCManager;
+self.imagePickerVCManager = pickerVCManager;
 //初始化oss上传
 [[OSSUploadManager getInstance] initOSSStsTokenCredential];
 

@@ -26,7 +26,7 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH_nav);
+    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-64);
     
     self.userNameField.delegate = self;
     self.verificationCodeField.delegate = self;

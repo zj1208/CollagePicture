@@ -9,13 +9,13 @@
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
-
+#import "EqualSpaceFlowLayoutEvolve.h"
 
 @class ZXLabelsTagsView;
 
 @protocol ZXLabelsTagsViewDelegate <NSObject>
-//如果不实现这些协议，则会用默认的设置；
 
+//如果不实现这些协议，则会用默认的设置；
 
 @optional
 /**
@@ -39,6 +39,20 @@
 @end
 
 
+// UICollectionViewCell对齐，等间距对齐
+
+typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
+    
+    //不支持固定间距对齐，使用系统的最小间距自动布局；
+    UICollectionViewFlowLayoutAlignNoneEqualSpace = 0,
+    //等间距左对齐
+    UICollectionViewFlowLayoutEqualSpaceAlignLeft = 1,
+    //等间距居中对齐
+    UICollectionViewFlowLayoutEqualSpaceAlignCenter = 2,
+    //等间距右对齐
+    UICollectionViewFlowLayoutEqualSpaceAlignRight = 3
+};
+
 
 @interface ZXLabelsTagsView : UIView<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
@@ -49,25 +63,41 @@
 
 @property (nonatomic, strong) NSMutableArray *dataMArray;
 
-//设置collectionView的sectionInset
-@property (nonatomic, assign)UIEdgeInsets sectionInset;
+// 设置collectionView的sectionInset;
+@property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-//item之间的间距
-@property (nonatomic, assign)CGFloat minimumInteritemSpacing;
-//行间距
-@property (nonatomic, assign)CGFloat minimumLineSpacing;
+// item之间的间距;
+@property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
-//最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除
-@property (nonatomic, assign)NSInteger maxItemCount;
+// 行间距;
+@property (nonatomic, assign) CGFloat minimumLineSpacing;
 
-//添加tag标签的额外设置
+// 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除;
+@property (nonatomic, assign) NSInteger maxItemCount;
 
+// 添加tag标签的额外设置;
 @property (nonatomic, strong) UIColor *tagBackgroudColor;
 
+// 设置cell标签宽度是否随它的内容自适应：default NO;
+@property (nonatomic, assign) BOOL apportionsItemWidthsByContent;
+
+// item同样size的值；只有效于apportionsItemWidthsByContent = NO的时候；
+@property (nonatomic, assign) CGSize itemSameSize;
+
+// 字体大小
+@property (nonatomic, assign) CGFloat titleFontSize;
+
+// 设置选中某个item
+@property (nonatomic, assign) NSInteger selectedIndex;
+
+// 是否支持选中样式展现
+@property (nonatomic, assign) BOOL cellSelectedStyle;
 
 
 - (void)setData:(NSArray *)data;
 
+//设置等间距对齐
+- (void)setCollectionViewLayoutWithEqualSpaceAlign:(AlignType)collectionViewCellAlignType withItemEqualSpace:(CGFloat)equalSpace animated:(BOOL)animated;
 /**
  获取整个collectionView需要的高度
  
@@ -75,6 +105,7 @@
  @return 高度
  */
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data;
+
 @end
 
 
@@ -124,10 +155,8 @@
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section==0)
-    {
-    }
-    else if (indexPath.section ==3)
+
+    if (indexPath.section ==3)
     {
         RecentlyFindLabCell *recentlyFindProCell = [tableView dequeueReusableCellWithIdentifier:reuse_recentlyFindCell forIndexPath:indexPath];
         recentlyFindProCell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -17,7 +17,7 @@
     // Drawing code
 }
 */
--(BOOL)canPerformAction:(SEL)action withSender:(id)sender
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
     if ([UIMenuController sharedMenuController])
     {

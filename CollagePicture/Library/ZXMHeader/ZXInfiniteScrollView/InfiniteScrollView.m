@@ -19,12 +19,12 @@ static NSString *const kPlaceholderImage = @"bannerPlaceholder";
 static const NSTimeInterval timeInterval= 3.f;
 
 @interface InfiniteScrollView ()<UIScrollViewDelegate,UIGestureRecognizerDelegate>
-@property(nonatomic,strong) UIScrollView *scrollView;
-@property(nonatomic,strong) UIPageControl *pageControl;
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) UIPageControl *pageControl;
 
-@property(nonatomic,assign) NSInteger currentPageIndex;
+@property(nonatomic, assign) NSInteger currentPageIndex;
 
-@property(nonatomic,strong) NSMutableArray *viewArray;
+@property(nonatomic, strong) NSMutableArray *viewArray;
 
 /**
  * @brief model数组；
@@ -65,32 +65,42 @@ static const NSTimeInterval timeInterval= 3.f;
 
 }
 
+- (UIScrollView *)scrollView
+{
+    if (!_scrollView)
+    {
+        _scrollView = [[UIScrollView alloc] init];
+        _scrollView.delegate = self;
+        _scrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _scrollView.directionalLockEnabled = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.showsVerticalScrollIndicator = NO;//no add scrollView's imageView
+        _scrollView.pagingEnabled = YES;
+    }
+    return _scrollView;
+}
 
+- (UIPageControl *)pageControl
+{
+    if (!_pageControl)
+    {
+        UIPageControl *pControl = [[UIPageControl alloc] init];
+        pControl.hidesForSinglePage = YES;
+        pControl.pageIndicatorTintColor = [UIColor whiteColor];
+        pControl.defersCurrentPageDisplay = YES;
+        pControl.currentPageIndicatorTintColor = [UIColor redColor];
+        [pControl addTarget:self action:@selector(pageEventMathod:) forControlEvents:UIControlEventValueChanged];
+        _pageControl = pControl;
+    }
+    return _pageControl;
+}
 - (void)commonInit
 {
-    
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.delegate = self;
-    self.scrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.scrollView.directionalLockEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;//no add scrollView's imageView
-    self.scrollView.pagingEnabled = YES;
     [self addSubview:self.scrollView];
-    
-
-    
-    self.pageControl = [[UIPageControl alloc] init];
-    self.pageControl.hidesForSinglePage = YES;
-    self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-    self.pageControl.defersCurrentPageDisplay = YES;
-    self.pageControl.currentPageIndicatorTintColor = [UIColor redColor];
-    [self.pageControl addTarget:self action:@selector(pageEventMathod:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:self.pageControl];
     
     self.viewArray = [NSMutableArray array];
     self.currentPageIndex = 0;
- 
 }
 
 - (void)setItemsArray:(NSMutableArray *)array placeholderImage:(UIImage *)placeholderImage

@@ -44,13 +44,13 @@
 
 - (void)setupUI {
     CGFloat chooseViewH = 80.0;
-    self.chooseView = [[HLChooseScrollView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, chooseViewH)];
+    self.chooseView = [[HLChooseScrollView alloc] initWithFrame:CGRectMake(0, 10, LCDW, chooseViewH)];
     self.chooseView.delegate = self;
     self.chooseView.dataSource = self;
     [self.view addSubview:self.chooseView];
     
-    self.newsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, chooseViewH, SCREEN_WIDTH, self.view.mj_h - chooseViewH)];
-    self.newsScrollView.contentSize = CGSizeMake(self.categoryArr.count * SCREEN_WIDTH, self.newsScrollView.mj_h);
+    self.newsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, chooseViewH, LCDW, self.view.mj_h - chooseViewH)];
+    self.newsScrollView.contentSize = CGSizeMake(self.categoryArr.count * LCDW, self.newsScrollView.mj_h);
     self.newsScrollView.pagingEnabled = TRUE;
     self.newsScrollView.delegate = self;
     [self.view addSubview:self.newsScrollView];
@@ -60,7 +60,7 @@
         [self.newsScrollView addSubview:vc.view];
         [self addChildViewController:vc];
         vc.newsName = self.categoryArr[i];
-        vc.view.frame = CGRectMake(i * self.newsScrollView.mj_w, 0, SCREEN_WIDTH, self.newsScrollView.mj_h);
+        vc.view.frame = CGRectMake(i * self.newsScrollView.mj_w, 0, LCDW, self.newsScrollView.mj_h);
 //        __weak __typeof(self)weakSelf = self;
         vc.selectedBlock = ^(HLNewsViewController *vc, NSInteger selectIndex) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您点击了消息" message:@"....." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -78,7 +78,7 @@
 
 - (void)chooseScrollView:(HLChooseScrollView *)view DidSelected:(NSInteger)index {
     [UIView animateWithDuration:0.25 animations:^{
-        self.newsScrollView.contentOffset = CGPointMake(index * SCREEN_WIDTH, 0);
+        self.newsScrollView.contentOffset = CGPointMake(index * LCDW, 0);
     }];
     
 
@@ -87,7 +87,7 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSInteger count = scrollView.contentOffset.x / SCREEN_WIDTH;
+    NSInteger count = scrollView.contentOffset.x / LCDW;
     [self.chooseView setSelecetedIndex:count];
     
     

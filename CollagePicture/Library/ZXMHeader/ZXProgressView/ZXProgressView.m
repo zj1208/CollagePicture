@@ -8,7 +8,7 @@
 
 #import "ZXProgressView.h"
 
-static CGFloat ZXProgressHeight =2;
+static CGFloat const ZXProgressHeight = 2;
 
 
 @implementation ZXProgressView
@@ -87,7 +87,6 @@ static CGFloat ZXProgressHeight =2;
     {
         UIImageView *progressImageView = [self.subviews firstObject];
         progressImageView.frame =self.frame;
-
     }
 }
 
@@ -96,13 +95,6 @@ static CGFloat ZXProgressHeight =2;
     _zxProgressImage = zxProgressImage;
     UIImageView *progressImageView = [self.subviews firstObject];
     [progressImageView removeFromSuperview];
-    
-    
-//    UIImageView *newImgView = [[UIImageView alloc] init];
-//    newImgView.image = zxProgressImage;
-//    [self addSubview:newImgView];
-//    [self sendSubviewToBack:newImgView];
-
 }
 
 - (void)setProgress:(float)progress animated:(BOOL)animated

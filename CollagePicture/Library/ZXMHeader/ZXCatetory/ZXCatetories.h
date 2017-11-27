@@ -10,26 +10,33 @@
 #define ZXCatetories_h
 
 #import "NSString+ZXEntension.h"
-#import "UITextField+ZXHelper.h"
-#import "UINavigationBar+ShadeColor.h"
 #import "NSURL+OSSImage.h"
-#import "UIColor+Hex.h"
 #import "NSObject+ZXRuntime.h"
-#import "UIViewController+NavBarCustom.h"
-#import "UIViewController+MBProgressHUD.h"
-#import "MBProgressHUD+ZXExtension.h"
-#import "UIViewController+LoginAndAlert.h"
-#import "UIViewController+ZXHelper.h"
-#import "UIAlertController+ZXExtension.h"
-
-#import "UIView+ViewHelper.h"
-#import "UIButton+ZXHelper.h"
-#import "UILabel+ZXExtension.h"
-#import "UIImage+ZXGIF.h"
-#import "UIImage+ZXHelper.h"
-#import "UIView+ZXChangeSize.h"
-#import "UIScrollView+ZXMJRefreshing.h"
-#import "UINavigationItem+ZXSpace.h"
 #import "NSURLComponents+ZXCategory.h"
 #import "NSURL+ZXCategory.h"
+
+#import "UIAlertController+ZXExtension.h"
+#import "UIButton+ZXHelper.h"
+#import "UIColor+ZXHex.h"
+#import "UIControl+ZXFastClick.h"
+#import "UIDevice+ZXInfo.h"
+#import "UIImage+ZXGIF.h"
+#import "UIImage+ZXHelper.h"
+
+#import "UILabel+ZXExtension.h"
+#import "UINavigationItem+ZXSpace.h"
+#import "UINavigationBar+ShadeColor.h"
+
+#import "UIScrollView+ZXCategory.h"
+#import "UIScrollView+ZXMJRefreshing.h"
+#import "UITextField+ZXHelper.h"
+#import "UIView+ViewHelper.h"
+#import "UIView+ZXChangeSize.h"
+#import "UIViewController+NavBarCustom.h"
+#import "UIViewController+MBProgressHUD.h"
+#import "UIViewController+LoginAndAlert.h"
+#import "UIViewController+ZXHelper.h"
+
+#import "MBProgressHUD+ZXExtension.h"
+
 #endif /* ZXCatetories_h */

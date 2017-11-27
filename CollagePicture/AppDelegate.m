@@ -91,13 +91,13 @@
 //初始化APNs代码
 - (void)addJPushAPNS
 {
-    if (Device_IOS10_OR_LATER)
+    if (Device_SYSTEMVERSION_IOS10_OR_LATER)
     {
         JPUSHRegisterEntity *entity = [[JPUSHRegisterEntity alloc] init];
         entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionSound|UNAuthorizationOptionBadge;
         [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     }
-    else if(Device_Version_Greater_THAN_OR_EQUAL_TO(8.f))
+    else if(Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(8.f))
     {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |

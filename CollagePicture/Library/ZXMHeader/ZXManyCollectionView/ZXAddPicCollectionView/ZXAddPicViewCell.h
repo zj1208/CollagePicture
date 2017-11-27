@@ -14,8 +14,8 @@ static NSString *const nib_ZXAddPicViewCell = @"ZXAddPicViewCell";
 
 @protocol ZXAddPicViewCellDelegate <NSObject>
 
-@optional
-- (void)zxDidSingleImageClick:(ZXAddPicViewCell *)photoView; // 单击
+//@optional
+//- (void)zxDidSingleImageClick:(ZXAddPicViewCell *)photoView; // 单击
 
 @end
 

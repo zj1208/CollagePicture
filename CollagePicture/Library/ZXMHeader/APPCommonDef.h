@@ -14,18 +14,19 @@
 #import <objc/runtime.h>
 
 #pragma mark
+
 #pragma mark-system version
 /***************************
 获取系统版本号等信息
  ****************************/
 //获取系统版本
-#ifndef                         Device_Version
-#define Device_Version          [[UIDevice currentDevice] systemVersion]
+#ifndef Device_SYSTEMVERSION
+#define Device_SYSTEMVERSION    [[UIDevice currentDevice] systemVersion]
 #endif
 
-#define Device_Version_Greater_THAN_OR_EQUAL_TO(v) ([Device_Version floatValue] >= v)
-#define Device_IOS10_OR_LATER ([Device_Version floatValue] >= 10.0)
-#define Device_IOS9_OR_LATER ([Device_Version floatValue] >= 9.0)
+#define Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(v) ([Device_SYSTEMVERSION floatValue] >= v)
+#define Device_SYSTEMVERSION_IOS10_OR_LATER ([Device_SYSTEMVERSION floatValue] >= 10.0)
+#define Device_SYSTEMVERSION_IOS9_OR_LATER ([Device_SYSTEMVERSION floatValue] >= 9.0)
 
 /*
 //检查系统版本
@@ -37,15 +38,15 @@
 */
 
 //获取系统名
-#ifndef                         Device_SystemName
+#ifndef Device_SystemName
 #define Device_SystemName       [[UIDevice currentDevice]systemName]
 #endif
 //设备名称－用户自己写的名称
-#ifndef                         Device_Name
+#ifndef Device_Name
 #define Device_Name             [[UIDevice currentDevice]name]
 #endif
 //用户设备实时类型 @"iPhone", @"iPod touch"
-#ifndef                         Device_model
+#ifndef Device_model
 #define Device_model            [[UIDevice currentDevice]model]
 #endif
 
@@ -91,11 +92,7 @@
 
 //iTunesLink 链接－－iTunesLink＋appID，ios6以后有直接跳转appStore的item应用Controller页面
 #ifndef ITUNESLINK
-#if __IPHONE_7_0
 #define ITUNESLINK @"http://itunes.apple.com/cn/app/id"
-#else
-#define ITUNESLINK @"http://ax.itunes.apple.com/cn/app/id"
-#endif
 #endif
 
 //检查版本更新请求数据用的
@@ -110,25 +107,10 @@
 /***************************
  获取屏幕信息（尺寸，宽，高），bounds 就是屏幕的全部区域：例：0，0，320，568
  ****************************/
+#ifndef LCDW
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
 #define LCDH ([[UIScreen mainScreen] bounds].size.height)
-
-#define LCDNH (self.navigationController.navigationBar.bounds.size.height)
-
-//当用了系统navigationBar的时候。获取可用尺寸高度
-#define LCDH_nav  (LCDH-LCDNH-20)
-//当用了系统navigationBar和tabBar的时候。获取可用尺寸高度
-#define LCDH_navAndTool  (LCDH_nav-self.navigationController.toolbar.bounds.size.height)
-
-#define LCDH_navAndTab (LCDH_nav-self.navigationController.tabBarController.tabBar.bounds.size.height)
-
-//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
-
-//iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；
-//宏定义的变量数字一定要加()才能准;CGFloat right = (LCDScale_5Equal6_To6plus(-93.f))-15.f
-#define LCDScale_5Equal6_To6plus(X) (IS_IPHONE_6P ? ((X)*LCDW/375) : (X))
-
+#endif
 
 #ifndef SCREEN_WIDTH
 
@@ -137,9 +119,18 @@
 #endif
 
 #ifndef SCREEN_MAX_LENGTH
-#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
-#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MAX_LENGTH (MAX(LCDW, LCDH))
+#define SCREEN_MIN_LENGTH (MIN(LCDW, LCDH))
 #endif
+
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#ifndef LCDScale_iphone6_Width
+#define LCDScale_iphone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#endif
+
+//iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；
+//宏定义的变量数字一定要加()才能准;CGFloat right = (LCDScale_5Equal6_To6plus(-93.f))-15.f
+#define LCDScale_5Equal6_To6plus(X) (IS_IPHONE_6P ? ((X)*SCREEN_MIN_LENGTH/375) : (X))
 
 #ifndef IS_IPHONE_4_OR_LESS
 #define IS_IPHONE_4_OR_LESS (SCREEN_MAX_LENGTH < 568.0)

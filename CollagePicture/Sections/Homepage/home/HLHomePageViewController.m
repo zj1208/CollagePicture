@@ -63,7 +63,7 @@
     // self.title 底部的tabbar会有字
     self.navigationItem.title = @"彩票";
     
-    self.headerView = [[HLHomePageADHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+    self.headerView = [[HLHomePageADHeaderView alloc] initWithFrame:CGRectMake(0, 0, LCDW, 80)];
     [self.headerView setAdLinks:@[@"3D", @"11xuan5"]];
     self.tableView.tableHeaderView = self.headerView;
 }

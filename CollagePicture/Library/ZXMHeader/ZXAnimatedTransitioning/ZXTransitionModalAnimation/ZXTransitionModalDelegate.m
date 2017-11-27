@@ -7,7 +7,7 @@
 //
 
 #import "ZXTransitionModalDelegate.h"
-#import "ZXModalAnimation.h"
+
 
 @implementation ZXTransitionModalDelegate
 //1
@@ -15,6 +15,7 @@
 {
     ZXModalAnimation *transition = [[ZXModalAnimation alloc] init];
     transition.type = ZXAnimationTypePresent;
+    transition.contentSize = self.contentSize;
     return transition;
 }
 

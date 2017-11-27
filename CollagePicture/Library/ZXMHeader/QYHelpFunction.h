@@ -101,13 +101,6 @@ FOUNDATION_EXTERN NSString *const QYHelpFunctionVersion ;
 -(float)zhuFile_checkImageFileTempSize:(NSString *)diskCachePath;
 
 
-#pragma mark-获取from 到 to之间的随机整数。
--(int)zhuGetRandomNumber:(int)from to:(int)to;
-
-
-#pragma mark-获取length个(0-9的)随机数组合字符串/
-- (NSString *)zhgetRandomNumber:(int)length;
-
 
 #pragma mark --图片
 /**

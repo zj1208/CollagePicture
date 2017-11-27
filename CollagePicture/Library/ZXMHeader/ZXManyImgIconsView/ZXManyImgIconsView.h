@@ -72,13 +72,13 @@ NS_ASSUME_NONNULL_END
 
 - (void)layoutSubviews
 {
- 
+     [super layoutSubviews];
     CGSize size  = [self.iconsView sizeWithIconsViewCount:self.iconsView.thumbnailUrlsArray.count];
     [self.iconsContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
         
         make.size.mas_equalTo(size);
     }];
-    [super layoutSubviews];
+
 }
 
 - (void)setData:(id)data

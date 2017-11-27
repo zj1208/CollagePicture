@@ -35,7 +35,6 @@
 
 - (void)awakeFromNib
 {
-//  [self commonInit];
     [super awakeFromNib];
 }
 
@@ -93,6 +92,7 @@
     item.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1 constant:10];
     [self addConstraint:constraint1];
+    
     
     NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeft multiplier:1 constant:5];
     [self addConstraint:constraint3];

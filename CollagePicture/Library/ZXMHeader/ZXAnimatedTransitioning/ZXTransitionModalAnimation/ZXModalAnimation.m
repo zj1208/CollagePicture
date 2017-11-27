@@ -8,9 +8,14 @@
 
 #import "ZXModalAnimation.h"
 
+@interface ZXModalAnimation ()
+
+@property (nonatomic, strong)UIView *coverView;
+
+@end
+
 @implementation ZXModalAnimation
 {
-    UIView *_coverView;
     NSArray *_constraints;
 }
 #pragma mark - Animated Transitioning
@@ -60,12 +65,20 @@
 
 //        toVC.view.translatesAutoresizingMaskIntoConstraints = NO;
         //添加整个控制器的view，且让它是透明的；
-        toVC.view.frame =containerView.frame;
-        toVC.view.backgroundColor = [UIColor clearColor];
         [containerView addSubview:toVC.view];
-        toVC.view.alpha = 0.f;
- 
+        if (!CGSizeEqualToSize(CGSizeZero, self.contentSize))
+        {
+            toVC.view.layer.cornerRadius = 4.f;
+            toVC.view.layer.masksToBounds = YES;
+            [self addConstraintsView:containerView withView:toVC.view];
+        }
+        else
+        {
+            toVC.view.frame =containerView.frame;
+            toVC.view.backgroundColor = [UIColor clearColor];
+        }
         //控制用户交互
+        toVC.view.alpha = 0.f;
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.f options:UIViewAnimationOptionCurveEaseIn animations:^{
             
@@ -130,20 +143,25 @@
 }
 
 
-- (void)addConstraintsView:(UIView*)containerView withView:(UIView *)modalView
-{
-    NSDictionary *views = NSDictionaryOfVariableBindings(containerView,modalView);
-    
-    NSArray *array = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-35-[modalView]-35-|" options:0 metrics:nil views:views];
-    _constraints = [NSArray arrayWithArray:array];
-    [containerView addConstraints:_constraints];
-    
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    [containerView addConstraint:constraint4];
-    
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:400];
-    [modalView addConstraint:constraint3];
+//containerView父视图，modalView：展示的子视图
 
+- (void)addConstraintsView:(UIView *)containerView withView:(UIView *)modalView
+{
+    modalView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    
+    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    [containerView addConstraint:constraint3];
+    
+    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.contentSize.height];
+    [modalView addConstraint:constraint4];
+
+    
+    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    [containerView addConstraint:constraint1];
+
+    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.contentSize.width];
+    [modalView addConstraint:constraint2];
 
 //    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeTop multiplier:1 constant:100];
 //    [containerView addConstraint:constraint4];

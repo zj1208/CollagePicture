@@ -8,14 +8,13 @@
 
 #import "ZXLabelsTagsView.h"
 
+static NSInteger const ZXMaxItemCount = 10;
 
-static NSInteger ZXMaxItemCount = 10;
 
+static CGFloat const ZXMinimumInteritemSpacing = 12.f;//item之间最小间隔
+static CGFloat const ZXMinimumLineSpacing = 12.f; //最小行间距
 
-static CGFloat ZXMinimumInteritemSpacing = 10.f;//item之间最小间隔
-static CGFloat ZXMinimumLineSpacing = 10.f; //最小行间距
-
-static NSString * const reuseInputTagsCell = @"Cell";
+static NSString * const reuseTagsCell = @"Cell";
 
 @interface ZXLabelsTagsView ()
 
@@ -34,8 +33,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 */
 - (void)awakeFromNib
 {
-    //[self commonInit];
-    //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
+     //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
     [super awakeFromNib];
 }
 - (instancetype)init
@@ -63,11 +61,26 @@ static NSString * const reuseInputTagsCell = @"Cell";
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        //如果写在这里，永远是这个值；
         [self commonInit];
     }
     return self;
 }
+
+- (void)commonInit
+{
+    self.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
+    self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
+    self.minimumLineSpacing = ZXMinimumLineSpacing;
+    self.maxItemCount = ZXMaxItemCount;
+    self.apportionsItemWidthsByContent = NO;
+    self.itemSameSize = CGSizeMake(75.f, 26.f);
+    self.titleFontSize = 14.f;
+    self.cellSelectedStyle = NO;
+}
+
+
+
+#pragma mark - layoutSubviews
 
 - (void)layoutSubviews
 {
@@ -75,36 +88,78 @@ static NSString * const reuseInputTagsCell = @"Cell";
     self.collectionView.frame = self.bounds;
 }
 
+#pragma mark - Setter
 
-- (void)commonInit
+
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex
 {
-    self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-    self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
-    self.minimumLineSpacing = ZXMinimumLineSpacing;
-    self.maxItemCount = ZXMaxItemCount;
-    
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = self.sectionInset;
-    self.collectionFlowLayout = flowLayout;
-    
-    
-    UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
-    self.collectionView = collection;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    [self addSubview:self.collectionView];
-    
-    
-    if (!_dataMArray)
+    _selectedIndex = selectedIndex;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:selectedIndex inSection:0];
+    [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+    if (self.cellSelectedStyle)
     {
-        _dataMArray = [NSMutableArray array];
+        NSArray *visibleIndexPaths = [self.collectionView indexPathsForVisibleItems];
+        [visibleIndexPaths enumerateObjectsUsingBlock:^(NSIndexPath*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            LabelCell * cell = (LabelCell *)[self.collectionView cellForItemAtIndexPath:obj];
+            [self collectionView:self.collectionView willDisplayCell:cell forItemAtIndexPath:indexPath];
+            
+        }];
+ 
     }
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:nibName_LabelCell bundle:nil] forCellWithReuseIdentifier:reuseInputTagsCell];
-    
-    self.collectionView.scrollEnabled = NO;
+
 }
+
+
+
+- (NSMutableArray *)dataMArray {
+    if (_dataMArray == nil) {
+        _dataMArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _dataMArray;
+}
+
+
+#pragma mark - UICollectionView
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView)
+    {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.sectionInset = self.sectionInset;
+        self.collectionFlowLayout = flowLayout;
+        
+        UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
+        collection.backgroundColor = [UIColor whiteColor];
+        collection.delegate = self;
+        collection.dataSource = self;
+        [self addSubview:collection];
+        
+        [collection registerNib:[UINib nibWithNibName:nibName_LabelCell bundle:nil] forCellWithReuseIdentifier:reuseTagsCell];
+        collection.scrollEnabled = NO;
+        
+        _collectionView = collection;
+
+    }
+    return _collectionView;
+}
+
+- (void)setCollectionViewLayoutWithEqualSpaceAlign:(AlignType)alignType withItemEqualSpace:(CGFloat)equalSpace animated:(BOOL)animated
+{
+    
+    EqualSpaceFlowLayoutEvolve * flowLayout = [[EqualSpaceFlowLayoutEvolve alloc]initWthType:alignType];
+    flowLayout.betweenOfCell = equalSpace ==NSNotFound?10:equalSpace;
+    self.collectionFlowLayout = flowLayout;
+    flowLayout.sectionInset = self.sectionInset;
+    [self.collectionView setCollectionViewLayout:flowLayout animated:NO completion:^(BOOL finished) {
+        
+    }];
+}
+
+
+
 
 #pragma mark - UICollectionView
 
@@ -114,38 +169,37 @@ static NSString * const reuseInputTagsCell = @"Cell";
 }
 
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
- 
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return self.dataMArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    LabelCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseInputTagsCell forIndexPath:indexPath];
-    cell.highlighted = YES;
+    LabelCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseTagsCell forIndexPath:indexPath];
+    cell.titleLab.font = [UIFont systemFontOfSize:self.titleFontSize];
     cell.title = [self.dataMArray objectAtIndex:indexPath.item];    // Configure the cell
+    if (!self.apportionsItemWidthsByContent)
+    {
+        cell.height = self.itemSameSize.height;
+    }
     return cell;
 }
-
 
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return self.sectionInset;
-    //    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return self.minimumLineSpacing;
-    //    return 10;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     return self.minimumInteritemSpacing;
-    //    return 10;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
@@ -153,82 +207,101 @@ static NSString * const reuseInputTagsCell = @"Cell";
     return CGSizeZero;
 }
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-//{
-//    return CGSizeMake(0, 10);
-//}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static LabelCell *cell =  nil;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
+    if (self.apportionsItemWidthsByContent)
+    {
+        static LabelCell *cell =  nil;
+        static dispatch_once_t onceToken;
         
-        if (cell == nil) {
-            cell = [[NSBundle mainBundle]loadNibNamed:@"LabelCell" owner:nil options:nil][0];
-        }
-    });
+        dispatch_once(&onceToken, ^{
+            
+            if (cell == nil) {
+                cell = [[NSBundle mainBundle]loadNibNamed:@"LabelCell" owner:nil options:nil][0];
+            }
+        });
+        cell.titleLab.font = [UIFont systemFontOfSize:self.titleFontSize];
+        cell.title = [self.dataMArray objectAtIndex:indexPath.item];
+        cell.height = 26.f;
+        return [cell sizeForCell];
+    }
     
-    cell.title = [self.dataMArray objectAtIndex:indexPath.item];    
-    return [cell sizeForCell];
+    return self.itemSameSize;
 }
 
-//展示数据外观更改
+// 展示数据外观更改
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
+//    为什么cell的backgoundColor设置无效?
     LabelCell *newCell = (LabelCell *)cell;
-    
+
+    if (newCell.selected && self.cellSelectedStyle)
+    {
+        UIColor *textColor = [UIColor colorWithRed:255.f/255 green:84.f/255 blue:52.f/255 alpha:1];
+        newCell.titleLab.textColor = textColor;
+        newCell.titleLab.layer.borderColor = textColor.CGColor;
+        newCell.titleLab.backgroundColor = [UIColor colorWithRed:255.f/255 green:245.f/255 blue:241.f/255 alpha:1];
+    }
+    else
+    {
+        // 默认设置
+        newCell.titleLab.textColor = [UIColor redColor];
+        newCell.titleLab.layer.borderColor = [UIColor redColor].CGColor;
+        newCell.titleLab.backgroundColor = self.tagBackgroudColor?self.tagBackgroudColor:[UIColor whiteColor];
+    }
+
+ 
     if ([self.delegate respondsToSelector:@selector(zx_labelsTagsView:willDisplayCell:forItemAtIndexPath:)])
     {
         [self.delegate zx_labelsTagsView:self willDisplayCell:newCell forItemAtIndexPath:indexPath];
     }
-    else
-    {
-        //默认设置
-        newCell.titleLab.textColor = [UIColor redColor];
-        newCell.layer.borderColor = [UIColor redColor].CGColor;
-        newCell.titleLab.backgroundColor = self.tagBackgroudColor?self.tagBackgroudColor:[UIColor whiteColor];
-    }
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+//- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return YES;
+//}
 
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.cellSelectedStyle)
+    {
+        NSArray *visibleIndexPaths = [collectionView indexPathsForVisibleItems];
+        [visibleIndexPaths enumerateObjectsUsingBlock:^(NSIndexPath*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            LabelCell * cell = (LabelCell *)[collectionView cellForItemAtIndexPath:obj];
+            [self collectionView:collectionView willDisplayCell:cell forItemAtIndexPath:indexPath];
+            
+        }]; 
+    }
+
     if ([self.delegate respondsToSelector:@selector(zx_labelsTagsView:collectionView:didSelectItemAtIndexPath:)])
     {
         [self.delegate zx_labelsTagsView:self collectionView:collectionView didSelectItemAtIndexPath:indexPath];
     }
-//    //添加标签
-//    if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
-//    {
-//        if ([self.delegate respondsToSelector:@selector(zxInputActionWithCollectionView:didSelectItemAtIndexPath: didAddTags:)])
-//        {
-//            [self.delegate zxInputActionWithCollectionView:collectionView didSelectItemAtIndexPath:indexPath didAddTags:self.dataMArray];
-//        }
-//        else
-//        {
-//            [self presentAlertController];
-//        }
-//    }
-//    //其余选中事件是删除标签
-//    else
-//    {
-//        [self reloadDataWithDeleteObjectWithCollectionView:collectionView didSelectItemAtIndexPath:indexPath];
-//    }
 }
 
 
-//计算collectionView的总高度
+//计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；可以在父视图用layoutIfNeed先执行layoutSubviews的设置frame方法；
 
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data
 {
@@ -238,10 +311,13 @@ static NSString * const reuseInputTagsCell = @"Cell";
     }
     [self setData:data];
     
-    NSInteger item = [self.dataMArray count]-1;
-    NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    NSInteger maxIndex = [self.dataMArray count]-1;
+    NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
-    return CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom;
+    CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
+//    self.collectionView.zx_height = height;
+
+    return ceilf(height);
 }
 
 - (void)setData:(NSArray *)data

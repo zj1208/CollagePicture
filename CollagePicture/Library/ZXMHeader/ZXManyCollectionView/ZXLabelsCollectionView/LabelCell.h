@@ -15,6 +15,8 @@ static NSString *nibName_LabelCell = @"LabelCell";
 @property (nonatomic, copy) NSString *title;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
+@property (nonatomic, assign)CGFloat height;
+
 
 - (CGSize)sizeForCell;
 

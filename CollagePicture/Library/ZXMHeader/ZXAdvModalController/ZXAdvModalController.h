@@ -10,11 +10,12 @@
 #import "ZXAdvModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 @class ZXAdvModalController;
 
 @protocol ZXAdvModalControllerDelegate <NSObject>
 
-
+@optional
 /**
  点击广告图按钮的回调代理
 
@@ -60,7 +61,7 @@ NS_ASSUME_NONNULL_END
     ZXAdvModalController *vc = [[ZXAdvModalController alloc] initWithNibName:nil bundle:nil];
     vc.btnActionDelegate = self;
     vc.modalPresentationStyle = UIModalPresentationCustom;
-    vc.transitioningDelegate = self;
+    vc.transitioningDelegate = self.transitonModelDelegate;
     ZXAdvModel *zxModel =[[ZXAdvModel alloc]initWithDesc:model.desc picString:model.pic url:model.url];
     vc.advModel = zxModel;
     [self presentViewController:vc animated:YES completion:nil];
@@ -71,23 +72,8 @@ NS_ASSUME_NONNULL_END
 - (void)zx_advModalController:(ZXAdvModalController *)controller advItem:(ZXAdvModel *)advModel
 {
     //业务逻辑的跳转
-    [[WYUtility dataUtil]cheackAdvURLToControllerWithSoureController:self.navigationController advUrlString:advModel.url];
+     [[WYUtility dataUtil]routerWithName:advModel.url withSoureController:self];
 }
 
- 
- #pragma mark-UIViewControllerTransitionDelegate
- 
- - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
- {
-    self.modalAnimation.type = ZXAnimationTypePresent;
-    return self.modalAnimation;
- }
- 
- 
- - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
- {
-    self.modalAnimation.type = ZXAnimationTypeDismiss;
-    return self.modalAnimation;
- }
 
  */

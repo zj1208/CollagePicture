@@ -37,18 +37,18 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 
 @implementation ZXEmptyViewController
 
-+ (instancetype)getInstance
-{
-    @synchronized(self)
-    {
-        static ZXEmptyViewController *obj = nil;
-        if (obj == nil)
-        {
-            obj = [[self alloc] init];
-        }
-        return obj;
-    }
-}
+//+ (instancetype)getInstance
+//{
+//    @synchronized(self)
+//    {
+//        static ZXEmptyViewController *obj = nil;
+//        if (obj == nil)
+//        {
+//            obj = [[self alloc] init];
+//        }
+//        return obj;
+//    }
+//}
 
 
 - (void)viewDidLoad {
@@ -57,9 +57,13 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self setUI];
+}
+
+- (void)setUI
+{
     UIImageView *imgView = [[UIImageView alloc] init];
     imgView.contentMode = UIViewContentModeScaleToFill;
-    
     [self.view addSubview:imgView];
     self.imageView = imgView;
     
@@ -79,10 +83,12 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     [btn setTitleColor:[UIColor colorWithWhite:0.3 alpha:1] forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn addTarget:self action:@selector(updateNewData:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     [self.view addSubview:btn];
     self.updateBtn = btn;
+ 
 }
+
 
 
 //设置圆角
@@ -99,13 +105,18 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 - (void)updateNewData:(id)sender
 {
     [self hideEmptyViewInController:self.parentViewController hasLocalData:YES];
-//    [MBProgressHUD zx_showLoadingWithStatus:@"正在加载..." toView:nil];
 
     if ([self.delegate respondsToSelector:@selector(zxEmptyViewUpdateAction)])
     {
         [self.delegate zxEmptyViewUpdateAction];
     }
 }
+
+- (void)setContentOffest:(CGSize)contentOffest
+{
+    _contentOffest = contentOffest;
+}
+
 
 - (void)viewDidLayoutSubviews
 {
@@ -116,23 +127,25 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 //    emptyVC.delegate = self;
 //    emptyVC.view.frame = CGRectMake(0, 64, LCDW, LCDH);
     
-    
+    //先设置图片居中显示
     [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
        
         make.size.mas_equalTo(_imageView.image.size);
         make.centerX.mas_equalTo(self.view.mas_centerX);
     }];
     
-    
+    //有提示语的时候， 有按钮，无按钮；
     if (self.label.text.length>0 )
     {
         CGRect rect = [self.label.text boundingRectWithSize:CGSizeMake(LCDW-24, LCDH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.label.font} context:nil];
 
         CGFloat otherContentHeight = 0.f;
+        //有点击加载按钮；
         if (!self.updateBtn.hidden)
         {
             otherContentHeight = 12+rect.size.height+40+LCDScale_iphone6_Width(30);
         }
+        //无点击加载按钮
         else
         {
             otherContentHeight = 12+rect.size.height;
@@ -140,36 +153,30 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
         
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
-            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64);
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+_contentOffest.height);
         }];
 
     }
-    if (self.label.text.length==0 && !self.updateBtn.hidden)
+    //无提示语，有加载按钮；
+    else if (self.label.text.length==0 && !self.updateBtn.hidden)
     {
         CGFloat otherContentHeight = 12+40+LCDScale_iphone6_Width(30);
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
-            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64);
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+_contentOffest.height);
         }];
 
     }
-    if (self.label.text.length==0 && self.updateBtn.hidden)
+    //无提示语，无加载按钮；
+    else if (self.label.text.length==0 && self.updateBtn.hidden)
     {
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
-            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-64);
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-64+_contentOffest.height);
         }];
         
     }
 
-//    if (self.OnlyImage) {
-//        [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//            
-//            make.size.mas_equalTo(_imageView.image.size);
-//            make.centerX.mas_equalTo(self.view.mas_centerX);
-//            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-_imageView.image.size.height*0.3);
-//        }];
-//    }
     
     [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
        
@@ -193,13 +200,6 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 
 - (void)addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide
 {
-//    [MBProgressHUD zx_hideHUDForView:nil];
-
-//    if ([NSString zhIsBlankString:title]) {
-//        self.OnlyImage = YES;
-//    }else{
-//        self.OnlyImage = NO; //接生意与我相关切换时没数据的氛围图有文字
-//    }
     
     if (error)
     {
@@ -274,6 +274,19 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
             [self removeFromParentViewController];
             [self endAppearanceTransition];
         }
+    }
+}
+
+- (void)hideEmptyViewInController:(UIViewController *)viewController
+{
+    if ([viewController.childViewControllers containsObject:self])
+    {
+        [self willMoveToParentViewController:nil];
+        [self beginAppearanceTransition:NO animated:YES];
+        
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+        [self endAppearanceTransition];
     }
 }
 

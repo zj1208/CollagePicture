@@ -8,7 +8,7 @@
 
 #import "MakingPhotoController.h"
 #import "ImageEditView.h"
-#import "MorePickerVCManager.h"
+#import "ZXImagePickerVCManager.h"
 //#import "EditorCompleteView.h"
 
 //#import "PayOderViewController.h"
@@ -26,12 +26,12 @@
 #define LCDScale_LandY(X) X*(LCDH-40)/(320-40)
 
 
-@interface MakingPhotoController ()<ImageEditViewPickerDelegate,MorePickerVCManagerDelegate>
+@interface MakingPhotoController ()<ImageEditViewPickerDelegate,ZXImagePickerVCManagerDelegate>
 
 /**
  *  多选照片管理器
  */
-@property(nonatomic,strong) MorePickerVCManager *morePickerVCManager;
+@property(nonatomic,strong) ZXImagePickerVCManager *imagePickerVCManager;
 /**
  *  imageEditView的group的数组；
  */
@@ -263,13 +263,12 @@
 #pragma mark - MorePickerController
 - (void)addMorePickerController
 {
-    MorePickerVCManager *manager = [[MorePickerVCManager alloc] init];
-    self.morePickerVCManager = manager;
-    self.morePickerVCManager.morePickerActionDelegate = self;
-    self.morePickerVCManager.displayCutBtn = YES;
-    self.morePickerVCManager.maxNumberOfSelection =12;
-    self.morePickerVCManager.minNumberOfSelection =1;
-    self.morePickerVCManager.isNeedUpdate = YES;
+    ZXImagePickerVCManager *manager = [[ZXImagePickerVCManager alloc] init];
+    self.imagePickerVCManager = manager;
+    self.imagePickerVCManager.morePickerActionDelegate = self;
+    self.imagePickerVCManager.displayCutBtn = YES;
+    self.imagePickerVCManager.maxNumberOfSelection =12;
+    self.imagePickerVCManager.minNumberOfSelection =1;
 }
 
 #pragma mark - 加载模版图片数据
@@ -713,13 +712,13 @@
     self.tempEditingView = imageEditView;
     if (self.againMakingBtn.selected)
     {
-        self.morePickerVCManager.maxNumberOfSelection = self.imageEditViewMArray.count;
+        self.imagePickerVCManager.maxNumberOfSelection = self.imageEditViewMArray.count;
     }
     else
     {
-       // self.morePickerVCManager.maxNumberOfSelection = [self getTotalNumImageEditView];
+       // self.imagePickerVCManager.maxNumberOfSelection = [self getTotalNumImageEditView];
     }
-    [self.morePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+    [self.imagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
 }
 
 

@@ -31,5 +31,5 @@
 - (IBAction)uploadBtnAction:(UIButton *)sender;
 
 
-@property (nonatomic,weak) id<NewFunctionActionDelegate>delegate;
+@property (nonatomic, weak) id<NewFunctionActionDelegate>delegate;
 @end

@@ -29,20 +29,20 @@
     self.imageView.contentMode =UIViewContentModeScaleAspectFill;
     [self setView:self.imageView cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDidClicked:)];
-    [self.imageView addGestureRecognizer:singleTap];
+//    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDidClicked:)];
+//    [self.imageView addGestureRecognizer:singleTap];
 
 }
 
 
-// 单击手势
-- (void)imageDidClicked:(UITapGestureRecognizer *)sender
-{
-    if ([self.delegate respondsToSelector:@selector(zxDidSingleImageClick:)]) { // 自定义 自己管理点击事件
-        [self.delegate zxDidSingleImageClick:self];
-        return;
-    }
-}
+//// 单击手势
+//- (void)imageDidClicked:(UITapGestureRecognizer *)sender
+//{
+//    if ([self.delegate respondsToSelector:@selector(zxDidSingleImageClick:)]) { // 自定义 自己管理点击事件
+//        [self.delegate zxDidSingleImageClick:self];
+//        return;
+//    }
+//}
 
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
 {

@@ -35,12 +35,12 @@ NS_ASSUME_NONNULL_END
  @property (weak, nonatomic) IBOutlet ZXPlaceholdTextView *textView;
  @property (weak, nonatomic) IBOutlet UILabel *remainLab;
  @property (weak, nonatomic) IBOutlet UIView *containerTextView;
- 
+
  
 - (void)viewDidLoad
 {
  
-   [self.containerTextView zhSetCornerRadius:2.f borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xE1E1E1)];
+    [self.containerTextView zhSetCornerRadius:2.f borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xE1E1E1)];
 
     self.textView.text = nil;
     _remainLab.text =@"还可输入200字";

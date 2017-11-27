@@ -28,47 +28,57 @@ static CGFloat heightForCell = 24;
 //设置圆角
 - (void)setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
 {
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = radius;
-    self.layer.borderWidth = width;
+    self.titleLab.layer.masksToBounds = YES;
+    self.titleLab.layer.cornerRadius = radius;
+    self.titleLab.layer.borderWidth = width;
     
-    self.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
+    self.titleLab.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
 }
 
+//- (void)setSelected:(BOOL)selected
+//{
+//    [super setSelected:selected];
+//
+//    if (selected)
+//    {
+//        self.backgroundColor = [UIColor redColor];
+//    }
+//    else
+//    {
+//        self.backgroundColor = [UIColor whiteColor];
+//    }
+//}
 
 - (void)awakeFromNib {
     // Initialization code
 
-    [self setCornerRadius:heightForCell/2 borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xcccccc)];
+    [super awakeFromNib];
+    self.height = heightForCell;
+    [self setCornerRadius:heightForCell/2 borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xcccccc)];
     _titleLab.font = [UIFont systemFontOfSize:14];
     _titleLab.textColor = UIColorFromRGB_HexValue(0xcccccc);
     _titleLab.backgroundColor = [UIColor whiteColor];
     _titleLab.numberOfLines = 1;
-    [super awakeFromNib];
+
+}
+
+- (void)setHeight:(CGFloat)height
+{
+    _height = height;
+    [self setCornerRadius:height/2 borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xcccccc)];
 }
 
 - (void)setTitle:(NSString *)title
 {
     _title = title;
     _titleLab.text = _title;
-//    if (title.length>8)
-//    {
-//        _titleLab.text = [NSString stringWithFormat:@"%@...",[_title substringToIndex:7]];
-//    }
     [self layoutIfNeeded];
-    
     [self updateConstraintsIfNeeded];
 }
 
 - (CGSize)sizeForCell
 {
-//    if (_titleLab.text.length>8)
-//    {
-//        NSDictionary *dic = @{NSFontAttributeName:_titleLab.font};
-//        CGRect rect = [@"12345678123" boundingRectWithSize:CGSizeMake(LCDW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:dic context:nil];
-//        return CGSizeMake(rect.size.width+heightForCell, heightForCell);
-//    }
-    CGFloat width = [_titleLab sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width+ heightForCell;
-    return CGSizeMake(floorf(width), heightForCell);
+    CGFloat width = [_titleLab sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width+ self.height;
+    return CGSizeMake(floorf(width), self.height);
 }
 @end

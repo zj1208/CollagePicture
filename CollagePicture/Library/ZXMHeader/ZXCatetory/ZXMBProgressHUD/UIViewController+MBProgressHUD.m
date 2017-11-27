@@ -21,12 +21,21 @@
 
 - (void)zhHUD_showWithStatus:(NSString*)aText
 {
-    MBProgressHUD *hud = nil;
-    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
-    hud.bezelView.color = [UIColor colorWithWhite:0 alpha:0.75f];
-    if (![MBProgressHUD HUDForView:self.view])
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:self.view];
+    if (!hud)
     {
         hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+        //默认白色
+        hud.contentColor = [UIColor whiteColor];
+        hud.opaque = YES;
+        hud.backgroundColor = [UIColor clearColor];
+        //默认是模糊样式
+        hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.bezelView.color = [UIColor colorWithWhite:0 alpha:0.75f];
+        
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.backgroundColor = [UIColor clearColor];
     }
     hud.label.text= aText;
     
@@ -36,12 +45,20 @@
 - (void)zhHUD_showHUDAddedTo:(UIView*)view labelText:(NSString *)aText{
     
 
-    MBProgressHUD *hud = nil;
-    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
-    hud.bezelView.color = [UIColor colorWithWhite:0 alpha:0.75f];
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:view];
     if (![MBProgressHUD HUDForView:view])
     {
        hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+        //默认白色
+        hud.contentColor = [UIColor whiteColor];
+        hud.opaque = YES;
+        hud.backgroundColor = [UIColor clearColor];
+        //默认是模糊样式
+        hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.bezelView.color = [UIColor colorWithWhite:0 alpha:0.75f];
+        
+        hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+        hud.backgroundView.backgroundColor = [UIColor clearColor];
     }
     hud.label.text= aText;
 }
@@ -71,10 +88,16 @@
     [self zhHUD_hideHUD];
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //默认白色
+    hud.contentColor = [UIColor whiteColor];
+    hud.opaque = YES;
+    hud.backgroundColor = [UIColor clearColor];
+    //默认是模糊样式
     hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
     hud.bezelView.color = [UIColor colorWithWhite:0 alpha:0.75f];
-
-    hud.contentColor = UIColorFromRGB_HexValue(0xffffff);
+    
+    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.backgroundView.backgroundColor = [UIColor clearColor];
     
    
     if (aText.length>12)
@@ -117,7 +140,7 @@
 
 - (void)zhHUD_showGifPlay
 {
-    UIImage *image = [UIImage zx_animatedGIFNamed:@"litteMoney"];
+    UIImage *image = [UIImage zx_animatedGIFNamed:@"loading"];
     UIImageView *gifView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,image.size.width/2, image.size.height/2)];
     gifView.image = image;
     MBProgressHUD *hud = nil;

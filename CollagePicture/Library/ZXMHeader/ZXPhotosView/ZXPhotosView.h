@@ -65,6 +65,7 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
 
 /** 本地相册图片(注意：存的是UIImage)数组(默认最多为九张,当传入图片数组长度超过九张时，取前九张) */
 @property (nonatomic, strong, nullable) NSMutableArray *images;
+
 /** 当图片上传前，最多上传的张数，默认为9，用于ZXPhotosViewStateWillCompose*/
 @property (nonatomic, assign) NSInteger imagesMaxCountWhenWillCompose;
 

@@ -203,21 +203,23 @@
     {
         view = [[UIApplication sharedApplication].windows lastObject];
     }
-    ZXOverlay *overlay = [[ZXOverlay alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+    {
+        view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+    }
+    ZXOverlay *overlay = [[ZXOverlay alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame))];
     overlay.delegate = self;
     [overlay addSubview:self];
     [view addSubview:overlay];
     
-    
-    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
-
+    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), LCDW, CGRectGetHeight(self.frame));
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
-        
+
         self.frame = CGRectMake(0, CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
 
     } completion:^(BOOL finished) {
-        
+
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     }];
 }
@@ -236,6 +238,8 @@
                      animations:^{
                          
                          self.frame = CGRectMake(0,CGRectGetMinY(self.frame)+CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+//                         self.superview.alpha = 0.1;
+
                      }
                      completion:^(BOOL finished){
                          if ([self.superview isKindOfClass:[ZXOverlay class]])

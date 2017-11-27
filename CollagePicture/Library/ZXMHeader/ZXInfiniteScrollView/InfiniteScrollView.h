@@ -141,7 +141,7 @@ NS_CLASS_AVAILABLE_IOS(3_0) @interface InfiniteScrollView : UIView
 {
     ZXADBannerModel *model = (ZXADBannerModel *)data;
     
-    [[WYUtility dataUtil]cheackAdvURLToControllerWithSoureController:self.navigationController advUrlString:model.url];
+    [[WYUtility dataUtil] routerWithName:model.url withSoureController:self];
 }
 */
 

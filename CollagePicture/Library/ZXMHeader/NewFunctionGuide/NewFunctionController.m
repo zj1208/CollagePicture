@@ -33,9 +33,6 @@ NSString *const kNewFunctionGuide = @"kNewFunctionGuide";
     
     self.uploadBtn.layer.masksToBounds = YES;
     self.uploadBtn.layer.cornerRadius = 5.f;
-    
- 
-    
 }
 
 - (void)firstLaunchApp
@@ -61,24 +58,20 @@ NSString *const kNewFunctionGuide = @"kNewFunctionGuide";
 
 - (IBAction)noPromptAction:(UIButton *)sender {
     
-    //统计
-//    [MobClick event:kUM_guide_not_show];
-    
+    __weak __typeof(self)weakSelf = self;
     [self dismissViewControllerAnimated:YES completion:^{
         
-        [self firstLaunchApp];
+        [weakSelf firstLaunchApp];
     }];
 }
 
 
 - (IBAction)uploadBtnAction:(UIButton *)sender {
     
-//    //统计
-//    [MobClick event:kUM_guide_import_pic];
-    
+    __weak __typeof(self)weakSelf = self;
     [self dismissViewControllerAnimated:YES completion:^{
        
-         [self firstLaunchApp];
+        [weakSelf firstLaunchApp];
         if ([_delegate respondsToSelector:@selector(zxNewFuntionGuideControllerAction)])
         {
             [_delegate zxNewFuntionGuideControllerAction];

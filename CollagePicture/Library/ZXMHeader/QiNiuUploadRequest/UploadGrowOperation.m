@@ -102,7 +102,7 @@
 //        NSLog(@"uploadProgress=%@,%lld,%lld",uploadProgress,uploadProgress.completedUnitCount,uploadProgress.totalUnitCount);
 
         //iOS7 不回返回上传进度，直接返回错误totalUnitCount ＝－1,暂时无法解决；
-        if (Device_Version<8.0)
+        if (Device_SYSTEMVERSION<8.0)
         {
 //            if (uploadProgress.totalUnitCount!=0 && !uploadProgress.paused &&!uploadProgress.cancelled)
 //            {
@@ -122,7 +122,7 @@
         
         _currentIndex++;
         _singleCompletedBlock(model,nil,nil);
-        if (Device_Version<8.0)
+        if (Device_SYSTEMVERSION<8.0)
         {
             taskProgress.completedUnitCount = 100;
              _progressBlock(progress);

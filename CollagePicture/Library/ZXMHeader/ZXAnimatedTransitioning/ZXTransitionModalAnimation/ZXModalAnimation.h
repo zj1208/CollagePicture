@@ -8,11 +8,16 @@
 
 #import "ZXBaseAnimation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ZXModalAnimation : ZXBaseAnimation
+
+@property (nonatomic, assign) CGSize contentSize;
+
 
 @end
 
-
+NS_ASSUME_NONNULL_END
 
 /*
 - (void)requestFirstLogin
