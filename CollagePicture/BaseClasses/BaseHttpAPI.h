@@ -9,13 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "PageModel.h"
 #import "AFURLRequestSerialization.h"
-#import "GetIDFA.h"
 
 
 
 typedef void (^CompleteBlock)(id data);
 typedef void (^ErrorBlock)(NSError* error);
-typedef void (^CompletePageBlock)(id data,PageModel* page);
+typedef void (^CompletePageBlock)(id data,PageModel* pageModel);
 typedef void (^CompleteListBlock)(id data,NSInteger pageNo,NSInteger totalPage);
 
 
@@ -24,15 +23,22 @@ typedef void (^CompleteListBlock)(id data,NSInteger pageNo,NSInteger totalPage);
 
 static  NSString *const kHTTP_TOKENKEY  =    @"token";
 static  NSString *const kHTTP_startIndex = @"startIndex";
+
+static  NSString *const kHTTP_USERID_KEY=  @"userId";
+
 static  NSString *const kHTTP_PAGENO_KEY = @"pn";
 static  NSString *const kHTTP_PAGESIZE_KEY  =   @"ps";
-static  NSString *const kHTTP_USERID_KEY=  @"userId";
+
 
 static  NSString *const kHTTP_PAGENO_KEY2 = @"pageNo";
 static  NSString *const kHTTP_PAGESIZE_KEY2  =   @"pageSize";
 
 static  NSString *const kHTTP_PAGENO_KEY3 = @"pageNum";
 static  NSString *const kHTTP_PAGESIZE_KEY3  =   @"pageSize";
+
+#pragma mark - HttpKey
+
+static NSString *kHTTP_ID_KEY = @"id";
 
 /**
  *  token失效

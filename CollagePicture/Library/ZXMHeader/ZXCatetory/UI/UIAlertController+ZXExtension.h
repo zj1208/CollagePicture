@@ -86,7 +86,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param cancelButtonTitle 取消按钮文本，加粗；
  @param destructiveButtonTitle 销毁警告按钮文本，红色
  @param otherButtonTitles 另外的按钮数组文本
- @param tapBlock 按钮点击事件
+ @param tapBlock 点击各种按钮的block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
  @return 返回AlertController对象；
  */
 + (instancetype)zx_presentActionSheetInViewController:(UIViewController *)viewController
@@ -114,8 +114,9 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 
 @property (readonly, nonatomic) NSInteger cancelButtonIndex;
-@property (readonly, nonatomic) NSInteger firstOtherButtonIndex;
 @property (readonly, nonatomic) NSInteger destructiveButtonIndex;
+@property (readonly, nonatomic) NSInteger firstOtherButtonIndex;
+
 
 @end
 

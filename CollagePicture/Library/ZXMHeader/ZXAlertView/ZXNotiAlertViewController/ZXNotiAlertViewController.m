@@ -17,6 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    
+    [self setView:self.containerView cornerRadius:10.f borderWidth:0 borderColor:nil];
+
 }
 
 
@@ -46,4 +51,20 @@
 }
 */
 
+- (IBAction)cancleBtnAction:(UIButton *)sender {
+    
+    if (self.cancleActionHandleBlock)
+    {
+        self.cancleActionHandleBlock();
+    }
+    else
+    {
+        
+    }
+}
+
+- (IBAction)doBtnAction:(UIButton *)sender {
+    
+    self.doActionHandleBlock();
+}
 @end

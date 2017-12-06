@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZXNotiAlertViewController">
             <connections>
+                <outlet property="containerView" destination="4F5-KR-JaI" id="eV0-jK-dnn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,6 +38,9 @@
                             <state key="normal" title="暂不打开">
                                 <color key="titleColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <connections>
+                                <action selector="cancleBtnAction:" destination="-1" eventType="touchUpInside" id="HXg-05-9hr"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCi-QB-4Bi">
                             <rect key="frame" x="125" y="200" width="125" height="100"/>
@@ -44,6 +48,9 @@
                             <state key="normal" title="立即开启">
                                 <color key="titleColor" red="0.99923402070999146" green="0.17287006974220276" blue="0.23768466711044312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="doBtnAction:" destination="-1" eventType="touchUpInside" id="0CP-ow-6ji"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

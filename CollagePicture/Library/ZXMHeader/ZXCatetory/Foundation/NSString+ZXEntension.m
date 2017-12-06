@@ -505,18 +505,6 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return responseString;
 }
 
-+ (NSString *)zhGetUDIDString
-{
-    Class cls = NSClassFromString(@"UMANUtil");
-    SEL deviceIDSelector = @selector(openUDIDString);
-    NSString *deviceID = nil;
-    if(cls && [cls respondsToSelector:deviceIDSelector]){
-        deviceID = [cls performSelector:deviceIDSelector];
-    }
-    return deviceID;
-}
-
-
 
 
 

@@ -15,7 +15,7 @@
 @class ZXLabelsInputTagsView;
 
 @protocol ZXLabelsInputTagsViewDelegate <NSObject>
-//如果不实现这些协议，则会用默认的设置；
+// 如果不实现这些协议，则会用默认的设置；
 
 @optional
 /**
@@ -47,7 +47,7 @@
 
 
 
-//这个代理影响ZXLabelsInputTagsView在tableView的整体布局高度，所以一定要回调，重新计算总高度；
+// 这个代理影响ZXLabelsInputTagsView在tableView的整体布局高度，所以一定要回调，重新计算总高度；
 @required
 /**
   用默认添加labe事件回调,点击确定添加tag到数组后的回调，或点击移除数据后的回调；
@@ -61,9 +61,9 @@
 
 
 
-//只能一开始设置这些属性，在重用的时候，如果在awakFromNib方法里初始化这些属性，有效果；
-//如果不在awakFromNib，另外动态改变的，则无法记住属性，获取的时候依然是初始化的值；
-//所以，即使重用，也一定要用同一个一个强引用的cell，才能保证；
+// 只能一开始设置这些属性，在重用的时候，如果在awakFromNib方法里初始化这些属性，有效果；
+// 如果不在awakFromNib，另外动态改变的，则无法记住属性，获取的时候依然是初始化的值；
+// 所以，即使重用，也一定要用同一个一个强引用的cell，才能保证；
 
 
 @interface ZXLabelsInputTagsView : UIView<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
@@ -74,28 +74,28 @@
 
 @property (nonatomic, strong) NSMutableArray *dataMArray;
 
-//设置collectionView的sectionInset
+// 设置collectionView的sectionInset
 @property (nonatomic, assign)UIEdgeInsets sectionInset;
 
-//item之间的间距
+// item之间的间距
 @property (nonatomic, assign)CGFloat minimumInteritemSpacing;
-//行间距
+// 行间距
 @property (nonatomic, assign)CGFloat minimumLineSpacing;
 
-//设置是否存在输入标签
+// 设置是否存在输入标签
 @property (nonatomic, getter=isExistInputItem)BOOL existInputItem;
 
-//最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除
+// 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除
 @property (nonatomic, assign)NSInteger maxItemCount;
 
-//设置添加tag的提示文本，默认@"点击输入标签"
+// 设置添加tag的提示文本，默认@"点击输入标签"
 @property (nonatomic, copy) NSString *defaultAddTagTitle;
-//点击添加tag时，默认提示中的文本；
+// 点击添加tag时，默认提示中的文本；
 @property (nonatomic, copy) NSString *defaultAlertTitle;
-//点击添加tag时,默认提示框中的textField的最长文本长度；默认10个长度
+// 点击添加tag时,默认提示框中的textField的最长文本长度；默认10个长度
 @property (nonatomic, assign) NSInteger defaultAlertFieldTextLength;
 
-//添加tag标签的额外设置
+// 添加tag标签的额外设置
 @property (nonatomic, strong) UIColor *addTagColor;
 @property (nonatomic, strong) UIColor *addTagBorderColor;
 @property (nonatomic, assign) CGFloat addTagCornerRadius;

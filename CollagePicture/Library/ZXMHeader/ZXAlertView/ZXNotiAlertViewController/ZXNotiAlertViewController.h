@@ -10,4 +10,14 @@
 
 @interface ZXNotiAlertViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+//void(^photoModelItemViewBlock)(UIView* itemView);
+@property (nonatomic, copy) void (^cancleActionHandleBlock)(void);
+@property (nonatomic, copy) void (^doActionHandleBlock)(void);
+
+
+- (IBAction)cancleBtnAction:(UIButton *)sender;
+
+- (IBAction)doBtnAction:(UIButton *)sender;
+
 @end

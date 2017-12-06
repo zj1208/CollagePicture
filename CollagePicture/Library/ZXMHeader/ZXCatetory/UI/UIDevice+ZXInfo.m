@@ -77,6 +77,24 @@
 }
 
 
+- (nullable NSString *)getUMOpenUDIDString
+{
+    Class cls = NSClassFromString(@"UMANUtil");
+    SEL deviceIDSelector = @selector(openUDIDString);
+    NSString *deviceID = nil;
+    if(cls && [cls respondsToSelector:deviceIDSelector])
+    {
+        deviceID = [cls performSelector:deviceIDSelector];
+    }
+    return deviceID;
+}
+
+- (void)openUDIDString
+{
+    
+}
+
+
 #pragma mark - Device
 
 + (NSString *)getDeviceVersionInfo

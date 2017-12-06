@@ -245,10 +245,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)zhFilterEscapeCharacterWithJsonString:(NSString *)str;
 
 
-//根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；
-+ (NSString *)zhGetUDIDString;
-
-
 #pragma mark-获取[from, to]之间的随机整数。
 
 //  arc4random() % 10： 获取[0－9]的随机数

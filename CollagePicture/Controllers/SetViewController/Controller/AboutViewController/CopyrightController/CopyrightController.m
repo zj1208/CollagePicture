@@ -90,7 +90,7 @@
     NSDictionary *dic = [self.copyrightArray objectAtIndex:indexPath.row];
    
     ZXWebViewController *webController = [[ZXWebViewController alloc] initWithBarTitle:[dic objectForKey:@"name"]];
-    [webController loadWebPageWithUrlString:[dic objectForKey:@"homepage"]];
+    [webController loadWebPageWithURLString:[dic objectForKey:@"homepage"]];
     [self.navigationController pushViewController:webController animated:YES];
 }
 
@@ -101,7 +101,7 @@
     NSDictionary *dic = [self.copyrightArray objectAtIndex:indexPath.row];
     NSString *licenseAdress = [self getLicenseAddressWithLicenseName:[dic objectForKey:@"license"]];
     ZXWebViewController *webController = [[ZXWebViewController alloc] initWithBarTitle:[dic objectForKey:@"license"]];
-    [webController loadWebPageWithUrlString:licenseAdress];
+    [webController loadWebPageWithURLString:licenseAdress];
     [self.navigationController pushViewController:webController animated:YES];
 
 }

@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)getIDFAUUIDString;
 
 
+// 获取openUDID-第三方
+// 根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；
+
+- (nullable NSString *)getUMOpenUDIDString;
+
 
 
 // 获取设备类型名称；

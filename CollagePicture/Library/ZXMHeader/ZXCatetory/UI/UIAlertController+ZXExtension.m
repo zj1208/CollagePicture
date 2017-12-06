@@ -60,10 +60,11 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
        popoverPresentationControllerBlock:(nullable UIAlertControllerPopoverPresentationControllerBlock)popoverPresentationControllerBlock
                                  tapBlock:(nullable UIAlertControllerCompletionBlock)tapBlock
 {
-    NSString *aTitle = NSLocalizedString(title, nil);
-    NSString *aMessage = NSLocalizedString(message, nil);
-    NSString *aCancelButtonTitle = NSLocalizedString(cancelButtonTitle, nil);
-    NSString *aDestructiveButtonTitle = NSLocalizedString(destructiveButtonTitle, nil);
+    //不能为nil
+    NSString *aTitle = title?NSLocalizedString(title, nil):title;
+    NSString *aMessage = message?NSLocalizedString(message, nil):message;
+    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):cancelButtonTitle;
+    NSString *aDestructiveButtonTitle = destructiveButtonTitle?NSLocalizedString(destructiveButtonTitle, nil):destructiveButtonTitle;
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:preferredStyle];
     

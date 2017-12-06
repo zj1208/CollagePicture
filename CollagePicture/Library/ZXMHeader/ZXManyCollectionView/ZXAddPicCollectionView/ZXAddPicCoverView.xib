@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="ZXAddPicCoverView">
+            <rect key="frame" x="0.0" y="0.0" width="514" height="110"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ne-26-X0A">
+                    <rect key="frame" x="15" y="15" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="5ne-26-X0A" secondAttribute="height" multiplier="1:1" id="NuA-Ja-hAw"/>
+                    </constraints>
+                    <state key="normal" image="postImage"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传真实的图片（最多四张）有图的供应商有助于提高抢单成功率" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40b-j8-vms">
+                    <rect key="frame" x="107" y="38.5" width="392" height="33.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5ne-26-X0A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="82S-cB-ZNz"/>
+                <constraint firstAttribute="trailing" secondItem="40b-j8-vms" secondAttribute="trailing" constant="15" id="ALZ-wx-e6N"/>
+                <constraint firstItem="40b-j8-vms" firstAttribute="leading" secondItem="5ne-26-X0A" secondAttribute="trailing" constant="12" id="OEz-br-jkO"/>
+                <constraint firstItem="5ne-26-X0A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="tvK-gt-AUo"/>
+                <constraint firstItem="40b-j8-vms" firstAttribute="centerY" secondItem="5ne-26-X0A" secondAttribute="centerY" id="uh8-AW-Yb5"/>
+                <constraint firstItem="5ne-26-X0A" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wJb-Bu-oOF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addButton" destination="5ne-26-X0A" id="yCw-fK-MH6"/>
+                <outlet property="titleLabel" destination="40b-j8-vms" id="rqQ-u3-Cay"/>
+            </connections>
+            <point key="canvasLocation" x="55" y="208"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="postImage" width="80" height="80"/>
+    </resources>
+</document>

@@ -30,7 +30,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
 
-
+@property (nonatomic, strong) UIAlertAction *textAlertAction;
 @end
 
 @implementation ZXLabelsInputTagsView
@@ -54,15 +54,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
     //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
     [super awakeFromNib];
 }
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        [self commonInit];
-    }
-    return self;
-}
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -383,11 +375,18 @@ static NSString * const reuseInputTagsCell = @"Cell";
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
     
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
+        
+    }];
+    __weak typeof (self) weakSelf = self;
+    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:aCancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
          [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:alertController.textFields.firstObject];
     }];
-    __weak typeof (self) weakSelf = self;
+    
     UIAlertAction *otherAction = [UIAlertAction actionWithTitle:otherButtonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *textField = [alertController.textFields firstObject];
@@ -408,11 +407,9 @@ static NSString * const reuseInputTagsCell = @"Cell";
         }
       
     }];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
-        
-    }];
+
+    self.textAlertAction = otherAction;
+    otherAction.enabled = NO;
     
     [alertController addAction:cancelAction];
     [alertController addAction:otherAction];
@@ -437,13 +434,15 @@ static NSString * const reuseInputTagsCell = @"Cell";
 #pragma mark 默认点击输入添加按钮 警告提示中的textField的 通知监听回调
 - (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification
 {
+     UITextField *textField = notification.object;
+    self.textAlertAction.enabled = ![ZXLabelsInputTagsView zhIsBlankString:textField.text];
     if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:handleTextFieldTextDidChangeNotification:)])
     {
         [self.delegate zx_labelsInputTagsView:self handleTextFieldTextDidChangeNotification:notification];
     }
     else
     {
-        UITextField *textField = notification.object;
+       
         if (textField.text.length >self.defaultAlertFieldTextLength)
         {
             textField.text = [textField.text substringToIndex:self.defaultAlertFieldTextLength];

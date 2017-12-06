@@ -25,6 +25,15 @@
 
 #pragma mark -类方法
 
++ (instancetype)modelWithAsset:(PHAsset *)asset type:(ZXAssetModelMediaType)type
+{
+    ZXPhoto *model = [[ZXPhoto alloc] init];
+    model.asset = asset;
+    model.type = type;
+    return model;
+}
+
+
 + (instancetype)photoWithOriginalUrl:(nullable NSString *)originalUrl thumbnailUrl:(nullable NSString *)thumbnailUrl
 {
     ZXPhoto *photo = [[ZXPhoto alloc] init];

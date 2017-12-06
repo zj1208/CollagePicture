@@ -10,7 +10,6 @@
 #import "AFNetworking.h"
 #import "UserInfoUDManager.h"
 #import "WYUserDefaultManager.h"
-
 #import "AFHTTPSessionManager+Synchronous.h"
 
 
@@ -36,7 +35,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 
 
 
--(void) postRequest:(NSString *)path parameters:(NSDictionary *)parameter success:(CompleteBlock)success failure:(ErrorBlock)failure
+-(void)postRequest:(NSString *)path parameters:(NSDictionary *)parameter success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameter];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
@@ -47,8 +46,10 @@ NSInteger const kAPPErrorCode_Token = 5001;
     //    用于添加更多参数
     ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
-    //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    
+//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    AFJSONResponseSerializer *response =[AFJSONResponseSerializer serializer];
+//    response.removesKeysWithNullValues = YES;
+//    manager.responseSerializer = response;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval =10.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
@@ -73,6 +74,10 @@ NSInteger const kAPPErrorCode_Token = 5001;
     }];
 }
 
+//{
+//    Accept-Language = en;q=1;
+//    User-Agent = YiShangbao/2.4.0.0 (iPhone; iOS 11.0; Scale/2.00);
+//}
 
 //get请求
 -(void) getRequest:(NSString *)path parameters:(NSDictionary *)parameter success:(CompleteBlock)success failure:(ErrorBlock)failure
@@ -87,29 +92,33 @@ NSInteger const kAPPErrorCode_Token = 5001;
     ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    
+//    AFJSONResponseSerializer *response =[AFJSONResponseSerializer serializer];
+//    response.removesKeysWithNullValues = YES;
+//    manager.responseSerializer = response;
+//
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval =10.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+//    NSLog(@"%@",manager.requestSerializer.HTTPRequestHeaders);
     WS(weakSelf);
     [manager GET:@"/m" parameters:postDictionary progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        
-        NSHTTPURLResponse *response =  (NSHTTPURLResponse *)task.response;
-        NSLog(@"response.allHeaderFields=%@",response.allHeaderFields);
-        NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:baseURL];
-        NSLog(@"cookies =%@",cookies);
+//        NSLog(@"%@",task.response.URL);
+//        NSHTTPURLResponse *response =  (NSHTTPURLResponse *)task.response;
+//        NSLog(@"response.allHeaderFields=%@",response.allHeaderFields);
+//        NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:baseURL];
+//        NSLog(@"cookies =%@",cookies);
 
         [weakSelf requestSuccessDealWithResponseObeject:responseObject success:success failure:failure];
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
+//        NSLog(@"%@",task.response.URL);
         NSLog(@"%@,%@",error,@(error.code));
         
-        //        ZX_NSLog_ModelAllValue(error);
         //        NSLog(@"\n error.domain=%@ \n error.code=%ld \n error.userInfo=%@,\n error.localizedDescription=%@",error.domain,error.code,error.userInfo,error.localizedDescription);
         
         if (failure)
@@ -128,6 +137,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 - (void)requestSuccessDealWithResponseObeject:(id)responseObject success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
     NSString *str = [NSString zhGetJSONSerializationStringFromObject:responseObject];
+    
     NSLog(@"%@",str);
 
 //    NSLog(@"\n+++++++%@",responseObject);
@@ -141,6 +151,8 @@ NSInteger const kAPPErrorCode_Token = 5001;
        [self requestHeaderFieldsWithCookieToken:token];
        [UserInfoUDManager setToken:token];
     }
+    
+    
     NSDictionary *result = [responseObject objectForKey:@"result"];
     
     if ([[result objectForKey:kRequestSuccess_Key] integerValue] == kRequestSuccess_Value)
@@ -152,13 +164,17 @@ NSInteger const kAPPErrorCode_Token = 5001;
         NSString *code = [result objectForKey:@"code"];
         if ([code isEqualToString:kToken_Code_Value_Invalid] ||[code isEqualToString:kToken_Code_Value_Disabled])
         {
+//            NSString *message =[NSString stringWithFormat:@"您的登录已失效，请重新登录！\n 老token：%@",[UserInfoUDManager getToken]];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"token坏了" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//            [alert show];
             NSError * error = [self customErrorWithObject:@"您的登录已失效，请重新登录！" errorCode:kAPPErrorCode_Token userInfoErrorCode:nil];
+            //可以区分不同api，处理不同业务
+            [UserInfoUDManager loginOutWithTokenErrorAPI:[meta objectForKey:@"api"]];
             if (failure)
             {
                 failure(error);
             }
-            //可以区分不同api，处理不同业务
-            [UserInfoUDManager loginOutWithTokenErrorAPI:[meta objectForKey:@"api"]];
+ 
         }
         else
         {
@@ -179,12 +195,15 @@ NSInteger const kAPPErrorCode_Token = 5001;
     [cookieProperties setObject:token forKey:NSHTTPCookieValue];
     [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
     [cookieProperties setObject:[WYUserDefaultManager getkCookieDomain] forKey:NSHTTPCookieOriginURL];
-    [cookieProperties setObject:@"604800" forKey:NSHTTPCookieMaximumAge];
-    [cookieProperties setObject:@"1" forKey:NSHTTPCookieVersion];
+//    [cookieProperties setObject:@"604800" forKey:NSHTTPCookieMaximumAge];
+//    [cookieProperties setObject:@"1" forKey:NSHTTPCookieVersion];
+    [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:604800];
+    [cookieProperties setObject:date forKey:NSHTTPCookieExpires];
     NSHTTPCookie *cookie_token = [NSHTTPCookie cookieWithProperties:cookieProperties];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage]setCookie:cookie_token];
+//    po [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies
 }
-
 
 
 - (NSError *)getErrorFromError:(NSError *)error
@@ -215,6 +234,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
             break; //-1016
         //"JSON text did not start with array or object and option to allow fragments not set."
         case 3840:title = @"程序开小差了，请稍后再试哦"; break; //502
+        case NSURLErrorCallIsActive:title =@"网络请求被电话中断，请稍后再试哦";//-1019
         default: return error;
             break;
     }
@@ -278,7 +298,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
         [dicParam setObject:@"" forKey:HEAD_AUTHTOKEN];
     }
     [dicParam setObject:[BaseHttpAPI getCurrentDatetime] forKey:HEAD_TS];
-    [dicParam setObject:[GetIDFA idfaString] forKey:HEAD_DID];
+    [dicParam setObject:[[UIDevice currentDevice]getIDFAUUIDString] forKey:HEAD_DID];
     [dicParam setObject:@"" forKey:HEAD_LNG];
     [dicParam setObject:@"" forKey:HEAD_LAT];
     
@@ -414,15 +434,16 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
     manager.completionQueue = dispatch_queue_create("AFNetworking+Synchronous", NULL);
     
     NSError *error = nil;
-    NSData *data = [manager syncGET:@"/m" parameters:postDictionary task:NULL error:&error];
-    if (success && data)
-    {
-        success(data);
-    }
-    if (error)
-    {
-        failure (error);
-    }
+    id responseObject = [manager syncGET:@"/m" parameters:postDictionary task:NULL error:&error];
+    
+    [self requestSuccessDealWithResponseObeject:responseObject success:success failure:^(NSError *error) {
+        
+        if (error)
+        {
+            failure (error);
+        }
+
+    }];
 }
 
 @end

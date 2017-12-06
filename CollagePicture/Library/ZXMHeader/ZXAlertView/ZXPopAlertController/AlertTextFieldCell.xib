@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AlertTextFieldCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctX-rf-SzM">
+                    <rect key="frame" x="15" y="30.5" width="40" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="iDU-O1-Lyu"/>
+                    </constraints>
+                    <state key="normal" image="alert_unSelect.png"/>
+                </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu," textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MAd-8h-WcK" customClass="ZXPlaceholdTextView">
+                    <rect key="frame" x="65" y="10" width="285" height="83"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.32549019610000002" green="0.32549019610000002" blue="0.32549019610000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ctX-rf-SzM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Cvx-vW-7ve"/>
+                <constraint firstItem="MAd-8h-WcK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VAf-S0-w9e"/>
+                <constraint firstItem="MAd-8h-WcK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="VyB-Ci-2oy"/>
+                <constraint firstAttribute="trailing" secondItem="MAd-8h-WcK" secondAttribute="trailing" constant="25" id="bD3-Bv-Sra"/>
+                <constraint firstItem="MAd-8h-WcK" firstAttribute="leading" secondItem="ctX-rf-SzM" secondAttribute="trailing" constant="10" id="jhR-Fx-7Ve"/>
+                <constraint firstItem="ctX-rf-SzM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-10" id="lc9-Vp-5f3"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="accessoryBtn" destination="ctX-rf-SzM" id="rHa-5Y-ris"/>
+                <outlet property="textView" destination="MAd-8h-WcK" id="agH-8J-nA9"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="45.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="alert_unSelect.png" width="16" height="16"/>
+    </resources>
+</document>

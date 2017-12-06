@@ -11,8 +11,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//AssetModelMediaTypeLivePhoto
+typedef  NS_ENUM(NSInteger,ZXAssetModelMediaType){
+    
+    ZXAssetModelMediaTypePhoto = 0,
+    ZXAssetModelMediaTypePhotoGif = 1,
+    ZXAssetModelMediaTypeVideo =2,
+    ZXAssetModelMediaTypeAudio = 3
+};
+
+@class PHAsset;
 @interface ZXPhoto : NSObject
 
+@property (nonatomic, strong) PHAsset *asset;
+
+@property (nonatomic, assign) ZXAssetModelMediaType type;
 /**
  图片缩略图地址
  */
@@ -34,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImage *image;
 
+
++ (instancetype)modelWithAsset:(PHAsset *)asset type:(ZXAssetModelMediaType)type;
 
 /**
  根据原图，缩略图快速创建模型
