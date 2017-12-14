@@ -21,8 +21,8 @@
 @implementation AboutViewController
 
 static NSString *const XTableViewCellIdentifier = @"Cell";
-static NSString * const kYWFeedbackAppKey = @"23557047";
-
+static NSString * const kFeedbackAppKey = @"23557047";
+static NSString * const kFeedbackAppSecret = @"******";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,7 +37,7 @@ static NSString * const kYWFeedbackAppKey = @"23557047";
 #pragma mark getter
 - (YWFeedbackKit *)feedbackKit {
     if (!_feedbackKit) {
-        _feedbackKit = [[YWFeedbackKit alloc] initWithAppKey:kYWFeedbackAppKey];
+        _feedbackKit = [[YWFeedbackKit alloc] initWithAppKey:kFeedbackAppKey appSecret:kFeedbackAppSecret];
     }
     return _feedbackKit;
 }

@@ -18,9 +18,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - AliyunOSSiOS (2.6.0)
-  - BCUserTrack (5.1.0.9):
-    - UTDID
+  - AliyunOSSiOS (2.6.5)
   - BlocksKit (2.2.5):
     - BlocksKit/All (= 2.2.5)
   - BlocksKit/All (2.2.5):
@@ -37,66 +35,73 @@ PODS:
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
   - BmobSDK (2.1.7)
+  - FLAnimatedImage (1.0.12)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - HMSegmentedControl (1.5.4)
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
-  - Masonry (0.6.4)
+  - Masonry (1.1.0)
   - MBProgressHUD (1.0.0)
-  - MJRefresh (3.0.8)
+  - MJRefresh (3.1.15.1)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
-  - SecurityGuardSDK (5.1.94)
-  - SGMain (5.1.94):
-    - SecurityGuardSDK (= 5.1.94)
+  - SDWebImage/GIF (4.0.0):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - SVPullToRefresh (0.4.1)
+  - THSegmentedPager (1.1.3):
+    - HMSegmentedControl (~> 1.5.2)
   - TMCache (2.1.0)
+  - TZImagePickerController (1.9.6)
   - UMengAnalytics (4.2.4)
-  - UTDID (1.1.0.16)
   - WebViewJavascriptBridge (6.0.2)
-  - YWFeedbackFMWK (2.0.3.1):
-    - BCUserTrack
-    - SecurityGuardSDK
-    - SGMain
 
 DEPENDENCIES:
-  - AFNetworking
-  - AFNetworking-Synchronous
-  - AliyunOSSiOS
+  - AFNetworking (~> 3.1.0)
+  - AFNetworking-Synchronous (~> 1.1.0)
+  - AliyunOSSiOS (~> 2.6.3)
   - BlocksKit (~> 2.2.5)
   - BmobSDK
-  - Mantle
-  - Masonry (~> 0.6.4)
-  - MBProgressHUD
-  - MJRefresh (~> 3.0.8)
-  - SDWebImage
+  - FMDB (~> 2.6.2)
+  - HMSegmentedControl (~> 1.5.4)
+  - Mantle (~> 2.1.0)
+  - Masonry (~> 1.1.0)
+  - MBProgressHUD (~> 1.0.0)
+  - MJRefresh (~> 3.1.14)
+  - SDWebImage (~> 4.0.0)
+  - SDWebImage/GIF
   - SVPullToRefresh (~> 0.4.1)
+  - THSegmentedPager (~> 1.1.3)
   - TMCache (~> 2.1.0)
-  - UMengAnalytics
-  - WebViewJavascriptBridge
-  - YWFeedbackFMWK (~> 2.0.2)
+  - TZImagePickerController (~> 1.9.3)
+  - UMengAnalytics (~> 4.2.4)
+  - WebViewJavascriptBridge (~> 6.0.2)
 
 SPEC CHECKSUMS:
-  AFNetworking: 18af9c7b41a3fd4d184bc1d3a9f0f32ddb90179b
-  AFNetworking-Synchronous: 9d344e9ab64cad375e83aba078001f915723f0f9
-  AliyunOSSiOS: b64828b0a165a4dc8c4e7a457241f1870d67b9a1
-  BCUserTrack: 684f468b8143be7a2ed10a8c449fd959b2a3a099
-  BlocksKit: 7a3a0bef9f934bb3f8126c7b765d74ab611ba190
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AFNetworking-Synchronous: 61b98fb931b114b0da2b243957ea533e2954c2a2
+  AliyunOSSiOS: 6d7f1f6aae0176095d147a88d60b23bbef93e0b7
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   BmobSDK: 23cbfbde2a7cfaeb0c8a946953a266fe5211e7f6
-  Mantle: 63fcfe5a9d1aaa4b9329e16540823f4a5bb4f019
-  Masonry: 6ee3c2340ad237997df6342277fbdbf9fefdb4cf
-  MBProgressHUD: 3a0586c59f596fc6c20a64e56c65b8207541addc
-  MJRefresh: 9ac89d91774e071e47652c823188ceb19a290a28
-  SDWebImage: 0431b708f404e7641dc0909a08bb893aa2e57b1b
-  SecurityGuardSDK: 05f6d782189160f2b23b731eed5cb314ce584855
-  SGMain: 8a3008d8a709259d4868f78ae3265659e58e4416
-  SVPullToRefresh: 14286dc463a8d1844ebf1e02bbb9123a4e059d63
-  TMCache: cf77615b85151a7875e8fa52f84265ac10fd3f49
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  HMSegmentedControl: b25bc4ec44766e073d62c473188fb354ee244b76
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MJRefresh: 5f8552bc25ca8751c010f621c1098dbdaacbccd6
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
+  THSegmentedPager: 9d4fb2acc78d77246caf1e71d2e878bf5977b904
+  TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
+  TZImagePickerController: 276dc7c0cc70da9ee354046474b405d87ef81c89
   UMengAnalytics: ef8d45f94c0e5771dc364cf6a5731d9d3b101da2
-  UTDID: c28855683c5ea2e77e597cb14609328f7d470d6e
-  WebViewJavascriptBridge: 64504aca9b8eb577ee5e53b06a8a2e64f926ff7a
-  YWFeedbackFMWK: dcf0f60a24099f9a35d3445ae9ef79f3633ef9f6
+  WebViewJavascriptBridge: 791ee0e26d1bf15efe5fb7fb9666a71a19b89d77
 
-PODFILE CHECKSUM: e17e8fa87245a8e93098b5a9f8066d4d23ef05d4
+PODFILE CHECKSUM: ab27642e9cd4954502fdfadfc6656ee228c35b34
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

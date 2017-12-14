@@ -6,10 +6,18 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 // 动态添加标签的collectionView
+// 2017.12.13
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
 
+// 编辑方式
+typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
+    
+    ZXLabelsInputCellEditingStyleNone,
+    ZXLabelsInputCellEditingStyleDelete, // 删除
+    ZXLabelsInputCellEditingStyleInsert  // 添加
+};
 
 
 @class ZXLabelsInputTagsView;
@@ -75,18 +83,23 @@
 @property (nonatomic, strong) NSMutableArray *dataMArray;
 
 // 设置collectionView的sectionInset
-@property (nonatomic, assign)UIEdgeInsets sectionInset;
+@property (nonatomic, assign) UIEdgeInsets sectionInset;
 
 // item之间的间距
-@property (nonatomic, assign)CGFloat minimumInteritemSpacing;
+@property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 // 行间距
-@property (nonatomic, assign)CGFloat minimumLineSpacing;
+@property (nonatomic, assign) CGFloat minimumLineSpacing;
 
 // 设置是否存在输入标签
-@property (nonatomic, getter=isExistInputItem)BOOL existInputItem;
+@property (nonatomic, getter=isExistInputItem) BOOL existInputItem;
 
 // 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除
-@property (nonatomic, assign)NSInteger maxItemCount;
+@property (nonatomic, assign) NSInteger maxItemCount;
+
+// 设置item的width，height，size；
+@property (nonatomic, assign) CGFloat itemWidth;
+@property (nonatomic, assign) CGFloat itemHeight;
+@property (nonatomic, assign) CGSize itemSize;
 
 // 设置添加tag的提示文本，默认@"点击输入标签"
 @property (nonatomic, copy) NSString *defaultAddTagTitle;
@@ -111,7 +124,7 @@
  @param data 数组
  @return 高度
  */
-- (CGFloat)getCellHeightWithContentData:(id)data;
+- (CGFloat)getCellHeightWithContentData:(NSArray *)data;
 @end
 
 
@@ -181,8 +194,8 @@
  
  - (void)awakeFromNib
  {
-    self.labelsTagsView.maxItemCount = 50;
     [super awakeFromNib];
+    self.labelsTagsView.maxItemCount = 50;
  }
  
  - (void)setData:(id)data
@@ -192,6 +205,7 @@
  
  - (CGFloat)getCellHeightWithContentIndexPath:(NSIndexPath *)indexPath data:(id)data
  {
+     [self layoutIfNeeded];
     return [self.labelsTagsView getCellHeightWithContentData:data];
  }
  @end

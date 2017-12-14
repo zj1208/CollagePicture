@@ -1,1 +1,0 @@
-../../../../YWFeedbackFMWK/BCConnectorBundle.framework/Versions/A/Headers/BCEAppEntity.h

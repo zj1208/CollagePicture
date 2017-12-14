@@ -5,8 +5,8 @@
 //  Created by simon on 17/3/15.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //  水平添加图片的组件；
-//  12/04,增加自定义提示view（UIButton图 + 提示UILabel）；
-
+//  增加自定义提示view（UIButton图 + 提示UILabel）；
+//  2017.12.13
 
 #import <UIKit/UIKit.h>
 #import "ZXAddPicViewCell.h"
@@ -71,7 +71,7 @@ static NSString * const ZXAddPhotoImageName = @"zxPhoto_addImage";
 @property (nonatomic, getter=isExistInputItem) BOOL existInputItem;
 
 // 设置添加按钮的图片
-@property (nonatomic, strong) UIImage *addButtonImage;
+@property (nonatomic, strong) UIImage *addButtonPlaceholderImage;
 
 // 最多可显示的item数量，到达这个数，就不能再加入，”添加图片“按钮也会移除
 @property (nonatomic, assign) NSInteger maxItemCount;

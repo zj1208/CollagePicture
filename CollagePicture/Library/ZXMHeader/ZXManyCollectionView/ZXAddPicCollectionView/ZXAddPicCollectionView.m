@@ -10,10 +10,7 @@
 #import "UIView+ZXChangeSize.h"
 #import "UIImageView+WebCache.h"
 #import <Photos/Photos.h>
-
-#ifndef AppPlaceholderImage
-#define AppPlaceholderImage [UIImage imageNamed:@"默认图正方形"]
-#endif
+#import "ZXAddPicPlaceholderCell.h"
 
 
 
@@ -31,6 +28,7 @@ static CGFloat const ZXPicItemLayoutTop =  10.f;
 static CGFloat const ZXPicItemLayoutRight = 10.f;
 
 static NSString * const reuseCell = @"Cell";
+static NSString * const reusePlaceholderCell = @"placeholderCell";
 
 
 @interface ZXAddPicCollectionView ()<ZXAddPicViewCellDelegate>
@@ -80,7 +78,8 @@ static NSString * const reuseCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
+   self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+//    self.collectionView.frame = self.bounds;
     self.addPicCoverView.frame = self.bounds;
 }
 - (void)commonInit
@@ -95,7 +94,7 @@ static NSString * const reuseCell = @"Cell";
     self.maxItemCount = ZXMaxItemCount;
     self.photosState = ZXPhotosViewStateWillCompose;
     
-    self.addButtonImage = [UIImage imageNamed:ZXAddPhotoImageName];
+    self.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddPhotoImageName];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = self.sectionInset;
@@ -114,6 +113,7 @@ static NSString * const reuseCell = @"Cell";
     }
     
     [self.collectionView registerNib:[UINib nibWithNibName:nib_ZXAddPicViewCell bundle:nil] forCellWithReuseIdentifier:reuseCell];
+    [self.collectionView registerClass:[ZXAddPicPlaceholderCell class] forCellWithReuseIdentifier:reusePlaceholderCell];
     self.collectionView.scrollEnabled = NO;
     
     self.showAddPicCoverView = YES;
@@ -139,19 +139,16 @@ static NSString * const reuseCell = @"Cell";
     if (!_addPicCoverView)
     {
         ZXAddPicCoverView *coverView = [ZXAddPicCoverView viewFromNib];
-//        coverView.backgroundColor = [UIColor redColor];
        [coverView.addButton addTarget:self action:@selector(coverAddBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         _addPicCoverView = coverView;
-   
     }
     return _addPicCoverView;
 }
 
-//12.04 新增提示view；
-- (void)setAddButtonImage:(UIImage *)addButtonImage
+- (void)setAddButtonPlaceholderImage:(UIImage *)addButtonPlaceholderImage
 {
-    _addButtonImage = addButtonImage;
-    [self.addPicCoverView.addButton setImage:addButtonImage forState:UIControlStateNormal];
+    _addButtonPlaceholderImage = addButtonPlaceholderImage;
+    [self.addPicCoverView.addButton setImage:addButtonPlaceholderImage forState:UIControlStateNormal];
 }
 
 
@@ -192,8 +189,6 @@ static NSString * const reuseCell = @"Cell";
     CGFloat right = sectionInset.right-ZXPicItemLayoutRight>0?sectionInset.right-ZXPicItemLayoutRight:0;
     _sectionInset = UIEdgeInsetsMake(sectionInset.top, sectionInset.left, sectionInset.top, right);
     self.collectionFlowLayout.sectionInset = _sectionInset;
-    
-//    self.addPicCoverView
 }
 
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth itemCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset interitemSpacing:(CGFloat)minimumInteritemSpacing
@@ -242,9 +237,12 @@ static NSString * const reuseCell = @"Cell";
     //添加图片按钮
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
     {
-        cell.deleteBtn.hidden = YES;
-        cell.videoCoverView.hidden = YES;
-        cell.imageView.image =self.addButtonImage;
+        ZXAddPicPlaceholderCell *placeholderCell = (ZXAddPicPlaceholderCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reusePlaceholderCell forIndexPath:indexPath];
+        if (self.addButtonPlaceholderImage)
+        {
+            placeholderCell.imageView.image =self.addButtonPlaceholderImage;
+        }
+        return placeholderCell;
     }
     else
     {
@@ -297,24 +295,35 @@ static NSString * const reuseCell = @"Cell";
 - (void)setImageView:(UIImageView *)imageView withURL:(NSURL *)videoURL placeholderImage:(UIImage *)placeholderImage
 {
     imageView.image = placeholderImage;
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    dispatch_async(queue, ^{
-        
-        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
-        AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-        gen.appliesPreferredTrackTransform = YES;
-        CMTime time = CMTimeMakeWithSeconds(0.0, 60);
-        NSError *error = nil;
-        CMTime actualTime;
-        CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-        UIImage *thumbImg = [[UIImage alloc] initWithCGImage:image];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+    UIImage *cacheImage = [[SDImageCache sharedImageCache]imageFromCacheForKey:videoURL.absoluteString];
+    if (cacheImage)
+    {
+        [imageView setImage:cacheImage];
+    }
+    else
+    {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        dispatch_async(queue, ^{
             
-            [imageView setImage:thumbImg];
-
+            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+            AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+            gen.appliesPreferredTrackTransform = YES;
+            CMTime time = CMTimeMakeWithSeconds(0.0, 60);
+            NSError *error = nil;
+            CMTime actualTime;
+            CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+            UIImage *thumbImg = [[UIImage alloc] initWithCGImage:image];
+            
+            [[SDImageCache sharedImageCache] storeImage:thumbImg forKey:videoURL.absoluteString completion:nil];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [imageView setImage:thumbImg];
+                
+            });
         });
-    });
+    }
+ 
   
     
     //获取视频时间
@@ -371,7 +380,6 @@ static NSString * const reuseCell = @"Cell";
     //其它图片item点击事件
     else
     {
-        
         if ([self.delegate respondsToSelector:@selector(zx_addPicCollectionView:didSelectPicItemAtIndex:didAddPics:)])
         {
             [self.delegate zx_addPicCollectionView:self didSelectPicItemAtIndex:indexPath.item didAddPics:_dataMArray];
@@ -433,7 +441,7 @@ static NSString * const reuseCell = @"Cell";
 }
 
 
-//计算collectionView的总高度
+#pragma mark - 计算collectionView的总高度
 
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data
 {
@@ -451,14 +459,10 @@ static NSString * const reuseCell = @"Cell";
         [self setData:data];
 
         //由于整个view被tableViewCell重用了，所以他只会记得init初始化的值；
-//        [self layoutIfNeeded];
         NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
         NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:totalItem-1 inSection:0];
         UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
         CGFloat height = CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom+ZXPicItemLayoutTop;
-        
-        self.collectionView.zx_height = ceilf(height);
-
         return ceilf(height);
     }
 }

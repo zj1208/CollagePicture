@@ -1,1 +1,0 @@
-../../../../SGMain/SGMain.framework/Headers/ISecurityGuardOpenInitialize.h

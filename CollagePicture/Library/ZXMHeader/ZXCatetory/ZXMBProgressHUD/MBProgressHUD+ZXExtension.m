@@ -35,17 +35,25 @@
 + (void)zx_showSuccess:(nullable NSString *)success toView:(nullable UIView *)view
 {
  
-    [MBProgressHUD zx_showText:success customIcon:nil view:view];
+    [MBProgressHUD zx_showText:success customIcon:nil view:view hideAfterDelay:0];
 }
 
++ (void)zx_showSuccess:(nullable NSString *)success toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay
+{
+    [MBProgressHUD zx_showText:success customIcon:nil view:view hideAfterDelay:delay];
+}
 
 + (void)zx_showError:(nullable NSString *)error toView:(nullable UIView *)view
 {
-
-    [MBProgressHUD zx_showText:error customIcon:nil view:view];
+    [MBProgressHUD zx_showText:error customIcon:nil view:view hideAfterDelay:0];
 }
 
 + (MBProgressHUD *)zx_showText:(nullable NSString *)aText customIcon:(nullable NSString *)imageName view:(nullable UIView *)view
+{
+    return  [MBProgressHUD zx_showText:aText customIcon:imageName view:view hideAfterDelay:0];
+}
+
++ (MBProgressHUD *)zx_showText:(nullable NSString *)aText customIcon:(nullable NSString *)imageName view:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay
 {
 //    if (view == nil) {
 //
@@ -105,9 +113,13 @@
     {
         hud.mode = MBProgressHUDModeText;
     }
-    [hud hideAnimated:YES afterDelay:1.f+hud.label.text.length*0.1];
+  
+    NSTimeInterval delayTime = delay>0?delay:(1.f+hud.label.text.length*0.1);
+    [hud hideAnimated:YES afterDelay:delayTime];
     return hud;
 }
+
+
 
 //@"litteMoney"
 + (void)zx_showGifWithGifName:(NSString *)gifName toView:(nullable UIView *)view

@@ -1,41 +1,40 @@
 platform:ios,8.0
 
-source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git'
-source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecsMirror.git'
+#source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git'
+#source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecsMirror.git'
 
 target "CollagePicture" do
-#'~> 1.0.0'
-pod 'MBProgressHUD'
-#'~> 3.7.6'－4.0.0
-pod 'SDWebImage'
-#'~> 3.1.0'
-pod 'AFNetworking'
-#'~> 1.1.0'
-pod 'AFNetworking-Synchronous'
 
+#通用标准库
+pod 'AFNetworking', '~> 3.1.0'
+pod 'AFNetworking-Synchronous', '~> 1.1.0'
+pod 'SDWebImage', '~> 4.0.0'
+pod 'SDWebImage/GIF'
+pod 'MBProgressHUD', '~> 1.0.0'
 #pod 'SVProgressHUD', '~> 2.1.2'
 
 #工具
-pod 'Masonry', '~> 0.6.4'
+pod 'Masonry', '~> 1.1.0'
 pod 'BlocksKit', '~> 2.2.5'
-#'~> 6.0.2'
-pod 'WebViewJavascriptBridge'
+pod 'WebViewJavascriptBridge', '~> 6.0.2'
+#pod 'AvoidCrash', '~> 2.3.0-beta'
+
+#本地存储
+pod 'FMDB', '~> 2.6.2'
+pod 'TMCache', '~> 2.1.0'
 
 #model
-#'~> 2.0.7'－2.1.0
-pod 'Mantle'
+pod 'Mantle', '~> 2.1.0'
 
 #刷新
 pod 'SVPullToRefresh', '~> 0.4.1'
-pod 'MJRefresh', '~> 3.1.12'
+pod 'MJRefresh', '~> 3.1.14'
 
 #第三方平台
-
 #'~> 1.6.9'－2.1.7
 pod 'BmobSDK'
-#'~> 2.1.4'－2.6.0
-pod 'AliyunOSSiOS'
-#4.0.4－4.2.4
+pod 'AliyunOSSiOS', '~> 2.6.3'
+#  友盟统计
 pod 'UMengAnalytics', '~> 4.2.4'
 # U-Share SDK UI模块（分享面板，建议添加）
 #pod 'UMengUShare/UI'
@@ -47,10 +46,14 @@ pod 'UMengAnalytics', '~> 4.2.4'
 #pod 'UMengUShare/Social/QQ'
 #数据
 
-#2.0.3.1 (was 2.0.2)
-pod 'YWFeedbackFMWK', '~> 2.0.2'
+#微信SDK UMShare已经有了，如果需要则删除本地的
+#pod 'WechatOpenSDK'
+#pod 'YWFeedbackFMWK', '~> 2.0.3.1'
 
-pod 'TMCache', '~> 2.1.0'
 
+#第三方UI库
+pod 'TZImagePickerController', '~>1.9.3'
+pod 'HMSegmentedControl', '~> 1.5.4'
+pod 'THSegmentedPager', '~> 1.1.3'
 
 end
