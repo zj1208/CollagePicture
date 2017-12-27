@@ -5,8 +5,12 @@
 //  Created by simon on 17/1/23.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+// 2017.12.27
+// 注释添加
 
 #import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 //吸顶效果；主要用于卡片等效果；判断布局属性frame小于布局顶部的y值，就将布局属性的frame的y值设置为顶部的y值就行
 
@@ -14,6 +18,7 @@
 
 @end
 
+NS_ASSUME_NONNULL_END
 
 /*
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -4,12 +4,17 @@
 //
 //  Created by simon on 17/2/21.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//
-//例子 看ZXLabelsInputTagsView的
+//  标签展示；
+//  例子 看ZXLabelsInputTagsView的
+
+//  2017.12.26
+//  修改nibName 常量定义 改为NSStringFromClass；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
 #import "EqualSpaceFlowLayoutEvolve.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class ZXLabelsTagsView;
 
@@ -34,7 +39,6 @@
  @param indexPath indexPath description
  */
 - (void)zx_labelsTagsView:(ZXLabelsTagsView *)labelsTagView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
-
 
 @end
 
@@ -108,6 +112,7 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 
 @end
 
+NS_ASSUME_NONNULL_END
 
 
 //////////////////－－－－－－例如－－－－－－－///////////////

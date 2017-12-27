@@ -4,7 +4,7 @@
 //
 //  Created by simon on 17/3/24.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//
+//  
 
 #import "ZXAdvModalController.h"
 
@@ -32,7 +32,8 @@
 
 - (void)setUI
 {
-    self.advPicBtn.imageView.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor clearColor];
+    self.advPicBtn.backgroundColor = [UIColor clearColor];
     self.advPicBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.advPicBtn.contentHorizontalAlignment= UIControlContentHorizontalAlignmentFill;
     self.advPicBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
@@ -41,11 +42,11 @@
     
     NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
     
-    self.dismissBtn.hidden = YES;
+//    self.dismissBtn.hidden = YES;
     
     [self.advPicBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-        _dismissBtn.hidden = NO;
+
+//        _dismissBtn.hidden = NO;
     }];
 }
 //设置圆角

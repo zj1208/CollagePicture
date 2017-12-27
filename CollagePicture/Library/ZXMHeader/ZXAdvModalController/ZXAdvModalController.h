@@ -4,7 +4,8 @@
 //
 //  Created by simon on 17/3/24.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//
+//  2017.12.18
+//  修改图片展示背景为透明
 
 #import <UIKit/UIKit.h>
 #import "ZXAdvModel.h"

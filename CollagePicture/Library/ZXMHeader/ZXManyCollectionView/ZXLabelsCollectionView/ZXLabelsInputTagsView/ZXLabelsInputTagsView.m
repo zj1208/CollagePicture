@@ -153,7 +153,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
         collection.dataSource = self;
         [self addSubview:collection];
         
-        [collection registerNib:[UINib nibWithNibName:nibName_LabelCell bundle:nil] forCellWithReuseIdentifier:reuseInputTagsCell];
+        [collection registerNib:[UINib nibWithNibName:NSStringFromClass([LabelCell class]) bundle:nil] forCellWithReuseIdentifier:reuseInputTagsCell];
         collection.scrollEnabled = NO;
         
         _collectionView = collection;
@@ -231,7 +231,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
     dispatch_once(&onceToken, ^{
         
         if (cell == nil) {
-            cell = [[NSBundle mainBundle]loadNibNamed:nibName_LabelCell owner:nil options:nil][0];
+            cell = [[NSBundle mainBundle]loadNibNamed:NSStringFromClass([LabelCell class]) owner:nil options:nil][0];
         }
     });
     

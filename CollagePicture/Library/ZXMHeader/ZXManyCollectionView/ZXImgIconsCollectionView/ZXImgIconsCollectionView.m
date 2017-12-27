@@ -8,6 +8,7 @@
 
 #import "ZXImgIconsCollectionView.h"
 #import "ZXImgIconsCell.h"
+#import "UIImageView+WebCache.h"
 
 static NSInteger const ZXMaxItemCount = 10;
 

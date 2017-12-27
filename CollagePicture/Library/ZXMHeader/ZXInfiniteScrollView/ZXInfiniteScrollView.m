@@ -8,6 +8,7 @@
 
 #import "ZXInfiniteScrollView.h"
 #import "ZXInfiniteCollectionCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface ZXInfiniteScrollView ()
 

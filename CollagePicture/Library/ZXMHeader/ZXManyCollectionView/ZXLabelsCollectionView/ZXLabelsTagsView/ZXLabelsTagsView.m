@@ -36,15 +36,15 @@ static NSString * const reuseTagsCell = @"Cell";
      //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
     [super awakeFromNib];
 }
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        [self commonInit];
-    }
-    return self;
-}
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self)
+//    {
+//        [self commonInit];
+//    }
+//    return self;
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -136,8 +136,8 @@ static NSString * const reuseTagsCell = @"Cell";
         collection.delegate = self;
         collection.dataSource = self;
         [self addSubview:collection];
-        
-        [collection registerNib:[UINib nibWithNibName:nibName_LabelCell bundle:nil] forCellWithReuseIdentifier:reuseTagsCell];
+        UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([LabelCell class]) bundle:nil];
+        [collection registerNib:cellNib forCellWithReuseIdentifier:reuseTagsCell];
         collection.scrollEnabled = NO;
         
         _collectionView = collection;
@@ -217,7 +217,7 @@ static NSString * const reuseTagsCell = @"Cell";
         dispatch_once(&onceToken, ^{
             
             if (cell == nil) {
-                cell = [[NSBundle mainBundle]loadNibNamed:@"LabelCell" owner:nil options:nil][0];
+                cell = [[NSBundle mainBundle]loadNibNamed:NSStringFromClass([LabelCell class]) owner:nil options:nil][0];
             }
         });
         cell.titleLab.font = [UIFont systemFontOfSize:self.titleFontSize];

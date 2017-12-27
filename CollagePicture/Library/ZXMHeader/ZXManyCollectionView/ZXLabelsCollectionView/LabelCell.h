@@ -5,10 +5,12 @@
 //  Created by simon on 17/2/19.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  2017.12.26
+//  修改nibName 常量定义 改为NSStringFromClass；
 
 #import <UIKit/UIKit.h>
 
-static NSString *nibName_LabelCell = @"LabelCell";
+NS_ASSUME_NONNULL_BEGIN
 
 @interface LabelCell : UICollectionViewCell
 
@@ -20,5 +22,7 @@ static NSString *nibName_LabelCell = @"LabelCell";
 
 - (CGSize)sizeForCell;
 
-
 @end
+
+
+NS_ASSUME_NONNULL_END

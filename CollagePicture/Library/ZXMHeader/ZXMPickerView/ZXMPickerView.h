@@ -5,9 +5,14 @@
 //  Created by 朱新明 on 15/2/11.
 //  Copyright (c) 2015年 朱新明. All rights reserved.
 //
+// 2017.12.25
+// 优化组件，顶部toolbar高度固定优化； pickerView高度约束修改优化；优化代码；
 
 #import <UIKit/UIKit.h>
 #import "ZXOverlay.h"
+
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class ZXMPickerView;
 @protocol ZXMPickerViewDelegate <NSObject>
@@ -46,14 +51,14 @@
 
 @interface ZXMPickerView : UIView<UIPickerViewDataSource,UIPickerViewDelegate,ZXOverlayDelegate>
 
-@property(nonatomic,weak)id<ZXMPickerViewDelegate>delegate;
+@property(nonatomic, weak) id<ZXMPickerViewDelegate>delegate;
 
-@property(nonatomic,strong)UIPickerView *pickerView;
+@property(nonatomic, strong) UIPickerView *pickerView;
 
 /**
  *  @brief 设置数据源
  */
--(void)reloadDataWithDataArray:(NSArray *)dataArray;
+- (void)reloadDataWithDataArray:(NSArray *)dataArray;
 
 //默认选中哪行
 // selection. in this case, it means showing the appropriate row in the middle
@@ -76,6 +81,8 @@
 
 @end
 
+NS_ASSUME_NONNULL_END
+
 #pragma mark - 例子
 //////////////--例子－－－－////////////////////
 
@@ -84,7 +91,7 @@
 {
     [super viewDidLoad];
     
-    ZXMPickerView *picker = [[ZXMPickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-LCDScale_iphone6_Width(230.f), LCDW, LCDScale_iphone6_Width(230.f))];
+    ZXMPickerView *picker = [[ZXMPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, LCDScale_iphone6_Width(230.f))];
     picker.delegate = self;
     self.pickerView = picker;
  

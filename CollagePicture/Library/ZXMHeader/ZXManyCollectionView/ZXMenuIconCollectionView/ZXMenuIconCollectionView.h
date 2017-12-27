@@ -4,8 +4,12 @@
 //
 //  Created by simon on 2017/10/23.
 //  Copyright © 2017年 com.Microants. All rights reserved.
+//
 //  collectionView菜单列表展示，计算动态数量的item所需要的collectionView总高度；
 //  要求：等大小item，上面图标，下面文字；每个collectionViewCell右上角既可以显示自定义图标，也可以显示badge数字
+//   2017.12.20
+//   增加UIImageView+WebCache库
+
 
 #import <UIKit/UIKit.h>
 #import "ZXMenuIconCell.h"

@@ -5,6 +5,8 @@
 //  Created by simon on 2017/11/28.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//   2017.12.20
+//   增加UIImageView+WebCache库
 
 #import <UIKit/UIKit.h>
 #import "EqualSpaceFlowLayoutEvolve.h"

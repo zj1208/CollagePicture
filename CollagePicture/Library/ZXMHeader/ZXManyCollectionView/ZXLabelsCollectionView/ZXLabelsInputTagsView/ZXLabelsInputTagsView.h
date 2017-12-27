@@ -5,11 +5,16 @@
 //  Created by simon on 17/2/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-// 动态添加标签的collectionView
 // 2017.12.13
+// 动态添加标签的collectionView
+
+//  2017.12.26
+//  修改nibName 常量定义 改为NSStringFromClass；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 // 编辑方式
 typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
@@ -23,8 +28,8 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
 @class ZXLabelsInputTagsView;
 
 @protocol ZXLabelsInputTagsViewDelegate <NSObject>
-// 如果不实现这些协议，则会用默认的设置；
 
+// 如果不实现这些协议，则会用默认的设置；
 @optional
 /**
  将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置
@@ -51,8 +56,6 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
 - (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView handleTextFieldTextDidChangeNotification:(NSNotification *)notification;
 
 - (void)zx_labelsInputTagsViewWithAlertViewDoButtonAction;
-
-
 
 
 // 这个代理影响ZXLabelsInputTagsView在tableView的整体布局高度，所以一定要回调，重新计算总高度；
@@ -125,9 +128,11 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
  @return 高度
  */
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data;
+
 @end
 
 
+NS_ASSUME_NONNULL_END
 
 
 
@@ -501,7 +506,7 @@ static NSString *editTagsCell = @"editTagsCell";
 - (void)shopInfoChange:(id)notification
 {
     ShopManagerInfoModel *model = (ShopManagerInfoModel *)[self.diskManager getData];
-    self.shopProLab.text = model.mainSell?model.mainSell:@"请选择主营产品";
+    self.shopProLab.text = model.mainSell?model.mainSell:@"请输入主营产品";
     self.shopProLab.textColor = model.mainSell?UIColorFromRGB_HexValue(0x222222):UIColorFromRGB_HexValue(0xCCCCCC);
     
     self.brandLab.text =model.mainBrand?model.mainBrand:@"请输入代理品牌";

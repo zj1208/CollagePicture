@@ -6,6 +6,7 @@
 //  Copyright © 2015年 mac. All rights reserved.
 //
 
+
 #import "UITextField+ZXHelper.h"
 #import "NSString+ZXEntension.h"
 
@@ -123,25 +124,30 @@ shouldChangeCharactersInRange:(NSRange)range
     
     NSCharacterSet *cs;
     NSUInteger nDotLoc = [textField.text rangeOfString:@"."].location;
+    //如果之前没有“.”
     if (NSNotFound == nDotLoc && 0 != range.location)
     {
-        //不是0-9的字符集合
         cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers]invertedSet];
+        // 如果现在是“.”，则允许；
         if ([string isEqualToString:@"."])
         {
             return YES;
         }
-        if (textField.text.length >= dotPreBits)
+        // 如果现在不是“.”,如果之前的整数已经到了规定限制，则不允许；
+        else if (textField.text.length >= dotPreBits)
         {  //小数点前面6位
             // [textField resignFirstResponder];
             //            [DCFStringUtil showNotice:[NSString stringWithFormat:@"只允许小数前%d位", dotPreBits]];
             return NO;
         }
+        // 其它正常的走以下流程；
     }
+    //如果之前有“.”
     else
     {
         //不是0-9－.的字符集合
         cs = [[NSCharacterSet characterSetWithCharactersInString:myDotNumbers]invertedSet];
+        // 如果已经到了总限制 位数 ，则不允许；
         if (textField.text.length >= dotPreBits + dotAfterBits + 1)
         {
             //            [textField resignFirstResponder];
@@ -149,6 +155,7 @@ shouldChangeCharactersInRange:(NSRange)range
             return  NO;
         }
     }
+    // 先分割开来，再通过“”组合； 不懂哦
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
     BOOL basicTest = [string isEqualToString:filtered];
     if (!basicTest)

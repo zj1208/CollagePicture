@@ -5,9 +5,12 @@
 //  Created by simon on 16/5/6.
 //  Copyright © 2016年 simon. All rights reserved.
 //
+// 2017.12.27
+// 注释添加
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @class ZXWaterfallFlowLayout;
 
@@ -49,26 +52,30 @@
  *  显示多少列
  */
 @property (nonatomic, assign) NSInteger columnsCount;
+
 /**
  *  边距
  */
 //@property (nonatomic,assign) UIEdgeInsets sectionInset;
+
 /**
  *  每一行之间的间距
  */
-@property (nonatomic,assign) CGFloat rowMargin;
+@property (nonatomic, assign) CGFloat rowMargin;
 
 /**
  *  每一列之间的间距
  */
-@property (nonatomic,assign) CGFloat columnMargin;
+@property (nonatomic, assign) CGFloat columnMargin;
 
 
-@property (nonatomic,weak) id<ZXWaterfallFlowLayoutDelegate>delegate;
+@property (nonatomic, weak) id<ZXWaterfallFlowLayoutDelegate>delegate;
 
-@property (nonatomic)BOOL limitItemHeight;
+@property (nonatomic) BOOL limitItemHeight;
+
 @end
 
+NS_ASSUME_NONNULL_END
 
 /**
  - (void)addCollectionView

@@ -20,7 +20,11 @@
 @interface ZXMPickerView ()
 @property (nonatomic , assign) int row;
 
-@property(nonatomic,copy)NSArray *dataArray;
+@property (nonatomic, copy) NSArray *dataArray;
+
+//@property (nonatomic, strong) ZXOverlay *overlay;
+
+@property (nonatomic, strong) UIToolbar *toolbar;
 @end
 
 
@@ -58,57 +62,89 @@
 - (void)initData
 {
     self.backgroundColor = [UIColor whiteColor];
-    
-    self.pickerView= [[UIPickerView alloc] init];
-    self.pickerView.showsSelectionIndicator = YES;
-    self.pickerView.delegate = self;
-    self.pickerView.dataSource =self;
-    [self addSubview:self.pickerView];
-    
-    [self addConstraint:self.pickerView toItem:self.pickerView.superview];
-   
     NSArray *array = [NSArray array];
     self.dataArray = array;
     
     _selectedRow =0;
+    [self addSubview:self.toolbar];
     
-    UIToolbar *toolbar=[[UIToolbar alloc] init];
-//    toolbar.barTintColor = [UIColor blueColor];
-    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,LCDScale_iphone6_Width(48));
-    [self addSubview:toolbar];
+    [self addSubview:self.pickerView];
+    // 添加pickerView的约束
+    [self addCustomConstraintWithItem:self.pickerView];
     
-    UIBarButtonItem *lefttem=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker)];
-    lefttem.tintColor =[UIColor blackColor];
-    UIBarButtonItem *borderSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    borderSpace.width = LCDScale_iphone6_Width(9);
+//    ZXOverlay *overlay = [[ZXOverlay alloc] init];
+//    overlay.delegate = self;
+//    [overlay addSubview:self];
+//    self.overlay = overlay;
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
     
-    UIBarButtonItem *centerSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    UIBarButtonItem *right=[[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(toolBarDoneClick:)];
-    right.tintColor =[UIColor blackColor];
-    toolbar.items=@[borderSpace,lefttem,centerSpace,right,borderSpace];
-    
+    self.toolbar.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame),44);
 }
 
+#pragma mark -pickerView
 
-- (void)addConstraint:(UIView *)item toItem:(UIView *)superView
+- (UIPickerView *)pickerView
+{
+    if (!_pickerView)
+    {
+        UIPickerView *pickerView= [[UIPickerView alloc] init];
+        pickerView.showsSelectionIndicator = YES;
+        pickerView.delegate = self;
+        pickerView.dataSource =self;
+        _pickerView = pickerView;
+    }
+    return  _pickerView;
+}
+
+#pragma mark -toolbar
+
+- (UIToolbar *)toolbar
+{
+    if (!_toolbar)
+    {
+        // 高度固定44，不然barButtonItem文字不居中；不能太高；
+        UIToolbar *toolbar=[[UIToolbar alloc] init];
+//        toolbar.barTintColor = [UIColor blueColor];
+        
+        UIBarButtonItem *leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker)];
+        leftBarButtonItem.tintColor =[UIColor blackColor];
+        
+        UIBarButtonItem *borderSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+        borderSpaceBarItem.width = LCDScale_iphone6_Width(12);
+        
+        UIBarButtonItem *centerSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        
+        UIBarButtonItem *rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(toolBarDoneClick:)];
+        rightBarButtonItem.tintColor =[UIColor blackColor];
+        toolbar.items =@[borderSpaceBarItem,leftBarButtonItem,centerSpaceBarItem,rightBarButtonItem,borderSpaceBarItem];;
+        _toolbar = toolbar;
+    }
+    return _toolbar;
+}
+
+#pragma mark - 添加pickView的约束
+
+- (void)addCustomConstraintWithItem:(UIView *)item
 {
     self.pickerView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1 constant:0];
-    [self addConstraint:constraint1];
+    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.toolbar attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    constraint1.active = YES;
     
-    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    [self addConstraint:constraint2];
-    
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeRight multiplier:1 constant:0];
-    [self addConstraint:constraint3];
-    
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    [self addConstraint:constraint4];
-    
+    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    constraint2.active = YES;
+
+    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+    constraint3.active = YES;
+
+    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    constraint4.active = YES;
+
 }
 
--(void)reloadDataWithDataArray:(NSArray *)dataArray;
+- (void)reloadDataWithDataArray:(NSArray *)dataArray;
 {
     _dataArray =[dataArray copy];
     [self.pickerView reloadAllComponents];
@@ -130,19 +166,19 @@
 }
 
 #pragma mark-dataSource
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
 //    NSLog(@"%d",self.dataArray.count);
     return self.dataArray.count;
 }
 
 #pragma mark-Delegate
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (row>=self.dataArray.count) {
         return [self.dataArray lastObject];
@@ -151,7 +187,7 @@
 }
 
 #pragma mark - PickerViewDelegate
--(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return LCDScale_iphone6_Width(48.f);
 }
@@ -161,7 +197,7 @@
 //    return 100;
 //}
 
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _row =(int)row;
 }
@@ -177,20 +213,19 @@
     [self cancelPicker];
 }
 
-- (void)showInTabBarView:(UIView *) view
+- (void)showInTabBarView:(UIView *)view
 {
-    ZXOverlay *overlay = [[ZXOverlay alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDH-49)];
+    ZXOverlay *overlay = [[ZXOverlay alloc] init];
     overlay.delegate = self;
     [overlay addSubview:self];
     [view addSubview:overlay];
+    overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)-49);
     
-    
-    self.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
-    
+    self.frame = CGRectMake(0, CGRectGetHeight(view.frame), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
     
     [UIView animateWithDuration:0.3 animations:^{
         
-        self.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds) - CGRectGetHeight(self.frame)-49, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
+        self.frame = CGRectMake(0, CGRectGetHeight(view.frame) - CGRectGetHeight(self.frame)-49, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
     }];
     
     [self.pickerView selectRow:_selectedRow inComponent:0 animated:YES];
@@ -207,16 +242,18 @@
     {
         view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
     }
-    ZXOverlay *overlay = [[ZXOverlay alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame))];
+    ZXOverlay *overlay = [[ZXOverlay alloc] init];
     overlay.delegate = self;
     [overlay addSubview:self];
     [view addSubview:overlay];
+    overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame));
+    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
+//    [self layoutIfNeeded];
     
-    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), LCDW, CGRectGetHeight(self.frame));
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
 
-        self.frame = CGRectMake(0, CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame), CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.frame));
+        self.frame = CGRectMake(0, CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
 
     } completion:^(BOOL finished) {
 
