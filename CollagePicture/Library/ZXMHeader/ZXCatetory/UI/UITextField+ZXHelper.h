@@ -5,8 +5,8 @@
 //  Created by xielei on 15/12/20.
 //  Copyright © 2015年 mac. All rights reserved.
 //
-// 2017.12.19
-// 增加限制小数点 注释
+// 2017.12.27
+// 限制小数，前几位后几位，优化；
 
 #import <UIKit/UIKit.h>
 

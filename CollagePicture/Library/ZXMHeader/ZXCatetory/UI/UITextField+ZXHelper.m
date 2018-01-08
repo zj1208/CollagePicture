@@ -124,7 +124,7 @@ shouldChangeCharactersInRange:(NSRange)range
     
     NSCharacterSet *cs;
     NSUInteger nDotLoc = [textField.text rangeOfString:@"."].location;
-    //如果之前没有“.”
+    //如果之前没有“.”,且不是第一个数
     if (NSNotFound == nDotLoc && 0 != range.location)
     {
         cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers]invertedSet];
@@ -133,13 +133,21 @@ shouldChangeCharactersInRange:(NSRange)range
         {
             return YES;
         }
+        else
+        {
+             if ([textField.text isEqualToString:@"0"])
+            {
+                return NO;
+            }
+        }
         // 如果现在不是“.”,如果之前的整数已经到了规定限制，则不允许；
-        else if (textField.text.length >= dotPreBits)
+        if (textField.text.length >= dotPreBits)
         {  //小数点前面6位
             // [textField resignFirstResponder];
             //            [DCFStringUtil showNotice:[NSString stringWithFormat:@"只允许小数前%d位", dotPreBits]];
             return NO;
         }
+   
         // 其它正常的走以下流程；
     }
     //如果之前有“.”
@@ -154,6 +162,11 @@ shouldChangeCharactersInRange:(NSRange)range
             //            [DCFStringUtil showNotice:[NSString stringWithFormat:@"只允许小数点后%d位", dotAfterBits]];
             return  NO;
         }
+        // 如果又是"."，则不允许输入；
+        if ([string isEqualToString:@"."])
+        {
+            return NO;
+        }
     }
     // 先分割开来，再通过“”组合； 不懂哦
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
@@ -164,6 +177,7 @@ shouldChangeCharactersInRange:(NSRange)range
         //        [DCFStringUtil showNotice:[NSString stringWithFormat:@"只允许小数点后%d位", dotAfterBits]];
         return NO;
     }
+    // 如果有小数点；且位数 > 小数点位置+后面限制位数
     if (NSNotFound != nDotLoc && range.location > nDotLoc +dotAfterBits)
     {  //小数点后面两位
         //        [textField resignFirstResponder];

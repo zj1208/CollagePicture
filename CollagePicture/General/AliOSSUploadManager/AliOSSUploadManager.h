@@ -1,5 +1,5 @@
 //
-//  OSSUploadManager.h
+//  AliOSSUploadManager.h
 //  YiShangbao
 //
 //  Created by simon on 17/2/10.
@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <AliyunOSSiOS/OSSService.h>
+
+// 2017.12.29
+// 修改单列方法名字；
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,19 +29,23 @@ typedef NS_ENUM(NSInteger, OSSFileCatalog){
     OSSFileCatalog_tradeReply =4,//生意回复求购
     OSSFileCatalog_shopQRCode = 5,//二维码
     OSSFileCatalog_userHeadIcon =6, //用户app头像
+    OSSFileCatalog_ProductVideo =7, //产品视频
+    OSSFileCatalog_ProductExtend =8, //产品推广
+    OSSFileCatalog_ProductExtendStock =9, //产品推广库存
+
     
 };
 
 
 //公有读bucket存储空间－修改后的
-static NSString *kOSS_bucketName_public = @"public-read-bkt-oss";
+static NSString *const kOSS_bucketName_public = @"public-read-bkt-oss";
 //私有读bucket存储空间
-static NSString *kOSS_bucketName_private = @"private-read-bkt";
+static NSString *const kOSS_bucketName_private = @"private-read-bkt";
 
-static NSString *kOSS_region = @"oss-cn-hangzhou";
+static NSString *const kOSS_region = @"oss-cn-hangzhou";
 
 //从服务端请求获取到信息－OSSFederationToken，再传给alioss
-static NSString *kOSS_credential_URL = @"mtop.oss.getSts";
+static NSString *const kOSS_credential_URL = @"mtop.oss.getSts";
 
 
 /**
@@ -52,16 +59,16 @@ typedef void(^ZXImageUploadSingleCompletedBlock) (id _Nullable imageInfo, NSStri
 typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
 
  
-@interface OSSUploadManager : NSObject
+@interface AliOSSUploadManager : NSObject
 
-@property (nonatomic,strong)OSSClient *client;
+@property (nonatomic, strong) OSSClient *client;
 
-@property (nonatomic,copy)NSString *bucketName;
+@property (nonatomic, copy) NSString *bucketName;
 
 //设置是否获取图片详细信息，如果不获取，返回的成功block则没有详细信息，只有imagePath路径地址
 @property (nonatomic, assign)BOOL getPicInfo;
 
-+ (instancetype)getInstance;
++ (instancetype)sharedInstance;
 
 
 
@@ -72,11 +79,12 @@ typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
  @param accessKey  权限key
  @param secretKey  secret密码
  */
-- (void)initOSSPlainCredentialWithBucketType:(OSSBucketType)bucketType accessKey:(NSString *)accessKey secretKey:(NSString *)secretKey;
+- (void)initOSSPlainCredentialWithBucketType:(OSSBucketType)bucketType accessKey:(NSString *)accessKey secretKey:(NSString *)secretKey __attribute__((deprecated("We recommend the STS authentication mode on mobile")));
 
 
-//STS鉴权模式－从服务端请求获取到信息－OSSFederationToken，再传给alioss；
-- (void)initOSSStsTokenCredential;
+// STS鉴权模式凭证，实现获取STSToken回调；自动更新；
+// 从服务端请求获取到信息－构造一个OSSFederationToken对象，再返回给aliOSS；
+- (void)initAliOSSWithSTSTokenCredential;
 
 
 /**
@@ -86,7 +94,7 @@ typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
  @param userId 用户id，用于产生唯一的objectKey
  @param data 上传的数据
  */
-- (void)putObjectOSSStsTokenPublicBucketWithUserId:(nullable NSString *)userId
+- (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
                                      uploadingData:(NSData *)data
                                           progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
                                     singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
@@ -102,7 +110,7 @@ typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
  @param data 上传的数据
  */
 
-- (void)putObjectOSSStsTokenPublicBucketWithUserId:(nullable NSString *)userId
+- (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
                                    fileCatalogType:(OSSFileCatalog)fileCatalog
                                      uploadingData:(NSData *)data
                                           progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
@@ -117,7 +125,7 @@ typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
  @param userId 用户id，用于产生唯一的objectKey
  @param data 上传的数据
  */
-- (void)putObjectOSSStsTokenPublicBucketWithUserId:(nullable NSString *)userId
+- (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
                                    customfileCatalog:(nullable NSString *)fileCatalog
                                      uploadingData:(NSData *)data
                                           progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
@@ -154,7 +162,7 @@ ZXImagePickerVCManager *pickerVCManager = [[ZXImagePickerVCManager alloc] init];
 pickerVCManager.morePickerActionDelegate = self;
 self.imagePickerVCManager = pickerVCManager;
 //初始化oss上传
-[[OSSUploadManager getInstance] initOSSStsTokenCredential];
+[[AliOSSUploadManager sharedInstance] initAliOSSWithSTSTokenCredential];
 
 
 - (void)zxImagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info withEditedImage:(UIImage *)image
@@ -162,7 +170,7 @@ self.imagePickerVCManager = pickerVCManager;
     NSData *imageData = UIImageJPEGRepresentation(image, 1);
     [self zhHUD_showHUDAddedTo:self.view labelText:@"正在上传"];
     WS(weakSelf);
-    [[OSSUploadManager getInstance]putObjectOSSStsTokenPublicBucketWithUserId:USER_TOKEN uploadingData:imageData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
+    [[AliOSSUploadManager sharedInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN uploadingData:imageData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         
     } singleComplete:^(id model, NSString *imageName, NSNumber *imgId) {
         

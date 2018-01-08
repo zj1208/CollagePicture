@@ -29,7 +29,7 @@
 
 
 
-+ (instancetype)getInstance
++ (instancetype)sharedInstance
 {
     static PendingOperations *manager = nil;
     static dispatch_once_t onceToken;
@@ -78,7 +78,7 @@
  *  根据asset资源数组和uploadId，original创建本地数组数据；
  *
  *  @param assets   asset资源数组
- *  @param uploadId 上传id
+ *  @param operationModel 上传id
  *  @param original 是否压缩
  */
 - (void)uploadGetData:(NSArray *)assets withUploadId:(UploadOperationModel *)operationModel isOriginal:(BOOL)original
@@ -129,7 +129,7 @@
     [cache storeImage:firstImg forKey:key toDisk:YES completion:nil];
 
     //把所有GrowthSavePhotoModel保存在本地
-    [[GrowthDataManager getInstance]insertData:uploadArray withAlbumId:operationModel.operationId];
+    [[GrowthDataManager sharedInstance]insertData:uploadArray withAlbumId:operationModel.operationId];
     
     //发送通知，告诉准备开始上传了
     [[NSNotificationCenter defaultCenter]postNotificationName:kNOTIFICATION_UPLOAD_Begain object:nil userInfo:nil];
@@ -189,7 +189,7 @@
 - (void)uploadPicForRecord:(UploadTable *)table
 {
     
-    GrowthDataManager *growthManager=  [GrowthDataManager getInstance];
+    GrowthDataManager *growthManager=  [GrowthDataManager sharedInstance];
     UploadGrowOperation *operation = [[UploadGrowOperation alloc] initWithRequest:table delegate:self progress:^(NSProgress* progress) {
         
         //上传进度反馈
@@ -263,7 +263,7 @@
 
 - (void)merchantTaskOperationBegainUpload:(UploadGrowOperation *)operation
 {
-    NSLog(@"self.pendingOperations.uploadMArray＝%@",[PendingOperations getInstance].uploadMArray);
+    NSLog(@"self.pendingOperations.uploadMArray＝%@",[PendingOperations sharedInstance].uploadMArray);
     
     operation.uploadTable.upload_progressType= UploadProgressType_uploading;
     operation.uploadTable.starting= YES;

@@ -17,9 +17,9 @@
 
 @implementation UIViewController (ZXHelper)
 
-- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(nullable NSDictionary *)data
+- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data
 {
-    UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:segue];
+    UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
     if (controller)
     {
         if (data)
@@ -34,13 +34,22 @@
     }
 }
 
-
-- (void)presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(nullable NSDictionary *)data
+- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock
 {
-    UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:segue];
+    UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
+    if (toControllerBlock)
+    {
+        toControllerBlock(controller);
+    }
+    [self pushStoryboardViewControllerWithStoryboardName:name identifier:storyboardId withData:data];
+}
+
+
+- (void)presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion
+{
+    UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
     if (controller)
     {
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
         if (data)
         {
             [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -48,13 +57,21 @@
                 [controller setValue:obj forKey:key];
             }];
         }
-        [self presentViewController:nav animated:YES completion:nil];
+        if (flag)
+        {
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+            [self presentViewController:nav animated:YES completion:completion];
+        }
+        else
+        {
+            [self presentViewController:controller animated:YES completion:completion];
+        }
     }
 }
 
--(UIViewController *)getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(NSString *)segue
+-(UIViewController *)getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(nullable NSString *)storyboardId
 {
-    if (!name ||!segue)
+    if (!name)
     {
         assert(name);
         return nil;
@@ -69,20 +86,13 @@
         return nil;
     }
     UIStoryboard *sb=[UIStoryboard  storyboardWithName:name  bundle:[NSBundle mainBundle]];
-    UIViewController *controller= [sb instantiateViewControllerWithIdentifier:segue];
-    return controller;
+    if (storyboardId)
+    {
+        return  [sb instantiateViewControllerWithIdentifier:storyboardId];
+    }
+    return [sb instantiateInitialViewController];
 }
 //
-- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(NSDictionary *)data toController:(void(^)(UIViewController *vc))toControllerBlock
-{
-    UIViewController *controller = [self getControllerWithStoryboardName:name controllerWithIdentifier:segue];
-    if (toControllerBlock)
-    {
-        toControllerBlock(controller);
-    }
-    [self pushStoryboardViewControllerWithStoryboardName:name identifier:segue withData:data];
-
-}
 
 
 - (void)pushSameStoryboardPerformSegueWithIdentifier:(NSString *)segue withData:(NSDictionary *)data

@@ -5,6 +5,8 @@
 //  Created by simon on 16/2/24.
 //  Copyright © 2016年 simon. All rights reserved.
 //
+// 2018.01.04
+// 修改优化方法；
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -14,19 +16,48 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (ZXHelper)<SKStoreProductViewControllerDelegate,UIActionSheetDelegate>
 /**
- *  storyboard跳转
+ *  storyboard跳转-push
  *
  *  @param name  storyboardName
- *  @param segue  storyboardID
+ *  @param storyboardId  storyboardID
  *  @param data  参数－dictionary格式
  */
-- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(nullable NSDictionary *)data;
+- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data;
 
-- (void)presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(nullable NSDictionary *)data;
 
--(UIViewController *)getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(NSString *)segue;
+/**
+ 同上 storyboard跳转-push；
 
-- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(NSString *)segue withData:(NSDictionary *)data toController:(void(^)(UIViewController *vc))toControllerBlock;
+ @param name storyboardName
+ @param storyboardId storyboardID
+ @param data 参数－dictionary格式;kvc传值；
+ @param toControllerBlock 返回目标controller
+ */
+- (void)pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock;
+
+
+/**
+ 同上storyboard跳转-present
+
+ @param name name description
+ @param storyboardId storyboardId description
+ @param flag 是否有导航navigationController
+ @param data 参数－dictionary格式;kvc传值；
+ @param completion 跳转完成
+ */
+- (void)presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion;
+
+
+/**
+ 根据storyboardId获取controller
+
+ @param name name description
+ @param storyboardId storyboardId description
+ @return return value description
+ */
+- (UIViewController *)getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(nullable NSString *)storyboardId;
+
+
 
 /**
  *  过滤modalController的返回；如果是模态的，则dismiss；

@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MessageModel.h"
 
-static NSString *nibName_ZXMenuIconCell = @"ZXMenuIconCell";
+//   2018.1.8
+//   修改ZXMenuIconCell实例方法；倒入MessageModel
+
 
 @interface ZXMenuIconCell : UICollectionViewCell
 
@@ -17,4 +20,6 @@ static NSString *nibName_ZXMenuIconCell = @"ZXMenuIconCell";
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
 @property (weak, nonatomic) IBOutlet UILabel *badgeLab;
+
+- (void)setData:(id)data placeholderImage:(UIImage *)placeholderImage;
 @end

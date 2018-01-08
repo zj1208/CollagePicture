@@ -1,21 +1,20 @@
 //
-//  OSSUploadManager.m
+//  AliOSSUploadManager.m
 //  YiShangbao
 //
 //  Created by simon on 17/2/10.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "OSSUploadManager.h"
-#import "OSSPicInfoRequest.h"
+#import "AliOSSUploadManager.h"
+#import "AliOSSPicInfoRequest.h"
 #import "BaseHttpAPI.h" //需要请求自己公司服务器，加密
 
-#import "WYUserDefaultManager.h"
 #ifndef APP_bundleIdentifier
 #define APP_bundleIdentifier [[NSBundle mainBundle]bundleIdentifier]
 #endif
 
-@interface OSSUploadManager ()<NSURLSessionTaskDelegate>
+@interface AliOSSUploadManager ()<NSURLSessionTaskDelegate>
 
 @property (nullable, nonatomic, copy) ZXImageUploadFailureBlock failuerBlock;
 @property (nullable, nonatomic, copy) ZXImageUploadSingleCompletedBlock singleCompletedBlock;
@@ -25,7 +24,7 @@
 - (NSString *)getFileCatalogWithType:(OSSFileCatalog)type;
 @end
 
-@implementation OSSUploadManager
+@implementation AliOSSUploadManager
 
 - (void)setGetPicInfo:(BOOL)getPicInfo
 {
@@ -35,7 +34,7 @@
     }
 }
 
-+ (instancetype)getInstance
++ (instancetype)sharedInstance
 {
     static id manager = nil;
     static dispatch_once_t onceToken;
@@ -47,90 +46,8 @@
     return manager;
 }
 
-- (void)putObjectOSSStsTokenPublicBucketWithUserId:(nullable NSString *)userId
-                                     uploadingData:(NSData *)data
-                                          progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
-                                    singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
-                                           failure:(nullable ZXImageUploadFailureBlock)failure
-{
 
-    
-     [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:nil uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
-}
-
-- (void)putObjectOSSStsTokenPublicBucketWithUserId:(nullable NSString *)userId
-                                   fileCatalogType:(OSSFileCatalog)fileCatalog
-                                     uploadingData:(NSData *)data
-                                          progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
-                                    singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
-                                           failure:(nullable ZXImageUploadFailureBlock)failure
-{
-    
-    NSString *fileType = [self getFileCatalogWithType:fileCatalog];
-    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:fileType uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
-
-}
-
-
-
-- (NSString *)getFileCatalogWithType:(OSSFileCatalog)type
-{
-    
-    switch (type)
-    {
-        case OSSFileCatalog_userHeadIcon:return @"2/head/";break;
-        case OSSFileCatalog_uploadProduct: return @"2/pro/"; break;
-        case OSSFileCatalog_shopHeadIcon: return @"2/sh/";break;
-        case OSSFileCatalog_ownFactory:return @"2/fac/";break;
-        case OSSFileCatalog_tradeReply:return @"2/rep/";break;
-        case OSSFileCatalog_shopQRCode:return @"2/qr/";break;
-        case OSSFileCatalog_shopScenery:return @"2/sr/";break;
-        default:
-            break;
-    }
-    return nil;
-
-}
-
-/**
- stsToken方式，公共读上传文件数据
-
- @param fileCatalog 自定义文件目录，可以是空；
- @param userId 用户id，用于产生唯一的objectKey
- @param data 上传的数据
- */
-- (void)putObjectOSSStsTokenPublicBucketWithUserId:(nullable NSString *)userId
-                                 customfileCatalog:(nullable NSString *)fileCatalog
-                                     uploadingData:(NSData *)data
-                                          progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
-                                    singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
-                                           failure:(nullable ZXImageUploadFailureBlock)failure
-{
-      [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:fileCatalog uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
-}
-
-
-
-
-
-
-- (void)putObjectWithUserId:(nullable NSString *)userId
-                 bucketName:(NSString *)bucket
-                    fileCatalog:(nullable NSString *)fileCatalog
-                  uploadingData:(NSData *)data
-                       progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
-                 singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
-                        failure:(nullable ZXImageUploadFailureBlock)failure
-{
-    if (!userId)
-    {
-        return;
-    }
-    self.bucketName = bucket;
-
-    [self putObjectRequestWithUserId:userId fileCatalog:fileCatalog uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
-}
-
+#pragma mark - 明文模式凭证初始化
 //明文设置模式;明文设置secret的方式建议只在测试时使用；
 - (void)initOSSPlainCredentialWithBucketType:(OSSBucketType)bucketType accessKey:(NSString *)accessKey secretKey:(NSString *)secretKey
 {
@@ -148,19 +65,22 @@
     [self initOSSClientCredentialProvider:credential];
 }
 
-
-//STS鉴权模式凭证-
-- (void)initOSSStsTokenCredential
+#pragma mark - STS鉴权模式凭证初始化
+// STS鉴权模式凭证，实现获取STSToken回调；自动更新；
+// 从服务端请求获取到信息－构造一个OSSFederationToken对象，再返回给aliOSS；
+// STS优点：您无需透露您的长期密钥(AccessKey)给第三方应用，只需生成一个访问令牌并将令牌交给第三方应用即可。这个令牌的访问权限及有效期限都可以由您自定义。您无需关心权限撤销问题，访问令牌过期后就自动失效。
+- (void)initAliOSSWithSTSTokenCredential
 {
     id<OSSCredentialProvider> credential = [[OSSFederationCredentialProvider alloc] initWithFederationTokenGetter:^OSSFederationToken * {
         
+        NSLog(@"测试，是否oss在后台偷偷请求调用");
         //等你 真正开始上传的时候，会回调来获取STS鉴权模式凭证token的block方法
         
         // 构造请求访问您的业务server；
-        //构造get请求的url字符串；
+        // 构造get请求的url字符串；
         NSString *kBaseURL =[WYUserDefaultManager getkAPP_BaseURL];
         NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/m?",kBaseURL];
-       
+        
         NSDictionary *par = [[BaseHttpAPI alloc] addRequestPostData:nil apiName:kOSS_credential_URL];
         [par enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
@@ -168,19 +88,19 @@
             [urlString appendString:str];
             
         }];
-        NSString *utf8URL = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSURL * url = [NSURL URLWithString:utf8URL];
+        NSString *utf8Str = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSURL * url = [NSURL URLWithString:utf8Str];
         NSURLRequest * request = [NSURLRequest requestWithURL:url];
         
         OSSTaskCompletionSource * tcs = [OSSTaskCompletionSource taskCompletionSource];
-  
+        
         //发送请求
-//        NSURLSession * session = [NSURLSession sharedSession];
+        //        NSURLSession * session = [NSURLSession sharedSession];
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         configuration.requestCachePolicy = NSURLRequestUseProtocolCachePolicy;
         configuration.timeoutIntervalForRequest = 10.f;
         configuration.timeoutIntervalForResource = 20.f;
-//        是否允许使用蜂窝网络
+        //        是否允许使用蜂窝网络
         configuration.allowsCellularAccess = YES;
         configuration.networkServiceType = NSURLNetworkServiceTypeDefault;
         
@@ -194,7 +114,7 @@
                 return;
             }
             //请求成功
-//            NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+            //            NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
             [tcs setResult:data];
         }];
         
@@ -208,8 +128,8 @@
         } else {
             // 返回数据是json格式，需要解析得到token的各个字段
             NSDictionary * origObject = [NSJSONSerialization JSONObjectWithData:tcs.task.result
-                                                                    options:kNilOptions
-                                                                      error:nil];
+                                                                        options:kNilOptions
+                                                                          error:nil];
             //根据公司返回数据要求，解析数据；
             NSDictionary *object = [[origObject objectForKey:@"result"]objectForKey:@"data"];
             OSSFederationToken * token = [OSSFederationToken new];
@@ -217,10 +137,10 @@
             token.tSecretKey = [object objectForKey:@"accessKeySecret"];
             token.tToken = [object objectForKey:@"securityToken"];
             token.expirationTimeInGMTFormat = [object objectForKey:@"expiration"];
-//            NSLog(@"get token: %@", token);
+            //            NSLog(@"get token: %@", token);
             return token;
         }
-
+        
     }];
     [self initOSSClientCredentialProvider:credential];
 }
@@ -234,6 +154,7 @@
     }
 }
 
+#pragma mark - 初始化OSSClient
 //初始化OSSClient
 - (void)initOSSClientCredentialProvider:(id)credential
 {
@@ -243,12 +164,91 @@
     OSSClientConfiguration * conf = [OSSClientConfiguration new];
     conf.maxRetryCount = 3; // 网络请求遇到异常失败后的重试次数
     conf.timeoutIntervalForRequest = 15; // 网络请求的超时时间
-//    conf.timeoutIntervalForResource = 24 * 60 * 60; // 允许资源传输的最长时间
+    //    conf.timeoutIntervalForResource = 24 * 60 * 60; // 允许资源传输的最长时间
     conf.timeoutIntervalForResource = 20; // 允许资源传输的最长时间 20秒；
-
+    
     //初始化主要完成Endpoint设置、鉴权方式设置、Client参数设置。其中，鉴权方式包含明文设置模式、自签名模式、STS鉴权模式。
     self.client =  [[OSSClient alloc] initWithEndpoint:endpoint credentialProvider:credential clientConfiguration:conf];
 }
+
+
+
+
+
+
+
+
+#pragma mark - 简单上传 公有读bucket存储空间
+
+//没有文件目录
+- (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
+                                       uploadingData:(NSData *)data
+                                            progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
+                                      singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
+                                             failure:(nullable ZXImageUploadFailureBlock)failure
+{
+    
+    
+    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:nil uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+}
+
+//多了指定文件目录类型
+- (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
+                                     fileCatalogType:(OSSFileCatalog)fileCatalog
+                                       uploadingData:(NSData *)data
+                                            progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
+                                      singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
+                                             failure:(nullable ZXImageUploadFailureBlock)failure
+{
+    
+    NSString *fileType = [self getFileCatalogWithType:fileCatalog];
+    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:fileType uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+    
+}
+
+//自定义文件目录
+- (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
+                                 customfileCatalog:(nullable NSString *)fileCatalog
+                                     uploadingData:(NSData *)data
+                                          progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
+                                    singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
+                                           failure:(nullable ZXImageUploadFailureBlock)failure
+{
+      [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:fileCatalog uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+}
+
+
+
+
+#pragma mark -简单上传 指定初始化
+/**
+ 最原始的简单上传；铭文／sts都用这个方法上传；
+ 
+ @param userId 用户id
+ @param bucket bucket存储空间；公有/私有
+ @param fileCatalog 文件目录，可以是空
+ @param data 上传的数据
+ @param progressBlock 上传返回的进度
+ @param signleCompleteBlock 上传成功block返回
+ @param failure 失败block返回
+ */
+- (void)putObjectWithUserId:(nullable NSString *)userId
+                 bucketName:(NSString *)bucket
+                    fileCatalog:(nullable NSString *)fileCatalog
+                  uploadingData:(NSData *)data
+                       progress:(nullable OSSNetworkingUploadProgressBlock)progressBlock
+                 singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
+                        failure:(nullable ZXImageUploadFailureBlock)failure
+{
+    if (!userId)
+    {
+        return;
+    }
+    self.bucketName = bucket;
+
+    [self putObjectRequestWithUserId:userId fileCatalog:fileCatalog uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+}
+
 
 
 
@@ -301,7 +301,7 @@
                 if (_getPicInfo)
                 {
                     //          signleCompleteBlock(nil,picString,nil);
-                    [OSSPicInfoRequest ossGetPicInfoWithBasePicURL:picString sucess:^(id  _Nullable data, CGSize picSize, NSError * _Nullable error) {
+                    [AliOSSPicInfoRequest ossGetPicInfoWithBasePicURL:picString sucess:^(id  _Nullable data, CGSize picSize, NSError * _Nullable error) {
                        
                         if (!error)
                         {
@@ -338,6 +338,27 @@
     });
 }
 
+- (NSString *)getFileCatalogWithType:(OSSFileCatalog)type
+{
+    
+    switch (type)
+    {
+        case OSSFileCatalog_userHeadIcon:   return @"2/head/"; break;
+        case OSSFileCatalog_uploadProduct:  return @"2/pro/";  break;
+        case OSSFileCatalog_shopHeadIcon:   return @"2/sh/";   break;
+        case OSSFileCatalog_ownFactory:     return @"2/fac/";  break;
+        case OSSFileCatalog_tradeReply:     return @"2/rep/";  break;
+        case OSSFileCatalog_shopQRCode:     return @"2/qr/";   break;
+        case OSSFileCatalog_shopScenery:    return @"2/sr/";   break;
+        case OSSFileCatalog_ProductVideo:   return @"2/pvi/";  break;
+        case OSSFileCatalog_ProductExtend:  return @"2/sp/";   break;
+        case OSSFileCatalog_ProductExtendStock: return @"2/ss/"; break;
+        default:
+            break;
+    }
+    return nil;
+    
+}
 
 //产生唯一的objectKey,如果userId为空，则有可能产生同一个key；
 - (NSString *)getOSSPutObjectKeyWithUserId:(nullable NSString *)userId fileCatalog:(nullable NSString *)fileCatalog
@@ -352,6 +373,11 @@
     if (!fileCatalog)
     {
         return [appendObejectKey stringByAppendingString:@".jpg"];
+    }
+    NSString *videoFile = [self getFileCatalogWithType:OSSFileCatalog_ProductVideo];
+    if ([fileCatalog isEqualToString:videoFile])
+    {
+       return [NSString stringWithFormat:@"%@%@.mp4",fileCatalog,appendObejectKey];
     }
     return [NSString stringWithFormat:@"%@%@.jpg",fileCatalog,appendObejectKey];
 }

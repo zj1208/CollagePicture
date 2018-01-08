@@ -1,14 +1,14 @@
 //
-//  OSSPicInfoRequest.m
+//  AliOSSPicInfoRequest.m
 //  YiShangbao
 //
 //  Created by simon on 17/3/5.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "OSSPicInfoRequest.h"
+#import "AliOSSPicInfoRequest.h"
 
-@implementation OSSPicInfoRequest
+@implementation AliOSSPicInfoRequest
 
 + (void)ossGetPicInfoWithBasePicURL:(nullable NSString *)baseURL sucess:(nonnull ZXCompletedBlock)complete
 {

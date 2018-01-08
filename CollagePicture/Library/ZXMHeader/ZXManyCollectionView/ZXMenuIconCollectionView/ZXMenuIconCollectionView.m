@@ -7,7 +7,7 @@
 //
 
 #import "ZXMenuIconCollectionView.h"
-//#import "MessageModel.h"
+#import "UIImageView+WebCache.h"
 
 static CGFloat const ZXMinimumInteritemSpacing = 12.f;//item之间最小间隔
 static CGFloat const ZXMinimumLineSpacing = 12.f; //最小行间距
@@ -86,7 +86,7 @@ static NSString * const reuseTagsCell = @"Cell";
         collection.dataSource = self;
         [self addSubview:collection];
         
-        [collection registerNib:[UINib nibWithNibName:nibName_ZXMenuIconCell bundle:nil] forCellWithReuseIdentifier:reuseTagsCell];
+        [collection registerNib:[UINib nibWithNibName:NSStringFromClass([ZXMenuIconCell class]) bundle:nil] forCellWithReuseIdentifier:reuseTagsCell];
         collection.scrollEnabled = NO;
         
         _collectionView = collection;
@@ -114,10 +114,8 @@ static NSString * const reuseTagsCell = @"Cell";
     ZXMenuIconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseTagsCell forIndexPath:indexPath];
     if (indexPath.item<self.dataMArray.count)
     {
-//        MessageModelSub *model = [self.dataMArray objectAtIndex:indexPath.item];
-//        cell.titleLab.text = model.typeName ;    // Configure the cell
-//        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.typeIcon] placeholderImage:self.placeholderImage];
-//        [cell.badgeLab zh_digitalIconWithBadgeValue:model.num maginY:0 badgeFont:[UIFont systemFontOfSize:12] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+        MessageModelSub *model = [self.dataMArray objectAtIndex:indexPath.item];
+        [cell setData:model placeholderImage:self.placeholderImage];
     }
     return cell;
 }
@@ -146,7 +144,11 @@ static NSString * const reuseTagsCell = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(_picItemHeight+12+31, _picItemWidth+20+20);
+    if ([self.flowLayoutDelegate respondsToSelector:@selector(zx_menuIconCollectionView:layout:sizeForItemAtIndexPath:)])
+    {
+        return [self.flowLayoutDelegate zx_menuIconCollectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
+    }
+    return CGSizeMake(_picItemWidth+20+20, _picItemHeight+12+31);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

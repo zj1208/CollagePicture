@@ -5,6 +5,8 @@
 //  Created by simon on 16/3/19.
 //  Copyright © 2016年 simon. All rights reserved.
 //
+// 2017.12.29
+// 修改单列方法名字；
 
 #import <Foundation/Foundation.h>
 
@@ -12,6 +14,8 @@
 #import "GrowthDataManager.h"
 #import "UploadOperationModel.h"
 #import "UploadGrowOperation.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 //上传进度
 #define kNOTIFICATION_UPLOAD_Progress           @"kNotificationUploadProgress"
@@ -45,7 +49,7 @@
 @property(nonatomic,strong)NSOperationQueue *uploadQueue;
 
 
-+(instancetype)getInstance;
++(instancetype)sharedInstance;
 
 /**
  *  根据numId与uploadMArray中的model对象的id比较得到数组中的索引
@@ -76,3 +80,5 @@
 - (void)startOperationsForTaskRecord:(UploadTable *)table;
 
 @end
+
+NS_ASSUME_NONNULL_END

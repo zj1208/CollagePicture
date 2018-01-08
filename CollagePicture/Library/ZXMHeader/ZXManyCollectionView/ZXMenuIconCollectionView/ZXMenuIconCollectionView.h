@@ -7,8 +7,9 @@
 //
 //  collectionView菜单列表展示，计算动态数量的item所需要的collectionView总高度；
 //  要求：等大小item，上面图标，下面文字；每个collectionViewCell右上角既可以显示自定义图标，也可以显示badge数字
-//   2017.12.20
-//   增加UIImageView+WebCache库
+
+//   2018.1.8
+//   修改ZXMenuIconCell实例方法
 
 
 #import <UIKit/UIKit.h>
@@ -16,11 +17,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ZXMenuIconCollectionViewDelegate;
+@protocol ZXMenuIconCollectionViewDelegate,ZXMenuIconCollectionViewDelegateFlowLayout;
 
 @interface ZXMenuIconCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
 @property (nonatomic, weak) id<ZXMenuIconCollectionViewDelegate>delegate;
+@property (nonatomic, weak) id<ZXMenuIconCollectionViewDelegateFlowLayout> flowLayoutDelegate;
+
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (strong, nonatomic)  UICollectionViewFlowLayout *collectionFlowLayout;
@@ -40,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat picItemWidth;
 @property (nonatomic, assign) CGFloat picItemHeight;
 
-@property (nonatomic, strong,nullable) UIImage *placeholderImage;
+@property (nonatomic, strong, nullable) UIImage *placeholderImage;
 
 
 - (void)setData:(NSArray *)data;
@@ -57,7 +60,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
+@protocol ZXMenuIconCollectionViewDelegateFlowLayout <UICollectionViewDelegate>
+@optional
 
+- (CGSize)zx_menuIconCollectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
 
 @protocol ZXMenuIconCollectionViewDelegate <NSObject>
 
