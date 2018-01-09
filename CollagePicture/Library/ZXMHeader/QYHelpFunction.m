@@ -24,12 +24,8 @@ NSString *const QYHelpFunctionVersion = @"v2.0  2015-03-20";
 
 @end
 
+/*
 
-#pragma mark-
-#pragma mark 时间转化相关
-/******************************
- StringTimeFormTotalTime
- ******************************/
 @implementation NSObject(StringTimeFormTotalTime)
 
 - (NSString*)zhuTime_switchPlayer_millisecond:(NSInteger)aTotalMillisecond;
@@ -166,185 +162,135 @@ NSString *const QYHelpFunctionVersion = @"v2.0  2015-03-20";
 
 @end
 
+*/
 
 
 
-#pragma mark-
-#pragma mark 判断本地数据有关
-/************************
- 判断本地数据,
- ************************/
-@implementation NSObject (judeNative)
-#pragma mark 调准一张图片大小,缩放方法。 以下2个方法一样的
--(UIImage *)zhuScaleToSize:(UIImage *)img size:(CGSize)size
-{
-    UIGraphicsBeginImageContext(size);
-    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return scaledImage;
-}
--(UIImage *)zhuScaleImage:(UIImage *)image toScale:(float)scaleSize
-{
-    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
-    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return scaledImage;
-}
-
+//@implementation NSObject (judeNative)
+//#pragma mark 调准一张图片大小,缩放方法。 以下2个方法一样的
 
 //返回数据文件的完整路径名
--(NSString*)zhuFile_getFilePath:(NSString*)aFileName
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [paths objectAtIndex:0];
-    //我这里先创建了一个目录
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *testDirectory = [filePath stringByAppendingPathComponent:@"test"];
-    [fileManager createDirectoryAtPath:testDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-    
-    NSString* fileDirectory = [testDirectory stringByAppendingPathComponent:aFileName];//将aFileName添加到路径末尾
-    return fileDirectory;
-}
-
--(void)zhuFile_saveCache:(NSString *)requestType andDataStr:(NSString*)dataStr
-{
-    NSUserDefaults *setting = [NSUserDefaults standardUserDefaults];
-    NSString *key = [NSString stringWithFormat:@"cache-%@",requestType];
-    [setting setObject:dataStr forKey:key];
-    [setting synchronize];
-}
-
-
--(NSString *)zhuFile_getCache:(NSString *)requestType
-{
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    NSString *key = [NSString stringWithFormat:@"cache-%@",requestType];
-    NSString *dataStr = [settings objectForKey:key];
-    return dataStr;
-}
-
-
--(void)zhuFile_getDefaultManagerResource
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *defaultPath = [[NSBundle mainBundle] resourcePath];
-    NSError *error;
-    NSArray *directoryContents = [fileManager contentsOfDirectoryAtPath:defaultPath error:&error];
-    NSLog(@"%@",directoryContents);
-    
-}
-
-
-#pragma mark-计算缓存图片大小-如SDWebImage下的
--(float)zhuFile_checkImageFileTempSize:(NSString *)diskCachePath
-{
-    float totalSize = 0;
-    NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:diskCachePath];
-    for(NSString *fileName in fileEnumerator)
-    {
-        NSString *filePath = [diskCachePath stringByAppendingPathComponent:fileName];
-        NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
-        signed long long length = [attrs fileSize];
-        totalSize +=length/1024.0/1024.0;
-    }
-    return totalSize;
-}
-
-
-
-
-
-
-////	@brief	浏览头像
-//static CGRect oldframe;
-//-(void)showImage:(UIImageView *)avatarImageView{
-//    UIImage *image=avatarImageView.image;
-//    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//    UIView *backgroundView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-//    oldframe=[avatarImageView convertRect:avatarImageView.bounds toView:window];
-//    backgroundView.backgroundColor=[UIColor blackColor];
-//    backgroundView.alpha=0;
-//    UIImageView *imageView=[[UIImageView alloc]initWithFrame:oldframe];
-//    imageView.image=image;
-//    imageView.tag=1;
-//    [backgroundView addSubview:imageView];
-//    [window addSubview:backgroundView];
-//    
-//    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
-//    [backgroundView addGestureRecognizer: tap];
-//    
-//    [UIView animateWithDuration:0.3 animations:^{
-//        imageView.frame=CGRectMake(0,([UIScreen mainScreen].bounds.size.height-image.size.height*[UIScreen mainScreen].bounds.size.width/image.size.width)/2, [UIScreen mainScreen].bounds.size.width, image.size.height*[UIScreen mainScreen].bounds.size.width/image.size.width);
-//        backgroundView.alpha=1;
-//    } completion:^(BOOL finished) {
-//        
-//    }];
+//-(NSString*)zhuFile_getFilePath:(NSString*)aFileName
+//{
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *filePath = [paths objectAtIndex:0];
+//    //我这里先创建了一个目录
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *testDirectory = [filePath stringByAppendingPathComponent:@"test"];
+//    [fileManager createDirectoryAtPath:testDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+//
+//    NSString* fileDirectory = [testDirectory stringByAppendingPathComponent:aFileName];//将aFileName添加到路径末尾
+//    return fileDirectory;
 //}
 //
-//-(void)hideImage:(UITapGestureRecognizer*)tap{
-//    UIView *backgroundView=tap.view;
-//    UIImageView *imageView=(UIImageView*)[tap.view viewWithTag:1];
-//    [UIView animateWithDuration:0.3 animations:^{
-//        imageView.frame=oldframe;
-//        backgroundView.alpha=0;
-//    } completion:^(BOOL finished) {
-//        [backgroundView removeFromSuperview];
-//    }];
+//-(void)zhuFile_saveCache:(NSString *)requestType andDataStr:(NSString*)dataStr
+//{
+//    NSUserDefaults *setting = [NSUserDefaults standardUserDefaults];
+//    NSString *key = [NSString stringWithFormat:@"cache-%@",requestType];
+//    [setting setObject:dataStr forKey:key];
+//    [setting synchronize];
 //}
-
-
-
-
-
-
-@end
-
-
-
-
-
-#pragma mark-
-#pragma mark HttpConnection 过滤json数据，html数据
-
-@implementation NSObject (httpConnection)
-
-
--(NSString *)filterHTML:(NSString *)html
-{
-    NSScanner * scanner = [NSScanner scannerWithString:html];
-    NSString * text = nil;
-    while([scanner isAtEnd]==NO)
-    {
-        //找到标签的起始位置
-        [scanner scanUpToString:@"<" intoString:nil];
-        //找到标签的结束位置
-        [scanner scanUpToString:@">" intoString:&text];
-        //替换字符
-        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
-    }
-    //    NSString * regEx = @"<([^>]*)>";
-    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
-    return html;
-}
-
-
--(NSString *)FilterJSONString:(NSString *)jsonString
-{
-    NSMutableString *responseString = [NSMutableString stringWithString:jsonString];
-    NSString *character = nil;
-    for (int i = 0; i < responseString.length; i ++)
-    {
-        character = [responseString substringWithRange:NSMakeRange(i, 1)];
-        if ([character isEqualToString:@"\\"])
-        {
-            [responseString deleteCharactersInRange:NSMakeRange(i, 1)];
-        }
-        
-    }
-    return responseString;
-}
+//
+//
+//-(NSString *)zhuFile_getCache:(NSString *)requestType
+//{
+//    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+//    NSString *key = [NSString stringWithFormat:@"cache-%@",requestType];
+//    NSString *dataStr = [settings objectForKey:key];
+//    return dataStr;
+//}
+//
+//
+//
+//
+//////    @brief    浏览头像
+////static CGRect oldframe;
+////-(void)showImage:(UIImageView *)avatarImageView{
+////    UIImage *image=avatarImageView.image;
+////    UIWindow *window=[UIApplication sharedApplication].keyWindow;
+////    UIView *backgroundView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+////    oldframe=[avatarImageView convertRect:avatarImageView.bounds toView:window];
+////    backgroundView.backgroundColor=[UIColor blackColor];
+////    backgroundView.alpha=0;
+////    UIImageView *imageView=[[UIImageView alloc]initWithFrame:oldframe];
+////    imageView.image=image;
+////    imageView.tag=1;
+////    [backgroundView addSubview:imageView];
+////    [window addSubview:backgroundView];
+////
+////    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideImage:)];
+////    [backgroundView addGestureRecognizer: tap];
+////
+////    [UIView animateWithDuration:0.3 animations:^{
+////        imageView.frame=CGRectMake(0,([UIScreen mainScreen].bounds.size.height-image.size.height*[UIScreen mainScreen].bounds.size.width/image.size.width)/2, [UIScreen mainScreen].bounds.size.width, image.size.height*[UIScreen mainScreen].bounds.size.width/image.size.width);
+////        backgroundView.alpha=1;
+////    } completion:^(BOOL finished) {
+////
+////    }];
+////}
+////
+////-(void)hideImage:(UITapGestureRecognizer*)tap{
+////    UIView *backgroundView=tap.view;
+////    UIImageView *imageView=(UIImageView*)[tap.view viewWithTag:1];
+////    [UIView animateWithDuration:0.3 animations:^{
+////        imageView.frame=oldframe;
+////        backgroundView.alpha=0;
+////    } completion:^(BOOL finished) {
+////        [backgroundView removeFromSuperview];
+////    }];
+////}
+//
+//
+//
+//
+//
+//
+//@end
+//
+//
+//
+//
+//
+//#pragma mark-
+//#pragma mark HttpConnection 过滤json数据，html数据
+//
+//@implementation NSObject (httpConnection)
+//
+//
+//-(NSString *)filterHTML:(NSString *)html
+//{
+//    NSScanner * scanner = [NSScanner scannerWithString:html];
+//    NSString * text = nil;
+//    while([scanner isAtEnd]==NO)
+//    {
+//        //找到标签的起始位置
+//        [scanner scanUpToString:@"<" intoString:nil];
+//        //找到标签的结束位置
+//        [scanner scanUpToString:@">" intoString:&text];
+//        //替换字符
+//        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
+//    }
+//    //    NSString * regEx = @"<([^>]*)>";
+//    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
+//    return html;
+//}
+//
+//
+//-(NSString *)FilterJSONString:(NSString *)jsonString
+//{
+//    NSMutableString *responseString = [NSMutableString stringWithString:jsonString];
+//    NSString *character = nil;
+//    for (int i = 0; i < responseString.length; i ++)
+//    {
+//        character = [responseString substringWithRange:NSMakeRange(i, 1)];
+//        if ([character isEqualToString:@"\\"])
+//        {
+//            [responseString deleteCharactersInRange:NSMakeRange(i, 1)];
+//        }
+//
+//    }
+//    return responseString;
+//}
 
 
 //+ (NSString *)replaceUnicode:(NSString *)unicodeStr
@@ -362,7 +308,7 @@ NSString *const QYHelpFunctionVersion = @"v2.0  2015-03-20";
 //}
 //
 //
-
-
-@end
+//
+//
+//@end
 
