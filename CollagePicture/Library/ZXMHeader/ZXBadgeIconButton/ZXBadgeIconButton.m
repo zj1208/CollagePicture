@@ -18,6 +18,17 @@
 
 @property (nonatomic, assign) CGFloat maginY;
 @property (nonatomic, strong) UIFont *badgeFont;
+
+/**
+ 设置角标的外观静态设置
+ 
+ @param aMaginY 数字的上下边距
+ @param font 角标字体大小
+ @param aTitleColor 角标的数字颜色
+ @param aBgColor 角标的背景颜色
+ */
+- (void)setBadgeContentInsetY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font badgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor;
+
 @end
 
 @implementation ZXBadgeIconButton
@@ -62,7 +73,7 @@
 {
     self.backgroundColor = [UIColor clearColor];
     _badgeValue = 0;
-
+    self.badgeLabelContentOffest = CGPointMake(0, 0);
     
     UIImageView *imageView = [[UIImageView alloc] init];
     [self addSubview:imageView];
@@ -95,7 +106,7 @@
 }
 
 
-- (void)maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font badgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor
+- (void)setBadgeContentInsetY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font badgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor
 {
     self.maginY = aMaginY;
     self.badgeFont = font?font:[UIFont systemFontOfSize:11];
@@ -137,7 +148,7 @@
     
     self.imageView.center = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2);
     CGSize size = [self zh_digitalIconWithBadgeValue:self.badgeValue maginY:_maginY badgeFont:self.badgeFont];
-    self.badgeLab.frame = CGRectMake(CGRectGetMaxX(self.imageView.frame)-12, CGRectGetMinY(self.imageView.frame), size.width, size.height);
+    self.badgeLab.frame = CGRectMake(CGRectGetMaxX(self.imageView.frame)-12+self.badgeLabelContentOffest.x, CGRectGetMinY(self.imageView.frame)+self.badgeLabelContentOffest.y, size.width, size.height);
     
     if (_autoFit)
     {

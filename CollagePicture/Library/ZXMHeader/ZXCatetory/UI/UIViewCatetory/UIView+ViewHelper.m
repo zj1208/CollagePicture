@@ -33,15 +33,23 @@
 
 
 //设置圆角
-- (void)setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)color
+- (void)setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
 {
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = radius;
     self.layer.borderWidth = width;
     
-    self.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
+    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
 
+- (void)zhSetCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
+{
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = radius;
+    self.layer.borderWidth = width;
+    
+    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
+}
 
 - (void)zhSetRoundItem
 {
@@ -52,14 +60,55 @@
 }
 
 
-- (void)zhSetShadowColor:(nullable UIColor *)color shadowOffset:(CGSize)offset shadowOpacity:(CGFloat)opacity
+
+- (void)zhSetShadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
 {
-    self.layer.shadowColor=color.CGColor;
+    self.layer.shadowColor=shadowColor?shadowColor.CGColor:[UIColor blackColor].CGColor;
+    self.layer.shadowOpacity=opacity;
     self.layer.shadowOffset=offset;
-    self.layer.shadowOpacity=opacity==NSNotFound?0.5:opacity;
-    self.layer.shadowRadius = 4.f;
+    self.layer.shadowRadius = shadowRadius;
 }
 
+
+- (void)zhSetShadowAndCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor shadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
+{
+    self.layer.shadowColor=shadowColor?shadowColor.CGColor:[UIColor blackColor].CGColor;
+    self.layer.shadowOpacity=opacity;
+    self.layer.shadowOffset=offset;
+    self.layer.shadowRadius = shadowRadius;
+    
+    self.layer.cornerRadius = radius;
+    self.layer.borderWidth = width;
+    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
+}
+
+- (void)zhSetBorderWithTop:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right borderColor:(UIColor *)color borderWidth:(CGFloat)width
+{
+    if (top) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, 0, self.frame.size.width, width);
+        layer.backgroundColor = color.CGColor;
+        [self.layer addSublayer:layer];
+    }
+    if (left) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, 0, width, self.frame.size.height);
+        layer.backgroundColor = color.CGColor;
+        [self.layer addSublayer:layer];
+    }
+    if (bottom) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, self.frame.size.height - width, self.frame.size.width, width);
+        layer.backgroundColor = color.CGColor;
+        [self.layer addSublayer:layer];
+    }
+    if (right) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(self.frame.size.width - width, 0, width, self.frame.size.height);
+        layer.backgroundColor = color.CGColor;
+        [self.layer addSublayer:layer];
+    }
+}
 
 #pragma mark - getter
 

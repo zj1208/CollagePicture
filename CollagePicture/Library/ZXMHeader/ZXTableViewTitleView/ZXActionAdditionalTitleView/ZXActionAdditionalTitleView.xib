@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,14 +16,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_bigLine" translatesAutoresizingMaskIntoConstraints="NO" id="aK3-UQ-Jye">
-                    <rect key="frame" x="10" y="45.5" width="4" height="14"/>
+                    <rect key="frame" x="12" y="45.5" width="4" height="14"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="14" id="eHp-em-I6U"/>
                         <constraint firstAttribute="width" constant="4" id="lIM-5o-RiI"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7N-q3-eOS">
-                    <rect key="frame" x="21" y="44" width="29" height="17"/>
+                    <rect key="frame" x="23" y="44" width="29" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -44,12 +44,13 @@
                 <constraint firstAttribute="trailing" secondItem="hCg-0m-PsU" secondAttribute="trailing" constant="15" id="7Y0-lL-ujt"/>
                 <constraint firstItem="hCg-0m-PsU" firstAttribute="leading" secondItem="2Gq-he-quu" secondAttribute="trailing" constant="8" id="CZU-AC-RlB"/>
                 <constraint firstItem="p7N-q3-eOS" firstAttribute="centerY" secondItem="1Om-1o-9RI" secondAttribute="centerY" id="IUS-X1-Vvx"/>
+                <constraint firstAttribute="trailing" secondItem="2Gq-he-quu" secondAttribute="trailing" priority="750" constant="15" id="QG0-OR-MW5"/>
                 <constraint firstItem="p7N-q3-eOS" firstAttribute="leading" secondItem="1Om-1o-9RI" secondAttribute="leading" priority="750" constant="10" id="Ujj-mB-8Tb"/>
                 <constraint firstItem="2Gq-he-quu" firstAttribute="centerY" secondItem="1Om-1o-9RI" secondAttribute="centerY" id="Yty-iO-TSW"/>
                 <constraint firstItem="aK3-UQ-Jye" firstAttribute="centerY" secondItem="1Om-1o-9RI" secondAttribute="centerY" id="akt-bV-o56"/>
                 <constraint firstItem="p7N-q3-eOS" firstAttribute="leading" secondItem="aK3-UQ-Jye" secondAttribute="trailing" constant="7" id="dTv-1b-KqF"/>
                 <constraint firstItem="hCg-0m-PsU" firstAttribute="centerY" secondItem="1Om-1o-9RI" secondAttribute="centerY" id="ebx-4P-pen"/>
-                <constraint firstItem="aK3-UQ-Jye" firstAttribute="leading" secondItem="1Om-1o-9RI" secondAttribute="leading" constant="10" id="yYw-b9-BlB"/>
+                <constraint firstItem="aK3-UQ-Jye" firstAttribute="leading" secondItem="1Om-1o-9RI" secondAttribute="leading" constant="12" id="yYw-b9-BlB"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

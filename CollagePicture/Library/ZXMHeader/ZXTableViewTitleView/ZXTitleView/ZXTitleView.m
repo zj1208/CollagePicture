@@ -17,5 +17,9 @@
     // Drawing code
 }
 */
-
++ (id)viewFromNib
+{
+    NSArray *arr =[[NSBundle mainBundle] loadNibNamed:[[self class] description] owner:self options:nil];
+    return [arr firstObject];
+}
 @end

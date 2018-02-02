@@ -44,10 +44,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 
 @synthesize picItemHeight = _picItemHeight;
 
-- (BOOL)isExistInputItem
-{
-    return _existInputItem;
-}
+
 - (void)awakeFromNib
 {
     //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
@@ -69,7 +66,6 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        //如果写在这里，永远是这个值；
         [self commonInit];
     }
     return self;
@@ -79,9 +75,11 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 {
     [super layoutSubviews];
    self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-//    self.collectionView.frame = self.bounds;
     self.addPicCoverView.frame = self.bounds;
 }
+
+
+
 - (void)commonInit
 {
     self.sectionInset = UIEdgeInsetsMake(5, 15, 5, 15);
@@ -96,28 +94,49 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     
     self.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddPhotoImageName];
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.sectionInset = self.sectionInset;
-    self.collectionFlowLayout = flowLayout;
-    
-    UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
-    self.collectionView = collection;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
     [self addSubview:self.collectionView];
     
+    self.showAddPicCoverView = YES;
+}
+
+- (BOOL)isExistInputItem
+{
+    return _existInputItem;
+}
+
+- (NSMutableArray *)dataMArray
+{
     if (!_dataMArray)
     {
         _dataMArray = [NSMutableArray array];
     }
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:nib_ZXAddPicViewCell bundle:nil] forCellWithReuseIdentifier:reuseCell];
-    [self.collectionView registerClass:[ZXAddPicPlaceholderCell class] forCellWithReuseIdentifier:reusePlaceholderCell];
-    self.collectionView.scrollEnabled = NO;
-    
-    self.showAddPicCoverView = YES;
+    return _dataMArray;
 }
+
+#pragma mark - UICollectionView
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView)
+    {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.sectionInset = self.sectionInset;
+        self.collectionFlowLayout = flowLayout;
+        
+        UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
+        collection.backgroundColor = [UIColor whiteColor];
+        collection.delegate = self;
+        collection.dataSource = self;
+        
+        [collection registerNib:[UINib nibWithNibName:nib_ZXAddPicViewCell bundle:nil] forCellWithReuseIdentifier:reuseCell];
+        [collection registerClass:[ZXAddPicPlaceholderCell class] forCellWithReuseIdentifier:reusePlaceholderCell];
+        collection.scrollEnabled = NO;
+        
+        _collectionView = collection;
+    }
+    return _collectionView;
+}
+
 
 - (void)setShowAddPicCoverView:(BOOL)showAddPicCoverView
 {
@@ -205,7 +224,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 
 
 
-#pragma mark - UICollectionView
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     
@@ -336,14 +355,11 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return self.sectionInset;
-    //    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-
     return self.minimumLineSpacing;
-    //    return 10;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section

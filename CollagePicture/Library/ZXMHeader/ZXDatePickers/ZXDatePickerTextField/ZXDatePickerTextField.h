@@ -1,12 +1,16 @@
 //
-//  ZXDatePickerTField.h
+//  ZXDatePickerTextField.h
 //
 //
 //  Created by zhuxinming on 15/10/29.
 //  Copyright © 2015年 mac. All rights reserved.
 //  可以参考网易云信的生日选择优化；这个暂时使用，待优化；
 
+//  2018.1.16 优化ZXDatePickerTextField；
+
 #import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZXDatePickerTDelegate <NSObject>
 
@@ -19,13 +23,15 @@
  *
  */
 
-- (void)datePickerValueChangedFinished:(NSString *)dateString date:(NSDate *)aDate;
+- (void)zx_datePickerValueChangedFinished:(NSString *)dateString date:(NSDate *)aDate;
 
+
+- (void)zx_datePickerFinish:(NSString *)dateString date:(NSDate *)aDate;
 
 @end
 
 
-@interface ZXDatePickerTField : UITextField
+@interface ZXDatePickerTextField : UITextField
 
 @property(nonatomic,weak) id<ZXDatePickerTDelegate>zxDelegate;
 
@@ -37,6 +43,8 @@
 - (void)showTextFieldHadDate:(NSString *)dateFormat;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 
 /*

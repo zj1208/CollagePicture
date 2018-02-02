@@ -5,23 +5,33 @@
 //  Created by simon on 17/4/13.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  简介：设置中间button按钮，图片+文字，按钮左右二边有0.5高度的线条； 可以自定义设置按钮宽度，线条是否隐藏；
+//
+//  2018.01.10
+//  增加注释；
 
 #import <UIKit/UIKit.h>
 
 static NSString *const nibName_ZXCenterTitleView = @"ZXCenterTitleView";
 
-// 设置中间按钮显示view，左侧线条，右侧线条（线条可隐藏），可以设置中间按钮的width宽度约束值；
 
 @interface ZXCenterTitleView : UIView
 
+// 中间按钮：可以设置图标+文字
 @property (weak, nonatomic) IBOutlet UIButton *centerBtn;
+
+// 中间按钮宽度
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerBtnWidthLayout;
+
 
 @property (weak, nonatomic) IBOutlet UIView *leftLine;
 @property (weak, nonatomic) IBOutlet UIView *rightLine;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerBtnWidthLayout;
-
+// 设置隐藏线条
 @property (nonatomic, assign) BOOL hideLineView;
+
+
++ (id)viewFromNib;
 @end
 
 

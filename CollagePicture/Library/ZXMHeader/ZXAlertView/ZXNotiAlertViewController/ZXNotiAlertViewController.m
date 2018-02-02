@@ -57,14 +57,13 @@
     {
         self.cancleActionHandleBlock();
     }
-    else
-    {
-        
-    }
 }
 
 - (IBAction)doBtnAction:(UIButton *)sender {
     
-    self.doActionHandleBlock();
+    if (self.doActionHandleBlock)
+    {
+        self.doActionHandleBlock();
+    }
 }
 @end

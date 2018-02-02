@@ -26,6 +26,12 @@
 {
     
 }
+
+- (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 - (void)setTextLab:(id)data1  detailLab:(id)data2
 {
     

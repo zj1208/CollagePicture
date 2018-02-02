@@ -5,12 +5,15 @@
 //  Created by simon on 17/2/16.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  简介：设置左侧button按钮，图片+文字，可以添加action事件； 可以自定义设置左侧边距；
+//
+//  2018.01.10
+//  增加注释；
 
 #import <UIKit/UIKit.h>
 
 static NSString *const nibName_ZXActionTitleView = @"ZXActionTitleView";
 
-//  左边按钮显示，可以设置左边间距，可以设置button的图片和文字；
 
 @interface ZXActionTitleView : UIView
 
@@ -19,6 +22,7 @@ static NSString *const nibName_ZXActionTitleView = @"ZXActionTitleView";
 //设置button左边间距
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnLayoutLeft;
 
++ (id)viewFromNib;
 @end
 
 

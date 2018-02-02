@@ -425,6 +425,40 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return [hash lowercaseString];
 }
 
+- (NSInteger)zhGetNumLinesWithBoundingRectWithSize:(CGSize)size titleFont:(UIFont *)font
+{
+    CGFloat textH = [self boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin| NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size.height;
+    CGFloat lineHeight = font.lineHeight;
+    NSInteger  lineCount = textH / lineHeight;
+    return lineCount;
+}
+
+
++ (CGSize)zhGetBoundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font
+{
+    if (CGSizeEqualToSize(size, CGSizeZero))
+    {
+        size = CGSizeMake(MAXFLOAT, MAXFLOAT);
+    }
+    NSDictionary *tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    CGSize textSize = [text boundingRectWithSize:size
+                              options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                           attributes:tdic
+                              context:nil].size;
+    return textSize;
+}
+
++ (void)zhDrawTextInContext:(CGContextRef *)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font
+{
+    NSMutableParagraphStyle *priceParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    priceParagraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    priceParagraphStyle.alignment = NSTextAlignmentLeft;
+    
+    [text drawInRect:rect
+      withAttributes:@{NSParagraphStyleAttributeName : priceParagraphStyle, NSFontAttributeName : font}];
+}
+
+
 + (NSString *)zhCreatMD5StringWithDict:(NSDictionary *)dict sortKeyArray:(NSArray *)sortKeys
 {
     __block NSString *str = @"";
@@ -486,7 +520,8 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
         if (error==nil && data!=nil)
         {
             NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            return str;
+            NSString *escapeString = [NSString zhFilterEscapeCharacterWithJsonString:str];
+            return escapeString;
         }
     }
     return nil;
@@ -504,7 +539,6 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     }
     return responseString;
 }
-
 
 
 

@@ -5,14 +5,26 @@
 //  Created by simon on 2017/10/13.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-
+//  简介：左侧：图标+标题文字，右侧：副标题+图标，（可空）点击整个view响应事件；
+//
+//  2018.01.10
+//  扩展ZXActionAdditionalViewAccessoryType；
 
 
 #import <UIKit/UIKit.h>
 
 static NSString *const nibName_ZXActionAdditionalTitleView = @"ZXActionAdditionalTitleView";
 
-//左侧：图标+标题文字，右侧：副标题+图标，（可空）点击整个view响应事件；
+typedef NS_ENUM(NSInteger, ZXActionAdditionalViewAccessoryType)
+{
+    // 最右边没有
+    ZXActionViewAccessoryTypeNone = 0,
+    
+    // 指示imageView图
+    ZXActionViewAccessoryTypeDisclosureIndicator = 1,
+
+};
+
 @interface ZXActionAdditionalTitleView : UIView
 
 @property (weak, nonatomic) IBOutlet UIImageView *leftIconImageView;
@@ -20,6 +32,8 @@ static NSString *const nibName_ZXActionAdditionalTitleView = @"ZXActionAdditiona
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailTitleLab;
+
+@property (nonatomic) ZXActionAdditionalViewAccessoryType    accessoryType;
 
 @property (weak, nonatomic) IBOutlet UIImageView *accessoryImageView;
 

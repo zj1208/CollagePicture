@@ -51,11 +51,9 @@ static CGFloat const ZXSegmentChoseBtnHeight = 40.f;
 - (void)commonInit
 {
     self.backgroundColor = [UIColor whiteColor];
-    
     [self addSubview:self.bottomDivideLine];
     
-    self.segmentHeight = ZXSegmentChoseBtnHeight;
-    
+    self.menuHeaderViewHeight = ZXSegmentChoseBtnHeight;
 }
 
 
@@ -134,9 +132,9 @@ static CGFloat const ZXSegmentChoseBtnHeight = 40.f;
 {
     [super layoutSubviews];
     
-    self.choseBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-ZXSegmentChoseBtnWidth, 0, ZXSegmentChoseBtnWidth, self.segmentHeight);
+    self.choseBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-ZXSegmentChoseBtnWidth, 0, ZXSegmentChoseBtnWidth, self.menuHeaderViewHeight);
     
-    self.titleLab.frame = CGRectMake(10, 0, CGRectGetWidth(self.frame)-ZXSegmentChoseBtnWidth-20, self.segmentHeight);
+    self.titleLab.frame = CGRectMake(10, 0, CGRectGetWidth(self.frame)-ZXSegmentChoseBtnWidth-20, self.menuHeaderViewHeight);
     
     self.bottomDivideLine.frame = CGRectMake(0, CGRectGetMaxY(self.choseBtn.frame), CGRectGetWidth(self.frame), 0.5);
     CGFloat tagsViewHeight = [self.labelsTagsView getCellHeightWithContentData:self.itemTitles];
@@ -201,7 +199,7 @@ static CGFloat const ZXSegmentChoseBtnHeight = 40.f;
     self.labelsTagsView.selectedIndex = _selectedIndex;
 
     CGFloat tagsViewHeight = [self.labelsTagsView getCellHeightWithContentData:self.itemTitles];
-    CGFloat totalHeight = self.segmentHeight +0.5 +tagsViewHeight;
+    CGFloat totalHeight = self.menuHeaderViewHeight +0.5 +tagsViewHeight;
     
     self.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), ZXSegmentChoseBtnHeight);
 

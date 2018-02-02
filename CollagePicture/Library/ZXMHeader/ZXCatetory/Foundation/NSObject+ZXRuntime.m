@@ -30,22 +30,3 @@
 
 @end
 
-/*
-方法交互的初衷目的是替换原生的方法实现；自己添加自己的额外业务逻辑，看MJRefresh例子
- 
- @implementation UITableView (MJRefresh)
- 
- + (void)load
- {
-    [self exchangeInstanceMethod1:@selector(reloadData) method2:@selector(mj_reloadData)];
- }
- 
- - (void)mj_reloadData
- {
-    [self mj_reloadData];
- 
-    [self executeReloadDataBlock];
- }
- @end
-
-*/

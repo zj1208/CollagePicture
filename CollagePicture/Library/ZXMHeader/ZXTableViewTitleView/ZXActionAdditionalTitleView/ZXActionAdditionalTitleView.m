@@ -21,6 +21,39 @@
 {
     [super awakeFromNib];
     self.backgroundColor =[UIColor whiteColor];
+    self.accessoryType = ZXActionViewAccessoryTypeDisclosureIndicator;
+}
+
+- (void)setAccessoryType:(ZXActionAdditionalViewAccessoryType)accessoryType
+{
+    if (accessoryType == ZXActionViewAccessoryTypeNone)
+    {
+//        [self.accessoryImageView removeFromSuperview];
+//         NSLog(@"%@",self.constraints);
+        //修改优先级
+        [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([obj.firstItem isEqual:self.accessoryImageView]
+                &&obj.firstAttribute == NSLayoutAttributeLeading
+                &&[obj.secondItem isEqual:self.detailTitleLab]
+                &&obj.secondAttribute ==NSLayoutAttributeTrailing)
+            {
+//                NSLog(@"%@",obj);
+                obj.priority = UILayoutPriorityDefaultHigh;
+            }
+            if ([obj.firstItem isEqual:self]
+                &&obj.firstAttribute == NSLayoutAttributeTrailing
+                &&[obj.secondItem isEqual:self.detailTitleLab]
+                &&obj.secondAttribute ==NSLayoutAttributeTrailing)
+            {
+                obj.priority = UILayoutPriorityRequired;
+            }
+        }];
+    }
+    else if (accessoryType == ZXActionViewAccessoryTypeDisclosureIndicator)
+    {
+        
+    }
 }
 
 + (id)viewFromNib

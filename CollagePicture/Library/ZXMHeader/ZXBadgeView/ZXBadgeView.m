@@ -43,32 +43,42 @@
 - (void)setInitUI
 {
     self.backgroundColor = [UIColor clearColor];
-    UIImageView *dotView = [[UIImageView alloc] init];
-    [self addSubview:dotView];
-    self.dotImageView = dotView;
-    self.dotImageView.image = [UIImage imageNamed:@"dot_red"];
-    self.dotImageView.hidden = YES;
+  
+    [self addSubview:self.badgeImageView];
     self.badgeViewType = ZXBadgeViewTypeDot;
 
 }
 
-- (void)addImageView
+- (UIImageView *)badgeImageView
 {
-    
+    if (!_badgeImageView)
+    {
+        UIImageView *badgeView = [[UIImageView alloc] init];
+        badgeView.image = [UIImage imageNamed:@"dot_red"];
+        badgeView.hidden = YES;
+        _badgeImageView = badgeView;
+    }
+    return _badgeImageView;
 }
+
+
 
 - (void)setBadgeViewType:(ZXBadgeViewType)badgeViewType
 {
     _badgeViewType = badgeViewType;
     if (_badgeViewType == ZXBadgeViewTypeDot)
     {
-        self.dotImageView.hidden = NO;
+        self.badgeImageView.image = [UIImage imageNamed:@"dot_red"];
+    }
+    else if (_badgeViewType ==ZXBadgeViewTypeCustomDot)
+    {
+        
     }
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.dotImageView.frame =self.bounds;
+    self.badgeImageView.frame =self.bounds;
 }
 @end

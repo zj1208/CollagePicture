@@ -5,12 +5,17 @@
 //  Created by simon on 16/1/14.
 //  Copyright © 2016年 simon. All rights reserved.
 //
+// 2018.01.09
+// 新增协议方法
 
 #import <Foundation/Foundation.h>
 
 @protocol SetDataProtoct <NSObject>
 
+@optional
 - (void)setData:(id)data;
+
+- (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath;
 
 
 - (void)setTextLab:(id)data1  detailLab:(id)data2;

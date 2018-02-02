@@ -9,11 +9,19 @@
 #import "ZXMPickerView.h"
 
 
-#ifndef LCDW
-#define LCDW ([[UIScreen mainScreen] bounds].size.width)
-#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+#ifndef SCREEN_WIDTH
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#endif
+
+#ifndef SCREEN_MAX_LENGTH
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+#endif
+
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#ifndef LCDScale_iPhone6_Width
+#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 
@@ -21,8 +29,6 @@
 @property (nonatomic , assign) int row;
 
 @property (nonatomic, copy) NSArray *dataArray;
-
-//@property (nonatomic, strong) ZXOverlay *overlay;
 
 @property (nonatomic, strong) UIToolbar *toolbar;
 @end
@@ -72,10 +78,6 @@
     // 添加pickerView的约束
     [self addCustomConstraintWithItem:self.pickerView];
     
-//    ZXOverlay *overlay = [[ZXOverlay alloc] init];
-//    overlay.delegate = self;
-//    [overlay addSubview:self];
-//    self.overlay = overlay;
 }
 - (void)layoutSubviews
 {
@@ -107,17 +109,16 @@
     {
         // 高度固定44，不然barButtonItem文字不居中；不能太高；
         UIToolbar *toolbar=[[UIToolbar alloc] init];
-//        toolbar.barTintColor = [UIColor blueColor];
         
-        UIBarButtonItem *leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelPicker)];
+        UIBarButtonItem *leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelBarButtonAction:)];
         leftBarButtonItem.tintColor =[UIColor blackColor];
         
         UIBarButtonItem *borderSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-        borderSpaceBarItem.width = LCDScale_iphone6_Width(12);
+        borderSpaceBarItem.width = LCDScale_iPhone6_Width(12);
         
         UIBarButtonItem *centerSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         
-        UIBarButtonItem *rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(toolBarDoneClick:)];
+        UIBarButtonItem *rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(finishBarButtonAction:)];
         rightBarButtonItem.tintColor =[UIColor blackColor];
         toolbar.items =@[borderSpaceBarItem,leftBarButtonItem,centerSpaceBarItem,rightBarButtonItem,borderSpaceBarItem];;
         _toolbar = toolbar;
@@ -189,7 +190,7 @@
 #pragma mark - PickerViewDelegate
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return LCDScale_iphone6_Width(48.f);
+    return LCDScale_iPhone6_Width(48.f);
 }
 
 //-(CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -202,16 +203,8 @@
     _row =(int)row;
 }
 
-- (void)toolBarDoneClick:(UIBarButtonItem *)sender
-{
-    NSString *tit = [self.dataArray objectAtIndex:_row];
-    
-    if ([self.delegate respondsToSelector:@selector(zx_pickerDidDoneStatus:index:itemTitle:)])
-    {
-        [self.delegate zx_pickerDidDoneStatus:self index:_row itemTitle:tit];
-    }
-    [self cancelPicker];
-}
+
+#pragma mark - show
 
 - (void)showInTabBarView:(UIView *)view
 {
@@ -248,7 +241,6 @@
     [view addSubview:overlay];
     overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame));
     self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
-//    [self layoutIfNeeded];
     
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
@@ -262,11 +254,16 @@
 }
 
 
-- (void)zxOverlaydissmissAction
+
+
+
+#pragma mark - barButtonItemAction
+
+
+- (void)cancelBarButtonAction:(id)sender
 {
     [self cancelPicker];
 }
-
 
 - (void)cancelPicker
 {
@@ -275,8 +272,7 @@
                      animations:^{
                          
                          self.frame = CGRectMake(0,CGRectGetMinY(self.frame)+CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-//                         self.superview.alpha = 0.1;
-
+                         
                      }
                      completion:^(BOOL finished){
                          if ([self.superview isKindOfClass:[ZXOverlay class]])
@@ -289,9 +285,23 @@
     }
 }
 
+- (void)finishBarButtonAction:(UIBarButtonItem *)sender
+{
+    NSString *tit = [self.dataArray objectAtIndex:_row];
+    [self cancelPicker];
 
+    if ([self.delegate respondsToSelector:@selector(zx_pickerDidDoneStatus:index:itemTitle:)])
+    {
+        [self.delegate zx_pickerDidDoneStatus:self index:_row itemTitle:tit];
+    }
+}
 
+#pragma mark -zxOverlayDelegate
 
+- (void)zxOverlaydissmissAction
+{
+    [self cancelPicker];
+}
 @end
 
 

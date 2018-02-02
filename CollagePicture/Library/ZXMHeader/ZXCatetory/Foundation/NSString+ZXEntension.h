@@ -1,11 +1,17 @@
 //
 //  NSString+ZXEntension.h
-//  wqk8
+//  
 //
 //  Created by simon on 15/11/17.
 //  Copyright © 2015年 mac. All rights reserved.
 //
+// 2017.12.20
+// 获取文本占几行空间
+// 2018.1.18  新增获取文字所需要的尺寸
+
 #import <Foundation/Foundation.h>
+//#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -217,6 +223,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ 获取文本占几行空间；
+
+ @param size 有效范围内；
+ @param font 字体大小
+ @return 几行
+ */
+- (NSInteger)zhGetNumLinesWithBoundingRectWithSize:(CGSize)size titleFont:(UIFont *)font;
+
+
+/**
+ 获取文字所需要的尺寸
+
+ @param text 文字内容
+ @param size 显示尺寸范围
+ @param font 字体大小
+ @return size
+ */
++ (CGSize)zhGetBoundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font;
+
+
+/**
+ 直接绘制文本到某个rect
+
+ @param ctx 上下文
+ @param text 文本
+ @param rect rect
+ @param font font
+ */
++ (void)zhDrawTextInContext:(CGContextRef)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font;
+
+/**
  key1=value1&key2=value2 组成的有序字符串 MD5加密
 
  @param dict 无序字典
@@ -241,8 +278,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)zhGetJSONSerializationStringFromObject:(nullable id)responseObject;
 
-// 过滤json字符串的转义字符；
+
+/**
+ 过滤json字符串的转义字符；
+
+ @param str json原字符串
+ @return 过滤后的json字符串
+ */
 + (NSString *)zhFilterEscapeCharacterWithJsonString:(NSString *)str;
+
+
+//根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；
++ (NSString *)zhGetUMOpenUDIDString;
 
 
 #pragma mark-获取[from, to]之间的随机整数。

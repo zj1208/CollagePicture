@@ -4,9 +4,10 @@
 //
 //  Created by simon on 17/3/15.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//  水平添加图片的组件；
-//  增加自定义提示view（UIButton图 + 提示UILabel）；
-//  2017.12.13
+//  注释：水平添加图片的组件；可以自定义提示view（UIButton图 + 提示UILabel）；
+
+//  2018.01.09
+//  优化代码
 
 #import <UIKit/UIKit.h>
 #import "ZXAddPicViewCell.h"
@@ -244,7 +245,7 @@ NS_ASSUME_NONNULL_END
         UIImage *image = (UIImage *)obj;
         NSData *imageData = [WYUtility zipNSDataWithImage:image];
         
-        [[AliOSSUploadManager getInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN fileCatalogType:OSSFileCatalog_uploadProduct uploadingData:imageData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
+        [[AliOSSUploadManager sharedInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN fileCatalogType:OSSFileCatalog_uploadProduct uploadingData:imageData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
             
         } singleComplete:^(id imageInfo,NSString*imagePath,CGSize imageSize) {
             

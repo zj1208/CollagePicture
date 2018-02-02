@@ -21,6 +21,7 @@ static const double uiControl_kTimeInterval = 0.5;
 
 @implementation UIControl (ZXFastClick)
 
+//运行时载入；有空考虑一下某处只重向临时用一次？
 + (void)load
 {
     Method originalMethod = class_getInstanceMethod(self, @selector(sendAction:to:forEvent:));
@@ -28,6 +29,8 @@ static const double uiControl_kTimeInterval = 0.5;
     method_exchangeImplementations(originalMethod, swizzledMethod);
 }
 
+// 注：好像主线程 正常push的时候，即使点击多快，不会响应第二个事件；
+// 主要是遇到异步请求；连续点击二次及以上；
 - (void)zx_sendAction:(SEL)action to:(nullable id)target forEvent:(nullable UIEvent *)event
 {
     if ([self isKindOfClass:[UIButton class]]  && self.allControlEvents ==UIControlEventTouchUpInside)

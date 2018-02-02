@@ -5,6 +5,10 @@
 //  Created by simon on 16/12/8.
 //  Copyright © 2016年 com.Microants. All rights reserved.
 //
+//  简介：设置左侧图标+标题文字； 与左侧边距是12，可以删除左侧图标，文字离左侧边距依然是12；
+//
+//  2018.01.10
+//  增加注释；
 
 #import <UIKit/UIKit.h>
 #import "ZXCenterTitleView.h"
@@ -13,13 +17,17 @@
 
 static NSString *const nibName_ZXTitleView = @"ZXTitleView";
 
-// 设置左侧图标+标题文字； 可以删除左侧图标；
+
 @interface ZXTitleView : UIView
 
+// 左侧文字
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
-
+// 左侧图标
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
+
+
++ (id)viewFromNib;
 
 @end
 

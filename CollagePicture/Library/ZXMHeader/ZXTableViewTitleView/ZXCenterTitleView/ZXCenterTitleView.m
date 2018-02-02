@@ -25,4 +25,10 @@
     self.leftLine.hidden = hideLineView;
     self.rightLine.hidden = hideLineView;
 }
+
++ (id)viewFromNib
+{
+    NSArray *arr =[[NSBundle mainBundle] loadNibNamed:[[self class] description] owner:self options:nil];
+    return [arr firstObject];
+}
 @end

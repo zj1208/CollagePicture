@@ -54,17 +54,19 @@ static NSString *const cellReuse_defaultCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    //注意：collectionView不能设置比当前view大很多宽度的，不然第二个cell可能超过当前可视区域，看不到；
+    self.collectionView.frame = self.bounds;
 }
 
 
 - (void)commonInit
 {
+    self.backgroundColor = [UIColor whiteColor];
     self.sectionInset = UIEdgeInsetsMake(10, 15, 10, 15);
     self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
     self.minimumLineSpacing = ZXMinimumLineSpacing;
     [self addSubview:self.collectionView];
-    self.collectionView.backgroundColor = [UIColor orangeColor];
+//    self.collectionView.backgroundColor = [UIColor orangeColor];
 }
 
 - (void)registerClassWithCollectionViewCell:(ZXCustomCollectionVCell <ZXCustomCollectionVCellProtocol>*)collectionViewCell forCellWithReuseIdentifier:(NSString *)identifier
@@ -99,7 +101,7 @@ static NSString *const cellReuse_defaultCell = @"Cell";
         self.collectionFlowLayout = flowLayout;
         
         UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
-        collection.backgroundColor = [UIColor whiteColor];
+        collection.backgroundColor = [UIColor clearColor];
         collection.delegate = self;
         collection.dataSource = self;
         
@@ -137,11 +139,17 @@ static NSString *const cellReuse_defaultCell = @"Cell";
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if (self.customCellReuse)
     {
         ZXCustomCollectionVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.customCellReuse forIndexPath:indexPath];
-        [cell setData:[self.dataMArray objectAtIndex:indexPath.item]];
+        if ([cell respondsToSelector:@selector(setData:)] && indexPath.item<self.dataMArray.count)
+        {
+            [cell setData:[self.dataMArray objectAtIndex:indexPath.item]];
+        }
+        if ([cell respondsToSelector:@selector(setData:withIndexPath:)]&& indexPath.item<self.dataMArray.count)
+        {
+            [cell setData:[self.dataMArray objectAtIndex:indexPath.item] withIndexPath:indexPath];
+        }
         return cell;
     }
     
@@ -152,10 +160,13 @@ static NSString *const cellReuse_defaultCell = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = CGSizeMake((CGRectGetWidth(self.bounds)-self.sectionInset.left-self.sectionInset.right)/2, (CGRectGetHeight(self.bounds)-self.sectionInset.top-self.sectionInset.bottom-self.minimumLineSpacing*(self.dataMArray.count-1))/self.dataMArray.count);
-    if (CGSizeEqualToSize(self.itemSize, CGSizeZero))
+    if (self.dataMArray.count>0)
     {
-        return size;
+        CGSize size = CGSizeMake((CGRectGetWidth(self.bounds)-self.sectionInset.left-self.sectionInset.right)/2, (CGRectGetHeight(self.bounds)-self.sectionInset.top-self.sectionInset.bottom-self.minimumLineSpacing*(self.dataMArray.count-1))/self.dataMArray.count);
+        if (CGSizeEqualToSize(self.itemSize, CGSizeZero))
+        {
+            return size;
+        }
     }
     return self.itemSize;
 }

@@ -12,4 +12,6 @@
 
 - (void)setData:(id)data;
 
+- (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath;
+
 @end

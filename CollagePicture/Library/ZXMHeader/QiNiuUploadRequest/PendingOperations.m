@@ -129,7 +129,7 @@
     [cache storeImage:firstImg forKey:key toDisk:YES completion:nil];
 
     //把所有GrowthSavePhotoModel保存在本地
-    [[GrowthDataManager sharedInstance]insertData:uploadArray withAlbumId:operationModel.operationId];
+    [[GrowthDataManager getInstance]insertData:uploadArray withAlbumId:operationModel.operationId];
     
     //发送通知，告诉准备开始上传了
     [[NSNotificationCenter defaultCenter]postNotificationName:kNOTIFICATION_UPLOAD_Begain object:nil userInfo:nil];
@@ -189,7 +189,7 @@
 - (void)uploadPicForRecord:(UploadTable *)table
 {
     
-    GrowthDataManager *growthManager=  [GrowthDataManager sharedInstance];
+    GrowthDataManager *growthManager=  [GrowthDataManager getInstance];
     UploadGrowOperation *operation = [[UploadGrowOperation alloc] initWithRequest:table delegate:self progress:^(NSProgress* progress) {
         
         //上传进度反馈

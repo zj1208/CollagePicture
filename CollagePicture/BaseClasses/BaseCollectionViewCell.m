@@ -15,6 +15,11 @@
     
 }
 
+- (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 - (CGFloat)getCellHeightWithContentData:(id)data{
     return 0.f;
     

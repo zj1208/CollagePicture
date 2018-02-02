@@ -14,4 +14,9 @@
 {
     
 }
+
+- (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 @end

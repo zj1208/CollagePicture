@@ -7,6 +7,7 @@
 //
 // 2017.12.25
 // 优化组件，顶部toolbar高度固定优化； pickerView高度约束修改优化；优化代码；
+// 2018.1.12 优化代码；
 
 #import <UIKit/UIKit.h>
 #import "ZXOverlay.h"
@@ -91,7 +92,7 @@ NS_ASSUME_NONNULL_END
 {
     [super viewDidLoad];
     
-    ZXMPickerView *picker = [[ZXMPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, LCDScale_iphone6_Width(230.f))];
+    ZXMPickerView *picker = [[ZXMPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, LCDScale_iPhone6_Width(230.f))];
     picker.delegate = self;
     self.pickerView = picker;
  

@@ -19,10 +19,10 @@
 
 - (void)setData:(id)data placeholderImage:(UIImage *)placeholderImage
 {
-    MessageModelSub *model = (MessageModelSub *)data;
-    self.titleLab.text = model.typeName ;    // Configure the cell
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.typeIcon] placeholderImage:placeholderImage];
-    [self.badgeLab zh_digitalIconWithBadgeValue:model.num maginY:0 badgeFont:[UIFont systemFontOfSize:12] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+//    MessageModelSub *model = (MessageModelSub *)data;
+//    self.titleLab.text = model.typeName ;    // Configure the cell
+//    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.typeIcon] placeholderImage:placeholderImage];
+//    [self.badgeLab zh_digitalIconWithBadgeValue:model.num maginY:0 badgeFont:[UIFont systemFontOfSize:12] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
     //        cell.backgroundColor = [UIColor redColor];
 }
 
