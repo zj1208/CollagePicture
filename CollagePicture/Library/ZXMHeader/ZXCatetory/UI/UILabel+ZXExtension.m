@@ -9,7 +9,46 @@
 #import "UILabel+ZXExtension.h"
 
 @implementation UILabel (ZXExtension)
-
+-(void)jl_changeStringOfNumberStyle:(NSString *)text numberColor:(UIColor *)numColr numberFont:(UIFont *)font
+{
+    NSString* str = [NSString string];
+    if (!text) {
+        if (self.text) {
+            str = [NSString stringWithString:self.text];
+        }else{
+            return;
+        }
+    }else{
+        str = [NSString stringWithString:text];
+    }
+    NSScanner *scanner = [NSScanner scannerWithString:str];
+    [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
+    int number;
+    [scanner scanInt:&number];
+    NSInteger local = 0;
+    NSString* strnum = [NSString stringWithFormat:@"%d",number];
+    NSRange range_num = [str rangeOfString:strnum];
+    
+    NSMutableString* strCopy = [NSMutableString stringWithString:str];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:str];
+    while (range_num.location != NSNotFound) {
+        NSRange range = NSMakeRange(range_num.location+local, range_num.length);
+        [attributedString addAttribute:NSForegroundColorAttributeName value:numColr range:range];
+        [attributedString addAttribute:NSFontAttributeName value:font range:range];
+        
+        local = range_num.length;
+        [strCopy deleteCharactersInRange:range_num];
+        
+        NSScanner *scanner = [NSScanner scannerWithString:strCopy];
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
+        int number;
+        [scanner scanInt:&number];
+        
+        NSString* strnum = [NSString stringWithFormat:@"%d",number];
+        range_num = [strCopy rangeOfString:strnum];
+    }
+    self.attributedText = attributedString;
+}
 -(void)jl_addMediumLineWithText:(NSString*)text lineColor:(UIColor*)color
 {
     NSString* str = [NSString string];
@@ -53,7 +92,7 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [str length])];
     self.attributedText = attributedString;
 }
--(void)jl_setAttributedText:(NSString *)text withMinimumLineHeight:(float)spacing lineBreakMode:(NSTextAlignment)alignment
+-(void)jl_setAttributedText:(NSString *)text withLineSpacing:(float)spacing
 {
     NSString* str = [NSString string];
     if (!text) {
@@ -67,9 +106,11 @@
     }
     NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:str];
     NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle1 setMinimumLineHeight:spacing];
-    paragraphStyle1.alignment = alignment;
-   
+    [paragraphStyle1 setLineSpacing:spacing];
+    
+    paragraphStyle1.lineBreakMode = self.lineBreakMode;
+    paragraphStyle1.alignment = self.textAlignment;
+    
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [str length])];
     self.attributedText = attributedString;
 }
@@ -92,7 +133,7 @@
     CGRect titleRect = [aDigitalTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics attributes:@{NSFontAttributeName:self.font} context:nil];
     CGSize titleFitSize = titleRect.size;
     
-    CGFloat maginY = aMaginY<2.5?2.5:aMaginY;
+    CGFloat maginY = aMaginY<3.5?3.5:aMaginY;
     CGFloat height = ceilf(titleFitSize.height)+2*maginY;
     [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         

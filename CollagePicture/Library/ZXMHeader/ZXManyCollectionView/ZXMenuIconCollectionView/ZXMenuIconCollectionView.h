@@ -5,14 +5,11 @@
 //  Created by simon on 2017/10/23.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  注释：collectionView菜单列表展示，可以计算出动态数量的item所需要的collectionView总高度；
-//  要求：等大小item，上面图标+下面文字；每个图标右上角可以显示badge数字；
+//  注释：collectionView菜单列表展示，每个item可以展示图标+下面文字+图标右上角的badge数字角标，可以计算出动态数量的item所需要的collectionView总高度；可以使用自定义Model数据数组+代理方法设置cell的UI数据，也可以使用默认ZXMunuIconModel+默认方法设置；
 
-//   2018.1.8
-//   修改ZXMenuIconCell实例方法
-//   2018.1.18
-//   优化代码；修改item大小；有bug，计算高度不准；在消息页面，initWithCoder:方法会调用二次
-//   2018.1.30 修改计算评价widht的方法；
+//  2018.2.11; 优化组件；
+
+
 
 #import <UIKit/UIKit.h>
 #import "ZXMenuIconCell.h"
@@ -41,8 +38,15 @@ NS_ASSUME_NONNULL_BEGIN
 // 行间距;默认12；
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
+/**
+ *  一个屏幕显示多少列；最好小于等于4列；
+ */
+@property (nonatomic, assign) NSInteger columnsCount;
+
+
+@property (nonatomic, assign) CGSize itemSize;
+
 // 设置item中的Icon图标的width，height，size；
-//@property (nonatomic, assign) CGSize itemSize;
 
 @property (nonatomic, assign) CGSize iconSize;
 
@@ -52,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 自适应缩放宽度大小：计算出来后用于设置一个总宽度（比如屏幕宽度）下放几个的平均item宽度；
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing;
+
+
 
 - (void)setData:(NSArray *)data;
 
@@ -88,6 +94,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView willDisplayCell:(ZXMenuIconCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath;
 
 
+// 代理方法设置cell的数据；
+- (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView cell:(ZXMenuIconCell *)cell forItemSetData:(id)data cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+
 /**
  自定义 点击添加cell事件回调
  
@@ -120,17 +129,36 @@ NS_ASSUME_NONNULL_END
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-    self.menuIconCollectionView.itemSize = CGSizeMake(LCDScale_iPhone6_Width(80),LCDScale_iPhone6_Width(80));
-    self.menuIconCollectionView.placeholderImage = AppPlaceholderImage;
+     self.menuIconCollectionView.columnsCount = 3;
+     self.menuIconCollectionView.minimumInteritemSpacing = 15.f;
+ 
+     CGFloat width = [self.menuIconCollectionView getItemAverageWidthInTotalWidth:LCDW columnsCount:self.menuIconCollectionView.columnsCount sectionInset:self.menuIconCollectionView.sectionInset minimumInteritemSpacing:self.menuIconCollectionView.minimumInteritemSpacing];
+     self.menuIconCollectionView.itemSize = CGSizeMake(width,width-LCDScale_iPhone6_Width(20));
+ 
+     self.menuIconCollectionView.placeholderImage = AppPlaceholderImage;
     
 }
 
 
-- (void)setData:(id)data
-{
-    [self.menuIconCollectionView setData:data];
-}
+ - (void)setData:(id)data
+ {
+     NSArray *dataArray = (NSArray *)data;
+     NSMutableArray *mArray = [NSMutableArray arrayWithCapacity:dataArray.count];
+     [data enumerateObjectsUsingBlock:^(MessageModelSub *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+     
+     ZXMenuIconModel *model = [[ZXMenuIconModel alloc] init];
+     model.icon = obj.typeIcon;
+     model.title = obj.typeName;
+     if (obj.num>0) {
+     model.sideMarkType = SideMarkType_number;
+     }else{
+     model.sideMarkType = SideMarkType_none;
+     }
+     model.sideMarkValue = [NSString stringWithFormat:@"%@",@(obj.num)];
+     [mArray addObject:model];
+     }];
+     [self.menuIconCollectionView setData:mArray];
+ }
 
 - (CGFloat)getCellHeightWithContentIndexPath:(NSIndexPath *)indexPath data:(id)data
 {
@@ -140,10 +168,3 @@ NS_ASSUME_NONNULL_END
  */
 
 
-// 例2，如果要做到item的图标大小不受影响，则改变item间距来达到平分；
-/*
-self.menuIconCollectionView.itemSize = CGSizeMake((LCDW-3*20)/4,(LCDW-3*20)/4);
-self.menuIconCollectionView.sectionInset = UIEdgeInsetsZero;
-self.menuIconCollectionView.minimumLineSpacing = 0.f;
-self.menuIconCollectionView.minimumInteritemSpacing = 20.f;
-*/

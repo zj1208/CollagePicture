@@ -6,6 +6,8 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
+//  2018.2.9；修改label的badge角标方法
+
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -14,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @brief  设置一个icon,在数字小于2位数的时候,是圆标记; 如果大于等于2位数,是2边半圆+中间长方形; 可以根据maginY调节文字与垂直边界的距离;
+   例如： [self.badgeLab zh_digitalIconWithBadgeValue:model.num maginY:3.5 badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6_Width(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+  iOS8上 高度计算不对？
  */
 - (void)zh_digitalIconWithBadgeValue:(NSInteger)aBadgeValue maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font titleColor:(nullable UIColor *)aTitleColor backgroundColor:(nullable UIColor*)aBgColor;
 
@@ -27,17 +31,26 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)jl_setAttributedText:(nullable NSString *)text withMinimumLineHeight:(float)spacing;
 
-
+//富文本设置行间距
+-(void)jl_setAttributedText:(nullable NSString *)text withLineSpacing:(float)spacing;
 
 
 /**
- 添加中划线
+ 富文本添加中划线
 
  @param text 要显示的字符串,传nil则以self.text显示
  @param color 中划线颜色
  */
 -(void)jl_addMediumLineWithText:(nullable NSString*)text lineColor:(UIColor*)color;
 
+/**
+ 将字符串中所有的数字颜色、字体修改
+
+ @param text eg:入住商铺394 上传产品20140
+ @param numColr numColr 数字颜色
+ @param font 数字字体
+ */
+-(void)jl_changeStringOfNumberStyle:(nullable NSString*)text numberColor:(UIColor*)numColr numberFont:(UIFont*)font;
 
 @end
 

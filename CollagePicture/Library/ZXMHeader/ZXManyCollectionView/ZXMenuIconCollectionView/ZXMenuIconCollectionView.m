@@ -9,7 +9,6 @@
 #import "ZXMenuIconCollectionView.h"
 #import "UIImageView+WebCache.h"
 
-
 #ifndef SCREEN_WIDTH
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
@@ -24,6 +23,7 @@
 #ifndef LCDScale_iPhone6_Width
 #define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
+
 
 static CGFloat const ZXMinimumInteritemSpacing = 12.f;//item之间最小间隔
 static CGFloat const ZXMinimumLineSpacing = 12.f; //最小行间距
@@ -66,11 +66,10 @@ static NSString * const reuseTagsCell = @"Cell";
     self.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
     self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
     self.minimumLineSpacing = ZXMinimumLineSpacing;
-//    self.itemSize = CGSizeMake(LCDScale_iPhone6_Width(ZXItemWidth), LCDScale_iPhone6_Width(ZXItemHeight));
+    self.itemSize = CGSizeMake(LCDScale_iPhone6_Width(ZXItemWidth), LCDScale_iPhone6_Width(ZXItemHeight));
     [self addSubview:self.collectionView];
+    
 //    self.collectionView.backgroundColor = [UIColor orangeColor];
-    self.iconSize = CGSizeMake(LCDScale_iPhone6_Width(ZXItemWidth), LCDScale_iPhone6_Width(ZXItemHeight));
-
 }
 
 #pragma mark - layoutSubviews
@@ -87,6 +86,18 @@ static NSString * const reuseTagsCell = @"Cell";
         _dataMArray = [NSMutableArray arrayWithCapacity:0];
     }
     return _dataMArray;
+}
+
+- (void)setSectionInset:(UIEdgeInsets)sectionInset
+{
+    _sectionInset = sectionInset;
+    self.collectionFlowLayout.sectionInset = sectionInset;
+}
+
+- (void)setMinimumLineSpacing:(CGFloat)minimumLineSpacing
+{
+    _minimumLineSpacing = minimumLineSpacing;
+    self.collectionFlowLayout.minimumLineSpacing = minimumLineSpacing;
 }
 
 
@@ -134,7 +145,19 @@ static NSString * const reuseTagsCell = @"Cell";
 //    cell.backgroundColor = [UIColor redColor];
     if (indexPath.item<self.dataMArray.count)
     {
-        [cell setData:[self.dataMArray objectAtIndex:indexPath.item] placeholderImage:self.placeholderImage];
+        id data = [self.dataMArray objectAtIndex:indexPath.item];
+        if ([self.delegate respondsToSelector:@selector(zx_menuIconView: cell:forItemSetData:cellForItemAtIndexPath:)])
+        {
+            [self.delegate zx_menuIconView:self  cell:cell forItemSetData:data cellForItemAtIndexPath:indexPath];
+        }
+        else if([data isKindOfClass:[ZXMenuIconModel class]])
+        {
+            [cell setData:data placeholderImage:self.placeholderImage];
+        }
+        else
+        {
+            NSLog(@"传的数据不对应显示");
+        }
     }
     return cell;
 }
@@ -167,7 +190,7 @@ static NSString * const reuseTagsCell = @"Cell";
     {
         return [self.flowLayoutDelegate zx_menuIconCollectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
     }
-    return CGSizeMake(self.iconSize.width+40, self.iconSize.width+40);
+    return self.itemSize;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -184,25 +207,41 @@ static NSString * const reuseTagsCell = @"Cell";
     return floorf(itemWidth);
 }
 
+#pragma mark - 计算方法
+
+- (NSInteger)getRowsWithDataCount:(NSInteger)count
+{
+    if (count ==0)
+    {
+        return 0;
+    }
+    NSInteger rows = 0; // 行数
+    //计算有几行的简单方法
+    if (count%self.columnsCount>0)
+    {
+        NSInteger totalItems = count+(self.columnsCount-(count%self.columnsCount));
+        rows = totalItems /self.columnsCount;
+    }
+    else
+    {
+        rows = count/self.columnsCount;
+    }
+    return  rows;
+}
+
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data
 {
     if ([data count]==0)
     {
         return 0.f;
     }
-  
-    [self setData:data];
-//    CGSize size = self.collectionView.collectionViewLayout.collectionViewContentSize;
-//    NSLog(@"%@",NSStringFromCGSize(size));
-//    return size.height;
-
-    NSInteger maxIndex = [self.dataMArray count]-1;
-    NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
-
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
-    CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
+    CGFloat height = 0;
+    NSInteger rows = [self getRowsWithDataCount:data.count];
+    //计算高度
+    height = rows * self.itemSize.height + (rows - 1) * self.minimumLineSpacing +self.sectionInset.top+self.sectionInset.bottom;
+    NSLog(@"个数= %@,高度 = %@",@(data.count), @(height));
+    
     return ceilf(height);
-//    return self.iconSize.width+40 +self.sectionInset.top+self.sectionInset.bottom;
 }
 
 

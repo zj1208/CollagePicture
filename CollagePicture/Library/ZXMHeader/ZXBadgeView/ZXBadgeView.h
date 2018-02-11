@@ -6,7 +6,7 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  注释：感觉没什么用，除了可以设置红点外面再弄白色边缘有用；
-//  2018.1.30 修改
+//  2018.2.5 bug修复
 
 #import <UIKit/UIKit.h>
 

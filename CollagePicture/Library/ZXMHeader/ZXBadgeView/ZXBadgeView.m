@@ -54,8 +54,6 @@
     if (!_badgeImageView)
     {
         UIImageView *badgeView = [[UIImageView alloc] init];
-        badgeView.image = [UIImage imageNamed:@"dot_red"];
-        badgeView.hidden = YES;
         _badgeImageView = badgeView;
     }
     return _badgeImageView;

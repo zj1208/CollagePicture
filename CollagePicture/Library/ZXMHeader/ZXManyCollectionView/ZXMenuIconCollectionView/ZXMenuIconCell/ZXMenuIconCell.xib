@@ -20,19 +20,20 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="6uN-l6-vOJ">
-                        <rect key="frame" x="20" y="12" width="155" height="155"/>
+                        <rect key="frame" x="20" y="10" width="155" height="155"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="6uN-l6-vOJ" secondAttribute="height" multiplier="1:1" id="mqL-JE-NFc"/>
+                            <constraint firstAttribute="width" constant="155" id="tlJ-Sb-r1O"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Uv-nA-QT1">
-                        <rect key="frame" x="80" y="175" width="35.5" height="16"/>
+                        <rect key="frame" x="80" y="173" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vsv-D6-Hsn">
-                        <rect key="frame" x="163" y="8" width="33" height="16"/>
+                        <rect key="frame" x="161" y="6" width="33" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -40,19 +41,19 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="6uN-l6-vOJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="0qp-yI-6AW"/>
+                <constraint firstItem="6uN-l6-vOJ" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" constant="-12" id="2gl-KP-r5K"/>
                 <constraint firstItem="6uN-l6-vOJ" firstAttribute="top" secondItem="Vsv-D6-Hsn" secondAttribute="bottom" constant="-12" id="3KU-9K-aGa"/>
                 <constraint firstItem="6uN-l6-vOJ" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="4JC-dP-XRU"/>
-                <constraint firstItem="6uN-l6-vOJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="7QS-S5-Kz0"/>
                 <constraint firstItem="2Uv-nA-QT1" firstAttribute="top" secondItem="6uN-l6-vOJ" secondAttribute="bottom" constant="8" id="Zes-ii-87o"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="2Uv-nA-QT1" secondAttribute="bottom" constant="8" id="nfh-yQ-XhZ"/>
                 <constraint firstItem="2Uv-nA-QT1" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="uV5-dU-GAW"/>
-                <constraint firstItem="Vsv-D6-Hsn" firstAttribute="leading" secondItem="6uN-l6-vOJ" secondAttribute="trailing" constant="-12" id="zL5-Gd-Q8S"/>
+                <constraint firstItem="Vsv-D6-Hsn" firstAttribute="leading" secondItem="6uN-l6-vOJ" secondAttribute="trailing" constant="-14" id="zL5-Gd-Q8S"/>
             </constraints>
             <size key="customSize" width="195" height="199"/>
             <connections>
                 <outlet property="badgeLab" destination="Vsv-D6-Hsn" id="Yer-pE-6Va"/>
                 <outlet property="iconImageView" destination="6uN-l6-vOJ" id="WuP-Mv-QVU"/>
+                <outlet property="imgViewLayoutWidth" destination="tlJ-Sb-r1O" id="U43-cb-9NL"/>
                 <outlet property="titleLab" destination="2Uv-nA-QT1" id="whE-Ap-tTk"/>
             </connections>
             <point key="canvasLocation" x="106.5" y="6.5"/>
