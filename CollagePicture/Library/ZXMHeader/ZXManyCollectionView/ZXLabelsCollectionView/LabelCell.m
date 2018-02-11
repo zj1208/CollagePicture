@@ -53,9 +53,9 @@ static CGFloat heightForCell = 24;
     // Initialization code
 
     [super awakeFromNib];
-    self.height = heightForCell;
     [self setCornerRadius:heightForCell/2 borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xcccccc)];
-    _titleLab.font = [UIFont systemFontOfSize:14];
+    _titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6_Width(14)];
+    self.height = _titleLab.font.lineHeight+10;
     _titleLab.textColor = UIColorFromRGB_HexValue(0xcccccc);
     _titleLab.backgroundColor = [UIColor whiteColor];
     _titleLab.numberOfLines = 1;

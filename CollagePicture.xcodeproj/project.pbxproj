@@ -200,9 +200,7 @@
 		F46920251FF341860099AB9D /* ZXCeilingFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F46920231FF341860099AB9D /* ZXCeilingFlowLayout.m */; };
 		F46920281FF341970099AB9D /* ZXWaterfallFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F46920261FF341970099AB9D /* ZXWaterfallFlowLayout.m */; };
 		F469202B1FF341A60099AB9D /* ZXNoGapCellFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F46920291FF341A60099AB9D /* ZXNoGapCellFlowLayout.m */; };
-		F469202E1FF342180099AB9D /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F469202C1FF342180099AB9D /* LabelCell.m */; };
 		F46920311FF3422B0099AB9D /* ZXLabelsTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F469202F1FF3422B0099AB9D /* ZXLabelsTagsView.m */; };
-		F46920341FF3423E0099AB9D /* ZXLabelsInputTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F46920321FF3423E0099AB9D /* ZXLabelsInputTagsView.m */; };
 		F4730CD21EA05FDC00952AF1 /* UMAnalyticsViewMarco.m in Sources */ = {isa = PBXBuildFile; fileRef = F4730CD11EA05FDC00952AF1 /* UMAnalyticsViewMarco.m */; };
 		F4730CDF1EA064A200952AF1 /* AddProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4730CD81EA064A200952AF1 /* AddProductModel.m */; };
 		F481E8A91FDFC96700D115D3 /* ZXAddPicViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F481E89E1FDFC96700D115D3 /* ZXAddPicViewCell.xib */; };
@@ -308,6 +306,8 @@
 		F4DAC4F0203032D9000428DF /* ZXMenuIconModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DAC4E8203032D9000428DF /* ZXMenuIconModel.m */; };
 		F4DAC4F1203032D9000428DF /* ZXMenuIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DAC4EC203032D9000428DF /* ZXMenuIconCell.m */; };
 		F4DAC4F2203032D9000428DF /* ZXMenuIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DAC4ED203032D9000428DF /* ZXMenuIconCell.xib */; };
+		F4DAC4F520304CF3000428DF /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DAC4F420304CF3000428DF /* LabelCell.m */; };
+		F4DAC4F820304D15000428DF /* ZXLabelsInputTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DAC4F720304D14000428DF /* ZXLabelsInputTagsView.m */; };
 		F4EB2FC81D8FCF7300F5B70B /* album_a10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FAD1D8FCF7300F5B70B /* album_a10@2x.png */; };
 		F4EB2FC91D8FCF7300F5B70B /* album_a11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FAE1D8FCF7300F5B70B /* album_a11@2x.png */; };
 		F4EB2FCA1D8FCF7300F5B70B /* album_a12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FAF1D8FCF7300F5B70B /* album_a12@2x.png */; };
@@ -732,12 +732,8 @@
 		F46920271FF341970099AB9D /* ZXWaterfallFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWaterfallFlowLayout.h; sourceTree = "<group>"; };
 		F46920291FF341A60099AB9D /* ZXNoGapCellFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXNoGapCellFlowLayout.m; sourceTree = "<group>"; };
 		F469202A1FF341A60099AB9D /* ZXNoGapCellFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXNoGapCellFlowLayout.h; sourceTree = "<group>"; };
-		F469202C1FF342180099AB9D /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
-		F469202D1FF342180099AB9D /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
 		F469202F1FF3422B0099AB9D /* ZXLabelsTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLabelsTagsView.m; sourceTree = "<group>"; };
 		F46920301FF3422B0099AB9D /* ZXLabelsTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsTagsView.h; sourceTree = "<group>"; };
-		F46920321FF3423E0099AB9D /* ZXLabelsInputTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLabelsInputTagsView.m; sourceTree = "<group>"; };
-		F46920331FF3423E0099AB9D /* ZXLabelsInputTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsInputTagsView.h; sourceTree = "<group>"; };
 		F4730CD01EA05FDC00952AF1 /* UMAnalyticsViewMarco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAnalyticsViewMarco.h; sourceTree = "<group>"; };
 		F4730CD11EA05FDC00952AF1 /* UMAnalyticsViewMarco.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAnalyticsViewMarco.m; sourceTree = "<group>"; };
 		F4730CD71EA064A200952AF1 /* AddProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductModel.h; sourceTree = "<group>"; };
@@ -915,6 +911,10 @@
 		F4DAC4EC203032D9000428DF /* ZXMenuIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMenuIconCell.m; sourceTree = "<group>"; };
 		F4DAC4ED203032D9000428DF /* ZXMenuIconCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXMenuIconCell.xib; sourceTree = "<group>"; };
 		F4DAC4EE203032D9000428DF /* ZXMenuIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMenuIconCell.h; sourceTree = "<group>"; };
+		F4DAC4F320304CF2000428DF /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
+		F4DAC4F420304CF3000428DF /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
+		F4DAC4F620304D14000428DF /* ZXLabelsInputTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsInputTagsView.h; sourceTree = "<group>"; };
+		F4DAC4F720304D14000428DF /* ZXLabelsInputTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLabelsInputTagsView.m; sourceTree = "<group>"; };
 		F4EB2FAD1D8FCF7300F5B70B /* album_a10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album_a10@2x.png"; sourceTree = "<group>"; };
 		F4EB2FAE1D8FCF7300F5B70B /* album_a11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album_a11@2x.png"; sourceTree = "<group>"; };
 		F4EB2FAF1D8FCF7300F5B70B /* album_a12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album_a12@2x.png"; sourceTree = "<group>"; };
@@ -1404,8 +1404,8 @@
 			children = (
 				F44E17A31FD6B01800383A92 /* ZXLabelsInputTagsView */,
 				F446A7E01FCC082900C82C90 /* LabelCell.xib */,
-				F469202D1FF342180099AB9D /* LabelCell.h */,
-				F469202C1FF342180099AB9D /* LabelCell.m */,
+				F4DAC4F320304CF2000428DF /* LabelCell.h */,
+				F4DAC4F420304CF3000428DF /* LabelCell.m */,
 				F446A7E51FCC082900C82C90 /* ZXLabelsTagsView */,
 			);
 			path = ZXLabelsCollectionView;
@@ -2061,8 +2061,8 @@
 		F44E17A31FD6B01800383A92 /* ZXLabelsInputTagsView */ = {
 			isa = PBXGroup;
 			children = (
-				F46920331FF3423E0099AB9D /* ZXLabelsInputTagsView.h */,
-				F46920321FF3423E0099AB9D /* ZXLabelsInputTagsView.m */,
+				F4DAC4F620304D14000428DF /* ZXLabelsInputTagsView.h */,
+				F4DAC4F720304D14000428DF /* ZXLabelsInputTagsView.m */,
 			);
 			path = ZXLabelsInputTagsView;
 			sourceTree = "<group>";
@@ -2781,9 +2781,9 @@
 		F4DAC4EB203032D9000428DF /* ZXMenuIconCell */ = {
 			isa = PBXGroup;
 			children = (
+				F4DAC4EE203032D9000428DF /* ZXMenuIconCell.h */,
 				F4DAC4EC203032D9000428DF /* ZXMenuIconCell.m */,
 				F4DAC4ED203032D9000428DF /* ZXMenuIconCell.xib */,
-				F4DAC4EE203032D9000428DF /* ZXMenuIconCell.h */,
 			);
 			path = ZXMenuIconCell;
 			sourceTree = "<group>";
@@ -3386,6 +3386,7 @@
 				F4DAC4E5203032A8000428DF /* ZXHorizontalPageFlowLayout.m in Sources */,
 				F446A9931FCC082A00C82C90 /* ZXNavigationBar.m in Sources */,
 				F49CFD2C1FDE5C8D009F2213 /* UIImage+XLExtension.m in Sources */,
+				F4DAC4F520304CF3000428DF /* LabelCell.m in Sources */,
 				F446A98D1FCC082A00C82C90 /* ADCustomTableView.m in Sources */,
 				F40228E41EF29F3C00E3D07E /* UserInfoUDManager.m in Sources */,
 				F4DAC4DD203032A8000428DF /* BadgeMarkItemModel.m in Sources */,
@@ -3402,6 +3403,7 @@
 				F44DAED51DC8D188000D9311 /* UMSocialShareScrollView.m in Sources */,
 				F446A9A61FCC082A00C82C90 /* UploadGrowOperation.m in Sources */,
 				F4DAC4C2202FDEA8000428DF /* UILabel+ZXExtension.m in Sources */,
+				F4DAC4F820304D15000428DF /* ZXLabelsInputTagsView.m in Sources */,
 				F4A78BC3202456D100AB6651 /* NSString+ZXEntension.m in Sources */,
 				F446A9881FCC082A00C82C90 /* ZXInfiniteScrollView.m in Sources */,
 				F49E199F1DF1875900676396 /* FourViewController.m in Sources */,
@@ -3424,7 +3426,6 @@
 				F461821D1D8129490015BC84 /* main.m in Sources */,
 				F446A91A1FCC082900C82C90 /* ZXPresentAlphaTransitioning.m in Sources */,
 				F44E17681FD64C5C00383A92 /* UIAlertController+ZXExtension.m in Sources */,
-				F46920341FF3423E0099AB9D /* ZXLabelsInputTagsView.m in Sources */,
 				A55A8D131F05F7B5009ADCE9 /* Lettery_3DView.m in Sources */,
 				F446A9801FCC082900C82C90 /* KxMenuItem.m in Sources */,
 				F446A9621FCC082900C82C90 /* EGORefreshTableHeaderView.m in Sources */,
@@ -3470,7 +3471,6 @@
 				F4DAC4F1203032D9000428DF /* ZXMenuIconCell.m in Sources */,
 				F49CFD2E1FDE5C8D009F2213 /* XLPhotoBrowser.m in Sources */,
 				F4C91893200622B100D3E158 /* ZXTitleView.m in Sources */,
-				F469202E1FF342180099AB9D /* LabelCell.m in Sources */,
 				F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */,
 				F4CBDAA2202D4A4B00FF506D /* ZXBadgeView.m in Sources */,
 				F4A78BC02024562500AB6651 /* ZXMPickerView.m in Sources */,

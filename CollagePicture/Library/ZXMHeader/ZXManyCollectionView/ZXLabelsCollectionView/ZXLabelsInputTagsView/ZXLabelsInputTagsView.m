@@ -8,11 +8,6 @@
 
 #import "ZXLabelsInputTagsView.h"
 
-#ifndef LCDW
-#define LCDW [[UIScreen mainScreen]bounds].size.width
-#define LCDScale_iphone6_Width(X)    X*LCDW/375
-#endif
-
 
 static NSInteger ZXMaxItemCount = 10;
 
@@ -51,13 +46,6 @@ static NSString * const reuseInputTagsCell = @"Cell";
 }
 */
 
-- (void)awakeFromNib
-{
-//    [self commonInit];
-    //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
-    [super awakeFromNib];
-}
-
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -82,7 +70,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = [[UIScreen mainScreen]bounds];
+    self.collectionView.frame = self.bounds;
 }
 
 //- (void)setDefaultAddTagTitle:(NSString *)defaultAddTagTitle
@@ -115,17 +103,13 @@ static NSString * const reuseInputTagsCell = @"Cell";
     self.itemWidth = ZXAddPicItemWidth;
     self.itemHeight = ZXAddPicItemHeight;
     self.itemSize = CGSizeMake(ZXAddPicItemWidth, ZXAddPicItemHeight);
-    self.minimumInteritemSpacing = LCDScale_iphone6_Width(ZXMinimumInteritemSpacing) ;
-    self.minimumLineSpacing =LCDScale_iphone6_Width(ZXMinimumLineSpacing);
+    self.minimumInteritemSpacing = LCDScale_iPhone6_Width(ZXMinimumInteritemSpacing) ;
+    self.minimumLineSpacing =LCDScale_iPhone6_Width(ZXMinimumLineSpacing);
     self.defaultAlertTitle = ZXDefaultAlertTitle;
     self.defaultAlertFieldTextLength = ZXDefaultAlertFieldTextLength;
     self.existInputItem = YES;//输入标签默认存在
     self.maxItemCount = ZXMaxItemCount;
     self.defaultAddTagTitle = ZXDefaultAddTagTitle;
-    
-//    self.addTagColor = UIColorFromRGB_HexValue(0x979797);
-//    self.addTagBorderColor = UIColorFromRGB_HexValue(0x979797);
-//    self.addTagCornerRadius = 24/2;
 }
 
 
@@ -186,7 +170,6 @@ static NSString * const reuseInputTagsCell = @"Cell";
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
     {
         cell.title = self.defaultAddTagTitle;
-
     }
     else
     {
@@ -319,13 +302,12 @@ static NSString * const reuseInputTagsCell = @"Cell";
     // 当存在输入标签，而且已经到最大个数
     if (_dataMArray.count == self.maxItemCount && self.isExistInputItem)
     {
-        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:_dataMArray.count inSection:0];
-        [collectionView insertItemsAtIndexPaths:@[lastIndexPath]];
-        
+//        加入后总数量 = 之前总数量，会崩溃；删除后的总数量 = 之前总数量也会崩溃；
+//        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:_dataMArray.count inSection:0];
+//        [collectionView insertItemsAtIndexPaths:@[lastIndexPath]];
         [self.dataMArray removeObjectAtIndex:indexPath.item];
-        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        [self.collectionView reloadData];
     }
-    
     // 不存在输入标签，或有输入标签但点击的不是输入标签
     else
     {
@@ -426,6 +408,10 @@ static NSString * const reuseInputTagsCell = @"Cell";
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
     }
+    else
+    {
+        [self.collectionView reloadData];
+    }
     
     if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:didChangedTagsWithTags:)])
     {
@@ -452,8 +438,6 @@ static NSString * const reuseInputTagsCell = @"Cell";
         }
         [self setData:data];
         
-        // 由于整个view被tableViewCell重用了，所以他只会记得init初始化的值；
-        // [self layoutIfNeeded];
         NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
         NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:totalItem-1 inSection:0];
         UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
@@ -466,18 +450,20 @@ static NSString * const reuseInputTagsCell = @"Cell";
 
 - (void)setData:(NSArray *)data
 {
-    [self.dataMArray removeAllObjects];
-    
-    if ([data count] > self.maxItemCount)
+    if (![self.dataMArray isEqualToArray:data])
     {
-        NSRange range = NSMakeRange(0, self.maxItemCount);
-        NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:range];
-        data = [NSMutableArray arrayWithArray:[data objectsAtIndexes:set]];
-    };
-    
-    [self.dataMArray addObjectsFromArray:data];
-    [self.collectionView reloadData];
-
+        [self.dataMArray removeAllObjects];
+        
+        if ([data count] > self.maxItemCount)
+        {
+            NSRange range = NSMakeRange(0, self.maxItemCount);
+            NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:range];
+            data = [NSMutableArray arrayWithArray:[data objectsAtIndexes:set]];
+        }
+        
+        [self.dataMArray addObjectsFromArray:data];
+        [self.collectionView reloadData];
+    }
 }
 
 + (BOOL)zhIsBlankString:(NSString *)string

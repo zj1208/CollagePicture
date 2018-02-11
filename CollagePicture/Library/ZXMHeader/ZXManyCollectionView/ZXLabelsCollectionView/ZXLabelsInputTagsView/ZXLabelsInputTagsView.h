@@ -11,6 +11,8 @@
 //  2017.12.26
 //  修改nibName 常量定义 改为NSStringFromClass；
 
+//  2018.2.11；修改在达到最大数量时候删除的bug；
+
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
 
