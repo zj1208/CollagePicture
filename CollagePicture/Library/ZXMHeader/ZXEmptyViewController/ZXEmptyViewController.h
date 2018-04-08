@@ -5,16 +5,24 @@
 //  Created by simon on 17/3/9.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+// 2018.1.03
+// 新增一些方法，调节属性；
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ZXEmptyViewController;
 @protocol ZXEmptyViewControllerDelegate <NSObject>
 
 - (void)zxEmptyViewUpdateAction;
 
+@optional
+// 重写底部按钮区域视图
+- (nullable UIView *)viewForFooterButtonInZxEmptyViewController:(ZXEmptyViewController *)emptyView;
 @end
+
+
 
 #define ZXEmptyRequestFaileImage  [UIImage imageNamed:@"reqeustFailure"]
 
@@ -24,10 +32,16 @@ static NSString * ZXEmptyRequestFaileTitle = @"数据加载失败~ ";
 
 @property (nullable, nonatomic, weak) id<ZXEmptyViewControllerDelegate>delegate;
 
-//内容偏移调节
-@property (nonatomic , assign) CGSize contentOffest;
+@property (nonatomic, strong) UILabel *label;
 
-//+ (instancetype)getInstance;
+//整体内容偏移调节
+@property (nonatomic, assign) CGSize contentOffest;
+
+// 自定义按钮添加设置
+@property (nonatomic, strong) UIButton *customButton;
+
+
+//+ (instancetype)sharedInstance;
 
 
 // 添加氛围图（数据空氛围图，请求失败氛围图）

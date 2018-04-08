@@ -5,9 +5,9 @@
 //  Created by simon on 2017/9/7.
 //  Copyright © 2017年 simon. All rights reserved.
 //
-//  注释：顶部“选择订单状态”提示 + “箭头”按钮；展开collectionView，n个cell；
+//  注释：弹出下拉视图；顶部一个“选择订单状态”Label + “箭头”按钮button，下面是展开的collectionView，其中有n个cell；
 
-//  2018.1.24   增加注释；
+//  2018.3.27   增加注释；
 
 #import <UIKit/UIKit.h>
 #import "ZXLabelsTagsView.h"

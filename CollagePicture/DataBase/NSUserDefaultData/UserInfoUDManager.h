@@ -1,10 +1,13 @@
 //
 //  UserInfoUDManager.h
-//  ICBC
+//  
 //
-//  Created by 朱新明 on.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by 朱新明 on 15/6/17.
+//  Copyright (c) 2015年 sina. All rights reserved.
 //
+// 2017.12.22
+// 增加WK的cookie容器清理； 修改wkWebView的清理缓存不包括cookie
+// 2018.4.02；优化代码；
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
@@ -26,7 +29,10 @@ FOUNDATION_EXPORT NSString *const kNotificationUserTokenError;
 #define USER_ID         [UserInfoUDManager getUserId]
 #define USER_NICKNAME   [UserInfoUDManager getNickname]
 
-
+//个推定义
+static NSString *const  ud_GTClientId = @"clientId";
+//苹果注册的设备token
+static NSString *const  ud_deviceToken = @"deviceToken";
 
 
 @interface UserInfoUDManager : NSObject
@@ -52,10 +58,19 @@ FOUNDATION_EXPORT NSString *const kNotificationUserTokenError;
 
 + (void)setToken:(NSString *)token;
 
-+(NSString *)getToken;
++ (NSString *)getToken;
 
-
+// 清理本地cookie； 退出登录的时候需要清理；
 + (void)cleanCookies;
+
+//// 根据cookieName 从NSHTTPCookieStorage 获取cookie；
+//+ (NSHTTPCookie *)getHTTPCookieFromNSHTTPCookieStorageWithCookieName:(NSString *)cookieName;
+//
+//// 根据cookieName 从cookies数组中筛选获取cookie；
+//+ (NSHTTPCookie *)getHTTPCookieFromCookesArray:(NSArray *)cookies withCookieName:(NSString *)cookieName;
+
+// 清理网页的所有本地数据，包括硬盘存储，内存缓存，离线缓存等；
++ (void)cleanWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler;
 /******************************************************************************/
 
 /**
@@ -102,22 +117,30 @@ FOUNDATION_EXPORT NSString *const kNotificationUserTokenError;
 
 
 
-/**
- 推送的token-例如：用于设备更新接口
- */
+#pragma mark - 推送
+
+#pragma mark -苹果设备token
+//从苹果服务器注册返回的远程通知设备token
+
 + (void)setRemoteNotiDeviceToken:(id)deviceToken;
 + (id)getRemoteNotiDeviceToken;
 
 
-/**
- 用户推送
- 
- @param clientId 推送目标ID
- */
+
+
+#pragma mark -用户第三方推送id
+
+//用户推送：clientId 推送目标ID
 + (void)setClientId:(id)clientId;
 + (id)getClientId;
 
 
+
+#pragma mark - 本地保存版本号，用户每个版本第一次处理业务
+
++ (void)setSaveVersion:(NSString *)version;
+
++ (id)getSaveVersion;
 
 #pragma mark - 登陆／退出
 

@@ -8,8 +8,13 @@
 //    NSAssert(self.dataSource.count > 0, @"Must have one childViewCpntroller at least");
 //    NSAssert(self.segmentTitles.count == self.dataSource.count, @"The childViewController's count doesn't equal to the count of segmentTitles");
 
+// 注释：包含顶部ZXSegmentedControl 分段选择视图，可以滑动；底部是根据SegmentTitles个数增加的n个子控制器，根据segment选择切换子控制器；
+//  2018.3.27 待优化：当控制器往左右方向手动滑动的时候，可以考虑segmentedControl的底部指示条也动画跟着动；
+
 #import <UIKit/UIKit.h>
 #import "ZXSegmentedControl.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZXSegmentPageControllerDelegate;
 
@@ -103,4 +108,149 @@
 
 @end
 
+NS_ASSUME_NONNULL_END
 
+
+//举例
+/*
+- (void)setData
+{
+    self.segTitles = @[@"全部",@"待确认",@"待支付",@"待发货",@"退款中",@"已发货",@"待评价",@"交易成功",@"交易关闭"];
+    
+    for (int i = 0; i < self.segTitles.count; i++) {
+        
+        SellerOrderAllController *vc = (SellerOrderAllController *)[self getControllerWithStoryboardName:sb_SellerOrder controllerWithIdentifier:SBID_SellerOrderAllController];
+        vc.nTitle = [NSString stringWithFormat:@"标题%d",i];
+        vc.orderListStatus = i;
+        [self.dataMArray addObject:vc];
+    }
+    
+    //    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.segPageController.segmentTitles = self.segTitles;
+    self.segPageController.viewControllers = self.dataMArray;
+    CGRect frame = self.view.frame;
+    CGFloat Y = isIphoneX?88:64;
+    frame.origin.y += Y;
+    frame.size.height -= Y;
+    self.segPageController.view.frame = frame;
+    
+    
+    self.segmentMenuView.itemTitles = self.segTitles;
+    
+    _orderCountsMArray = [NSMutableArray array];
+    
+    
+    //先加载pageController的某个controller
+    [_segPageController setSelectedPageIndex:self.orderListStatus animated:YES];
+    SellerOrderAllController *vc = [self.dataMArray objectAtIndex:self.orderListStatus];
+    vc.orderListStatus = self.orderListStatus;
+    [vc.tableView.mj_header beginRefreshing];
+    
+    [self requestCleanOrderMark];
+}
+
+- (void)requestOrderCount
+{
+    [[[AppAPIHelper shareInstance]hsOrderManagementApi]getOrderStatusCountWithRoleType:[WYUserDefaultManager getUserTargetRoleType] success:^(id data) {
+        
+        [_orderCountsMArray removeAllObjects];
+        [_orderCountsMArray addObjectsFromArray:data];
+        
+        NSMutableArray *mArray = [self getNSegmentTitlesWithOrderCountModel:data];
+        self.segPageController.segmentTitles = mArray;
+        [MBProgressHUD zx_hideHUDForView:self.view];
+        
+    } failure:^(NSError *error) {
+        
+        [MBProgressHUD zx_hideHUDForView:self.view];
+    }];
+}
+
+
+- (ZXSegmentedPageController *)segPageController
+{
+    if (!_segPageController)
+    {
+        ZXSegmentedPageController *segVC = [[ZXSegmentedPageController alloc]init];
+        segVC.segmentFontSize = 15.f;
+        segVC.segmentHeight = 40.f;
+        segVC.delegate = self;
+        segVC.segmentMinimumItemSpacing = 26.f;
+        [self addChildViewController:segVC];
+        [self.view addSubview:segVC.view];
+        _segPageController = segVC;
+    }
+    return _segPageController;
+}
+
+
+- (NSMutableArray *)dataMArray
+{
+    if (!_dataMArray)
+    {
+        NSMutableArray *mArray = [NSMutableArray array];
+        _dataMArray = mArray;
+    }
+    return _dataMArray;
+}
+
+#pragma mark - ZXSegmentPageControllerDelegate
+
+
+- (void)zx_segmentPageControllerWithSegmentView:(ZXSegmentedControl *)segmentedControl willDisplayCell:(ZXSegmentCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSMutableAttributedString *mAtt1 = [[NSMutableAttributedString alloc] init];
+    NSAttributedString *att1 = [[NSAttributedString alloc] initWithString:[self.segTitles objectAtIndex:indexPath.item] attributes:nil];
+    [mAtt1 appendAttributedString:att1];
+    NSAttributedString *att2 = nil;
+    if (indexPath.item >0 && indexPath.item<(self.segTitles.count-2) &&_orderCountsMArray.count>indexPath.item)
+    {
+        GetOrderStautsCountModel *model = [_orderCountsMArray objectAtIndex:indexPath.item-1];
+        NSString *st = [NSString stringWithFormat:@"(%@)",model.orderCount];
+        att2= [[NSAttributedString alloc] initWithString:st attributes:nil];
+        [mAtt1 appendAttributedString:att2];
+    }
+    UIColor *selcteColor = [UIColor colorWithRed:255.f/255 green:84.f/255 blue:52.f/255 alpha:1];
+    UIColor *normalColor = [UIColor colorWithRed:83./255 green:83.f/255 blue:83.f/255 alpha:1];
+    
+    if (cell.isSelected)
+    {
+        [mAtt1 addAttributes:@{NSForegroundColorAttributeName:selcteColor} range:NSMakeRange(0, mAtt1.length)];
+        [mAtt1 addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:16] range:NSMakeRange(0, mAtt1.length)];
+        cell.attributedTitle = mAtt1;
+    }
+    else
+    {
+        [mAtt1 addAttributes:@{NSForegroundColorAttributeName:normalColor} range:NSMakeRange(0, att1.length)];
+        if (att2.length >0)
+        {
+            [mAtt1 addAttributes:@{NSForegroundColorAttributeName:selcteColor} range:[mAtt1.string rangeOfString:att2.string]];
+        }
+        [mAtt1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, mAtt1.length)];
+        cell.attributedTitle = mAtt1;
+    }
+}
+
+- (void)zx_segmentPageControllerWithSegmentView:(ZXSegmentedControl *)segmentedControl didSelectedIndex:(NSInteger)index
+{
+    [MobClick event:kUM_b_slideabove];
+    
+    SellerOrderAllController *vc = [self.dataMArray objectAtIndex:index];
+    [vc.tableView.mj_header beginRefreshing];
+}
+
+//滑动切换的时候；每次请求会刷新； 传的viewControllers数组，controller的status状态属性无效；
+- (void)zx_segmentPageControllerWithTransitionToViewControllersIndex:(NSInteger)index transitionCompleted:(BOOL)completed
+{
+    [MobClick event:kUM_b_slidedown];
+    //    NSLog(@"index=%ld",index);
+    if (completed)
+    {
+        //        NSLog(@"%ld",index);
+        
+        SellerOrderAllController *vc = [self.dataMArray objectAtIndex:index];
+        //        vc.orderListStatus = index;
+        [vc.tableView.mj_header beginRefreshing];
+    }
+}
+*/

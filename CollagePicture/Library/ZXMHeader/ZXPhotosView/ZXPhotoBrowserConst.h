@@ -11,7 +11,7 @@
 
 
 
-FOUNDATION_EXPORT CGFloat const ZXPhotoMargin;   // 图片之间的默认间距
+FOUNDATION_EXPORT CGFloat const  ZXPhotoMargin;   // 图片之间的默认间距
 FOUNDATION_EXPORT CGFloat const  ZXPhotoWidth;    // 图片的默认宽度
 FOUNDATION_EXPORT CGFloat const  ZXPhotoHeight;   // 图片的默认高度
 FOUNDATION_EXPORT NSInteger const  ZXPhotosMaxColoum;  // 图片每行默认最多个数
@@ -30,7 +30,7 @@ static NSString *const ZXDeleteImageName = @"zxPhoto_deleteimage";
 
 #ifndef LCDW
 #define LCDW [[UIScreen mainScreen]bounds].size.width
-#define LCDScale_iphone6_Width(X)    X*LCDW/375
+#define LCDScale_iPhone6_Width(X)    X*LCDW/375
 #endif
 
 #ifndef AppPlaceholderImage

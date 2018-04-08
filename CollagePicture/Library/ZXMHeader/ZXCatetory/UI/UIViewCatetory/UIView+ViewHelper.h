@@ -5,8 +5,8 @@
 //  Created by zhuxinming on 14/11/1.
 //  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
 //
-// 2018.1.24  新增方法
 // 2018.1.29 新增方法：可以同时设置圆角和阴影
+// 2018.3.19  新增xib方法
 
 #import <UIKit/UIKit.h>
 
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)zhSetCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
 
-//设置半圆；
+//  直接设置半圆；
 - (void)zhSetRoundItem;
 
 
@@ -122,6 +122,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)zhNSLogSubviewsFromView:(UIView *)view andLevel:(NSInteger)level;
 
+
+
++ (id)zhViewFromNib;
+
+/**
+ 通过遍历view的父视图查找到cell，再根据cell获取NSIndexPath
+
+ @param view tableview/collectionview
+ @return 未找到父视图为cell(tableViewCell、collectionviewCell) 则return nil
+ */
+- (NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view;
 
 @end
 

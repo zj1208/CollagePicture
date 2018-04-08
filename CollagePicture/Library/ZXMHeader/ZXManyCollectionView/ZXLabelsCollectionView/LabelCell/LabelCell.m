@@ -18,6 +18,21 @@ static CGFloat heightForCell = 24;
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
 #endif
 
+#ifndef SCREEN_WIDTH
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#endif
+
+#ifndef SCREEN_MAX_LENGTH
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+#endif
+
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#ifndef LCDScale_iPhone6_Width
+#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#endif
+
 @interface LabelCell ()
 
 @end

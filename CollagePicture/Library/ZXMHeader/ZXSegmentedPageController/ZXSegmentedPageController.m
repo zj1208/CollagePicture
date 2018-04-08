@@ -279,6 +279,7 @@
     }
     if (completed) {
         
+//      顶部segmentedControl切换设置；
         self.segmentView.selectedIndex =self.currentIndex ;
     }
 }

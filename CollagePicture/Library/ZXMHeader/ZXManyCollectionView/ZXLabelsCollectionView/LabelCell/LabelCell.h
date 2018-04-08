@@ -24,9 +24,7 @@
 #define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
-
 NS_ASSUME_NONNULL_BEGIN
-
 
 @interface LabelCell : UICollectionViewCell
 

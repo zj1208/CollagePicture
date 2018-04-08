@@ -1,17 +1,21 @@
 //
 //  UserInfoUDManager.m
-//  ICBC
+//  
 //
-//  Created by 朱新明 on 15/3/17.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by 朱新明 on 15/6/17.
+//  Copyright (c) 2015年 sina. All rights reserved.
 //
 
 #import "UserInfoUDManager.h"
+#import <WebKit/WebKit.h>
 
 NSString *const kNotificationUserLoginIn = @"kNotificationUserLoginIn";
 NSString *const kNotificationUserLoginOut =@"kNotificationUserLoginOut";
 NSString *const kNotificationUpdateUserInfo = @"kNotificationUpdateUserInfo";
 NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
+
+
+static NSString *const ud_saveVersion = @"ud_saveVersion";
 
 @implementation UserInfoUDManager
 
@@ -19,16 +23,18 @@ NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
 #define Appkey         @"BabyAppkey"
 #define Token          @"token"
 
-//个推定义
-#define GTClientId @"clientId"
-#define GTDeviceToken @"deviceToken"
+
+
+
+
+
+
 
 + (bool)isLogin
 {
     NSString *userId = [self getUserId];
     NSString *token = [self getToken];
-    id model = [self getUserData];
-    if (userId ||token ||model)
+    if (userId ||token)
     {
         return YES;
     }
@@ -87,7 +93,7 @@ NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
 }
 
 
-//本地cookie一定要清理，退出后传给服务端cookie，会造成服务器取出来签名bug；
+// 本地cookie一定要清理，退出后传给服务端cookie，会造成服务器取出来签名bug；
 + (void)cleanCookies
 {
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -98,8 +104,36 @@ NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
             [cookieStorage deleteCookie:obj];
         }
     }
+// getAllCookies:不能使用，即使上面方法没有，使用下面方法也会崩溃；刚登陆的时候使用getAllCookies:也会崩溃
+//    不会崩溃？
+//    if (@available(iOS 11.0, *))
+//    {
+//        WKHTTPCookieStore *cookieStore = [WKWebsiteDataStore defaultDataStore].httpCookieStore;
+//        NSLog(@"%@",cookieStore);
+//        [cookieStore getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
+//
+//            NSLog(@"%@",cookies);
+//            [cookies enumerateObjectsUsingBlock:^(NSHTTPCookie * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//                [cookieStore deleteCookie:obj completionHandler:nil];
+//            }];
+//
+//        }];
+//    }
  }
 
++ (void)cleanWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
+{
+    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+    {
+        NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+        //移除cookie，不删除WK的本地cookie
+        NSMutableSet *mSet = [NSMutableSet setWithSet:websieteDataTypes];
+        [mSet removeObject:WKWebsiteDataTypeCookies];
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes:mSet modifiedSince:dateFrom completionHandler:completionHandler];
+    }
+}
 #pragma mark-自己用的方法
 
 /**
@@ -230,7 +264,7 @@ NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
 + (BOOL)isOpenShop
 {
     id shopId = [self getShopId];
-    if ([NSString zhIsBlankString:shopId])
+    if (shopId==nil || [shopId length]==0)
     {
         return NO;
     }
@@ -241,26 +275,39 @@ NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
 
 + (void)setRemoteNotiDeviceToken:(id)deviceToken
 {
-    [UserDefault setObject:deviceToken forKey:GTDeviceToken];
+    [UserDefault setObject:deviceToken forKey:ud_deviceToken];
     [UserDefault synchronize];
 }
 
 + (id)getRemoteNotiDeviceToken
 {
-    return [UserDefault objectForKey:GTDeviceToken];
+    return [UserDefault objectForKey:ud_deviceToken];
 }
 
 
 + (void)setClientId:(id)clientId
 {
-    [UserDefault setObject:clientId forKey:GTClientId];
+    [UserDefault setObject:clientId forKey:ud_GTClientId];
     [UserDefault synchronize];
  
 }
 + (id)getClientId
 {
-    return [UserDefault objectForKey:GTClientId];
- 
+    return [UserDefault objectForKey:ud_GTClientId];
 }
 
+
+#pragma mark - 本地保存版本号，用户每个版本第一次处理业务
+
+
++ (void)setSaveVersion:(NSString *)version
+{
+    [UserDefault setObject:version forKey:ud_saveVersion];
+    [UserDefault synchronize];
+}
+
++ (id)getSaveVersion
+{
+    return [UserDefault objectForKey:ud_saveVersion];
+}
 @end

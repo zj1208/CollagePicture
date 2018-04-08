@@ -5,6 +5,7 @@
 //  Created by simon on 2017/11/3.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  2018.04.03  优化注释
 
 #import <UIKit/UIKit.h>
 
@@ -12,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIDevice (ZXInfo)
 
-// 每次生成一个随机的UUID；格式如"E621E1F8-C36C-495A-93FC-0C247A3E6E5F”的字符串；
+// 每次初始化后生成一个随机的UUID；格式如"E621E1F8-C36C-495A-93FC-0C247A3E6E5F”的字符串；
 - (NSString *)getUUID;
 
 // 获取IDFV的UUID；

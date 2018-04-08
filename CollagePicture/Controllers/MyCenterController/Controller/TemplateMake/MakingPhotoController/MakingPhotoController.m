@@ -718,7 +718,7 @@
     {
        // self.imagePickerVCManager.maxNumberOfSelection = [self getTotalNumImageEditView];
     }
-    [self.imagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+    [self.imagePickerVCManager zxPresentActionSheetToImagePickerWithSourceController:self];
 }
 
 

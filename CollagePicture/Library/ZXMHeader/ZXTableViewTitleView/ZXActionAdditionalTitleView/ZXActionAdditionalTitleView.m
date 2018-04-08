@@ -17,11 +17,13 @@
     // Drawing code
 }
 */
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    self.backgroundColor =[UIColor whiteColor];
-    self.accessoryType = ZXActionViewAccessoryTypeDisclosureIndicator;
+     self.accessoryType = ZXActionViewAccessoryTypeDisclosureIndicator;
+    self.backgroundColor = [UIColor whiteColor];
+    self.bottomLine.hidden = YES;
 }
 
 - (void)setAccessoryType:(ZXActionAdditionalViewAccessoryType)accessoryType

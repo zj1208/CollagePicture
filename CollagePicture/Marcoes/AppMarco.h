@@ -16,9 +16,7 @@
 
 
 #pragma mark - 美颜拼图AppleID
-#define kAPPID  @"1082092069" //拉微
-//#define kAPPID  @"1177018574"
-#define kAPP_checkVersionUpdateURL                [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",kAPPID]
+#define kAPPID  @"1180821282" //义采宝
 
 #pragma mark - JPush
 

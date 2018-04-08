@@ -5,12 +5,8 @@
 //  Created by simon on 17/2/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-// 2017.12.13
-// 动态添加标签的collectionView
-
-//  2017.12.26
-//  修改nibName 常量定义 改为NSStringFromClass；
-
+//  注释： 动态添加标签的collectionView
+//  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
 //  2018.2.11；修改在达到最大数量时候删除的bug；
 
 #import <UIKit/UIKit.h>

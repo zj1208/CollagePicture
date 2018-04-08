@@ -148,6 +148,7 @@ response.allHTTPHeaderFields = {
 #pragma mark - 获取指定NSHTTPCookie
 
 // 请求完回调回来，就能马上获取到正确的值；说明可以保证在请求response回来的时候，NSHTTPCookieStorage已经存储了最新的cookie；
+// 注意：从NSHTTPCookieStorage获取的cookie永远是最新更新的，只要NSURLRequest请求系统就会更新到最新，所以对应最新cookie的创建时间一直是最新请求反馈的时间；
 - (nullable NSHTTPCookie *)getHTTPCookieFromNSHTTPCookieStorageWithCookieName:(NSString *)cookieName
 {
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage]cookies];
@@ -182,6 +183,7 @@ response.allHTTPHeaderFields = {
 #pragma mark - 清理NSHTTPcookieStorage
 
 // 本地cookie一定要清理，退出后传给服务端cookie，会造成服务器取出来签名bug；
+// 也可以用removeCookiesSinceDate:方法删除；
 - (void)cleanAllCookieInNSHTTPCookieStorage
 {
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -224,17 +226,18 @@ response.allHTTPHeaderFields = {
     return delCount;
 }
 
-//- (void)cleanWKWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
-//{
-//    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
-//    {
+- (void)cleanWKWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
+{
+    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+    {
+        NSSet *mSet = [NSSet setWithArray:@[WKWebsiteDataTypeMemoryCache,WKWebsiteDataTypeDiskCache]];
 //        NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
 //        //移除cookie，不删除WK的本地cookie
 //        NSMutableSet *mSet = [NSMutableSet setWithSet:websieteDataTypes];
 //        [mSet removeObject:WKWebsiteDataTypeCookies];
-//        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
-//        [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes:mSet modifiedSince:dateFrom completionHandler:completionHandler];
-//    }
-//}
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes:mSet modifiedSince:dateFrom completionHandler:completionHandler];
+    }
+}
 
 @end

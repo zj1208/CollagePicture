@@ -28,18 +28,29 @@
                     <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vct-NQ-dvP" userLabel="line">
+                    <rect key="frame" x="0.0" y="64" width="342" height="1"/>
+                    <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="lPt-IQ-maS"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="RGu-7A-EFY" firstAttribute="leading" secondItem="Ctu-Og-kBh" secondAttribute="trailing" constant="7" id="CkT-7l-r9F"/>
                 <constraint firstItem="Ctu-Og-kBh" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="LS8-Gq-qt8"/>
+                <constraint firstAttribute="bottom" secondItem="Vct-NQ-dvP" secondAttribute="bottom" id="MDg-Nq-Fqo"/>
                 <constraint firstItem="Ctu-Og-kBh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="UuW-sd-xbi"/>
                 <constraint firstItem="RGu-7A-EFY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="XIj-xo-fl4"/>
+                <constraint firstAttribute="trailing" secondItem="Vct-NQ-dvP" secondAttribute="trailing" id="gjy-tB-tNf"/>
                 <constraint firstItem="RGu-7A-EFY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" constant="10" id="voi-sC-pbP"/>
+                <constraint firstItem="Vct-NQ-dvP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ztR-L8-y2R"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="bottomLine" destination="Vct-NQ-dvP" id="d1h-RV-kiQ"/>
                 <outlet property="leftImageView" destination="Ctu-Og-kBh" id="rOJ-mm-bHp"/>
                 <outlet property="titleLab" destination="RGu-7A-EFY" id="YW1-EM-CdJ"/>
             </connections>

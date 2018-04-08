@@ -6,9 +6,10 @@
 //  Copyright © 2016年 com.Microants. All rights reserved.
 //
 //  简介：设置左侧图标+标题文字； 与左侧边距是12，可以删除左侧图标，文字离左侧边距依然是12；
+//       默认Xib的背景色是透明的；
 //
-//  2018.01.10
-//  增加注释；
+//  2018.03.19
+//  增加底部线条；
 
 #import <UIKit/UIKit.h>
 #import "ZXCenterTitleView.h"
@@ -26,8 +27,11 @@ static NSString *const nibName_ZXTitleView = @"ZXTitleView";
 // 左侧图标
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 
+// 底部线条,默认隐藏
+@property (weak, nonatomic) IBOutlet UIView *bottomLine;
 
 + (id)viewFromNib;
+
 
 @end
 

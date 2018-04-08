@@ -5,6 +5,9 @@
 //  Created by simon on 2017/9/21.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  简介：一个选择弹框；顶部一个标题，下面一系列（打勾+title文本），再加一个（打勾+输入textField），底部是取消+确定按钮；
+//  待优化：可以直接显示上次选择的index；
+//  2018.3.27 添加注释
 
 #import <UIKit/UIKit.h>
 #import "ZXTransitionModalDelegate.h"
@@ -59,7 +62,7 @@ NS_ASSUME_NONNULL_END
     {
         self.transitonModelDelegate = [[ZXTransitionModalDelegate alloc] init];
     }
-    self.transitonModelDelegate.contentSize = CGSizeMake(LCDScale_iphone6_Width(295), LCDScale_iphone6_Width(407));
+    self.transitonModelDelegate.contentSize = CGSizeMake(LCDScale_iPhone6_Width(295), LCDScale_iPhone6_Width(407));
     
     AlertChoseController *vc = [[AlertChoseController alloc] initWithNibName:@"AlertChoseController" bundle:nil];
     vc.addTextField = YES;

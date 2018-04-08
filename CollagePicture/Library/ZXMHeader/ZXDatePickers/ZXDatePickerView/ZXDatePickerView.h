@@ -8,6 +8,7 @@
 //  注释：根据UIDatePicker，二次封装成一个带toolBar的弹框；可以使用block方法回调，也可以使用代理方法回调；
 
 // 2018.1.18  目前showInView:方法，如果传tableView，在转换window的时候，有时候会出问题；
+// 2018.4.4 优化代码；
 
 #import <UIKit/UIKit.h>
 #import "ZXOverlay.h"
@@ -106,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showInView:(UIView *)view valueChange:(void(^)(NSDate *date,NSString *dateString))valueChange cancleHander:(void(^ __nullable)(void))cancleHander doneHander:(void(^__nullable)(NSDate *date,NSString *dateString))doneHander;
 
 
-- (void)showInTabBarView:(UIView *)view;
+//- (void)showInTabBarView:(UIView *)view;
 
 - (void)showInView:(UIView *)view;
 

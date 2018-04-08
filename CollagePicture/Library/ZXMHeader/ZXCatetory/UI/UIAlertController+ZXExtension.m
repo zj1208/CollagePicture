@@ -16,19 +16,28 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 @implementation UIAlertController (ZXExtension)
 
 
+//+ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
+//                                     withTitle:(nullable NSString *)title
+//                                       message:(nullable NSString *)message
+//                             cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler
+//                                 doButtonTitle:(nullable NSString *)doButtonTitle
+//                                     doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
+//                           preferredActionTitle:(nullable NSString *)preferredTitle
+//{
+//    
+//}
 
-
-+ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
++ (instancetype)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
                               withTitle:(nullable NSString *)title
                                 message:(nullable NSString *)message
                       cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler
                           doButtonTitle:(nullable NSString *)doButtonTitle
                               doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
 {
-    NSString *aTitle = NSLocalizedString(title, nil);
-    NSString *aMessage = NSLocalizedString(message, nil);
-    NSString *aCancelButtonTitle = NSLocalizedString(cancelButtonTitle, nil);
-    NSString *otherButtonTitle = NSLocalizedString(doButtonTitle, nil);
+    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
+    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
+    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
+    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
     
@@ -39,10 +48,11 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
     }
     if (doButtonTitle.length>0)
     {
-        UIAlertAction *doAction = [UIAlertAction actionWithTitle:otherButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
+        UIAlertAction *doAction = [UIAlertAction actionWithTitle:aDoButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
         [alertController addAction:doAction];
     }
     [viewController presentViewController:alertController animated:YES completion:nil];
+    return alertController;
 }
 
 
@@ -60,11 +70,11 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
        popoverPresentationControllerBlock:(nullable UIAlertControllerPopoverPresentationControllerBlock)popoverPresentationControllerBlock
                                  tapBlock:(nullable UIAlertControllerCompletionBlock)tapBlock
 {
-    //不能为nil
-    NSString *aTitle = title?NSLocalizedString(title, nil):title;
-    NSString *aMessage = message?NSLocalizedString(message, nil):message;
-    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):cancelButtonTitle;
-    NSString *aDestructiveButtonTitle = destructiveButtonTitle?NSLocalizedString(destructiveButtonTitle, nil):destructiveButtonTitle;
+    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
+    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
+    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
+    NSString *aDestructiveButtonTitle = destructiveButtonTitle?NSLocalizedString(destructiveButtonTitle, nil):nil;
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:preferredStyle];
     
@@ -201,7 +211,21 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
                              tapBlock:tapBlock];
 }
 
-
+- (void)setAlertViewPreferredActionWithTitle:(NSString *)prefreredTitle
+{
+    if (self.preferredStyle == UIAlertControllerStyleAlert)
+    {
+        WS(weakSelf);
+        [self.actions enumerateObjectsUsingBlock:^(UIAlertAction * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([obj.title isEqualToString:prefreredTitle])
+            {
+                weakSelf.preferredAction = obj;
+            }
+        }];
+    }
+  
+}
 
 #pragma mark - 属性
 

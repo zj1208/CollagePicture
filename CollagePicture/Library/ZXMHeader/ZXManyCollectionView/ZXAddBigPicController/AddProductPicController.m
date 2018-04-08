@@ -10,7 +10,7 @@
 #import "ZXImagePickerVCManager.h"
 #import "TMDiskManager.h"
 #import "CommonModel.h"
-#import "OSSUploadManager.h"
+#import "AliOSSUploadManager.h"
  
 @interface AddProductPicController ()<ZXImagePickerVCManagerDelegate,ZXAddBigPicCollectionViewDataSource>
 
@@ -37,7 +37,7 @@
     self.imagePickerVCManager = pickerVCManager;
     
     //初始化oss上传
-    [[OSSUploadManager getInstance] initOSSStsTokenCredential];
+    [[AliOSSUploadManager sharedInstance] initAliOSSWithSTSTokenCredential];
     
     self.collectionView.backgroundColor = UIColorFromRGB_HexValue(0xf3f3f3);
 
@@ -111,7 +111,7 @@
     self.navigationController.navigationBar.userInteractionEnabled = NO;
     
     WS(weakSelf);
-    [[OSSUploadManager getInstance]putObjectOSSStsTokenPublicBucketWithUserId:USER_TOKEN fileCatalogType:OSSFileCatalog_uploadProduct uploadingData:imageData progress:nil singleComplete:^(id imageInfo,NSString*imagePath,CGSize imageSize) {
+    [[AliOSSUploadManager sharedInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN fileCatalogType:OSSFileCatalog_uploadProduct uploadingData:imageData progress:nil singleComplete:^(id imageInfo,NSString*imagePath,CGSize imageSize) {
         
 //        AliOSSPicUploadModel *model = [[AliOSSPicUploadModel alloc] init];
 //        model.p = imagePath;

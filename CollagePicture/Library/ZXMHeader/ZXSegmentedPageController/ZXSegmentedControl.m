@@ -83,7 +83,7 @@
     self.minimumItemSpacing = 10.f;
     self.selectionIndicatorColor = self.selectedColor;
     self.selectionIndicatorHeight = 3.f;
-    
+    self.widthStyle = ZXSegmentedControlSegmentWidthStyleDynamic;
     [self addSubview:self.collectionView];
 
     //先添加collectionView，再添加indicateLine
@@ -182,7 +182,6 @@
         else
         {
             obj.selected = NO;
-
         }
     }];
     
@@ -284,6 +283,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (self.widthStyle == ZXSegmentedControlSegmentWidthStyleFixed)
+    {
+         return CGSizeMake((CGRectGetWidth(self.frame)-self.minimumItemSpacing*(self.dataSources.count-1)-self.segmentEdgeInset.left-self.segmentEdgeInset.right)/self.dataSources.count, 30);
+    }
+    //  cell是计算宽度
     ZXSegmentModel *model = [self.dataSources objectAtIndex:indexPath.row];
     return CGSizeMake(model.width, 30);
 }
@@ -339,14 +343,20 @@
 
 - (void)moveLineToIndexPath:(NSIndexPath *)indexPath animation:(BOOL)animation
 {
+    ZXSegmentModel *model = [self.dataSources objectAtIndex:indexPath.row];
+    
     UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     
     CGRect lineBounds = self.indicateLine.bounds;
     if (self.selectionStyle == ZXSegmentedControlSelectionStyleTextWidthStripe)
     {
-        lineBounds.size.width = layoutAttributes.size.width - 10;
+        lineBounds.size.width = model.width - ZXSegmentedTitleExtendWidth;
     }
-    else
+    else if (self.selectionStyle ==ZXSegmentedControlSelectionStyleExtendTextWidthStripe)
+    {
+       lineBounds.size.width = model.width;
+    }
+    else if (self.selectionStyle ==ZXSegmentedControlSelectionStyleFullWidthStripe)
     {
         lineBounds.size.width = layoutAttributes.size.width;
     }
@@ -393,11 +403,15 @@
     UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
 //    ZXSegmentCell *cell = (ZXSegmentCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     if (self.selectionStyle == ZXSegmentedControlSelectionStyleFullWidthStripe) {
-        self.indicateLine.frame = CGRectMake(4, CGRectGetHeight(self.frame) - self.selectionIndicatorHeight-1, model.width, self.selectionIndicatorHeight);
+        self.indicateLine.frame = CGRectMake(4, CGRectGetHeight(self.frame) - self.selectionIndicatorHeight-1, layoutAttributes.frame.size.width, self.selectionIndicatorHeight);
     }
     else if (self.selectionStyle == ZXSegmentedControlSelectionStyleTextWidthStripe)
     {
-        self.indicateLine.frame = CGRectMake(4, CGRectGetHeight(self.frame) - self.selectionIndicatorHeight-1, model.width-10, self.selectionIndicatorHeight);
+        self.indicateLine.frame = CGRectMake(4, CGRectGetHeight(self.frame) - self.selectionIndicatorHeight-1, model.width-ZXSegmentedTitleExtendWidth, self.selectionIndicatorHeight);
+    }
+    else if (self.selectionStyle ==ZXSegmentedControlSelectionStyleExtendTextWidthStripe)
+    {
+        self.indicateLine.frame = CGRectMake(4, CGRectGetHeight(self.frame) - self.selectionIndicatorHeight-1, model.width, self.selectionIndicatorHeight);
     }
     CGPoint lineCenter = self.indicateLine.center;
     lineCenter.x = layoutAttributes.center.x;
@@ -528,15 +542,14 @@
     {
         if (self.attributedTitle)
         {
-            _width = self.attributedTitle.size.width+10 ;
+            _width = self.attributedTitle.size.width+ZXSegmentedTitleExtendWidth;
         }
         else
         {
             NSString *string = self.title?self.title:self.attributedTitle.string;
             CGFloat wid = [string boundingRectWithSize:CGSizeMake(0, 40) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:self.fontSize]} context:nil].size.width;
             
-            _width = wid + 10;
- 
+            _width = wid + ZXSegmentedTitleExtendWidth;
         }
      }
     

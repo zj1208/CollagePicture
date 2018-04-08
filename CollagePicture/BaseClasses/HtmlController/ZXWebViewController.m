@@ -77,6 +77,11 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 @property(nonatomic, copy)NSArray *picArray;
 
+@property (nonatomic, assign) BOOL needDellocH5; //h5跳原生后，从堆栈中移除
+
+//URL数组
+@property(nonatomic, strong) NSMutableArray *urlArrayM;
+
 @end
 
 @implementation ZXWebViewController
@@ -113,21 +118,44 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self resume];//干嘛？
+
+    if (!self.bridge) {
+        [self addWebViewJavascriptBridge]; //重新建立桥街,直接代理设置nil好像无效
+    }
+
+    if (self.presentedViewController)
+    {//h5调用系统相册、相机、文件系统后不resume(下面这两个类)
+//        [self.presentedViewController isKindOfClass:[UIImagePickerController class]];
+//        [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]];
+    }else{
+        [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self.webView.scrollView flashScrollIndicators];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-}
 
+    self.bridge = nil;
+
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (self.needDellocH5) {
+        NSMutableArray *arrayM = [NSMutableArray arrayWithArray:self.navigationController.childViewControllers];
+        [arrayM removeObject:self];
+        [self.navigationController setViewControllers:arrayM animated:NO];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -135,6 +163,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 }
 - (void)dealloc
 {
+    NSLog(@"deallocWebview");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -372,7 +401,14 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 }
 
 
-
+- (NSMutableArray *)urlArrayM
+{
+    if (!_urlArrayM)
+    {
+        _urlArrayM = [NSMutableArray array];
+    }
+    return _urlArrayM;
+}
 
 
 # pragma mark - UIWebViewDelegate
@@ -382,6 +418,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 //    [MBProgressHUD zx_showGifWithGifName:@"loading" toView:self.view];
 //     [HKMBProgressHUD wy_loadingShow:self.view];
+ 
     NSLog(@"%@",self.view.subviews);
 }
 
@@ -399,6 +436,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         self.navigationItem.title = doTitle;
     }
     [self updateNavigationItems];
+    [self.urlArrayM removeAllObjects];
 }
 
 
@@ -425,6 +463,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSLog(@"%@",request.URL);
+    [self.urlArrayM addObject:request.URL];
     //    NSLog(@"%@",request.allHTTPHeaderFields);
     //    NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:request.allHTTPHeaderFields forURL:request.URL];
     //    NSLog(@"cookies=%@",cookies);
@@ -638,7 +677,15 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     //分享
     NSString *imageStr = @"http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/app/icon/logo_zj.png";
-//    [WYSHARE shareSDKWithImage:imageStr Title:self.title Content:@"用了义采宝，生意就是好!" withUrl:self.webUrl];
+    
+    NSString *shareUrl;
+    if (self.urlArrayM.count>0) {
+        NSURL* url = self.urlArrayM.firstObject;
+        shareUrl =url.absoluteString;
+    }else{
+        shareUrl = self.webView.request.URL.absoluteString;
+    }
+//    [WYSHARE shareSDKWithImage:imageStr Title:self.title Content:@"用了义采宝，生意就是好!" withUrl:shareUrl];
 }
 
 
@@ -659,6 +706,10 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     //-----结束当前页面(finish)，无参
     [self.bridge registerHandler:@"finish" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self finish];
+    }];
+    //从堆栈中移除并销毁当前H5页面
+    [self.bridge registerHandler:@"dellocH5" handler:^(id data, WVJBResponseCallback responseCallback) {
+        [self dellocH5];
     }];
     //----调用分享(share)，参数为分享的标题以及点击的链接地址{'title':xxx,'text':xxx,'link':xxx,'image':xxx}
     [self.bridge registerHandler:@"share" handler:^(id data, WVJBResponseCallback responseCallback) {
@@ -813,7 +864,14 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
 //    [[WYUtility dataUtil]routerWithName:[dic objectForKey:@"url"] withSoureController:self];
 }
-
+//从堆栈中移除并销毁当前H5页面
+-(void)dellocH5
+{
+    self.needDellocH5 = YES;
+//    NSMutableArray *arrayM = [NSMutableArray arrayWithArray:self.navigationController.childViewControllers];
+//    [arrayM removeObject:self];
+//    [self.navigationController setViewControllers:arrayM animated:NO];
+}
 //7.resume事件
 -(void)resume
 {
@@ -843,9 +901,21 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 #pragma mark - 请求失败／列表为空时候的代理请求
 
+//self.webView.request.URL.absoluteString 在加载失败的时候是空的
 - (void)zxEmptyViewUpdateAction
 {
-    [self requestWithUrlStr:self.webView.request.URL.absoluteString];
+    NSURL* url = self.urlArrayM.firstObject;
+    [self requestWithUrlStr:url.absoluteString];
+}
+
+#pragma mark - 在webView中显示报告错误；（目前没用）
+
+- (void)reportErrorInsideWebView:(NSError *)error
+{
+    NSString* errorString = [NSString stringWithFormat:
+                             @"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"><html><head><meta http-equiv='Content-Type' content='text/html;charset=utf-8'><title></title></head><body><div style='width: 100%%; text-align: center; font-size: 36pt; color: red;'>An error occurred:<br>%@</div></body></html>",
+                             error.localizedDescription];
+    [self.webView loadHTMLString:errorString baseURL:nil];
 }
 
 
@@ -914,6 +984,5 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     self.localTxtFileContent = content;
     self.webLoadType = WebLoadType_LocalFileContent;
 }
-
 
 @end

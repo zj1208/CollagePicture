@@ -266,6 +266,7 @@
     _uploadProgress = [progressBlock copy];
     _singleCompletedBlock = [signleCompleteBlock copy];
     
+    // 对象由元信息（Object Meta），用户数据（Data）和文件名（Key）组成；由存储空间内部唯一的 Key 来标识。对象元信息是一个键值对，表示了对象的一些属性，比如最后修改时间、大小等信息，同时用户也可以在元信息中存储一些自定义的信息。
     OSSPutObjectRequest *put = [OSSPutObjectRequest new];
     put.bucketName = _bucketName;
     put.objectKey = [self getOSSPutObjectKeyWithUserId:userId fileCatalog:fileCatalog];
@@ -353,6 +354,8 @@
         case OSSFileCatalog_ProductVideo:   return @"2/pvi/";  break;
         case OSSFileCatalog_ProductExtend:  return @"2/sp/";   break;
         case OSSFileCatalog_ProductExtendStock: return @"2/ss/"; break;
+        case OSSFileCatalog_MakeBill: return @"2/bill/"; break;
+        case OSSFileCatalog_uploadProductPicText: return @"2/grap/";break;
         default:
             break;
     }
@@ -360,28 +363,160 @@
     
 }
 
-//产生唯一的objectKey,如果userId为空，则有可能产生同一个key；
+// 产生唯一的objectKey；自定义方法自己构造，如果userId为空，则有可能产生同一个key；
+// 如果没有文件目录，默认.jpg结尾； 如果
+/*
+对象的命名规范如下：
+使用UTF-8编码。
+长度必须在1-1023字节之间。
+不能以“/”或者“\”字符开头。
+ */
 - (NSString *)getOSSPutObjectKeyWithUserId:(nullable NSString *)userId fileCatalog:(nullable NSString *)fileCatalog
 {
     
     long long int timevalue = (long long int)([NSDate date].timeIntervalSince1970 * 1000);
     NSNumber *timeNum = [NSNumber numberWithLongLong:timevalue];
-    NSString *appendObejectKey = [userId stringByAppendingString:[timeNum stringValue]];
+    NSString *appendObejectKey = [userId stringByAppendingString:[timeNum stringValue]];//userId+时间(保留三位小数再乘1000) = 图片名称
 //    NSString *key = [NSString zhCreatedMD5:appendObejectKey];
 //    NSString *userId_16 = [NSString zhHexStringFromString:userId];
 //    NSLog(@"%@,%@",userId_16,userId);
+    
+    //  如果是视频目录
+    NSString *videoFile = [self getFileCatalogWithType:OSSFileCatalog_ProductVideo];
+    //  如果没有文件目录;文件名末尾默认以jpg结尾；待优化；
     if (!fileCatalog)
     {
         return [appendObejectKey stringByAppendingString:@".jpg"];
     }
-    NSString *videoFile = [self getFileCatalogWithType:OSSFileCatalog_ProductVideo];
-    if ([fileCatalog isEqualToString:videoFile])
+   //   如果视频目录，则mp4结尾；待优化；
+    else if ([fileCatalog isEqualToString:videoFile])
     {
-       return [NSString stringWithFormat:@"%@%@.mp4",fileCatalog,appendObejectKey];
+        return [NSString stringWithFormat:@"%@%@.mp4",fileCatalog,appendObejectKey];
     }
     return [NSString stringWithFormat:@"%@%@.jpg",fileCatalog,appendObejectKey];
 }
-
+//对上面👆[userId stringByAppendingString:[timeNum stringValue]拼接的字符串数组按末尾时间戳排序
+//eg: XX93a0897ab5823be48d812025abd427eb1522394434132.jpg
+/*
++ (NSArray *)sortAliOSSImage_UserID_time_WithModelArr:(NSArray<__kindof AliOSSPicUploadModel *> *)array
+{
+    NSMutableArray* arraySort = [NSMutableArray arrayWithArray:array];
+    for (int i=0; i<arraySort.count; ++i)
+    {
+        AliOSSPicUploadModel *model_i = arraySort[i];
+        NSArray *arr_i = [model_i.p componentsSeparatedByString:@"."];//.jpg
+        NSString* imageP_i = arr_i.count>1?arr_i[arr_i.count-2]:nil;
+        if (imageP_i.length <13)
+        { //暂时只取末尾13位
+            return array; //一旦图片名称长度有异常不排序了，返回原数组
+        }
+        NSRange range_i = NSMakeRange(imageP_i.length-13, 13);
+        NSString* subthr_i = [imageP_i substringWithRange:range_i];
+        if (![NSString zhIsIntScan:subthr_i]) {//非存数字
+            return array;
+        }
+        long long int integer_i = subthr_i.longLongValue;
+        for (int j=i+1; j<arraySort.count; ++j)
+        {
+            AliOSSPicUploadModel *model_j = arraySort[j];
+            NSArray *arr_j = [model_j.p componentsSeparatedByString:@"."];
+            NSString* imageP_j = arr_j.count>1?arr_j[arr_j.count-2]:nil;
+            if (imageP_j.length <13)
+            {
+                return array;
+            }
+            NSRange range_j = NSMakeRange(imageP_j.length-13, 13);
+            NSString* subthr_j = [imageP_j substringWithRange:range_j];
+            if (![NSString zhIsIntScan:subthr_j]) {
+                return array;
+            }
+            long long int integer_j = subthr_j.longLongValue;
+            if (integer_i >integer_j) {
+                [arraySort exchangeObjectAtIndex:j withObjectAtIndex:i];
+            }
+        }
+    }
+    NSLog(@"=====\n%@\n====\n%@\n",array,arraySort);
+    return arraySort;
+}
++(NSArray *)sortAliOSSImage_UserID_time_WithPhotoModelArr:(NSArray<__kindof ZXPhoto*> *)array
+{
+    NSMutableArray* arraySort = [NSMutableArray arrayWithArray:array];
+    for (int i=0; i<arraySort.count; ++i)
+    {
+        ZXPhoto *model_i = arraySort[i];
+        NSArray *arr_i = [model_i.original_pic componentsSeparatedByString:@"."];//.jpg
+        NSString* imageP_i = arr_i.count>1?arr_i[arr_i.count-2]:nil;
+        if (imageP_i.length <13){ //暂时只取末尾13位
+            return array; //一旦图片名称长度有异常不排序了，返回原数组
+        }
+        NSRange range_i = NSMakeRange(imageP_i.length-13, 13);
+        NSString* subthr_i = [imageP_i substringWithRange:range_i];
+        if (![NSString zhIsIntScan:subthr_i]) {//非存数字
+            return array;
+        }
+        long long int integer_i = subthr_i.longLongValue;
+        for (int j=i+1; j<arraySort.count; ++j)
+        {
+            ZXPhoto *model_j = arraySort[j];
+            NSArray *arr_j = [model_j.original_pic componentsSeparatedByString:@"."];
+            NSString* imageP_j = arr_j.count>1?arr_j[arr_j.count-2]:nil;
+            if (imageP_j.length <13)
+            {
+                return array;
+            }
+            NSRange range_j = NSMakeRange(imageP_j.length-13, 13);
+            NSString* subthr_j = [imageP_j substringWithRange:range_j];
+            if (![NSString zhIsIntScan:subthr_j]) {
+                return array;
+            }
+            long long int integer_j = subthr_j.longLongValue;
+            if (integer_i >integer_j) {
+                [arraySort exchangeObjectAtIndex:j withObjectAtIndex:i];
+            }
+        }
+    }
+    NSLog(@"=====\n%@\n====\n%@\n",array,arraySort);
+    return arraySort;
+}
+ */
++ (NSArray *)sortAliOSSImage_UserID_time_WithStringArr:(NSArray<__kindof NSString *> *)array
+{
+    NSMutableArray* arraySort = [NSMutableArray arrayWithArray:array];
+    for (int i=0; i<arraySort.count; ++i) {
+        NSString *str_i = arraySort[i];
+        NSArray *arr_i = [str_i componentsSeparatedByString:@"."];//.jpg
+        NSString* imageP_i = arr_i.count>1?arr_i[arr_i.count-2]:nil;
+        if (imageP_i.length <13) { //暂时只取末尾13位
+            return array; //一旦图片名称长度有异常不排序了，返回原数组
+        }
+        NSRange range_i = NSMakeRange(imageP_i.length-13, 13);
+        NSString* subthr_i = [imageP_i substringWithRange:range_i];
+        if (![NSString zhIsIntScan:subthr_i]) {//非存数字
+            return array;
+        }
+        long long int integer_i = subthr_i.longLongValue;
+        for (int j=i; j<arraySort.count; ++j) {
+            NSString *str_j = arraySort[j];
+            NSArray *arr_j = [str_j componentsSeparatedByString:@"."];
+            NSString* imageP_j = arr_j.count>1?arr_j[arr_j.count-2]:nil;
+            if (imageP_j.length <13) {
+                return array;
+            }
+            NSRange range_j = NSMakeRange(imageP_j.length-13, 13);
+            NSString* subthr_j = [imageP_j substringWithRange:range_j];
+            if (![NSString zhIsIntScan:subthr_j]) {
+                return array;
+            }
+            long long int integer_j = subthr_j.longLongValue;
+            if (integer_i >integer_j) {
+                [arraySort exchangeObjectAtIndex:j withObjectAtIndex:i];
+            }
+        }
+    }
+    NSLog(@"=====\n%@\n====\n%@\n",array,arraySort);
+    return arraySort;
+}
 
 //自定义NSError错误信息
 - (NSError *)customErrorWithObject:(NSString *)object errorCode:(NSInteger)code userInfoErrorCode:(nullable NSString *)errorCode;

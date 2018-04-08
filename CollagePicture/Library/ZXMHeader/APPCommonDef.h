@@ -5,6 +5,8 @@
 //  Created by 朱新明 on 12-10-18.
 //  Copyright (c) 2012年 Ibokan. All rights reserved.
 //
+// 2018.3.7
+// 新增宏定义：适配iphoneX
 
 //宏定义的参数，就是一个字符串替换；所以参数一定要带括号；
 #ifndef UI_APPCommonDef_h
@@ -15,7 +17,7 @@
 
 #pragma mark
 
-#pragma mark-system version
+#pragma mark - system version
 /***************************
 获取系统版本号等信息
  ****************************/
@@ -37,6 +39,7 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 */
 
+#pragma mark - Device设备信息
 //获取系统名
 #ifndef Device_SystemName
 #define Device_SystemName       [[UIDevice currentDevice]systemName]
@@ -56,8 +59,7 @@
 
 /*********************************************************************************/
 
-#pragma mark
-#pragma mark-AppBundle信息
+#pragma mark - AppBundle信息
 //资源包info.plist文件的所有健值的字典；
 #define APPInfoDictionary    [[NSBundle mainBundle]infoDictionary]
 #define APP_AllInfoShow      CFShow(APPInfoDictionary)
@@ -74,21 +76,21 @@
 //app内部测试版本号Build
 #define APP_build            [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleVersion"]//版本号
 
-
+#pragma mark - -APP的window
 //返回AppDelegate指针
 #ifndef APP_Delegate
-#define APP_Delegate            (AppDelegate*)[[UIApplication sharedApplication]  delegate]
+#define APP_Delegate      (AppDelegate*)[[UIApplication sharedApplication]  delegate]
 #endif
 //应用当前持有的最高级window
 #ifndef APP_keyWindow
-#define APP_keyWindow            [[UIApplication sharedApplication] keyWindow]
+#define APP_keyWindow     [[UIApplication sharedApplication] keyWindow]
 #endif
 //应用程序的主window
 #ifndef APP_MainWindow
 #define APP_MainWindow    [[[UIApplication sharedApplication] delegate] window]
 #endif
 
-
+#pragma mark - Itunes链接
 
 //iTunesLink 链接－－iTunesLink＋appID，ios6以后有直接跳转appStore的item应用Controller页面
 #ifndef ITUNESLINK
@@ -113,34 +115,50 @@
 #endif
 
 #ifndef SCREEN_WIDTH
-
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 #endif
 
 #ifndef SCREEN_MAX_LENGTH
-#define SCREEN_MAX_LENGTH (MAX(LCDW, LCDH))
-#define SCREEN_MIN_LENGTH (MIN(LCDW, LCDH))
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iphone6_Width
-#define LCDScale_iphone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6_Width
+#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 //iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；
 //宏定义的变量数字一定要加()才能准;CGFloat right = (LCDScale_5Equal6_To6plus(-93.f))-15.f
-#define LCDScale_5Equal6_To6plus(X) (IS_IPHONE_6P ? ((X)*SCREEN_MIN_LENGTH/375) : (X))
+#define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_X)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
+
+
+#pragma mark - 判断是什么设备
 
 #ifndef IS_IPHONE_4_OR_LESS
+
 #define IS_IPHONE_4_OR_LESS (SCREEN_MAX_LENGTH < 568.0)
-#define IS_IPHONE_5 (SCREEN_MAX_LENGTH == 568.0)
-#define IS_IPHONE_6 (SCREEN_MIN_LENGTH == 375.0)
+#define IS_IPHONE_5 (SCREEN_MIN_LENGTH == 320.0 && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
+#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
 #endif
 
 
-#pragma mark-设置view某个尺寸改变后的frame
+
+#pragma mark - 获取navigationBar，statuBar，tabBar高度
+
+#ifndef  HEIGHT_NAVBAR
+#define  HEIGHT_NAVBAR      (IS_IPHONE_X ? (44.f+44.f) : (44.f+20.f))
+#define  HEIGHT_STATEBAR    (IS_IPHONE_X ? (44.f) : (20.f))
+#define  HEIGHT_TABBAR      (IS_IPHONE_X ? (34.f+49.f) : 0)
+#define  HEIGHT_TABBARSAFE  (IS_IPHONE_X ? (34.f) : 0)
+
+#endif
+
+
+#pragma mark - 设置view某个尺寸改变后的frame
 //单独设置view的frame里的高度，其他的值保持不变
 #define ZX_FRAME_Y(view,y) CGRectMake(CGRectGetMinX(view.frame),y, CGRectGetWidth(view.frame),CGRectGetHeight(view.frame))
 #define ZX_FRAME_H(view,h) CGRectMake(CGRectGetMinX(view.frame),CGRectGetMinY(view.frame), CGRectGetWidth(view.frame),h)
@@ -149,7 +167,7 @@
 //*********************************************************************************
 
 
-#pragma mark-secondsTime
+#pragma mark - secondsTime
 //a day/month/year has many secondes;
 #define SECONDS_PER_HOUR (60*60)
 #define SECONDS_PER_DAY (24*60*60)
@@ -167,7 +185,7 @@
 
 //*********************************************************************************
 
-#pragma mark-NSLog utility 打印
+#pragma mark - NSLog utility 打印
 
 ////NSLog返回更多信息。
 //#ifdef DEBUG
@@ -253,14 +271,6 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 
 
 
-//#pragma mark-barTintColor
-#ifndef ZX_BarTintColor
-#define ZX_BarTintColor self.navigationController.navigationBar.barTintColor
-#endif
-
-
-
-
 #pragma mark-NSString utility
 
 //去除2端空格；
@@ -271,7 +281,7 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 
 
 
-#pragma mark-UIColor utility
+#pragma mark - UIColor utility
 
 #define UIColorFromRGB(R,G,B)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
 #define UIColorFromRGBA(R,G,B,A)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
@@ -298,7 +308,7 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 
 
 //系统api更新，有一些DEPRECATED了，需要适配
-#pragma mark  IOS7，IOS8Compatible
+#pragma mark - IOS7，IOS8Compatible
 
 #pragma mark-NSString(UIStringDrawing)
 
@@ -339,20 +349,6 @@ sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 #define ZX_UIStatusBarStyleLightContent UIStatusBarStyleBlackOpaque\
 
 #endif
-
-
-//tabBar的背景颜色
-#if __IPHONE_7_0
-#define ZX_UITabBar_BarTintColor(tabBar) tabBar.barTintColor
-
-#else
-#define ZX_UITabBar_BarTintColor(tabBar) tabBar.tintColor
-
-#endif
-
-
-
-
 
 
 //tabBarItme按钮的颜色。selectedImageTintColor在ios8.0已经废弃；在ios7和之前， seletedImageTintColor 用UITabBar的tintColor属性获取

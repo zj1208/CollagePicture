@@ -12,6 +12,7 @@
 
 // 2018.2.5； 增加pageControl
 // 2018.2.8； 优化功能；修改bug；
+// 2018.3.22 增加注释
 
 
 #import <UIKit/UIKit.h>
@@ -100,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 /**
- 将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置
+ 将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置；可以改变cell的图标大小；
 
  @param cell LabelCell
  @param indexPath collectionView中的对应indexPath
@@ -158,7 +159,7 @@ NS_ASSUME_NONNULL_END
 }
 
 #pragma mark -ZXHorizontalPageCollectionViewDelegate
-
+// 改变cell的图标大小
 - (void)zx_horizontalPageCollectionView:(ZXHorizontalPageCollectionView *)pageView willDisplayCell:(ZXBadgeCollectionCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     cell.imgViewLayoutWidth.constant = 30;

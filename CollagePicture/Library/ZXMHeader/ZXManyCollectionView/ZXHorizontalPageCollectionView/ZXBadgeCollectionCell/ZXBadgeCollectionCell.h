@@ -6,8 +6,11 @@
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 //  简介：设计依据是 固定中心图标大小；角标（右上角按钮角标，右上角imageView图标角标）相对于中心图标做偏移；
+//  可以利用约束imgViewLayoutWidth修改中心图标大小；
 //  最好一屏幕最大设置4列，超过4列，角标，图标，字体有可能显示不下；
 //  2018.2.7 新增红点的专用imageView；
+//  2018.3.22 新增注释；
+
 
 #import <UIKit/UIKit.h>
 #import "BadgeMarkItemModel.h"

@@ -5,11 +5,12 @@
 //  Created by simon on 2017/10/13.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  简介：左侧：图标+标题文字，右侧：副标题+图标，（可空）点击整个view响应事件；
+//  简介：左侧：图标+标题文字，右侧：副标题； Accessory：图标，可设置不显示或显示，（可空）点击整个view响应事件；  底部有线条可设置及隐藏；
 //
 //  2018.01.10
 //  扩展ZXActionAdditionalViewAccessoryType；
-
+//  2018.03.20
+//  增加底部线条，修改辅助图标不显示的bug；
 
 #import <UIKit/UIKit.h>
 
@@ -17,10 +18,10 @@ static NSString *const nibName_ZXActionAdditionalTitleView = @"ZXActionAdditiona
 
 typedef NS_ENUM(NSInteger, ZXActionAdditionalViewAccessoryType)
 {
-    // 最右边没有
+    // Accessory没有图标
     ZXActionViewAccessoryTypeNone = 0,
     
-    // 指示imageView图
+    // Accessory指示imageView图标
     ZXActionViewAccessoryTypeDisclosureIndicator = 1,
 
 };
@@ -39,6 +40,10 @@ typedef NS_ENUM(NSInteger, ZXActionAdditionalViewAccessoryType)
 
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
 
+
+// 底部线条,默认隐藏
+@property (weak, nonatomic) IBOutlet UIView *bottomLine;
+
 + (id)viewFromNib;
 
 @end
@@ -46,7 +51,7 @@ typedef NS_ENUM(NSInteger, ZXActionAdditionalViewAccessoryType)
 /*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    if (section ==2)
+    if (section ==section_recentlyPushTrande)
     {
         if (self.purchaserModel.lastBizs.count>0)
         {
@@ -55,6 +60,7 @@ typedef NS_ENUM(NSInteger, ZXActionAdditionalViewAccessoryType)
             titleView.accessoryImageView.image = [UIImage imageNamed:@"pic-jiantou"];
             titleView.detailTitleLab.text = @"查看全部";
             [titleView.tapGestureRecognizer addTarget:self action:@selector(goTradeListAction:)];
+            titleView.bottomLine.hidden = NO;
             return titleView;
         }
     }

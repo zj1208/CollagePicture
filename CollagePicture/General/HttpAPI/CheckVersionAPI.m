@@ -7,7 +7,7 @@
 //
 
 #import "CheckVersionAPI.h"
-
+#import "NSURL+ZXAppLinks.h"
 
 /**
  *  请求发生错误的自定义参数
@@ -15,8 +15,6 @@
 static NSString *const kAPPErrorDomain = @"com.CheckVersionAPI.domain";
 static NSInteger const kAPPErrorCode = 5000;
 
-
-#define kAPP_checkVersionUpdateURL                [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",kAPPID]
 
 
 @implementation CheckVersionAPI
@@ -152,8 +150,7 @@ static NSInteger const kAPPErrorCode = 5000;
 
 - (NSString *)getAppVersionFromItunes:(NSString *)appId
 {
-    NSString *lookup = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appId];
-    NSURL *url =[NSURL URLWithString:lookup];
+    NSURL *url =[NSURL appStoreAppInfomationURLForApplicationIdentifier:appId];
     NSString *jsonData  = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
     NSLog(@"%@",jsonData);
     

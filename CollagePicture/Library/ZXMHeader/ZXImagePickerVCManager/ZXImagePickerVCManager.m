@@ -10,14 +10,16 @@
 #include <MobileCoreServices/UTCoreTypes.h>
 
 
+
 static char pickerControllerActionKey;
 
 @implementation ZXImagePickerVCManager
 
-- (void)zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:(UIViewController *)sourceController
+- (void)zxPresentActionSheetToImagePickerWithSourceController:(UIViewController *)sourceController
 {
-    NSString *title = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]?@"选择":nil;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(title, nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+    NSString *title = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]?NSLocalizedString(@"选择", nil):nil;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:cancelAction];
@@ -54,10 +56,11 @@ static char pickerControllerActionKey;
                               doButtonTitle:(nullable NSString *)doButtonTitle
                                   doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
 {
-    NSString *aTitle = NSLocalizedString(title, nil);
-    NSString *aMessage = NSLocalizedString(message, nil);
-    NSString *aCancelButtonTitle = NSLocalizedString(cancelButtonTitle, nil);
-    NSString *otherButtonTitle = NSLocalizedString(doButtonTitle, nil);
+    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
+    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
+    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
+    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
     
@@ -68,7 +71,7 @@ static char pickerControllerActionKey;
     }
     if (doButtonTitle.length>0)
     {
-        UIAlertAction *doAction = [UIAlertAction actionWithTitle:otherButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
+        UIAlertAction *doAction = [UIAlertAction actionWithTitle:aDoButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
         [alertController addAction:doAction];
     }
     [viewController presentViewController:alertController animated:YES completion:nil];
@@ -93,7 +96,7 @@ static char pickerControllerActionKey;
     }
     else
     {
-        imagePicker.allowsEditing = YES;
+//        imagePicker.allowsEditing = YES;
         if (self.morePickerAlbumType ==PhotosAlbumListType_custom)
         {
 //        [self pushToImagePickerToController:sourceController];

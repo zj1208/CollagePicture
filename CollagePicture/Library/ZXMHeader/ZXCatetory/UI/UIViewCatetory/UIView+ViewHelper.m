@@ -197,8 +197,40 @@
 }
 
 
++ (id)zhViewFromNib
+{
+    NSArray *arr =[[NSBundle mainBundle] loadNibNamed:[[self class] description] owner:self options:nil];
+    return [arr firstObject];
+}
 
-
+- (NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view
+{
+    UIView *superview = self.superview;
+    while (superview) {
+        if ([superview isKindOfClass:[UITableViewCell class]])
+        {
+            if ([view isKindOfClass:[UITableView class]])
+            {
+                UITableView *tableView = (UITableView *)view;
+                UITableViewCell *tableViewCell = (UITableViewCell *)superview;
+                NSIndexPath* indexPath = [tableView indexPathForCell:tableViewCell];
+                return indexPath;
+            }
+        }
+        if ([superview isKindOfClass:[UICollectionViewCell class]])
+        {
+            if ([view isKindOfClass:[UICollectionView class]])
+            {
+                UICollectionView *collectionView = (UICollectionView *)view;
+                UICollectionViewCell *collectionViewCell = (UICollectionViewCell *)superview;
+                NSIndexPath* indexPath = [collectionView indexPathForCell:collectionViewCell];
+                return indexPath;
+            }
+        }
+        superview = superview.superview;
+    }
+    return nil;
+}
 
 @end
 

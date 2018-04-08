@@ -130,23 +130,28 @@
 {
     self.putView.hidden = NO;
     CGRect rect = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat ty = - rect.size.height;
+    CGFloat ty = rect.size.height;
     __weak __typeof(&*self)weakSelf = self;
 
-    [UIView animateWithDuration:[noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
+    NSTimeInterval duration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    [UIView animateWithDuration:duration animations:^{
         
-        weakSelf.putView.transform = CGAffineTransformMakeTranslation(0, ty);  //纯代码
-        
+        weakSelf.putView.transform = CGAffineTransformMakeTranslation(0, -ty);  //纯代码
     }];
 }
 
 
 #pragma mark 键盘即将退出—与上面方法对应；
-- (void)keyboardWillHide:(NSNotification *)note{
+- (void)keyboardWillHide:(NSNotification *)noti
+{
     
     __weak __typeof(&*self)weakSelf = self;
     self.putView.hidden = YES;
-    [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
+    
+    NSTimeInterval duration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+    [UIView animateWithDuration:duration animations:^{
         
         weakSelf.putView.transform = CGAffineTransformIdentity; //纯代码
         weakSelf.putView.superview.alpha = 0;

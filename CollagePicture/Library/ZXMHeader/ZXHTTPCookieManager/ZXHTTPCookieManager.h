@@ -7,8 +7,10 @@
 //
 // 2018.01.02
 // 创建这个类
+// 2018.04.03 修改注释
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -109,6 +111,9 @@ UM_distinctid=160a0e171573ed-06957cb7c349838-6a462226-2c600-160a0e1715847a;mat=8
  @return 删除个数；
  */
 - (NSInteger)deleteCookieInNSHTTPCookieStorageWithURL:(NSURL *)URL;
+
+
+- (void)cleanWKWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler;
 @end
 
 NS_ASSUME_NONNULL_END

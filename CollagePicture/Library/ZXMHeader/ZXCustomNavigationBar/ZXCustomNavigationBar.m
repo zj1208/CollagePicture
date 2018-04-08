@@ -1,14 +1,14 @@
 //
-//  ZXNavigationBar.m
+//  ZXCustomNavigationBar.m
 //  YiShangbao
 //
 //  Created by simon on 2017/10/19.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "ZXNavigationBar.h"
+#import "ZXCustomNavigationBar.h"
 
-@implementation ZXNavigationBar
+@implementation ZXCustomNavigationBar
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -17,5 +17,11 @@
     // Drawing code
 }
 */
+
+- (void)setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem
+{
+    _leftBarButtonItem = leftBarButtonItem;
+    
+}
 
 @end

@@ -5,6 +5,9 @@
 //  Created by simon on 17/6/27.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+// 2018.2.12； 新增预选按钮事件 设置；
+// 2018.3.28； 优化代码；
+
 
 #import <UIKit/UIKit.h>
 
@@ -29,6 +32,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 @interface UIAlertController (ZXExtension)
 
 
+#pragma mark - AlertControllerAlertStyle
 /**
  弹出可以设置最多2个按钮的警告框；－最常见的提示框
  
@@ -40,7 +44,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param doButtonTitle 另外一个按钮文本
  @param doHandler 另外一个按钮的点击事件回调；默认取消事件－dismiss；
  */
-+ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
++ (instancetype)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
                               withTitle:(nullable NSString *)title
                                 message:(nullable NSString *)message
                       cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler
@@ -77,6 +81,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 
 
+#pragma mark - ActionSheet
 /**
  弹出ActionSheet
 
@@ -110,8 +115,10 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 
 
+// 2.12设置某个UIAlertAction为优先提示事件；即文字加粗高亮；默认cancle事件按钮；
+// [alert setAlertViewPreferredActionWithTitle:@"继续"];
 
-
+- (void)setAlertViewPreferredActionWithTitle:(NSString *)prefreredTitle;
 
 @property (readonly, nonatomic) NSInteger cancelButtonIndex;
 @property (readonly, nonatomic) NSInteger destructiveButtonIndex;

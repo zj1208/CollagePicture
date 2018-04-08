@@ -5,9 +5,12 @@
 //  Created by simon on 16/4/19.
 //  Copyright © 2016年 simon. All rights reserved.
 //
+//  2018.3.28； 优化代码；
+
 
 #import <Foundation/Foundation.h>
 
+// 参考云信封装-NIMKitPhotoFetcher；
 //#import "ImagePickerViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -93,7 +96,7 @@ typedef NS_ENUM(NSInteger, PhotosAlbumListType)
 //@property (nonatomic, strong) NSNumber *subjectId;
 
 //调用ActionSheet，可以自己选择相册／相机
-- (void)zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:(UIViewController *)sourceController;
+- (void)zxPresentActionSheetToImagePickerWithSourceController:(UIViewController *)sourceController;
 
 //根据sourceType直接调用相册列表或相机
 - (void)presentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController;
@@ -104,43 +107,57 @@ NS_ASSUME_NONNULL_END
 
 /*
  #import "ZXImagePickerVCManager.h"
- 
+ #import "AliOSSUploadManager.h"
+
 <ZXImagePickerVCManagerDelegate>
  
- @property (nonatomic ,strong)ZXImagePickerVCManager *ZXImagePickerVCManager;
+ @property (nonatomic, strong)ZXImagePickerVCManager *zxImagePickerVCManager;
 
+ @implementation ******
  
-//初始化照片／拍照选择
-ZXImagePickerVCManager *pickerVCManager = [[ZXImagePickerVCManager alloc] init];
-pickerVCManager.morePickerActionDelegate = self;
-self.ZXImagePickerVCManager = pickerVCManager;
- //初始化oss上传
- [[OSSUploadManager getInstance] initOSSStsTokenCredential];
- //是否需要获取图片信息，长宽
- [OSSUploadManager getInstance].getPicInfo = YES;
-
+ - (void)initImagePickerVCManager {
+    //初始化照片／拍照选择
+    ZXImagePickerVCManager *pickerVCManager = [[ZXImagePickerVCManager alloc] init];
+    pickerVCManager.morePickerActionDelegate = self;
+    self.imagePickerVCManager = pickerVCManager;
+     //初始化oss上传
+     [[AliOSSUploadManager sharedInstance] initAliOSSWithSTSTokenCredential];
+     //是否需要获取图片信息，长宽
+     [AliOSSUploadManager sharedInstance].getPicInfo = YES;
+ }
+ 
  - (IBAction)shareAction:(UIButton *)sender {
  
-  [self.ZXImagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+  [self.imagePickerVCManager zxPresentActionSheetToImagePickerWithSourceController:self];
  
  }
 
 //代理 
 - (void)zxImagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info withEditedImage:(UIImage *)image
 {
-    NSData *imageData = UIImageJPEGRepresentation(image, 1);
-    [self zhHUD_showHUDAddedTo:self.view labelText:@"正在上传"];
+   // NSData *imageData = UIImageJPEGRepresentation(image, 1);
+    NSData *imageData = [WYUtility zipNSDataWithImage:image];
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
+
+    [MBProgressHUD zx_showLoadingWithStatus:@"正在上传" toView:self.view];
     WS(weakSelf);
-    [[OSSUploadManager getInstance]putObjectOSSStsTokenPublicBucketWithUserId:USER_TOKEN uploadingData:imageData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
+    [[AliOSSUploadManager sharedInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN uploadingData:imageData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         
     } singleComplete:^(id imageInfo,NSString*imagePath,CGSize imageSize) {
         
         //这里处理上传图片
-        [weakSelf zhHUD_hideHUDForView:weakSelf.view];
-        
+        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+         AliOSSPicUploadModel *model = [[AliOSSPicUploadModel alloc] init];
+         model.p = imagePath;
+         model.w = imageSize.width;
+         model.h = imageSize.height;
+        weakSelf.navigationController.navigationBar.userInteractionEnabled = YES;
+
     } failure:^(NSError *error) {
-        
-        [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
+ 
+        weakSelf.navigationController.navigationBar.userInteractionEnabled = YES;
+
+        [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
     }];
 }
 

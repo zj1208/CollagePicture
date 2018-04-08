@@ -5,7 +5,7 @@
 //  Created by simon on 2017/12/1.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  2017.12.13
+//  2018.3.22 修改文字默认颜色
 
 #import <UIKit/UIKit.h>
 

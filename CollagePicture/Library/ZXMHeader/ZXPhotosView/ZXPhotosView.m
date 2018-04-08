@@ -48,9 +48,9 @@
 {
     if (self = [super init]) {
         // 初始化
-        self.photoMargin =LCDScale_iphone6_Width(ZXPhotoMargin) ;
-        self.photoWidth = LCDScale_iphone6_Width(ZXPhotoWidth);
-        self.photoHeight =LCDScale_iphone6_Width(ZXPhotoHeight);
+        self.photoMargin =LCDScale_iPhone6_Width(ZXPhotoMargin) ;
+        self.photoWidth = LCDScale_iPhone6_Width(ZXPhotoWidth);
+        self.photoHeight =LCDScale_iPhone6_Width(ZXPhotoHeight);
         self.photoMaxCount = ZXPhotoMaxCount;
         self.photosMaxColoum = ZXPhotosMaxColoum;
         self.imagesMaxCountWhenWillCompose = ZXImagesMaxCountWhenWillCompose;

@@ -19,7 +19,7 @@
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
 #define LCDH ([[UIScreen mainScreen] bounds].size.height)
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
 #endif
 
 static NSInteger  kAPPErrorCode_Token2 = 5001;
@@ -28,16 +28,14 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 @interface ZXEmptyViewController ()
 @property (nonatomic, strong) UIImageView *imageView;
 
-@property (nonatomic, strong) UILabel *label;
-
-@property (nonatomic, strong)UIButton *updateBtn;
+@property (nonatomic, strong) UIButton *updateBtn;
 
 //@property(nonatomic,assign)BOOL OnlyImage;
 @end
 
 @implementation ZXEmptyViewController
 
-//+ (instancetype)getInstance
+//+ (instancetype)sharedInstance
 //{
 //    @synchronized(self)
 //    {
@@ -89,6 +87,7 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
  
 }
 
+//- ()
 
 
 //设置圆角
@@ -122,10 +121,6 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 {
     [super viewDidLayoutSubviews];
     NSLog(@"%@",NSStringFromCGRect(self.view.frame));
-    //海狮解决办法：
-//    ZXEmptyViewController *emptyVC =[[ZXEmptyViewController alloc] init];
-//    emptyVC.delegate = self;
-//    emptyVC.view.frame = CGRectMake(0, 64, LCDW, LCDH);
     
     //先设置图片居中显示
     [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -143,7 +138,7 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
         //有点击加载按钮；
         if (!self.updateBtn.hidden)
         {
-            otherContentHeight = 12+rect.size.height+40+LCDScale_iphone6_Width(30);
+            otherContentHeight = 12+rect.size.height+40+LCDScale_iPhone6_Width(30);
         }
         //无点击加载按钮
         else
@@ -160,7 +155,7 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     //无提示语，有加载按钮；
     else if (self.label.text.length==0 && !self.updateBtn.hidden)
     {
-        CGFloat otherContentHeight = 12+40+LCDScale_iphone6_Width(30);
+        CGFloat otherContentHeight = 12+40+LCDScale_iPhone6_Width(30);
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
             make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+_contentOffest.height);
@@ -189,8 +184,8 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     [self.updateBtn mas_updateConstraints:^(MASConstraintMaker *make) {
        
         make.top.mas_equalTo(_label.mas_bottom).offset(40);
-        make.width.mas_equalTo(LCDScale_iphone6_Width(120));
-        make.height.mas_equalTo(LCDScale_iphone6_Width(30));
+        make.width.mas_equalTo(LCDScale_iPhone6_Width(120));
+        make.height.mas_equalTo(LCDScale_iPhone6_Width(30));
         make.centerX.mas_equalTo(self.view.mas_centerX);
         
     }];
