@@ -91,7 +91,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     self.existInputItem = YES;//添加图片按钮默认存在
     self.maxItemCount = ZXMaxItemCount;
     self.photosState = ZXPhotosViewStateWillCompose;
-    
+    self.columnsCount = 4;
     self.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddPhotoImageName];
     
     [self addSubview:self.collectionView];
@@ -180,6 +180,11 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     _minimumInteritemSpacing = itemSpace;
 }
 
+- (void)setColumnsCount:(NSInteger)columnsCount
+{
+    _columnsCount = columnsCount;
+}
+
 //- (void)setPicItemSize:(CGSize)picItemSize
 //{
 //    _picItemSize = CGSizeMake(picItemSize.width+ZXPicItemLayoutRight, picItemSize.height+ZXPicItemLayoutTop);
@@ -210,11 +215,11 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     self.collectionFlowLayout.sectionInset = _sectionInset;
 }
 
-- (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth itemCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset interitemSpacing:(CGFloat)minimumInteritemSpacing
+- (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 {
     CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutRight;
     itemSpace = itemSpace>0?itemSpace:0;
-    CGFloat itemWidth =  (totalWidth - (count-1)*itemSpace-inset.left-inset.right)/count-ZXPicItemLayoutRight;
+    CGFloat itemWidth =  (totalWidth - (columnsCount-1)*itemSpace-inset.left-inset.right)/columnsCount-ZXPicItemLayoutRight;
     return floorf(itemWidth);
 }
 
@@ -234,15 +239,8 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    if (self.isExistInputItem)
-    {
-        if (_dataMArray.count <self.maxItemCount)
-        {
-            return self.dataMArray.count+1;
-        }
-        return self.maxItemCount;
-    }
-    return self.dataMArray.count;
+    NSInteger count = [self getNumberOfItemsInSection];
+    return count;
 }
 
 
@@ -253,7 +251,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 //    cell.backgroundColor = [UIColor redColor];
     [cell.deleteBtn addTarget:self action:@selector(deleteAction:) forControlEvents:UIControlEventTouchUpInside];
 //    NSLog(@"indexPath=%ld",indexPath.item);
-    //添加图片按钮
+    //添加图片按钮Cell 重用；
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
     {
         ZXAddPicPlaceholderCell *placeholderCell = (ZXAddPicPlaceholderCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reusePlaceholderCell forIndexPath:indexPath];
@@ -265,52 +263,46 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     }
     else
     {
-        if (self.photosState ==ZXPhotosViewStateWillCompose)
+        cell.deleteBtn.hidden = NO;
+
+        id obj = [_dataMArray objectAtIndex:indexPath.item];
+        if ([obj isKindOfClass:[UIImage class]])
         {
-            id obj = [_dataMArray objectAtIndex:indexPath.item];
-            if ([obj isKindOfClass:[UIImage class]])
-            {
-                cell.videoCoverView.hidden = YES;
-                cell.imageView.image = (UIImage *)obj;
-            }
-            else if ([obj isKindOfClass:[ZXPhoto class]])
-            {
-                ZXPhoto *photo = (ZXPhoto *)obj;
-                if (photo.type == ZXAssetModelMediaTypePhoto)
-                {
-                    cell.videoCoverView.hidden = YES;
-                    cell.imageView.image =[(ZXPhoto*)obj image];
-                }
-                else if (photo.type == ZXAssetModelMediaTypeVideo)
-                {
-                    cell.videoCoverView.hidden = NO;
-                }
-            }
+            cell.videoCoverView.hidden = YES;
+            cell.imageView.image = (UIImage *)obj;
         }
-        else
+        else if ([obj isKindOfClass:[ZXPhoto class]])
         {
-            ZXPhoto *photo = (ZXPhoto *)[_dataMArray objectAtIndex:indexPath.item];
+            ZXPhoto *photo = (ZXPhoto *)obj;
+//            [cell setData:photo];
+
             if (photo.type == ZXAssetModelMediaTypePhoto)
             {
                 cell.videoCoverView.hidden = YES;
                 NSURL *url = [NSURL URLWithString:photo.thumbnail_pic];
                 [cell.imageView sd_setImageWithURL:url placeholderImage:AppPlaceholderImage];
             }
+            if (photo.type == ZXAssetModelMediaTypeCustom)
+            {
+                cell.videoCoverView.hidden = NO;
+                NSURL *url = [NSURL URLWithString:photo.thumbnail_pic];
+                [cell.imageView sd_setImageWithURL:url placeholderImage:AppPlaceholderImage];
+                cell.coverIconImageView.image = [UIImage imageNamed:@"icon_produce"];
+            }
             else if (photo.type == ZXAssetModelMediaTypeVideo)
             {
                 cell.videoCoverView.hidden = NO;
-                NSURL *url = [NSURL URLWithString:photo.original_pic];
+                cell.coverIconImageView.image = [UIImage imageNamed:@"photo_shexiang"];
+                NSURL *url = [NSURL URLWithString:photo.videoURLString];
                 [self setImageView:cell.imageView withURL:url placeholderImage:AppPlaceholderImage];
             }
-        
         }
-      
-        cell.deleteBtn.hidden = NO;
     }
     // Configure the cell
     return cell;
 }
 
+// 视频缩略图
 - (void)setImageView:(UIImageView *)imageView withURL:(NSURL *)videoURL placeholderImage:(UIImage *)placeholderImage
 {
     imageView.image = placeholderImage;
@@ -472,16 +464,59 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
         {
             return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+_picItemHeight+2*ZXPicItemLayoutTop;
         }
-        [self setData:data];
-
-        //由于整个view被tableViewCell重用了，所以他只会记得init初始化的值；
-        NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
-        NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:totalItem-1 inSection:0];
-        UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
-        CGFloat height = CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom+ZXPicItemLayoutTop;
+        
+        NSInteger count = [self getNumberOfItemsInSection];
+        NSInteger rows = [self getRowsWithDataCount:count];
+        //计算高度
+        CGFloat height = rows * (_picItemHeight+ZXPicItemLayoutTop) + (rows - 1) * self.minimumLineSpacing +self.sectionInset.top+self.sectionInset.bottom;
         return ceilf(height);
+
+//        [self setData:data];
+
+//        //由于整个view被tableViewCell重用了，所以他只会记得init初始化的值；
+//        NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
+//        NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:totalItem-1 inSection:0];
+//        UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
+//        CGFloat height = CGRectGetMaxY(attributes.frame)+self.collectionFlowLayout.sectionInset.bottom+ZXPicItemLayoutTop;
     }
 }
+#pragma mark - 计算方法
+// 获取总
+- (NSInteger)getNumberOfItemsInSection
+{
+    NSInteger count = 0;
+    if (self.isExistInputItem)
+    {
+        count = _dataMArray.count<self.maxItemCount?self.dataMArray.count+1:self.maxItemCount;
+    }
+    else
+    {
+        count = _dataMArray.count<self.maxItemCount?self.dataMArray.count:self.maxItemCount;
+    }
+    return count;
+}
+
+- (NSInteger)getRowsWithDataCount:(NSInteger)count
+{
+    if (count ==0)
+    {
+        return 0;
+    }
+    NSInteger rows = 0; // 行数
+    //计算有几行的简单方法
+    if (count%self.columnsCount>0)
+    {
+        NSInteger totalItems = count+(self.columnsCount-(count%self.columnsCount));
+        rows = totalItems /self.columnsCount;
+    }
+    else
+    {
+        rows = count/self.columnsCount;
+    }
+    return  rows;
+}
+
+
 
 - (void)setData:(NSArray *)data
 {

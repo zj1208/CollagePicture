@@ -8,7 +8,7 @@
 //  根据image图片大小，右上角设置badgeLabel；
 
 // 2018.1.23 新增 badgeLabel相对偏移；默认向image大小左偏移12，上对齐；
-
+// 2018.4.19 修改文字绘画选项；
 
 #import <UIKit/UIKit.h>
 

@@ -10,6 +10,11 @@
 #import "APPCommonDef.h"
 #import <objc/runtime.h>
 
+////不能用，一旦用了，会无法打包
+//#ifndef __OPTIMIZE__
+//#define NSLitLog(format, ...) printf(" %s\n", [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+//#endif
+
 
 @implementation UIView (ViewHelper)
 

@@ -4,8 +4,12 @@
 //
 //  Created by simon on 17/2/26.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//  2017.12.14
-//  定义一个新的日期
+//
+//  简介：定义一个自定义toolView，中间一个按钮； toolView可以根据约束自适应父视图布局；
+//  按钮水平垂直居中显示，可以设置左右边距，也可以设置上下边距；
+//  可以自己设置按钮的背景，title，image等基本属性；
+
+//  待优化： 由于是xib加载，所以如果及时赋值数据的时候，会先加载出xib的数据，然后再替换我们写的数据；这样会有视觉过渡bug，一定不要有xib上的文字；
 
 #import <UIKit/UIKit.h>
 #import "ZXTowBtnBottomToolView.h"
@@ -39,7 +43,7 @@ static NSString *nibName_ZXCenterBottomToolView = @"ZXCenterBottomToolView";
         make.bottom.mas_equalTo(self.view.mas_bottom).with.offset(0);
         make.left.mas_equalTo(self.view.mas_left).with.offset(0);
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.height.mas_equalTo(LCDScale_iphone6_Width(49.f));
+        make.height.mas_equalTo(LCDScale_iPhone6_Width(49.f));
     }];
     [view.onlyCenterBtn setTitle:@"发送给采购商" forState:UIControlStateNormal];
     [view.onlyCenterBtn setImage:[UIImage imageNamed:@"发送给采购商"] forState:UIControlStateNormal];
@@ -90,7 +94,6 @@ static NSString *nibName_ZXCenterBottomToolView = @"ZXCenterBottomToolView";
     }];
     view.centerBtnLeadingLayout.constant = LCDScale_5Equal6_To6plus(15.f);
     view.centerBtnTopLayout.constant = LCDScale_5Equal6_To6plus(8.f);
-    //单独打电话按钮
     UIImage *backgroundImage2 = [WYUTILITY getCommonVersion2RedGradientImageWithSize:view.onlyCenterBtn.frame.size];
     [view.onlyCenterBtn setBackgroundImage:backgroundImage2 forState:UIControlStateNormal];
     [view.onlyCenterBtn setTitle:@"在线沟通" forState:UIControlStateNormal];

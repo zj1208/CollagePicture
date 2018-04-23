@@ -448,7 +448,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return textSize;
 }
 
-+ (void)zhDrawTextInContext:(CGContextRef *)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font
++ (void)zhDrawTextInContext:(CGContextRef)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font
 {
     NSMutableParagraphStyle *priceParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     priceParagraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -553,5 +553,12 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 }
 
 
++ (CGFloat)zhGetItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
+{
+    CGFloat itemSpace = minimumInteritemSpacing;
+    itemSpace = itemSpace>0?itemSpace:0;
+    CGFloat itemWidth =  (totalWidth - (columnsCount-1)*itemSpace-inset.left-inset.right)/columnsCount;
+    return floorf(itemWidth);
+}
 
 @end

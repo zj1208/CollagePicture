@@ -15,10 +15,20 @@
 #import "XLPhotoBrowser.h"
 //#import "HKMBProgressHUD+WYLoadingGif.h"
 
-#define  isIphoneX (LCDW == 375.f && LCDH == 812.f ? YES : NO)
-#define  NAVIBARHEIGHT    (isIphoneX ? (44.f+44.f) : (44.f+20.f))
-#define  STATEBARHEIGHT    (isIphoneX ? (44.f) : (20.f))
-#define  TABBARSAFEHEIGHT    (isIphoneX ? (34.f) : 0)
+
+#ifndef  IS_IPHONE_X
+#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
+#endif
+
+#ifndef  HEIGHT_NAVBAR
+#define  HEIGHT_NAVBAR      (IS_IPHONE_X ? (44.f+44.f) : (44.f+20.f))
+#define  HEIGHT_STATEBAR    (IS_IPHONE_X ? (44.f) : (20.f))
+#define  HEIGHT_TABBAR      (IS_IPHONE_X ? (34.f+49.f) : 0)
+#endif
+
+#ifndef  HEIGHT_TABBAR_SAFE
+#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_X ? (34.f) : 0)
+#endif
 
 typedef NS_ENUM(NSInteger, WebLoadType) {
     
@@ -71,11 +81,12 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 @property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 
-@property (nonatomic, strong) NSMutableDictionary *btnFun;
+@property (nonatomic, strong) NSMutableDictionary *rightBtnJsDic;
 @property (nonatomic, strong) NSMutableDictionary *rrbtnDic;
 @property (nonatomic, strong) NSMutableDictionary *lrbtnDic;
 
-@property(nonatomic, copy)NSArray *picArray;
+@property(nonatomic, copy) NSArray *picArray; //大图预览数组
+@property(nonatomic, copy) NSArray *imagesProcutsArray; //大图+产品预览数组
 
 @property (nonatomic, assign) BOOL needDellocH5; //h5跳原生后，从堆栈中移除
 
@@ -100,7 +111,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
     [self setUI];
     //初始化数据
     [self setData];
@@ -123,10 +133,9 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         [self addWebViewJavascriptBridge]; //重新建立桥街,直接代理设置nil好像无效
     }
 
-    if (self.presentedViewController)
-    {//h5调用系统相册、相机、文件系统后不resume(下面这两个类)
-//        [self.presentedViewController isKindOfClass:[UIImagePickerController class]];
-//        [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]];
+    if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
+    {//h5调用系统相册、相机、文件系统后不resume
+        
     }else{
         [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
     }
@@ -150,7 +159,8 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    if (self.needDellocH5) {
+    if (self.needDellocH5)
+    {
         NSMutableArray *arrayM = [NSMutableArray arrayWithArray:self.navigationController.childViewControllers];
         [arrayM removeObject:self];
         [self.navigationController setViewControllers:arrayM animated:NO];
@@ -167,14 +177,16 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - UI
+#pragma mark - UI加载
 
 - (void)setUI
 {
+    self.view.backgroundColor = [UIColor whiteColor];
+
     // 设置导航条
     [self setupNav];
     // 添加webView
-    [self addWebView];
+    [self.view addSubview:self.webView];
     // 添加空视图
     [self addEmptyView];
     
@@ -187,24 +199,58 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 
 
+
+#pragma mark -初始化导航条
+- (void)setupNav
+{
+    [self setLoadTitle];
+
+    //不要用animated，不然有bug
+    NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
+    self.navigationItem.leftBarButtonItems = items;
+    
+    
+    NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
+    NSRange rangeDuiBa = [self.URLString rangeOfString:@"duiba.com.cn"];
+    //屏蔽兑吧域名，兑吧界面不展示分享
+    if(rangeDuiBa.location == NSNotFound&& rangeCFB.location == NSNotFound)
+    {
+        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
+        [self.navigationItem setRightBarButtonItems:@[rightBarButtonItem] animated:NO];
+    }
+
+}
+
+- (void)setLoadTitle
+{
+    NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
+    if (rangeCFB.location != NSNotFound)
+    {
+        self.barTitle = @"平安财富宝理财专区";
+    }
+    self.navigationItem.title = self.barTitle;
+}
+
 #pragma mark -初始化WebView
 
-- (void)addWebView
+- (UIWebView *)webView
 {
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, NAVIBARHEIGHT, LCDW, LCDH-NAVIBARHEIGHT-TABBARSAFEHEIGHT)];
-    webView.delegate = self;
-    webView.scalesPageToFit = YES;
-    webView.backgroundColor = self.view.backgroundColor;
-//    webView.backgroundColor = [UIColor redColor];
-    webView.dataDetectorTypes = !UIDataDetectorTypeAddress;
-    webView.mediaPlaybackRequiresUserAction = NO;
-    webView.allowsInlineMediaPlayback = YES;
-    if ([webView respondsToSelector:@selector(allowsPictureInPictureMediaPlayback)])
+    if (!_webView)
     {
-        webView.allowsPictureInPictureMediaPlayback = YES;
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0,HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE)];
+        webView.delegate = self;
+        webView.scalesPageToFit = YES;
+        webView.backgroundColor = self.view.backgroundColor;
+        webView.dataDetectorTypes = !UIDataDetectorTypeAddress;
+        webView.mediaPlaybackRequiresUserAction = NO;
+        webView.allowsInlineMediaPlayback = YES;
+        if ([webView respondsToSelector:@selector(allowsPictureInPictureMediaPlayback)])
+        {
+            webView.allowsPictureInPictureMediaPlayback = YES;
+        }
+        _webView = webView;
     }
-    self.webView = webView;
-    [self.view addSubview:self.webView];    
+    return _webView;
 }
 
 
@@ -213,9 +259,8 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     if (!_progressView) {
         _progressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleDefault];
-        _progressView.frame = CGRectMake(0, NAVIBARHEIGHT, self.view.bounds.size.width, 2);
+        _progressView.frame = CGRectMake(0, HEIGHT_NAVBAR, self.view.bounds.size.width, 2);
         _progressView.trackTintColor = [UIColor clearColor];
-        //        _progressView.progressTintColor = [WYUISTYLE colorWithHexString:@"4C81FF"];
         _progressView.progressTintColor = [UIColor greenColor];
     }
     return _progressView;
@@ -230,45 +275,45 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 }
 
 
-#pragma mark -初始化导航条
-- (void)setupNav
-{
-    //不要用animated，不然有bug
-    NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
-    self.navigationItem.leftBarButtonItems = items;
-    
-    
-    NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
-    if (rangeCFB.location != NSNotFound)
-    {
-        self.barTitle = @"平安财富宝理财专区";
-    }
-    self.title = self.barTitle;
-
-    NSRange rangeDuiBa = [self.URLString rangeOfString:@"duiba.com.cn"];
-    if(rangeDuiBa.location == NSNotFound&& rangeCFB.location == NSNotFound)
-    { //屏蔽兑吧域名，兑吧界面不展示分享
-        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
-        NSArray *rightItems = @[rightBarButtonItem];
-        [self.navigationItem setRightBarButtonItems:rightItems animated:NO];
-    }
-
-}
-
-
 #pragma mark - initData初始化数据
 
 - (void)setData
 {
     //加载数据
-    self.picArray = [[NSMutableArray alloc] init];
-    _btnFun = [NSMutableDictionary new];
+    _rightBtnJsDic = [NSMutableDictionary new];
     _lrbtnDic = [NSMutableDictionary new];
     _rrbtnDic = [NSMutableDictionary new];
     
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateInfo:) name:Noti_ProductManager_Edit_goBackUpdate object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:kNotificationUserLoginIn object:nil];
+}
+
+- (NSArray *)picArray
+{
+    if (!_picArray)
+    {
+        _picArray =[NSArray array];
+    }
+    return _picArray;
+}
+
+- (NSArray *)imagesProcutsArray
+{
+    if (!_imagesProcutsArray)
+    {
+        _imagesProcutsArray =[NSArray array];
+    }
+    return _imagesProcutsArray;
+}
+
+- (NSMutableArray *)urlArrayM
+{
+    if (!_urlArrayM)
+    {
+        _urlArrayM = [NSMutableArray array];
+    }
+    return _urlArrayM;
 }
 
 #pragma mark-通知selector
@@ -310,7 +355,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 }
 
 
-#pragma mark - 加载各种不同数据
+#pragma mark - 加载各种不同数据;响应不同加载：真正请求数据
 
 - (void)webViewRequestLoadType
 {
@@ -333,11 +378,23 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     }
 }
 
-#pragma mark -响应不同加载：真正请求数据
-//加载纯外部链接网页
+
+
+#pragma mark-加载纯外部链接网页
 - (void)loadRequestWebPageWithURLString
 {
+    NSURL *url = [self getCurrentWebPageNewURL];
+    NSLog(@"url = %@",[url absoluteString]);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+    [self.webView loadRequest:request];
+    
+}
+
+- (NSURL *)getCurrentWebPageNewURL
+{
     NSURL *url = nil;
+    
     // 如果是自己公司域名
     if ([self.URLString hasPrefix:[WYUserDefaultManager getkAPP_H5URL]])
     {
@@ -346,9 +403,9 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
             NSString *token = ISLOGIN?[UserInfoUDManager getToken]:@"";
             self.URLString = [self.URLString stringByReplacingOccurrencesOfString:@"{token}" withString:token];
         }
-        
         url = [NSURL zhURLWithString:self.URLString queryItemValue:[BaseHttpAPI getCurrentAppVersion] forKey:@"ttid"];
     }
+    // 如果是平安域名-
     else if ([self.URLString hasPrefix:@"https://ncfb-stg3.pingan.com.cn"] ||[self.URLString hasPrefix:@"https://cfb.pingan.com"])
     {
         url = [NSURL URLWithString:self.URLString];
@@ -358,13 +415,9 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         NSString * string= [self.URLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         url = [NSURL URLWithString:string];
     }
-    NSLog(@"url = %@",[url absoluteString]);
-    //  url = [NSURL URLWithString:@"http://192.168.10.210:8001/debug"];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
-    [self.webView loadRequest:request];
-    
+    return url;
 }
+
 
 
 //加载本地文件资源：- (void)loadData:(NSData *)data MIMEType:(NSString *)MIMEType textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL;
@@ -401,17 +454,9 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 }
 
 
-- (NSMutableArray *)urlArrayM
-{
-    if (!_urlArrayM)
-    {
-        _urlArrayM = [NSMutableArray array];
-    }
-    return _urlArrayM;
-}
 
 
-# pragma mark - UIWebViewDelegate
+# pragma mark - ------------------------UIWebViewDelegate-------------------------
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
@@ -676,16 +721,16 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 -(void)shareAction:(id)sender
 {
     //分享
-    NSString *imageStr = @"http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/app/icon/logo_zj.png";
+    NSString *picStr = @"http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/app/icon/logo_zj.png";
     
-    NSString *shareUrl;
+    NSString *link;
     if (self.urlArrayM.count>0) {
         NSURL* url = self.urlArrayM.firstObject;
-        shareUrl =url.absoluteString;
+        link =url.absoluteString;
     }else{
-        shareUrl = self.webView.request.URL.absoluteString;
+        link = self.webView.request.URL.absoluteString;
     }
-//    [WYSHARE shareSDKWithImage:imageStr Title:self.title Content:@"用了义采宝，生意就是好!" withUrl:shareUrl];
+//    [WYShareManager shareInVC:self withImage:picStr withTitle:self.navigationItem.title withContent:@"用了义采宝，生意就是好!" withUrl:link];
 }
 
 
@@ -728,7 +773,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     
     //----设置导航右侧按钮(setRight)
     [self.bridge registerHandler:@"setRight" handler:^(id data, WVJBResponseCallback responseCallback) {
-        _btnFun = data;
         [self setRight:data];
     }];
     
@@ -765,76 +809,80 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 -(void)share:(NSDictionary *)dic
 {
     //    "type" : "bussinessCardDetail",
-//    [WYSHARE shareSDKWithImage:[dic objectForKey:@"image"] Title:[dic objectForKey:@"title"] Content:[dic objectForKey:@"text"] withUrl:[dic objectForKey:@"link"]];
+//    NSString *picStr = [dic objectForKey:@"image"];
+//    NSString *title = [dic objectForKey:@"title"];
+//    NSString *content = [dic objectForKey:@"text"];
+//    NSString *link = [dic objectForKey:@"link"];
+//    [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
 }
-
 
 //3.跳转到大图浏览(previewImages)，参数为下标和图片数组
 -(void)previewImages:(NSDictionary *)dic{
     //大图浏览
-    NSInteger index = [[dic objectForKey:@"position"] integerValue];
-    self.picArray = [dic objectForKey:@"images"];
-    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:_picArray.count datasource:self];
-    browser.browserStyle = XLPhotoBrowserStyleCustom;
-    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+//    NSInteger index = [[dic objectForKey:@"position"] integerValue];
+//    self.picArray = [NSArray arrayWithArray: [dic objectForKey:@"images"] ];
+//    self.imagesProcutsArray = [NSArray arrayWithArray:[dic objectForKey:@"products"]];
+//    NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
+    
+//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
+//    browser.browserStyle = XLPhotoBrowserStyleCustom;
+//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
 }
-
-#pragma mark-XLPhotoBrowserDatasource
+#pragma mark  XLPhotoBrowserDatasource
 - (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
-    return _picArray[index];
+    
+    if (self.imagesProcutsArray.count>0) {
+        NSDictionary *objc = self.imagesProcutsArray[index];
+        NSURL *url = [NSURL URLWithString:[objc objectForKey:@"image"]];
+        return url;
+    }else{
+        NSURL *url = [NSURL URLWithString: _picArray[index]];
+        return url;
+    }
 }
-
+-(NSArray *)getGoodsUrlList
+{
+    NSMutableArray *arrayM = [NSMutableArray array];
+//    for (int i=0; i<self.imagesProcutsArray.count; ++i) {
+//        XLPhotoUrlModel *model = [[XLPhotoUrlModel alloc] init];
+//
+//        NSDictionary *objc = self.imagesProcutsArray[i];
+//        NSString *link = [objc objectForKey:@"link"];
+//        if ( ![NSString zhIsBlankString:link]) {
+//            model.goodsUrl = link;
+//        }
+//        [arrayM addObject:model];
+//    }
+    return arrayM;
+}
 
 //4.设置标题（setTitle)
 -(void)setNavTitle:(NSDictionary *)dic
 {
-    [self setTitle:[dic objectForKey:@"title"]];
+    self.navigationItem.title = [dic objectForKey:@"title"];
+//    [self setTitle:[dic objectForKey:@"title"]];
 }
 
 
 //5.设置导航右侧按钮(setRight)
 -(void)setRight:(NSDictionary *)dic
 {
-    NSMutableArray *btnArray = [dic objectForKey:@"items"];
+    _rightBtnJsDic = [dic mutableCopy];
+    NSArray *btnArray = [dic objectForKey:@"items"];
     if (btnArray.count == 1)
     {
         self.rrbtnDic = btnArray[0];
-        NSString *icon = [self.rrbtnDic objectForKey:@"icon"];
-        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] init];
-        if (icon.length)
-        {
-            rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-            //            UIImage *backImg = [UIImage zh_imageWithColor:[UIColor redColor] andSize:[UIImage imageNamed:icon].size];
-            //            [rightBarButtonItem setBackgroundImage:backImg forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        }else
-        {
-            rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self.rrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-        }
-        NSArray *items = @[rightBarButtonItem];
-        [self.navigationItem setRightBarButtonItems:items animated:YES];
+        UIBarButtonItem *item = [self jsBarBtnWithButtonDic:self.rrbtnDic action:@selector(rRightbtnAction:)];
+        [self.navigationItem setRightBarButtonItem:item animated:NO];
     }
     else if (btnArray.count == 2)
     {
         self.lrbtnDic = btnArray[0];
-        NSString *icon = [self.lrbtnDic objectForKey:@"icon"];
+        UIBarButtonItem *rightBarBtnItem1 = [self jsBarBtnWithButtonDic:self.lrbtnDic action:@selector(lRightbtnAction:)];
         
-        UIBarButtonItem *rightBarButtonItem_first = [[UIBarButtonItem alloc] init];
-        if (icon.length) {
-            rightBarButtonItem_first = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rlbtnAction)];
-        }else{
-            rightBarButtonItem_first = [[UIBarButtonItem alloc] initWithTitle:[self.lrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:@selector(rlbtnAction)];
-        }
         self.rrbtnDic = btnArray[1];
-        NSString *icon2 = [self.rrbtnDic objectForKey:@"icon"];
-        UIBarButtonItem *rightBarButtonItem_second = [[UIBarButtonItem alloc] init];
-        if (icon2.length)
-        {
-            rightBarButtonItem_second = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon2] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-            
-        }else{
-            rightBarButtonItem_second = [[UIBarButtonItem alloc] initWithTitle:[self.rrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-        }
-        NSArray *items = @[rightBarButtonItem_second,rightBarButtonItem_first];
+        UIBarButtonItem *rightBarBtnItem2 = [self jsBarBtnWithButtonDic:self.rrbtnDic action:@selector(rRightbtnAction:)];
+        NSArray *items = @[rightBarBtnItem2,rightBarBtnItem1];
         [self.navigationItem setRightBarButtonItems:items animated:YES];
     }
     else
@@ -843,17 +891,33 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     }
 }
 
+- (UIBarButtonItem *)jsBarBtnWithButtonDic:(NSDictionary *)btnDic action:(SEL)action
+{
+    NSString *icon = [btnDic objectForKey:@"icon"];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] init];
+    if (icon.length)
+    {
+        barButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:action];
+    }else
+    {
+        barButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self.rrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:action];
+    }
+    return barButtonItem;
+}
 #pragma mark-右侧导航按钮事件
--(void)rrbtnAction{
+
+-(void)rRightbtnAction:(UIBarButtonItem *)sender
+{
     NSString *idstr = [self.rrbtnDic objectForKey:@"id"];
-    NSString *successStr = [self.btnFun objectForKey:@"onSuccess"];
+    NSString *successStr = [self.rightBtnJsDic objectForKey:@"onSuccess"];
     NSString *str = [NSString stringWithFormat:@"(%@)(%@)",successStr,idstr];
     [self.webView stringByEvaluatingJavaScriptFromString:str];
 }
 
--(void)rlbtnAction{
+-(void)lRightbtnAction:(UIBarButtonItem *)sender
+{
     NSString *idstr = [self.lrbtnDic objectForKey:@"id"];
-    NSString *successStr = [self.btnFun objectForKey:@"onSuccess"];
+    NSString *successStr = [self.rightBtnJsDic objectForKey:@"onSuccess"];
     NSString *str = [NSString stringWithFormat:@"(%@)(%@)",successStr,idstr];
     [self.webView stringByEvaluatingJavaScriptFromString:str];
 }

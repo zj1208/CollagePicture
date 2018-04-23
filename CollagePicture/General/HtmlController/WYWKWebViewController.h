@@ -9,10 +9,13 @@
 //  更改默认分享 标题没有的问题；调试cookie
 //  2018.3.29 修改第二个wkWebView无法加载请求的bug；
 //  2018.4.2 优化加载超链接的方法；优化没有登录不加载cookie判断；
+//  2018.4.12 修改分享组件；
+//  2018.4.16 优化程序；
 
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "ZXWebViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

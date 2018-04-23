@@ -14,7 +14,21 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "XLPhotoBrowser.h"
 #import "ZXHTTPCookieManager.h"
+//#import "ZXPrintPageRenderer.h"
 
+#ifndef  IS_IPHONE_X
+#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
+#endif
+
+#ifndef  HEIGHT_NAVBAR
+#define  HEIGHT_NAVBAR      (IS_IPHONE_X ? (44.f+44.f) : (44.f+20.f))
+#define  HEIGHT_STATEBAR    (IS_IPHONE_X ? (44.f) : (20.f))
+#define  HEIGHT_TABBAR      (IS_IPHONE_X ? (34.f+49.f) : 0)
+#endif
+
+#ifndef  HEIGHT_TABBAR_SAFE
+#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_X ? (34.f) : 0)
+#endif
 typedef NS_ENUM(NSInteger, WebLoadType) {
     
     WebLoadType_URLString =0,//网络html地址
@@ -70,12 +84,13 @@ XLPhotoBrowserDatasource,XLPhotoBrowserDelegate, ZXEmptyViewControllerDelegate,U
 //URL数组
 @property(nonatomic, strong) NSMutableArray *urlArrayM;
 
-
-@property (nonatomic, strong) NSMutableDictionary *btnFun;
+// 业务需要集合数据
+@property (nonatomic, strong) NSMutableDictionary *rightBtnJsDic;
 @property (nonatomic, strong) NSMutableDictionary *rrbtnDic;
 @property (nonatomic, strong) NSMutableDictionary *lrbtnDic;
 
-@property(nonatomic, copy) NSArray *picArray;
+@property(nonatomic, copy) NSArray *picArray; //大图预览数组
+@property(nonatomic, copy) NSArray *imagesProcutsArray; //大图+产品预览数组
 
 @property (nonatomic, assign) BOOL needDellocH5; //h5跳原生后，从堆栈中移除
 
@@ -96,7 +111,7 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithHexString:@"F3F3F3"];
+    
     //设置userAgent-必须第一
     [self userAgent];
     
@@ -105,23 +120,26 @@ static NSString* const SixSpaces = @"      ";
     
     //初始化数据
     [self setData];
+    
     //建立桥接
     [self addWebViewJavascriptBridge];
     
     //根据不同业务加载数据
     [self webViewRequestLoadType];
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.bridge) {
+    
+    if (!self.bridge)
+    {
         [self addWebViewJavascriptBridge]; //重新建立桥街
     }
-   
-    if (self.presentedViewController)
-    {//h5调用系统相册、相机、文件系统后不resume(下面这两个类)
-//        [self.presentedViewController isKindOfClass:[UIImagePickerController class]];
-//        [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]];
+
+    if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
+    {//h5调用系统相册、相机、文件系统后不resume
+
     }else{
         [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
     }
@@ -150,7 +168,8 @@ static NSString* const SixSpaces = @"      ";
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    if (self.needDellocH5) {
+    if (self.needDellocH5)
+    {
         NSMutableArray *arrayM = [NSMutableArray arrayWithArray:self.navigationController.childViewControllers];
         [arrayM removeObject:self];
         [self.navigationController setViewControllers:arrayM animated:NO];
@@ -158,7 +177,6 @@ static NSString* const SixSpaces = @"      ";
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-//    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 - (void)dealloc
@@ -171,16 +189,18 @@ static NSString* const SixSpaces = @"      ";
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(URL)) ];
 }
 
-#pragma mark - ------------------------UI--------------------------
+#pragma mark - UI加载
 -(void) buildUI
-{    //设置导航条
+{
+    self.view.backgroundColor = [UIColor colorWithHexString:@"F3F3F3"];
+
+    //设置导航条
     [self setupNav];
     //添加WKWebView；
     [self.view addSubview:self.webView];
     //添加进度条
     [self.view addSubview:self.progressView];
     
-    [self addObserver];
     [self addEmptyView];
    
     if (@available(iOS 11.0, *)){
@@ -193,30 +213,35 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark -初始化导航条
 - (void)setupNav
 {
+    [self setLoadTitle];
+
     //不要用animated，不然有bug
     NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
     self.navigationItem.leftBarButtonItems = items;
     
     NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
-    if (rangeCFB.location != NSNotFound)
-    {
-        self.barTitle = @"平安财富宝理财专区";
-    }
-    self.title = self.barTitle;
-    
     NSRange rangeDuiBa = [self.URLString rangeOfString:@"duiba.com.cn"];
-    
     // 屏蔽兑吧域名，兑吧界面不展示分享
     if(rangeDuiBa.location == NSNotFound && rangeCFB.location == NSNotFound)
     {
         UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:SixSpaces style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];//默认6个空格占位，空格太少按钮宽度过小，title切换至“分享”过渡效果不太好
         self.shareButtonItem = rightBarButtonItem;
         self.shareButtonItem.enabled = NO;
-        NSArray *rightItems = @[self.shareButtonItem];
-        [self.navigationItem setRightBarButtonItems:rightItems animated:NO];
+        [self.navigationItem setRightBarButtonItems:@[self.shareButtonItem] animated:NO];
     }
 }
 
+- (void)setLoadTitle
+{
+    NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
+    if (rangeCFB.location != NSNotFound)
+    {
+        self.barTitle = @"平安财富宝理财专区";
+    }
+    self.navigationItem.title = self.barTitle;
+}
+
+#pragma mark -初始化WebView
 
 - (WKWebView *)webView
 {
@@ -224,10 +249,10 @@ static NSString* const SixSpaces = @"      ";
     {
         WKUserContentController *contentContorller = [[WKUserContentController alloc] init];
         
-//        // 注入一个用户脚本；
-//        NSString *source = [NSString stringWithFormat:@"document.cookie = 'mat = %@'",[UserInfoUDManager getToken]];
-//        WKUserScript *cookieScript =  [[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
-//        [contentContorller addUserScript:cookieScript];
+        // 注入一个cookie用户脚本；
+        NSString *source = [NSString stringWithFormat:@"document.cookie = 'mat = %@'",[UserInfoUDManager getToken]];
+        WKUserScript *cookieScript =  [[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+        [contentContorller addUserScript:cookieScript];
         
         //不能乱设置，不然布局会乱
         WKPreferences *preferences = [[WKPreferences alloc] init];
@@ -275,7 +300,7 @@ static NSString* const SixSpaces = @"      ";
             }
         }
         
-        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBARSAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
+        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
         wkWebView.backgroundColor = self.view.backgroundColor;
         wkWebView.allowsBackForwardNavigationGestures = YES;
         if ([wkWebView respondsToSelector:@selector(allowsLinkPreview)])
@@ -284,7 +309,6 @@ static NSString* const SixSpaces = @"      ";
         }
 
         wkWebView.navigationDelegate = self;
-//        wkWebView.UIDelegate = self;
         _webView = wkWebView;
     }
     return _webView;
@@ -315,23 +339,13 @@ static NSString* const SixSpaces = @"      ";
     self.emptyViewController = emptyVC;
 }
 
-- (void)managerCookiesChanged:(id)notification
-{
-//    NSURL* url = self.urlArrayM.firstObject;
-//    [self requestWithUrlStr:url.absoluteString];
-    
-    
-//    [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
-//    [self.webView reload];
-//    NSLog(@"NSHTTPCookieStorage=%@",[NSHTTPCookieStorage sharedHTTPCookieStorage].cookies);
-    
-}
+
 
 #pragma mark - 添加KVO观察者
 
 - (void)addObserver
 {
-    //kvo监听，获得页面title和加载进度值;
+//    kvo监听，获得页面title和加载进度值;
     [self.webView addObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) options:NSKeyValueObservingOptionNew context:NULL];
     [self.webView addObserver:self forKeyPath:NSStringFromSelector(@selector(title)) options:NSKeyValueObservingOptionNew context:NULL];
     [self.webView addObserver:self forKeyPath:NSStringFromSelector(@selector(URL)) options:NSKeyValueObservingOptionNew context:NULL];
@@ -342,40 +356,52 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
+    
     //加载进度值
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(estimatedProgress))] && object == self.webView)
     {
-        [self.progressView setAlpha:1.0f];
-        BOOL animated = self.webView.estimatedProgress > self.progressView.progress;
-        if (animated)
-        {
-            [self.progressView setProgress:self.webView.estimatedProgress animated:animated];
-        }
-        if(self.webView.estimatedProgress >= 1.0f)
-        {
-            [UIView animateWithDuration:0.5f delay:0.1f options:UIViewAnimationOptionCurveEaseOut
-                             animations:^{
-                                 [self.progressView setAlpha:0.0f];
-                             }completion:^(BOOL finished) {
-                                 [self.progressView setProgress:0.0f animated:NO];
-                                 [self.navigationController.navigationBar setShadowImage:nil];
-                             }];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_progressView setAlpha:1.0f];
+            BOOL animated = _webView.estimatedProgress > _progressView.progress;
+            if (animated)
+            {
+                [_progressView setProgress:_webView.estimatedProgress animated:animated];
+            }
+            if(_webView.estimatedProgress >= 1.0f)
+            {
+                [UIView animateWithDuration:0.5f delay:0.1f options:UIViewAnimationOptionCurveEaseOut
+                                 animations:^{
+                                     [_progressView setAlpha:0.0f];
+                                 }completion:^(BOOL finished) {
+                                     [_progressView setProgress:0.0f animated:NO];
+                                     [self.navigationController.navigationBar setShadowImage:nil];
+                                 }];
+            }
+        });
+    
     }
     //网页title
-    else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))] && object ==self.webView)
+    else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))] && object ==_webView)
     {
-        if (!self.barTitle && self.webView.title.length>0)
-        {
-            self.navigationItem.title = self.webView.title;
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (!_barTitle && _webView.title.length>0)
+            {
+                self.navigationItem.title = _webView.title;
+            }
+        });
+   
     }
     //网页url
     else if ([keyPath isEqualToString:NSStringFromSelector(@selector(URL))] && object ==self.webView)
     {
-        if (self.webView.URL) {
-            [self.urlArrayM addObject:self.webView.URL];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (_webView.URL) {
+                [_urlArrayM addObject:_webView.URL];
+            }
+        });
+ 
         NSLog(@">>%@",self.webView.URL);
         NSLog(@"<<%@",self.urlArrayM);
     }
@@ -387,9 +413,11 @@ static NSString* const SixSpaces = @"      ";
 //初始化数据
 - (void)setData
 {
+    [self addObserver];
+
     self.urlArrayM = [NSMutableArray array];
-    self.picArray = [NSArray array];
-    _btnFun = [NSMutableDictionary new];
+    
+    _rightBtnJsDic = [NSMutableDictionary new];
     _lrbtnDic = [NSMutableDictionary new];
     _rrbtnDic = [NSMutableDictionary new];
     
@@ -401,19 +429,50 @@ static NSString* const SixSpaces = @"      ";
 
 }
 
+- (NSArray *)picArray
+{
+    if (!_picArray)
+    {
+        _picArray =[NSArray array];
+    }
+    return _picArray;
+}
+
+- (NSArray *)imagesProcutsArray
+{
+    if (!_imagesProcutsArray)
+    {
+        _imagesProcutsArray =[NSArray array];
+    }
+    return _imagesProcutsArray;
+}
+
+- (NSMutableArray *)urlArrayM
+{
+    if (!_urlArrayM)
+    {
+        _urlArrayM = [NSMutableArray array];
+    }
+    return _urlArrayM;
+}
+
 #pragma mark-通知selector
+
+- (void)managerCookiesChanged:(id)notification
+{
+    
+}
 - (void)updateInfo:(id)notification
 {
     [self.webView reload];
 }
 - (void)loginIn:(id)notification
 {
-    if (Device_SYSTEMVERSION.floatValue>8 && Device_SYSTEMVERSION.floatValue<11)
+    if (Device_SYSTEMVERSION.floatValue<11)
     {
         // 为了解决登陆完，cookie还没有被写进浏览器；
         [MBProgressHUD zx_showSuccess:@"登陆成功，正在刷新数据" toView:self.view hideAfterDelay:2.5f];
         [self.webView performSelector:@selector(reload) withObject:nil afterDelay:2.5f];
-        [self performSelector:@selector(resume) withObject:nil afterDelay:2.5f];
     }
     else
     {
@@ -461,7 +520,7 @@ static NSString* const SixSpaces = @"      ";
 }
 
 
-#pragma mark - 加载各种不同数据
+#pragma mark - 加载各种不同数据;响应不同加载：真正请求数据
 
 - (void)webViewRequestLoadType
 {
@@ -484,12 +543,90 @@ static NSString* const SixSpaces = @"      ";
     }
 }
 
-#pragma mark -响应不同加载：真正请求数据
-//加载纯外部链接网页
+
+#pragma mark-加载纯外部链接网页
+
 - (void)loadRequestWebPageWithURLString
 {
+    NSURL *url = [self getCurrentWebPageNewURL];
+    NSLog(@"url = %@",[url absoluteString]);
 
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    
+    // 即使请求头有cookie-mat，请求response服务器反应也没有cookie-mat？
+//    NSString *cookie = [[ZXHTTPCookieManager sharedInstance]getCurrentRequestCookieHeaderForURL:url];
+//    [request setValue:cookie forHTTPHeaderField:@"Cookie"];
+//    [self.webView loadRequest:request];
+    
+    if (@available(iOS 11.0, *))
+    {
+        WKWebsiteDataStore *websiteDataStore = self.webView.configuration.websiteDataStore;
+        WKHTTPCookieStore *cookieStore  = websiteDataStore.httpCookieStore;
+        //这个cookie一直是最新的
+        NSHTTPCookie *cookie = [[ZXHTTPCookieManager sharedInstance]getHTTPCookieFromNSHTTPCookieStorageWithCookieName:@"mat"];
+//         NSLog(@"%@",cookie);
+        if (!cookie)
+        {
+            [self.webView loadRequest:request];
+            return;
+        }
+//        [MBProgressHUD zx_showSuccess:[NSString stringWithFormat:@"%@",@(self.navigationController.viewControllers.count)] toView:nil];
+
+ 
+//      3.29 修改第二个wkWebView无法加载请求的bug；
+//        当已经加载过WKWebViewController，也存在容器中；再添加第二个WKWebViewController到容器中，会导致WKHTTPCookieStore的方法失效，且所有block都无法返回；第二个无法加载请求的bug；
+        __block BOOL loadedWkWebView = NO;
+        if (self.navigationController.viewControllers.count>=2)
+        {
+            NSArray *arr = [self.navigationController.viewControllers subarrayWithRange:NSMakeRange(0, self.navigationController.viewControllers.count-1)];
+            [arr enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+                if ([obj isKindOfClass:[WYWKWebViewController class]])
+                {
+                    loadedWkWebView = YES;
+                }
+            }];
+            if (loadedWkWebView)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [_webView loadRequest:request];
+
+                });
+            }
+            else
+            {
+                [cookieStore setCookie:cookie completionHandler:^{
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [self.webView loadRequest:request];
+                        
+                    });
+                }];
+            }
+        }
+        else
+        {
+            [cookieStore setCookie:cookie completionHandler:^{
+                
+                [self.webView loadRequest:request];
+            }];
+        }
+    }
+    else
+    {
+        // 即使请求头有cookie-mat，请求response服务器反应也没有cookie-mat？
+        NSString *cookie = [[ZXHTTPCookieManager sharedInstance]getCurrentRequestCookieHeaderForURL:url];
+        [request setValue:cookie forHTTPHeaderField:@"Cookie"];
+        [self.webView loadRequest:request];
+    }
+}
+
+- (NSURL *)getCurrentWebPageNewURL
+{
     NSURL *url = nil;
+    
     // 如果是自己公司域名
     if ([self.URLString hasPrefix:[WYUserDefaultManager getkAPP_H5URL]])
     {
@@ -510,72 +647,8 @@ static NSString* const SixSpaces = @"      ";
         NSString * string= [self.URLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         url = [NSURL URLWithString:string];
     }
-  NSLog(@"url = %@",[url absoluteString]);
-//  url = [NSURL URLWithString:@"http://192.168.10.210:8001/debug"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    if (@available(iOS 11.0, *))
-    {
-        WKWebsiteDataStore *websiteDataStore = self.webView.configuration.websiteDataStore;
-        WKHTTPCookieStore *cookieStore  = websiteDataStore.httpCookieStore;
-        //这个cookie一直是最新的
-        NSHTTPCookie *cookie = [[ZXHTTPCookieManager sharedInstance]getHTTPCookieFromNSHTTPCookieStorageWithCookieName:@"mat"];
-         NSLog(@"%@",cookie);
-        if (!cookie)
-        {
-            [self.webView loadRequest:request];
-            return;
-        }
-//        [cookieStore getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
-        
-//            [MBProgressHUD zx_showSuccess:@"app中所有的cookie获取回调了" toView:nil];
-            
-//        }];
-//      3.29 修改第二个wkWebView无法加载请求的bug；
-//        当已经加载过WKWebViewController，也存在容器中；再添加第二个WKWebViewController到容器中，会导致WKHTTPCookieStore的方法失效，且所有block都无法返回；第二个无法加载请求的bug；
-//        __block BOOL loadedWkWebView = NO;
-//        if (self.navigationController.viewControllers.count>=2)
-//        {
-//            NSArray *arr = [self.navigationController.viewControllers subarrayWithRange:NSMakeRange(0, self.navigationController.viewControllers.count-1)];
-//            [arr enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//                if ([obj isKindOfClass:[WYWKWebViewController class]])
-//                {
-//                    loadedWkWebView = YES;
-//                }
-//            }];
-//            if (loadedWkWebView)
-//            {
-//                [self.webView loadRequest:request];
-//            }
-//            else
-//            {
-//                [cookieStore setCookie:cookie completionHandler:^{
-//
-//                    [self.webView loadRequest:request];
-//                }];
-//            }
-//        }
-//        else
-//        {
-
-            [cookieStore setCookie:cookie completionHandler:^{
-                
-//                [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"1" message:nil cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"确定" doHandler:nil];
-//                [MBProgressHUD zx_showSuccess:[NSString stringWithFormat:@"%@",cookie] toView:nil hideAfterDelay:4.f];
-
-                [_webView loadRequest:request];
-            }];
-//        }
-    }
-    else
-    {
-        // 即使请求头有cookie-mat，请求response服务器反应也没有cookie-mat？
-        NSString *cookie = [[ZXHTTPCookieManager sharedInstance]getCurrentRequestCookieHeaderForURL:url];
-        [request setValue:cookie forHTTPHeaderField:@"Cookie"];
-        [self.webView loadRequest:request];
-    }
+    return url;
 }
-
 
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
@@ -625,18 +698,15 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark - ------------------------WKWebView Delegate-------------------------
 #pragma mark WKNavigationDelegate
 // 1 在发送请求之前，决定是否请求
+
+
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSLog(@"1.在发送请求之前，决定是否请求跳转%@",navigationAction.request);
     NSURLRequest *request = navigationAction.request;
+ 
 //    NSLog(@"wkWebViewAllHTTPHeaderFieldes = %@",request.allHTTPHeaderFields);
-//    if (@available(iOS 11.0, *))
-//    {
-//    }
-//    else
-//    {
-//        [[ZXHTTPCookieManager sharedInstance]handleHeaderFields:request.allHTTPHeaderFields  forURL:request.URL];
-//    }
+
   
     // 阿里支付加载
     if ([self payWithAliPayWithRequest:request])
@@ -715,10 +785,13 @@ static NSString* const SixSpaces = @"      ";
 {
     [self updateNavigationItems];
     NSLog(@"3.在收到响应后，决定是否加载");
-//    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-//
-//    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
-//    NSLog(@"[response allHeaderFields] = %@,cookies:%@",[response allHeaderFields],cookies);
+    //能读取到，但是没有存入NSHTTPCookieStorage
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    NSString *cookieString =  [[ZXHTTPCookieManager sharedInstance]cookieStringWithResponse:response];
+    [[ZXHTTPCookieManager sharedInstance]handleResponseHeaderFields:response.allHeaderFields forURL:response.URL];
+    NSLog(@"wkwebview中的cookie:%@", cookieString);
+    
+
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
@@ -995,27 +1068,6 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)customBackItemAction:(UIButton *)sender
 {
-    [self goBack];
-    //    if (self.customH5GoBackDic)
-    //    {
-    //        NSString *customGoBackHandler = [self.customH5GoBackDic objectForKey:@"customGoBackHandler"];
-    //        NSString *str = [NSString stringWithFormat:@"(%@)()",customGoBackHandler];
-    //        NSString *cangoback = [self.webView stringByEvaluatingJavaScriptFromString:str];
-    //
-    //        if ([cangoback isEqualToString:@"Y"]) {
-    //
-    //            [self goBack];
-    //            self.customH5GoBackDic = nil;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        [self goBack];
-    //    }
-}
-
-- (void)goBack
-{
     if ([self.webView canGoBack])
     {
         NSLog(@"goBack");
@@ -1027,15 +1079,15 @@ static NSString* const SixSpaces = @"      ";
     }
 }
 
+
+
 - (void)closeButtonItemAction:(id)sender
 {
-    NSLog(@"close");
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
     if ([self.webView isLoading])
     {
         [self.webView stopLoading];
     }
-//    self.webView.configuration.preferences.javaScriptEnabled = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -1043,18 +1095,15 @@ static NSString* const SixSpaces = @"      ";
 -(void)shareAction:(id)sender
 {
     // 默认图片地址
-    NSString *imageStr = @"http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/app/icon/logo_zj.png";
-    NSString *shareUrl;
+    NSString *picStr = @"http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/app/icon/logo_zj.png";
+    NSString *link =nil;
     if (self.urlArrayM.count>0) {
         NSURL* url = self.urlArrayM.firstObject;
-        shareUrl =url.absoluteString;
+        link =url.absoluteString;
     }else{
-        shareUrl = self.webView.URL.absoluteString;
+        link = self.webView.URL.absoluteString;
     }
-    if (shareUrl)
-    {
-//        [WYSHARE shareSDKWithImage:imageStr Title:self.navigationItem.title Content:@"用了义采宝，生意就是好!" withUrl:shareUrl];
-    }
+//    [WYShareManager shareInVC:self withImage:picStr withTitle:self.navigationItem.title withContent:@"用了义采宝，生意就是好!" withUrl:link];
 }
 
 
@@ -1080,7 +1129,7 @@ static NSString* const SixSpaces = @"      ";
     }];
     //从堆栈中移除并销毁当前H5页面
     [self.bridge registerHandler:@"dellocH5" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self dellocH5];
+        [self jsDellocH5];
     }];
     
     //----调用分享(share)，参数为分享的标题以及点击的链接地址{'title':xxx,'text':xxx,'link':xxx,'image':xxx}
@@ -1097,7 +1146,6 @@ static NSString* const SixSpaces = @"      ";
     }];
     //----设置导航右侧按钮(setRight)
     [self.bridge registerHandler:@"setRight" handler:^(id data, WVJBResponseCallback responseCallback) {
-        _btnFun = data;
         [self setRight:data];
     }];
     //----js跳转native页面
@@ -1126,73 +1174,85 @@ static NSString* const SixSpaces = @"      ";
 //2.调用分享(share)，参数为分享的标题以及点击的链接地址
 -(void)share:(NSDictionary *)dic
 {
-//   [WYSHARE shareSDKWithImage:[dic objectForKey:@"image"] Title:[dic objectForKey:@"title"] Content:[dic objectForKey:@"text"] withUrl:[dic objectForKey:@"link"]];
+//    NSString *picStr = [dic objectForKey:@"image"];
+//    NSString *title = [dic objectForKey:@"title"];
+//    NSString *content = [dic objectForKey:@"text"];
+//    NSString *link = [dic objectForKey:@"link"];
+//    [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
 }
 
 
 //3.跳转到大图浏览(previewImages)，参数为下标和图片数组
 -(void)previewImages:(NSDictionary *)dic{
     //大图浏览
-    NSInteger index = [[dic objectForKey:@"position"] integerValue];
-    self.picArray = [dic objectForKey:@"images"];
-    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:_picArray.count datasource:self];
-    browser.browserStyle = XLPhotoBrowserStyleCustom;
-    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+//    NSInteger index = [[dic objectForKey:@"position"] integerValue];
+//    self.picArray = [NSArray arrayWithArray: [dic objectForKey:@"images"] ];
+//    self.imagesProcutsArray = [NSArray arrayWithArray:[dic objectForKey:@"products"]];
+//    NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
+    
+//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
+//    browser.browserStyle = XLPhotoBrowserStyleCustom;
+//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+    
+    
+//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:_picArray.count datasource:self];
+//    browser.browserStyle = XLPhotoBrowserStyleCustom;
+//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
 }
 
 #pragma mark  XLPhotoBrowserDatasource
 - (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
-    return _picArray[index];
-}
 
+    if (self.imagesProcutsArray.count>0) {
+        NSDictionary *objc = self.imagesProcutsArray[index];
+        NSURL *url = [NSURL URLWithString:[objc objectForKey:@"image"]];
+        return url;
+    }else{
+        NSURL *url = [NSURL URLWithString: _picArray[index]];
+        return url;
+    }
+}
+-(NSArray *)getGoodsUrlList
+{
+    NSMutableArray *arrayM = [NSMutableArray array];
+//    for (int i=0; i<self.imagesProcutsArray.count; ++i) {
+//        XLPhotoUrlModel *model = [[XLPhotoUrlModel alloc] init];
+//
+//        NSDictionary *objc = self.imagesProcutsArray[i];
+//        NSString *link = [objc objectForKey:@"link"];
+//        if ( ![NSString zhIsBlankString:link]) {
+//            model.goodsUrl = link;
+//        }
+//        [arrayM addObject:model];
+//    }
+    return arrayM;
+}
 
 //4.设置标题（setTitle)
 -(void)setNavTitle:(NSDictionary *)dic{
-    [self setTitle:[dic objectForKey:@"title"]];
+    self.navigationItem.title = [dic objectForKey:@"title"];
+//    [self setTitle:[dic objectForKey:@"title"]];
 }
 
 //5.设置导航右侧按钮(setRight)
--(void)setRight:(NSDictionary *)dic{
-    NSMutableArray *btnArray = [dic objectForKey:@"items"];
+-(void)setRight:(NSDictionary *)dic
+{
+    _rightBtnJsDic = [dic mutableCopy];
+    NSArray *btnArray = [dic objectForKey:@"items"];
     if (btnArray.count == 1)
     {
         self.rrbtnDic = btnArray[0];
-        NSString *icon = [self.rrbtnDic objectForKey:@"icon"];
-        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] init];
-        if (icon.length)
-        {
-            rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-            //            UIImage *backImg = [UIImage zh_imageWithColor:[UIColor redColor] andSize:[UIImage imageNamed:icon].size];
-            //            [rightBarButtonItem setBackgroundImage:backImg forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        }else
-        {
-            rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self.rrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-        }
-        NSArray *items = @[rightBarButtonItem];
-        [self.navigationItem setRightBarButtonItems:items animated:YES];
+        UIBarButtonItem *item = [self jsBarBtnWithButtonDic:self.rrbtnDic action:@selector(rRightbtnAction:)];
+        [self.navigationItem setRightBarButtonItem:item animated:NO];
     }
     else if (btnArray.count == 2)
     {
         self.lrbtnDic = btnArray[0];
-        NSString *icon = [self.lrbtnDic objectForKey:@"icon"];
-        
-        UIBarButtonItem *rightBarButtonItem_first = [[UIBarButtonItem alloc] init];
-        if (icon.length) {
-            rightBarButtonItem_first = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rlbtnAction)];
-        }else{
-            rightBarButtonItem_first = [[UIBarButtonItem alloc] initWithTitle:[self.lrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:@selector(rlbtnAction)];
-        }
+        UIBarButtonItem *rightBarBtnItem1 = [self jsBarBtnWithButtonDic:self.lrbtnDic action:@selector(lRightbtnAction:)];
+     
         self.rrbtnDic = btnArray[1];
-        NSString *icon2 = [self.rrbtnDic objectForKey:@"icon"];
-        UIBarButtonItem *rightBarButtonItem_second = [[UIBarButtonItem alloc] init];
-        if (icon2.length)
-        {
-            rightBarButtonItem_second = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon2] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-            
-        }else{
-            rightBarButtonItem_second = [[UIBarButtonItem alloc] initWithTitle:[self.rrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:@selector(rrbtnAction)];
-        }
-        NSArray *items = @[rightBarButtonItem_second,rightBarButtonItem_first];
+        UIBarButtonItem *rightBarBtnItem2 = [self jsBarBtnWithButtonDic:self.rrbtnDic action:@selector(rRightbtnAction:)];
+        NSArray *items = @[rightBarBtnItem2,rightBarBtnItem1];
         [self.navigationItem setRightBarButtonItems:items animated:YES];
     }
     else
@@ -1201,10 +1261,25 @@ static NSString* const SixSpaces = @"      ";
     }
 }
 
+- (UIBarButtonItem *)jsBarBtnWithButtonDic:(NSDictionary *)btnDic action:(SEL)action
+{
+    NSString *icon = [btnDic objectForKey:@"icon"];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] init];
+    if (icon.length)
+    {
+        barButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:action];
+    }else
+    {
+        barButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self.rrbtnDic objectForKey:@"text"] style:UIBarButtonItemStylePlain target:self action:action];
+    }
+    return barButtonItem;
+}
+
 #pragma mark 右侧导航按钮事件
--(void)rrbtnAction{
+-(void)rRightbtnAction:(UIBarButtonItem *)sender
+{
     NSString *idstr = [self.rrbtnDic objectForKey:@"id"];
-    NSString *successStr = [self.btnFun objectForKey:@"onSuccess"];
+    NSString *successStr = [self.rightBtnJsDic objectForKey:@"onSuccess"];
     NSString *str = [NSString stringWithFormat:@"(%@)(%@)",successStr,idstr];
     //    [self.webView stringByEvaluatingJavaScriptFromString:str];
     [self.webView evaluateJavaScript:str completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
@@ -1212,9 +1287,10 @@ static NSString* const SixSpaces = @"      ";
     
 }
 
--(void)rlbtnAction{
+-(void)lRightbtnAction:(UIBarButtonItem *)sender
+{
     NSString *idstr = [self.lrbtnDic objectForKey:@"id"];
-    NSString *successStr = [self.btnFun objectForKey:@"onSuccess"];
+    NSString *successStr = [self.rightBtnJsDic objectForKey:@"onSuccess"];
     NSString *str = [NSString stringWithFormat:@"(%@)(%@)",successStr,idstr];
     //    [self.webView stringByEvaluatingJavaScriptFromString:str];
     [self.webView evaluateJavaScript:str completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
@@ -1227,17 +1303,16 @@ static NSString* const SixSpaces = @"      ";
 //    [[WYUtility dataUtil]routerWithName:[dic objectForKey:@"url"] withSoureController:self];
 }
 //从堆栈中移除并销毁当前H5页面
--(void)dellocH5
+-(void)jsDellocH5
 {
     self.needDellocH5 = YES; //3.1.0版本后开始使用该方法标记再移除,之前版本使用下方法，但下方法不能H5加载过程中进行跳转销毁
-
 //    NSMutableArray *arrayM = [NSMutableArray arrayWithArray:self.navigationController.childViewControllers];
 //    [arrayM removeObject:self];
 //    [self.navigationController setViewControllers:arrayM animated:NO];
 }
 
 //7.resume事件-返回时通知h5刷新页面
--(void) resume
+-(void)resume
 {
     NSString *str = [NSString stringWithFormat:@"(function () {var event = new Event('resume');document.dispatchEvent(event);})()"];
     [self.webView evaluateJavaScript:str completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
@@ -1276,8 +1351,8 @@ static NSString* const SixSpaces = @"      ";
 
 
 #pragma mark -  获取自定义当前版本（后台约定）
-- (NSString *)getCurrentAppVersion {
-    
+- (NSString *)getCurrentAppVersion
+{
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *ttid = [NSString stringWithFormat:@"%@_ysb@iphone",app_Version];

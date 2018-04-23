@@ -30,6 +30,7 @@
     [self setView:self.imageView cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
     self.videoCoverView.hidden = YES;
     
+//    self.backgroundColor = [UIColor greenColor];
 //    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDidClicked:)];
 //    [self.imageView addGestureRecognizer:singleTap];
 
@@ -52,6 +53,53 @@
     view.layer.borderWidth = width;
     
     view.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
+}
+
+// 一旦执行这个，视频图片就有可能加载有问题；
+- (void)setData:(ZXPhoto *)data
+{
+    self.model = data;
+    if ([self.model isKindOfClass:[ZXPhoto class]])
+    {
+        [self refresh];
+    }
+}
+
+
+- (void)refresh
+{
+    [self addContentViewIfNotExist];
+}
+
+- (void)addContentViewIfNotExist
+{
+    if (_bubbleView == nil)
+    {
+        id<ZXCellLayoutConfigSource> layoutConfig = [[ZXAddPicViewKit sharedKit] cellLayoutConfig];
+        NSString *contentStr = [layoutConfig cellContent:self.model];
+        NSAssert([contentStr length] > 0, @"should offer cell content class name");
+        Class clazz = NSClassFromString(contentStr);
+        ZXAddPicViewContentView *contentView = [[clazz alloc] initContentView];
+        NSAssert(contentView, @"can not init content view");
+        _bubbleView = contentView;
+//        ZXAssetModelMediaType mediaType = self.model.type;
+//        if (mediaType ==ZXAssetModelMediaTypeCustom)
+//        {
+//
+//        }
+        [self.contentView addSubview:_bubbleView];
+    }
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self layoutBubbleView];
+
+}
+
+- (void)layoutBubbleView
+{
+    self.bubbleView.frame = CGRectMake(0, CGRectGetHeight(self.deleteBtn.frame), CGRectGetWidth(self.contentView.frame)-10, CGRectGetHeight(self.contentView.frame)-CGRectGetHeight(self.deleteBtn.frame));
 }
 
 @end

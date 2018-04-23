@@ -5,8 +5,8 @@
 //  Created by simon on 17/6/19.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-
 //  2018.2.9；修改label的badge角标方法
+//  2018.4.19 修改文字绘画选项,角标计算不准的问题；
 
 #import <UIKit/UIKit.h>
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @brief  设置一个icon,在数字小于2位数的时候,是圆标记; 如果大于等于2位数,是2边半圆+中间长方形; 可以根据maginY调节文字与垂直边界的距离;
-   例如： [self.badgeLab zh_digitalIconWithBadgeValue:model.num maginY:3.5 badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6_Width(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+   例如： [self.badgeLab zh_digitalIconWithBadgeValue:model.num maginY:1 badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6_Width(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
   iOS8上 高度计算不对？
  */
 - (void)zh_digitalIconWithBadgeValue:(NSInteger)aBadgeValue maginY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font titleColor:(nullable UIColor *)aTitleColor backgroundColor:(nullable UIColor*)aBgColor;

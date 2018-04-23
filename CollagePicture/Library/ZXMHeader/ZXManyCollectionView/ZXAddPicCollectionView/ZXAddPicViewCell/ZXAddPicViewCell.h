@@ -8,6 +8,11 @@
 //  2017.12.13
 
 #import <UIKit/UIKit.h>
+#import "ZXPhoto.h"
+#import "ZXAddPicViewContentView.h"
+#import "ZXAddPicViewKit.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString *const nib_ZXAddPicViewCell = @"ZXAddPicViewCell";
 
@@ -29,6 +34,17 @@ static NSString *const nib_ZXAddPicViewCell = @"ZXAddPicViewCell";
 
 // 视频遮图；
 @property (weak, nonatomic) IBOutlet UIView *videoCoverView;
+@property (weak, nonatomic) IBOutlet UIImageView *coverIconImageView;
 
 @property (nonatomic, weak) id<ZXAddPicViewCellDelegate>delegate;
+
+@property (nonatomic, strong) ZXPhoto *model;
+
+@property (nonatomic, strong) ZXAddPicViewContentView *bubbleView;
+
+
+- (void)setData:(ZXPhoto *)data;
+
 @end
+
+NS_ASSUME_NONNULL_END

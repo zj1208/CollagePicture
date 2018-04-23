@@ -91,15 +91,17 @@
     
     hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
     hud.backgroundView.backgroundColor = [UIColor clearColor];
-    
+    NSTimeInterval delayTime = delay;
     if (aText.length>12)
     {
-        hud.detailsLabel.text= NSLocalizedString(aText, nil);
+        hud.detailsLabel.text= aText?NSLocalizedString(aText, nil):nil;
         hud.detailsLabel.font = [UIFont systemFontOfSize:15];
+        delayTime = delay>0?delay:(1.f+hud.detailsLabel.text.length*0.1);
     }
     else
     {
-        hud.label.text= NSLocalizedString(aText, nil);
+        hud.label.text= aText?NSLocalizedString(aText, nil):nil;
+        delayTime = delay>0?delay:(1.f+hud.label.text.length*0.1);
     }
     
     if (imageName)
@@ -114,7 +116,6 @@
         hud.mode = MBProgressHUDModeText;
     }
   
-    NSTimeInterval delayTime = delay>0?delay:(1.f+hud.label.text.length*0.1);
     [hud hideAnimated:YES afterDelay:delayTime];
     return hud;
 }

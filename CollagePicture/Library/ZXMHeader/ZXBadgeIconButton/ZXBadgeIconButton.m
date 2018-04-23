@@ -175,10 +175,15 @@
     }
     self.badgeLab.text = aDigitalTitle;
     
-    CGRect titleRect = [aDigitalTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics attributes:@{NSFontAttributeName:self.badgeLab.font} context:nil];
+    //  注意：不要用NSStringDrawingUsesDeviceMetrics，不然iOS8时候计算的高度就比较大；
+    //   从新的SDK之后，计算出来的高度已经包括了一定的上下边距，并不是实际文字的高度；
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = self.badgeLab.lineBreakMode;
+    style.alignment = self.badgeLab.textAlignment;
+    CGRect titleRect = [aDigitalTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.badgeLab.font,NSParagraphStyleAttributeName:style} context:nil];
     CGSize titleFitSize = titleRect.size;
     
-    CGFloat maginY = aMaginY+2.5;
+    CGFloat maginY = aMaginY;
     CGFloat btnHeight = ceilf(titleFitSize.height)+2*maginY;
     CGFloat btnWidth =0.f;
 //    高度 height

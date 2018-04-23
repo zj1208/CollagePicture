@@ -130,11 +130,17 @@
     }
     self.text = aDigitalTitle;
  
-    CGRect titleRect = [aDigitalTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics attributes:@{NSFontAttributeName:self.font} context:nil];
+//   注意：不要用NSStringDrawingUsesDeviceMetrics，不然iOS8时候计算的高度就比较大；
+//   从新的SDK之后，计算出来的高度已经包括了一定的上下边距，并不是实际文字的高度；
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = self.lineBreakMode;
+    style.alignment = self.textAlignment;
+    CGRect titleRect = [self.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 100) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font,NSParagraphStyleAttributeName:style} context:nil];
     CGSize titleFitSize = titleRect.size;
-    
-    CGFloat maginY = aMaginY<3.5?3.5:aMaginY;
-    CGFloat height = ceilf(titleFitSize.height)+2*maginY;
+//    这句代码有问题；
+    CGFloat maginY = aMaginY<1.f?1.f:aMaginY;
+ 
+    CGFloat height = (ceilf(titleFitSize.height))+2*maginY;
     [self.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         obj.active = NO;

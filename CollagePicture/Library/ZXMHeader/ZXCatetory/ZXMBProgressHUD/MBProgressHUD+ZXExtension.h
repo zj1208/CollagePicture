@@ -5,18 +5,21 @@
 //  Created by simon on 17/6/22.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  2017.12.11
+//  2018.4.12  优化延长时间的bug；
 
 #import <MBProgressHUD/MBProgressHUD.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MBProgressHUD (ZXExtension)
-
 // 注意：
 // 支持window显示和自定义view显示，当view＝nil，显示在window上；
-// 在上传，正在干什么这种，要在window上提示；
-// 在UITabelViewController，UICollectionViewController，也要在window上提示；
+// 当业务遇到“上传”，“正在干什么”等，要在window上提示；
+// 当在UITabelViewController，UICollectionViewController，也要在window上提示；
+
+@interface MBProgressHUD (ZXExtension)
+
+
+
 
 // 正在加载提示
 + (void)zx_showLoadingWithStatus:(nullable NSString *)aText toView:(nullable UIView *)view;

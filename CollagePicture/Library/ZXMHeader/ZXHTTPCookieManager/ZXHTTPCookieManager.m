@@ -51,9 +51,18 @@
     _cookieFilter = filter;
 }
 
+
+
+- (NSString *)cookieStringWithResponse:(NSHTTPURLResponse *)response
+{
+//    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+    NSString *cookieString = [[response allHeaderFields] valueForKey:@"Set-Cookie"];
+    return cookieString;
+}
+
+
 /*
- headerFields response响应头中获取是肯定无cookie的,但是系统确实返回回来了，怎么去获取呢；而且文章博客都说有返回；
- 是不是哪里错了；
+ 当headerFields response响应头中无cookie,可能是服务器人员没有写入，所以没有返回；
  
 response.allHTTPHeaderFields = {
     Connection = keep-alive;
@@ -66,9 +75,9 @@ response.allHTTPHeaderFields = {
     Etag = W/"5a420d37-7c7";
 }
  */
-- (NSArray <NSHTTPCookie *> *)handleHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL
+- (NSArray <NSHTTPCookie *> *)handleResponseHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL
 {
-    // 肯定是空的；怎样才能有数据呢？
+    
     NSArray *cookiesArray = [NSHTTPCookie cookiesWithResponseHeaderFields:headerFields forURL:URL];
     if (cookiesArray && cookiesArray.count>0)
     {
@@ -88,6 +97,7 @@ response.allHTTPHeaderFields = {
 #pragma mark - 获取请求头cookie字典格式的字符串；
 
 // 获取当前所有NSHTTPCookie的请求头[name=value;name=value]格式组合字符串
+
 - (nullable NSString *)getCurrentRequestCookieHeader
 {
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage]cookies];
@@ -98,6 +108,11 @@ response.allHTTPHeaderFields = {
 }
 
 // 获取当前某个域名下的所有NSHTTPCookie的请求头[name=value;name=value]格式组合字符串；
+//{
+//    Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+//    Cookie = "mat=6ed567cadeb63102a02a1d64b022c19f";
+//    "User-Agent" = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like Mac OS X) AppleWebKit/604.5.6 (KHTML, like Gecko) Mobile/15D100microants-4-3.3.0.3";
+//}
 - (nullable NSString *)getCurrentRequestCookieHeaderForURL:(NSURL *)URL
 {
     NSArray *cookieArray = [self searchAppropriateCookies:URL];
@@ -202,10 +217,10 @@ response.allHTTPHeaderFields = {
     //        [cookieStore getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
     //
     //            NSLog(@"%@",cookies);
-    //            [cookies enumerateObjectsUsingBlock:^(NSHTTPCookie * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    //
-    //                [cookieStore deleteCookie:obj completionHandler:nil];
-    //            }];
+//                [cookies enumerateObjectsUsingBlock:^(NSHTTPCookie * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//    
+//                    [cookieStore deleteCookie:obj completionHandler:nil];
+//                }];
     //
     //        }];
     //    }

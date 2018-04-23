@@ -8,9 +8,9 @@
 // 2017.12.20
 // 获取文本占几行空间
 // 2018.1.18  新增获取文字所需要的尺寸
+// 2018.4.18  新增计算平均item宽带方法
 
 #import <Foundation/Foundation.h>
-//#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -299,6 +299,12 @@ NS_ASSUME_NONNULL_BEGIN
 //  同arc4random_uniform(10):获取[0-10]的随机整数;
 - (int)zhGetRandomNumberWithFrom:(int)from to:(int)to;
 
+
+
+/**
+ 计算平均宽度方法
+ */
++ (CGFloat)zhGetItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing;
 
 @end
 

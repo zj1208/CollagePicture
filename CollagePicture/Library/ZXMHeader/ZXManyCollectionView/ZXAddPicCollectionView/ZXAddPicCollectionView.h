@@ -4,10 +4,12 @@
 //
 //  Created by simon on 17/3/15.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//  注释：水平添加图片的组件；可以自定义提示view（UIButton图 + 提示UILabel）；
 
-//  2018.01.09
-//  优化代码
+//  简介：N行*N列 格式的添加图片组件，最后一个是添加图片按钮；可以自定义提示view（UIButton图 + 提示UILabel）；
+//  待优化 使用ZXAddPicViewContentView 覆盖view的时候，视频资源的图片展示错乱问题；
+//  2018.01.09   优化代码
+//  2018.04.13   优化代码，修改高度计算
+//
 
 #import <UIKit/UIKit.h>
 #import "ZXAddPicViewCell.h"
@@ -68,6 +70,13 @@ static NSString * const ZXAddPhotoImageName = @"zxPhoto_addImage";
 // 行间距，忽略删除按钮
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
+
+/**
+ *  一个屏幕显示多少列；最好小于等于4列；
+ */
+@property (nonatomic, assign) NSInteger columnsCount;
+
+
 // 设置是否存在动态“添加图片“按钮
 @property (nonatomic, getter=isExistInputItem) BOOL existInputItem;
 
@@ -83,8 +92,8 @@ static NSString * const ZXAddPhotoImageName = @"zxPhoto_addImage";
 @property (nonatomic, assign) CGSize picItemSize;
 
 // 自适应缩放宽度大小：计算出来后用于设置一个总宽度（比如屏幕宽度）下放几个的平均item宽度；
-- (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth itemCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset interitemSpacing:(CGFloat)minimumInteritemSpacing
-;
+
+- (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing;
 
 
 - (void)setData:(NSArray *)data;
@@ -209,8 +218,54 @@ NS_ASSUME_NONNULL_END
         [_photosMArray addObject:photo];
     }];
 }
- 
+*/
+/*
+#pragma mark - 添加图片视频
 
+- (void)picBtnAction:(id)sender
+{
+    // 只允许加一个视频，如果已经有视频了，直接添加图片/拍照
+    if ([self getViedoStringFormPicArray:self.photosMArray])
+    {
+        [self presentImagePickerController];
+        return;
+    }
+    [UIAlertController zx_presentActionSheetInViewController:self withTitle:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@[@"拍照和照片",@"视频"] tapBlock:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        
+        if (buttonIndex ==alertController.firstOtherButtonIndex)
+        {
+            [self presentImagePickerController];
+        }
+        else if (buttonIndex ==alertController.firstOtherButtonIndex+1)
+        {
+            [self presentChooseVideoController];
+        }
+    }];
+}
+
+ 
+//添加视频
+- (void)uploadVideoWith:(NSData *)videoData
+{
+    WS(weakSelf);
+    [MBProgressHUD zx_showLoadingWithStatus:@"正在上传" toView:self.view];
+    [[AliOSSUploadManager sharedInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN fileCatalogType:OSSFileCatalog_ProductVideo uploadingData:videoData progress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
+        
+    } singleComplete:^(id  _Nullable imageInfo, NSString * _Nullable imagePath, CGSize imageSize) {
+        
+        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+        ZXPhoto *photo = [ZXPhoto photoWithOriginalUrl:imagePath thumbnailUrl:@""];
+        photo.type = ZXAssetModelMediaTypeVideo;
+        [_photosMArray insertObject:photo atIndex:0];
+        [self.photoCell.picsCollectionView setData:_photosMArray];
+        [self.tableView reloadData];
+        
+    } failure:^(NSError * _Nullable error) {
+        
+        [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
+        
+    }];
+}
 
 #pragma mark - 添加图片
 
@@ -256,12 +311,17 @@ NS_ASSUME_NONNULL_END
             ZXPhoto *photo = [ZXPhoto photoWithOriginalUrl:imagePath thumbnailUrl:picUrl.absoluteString];
             photo.width = imageSize.width;
             photo.height = imageSize.height;
+            photo.type = ZXAssetModelMediaTypePhoto;
+
             [tempMArray addObject:photo];
 
             if (currentIndex ==photos.count)
             {
-                [_photosMArray addObjectsFromArray:tempMArray];
-                [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+                 NSArray * tempMArray2 = [AliOSSUploadManager sortAliOSSImage_UserID_time_WithPhotoModelArr:tempMArray];
+ 
+                 [_photosMArray addObjectsFromArray:tempMArray2];
+                 [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+ 
                 [self.photoCell.picsCollectionView setData:_photosMArray];
                 [self.tableView reloadData];
             }
@@ -272,7 +332,9 @@ NS_ASSUME_NONNULL_END
         }];
     }];
 }
+*/
 
+/*
 #pragma mark - ZXAddPicCollectionViewDelegate
 
 - (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)addPicCollectionView commitEditingStyle:(ZXAddPicCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -290,20 +352,69 @@ NS_ASSUME_NONNULL_END
 }
 
 
+//- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray
+//{
+////    大图浏览
+//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:picsArray.count datasource:self];
+//    browser.browserStyle = XLPhotoBrowserStyleCustom;
+//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+//}
+
+//#pragma mark - XLPhotoBrowserDatasource
+//
+//- (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
+//
+//    NSString *orginal =[[_photosMArray objectAtIndex:index]original_pic];
+//    return [NSURL URLWithString:orginal];
+//}
+
 - (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray
 {
-    //大图浏览
-    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:picsArray.count datasource:self];
-    browser.browserStyle = XLPhotoBrowserStyleCustom;
-    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+    ZXPhoto *photo = [picsArray objectAtIndex:index] ;
+    if (photo.type == ZXAssetModelMediaTypeVideo)
+    {
+        CCVideoPlayerViewController *playerViewVC = [[CCVideoPlayerViewController alloc]init];
+        [playerViewVC updatePlayerWithURL:photo.original_pic];
+        [self presentViewController:playerViewVC animated:YES completion:nil];
+    }
+    else
+    {
+        
+        NSMutableArray *array = [NSMutableArray array];
+        [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            ZXPhoto *photo = (ZXPhoto *)obj;
+            if (photo.type == ZXAssetModelMediaTypePhoto)
+            {
+                [array addObject:photo];
+            }
+        }];
+        NSInteger inde = index;
+        if (array.count < picsArray.count)
+        {
+            inde = index-1;
+        }
+        //大图浏览
+        XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:inde imageCount:array.count datasource:self];
+        browser.browserStyle = XLPhotoBrowserStyleCustom;
+        browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+    }
+    
 }
-
- 
-#pragma mark - XLPhotoBrowserDatasource
+#pragma mark    - XLPhotoBrowserDatasource
 
 - (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
     
-    NSString *orginal =[[_photosMArray objectAtIndex:index]original_pic];
+    NSMutableArray *array = [NSMutableArray array];
+    [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        ZXPhoto *photo = (ZXPhoto *)obj;
+        if (photo.type == ZXAssetModelMediaTypePhoto)
+        {
+            [array addObject:photo];
+        }
+    }];
+    NSString *orginal =[[array objectAtIndex:index]original_pic];
     return [NSURL URLWithString:orginal];
 }
 */
@@ -314,6 +425,7 @@ NS_ASSUME_NONNULL_END
 
 // 业务类型1.转换为model数组（json数组）上传
 // 图片
+
 /*
 - (NSMutableArray *)manyPicModelFormPicArray:(NSMutableArray *)photoArray
 {
@@ -321,14 +433,19 @@ NS_ASSUME_NONNULL_END
     [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         ZXPhoto *photo = (ZXPhoto *)obj;
-        AliOSSPicUploadModel *model = [[AliOSSPicUploadModel alloc] init];
-        model.p = photo.original_pic;
-        model.w = photo.width;
-        model.h = photo.height;
-        [uploadPicArray addObject:model];
+        if (photo.type == ZXAssetModelMediaTypePhoto)
+        {
+            AliOSSPicUploadModel *model = [[AliOSSPicUploadModel alloc] init];
+            model.p = photo.original_pic;
+            model.w = photo.width;
+            model.h = photo.height;
+            [uploadPicArray addObject:model];
+        }
+        
     }];
     return  uploadPicArray;
 }
+
 // model.pics = [self manyPicModelFormPicArray:self.photosMArray];
 */
  

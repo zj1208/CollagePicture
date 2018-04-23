@@ -5,9 +5,10 @@
 //  Created by simon on 2017/12/29.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-// 2018.01.02
-// 创建这个类
-// 2018.04.03 修改注释
+//  简介：cookie的各种方法处理；
+
+// 2018.01.02 创建这个类
+// 2018.04.20 添加方法；
 
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
@@ -33,23 +34,40 @@ typedef BOOL(^ZXHTTPCookieFilter)(NSHTTPCookie *cookie,NSURL *url);
  */
 - (void)setCookieFilter:(ZXHTTPCookieFilter)filter;
 
+#pragma mark - 响应头数据：
+
 
 /**
- 处理HTTP中Reponse的headerFields携带的Cookie并存储；
+ 获取响应头的cookie数据字符串格式； 
 
- @param headerFields response请求响应后的头字典
+ @param response 响应对象
+ @return cookie字符串
+ NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+ NSString *cookieString =  [[ZXHTTPCookieManager sharedInstance]cookieStringWithResponse:response];
+ 
+ */
+- (NSString *)cookieStringWithResponse:(NSHTTPURLResponse *)response;
+
+/**
+ 先读取响应头中的cookie数据，再根据URL获取指定cookie，再NSHTTPCookieStorage存储；
+ 即处理HTTP中Reponse的headerFields携带的Cookie并存储；
+
+ @param headerFields response 请求响应后的头字典
  @param URL 根据匹配策略获取查找URL关联的所有Cookie；可能不同的name设置；
  @return 返回添加到存储的Cookie数组；
+ 
+ [[ZXHTTPCookieManager sharedInstance]handleResponseHeaderFields:response.allHeaderFields forURL:response.URL];
+
  */
-- (NSArray <NSHTTPCookie *> *)handleHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL;
+- (NSArray <NSHTTPCookie *> *)handleResponseHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL;
 
 
-#pragma mark - 获取请求头cookie字典格式的字符串；
+#pragma mark - 请求头数据：获取请求头cookie字典格式的字符串；
 
 /**
  获取当前所有cookie的字符串拼接
 UM_distinctid=160a0e171573ed-06957cb7c349838-6a462226-2c600-160a0e1715847a;mat=8be8ad68688837b79470fb689bdc2d7b；
- 不知道干嘛用；
+
  @return 当前所有cookie的字符串拼接;
  */
 - (nullable NSString *)getCurrentRequestCookieHeader;

@@ -381,7 +381,7 @@ static CGFloat const ZXLineSpacing = 12.f; //固定行间距
     NSInteger rows = [self getRowsWithDataCount:data.count];
     //计算高度
     pageViewHeight = rows * self.itemSize.height + (rows - 1) * self.lineSpacing +self.sectionInset.top+self.sectionInset.bottom;
-    NSLog(@"个数= %@,高度 = %@",@(data.count), @(pageViewHeight));
+//    NSLog(@"个数= %@,高度 = %@",@(data.count), @(pageViewHeight));
     
     return ceilf(pageViewHeight);
 }
