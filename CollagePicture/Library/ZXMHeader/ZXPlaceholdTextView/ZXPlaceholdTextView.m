@@ -187,8 +187,6 @@
                 self.text = [ self.text substringToIndex:self.maxCharacters];
             }
         }
-//        void (^limint)(ZXPlaceholdTextView*textView) =_textDidChangeBlock;
-
         _textDidChangeBlock(self,self.maxCharacters - [self.text length]);
  
     }

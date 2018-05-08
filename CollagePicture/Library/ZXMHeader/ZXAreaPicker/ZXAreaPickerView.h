@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HZLocation.h"
+#import "ZXLocation.h"
 
 typedef enum {
     HZAreaPickerWithStateAndCity,   //省和地级市市
@@ -15,7 +15,7 @@ typedef enum {
 } HZAreaPickerStyle;
 
 
-@class HZAreaPickerView;
+@class ZXAreaPickerView;
 
 @protocol HZAreaPickerDelegate <NSObject>
 
@@ -23,18 +23,18 @@ typedef enum {
  *  @brief 代理回调
  */
 @optional
-- (void)pickerDidChaneStatus:(HZAreaPickerView *)picker;
+- (void)pickerDidChaneStatus:(ZXAreaPickerView *)picker;
 
 @end
 
 
 
 
-@interface HZAreaPickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface ZXAreaPickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (assign, nonatomic) id <HZAreaPickerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIPickerView *locatePicker;
-@property (strong, nonatomic) HZLocation *locate;
+@property (strong, nonatomic) ZXLocation *locate;
 @property (nonatomic) HZAreaPickerStyle pickerStyle;
 
 
@@ -85,14 +85,14 @@ typedef enum {
  
  <HZAreaPickerDelegate>
  
- @property(nonatomic,strong)HZAreaPickerView *areaPickerView;
+ @property(nonatomic,strong)ZXAreaPickerView *areaPickerView;
 
  
-self.areaPickerView = [[HZAreaPickerView alloc] initTextFieldOfInputViewWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self textField:_txtArea ];
+self.areaPickerView = [[ZXAreaPickerView alloc] initTextFieldOfInputViewWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self textField:_txtArea ];
 
  
  #pragma mark - HZAreaPicker delegate
- -(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+ -(void)pickerDidChaneStatus:(ZXAreaPickerView *)picker
  {
      NSString *string = [NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district];
  

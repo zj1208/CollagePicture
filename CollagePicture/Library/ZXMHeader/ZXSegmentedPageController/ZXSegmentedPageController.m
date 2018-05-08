@@ -227,7 +227,7 @@
 
 #pragma mark - ZXSegmentedControlDelegate
 
-- (void)zx_segmentView:(ZXSegmentedControl *)ZXSegmentedControl didSelectedIndex:(NSInteger)index
+- (void)zx_segmentView:(ZXSegmentedControl *)zxSegmentedControl didSelectedIndex:(NSInteger)index
 {
     if (self.pages.count <= index)
     {
@@ -250,15 +250,15 @@
     
     if ([self.delegate respondsToSelector:@selector(zx_segmentPageControllerWithSegmentView:didSelectedIndex:)])
     {
-        [self.delegate zx_segmentPageControllerWithSegmentView:ZXSegmentedControl didSelectedIndex:index];
+        [self.delegate zx_segmentPageControllerWithSegmentView:zxSegmentedControl didSelectedIndex:index];
     }
 }
 
-- (void)zx_segmentView:(ZXSegmentedControl *)ZXSegmentedControl willDisplayCell:(ZXSegmentCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)zx_segmentView:(ZXSegmentedControl *)zxSegmentedControl willDisplayCell:(ZXSegmentCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.delegate respondsToSelector:@selector(zx_segmentPageControllerWithSegmentView:willDisplayCell:forItemAtIndexPath:)])
     {
-        [self.delegate zx_segmentPageControllerWithSegmentView:ZXSegmentedControl willDisplayCell:cell forItemAtIndexPath:indexPath];
+        [self.delegate zx_segmentPageControllerWithSegmentView:zxSegmentedControl willDisplayCell:cell forItemAtIndexPath:indexPath];
     }
 }
 

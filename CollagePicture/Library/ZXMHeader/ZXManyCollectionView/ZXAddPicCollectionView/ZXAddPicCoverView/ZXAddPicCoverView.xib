@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
                     <state key="normal" image="postImage"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传真实的图片（最多四张）有图的供应商有助于提高抢单成功率" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40b-j8-vms">
-                    <rect key="frame" x="107" y="38.5" width="392" height="33.5"/>
+                    <rect key="frame" x="110" y="38.5" width="389" height="33.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -34,7 +34,7 @@
             <constraints>
                 <constraint firstItem="5ne-26-X0A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="82S-cB-ZNz"/>
                 <constraint firstAttribute="trailing" secondItem="40b-j8-vms" secondAttribute="trailing" constant="15" id="ALZ-wx-e6N"/>
-                <constraint firstItem="40b-j8-vms" firstAttribute="leading" secondItem="5ne-26-X0A" secondAttribute="trailing" constant="12" id="OEz-br-jkO"/>
+                <constraint firstItem="40b-j8-vms" firstAttribute="leading" secondItem="5ne-26-X0A" secondAttribute="trailing" constant="15" id="OEz-br-jkO"/>
                 <constraint firstItem="5ne-26-X0A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="tvK-gt-AUo"/>
                 <constraint firstItem="40b-j8-vms" firstAttribute="centerY" secondItem="5ne-26-X0A" secondAttribute="centerY" id="uh8-AW-Yb5"/>
                 <constraint firstItem="5ne-26-X0A" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wJb-Bu-oOF"/>
@@ -42,6 +42,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addButton" destination="5ne-26-X0A" id="yCw-fK-MH6"/>
+                <outlet property="titleLabLeading" destination="OEz-br-jkO" id="Vmf-er-dAG"/>
                 <outlet property="titleLabel" destination="40b-j8-vms" id="rqQ-u3-Cay"/>
             </connections>
             <point key="canvasLocation" x="55" y="208"/>

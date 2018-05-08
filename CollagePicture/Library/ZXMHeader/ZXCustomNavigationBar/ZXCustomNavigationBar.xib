@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,13 +40,13 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c5U-c7-xiI" userLabel="UINavigationBarContentView">
-                    <rect key="frame" x="0.0" y="20" width="443" height="105"/>
+                    <rect key="frame" x="0.0" y="81" width="443" height="44"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ipI-FM-8iP" userLabel="rightView">
-                            <rect key="frame" x="343" y="0.0" width="85" height="105"/>
+                            <rect key="frame" x="343" y="0.0" width="85" height="44"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31l-2N-93c">
-                                    <rect key="frame" x="0.0" y="0.0" width="35" height="105"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="vAm-xp-3KS"/>
                                     </constraints>
@@ -54,7 +54,7 @@
                                     <state key="normal" title="预览"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-e5-bQg">
-                                    <rect key="frame" x="50" y="0.0" width="35" height="105"/>
+                                    <rect key="frame" x="50" y="0.0" width="35" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="IaL-O1-oqc"/>
                                     </constraints>
@@ -73,13 +73,13 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zym-QB-Xec" userLabel="titleView">
-                            <rect key="frame" x="152" y="0.0" width="181" height="105"/>
+                            <rect key="frame" x="152" y="0.0" width="181" height="44"/>
                         </view>
                         <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-eA-gFi" userLabel="leftView">
-                            <rect key="frame" x="15" y="0.0" width="122" height="105"/>
+                            <rect key="frame" x="15" y="0.0" width="122" height="44"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQe-rh-DY9">
-                                    <rect key="frame" x="0.0" y="0.0" width="122" height="104"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="122" height="43"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="122" id="vMx-tv-QaJ"/>
                                     </constraints>
@@ -105,6 +105,7 @@
                         <constraint firstItem="Zym-QB-Xec" firstAttribute="top" secondItem="c5U-c7-xiI" secondAttribute="top" id="MRK-C9-Qfl"/>
                         <constraint firstItem="ipI-FM-8iP" firstAttribute="top" secondItem="c5U-c7-xiI" secondAttribute="top" id="VDV-gN-2h0"/>
                         <constraint firstItem="Zym-QB-Xec" firstAttribute="centerY" secondItem="c5U-c7-xiI" secondAttribute="centerY" id="Xgs-y8-ZRU"/>
+                        <constraint firstAttribute="height" constant="44" id="lUg-Rf-Rfd"/>
                         <constraint firstItem="ipI-FM-8iP" firstAttribute="leading" secondItem="Zym-QB-Xec" secondAttribute="trailing" constant="10" id="ldY-2T-kU3"/>
                         <constraint firstItem="zPq-eA-gFi" firstAttribute="centerY" secondItem="c5U-c7-xiI" secondAttribute="centerY" id="m61-v7-Clh"/>
                         <constraint firstItem="zPq-eA-gFi" firstAttribute="leading" secondItem="c5U-c7-xiI" secondAttribute="leading" constant="15" id="uzb-CP-XEr"/>
@@ -112,13 +113,11 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ejL-Pe-Hvd" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="2AB-6b-hoY"/>
                 <constraint firstItem="c5U-c7-xiI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="84m-aC-qg5"/>
                 <constraint firstAttribute="bottom" secondItem="c5U-c7-xiI" secondAttribute="bottom" id="8nc-wx-7xM"/>
                 <constraint firstAttribute="trailing" secondItem="c5U-c7-xiI" secondAttribute="trailing" id="HCC-ub-Lmk"/>
-                <constraint firstItem="c5U-c7-xiI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="PW2-a8-z8b"/>
                 <constraint firstItem="ejL-Pe-Hvd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Xe5-e6-Kbt"/>
                 <constraint firstItem="ejL-Pe-Hvd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oey-0y-uhB"/>
                 <constraint firstItem="ejL-Pe-Hvd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xtr-Qd-kjK"/>
@@ -126,8 +125,8 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="barBackgroundContainerView" destination="ejL-Pe-Hvd" id="sX9-Ns-2iD"/>
-                <outlet property="barBackgroundImageView" destination="M4i-nH-10Y" id="yeX-Lx-2m4"/>
-                <outlet property="barBackgroundLineImageView" destination="pmO-ap-SpT" id="cRg-ho-jNt"/>
+                <outlet property="barBackgroundImageView" destination="pmO-ap-SpT" id="Z2i-Co-vgn"/>
+                <outlet property="barBackgroundShadowImageView" destination="M4i-nH-10Y" id="GZc-7N-IhF"/>
                 <outlet property="leftBarButton" destination="kQe-rh-DY9" id="AH8-zR-kOR"/>
                 <outlet property="leftContainerView" destination="zPq-eA-gFi" id="C2g-S2-iz9"/>
                 <outlet property="navigationBarContentView" destination="c5U-c7-xiI" id="yuU-Te-ar7"/>

@@ -1,5 +1,5 @@
 //
-//  ZXCellLayoutConfigSource.h
+//  ZXAddPicCellLayoutConfigSource.h
 //  YiShangbao
 //
 //  Created by simon on 2018/4/18.
@@ -7,20 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZXPhoto.h"
 
-
-@protocol ZXCellLayoutConfigSource <NSObject>
+@protocol ZXAddPicCellLayoutConfigSource <NSObject>
 
 /**
  * @return 返回内容大小
  */
-- (CGSize)contentSize:(id)model cellWidth:(CGFloat)width;
+- (CGSize)contentSize:(ZXPhoto *)model cellWidth:(CGFloat)width;
 
 
 /**
  *  需要构造的cellContent类名
  */
-- (NSString *)cellContent:(id)model;
+- (NSString *)cellContent:(ZXPhoto *)model;
 
 
 @end

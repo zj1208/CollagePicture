@@ -1,17 +1,17 @@
 //
-//  HZAreaPickerView.m
+//  ZXAreaPickerView.m
 //  areapicker
 //
 //  Created by simon on 14-9-9.
 //  Copyright (c) 2014年 simon.com. All rights reserved.
 //
 
-#import "HZAreaPickerView.h"
+#import "ZXAreaPickerView.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kDuration 0.3
 
-@interface HZAreaPickerView ()
+@interface ZXAreaPickerView ()
 
 @property(nonatomic,strong) NSArray *provinces;//35个字典省份组合的数组
 @property(nonatomic,strong) NSArray *cities;
@@ -20,7 +20,7 @@
 @property (nonatomic,strong)UITextField *inputTextField;
 @end
 
-@implementation HZAreaPickerView
+@implementation ZXAreaPickerView
 
 @synthesize delegate=_delegate;
 @synthesize pickerStyle=_pickerStyle;
@@ -33,10 +33,10 @@
 @synthesize areas;
 
 
--(HZLocation *)locate
+-(ZXLocation *)locate
 {
     if (_locate == nil) {
-        _locate = [[HZLocation alloc] init];
+        _locate = [[ZXLocation alloc] init];
     }
     
     return _locate;
@@ -47,7 +47,7 @@
 - (instancetype)initWithStyle:(HZAreaPickerStyle)pickerStyle delegate:(id<HZAreaPickerDelegate>)delegate
 {
     
-    self = [[[NSBundle mainBundle] loadNibNamed:@"HZAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
+    self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
     if (self)
     {
         self.delegate = delegate;
@@ -62,7 +62,7 @@
                                delegate:(id <HZAreaPickerDelegate>)delegate
                               textField:(UITextField*)textField
 {
-    self = [[[NSBundle mainBundle] loadNibNamed:@"HZAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
+    self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
     if (self)
     {
         self.delegate = delegate;

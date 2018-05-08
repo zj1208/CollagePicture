@@ -8,7 +8,7 @@
 //    NSAssert(self.dataSource.count > 0, @"Must have one childViewCpntroller at least");
 //    NSAssert(self.segmentTitles.count == self.dataSource.count, @"The childViewController's count doesn't equal to the count of segmentTitles");
 
-// 注释：包含顶部ZXSegmentedControl 分段选择视图，可以滑动；底部是根据SegmentTitles个数增加的n个子控制器，根据segment选择切换子控制器；
+//  注释：包含顶部ZXSegmentedControl 分段选择视图，可以滑动；底部是根据SegmentTitles个数增加的n个子控制器，根据segment选择切换子控制器；
 //  2018.3.27 待优化：当控制器往左右方向手动滑动的时候，可以考虑segmentedControl的底部指示条也动画跟着动；
 
 #import <UIKit/UIKit.h>
@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_END
     self.segPageController.segmentTitles = self.segTitles;
     self.segPageController.viewControllers = self.dataMArray;
     CGRect frame = self.view.frame;
-    CGFloat Y = isIphoneX?88:64;
+    CGFloat Y = IS_IPHONE_X?88:64;
     frame.origin.y += Y;
     frame.size.height -= Y;
     self.segPageController.view.frame = frame;

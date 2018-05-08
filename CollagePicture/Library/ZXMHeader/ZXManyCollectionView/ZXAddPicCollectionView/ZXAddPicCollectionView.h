@@ -7,15 +7,19 @@
 
 //  简介：N行*N列 格式的添加图片组件，最后一个是添加图片按钮；可以自定义提示view（UIButton图 + 提示UILabel）；
 //  待优化 使用ZXAddPicViewContentView 覆盖view的时候，视频资源的图片展示错乱问题；
-//  2018.01.09   优化代码
 //  2018.04.13   优化代码，修改高度计算
-//
+//  2018.04.28   修改高度计算bug
+//  5.03         九宫格组件优化；改为外部动态配置遮图；
+//  5.07         优化计算代码；
+
+
 
 #import <UIKit/UIKit.h>
 #import "ZXAddPicViewCell.h"
 // 图片模型
 #import "ZXPhoto.h"
 #import "ZXAddPicCoverView.h"
+#import "ZXAddPicViewKit.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -135,6 +139,8 @@ NS_ASSUME_NONNULL_END
 
 /*******************************例如*多张图片上传******************/
 
+#pragma mark - 举例
+#pragma mark -1.UITableViewCell:HeaderPicsViewCell初始化
 
 //1.UITableViewCell:HeaderPicsViewCell初始化
 
@@ -146,15 +152,16 @@ NS_ASSUME_NONNULL_END
     
     ZXAddPicCollectionView *picView = [[ZXAddPicCollectionView alloc] init];
     picView.maxItemCount = 9;
-    picView.minimumInteritemSpacing = 2.f;
+    picView.minimumInteritemSpacing = 12.f;
     picView.photosState = ZXPhotosViewStateDidCompose;
-    picView.sectionInset = UIEdgeInsetsMake(5, 12, 5, 12);
+    picView.sectionInset = UIEdgeInsetsMake(5, 12, 10, 12);
     picView.picItemWidth = [picView getItemAverageWidthInTotalWidth:LCDW itemCount:4 sectionInset:picView.sectionInset interitemSpacing:picView.minimumInteritemSpacing];
     picView.picItemHeight = picView.picItemWidth;
     picView.addButtonImage = [UIImage imageNamed:ZXAddAssetImageName];
     
     picView.addPicCoverView.titleLabel.text = [NSString stringWithFormat:@"添加图片或视频\n(最多9个，视频时长不能超过10秒)"];
-    
+    picView.addPicCoverView.titleLabLeading.constant = 23.f;
+
     self.picsCollectionView = picView;
     [self.contentView addSubview:picView];
     
@@ -167,6 +174,9 @@ NS_ASSUME_NONNULL_END
     }];
     
     self.containerView.hidden = YES;
+ 
+    [[ZXAddPicViewKit sharedKit]registerLayoutConfig:[CustomAddPicLayoutConfig new]];
+
 }
 
 // 当有数据的时候
@@ -177,6 +187,7 @@ NS_ASSUME_NONNULL_END
 */
 
 
+#pragma mark -2.controller页面
 
 // 2.controller:
 

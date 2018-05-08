@@ -1,5 +1,5 @@
 //
-//  HZLocation.h
+//  ZXLocation.h
 //  areapicker
 //
 //  Created by simon on 14-9-9.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HZLocation : NSObject
+@interface ZXLocation : NSObject
 
 @property (copy, nonatomic) NSString *country; //国家
 @property (copy, nonatomic) NSString *state;//省份

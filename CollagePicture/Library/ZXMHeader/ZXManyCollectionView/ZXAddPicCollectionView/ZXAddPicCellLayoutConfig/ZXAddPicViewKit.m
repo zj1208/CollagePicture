@@ -15,7 +15,7 @@
 {
     if (self = [super init]) {
  
-        _cellLayoutConfig = [[ZXCellLayoutConfig alloc] init];
+        _cellLayoutConfig = [[ZXAddPicCellLayoutConfig alloc] init];
     }
     return self;
 }
@@ -31,9 +31,9 @@
     return instance;
 }
 
-- (void)registerLayoutConfig:(ZXCellLayoutConfig *)layoutConfigClass
+- (void)registerLayoutConfig:(ZXAddPicCellLayoutConfig *)layoutConfigClass
 {
-    if ([layoutConfigClass isKindOfClass:[ZXCellLayoutConfig class]])
+    if ([layoutConfigClass isKindOfClass:[ZXAddPicCellLayoutConfig class]])
     {
         self.cellLayoutConfig = layoutConfigClass;
     }
@@ -44,7 +44,7 @@
 }
 
 
-- (id<ZXCellLayoutConfigSource>)layoutConfig
+- (id<ZXAddPicCellLayoutConfigSource>)layoutConfig
 {
     return _cellLayoutConfig;
 }

@@ -17,8 +17,8 @@
 
 static NSInteger const ZXMaxItemCount = 3;
 
-static CGFloat const ZXMinimumInteritemSpacing = 10.f;//item之间最小间隔
-static CGFloat const ZXMinimumLineSpacing = 10.f; //最小行间距
+static CGFloat const ZXMinimumInteritemSpacing = 12.f;//item之间最小间隔
+static CGFloat const ZXMinimumLineSpacing = 12.f; //最小行间距
 static CGFloat const ZXAddPicItemWidth = 60.f;
 static CGFloat const ZXAddPicItemHeight = 60.f;
 
@@ -203,7 +203,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 
 - (void)setMinimumLineSpacing:(CGFloat)minimumLineSpacing
 {
-    CGFloat space = self.minimumInteritemSpacing-ZXPicItemLayoutTop;
+    CGFloat space = minimumLineSpacing-ZXPicItemLayoutTop;
     space = space>0?space:0;
     _minimumLineSpacing = space;
 }
@@ -211,15 +211,14 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 - (void)setSectionInset:(UIEdgeInsets)sectionInset
 {
     CGFloat right = sectionInset.right-ZXPicItemLayoutRight>0?sectionInset.right-ZXPicItemLayoutRight:0;
-    _sectionInset = UIEdgeInsetsMake(sectionInset.top, sectionInset.left, sectionInset.top, right);
+    _sectionInset = UIEdgeInsetsMake(sectionInset.top, sectionInset.left, sectionInset.bottom, right);
     self.collectionFlowLayout.sectionInset = _sectionInset;
 }
 
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 {
-    CGFloat itemSpace = minimumInteritemSpacing-ZXPicItemLayoutRight;
-    itemSpace = itemSpace>0?itemSpace:0;
-    CGFloat itemWidth =  (totalWidth - (columnsCount-1)*itemSpace-inset.left-inset.right)/columnsCount-ZXPicItemLayoutRight;
+    minimumInteritemSpacing = minimumInteritemSpacing>0?minimumInteritemSpacing:0;
+    CGFloat itemWidth =  (totalWidth - (columnsCount-1)*minimumInteritemSpacing-inset.left-inset.right)/columnsCount-ZXPicItemLayoutRight;
     return floorf(itemWidth);
 }
 
@@ -239,7 +238,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    NSInteger count = [self getNumberOfItemsInSection];
+    NSInteger count = [self getNumberOfItemsInSection:self.dataMArray];
     return count;
 }
 
@@ -268,31 +267,26 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
         id obj = [_dataMArray objectAtIndex:indexPath.item];
         if ([obj isKindOfClass:[UIImage class]])
         {
-            cell.videoCoverView.hidden = YES;
             cell.imageView.image = (UIImage *)obj;
         }
         else if ([obj isKindOfClass:[ZXPhoto class]])
         {
+
             ZXPhoto *photo = (ZXPhoto *)obj;
-//            [cell setData:photo];
+            [cell setData:photo];
 
             if (photo.type == ZXAssetModelMediaTypePhoto)
             {
-                cell.videoCoverView.hidden = YES;
                 NSURL *url = [NSURL URLWithString:photo.thumbnail_pic];
                 [cell.imageView sd_setImageWithURL:url placeholderImage:AppPlaceholderImage];
             }
             if (photo.type == ZXAssetModelMediaTypeCustom)
             {
-                cell.videoCoverView.hidden = NO;
                 NSURL *url = [NSURL URLWithString:photo.thumbnail_pic];
                 [cell.imageView sd_setImageWithURL:url placeholderImage:AppPlaceholderImage];
-                cell.coverIconImageView.image = [UIImage imageNamed:@"icon_produce"];
             }
             else if (photo.type == ZXAssetModelMediaTypeVideo)
             {
-                cell.videoCoverView.hidden = NO;
-                cell.coverIconImageView.image = [UIImage imageNamed:@"photo_shexiang"];
                 NSURL *url = [NSURL URLWithString:photo.videoURLString];
                 [self setImageView:cell.imageView withURL:url placeholderImage:AppPlaceholderImage];
             }
@@ -301,6 +295,11 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
     // Configure the cell
     return cell;
 }
+
+//id<ZXAddPicCellLayoutConfigSource> layoutConfig = [[ZXAddPicViewKit sharedKit] cellLayoutConfig];
+//NSString *identity = [layoutConfig cellContent:photo];
+//ZXAddPicViewCell *cell2 = [collectionView dequeueReusableCellWithReuseIdentifier:identity forIndexPath:indexPath];
+
 
 // 视频缩略图
 - (void)setImageView:(UIImageView *)imageView withURL:(NSURL *)videoURL placeholderImage:(UIImage *)placeholderImage
@@ -465,7 +464,7 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
             return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+_picItemHeight+2*ZXPicItemLayoutTop;
         }
         
-        NSInteger count = [self getNumberOfItemsInSection];
+        NSInteger count = [self getNumberOfItemsInSection:data];
         NSInteger rows = [self getRowsWithDataCount:count];
         //计算高度
         CGFloat height = rows * (_picItemHeight+ZXPicItemLayoutTop) + (rows - 1) * self.minimumLineSpacing +self.sectionInset.top+self.sectionInset.bottom;
@@ -482,16 +481,16 @@ static NSString * const reusePlaceholderCell = @"placeholderCell";
 }
 #pragma mark - 计算方法
 // 获取总
-- (NSInteger)getNumberOfItemsInSection
+- (NSInteger)getNumberOfItemsInSection:(NSArray *)data
 {
     NSInteger count = 0;
     if (self.isExistInputItem)
     {
-        count = _dataMArray.count<self.maxItemCount?self.dataMArray.count+1:self.maxItemCount;
+        count = data.count<self.maxItemCount?data.count+1:self.maxItemCount;
     }
     else
     {
-        count = _dataMArray.count<self.maxItemCount?self.dataMArray.count:self.maxItemCount;
+        count = data.count<self.maxItemCount?data.count:self.maxItemCount;
     }
     return count;
 }

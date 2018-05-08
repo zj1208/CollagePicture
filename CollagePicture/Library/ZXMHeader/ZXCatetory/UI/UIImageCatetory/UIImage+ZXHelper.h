@@ -5,6 +5,7 @@
 //  Created by simon on 15/6/25.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
+//  5.4  获取view的快照视图替换方法；
 
 #import <UIKit/UIKit.h>
 
@@ -97,7 +98,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  把某个view绘画到上下文中生成一个image图片；
-
+ ios7以后获取快照视图有新方法；
+ UIView *clipView = [cell snapshotViewAfterScreenUpdates:NO];
  @param  view 可以是整个屏幕
  @return image
  */

@@ -7,6 +7,7 @@
 //
 //  注释：用UICollectionView自定义一个ZXSegmentControl；底部加选中的红色指示条；
 //  2018.3.6,新增选择条样式；新增segment宽度样式；
+//  2018.5.07  新增注释
 
 #import <UIKit/UIKit.h>
 
@@ -30,13 +31,15 @@ typedef NS_ENUM(NSInteger, ZXSegmentedControlSelectionStyle) {
 //  ZXSegmentedControlSelectionStyleBox,
 };
 
-// 设置宽度样式；
+// 设置每个segment的宽度样式；
 typedef NS_ENUM(NSInteger, ZXSegmentedControlSegmentWidthStyle)
 {
-    //   固定宽带，根据view的宽带得出每个segment的平均宽度；
+    //   固定宽度，根据view的宽度得出每个segment的平均宽度；
     ZXSegmentedControlSegmentWidthStyleFixed = 0,   // Segment width is fixed
     ZXSegmentedControlSegmentWidthStyleDynamic = 1, // Segment width will only be as big as the text width (including inset)
 };
+
+
 
 @protocol ZXSegmentedControlDelegate,ZXSegmentedControlDataSource;
 @class ZXSegmentCell;
@@ -48,16 +51,20 @@ typedef NS_ENUM(NSInteger, ZXSegmentedControlSegmentWidthStyle)
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
+// 文字数组
 @property (nonatomic, strong) NSArray *sectionTitles;
+// 文字默认颜色
 @property (nonatomic, strong) UIColor *normalColor;
+// 文字选中颜色
 @property (nonatomic, strong) UIColor *selectedColor;
+// 文字默认字体大小
 @property (nonatomic, assign) CGFloat fontSize;
+// 文字选中字体大小
 @property (nonatomic, assign) CGFloat selectedFontSize;
 
 //@property (nonatomic, strong) NSArray *sectionAttributedTitles;
 
 @property (nonatomic, assign) NSInteger selectedIndex;
-
 
 
 // 外观collectionView设置
@@ -81,14 +88,14 @@ typedef NS_ENUM(NSInteger, ZXSegmentedControlSegmentWidthStyle)
 // 设置选中指示条颜色
 @property (nonatomic, strong) UIColor *selectionIndicatorColor UI_APPEARANCE_SELECTOR;
 
-// Default is 3.0
+// 设置选中指示条高度 Default is 3.0
 @property (nonatomic, readwrite) CGFloat selectionIndicatorHeight;
 
 
 + (instancetype)segmentViewWithSectionTitles:(NSArray<NSString *> *)titles;
 
 
-- (void)setSelectedIndex:(NSInteger)selectedIndex animation:(BOOL)animation ;
+- (void)setSelectedIndex:(NSInteger)selectedIndex animation:(BOOL)animation;
 
 - (void)reloadData;
 
@@ -98,10 +105,10 @@ typedef NS_ENUM(NSInteger, ZXSegmentedControlSegmentWidthStyle)
 @protocol ZXSegmentedControlDelegate <NSObject>
 
 // 设置文本显示外观；
-- (void)zx_segmentView:(ZXSegmentedControl *)ZXSegmentedControl willDisplayCell:(ZXSegmentCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath;
+- (void)zx_segmentView:(ZXSegmentedControl *)zxSegmentedControl willDisplayCell:(ZXSegmentCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath;
 
 // 选中回调；
-- (void)zx_segmentView:(ZXSegmentedControl *)ZXSegmentedControl didSelectedIndex:(NSInteger)index;
+- (void)zx_segmentView:(ZXSegmentedControl *)zxSegmentedControl didSelectedIndex:(NSInteger)index;
 
 @end
 
@@ -132,7 +139,7 @@ typedef NS_ENUM(NSInteger, ZXSegmentedControlSegmentWidthStyle)
 
 
 
-#pragma LDSegmentCell
+#pragma ZXSegmentCell
 
 @interface ZXSegmentCell : UICollectionViewCell
 
@@ -164,3 +171,40 @@ typedef NS_ENUM(NSInteger, ZXSegmentedControlSegmentWidthStyle)
 
 
 NS_ASSUME_NONNULL_END
+
+
+
+
+
+// 举例使用
+/*
+- (ZXSegmentedControl *)segmentedView
+{
+    if(!segmentView)
+    {
+        _segmentView = [[ZXSegmentedControl alloc]init] ;
+        _segmentView.delegate = self;
+        _segmentView.fontSize = 15;
+        [self.view addSubview:_segmentView];
+        _segmentView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
+        _segmentView.sectionTitles = @[@"全部",@"未收款",@"部分收款"];
+        _segmentView.selectionIndicatorColor = [UIColor colorWithHex:0xFF5434];
+        _segmentView.selectedColor = [UIColor colorWithHex:0xFF5434];
+        _segmentView.normalColor = [UIColor colorWithHex:0x535353];
+        _segmentView.selectionStyle = ZXSegmentedControlSelectionStyleExtendTextWidthStripe;
+        _segmentView.widthStyle = ZXSegmentedControlSegmentWidthStyleFixed;
+        [_segmentView reloadData];
+    }
+    return _segmentView;
+}
+#pragma mark - ZXSegmentedControlDelegate
+
+- (void)zx_segmentView:(ZXSegmentedControl *)zxSegmentedControl willDisplayCell:(ZXSegmentCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+- (void)zx_segmentView:(ZXSegmentedControl *)zxSegmentedControl didSelectedIndex:(NSInteger)index{
+    self.billStatusType = index;
+    [self.tableView.mj_header beginRefreshing];
+}
+*/

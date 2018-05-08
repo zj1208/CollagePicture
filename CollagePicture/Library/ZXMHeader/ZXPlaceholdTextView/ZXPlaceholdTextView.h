@@ -5,6 +5,7 @@
 //  Created by simon on 17/4/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  2018.4.27 修改举例注释
 
 #import <UIKit/UIKit.h>
 
@@ -40,7 +41,7 @@ NS_ASSUME_NONNULL_END
 - (void)viewDidLoad
 {
  
-    [self.containerTextView zhSetCornerRadius:2.f borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xE1E1E1)];
+    [self.containerTextView zh_setCornerRadius:2.f borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xE1E1E1)];
 
     self.textView.text = nil;
     _remainLab.text =@"还可输入200字";

@@ -1,12 +1,12 @@
 //
-//  UIView+ViewHelper.m
+//  UIView+XMHelper.m
 //  ShiChunTang
 //
 //  Created by zhuxinming on 14/11/1.
 //  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
 //
 
-#import "UIView+ViewHelper.h"
+#import "UIView+XMHelper.h"
 #import "APPCommonDef.h"
 #import <objc/runtime.h>
 
@@ -16,7 +16,7 @@
 //#endif
 
 
-@implementation UIView (ViewHelper)
+@implementation UIView (XMHelper)
 
 //+ (void)load
 //{
@@ -43,20 +43,18 @@
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = radius;
     self.layer.borderWidth = width;
-    
     self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
 
-- (void)zhSetCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
+- (void)xm_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
 {
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = radius;
     self.layer.borderWidth = width;
-    
     self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
 
-- (void)zhSetRoundItem
+- (void)xm_setRoundItem
 {
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = CGRectGetHeight(self.frame)/2;
@@ -66,16 +64,20 @@
 
 
 
-- (void)zhSetShadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
+- (void)xm_setShadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
 {
-    self.layer.shadowColor=shadowColor?shadowColor.CGColor:[UIColor blackColor].CGColor;
+    // cannot have masking
+    self.layer.masksToBounds = NO;
+    
     self.layer.shadowOpacity=opacity;
     self.layer.shadowOffset=offset;
     self.layer.shadowRadius = shadowRadius;
+    
+    self.layer.borderColor =shadowColor?[shadowColor CGColor]:[UIColor clearColor].CGColor;
 }
 
 
-- (void)zhSetShadowAndCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor shadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
+- (void)xm_setShadowAndCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor shadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
 {
     self.layer.shadowColor=shadowColor?shadowColor.CGColor:[UIColor blackColor].CGColor;
     self.layer.shadowOpacity=opacity;
@@ -87,7 +89,7 @@
     self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
 
-- (void)zhSetBorderWithTop:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right borderColor:(UIColor *)color borderWidth:(CGFloat)width
+- (void)xm_setBorderWithTop:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right borderColor:(UIColor *)color borderWidth:(CGFloat)width
 {
     if (top) {
         CALayer *layer = [CALayer layer];
@@ -115,6 +117,27 @@
     }
 }
 
+
+- (void)xm_updateShadowPathToBounds:(CGRect)bounds withDuration:(NSTimeInterval)duration
+{
+    CGPathRef oldPath = self.layer.shadowPath;
+    CGPathRef newPath = CGPathCreateWithRect(bounds, NULL);
+    
+    if (oldPath && duration>0)
+    {
+        CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+        theAnimation.duration = duration;
+        theAnimation.fromValue = (__bridge id)oldPath;
+        theAnimation.toValue = (__bridge id)newPath;
+        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [self.layer addAnimation:theAnimation forKey:@"shadowPath"];
+    }
+    
+    self.layer.shadowPath = newPath;
+    
+    CGPathRelease(newPath);
+}
+
 #pragma mark - getter
 
 
@@ -122,19 +145,31 @@
  * @brief 获取UIView的对应controller
  */
 
-- (nullable UIViewController *)zhGetMyResponderViewController
+- (nullable UIViewController *)xm_getResponderViewController
 {
-    for (UIView* next = [self superview]; next; next = next.superview) {
+//    UIResponder *nextResponder =  self;
+//    do
+//    {
+//        nextResponder = [nextResponder nextResponder];
+//        
+//        if ([nextResponder isKindOfClass:[UIViewController class]])
+//            return (UIViewController*)nextResponder;
+//        
+//    } while (nextResponder != nil);
+//
+    for (UIView* next = self; next; next = next.superview)
+    {
         UIResponder *nextResponder = [next nextResponder];
         if ([nextResponder isKindOfClass:[UIViewController class]]) {
             return (UIViewController *)nextResponder;
         }
     }
+    
     return nil;
 }
 
 
-- (float)zhGetValueFortapGestureOnSliderObject:(UISlider *)slider  withGesture:(UITapGestureRecognizer *)gesture
+- (float)xm_getValueFortapGestureOnSliderObject:(UISlider *)slider  withGesture:(UITapGestureRecognizer *)gesture
 {
     CGPoint tapPoint = [gesture locationInView:slider];
     CGRect rect = [slider trackRectForBounds:[slider bounds]];
@@ -143,7 +178,7 @@
 }
 
 
-+ (void)zhNSLogSubviewsFromView:(UIView *)view andLevel:(NSInteger)level
++ (void)xm_NSLogSubviewsFromView:(UIView *)view andLevel:(NSInteger)level
 {
     NSArray *subviews = [view subviews];
     // 如果没有子视图就直接返回
@@ -158,15 +193,21 @@
         // 打印子视图类名,不能用这个函数宏，无法打包
 //        NSLitLog(@"%@%ld: %@", blank, level, subview.class);
         // 递归获取此视图的子视图
-        [self zhNSLogSubviewsFromView:subview andLevel:(level+1)];
+        [self xm_NSLogSubviewsFromView:subview andLevel:(level+1)];
         
     }
+}
+
++ (id)xm_viewFromNib
+{
+    NSArray *arr =[[NSBundle mainBundle] loadNibNamed:[[self class] description] owner:self options:nil];
+    return [arr firstObject];
 }
 
 #pragma mark - perform
 
 
-- (void)zhPerformKeyboardDismissWithClass:(Class)aClass
+- (void)xm_performKeyboardDismissWithClass:(Class)aClass
 {
     for(UIView* view in self.subviews)
     {
@@ -182,7 +223,7 @@
 }
 
 
-- (void)zhPerformCallPhone:(NSString *)phone
+- (void)xm_performCallPhone:(NSString *)phone
 {
     if (phone && phone.length>0) {
         
@@ -195,18 +236,14 @@
 
 
 
-- (void)zhPerformCallPhoneApplication:(NSString *)phone
+- (void)xm_performCallPhoneApplication:(NSString *)phone
 {
     NSString *allString = [NSString stringWithFormat:@"tel:%@",phone];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:allString]];
 }
 
 
-+ (id)zhViewFromNib
-{
-    NSArray *arr =[[NSBundle mainBundle] loadNibNamed:[[self class] description] owner:self options:nil];
-    return [arr firstObject];
-}
+
 
 - (NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view
 {
@@ -239,54 +276,3 @@
 
 @end
 
-
-
-/*
-@implementation UIView (animation)
-
-
-#pragma mark-- animation动画
-
-- (void)zhuCustomDirectionFromTopAnimationType:(NSString*)kCATransitionType layer:(CALayer*)layer
-{
-    CATransition * animation = [CATransition animation];
-    animation.duration = 0.5f;
-    animation.delegate = self;
-    //[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];2种方法是不同的，但意思是一样的。这里不能用，得区分
-    animation.timingFunction = UIViewAnimationCurveEaseInOut;//调速功能
-    animation.type = kCATransitionType;//动画模式-4选一
-    animation.subtype = kCATransitionFromTop; //动画方向-对于淡化，不需要可以所以省略
-    //这里可以添加要转变的uiview，变化动作
-    [layer addAnimation:animation forKey:@"alpha"];
-    
-}
-- (void)zhuCustomDirectionFromBottomAnimationType:(NSString*)kCATransitionType layer:(CALayer*)layer
-{
-    CATransition * animation = [CATransition animation];
-    animation.duration = 0.5f;
-    animation.delegate = self;
-    //[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];2种方法是不同的，但意思是一样的。这里不能用，得区分
-    animation.timingFunction = UIViewAnimationCurveEaseInOut;//调速功能
-    animation.type = kCATransitionType;
-    animation.subtype = kCATransitionFromBottom; //对于淡化，不需要动画方向，所以省略
-    //这里可以添加要转变的uiview，变化动作
-    [layer addAnimation:animation forKey:@"alpha"];
-    
-}
-
-//animation.type = kCATransitionReveal//揭开
-//animation.type = kCATransitionPush//推挤
-//animation.type = kCATransitionMoveIn;覆盖
-//animation.type = KCATransitionFade;// 淡化
-
-// @"cube" 立方体
-// @"suckEffect" 吸收
-// @"oglFlip" 翻转
-// @"rippleEffect" 波纹
-// @"pageCurl" 翻页
-// @"pageUnCurl" 反翻页
-// @"cameraIrisHollowOpen" 镜头开
-// @"cameraIrisHollowClose" 镜头关
-
-@end
-*/

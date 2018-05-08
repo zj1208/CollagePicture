@@ -1,14 +1,14 @@
 //
-//  ZXAddPicViewContentView.m
+//  ZXAddPicBaseContentView.m
 //  YiShangbao
 //
 //  Created by simon on 2018/4/18.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 
-#import "ZXAddPicViewContentView.h"
+#import "ZXAddPicBaseContentView.h"
 
-@implementation ZXAddPicViewContentView
+@implementation ZXAddPicBaseContentView
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -27,6 +27,9 @@
     return self;
 }
 
-
+- (void)refresh:(ZXPhoto *)data
+{
+    
+}
 
 @end

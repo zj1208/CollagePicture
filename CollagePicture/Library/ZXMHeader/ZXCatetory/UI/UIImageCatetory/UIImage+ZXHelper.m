@@ -119,6 +119,15 @@
 }
 
 
+//在iOS7以前，获取一个UIView的快照有以下步骤： 首先创建一个UIGraphics的图像上下文，然后将视图的layer渲染到该上下文中，从而取得一个图像，最后关闭图像上下文，并将图像显示在UIImageView中。
+/*
+[view snapshotViewAfterScreenUpdates:NO];
+这个方法制作了一个UIView的副本，如果我们希望视图在执行动画之前保存现在的外观，以备之后使用（动画中视图可能会被子视图遮盖或者发生其他一些变化）
+ afterUpdates参数表示是否在所有效果应用在视图上了以后再获取快照。例如，如果该参数为NO，则立马获取该视图现在状态的快照，反之，以下代码只能得到一个空白快照：
+ [view snapshotViewAfterScreenUpdates:YES];
+ [view setAlpha:0.0];
+ 由于我们设置afterUpdates参数为YES，而视图的透明度值被设置成了0，所以方法将在该设置应用在视图上了之后才进行快照，于是乎屏幕空白；
+ */
 + (UIImage *)zh_getContextImageFromView: (UIView *)view
 {
     // draw a view's contents into an image context

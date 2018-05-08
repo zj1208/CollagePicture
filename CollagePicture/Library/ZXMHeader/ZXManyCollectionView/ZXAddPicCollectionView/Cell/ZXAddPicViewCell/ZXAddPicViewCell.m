@@ -27,7 +27,8 @@
 //    [self.deleteBtn setBackgroundColor:[UIColor blueColor]];
     
     self.imageView.contentMode =UIViewContentModeScaleAspectFill;
-    [self setView:self.imageView cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
+    self.imageViewCornerRadius = 5.f;
+    [self setView:self.imageView cornerRadius:self.imageViewCornerRadius borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
     self.videoCoverView.hidden = YES;
     
 //    self.backgroundColor = [UIColor greenColor];
@@ -45,6 +46,8 @@
 //        return;
 //    }
 //}
+
+
 
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
 {
@@ -69,25 +72,26 @@
 - (void)refresh
 {
     [self addContentViewIfNotExist];
+    
+    [_customContentView refresh:self.model];
+    [_customContentView setNeedsLayout];
 }
 
 - (void)addContentViewIfNotExist
 {
-    if (_bubbleView == nil)
+    if (_customContentView == nil)
     {
-        id<ZXCellLayoutConfigSource> layoutConfig = [[ZXAddPicViewKit sharedKit] cellLayoutConfig];
+        id<ZXAddPicCellLayoutConfigSource> layoutConfig = [[ZXAddPicViewKit sharedKit] cellLayoutConfig];
         NSString *contentStr = [layoutConfig cellContent:self.model];
         NSAssert([contentStr length] > 0, @"should offer cell content class name");
         Class clazz = NSClassFromString(contentStr);
-        ZXAddPicViewContentView *contentView = [[clazz alloc] initContentView];
+        ZXAddPicBaseContentView *contentView = [[clazz alloc] initContentView];
         NSAssert(contentView, @"can not init content view");
-        _bubbleView = contentView;
-//        ZXAssetModelMediaType mediaType = self.model.type;
-//        if (mediaType ==ZXAssetModelMediaTypeCustom)
-//        {
-//
-//        }
-        [self.contentView addSubview:_bubbleView];
+        _customContentView = contentView;
+
+//        _customContentView.backgroundColor = [UIColor orangeColor];
+        [self setView:_customContentView cornerRadius:self.imageViewCornerRadius borderWidth:0.5f borderColor:nil];
+        [self.contentView addSubview:_customContentView];
     }
 }
 - (void)layoutSubviews
@@ -99,7 +103,7 @@
 
 - (void)layoutBubbleView
 {
-    self.bubbleView.frame = CGRectMake(0, CGRectGetHeight(self.deleteBtn.frame), CGRectGetWidth(self.contentView.frame)-10, CGRectGetHeight(self.contentView.frame)-CGRectGetHeight(self.deleteBtn.frame));
+    self.customContentView.frame = CGRectMake(0, CGRectGetHeight(self.deleteBtn.frame), CGRectGetWidth(self.contentView.frame)-10, CGRectGetHeight(self.contentView.frame)-CGRectGetHeight(self.deleteBtn.frame));
 }
 
 @end

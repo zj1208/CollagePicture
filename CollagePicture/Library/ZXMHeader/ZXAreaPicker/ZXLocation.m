@@ -1,14 +1,14 @@
 //
-//  HZLocation.m
+//  ZXLocation.m
 //  areapicker
 //
 //  Created by simon on 14-9-9.
 //  Copyright (c) 2014年 simon.com. All rights reserved.
 //
 
-#import "HZLocation.h"
+#import "ZXLocation.h"
 
-@implementation HZLocation
+@implementation ZXLocation
 
 @synthesize country = _country;
 @synthesize state = _state;

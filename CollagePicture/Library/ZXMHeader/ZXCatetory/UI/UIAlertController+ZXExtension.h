@@ -5,8 +5,12 @@
 //  Created by simon on 17/6/27.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  待优化：如果没有用NSLocalizedString传值过来，则使用NSLocalizedString(x, nil)；如果已经用了，则不使用；
+
 // 2018.2.12； 新增预选按钮事件 设置；
 // 2018.3.28； 优化代码；
+// 2018.4.26 , 修改国际本地化问题，去除NSLocalizedString(x, nil)；
+
 
 
 #import <UIKit/UIKit.h>

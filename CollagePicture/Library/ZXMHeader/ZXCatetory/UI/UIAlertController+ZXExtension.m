@@ -34,10 +34,15 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
                           doButtonTitle:(nullable NSString *)doButtonTitle
                               doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
 {
-    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
-    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
-    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
-    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
+//    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
+//    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
+//    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
+//    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
+    
+    NSString *aTitle = title;
+    NSString *aMessage = message;
+    NSString *aCancelButtonTitle = cancelButtonTitle;
+    NSString *aDoButtonTitle =doButtonTitle;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
     
@@ -71,10 +76,15 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
                                  tapBlock:(nullable UIAlertControllerCompletionBlock)tapBlock
 {
     // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
-    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
-    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
-    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
-    NSString *aDestructiveButtonTitle = destructiveButtonTitle?NSLocalizedString(destructiveButtonTitle, nil):nil;
+//    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
+//    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
+//    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
+//    NSString *aDestructiveButtonTitle = destructiveButtonTitle?NSLocalizedString(destructiveButtonTitle, nil):nil;
+    
+    NSString *aTitle = title;
+    NSString *aMessage = message;
+    NSString *aCancelButtonTitle = cancelButtonTitle;
+    NSString *aDestructiveButtonTitle = destructiveButtonTitle;
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:preferredStyle];
     

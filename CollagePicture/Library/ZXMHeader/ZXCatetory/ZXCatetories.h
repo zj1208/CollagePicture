@@ -30,12 +30,16 @@
 #import "UIScrollView+ZXCategory.h"
 #import "UIScrollView+ZXMJRefreshing.h"
 #import "UITextField+ZXHelper.h"
-#import "UIView+ViewHelper.h"
+#import "UIView+XMHelper.h"
 #import "UIView+ZXChangeSize.h"
+#import "UIView+XMAnimation.h"
 #import "UIViewController+NavBarCustom.h"
 #import "UIViewController+MBProgressHUD.h"
 #import "UIViewController+LoginAndAlert.h"
 #import "UIViewController+ZXHelper.h"
+#import "UIWindow+ZXHierarchy.h"
+
+
 
 #import "MBProgressHUD+ZXExtension.h"
 
