@@ -6,10 +6,17 @@
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
 //  5.4  获取view的快照视图替换方法；
+//  2018.5.31 增加获取渐变图方式区分垂直/水平方向 ；
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+//渐变image的渐变方向
+typedef NS_ENUM(NSInteger, ZXGradientImageDirection) {
+    ZXGradientImageDirectionVertical,
+    ZXGradientImageDirectionHorizontal
+};
 
 @interface UIImage (ZXImageHelper)
 
@@ -60,10 +67,14 @@ NS_ASSUME_NONNULL_BEGIN
                               components:(const CGFloat[_Nullable])components
                                    count:(NSInteger)count;
 
-
++ (UIImage *)zh_getGradientImageWithSize:(CGSize)size
+                               locations:(const CGFloat[_Nullable])locations
+                              components:(const CGFloat[_Nullable])components
+                                   count:(NSInteger)count
+                           directionType:(ZXGradientImageDirection)directon;
 
 /**
- 绘制2个位置的渐变颜色的image；根据开始颜色和结束颜色，获取一个image渐变图片；
+ 绘制2个位置的水平渐变颜色的image；根据开始颜色和结束颜色，获取一个image渐变图片；
  利用
  zh_getGradientImageWithSize:(CGSize)size
  locations:(const CGFloat[])locations
@@ -74,8 +85,13 @@ NS_ASSUME_NONNULL_BEGIN
  @param endColor 结束颜色
  @return 背景图片
  */
-+ (UIImage *)zh_getGradientImageFromTowColorComponentWithSize:(CGSize)size startColor:(UIColor *)startColor endColor:(UIColor *)endColor;
++ (UIImage *)zh_getGradientImageFromHorizontalTowColorWithSize:(CGSize)size startColor:(UIColor *)startColor endColor:(UIColor *)endColor;
 
+
+/**
+ 返回2个颜色的垂直渐变image图片
+ */
++ (UIImage *)zh_getGradientImageFromVerticalTowColorWithSize:(CGSize)size topColor:(UIColor *)topColor bottomColor:(UIColor *)bottomColor;
 
 /**
  把原图image重新绘画到指定size的上下文中；

@@ -72,7 +72,7 @@
     
     self.collectionView.uploadPicBtnActionBlock = ^(NSIndexPath *editPath)
     {
-          [self.imagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+          [self.imagePickerVCManager zxPresentActionSheetToImagePickerWithSourceController:self];
     };
 }
 
@@ -107,8 +107,8 @@
 - (void)zxImagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info withEditedImage:(UIImage *)image
 {
     NSData *imageData = [WYUtility zipNSDataWithImage:image];
-    [self zhHUD_showWithStatus:@"正在上传"];
-    self.navigationController.navigationBar.userInteractionEnabled = NO;
+    [MBProgressHUD zx_showLoadingWithStatus:@"正在上传" toView:self.view];
+  self.navigationController.navigationBar.userInteractionEnabled = NO;
     
     WS(weakSelf);
     [[AliOSSUploadManager sharedInstance]putOSSObjectSTSTokenInPublicBucketWithUserId:USER_TOKEN fileCatalogType:OSSFileCatalog_uploadProduct uploadingData:imageData progress:nil singleComplete:^(id imageInfo,NSString*imagePath,CGSize imageSize) {
@@ -124,24 +124,23 @@
          photo.width = imageSize.width;
          photo.height = imageSize.height;
  
- 
-        [weakSelf zhHUD_showSuccessWithStatus:@"上传成功"];
-        self.navigationController.navigationBar.userInteractionEnabled = YES;
-        if (_editIndexPath.section ==0)
+        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+        weakSelf.navigationController.navigationBar.userInteractionEnabled = YES;
+        if (weakSelf.editIndexPath.section ==0)
         {
-            [_section1MArray addObject:photo];
+            [weakSelf.section1MArray addObject:photo];
         }
         else
         {
-            [_section2MArray addObject:photo];
+            [weakSelf.section2MArray addObject:photo];
         }
         [weakSelf.collectionView reloadData];
         //这里处理上传图片
         
     } failure:^(NSError *error) {
         
-        [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
-        self.navigationController.navigationBar.userInteractionEnabled = YES;
+      [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
+        weakSelf.navigationController.navigationBar.userInteractionEnabled = YES;
         
     }];
 }

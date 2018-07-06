@@ -212,7 +212,7 @@
 
 
 //获取mac地址
-+ (NSString *)getMacAddress
++ (nullable NSString *)getMacAddress
 {
     int mib[6];
     size_t len;
@@ -351,7 +351,7 @@
 
 
 // 获取每个cpu的使用比例
-+ (NSArray *)getPerCPUUsage
++ (nullable NSArray *)getPerCPUUsage
 {
     processor_info_array_t _cpuInfo, _prevCPUInfo = nil;
     mach_msg_type_number_t _numCPUInfo, _numPrevCPUInfo = 0;

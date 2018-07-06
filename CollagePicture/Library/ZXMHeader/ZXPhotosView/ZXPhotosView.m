@@ -59,10 +59,11 @@
         self.pagingEnabled = NO;
         self.autoLayoutWithWeChatSytle = YES;
         self.photosState = ZXPhotosViewStateDidCompose;
-
+    
         self.cellMArray = [NSMutableArray array];
 //        self.backgroundColor = [UIColor orangeColor];
 //        self.contentInset = UIEdgeInsetsMake(5.f, 0.f, 5.f, 0.f);
+//        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -84,7 +85,7 @@
 
 
 
-
+// 没用
 + (instancetype)photosViewWithImages:(NSMutableArray *)images
 {
     return [[self alloc] initPhotosViewWithImages:images];
@@ -93,7 +94,7 @@
 
 - (instancetype)initPhotosViewWithImages:(NSMutableArray *)images
 {
-    if (self == [super init])
+    if (self = [super init])
     {
         self.images = images;
     }
@@ -197,10 +198,10 @@
     _photoModelArray  = photoModelArray;
     // 设置图片状态
     self.photosState = ZXPhotosViewStateDidCompose;
-    // 移除添加图片按钮
-    [self.addImageButton removeFromSuperview];
+
     //获取最多显示几张图片
     NSInteger photoCount = self.photoMaxCount<photoModelArray.count?self.photoMaxCount:photoModelArray.count;
+//    NSInteger photoCount = self.photoMaxCount;
 
     // 当UIButton不够的时候，才需要创建；
     while (self.cellMArray.count < photoCount) {
@@ -209,25 +210,26 @@
         btn.imageView.contentMode = UIViewContentModeScaleAspectFill;
         btn.contentHorizontalAlignment= UIControlContentHorizontalAlignmentFill;
         btn.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
-
+        [btn addTarget:self action:@selector(clickPhotoAction:) forControlEvents:UIControlEventTouchUpInside];
+        if (self.photoModelItemViewBlock)
+        {
+            self.photoModelItemViewBlock(btn);
+        }
         [self addSubview:btn];
         [self.cellMArray addObject:btn];
     }
 
-    
+//    __weak __typeof(self)weakSelf = self;
     [self.cellMArray enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        
         UIButton *photoView = (UIButton *)obj;
-        [photoView addTarget:self action:@selector(clickPhotoAction:) forControlEvents:UIControlEventTouchUpInside];
         photoView.tag = idx;
-        if (_photoModelItemViewBlock)
+
+        if (idx < photoModelArray.count)
         {
-            _photoModelItemViewBlock(photoView);
-        }
-        if (idx < _photoModelArray.count) {
             photoView.hidden = NO;
             // 设置图片
-            id photoItem = [_photoModelArray objectAtIndex:idx];
+            id photoItem = [photoModelArray objectAtIndex:idx];
 
             if ([photoItem isKindOfClass:[ZXPhoto class]])
             {
@@ -255,7 +257,7 @@
         [self.delegate zx_photosView:self didSelectWithIndex:sender.tag photosArray:_photoModelArray userInfo:_userInfo];
     }
 }
-
+/*
 - (void)setImages:(NSMutableArray<UIImage *> *)images
 {
     // 图片大于规定数字（取前九张）
@@ -266,8 +268,8 @@
     };
     _images = images;
   
-    // 移除添加图片按钮
-    [self.addImageButton removeFromSuperview];
+//    // 移除添加图片按钮
+//    [self.addImageButton removeFromSuperview];
     
     self.photosState = ZXPhotosViewStateWillCompose;
     NSInteger imageCount = images.count;
@@ -287,13 +289,15 @@
 //        photoView.photosView = self;
 //        [self addSubview:photoView];
 //    }
+
+    __weak __typeof(self)weakSelf = self;
     
     [self.cellMArray enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         UIButton *photoView = (UIButton *)obj;
         photoView.tag = idx;
         
-        if (idx < _images.count) {
+        if (idx < weakSelf.images.count) {
             photoView.hidden = NO;
             [photoView setBackgroundColor:[UIColor orangeColor]];
             [photoView setImage:[images objectAtIndex:idx] forState:UIControlStateNormal];
@@ -304,35 +308,6 @@
         
     }];
 
-//    // 设置图片
-//    for(int i = 0; i < self.subviews.count; i++)
-//    {
-//        PYPhotoView *photoView = self.subviews[i];
-//        // 设置标记
-//#if DEBUG
-//        NSCAssert([photoView isKindOfClass:[PYPhotoView class]], @"The photoView must be PYPhotoView Class");
-//#endif
-//        photoView.tag = i;
-//        photoView.images = images;
-//        if (i < imageCount) {
-//            photoView.hidden = NO;
-//            // 设置图片
-//            photoView.image = images[i];
-//        }else{
-//            photoView.hidden = YES;
-//        }
-//    }
-    
-//    // 设置contentSize和 self.size
-//    // 取出size
-//    CGSize size = [self sizeWithPhotoCount:self.images.count photosState:self.photosState];
-//    self.contentSize = size;
-//    CGFloat width = size.width + self.py_x > PYScreenW ? PYScreenW - self.py_x : size.width;
-//    self.py_size = CGSizeMake(width, size.height);
-//    
-//    // 刷新
-//    [self layoutSubviews];
-    
     if (_images.count ==0)
     {
         if (![self.promptLab isDescendantOfView:self])
@@ -346,7 +321,9 @@
         self.promptLab.hidden = YES;
     }
 }
+*/
 
+// 每次需要重新布局
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -374,16 +351,18 @@
     //调整图片位置
     __block CGFloat zx_x;
     __block CGFloat zx_y;
+    __weak __typeof(self)weakSelf = self;
     [self.cellMArray enumerateObjectsUsingBlock:^(__kindof UIButton * _Nonnull btn, NSUInteger idx, BOOL * _Nonnull stop) {
         
         NSInteger rowIndex = idx / maxCol;
         NSInteger columnIndex = idx % maxCol;
-        zx_x = columnIndex *(_photoWidth+_photoMargin);
-        zx_y = rowIndex *(_photoHeight + _photoMargin);
-        btn.frame = CGRectMake(floorf(zx_x), floorf(zx_y),floorf( _photoWidth), floorf(_photoHeight));
+        zx_x = columnIndex *(weakSelf.photoWidth+weakSelf.photoMargin);
+        zx_y = rowIndex *(weakSelf.photoHeight + weakSelf.photoMargin);
+        btn.frame = CGRectMake(floorf(zx_x), floorf(zx_y),floorf(weakSelf.photoWidth), floorf(weakSelf.photoHeight));
         
     }];
     
+    /*
     //设置发布图片时 额外的button位置，scrollView的size；
     if (self.images.count < self.imagesMaxCountWhenWillCompose && self.photosState == ZXPhotosViewStateWillCompose) {
         
@@ -398,15 +377,8 @@
 
         self.addImageButton.frame = CGRectMake(floorf(zx_x), floorf(zx_y), floorf(_photoWidth), floorf(_photoHeight));
         
-//        [self.promptLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//            
-//            make.centerY.mas_equalTo(_addImageButton.mas_centerY);
-//            make.left.mas_equalTo(_addImageButton.mas_right).with.offset(12);
-//            
-//        }];
-
     }
-    
+    */
     // 设置contentSize和 self.size
     // 取出size
     CGSize size = [self sizeWithPhotoCount:photoCount photosState:self.photosState];
@@ -417,20 +389,9 @@
 }
 
 
-//- (void)updateConstraints
-//{
-//    [super updateConstraints];
-//    [self.promptLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.centerY.mas_equalTo(_addImageButton.mas_centerY);
-//        make.left.mas_equalTo(_addImageButton.mas_right).with.offset(12);
-//        
-//    }];
-//}
 
-
-
-/** 添加图片按钮 */
+/*
+//添加图片按钮
 - (UIButton *)addImageButton
 {
     if (!_addImageButton) {
@@ -459,7 +420,8 @@
 }
 
 
-/** 点击添加图片调用此方法 */
+
+//点击添加图片调用此方法
 - (void)addImageDidClicked:(id)sender
 {
 //    发出添加图片的通知
@@ -473,7 +435,12 @@
         [self.delegate photosView:self didAddImageClickedWithImages:self.images];
     }
 }
-
+ 
+ - (void)reloadDataWithImages:(NSMutableArray *)images
+ {
+ [self setImages:_images];
+ }
+*/
 
 
 - (CGSize)sizeWithPhotoCount:(NSInteger)count  photosState:(ZXPhotosViewState)state
@@ -531,10 +498,22 @@
 
 
 
-- (void)reloadDataWithImages:(NSMutableArray *)images
+
+
+
+// 处理事件传递，当点击scrollView的时候，不应该反馈这个事件传递是有效的；点击scrollView的空白区域应该让父视图自己响应事件；
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    [self setImages:_images];
+    return  CGRectContainsPoint(self.bounds, point);
 }
 
-
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UIView *view = [super hitTest:point withEvent:event];
+    if ([view isEqual:self])
+    {
+        return nil;
+    }
+    return view;
+}
 @end

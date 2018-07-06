@@ -28,7 +28,7 @@
 
 - (instancetype)initPhotoWithOriginalUrl:(nullable NSString *)originalUrl
 {
-    if (self == [super init])
+    if (self = [super init])
     {
         self.original_pic = originalUrl;
     }
@@ -38,7 +38,7 @@
 
 
 - (instancetype)initWithImage:(nullable UIImage *)image {
-    if (self == [super init])
+    if (self = [super init])
     {
         self.image = image;
     }

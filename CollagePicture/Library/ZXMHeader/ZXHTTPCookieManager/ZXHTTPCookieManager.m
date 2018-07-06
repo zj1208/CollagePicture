@@ -75,9 +75,8 @@ response.allHTTPHeaderFields = {
     Etag = W/"5a420d37-7c7";
 }
  */
-- (NSArray <NSHTTPCookie *> *)handleResponseHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL
+- (nullable NSArray <NSHTTPCookie *> *)handleResponseHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL
 {
-    
     NSArray *cookiesArray = [NSHTTPCookie cookiesWithResponseHeaderFields:headerFields forURL:URL];
     if (cookiesArray && cookiesArray.count>0)
     {

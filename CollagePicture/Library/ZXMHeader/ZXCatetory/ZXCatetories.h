@@ -33,10 +33,10 @@
 #import "UIView+XMHelper.h"
 #import "UIView+ZXChangeSize.h"
 #import "UIView+XMAnimation.h"
-#import "UIViewController+NavBarCustom.h"
+#import "UIViewController+XMNavBarCustom.h"
 #import "UIViewController+MBProgressHUD.h"
-#import "UIViewController+LoginAndAlert.h"
-#import "UIViewController+ZXHelper.h"
+#import "UIViewController+XMLoginAndAlert.h"
+#import "UIViewController+XMHelper.h"
 #import "UIWindow+ZXHierarchy.h"
 
 

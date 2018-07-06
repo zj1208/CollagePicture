@@ -11,11 +11,16 @@
 //  待优化：（1）如果没有文件目录;文件名末尾默认以jpg结尾；
 //    （2）如果视频目录，则mp4结尾；
 
+//  2018.3.30 添加注释
+//  2018.4.08；新增图片按时间排序
+//  2018.5.25；block循坏引用
+
+
 
 #import <Foundation/Foundation.h>
 #import <AliyunOSSiOS/OSSService.h>
 #import "ZXPhoto.h"
-// 2018.3.30 添加注释
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -174,8 +179,9 @@ typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
  eg: http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/2/sp/93a0897ab5823be48d812025abd427eb1522397528846.jpg;
  */
 //+ (NSArray *)sortAliOSSImage_UserID_time_WithModelArr:(NSArray<__kindof AliOSSPicUploadModel *> *)array;
-//+ (NSArray *)sortAliOSSImage_UserID_time_WithPhotoModelArr:(NSArray<__kindof ZXPhoto*> *)array;
++ (NSArray *)sortAliOSSImage_UserID_time_WithPhotoModelArr:(NSArray<__kindof ZXPhoto*> *)array;
 + (NSArray *)sortAliOSSImage_UserID_time_WithStringArr:(NSArray<__kindof NSString *> *)array;
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -199,11 +205,11 @@ self.imagePickerVCManager = pickerVCManager;
     } singleComplete:^(id model, NSString *imageName, NSNumber *imgId) {
         
         //这里处理上传图片
-        [weakSelf zhHUD_hideHUDForView:self.view];
-        
+        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+
     } failure:^(NSError *error) {
         
-        [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
+        [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
     }];
 }
 

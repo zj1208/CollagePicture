@@ -5,9 +5,11 @@
 //  Created by simon on 17/2/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  注释： 动态添加标签的collectionView
+//  简介： 动态添加标签的collectionView
+
 //  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
 //  2018.2.11；修改在达到最大数量时候删除的bug；
+//  2018.6.07  修改高度计算；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
@@ -125,7 +127,7 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
  @param data 数组
  @return 高度
  */
-- (CGFloat)getCellHeightWithContentData:(NSArray *)data;
+- (CGFloat)getCellHeightWithContentData:(nullable NSArray *)data;
 
 @end
 

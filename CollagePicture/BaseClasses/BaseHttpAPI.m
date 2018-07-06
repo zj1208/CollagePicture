@@ -11,7 +11,8 @@
 #import "UserInfoUDManager.h"
 #import "WYUserDefaultManager.h"
 #import "AFHTTPSessionManager+Synchronous.h"
-
+#import <WebKit/WebKit.h>
+#import "ZXHTTPCookieManager.h"
 
 
 @implementation BaseHttpAPI
@@ -53,6 +54,8 @@ NSInteger const kAPPErrorCode_Token = 5001;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval =10.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+//    manager.requestSerializer.HTTPShouldHandleCookies = NO;
+
     WS(weakSelf);
     [manager POST:@"/m" parameters:postDictionary progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -99,17 +102,23 @@ NSInteger const kAPPErrorCode_Token = 5001;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval =10.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+//    manager.requestSerializer.HTTPShouldHandleCookies = NO;
+
 //    NSLog(@"%@",manager.requestSerializer.HTTPRequestHeaders);
     WS(weakSelf);
     [manager GET:@"/m" parameters:postDictionary progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        // 响应的不可能有cookie的
 //        NSLog(@"%@",task.response.URL);
 //        NSHTTPURLResponse *response =  (NSHTTPURLResponse *)task.response;
-//        NSLog(@"response.allHeaderFields=%@",response.allHeaderFields);
-//        NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:baseURL];
+//        NSDictionary *allHeaderFields = response.allHeaderFields;
+//        NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:task.response.URL];
 //        NSLog(@"cookies =%@",cookies);
+//        NSString *cookie = [allHeaderFields valueForKey:@"Set-Cookie"];
+//        NSString *statusCode = [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode];
+//        NSLog(@"response.allHeaderFields=%@,cookie = %@,statusCode = %@",allHeaderFields,cookie,statusCode);
 
         [weakSelf requestSuccessDealWithResponseObeject:responseObject success:success failure:failure];
         
@@ -148,8 +157,12 @@ NSInteger const kAPPErrorCode_Token = 5001;
 //       NSString *message =[NSString stringWithFormat:@"新token:%@,\n 老token：%@",token,[UserInfoUDManager getToken]];
 //       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"token变了" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
 //       [alert show];
-       [self requestHeaderFieldsWithCookieToken:token];
+//       [self requestHeaderFieldsWithCookieToken:token];
        [UserInfoUDManager setToken:token];
+    }
+    else
+    {
+ 
     }
     
     
@@ -188,6 +201,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
     }
 }
 
+// 其实用了AFNetworking之后，self own save；
 - (void)requestHeaderFieldsWithCookieToken:(NSString *)token
 {
     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
@@ -202,8 +216,36 @@ NSInteger const kAPPErrorCode_Token = 5001;
     [cookieProperties setObject:date forKey:NSHTTPCookieExpires];
     NSHTTPCookie *cookie_token = [NSHTTPCookie cookieWithProperties:cookieProperties];
     [[NSHTTPCookieStorage sharedHTTPCookieStorage]setCookie:cookie_token];
-//    po [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies
+////    po [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies
+
+    if (@available(iOS 11.0, *))
+    {
+        WKHTTPCookieStore *cookieStore = [WKWebsiteDataStore defaultDataStore].httpCookieStore;
+        // 这里获取到的是最新的cookie的value = 最新的token
+//        [cookieStore addObserver:self];
+        NSHTTPCookie *cookie = [[ZXHTTPCookieManager sharedInstance]getHTTPCookieFromNSHTTPCookieStorageWithCookieName:@"mat"];
+        NSString *str = [NSString stringWithFormat:@"cookie =%@, mat = %@",cookie,token];
+        NSLog(@"%@",str);
+        __block  WKHTTPCookieStore *SELF  =  cookieStore;
+        // 虽然存储很快成功，但是获取getAllCookies有时候不对；
+        [cookieStore setCookie:cookie completionHandler:^{
+            NSLog(@"cookie已经存储到WKWebView存储器");
+            
+            // 获取回来的cookie，有时候是上面最新的token，有时候是以前老的； 连数据线的时候，肯定是最新的；
+//            为什么设置最新cookie成功了，再去getAllCookies获取，怎么有时候还不是最新cookie的token呢；好奇怪啊，苹果bug；难道是获取缓存？还是设置方法的block并不是回调真正存储成功；
+            [SELF getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
+                
+                NSLog(@"cookies =%@",cookies);
+//                NSHTTPCookie *cookie = [[ZXHTTPCookieManager sharedInstance]getHTTPCookieFromCookesArray:cookies withCookieName:@"mat"];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:token message:cookie.description delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                [alert show];
+
+            }];
+        }];
+    }
 }
+
+
 
 
 - (NSError *)getErrorFromError:(NSError *)error
@@ -211,30 +253,24 @@ NSInteger const kAPPErrorCode_Token = 5001;
     NSString *title = nil;
     switch (error.code)
     {
-        case NSURLErrorCancelled:title = @"您的请求被取消了";break;
-        case NSURLErrorBadURL:title = @"您的请求URL错误";break;
-        case NSURLErrorUnsupportedURL:title =@"您的请求URL格式有误"; break;//-1002
-        case NSURLErrorCannotFindHost:title =@"没有找到服务器";break;//-1003
-        case NSURLErrorCannotConnectToHost:title =@"未能连接到服务器";  break; //Could not connect to the server -1004
-//        case NSURLErrorNotConnectedToInternet:title =@"您没有连接网络";  break;//The Internet connection appears to be offline.-1009
-//        case NSURLErrorTimedOut:title =@"您的网络有问题，请稍后重试";  break;//The request timed out -1001
-//        case NSURLErrorDNSLookupFailed:title = @"很抱歉,我们服务器发生错误\n域名系统查找失败";break; //-1006
-//        case NSURLErrorBadServerResponse:title =@"服务器发生错误";  break;//-1011
-//            
-//        case NSURLErrorNetworkConnectionLost:title = @"网络连接中断";break;//The network connection was lost -1005
+        case NSURLErrorCancelled:title = NSLocalizedString(@"您的请求被取消了", nil);break;
+        case NSURLErrorBadURL:title = NSLocalizedString(@"您的请求URL错误", nil);break;
+        case NSURLErrorUnsupportedURL:title = NSLocalizedString(@"您的请求URL格式有误", nil); break;//-1002
+        case NSURLErrorCannotFindHost:title = NSLocalizedString(@"没有找到服务器", nil);break;//-1003
+        case NSURLErrorCannotConnectToHost:title = NSLocalizedString(@"未能连接到服务器", nil);  break; //Could not connect to the server -1004
 
-        case NSURLErrorNetworkConnectionLost:title = @"老板，你的网断了，检查下哇";break;//The network connection was lost -1005
-        case NSURLErrorNotConnectedToInternet:title =@"老板，你的网断了，检查下哇";  break;//The Internet connection appears to be offline.-1009
-        case NSURLErrorTimedOut:title =@"网络有点不稳定呀~";  break;//The request timed out -1001
-        case NSURLErrorDNSLookupFailed:title = @"程序开小差了，请稍后再试哦";break; //-1006
-        case NSURLErrorBadServerResponse:title =@"程序开小差了，请稍后再试哦";  break;//-1011
+        case NSURLErrorNetworkConnectionLost:title = NSLocalizedString(@"老板，你的网断了，检查下哇", @"网络连接中断");break;//The network connection was lost -1005
+        case NSURLErrorNotConnectedToInternet:title = NSLocalizedString(@"老板，你的网断了，检查下哇", @"您没有连接网络");  break;//The Internet connection appears to be offline.-1009
+        case NSURLErrorTimedOut:title = NSLocalizedString(@"网络有点不稳定呀~", @"您的网络有问题，请稍后重试");  break;//The request timed out -1001
+        case NSURLErrorDNSLookupFailed:title = NSLocalizedString(@"程序开小差了，请稍后再试哦", @"很抱歉,我们服务器发生错误\n域名系统查找失败");break; //-1006
+        case NSURLErrorBadServerResponse:title = NSLocalizedString(@"程序开小差了，请稍后再试哦", @"服务器发生错误");  break;//-1011
     
 //            NSCocoaErrorDomain
-        case NSURLErrorCannotDecodeContentData:title =@"unacceptable content-type: text/javascript";
+        case NSURLErrorCannotDecodeContentData:title = NSLocalizedString(@"unacceptable content-type: text/javascript", nil);
             break; //-1016
         //"JSON text did not start with array or object and option to allow fragments not set."
-        case 3840:title = @"程序开小差了，请稍后再试哦"; break; //502
-        case NSURLErrorCallIsActive:title =@"网络请求被电话中断，请稍后再试哦";//-1019
+        case 3840:title = NSLocalizedString(@"程序开小差了，请稍后再试哦", nil); break; //502
+        case NSURLErrorCallIsActive:title = NSLocalizedString(@"网络请求被电话中断，请稍后再试哦", nil); break;//-1019
         default: return error;
             break;
     }

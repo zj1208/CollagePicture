@@ -142,7 +142,7 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
     
     NSString *mobilePhoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
 
-    if (![UITextField zh_validatePhoneNumber:mobilePhoneNumber])
+    if (![UITextField xm_validatePhoneNumber:mobilePhoneNumber])
     {
         [MBProgressHUD zx_showError:@"请您输入正确的手机号码" toView:nil];
         return;
@@ -204,7 +204,7 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
 {
     NSString *mobilePhoneNumer = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
     NSString *passwordError = [UITextField zh_TextFieldPassword:self.passwordField.text];
-    if (![UITextField zh_validatePhoneNumber:mobilePhoneNumer])
+    if (![UITextField xm_validatePhoneNumber:mobilePhoneNumer])
     {
         [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }

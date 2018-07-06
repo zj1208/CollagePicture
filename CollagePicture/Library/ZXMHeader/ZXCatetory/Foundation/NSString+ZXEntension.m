@@ -53,8 +53,9 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 
 + (NSString *)getDiffentTime:(NSTimeInterval)cha
 {
-    NSString *timeString;
-    if (cha/3600<1) //小于1小时
+    NSString *timeString = @"";
+    // 小于1小时
+    if ((cha/SECONDS_PER_HOUR)<1)
     {
         if (cha/60<1)
         {
@@ -67,25 +68,26 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
             timeString = [NSString stringWithFormat:@"%@分钟前",timeString];
         }
     }
-    if (cha/3600>=1 && cha/3600<24)
+//    大于等于1小时，小于24小时
+    else if ((cha/SECONDS_PER_HOUR)>=1 && (cha/SECONDS_PER_HOUR)<24)
     {
         timeString = [NSString stringWithFormat:@"%f",cha/3600];
         timeString = [timeString substringToIndex:timeString.length-7];
         timeString = [NSString stringWithFormat:@"%@小时前",timeString];
     }
-    if (cha/SECONDS_PER_DAY>=1 && cha/SECONDS_PER_DAY <30)
+    else if (cha/SECONDS_PER_DAY>=1 && cha/SECONDS_PER_DAY <30)
     {
         timeString = [NSString stringWithFormat:@"%f",cha/SECONDS_PER_DAY];
         timeString = [timeString substringToIndex:timeString.length-7];
         timeString = [NSString stringWithFormat:@"%@天前",timeString];
     }
-    if (cha/SECONDS_PER_DAY>=30 && cha/SECONDS_PER_DAY <365)
+    else if (cha/SECONDS_PER_DAY>=30 && cha/SECONDS_PER_DAY <365)
     {
         timeString = [NSString stringWithFormat:@"%f",cha/SECONDS_PER_MONTH];
         timeString = [timeString substringToIndex:timeString.length-7];
         timeString = [NSString stringWithFormat:@"%@个月前",timeString];
     }
-    if(cha/SECONDS_PER_DAY>=365)
+    else
     {
         timeString = [NSString stringWithFormat:@"%f",cha/SECONDS_PER_YEAR];
         timeString = [timeString substringToIndex:timeString.length-7];

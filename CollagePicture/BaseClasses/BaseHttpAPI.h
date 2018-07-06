@@ -5,6 +5,8 @@
 //  Created by 朱新明 on 15/6/4.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
+// 2017.12.22 调试cookie
+// 2018.5.09  优化代码
 
 #import <Foundation/Foundation.h>
 #import "PageModel.h"
@@ -13,8 +15,8 @@
 
 
 typedef void (^CompleteBlock)(id data);
-typedef void (^ErrorBlock)(NSError* error);
-typedef void (^CompletePageBlock)(id data,PageModel* pageModel);
+typedef void (^ErrorBlock)(NSError *error);
+typedef void (^CompletePageBlock)(id data,PageModel *pageModel);
 typedef void (^CompleteListBlock)(id data,NSInteger pageNo,NSInteger totalPage);
 
 

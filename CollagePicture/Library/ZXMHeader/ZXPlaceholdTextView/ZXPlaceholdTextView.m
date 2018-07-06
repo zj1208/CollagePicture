@@ -72,34 +72,44 @@
     [self setupViews];
 }
 
+
 - (void)setupViews
 {
-    UILabel *placeholderLabel = [[UILabel alloc] init];
-    placeholderLabel.numberOfLines = 0;
-    placeholderLabel.font = self.font;
-    [self addSubview:placeholderLabel];
-    
-    _placeholderLabel = placeholderLabel;
+    [self addSubview:self.placeholderLabel];
     // 默认的占位文字颜色
     _placeholderLabel.textColor =self.placeholderColor;
-    
     [self addConstraint:_placeholderLabel toSuperviewItem:self];
-
 }
+
+
+- (UILabel *)placeholderLabel
+{
+    if (!_placeholderLabel)
+    {
+        UILabel *placeholderLabel = [[UILabel alloc] init];
+        placeholderLabel.numberOfLines = 0;
+        placeholderLabel.font = self.font;
+        _placeholderLabel = placeholderLabel;
+    }
+    return _placeholderLabel;
+}
+
 
 - (void)addConstraint:(UIView *)item toSuperviewItem:(UIView *)superView
 {
     item.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1 constant:10];
-    [self addConstraint:constraint1];
+//    [self addConstraint:constraint1];
+    constraint1.active = YES;
     
     
     NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeft multiplier:1 constant:5];
-    [self addConstraint:constraint3];
-    
+//    [self addConstraint:constraint3];
+    constraint3.active = YES;
+
     NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    [self addConstraint:constraint4];
-    
+//    [self addConstraint:constraint4];
+    constraint4.active = YES;
 }
 
 - (void)layoutSubviews
@@ -188,7 +198,6 @@
             }
         }
         _textDidChangeBlock(self,self.maxCharacters - [self.text length]);
- 
     }
 
 }

@@ -284,11 +284,12 @@
     //SDK的所有操作都会返回一个OSSTask，您可以为这个task设置一个延续动作，等待其异步完成，也可以通过调用waitUntilFinished阻塞等待其完成
     
     NSAssert(_client, @"没有初始化凭证");
+    __weak typeof (self) weakSelf = self;
 //    NSLog(@"Thread:%@",[NSThread currentThread]);
     dispatch_queue_t currentQueue = dispatch_queue_create("my.queue", DISPATCH_QUEUE_CONCURRENT);
     dispatch_async(currentQueue, ^{
         
-        OSSTask *putTask = [_client putObject:put];
+        OSSTask *putTask = [weakSelf.client putObject:put];
         [putTask continueWithBlock:^id _Nullable(OSSTask * _Nonnull task) {
             if (!task.error)
             {
@@ -296,10 +297,10 @@
                 //            NSLog(@"SuccessThread:%@",[NSThread currentThread]);
                 
                 NSLog(@"uploadObjectSuccess");
-                NSString *picString =[NSString stringWithFormat:@"http://%@.%@.aliyuncs.com/%@",_bucketName, kOSS_region,put.objectKey];
+                NSString *picString =[NSString stringWithFormat:@"http://%@.%@.aliyuncs.com/%@",weakSelf.bucketName, kOSS_region,put.objectKey];
                 NSLog(@"%@",picString);
                 
-                if (_getPicInfo)
+                if (weakSelf.getPicInfo)
                 {
                     //          signleCompleteBlock(nil,picString,nil);
                     [AliOSSPicInfoRequest ossGetPicInfoWithBasePicURL:picString sucess:^(id  _Nullable data, CGSize picSize, NSError * _Nullable error) {
@@ -309,7 +310,7 @@
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 
                                 NSLog(@"获取图片信息成功，info:%@",data);
-                                _singleCompletedBlock (data,picString,picSize);
+                                weakSelf.singleCompletedBlock (data,picString,picSize);
                             });
                         }
                     }];
@@ -318,7 +319,7 @@
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        _singleCompletedBlock (nil,picString,CGSizeZero);
+                        weakSelf.singleCompletedBlock (nil,picString,CGSizeZero);
                     });
                 }
             }
@@ -327,7 +328,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                      //应该系分网络好不好；
                     NSLog(@"upload object failed,error:%@,code =%ld",task.error,task.error.code); //请求超时是 6；
-                    NSError * error = [self customErrorWithObject:@"上传失败，请稍后再试！" errorCode:task.error.code userInfoErrorCode:nil];
+                    NSError * error = [weakSelf customErrorWithObject:@"上传失败，请稍后再试！" errorCode:task.error.code userInfoErrorCode:nil];
 
                     failure (error);
                 });
@@ -439,6 +440,7 @@
     NSLog(@"=====\n%@\n====\n%@\n",array,arraySort);
     return arraySort;
 }
+ */
 +(NSArray *)sortAliOSSImage_UserID_time_WithPhotoModelArr:(NSArray<__kindof ZXPhoto*> *)array
 {
     NSMutableArray* arraySort = [NSMutableArray arrayWithArray:array];
@@ -479,7 +481,6 @@
     NSLog(@"=====\n%@\n====\n%@\n",array,arraySort);
     return arraySort;
 }
- */
 + (NSArray *)sortAliOSSImage_UserID_time_WithStringArr:(NSArray<__kindof NSString *> *)array
 {
     NSMutableArray* arraySort = [NSMutableArray arrayWithArray:array];

@@ -180,7 +180,7 @@ static NSString *const  ud_deviceToken = @"deviceToken";
      {
         return;
      }
-     [self.window.rootViewController zh_presentLoginController];
+     [self.window.rootViewController xm_presentLoginController];
  }
  
  - (void)changeDomain:(id)notification

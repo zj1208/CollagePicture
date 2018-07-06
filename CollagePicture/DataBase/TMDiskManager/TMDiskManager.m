@@ -23,14 +23,29 @@
 
 - (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key
 {
+    [self setPropertyImplementationValue:value forKey:key postNotification:YES];
+}
+
+- (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key postNotification:(BOOL)flag
+{
     if (!key)
     {
         return;
     }
-    id object = [self getData]; 
+    id object = [self getData];
+    if (!object)
+    {
+        return;
+    }
     [object setValue:value forKey:key];
-    [self setData:object];
+    [[TMDiskCache sharedCache]removeObjectForKey:self.objectKey];
+    [[TMDiskCache sharedCache] setObject:object forKey:self.objectKey];
+    if (flag)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:self.objectKey object:nil];
+    }
 }
+
 
 
 - (void)setData:(id)object
@@ -41,7 +56,7 @@
     }
     [[TMDiskCache sharedCache]removeObjectForKey:self.objectKey];
     [[TMDiskCache sharedCache] setObject:object forKey:self.objectKey];
-    [[NSNotificationCenter defaultCenter]postNotificationName:self.objectKey object:self];
+//    [[NSNotificationCenter defaultCenter]postNotificationName:self.objectKey object:self];
 }
 
 - (id)getData

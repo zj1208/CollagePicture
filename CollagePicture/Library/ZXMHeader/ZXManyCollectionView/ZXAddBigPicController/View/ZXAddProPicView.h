@@ -6,6 +6,8 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //  添加商铺图片的子view
 
+//  5.8   优化代码
+
 #import <UIKit/UIKit.h>
 
 @protocol AddProductPicViewDelegate <NSObject>

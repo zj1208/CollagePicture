@@ -6,6 +6,7 @@
 //  Copyright © 2016年 simon. All rights reserved.
 //
 //  2018.3.26 修改固定路径为类目获取；
+//  2018.5.10 优化代码
 
 #import "BaseHttpAPI.h"
 #import "AFNetworking.h"
@@ -46,7 +47,7 @@ typedef void (^ErrorBlock)(NSError* error);
 //检查itunes版本数据－请求
 - (void)checkVersionSuccessWithAppId:(NSString *)appId success:(CompleteBlock)success failure:(ErrorBlock)failure;
 
-- (NSString *)getAppVersionFromItunes:(NSString *)appId;
+- (nullable NSString *)getAppVersionFromItunes:(NSString *)appId;
 
 //检查版本更新－包括请求业务
 -(void)checkVersionUpdateWithController:(UIViewController *)controller;

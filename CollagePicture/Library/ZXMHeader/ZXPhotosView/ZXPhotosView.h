@@ -5,6 +5,10 @@
 //  Created by simon on 17/1/6.
 //  Copyright © 2017年 simon. All rights reserved.
 //
+//  简介： 9宫格/4张图片样式/单张比例缩放图片 等如同微信样式的图片集展示；
+//  待优化：滑动时候有卡顿现象，一卡的时候，能轻微看到PhotosView的图片排版；
+
+//  2018.5.30  优化点击scrollView区域中的空白区域，无法让父视图传递事件给自己的bug；
 
 #import <UIKit/UIKit.h>
 #import "ZXPhoto.h"
@@ -18,7 +22,6 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
     ZXPhotosViewStateDidCompose = 1     // 已发布
 };
 
-//typedef void (^TextDidChangeBlock)(ZXPlaceholdTextView *textView,NSUInteger remainCount);
 
 
 @class ZXPhotosView;
@@ -44,6 +47,7 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
 - (void)zx_photosView:(ZXPhotosView *)photosView didSelectWithIndex:(NSInteger)index photosArray:( NSArray*)photos;
 
 - (void)zx_photosView:(ZXPhotosView *)photosView didSelectWithIndex:(NSInteger)index photosArray:(NSArray*)photos userInfo:(nullable id)userInfo;
+
 @end
 
 
@@ -51,7 +55,7 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
 @interface ZXPhotosView : UIScrollView
 
 //代理
-@property (nonatomic, weak)id<ZXPhotosViewDelegate>delegate;
+@property (nonatomic, weak) id<ZXPhotosViewDelegate>delegate;
 
 /** 所有图片的状态（默认为已发布状态） */
 @property (nonatomic, assign) ZXPhotosViewState photosState;
@@ -66,8 +70,15 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
 /** 本地相册图片(注意：存的是UIImage)数组(默认最多为九张,当传入图片数组长度超过九张时，取前九张) */
 @property (nonatomic, strong, nullable) NSMutableArray *images;
 
+// 目前没用
+
 /** 当图片上传前，最多上传的张数，默认为9，用于ZXPhotosViewStateWillCompose*/
+
 @property (nonatomic, assign) NSInteger imagesMaxCountWhenWillCompose;
+
+// 注释label
+@property (nonatomic, strong) UILabel *promptLab;
+
 
 /**
  控制最多显示几张图片； 用于ZXPhotosViewStateDidCompose
@@ -96,8 +107,7 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
 @property (nonatomic, strong, nullable) id userInfo;
 
 
-//注释label
-@property (nonatomic, strong) UILabel *promptLab;
+
 
 //声明一个photoView的block变量-已发布，回调这个itemView，可以设置它
 @property (nonatomic, copy, nullable) void(^photoModelItemViewBlock)(UIView* itemView);
@@ -129,6 +139,16 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
 
 
 /**
+ 根据图片个数和图片状态自动计算出ZXPhontosView的size
+ 
+ @param count 图片个数
+ @return ZXPhontosView的size
+ */
+- (CGSize)sizeWithPhotoCount:(NSInteger)count  photosState:(ZXPhotosViewState)state;
+
+
+// 没用
+/**
  存储本地图片的数组
  
  @param images 本地图片image数组
@@ -140,16 +160,9 @@ typedef NS_ENUM(NSInteger, ZXPhotosViewState) {
  * 刷新图片(未发布)
  * images : 新的图片数组
  */
-- (void)reloadDataWithImages:(nullable NSMutableArray *)images;
+//- (void)reloadDataWithImages:(nullable NSMutableArray *)images;
 
 
-/**
- 根据图片个数和图片状态自动计算出ZXPhontosView的size
- 
- @param count 图片个数
- @return ZXPhontosView的size
- */
-- (CGSize)sizeWithPhotoCount:(NSInteger)count  photosState:(ZXPhotosViewState)state;
 
 @end
 

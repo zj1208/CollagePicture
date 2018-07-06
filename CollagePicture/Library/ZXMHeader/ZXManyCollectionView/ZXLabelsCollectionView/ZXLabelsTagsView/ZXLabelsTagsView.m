@@ -36,15 +36,7 @@ static NSString * const reuseTagsCell = @"Cell";
      //只用于在加载完ui－initWithCoder之后，对IBOutlet 连接的子控件进行初始化工作；
     [super awakeFromNib];
 }
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self)
-//    {
-//        [self commonInit];
-//    }
-//    return self;
-//}
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -73,9 +65,10 @@ static NSString * const reuseTagsCell = @"Cell";
     self.minimumLineSpacing = ZXMinimumLineSpacing;
     self.maxItemCount = ZXMaxItemCount;
     self.apportionsItemWidthsByContent = NO;
-    self.itemSameSize = CGSizeMake(75.f, 26.f);
+    self.itemSameSize = CGSizeMake(82.f, 29.f);
     self.titleFontSize = 14.f;
     self.cellSelectedStyle = NO;
+    self.clipsToBounds = YES;
 }
 
 
@@ -85,7 +78,7 @@ static NSString * const reuseTagsCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
+//    self.collectionView.frame = self.bounds;
 }
 
 #pragma mark - Setter
@@ -301,13 +294,14 @@ static NSString * const reuseTagsCell = @"Cell";
 }
 
 
-//计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；可以在父视图用layoutIfNeed先执行layoutSubviews的设置frame方法；
+//计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；
 
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data
 {
-    if ([data count]==0)
+    if (!data || [data count]==0)
     {
-        return 0.f;
+        self.collectionView.frame =CGRectZero;
+        return 0;
     }
     [self setData:data];
     
@@ -315,7 +309,6 @@ static NSString * const reuseTagsCell = @"Cell";
     NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
     CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
-//    self.collectionView.zx_height = height;
 
     return ceilf(height);
 }
@@ -334,6 +327,7 @@ static NSString * const reuseTagsCell = @"Cell";
         };
         
         [self.dataMArray addObjectsFromArray:data];
+        self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         [self.collectionView reloadData];    }
 }
 

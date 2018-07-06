@@ -129,10 +129,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     [super viewWillAppear:animated];
 
-    if (!self.bridge) {
-        [self addWebViewJavascriptBridge]; //重新建立桥街,直接代理设置nil好像无效
-    }
-
     if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
     {//h5调用系统相册、相机、文件系统后不resume
         
@@ -152,10 +148,9 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-    self.bridge = nil;
-
 }
+
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -206,7 +201,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     [self setLoadTitle];
 
     //不要用animated，不然有bug
-    NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
+    NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
     self.navigationItem.leftBarButtonItems = items;
     
     
@@ -215,10 +210,9 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     //屏蔽兑吧域名，兑吧界面不展示分享
     if(rangeDuiBa.location == NSNotFound&& rangeCFB.location == NSNotFound)
     {
-        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
+        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"分享", nil) style:UIBarButtonItemStylePlain target:self action:@selector(shareAction:)];
         [self.navigationItem setRightBarButtonItems:@[rightBarButtonItem] animated:NO];
     }
-
 }
 
 - (void)setLoadTitle
@@ -226,7 +220,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
     if (rangeCFB.location != NSNotFound)
     {
-        self.barTitle = @"平安财富宝理财专区";
+        self.barTitle = NSLocalizedString(@"平安财富宝理财专区", nil);
     }
     self.navigationItem.title = self.barTitle;
 }
@@ -527,32 +521,35 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 - (BOOL)payWithAliPayWithRequest:(NSURLRequest *)request
 {
-    
     NSString *appScheme = @"yicaibao";
     WS(weakSelf);
     BOOL isIntercepted = [[AlipaySDK defaultService] payInterceptorWithUrl:[request.URL absoluteString] fromScheme:appScheme callback:^(NSDictionary *resultDic) {
         NSLog(@"result = %@",resultDic);
-        [self paymentAlipayResult:[resultDic objectForKey:@"resultCode"]];
-        if ([resultDic[@"isProcessUrlPay"] boolValue]) {
-            // returnUrl 代表 第三方App需要跳转的成功页URL
-            NSString* urlStr = resultDic[@"returnUrl"];
-            if (urlStr.length ==0)
+        if ([resultDic[@"isProcessUrlPay"] boolValue])
+        {
+            NSString *resultCode = [resultDic objectForKey:@"resultCode"];
+            [self paymentAlipayResult:resultCode];
+            if ([resultCode isEqualToString:@"9000"])
             {
-                [self.webView goBack];
-            }
-            else
-            {
-                [weakSelf requestWithUrlStr:urlStr];
+                // returnUrl 代表 第三方App需要跳转的成功页URL
+                NSString* urlStr = resultDic[@"returnUrl"];
+                if (urlStr.length ==0)
+                {
+                    [self.webView goBack];
+                }
+                else
+                {
+                    [weakSelf requestWithUrlStr:urlStr];
+                }
             }
         }
     }];
     return isIntercepted;
-//    return YES;
 }
 
 
-//支付宝支付结果反馈
-- (void) paymentAlipayResult:(NSNumber *)code{
+//支付宝支付结果反馈,可以不展示，失败时不做任何处理
+- (void) paymentAlipayResult:(NSString *)code{
     switch (code.integerValue) {
         case 9000:
         {
@@ -574,10 +571,10 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         case 6002:
             [MBProgressHUD zx_showError:@"网络好像有点问题噢，请检查您的网络设置" toView:self.view];
             break;
+//            这个比较模糊，不处理
         case 6004:
-            [MBProgressHUD zx_showError:@"正在处理支付结果，稍后注意查看结果" toView:self.view];
+//            [MBProgressHUD zx_showError:@"正在处理支付结果，稍后注意查看结果" toView:self.view];
             break;
-            
         default:
             [MBProgressHUD zx_showError:@"支付失败" toView:self.view];
             break;
@@ -603,7 +600,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         //        UIImage* backItemHlImage = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
         UIButton* backButton = [[UIButton alloc] init];
-        [backButton setTitle:@"返回" forState:UIControlStateNormal];
+        [backButton setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
         [backButton setTitleColor:self.navigationController.navigationBar.tintColor forState:UIControlStateNormal];
         [backButton setTitleColor:[self.navigationController.navigationBar.tintColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
         [backButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
@@ -625,7 +622,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     if (!_closeButtonItem) {
         
         UIButton* backButton = [[UIButton alloc] init];
-        [backButton setTitle:@"关闭" forState:UIControlStateNormal];
+        [backButton setTitle:NSLocalizedString(@"关闭", nil) forState:UIControlStateNormal];
         [backButton setTitleColor:self.navigationController.navigationBar.tintColor forState:UIControlStateNormal];
         [backButton setTitleColor:[self.navigationController.navigationBar.tintColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
         [backButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
@@ -643,7 +640,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     if ([self.webView canGoBack])
     {
-        NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,_negativeSpacerItem]];
+        NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,_negativeSpacerItem]];
         [self.navigationItem setLeftBarButtonItems:items animated:NO];
     }
     else
@@ -651,7 +648,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:4;
         if (self.navigationItem.leftBarButtonItems.count == numItems)
         {
-            NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,_negativeSpacerItem]];
+            NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,_negativeSpacerItem]];
             [self.navigationItem setLeftBarButtonItems:items animated:NO];
         }
     }
@@ -749,36 +746,37 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
     // js的finish事件回调native结束事件
     //-----结束当前页面(finish)，无参
+    WS(weakSelf);
     [self.bridge registerHandler:@"finish" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self finish];
+        [weakSelf finish];
     }];
     //从堆栈中移除并销毁当前H5页面
     [self.bridge registerHandler:@"dellocH5" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self dellocH5];
+        [weakSelf dellocH5];
     }];
     //----调用分享(share)，参数为分享的标题以及点击的链接地址{'title':xxx,'text':xxx,'link':xxx,'image':xxx}
     [self.bridge registerHandler:@"share" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self share:data];
+        [weakSelf share:data];
     }];
     
     //----跳转到大图浏览(previewImages)，参数为下标和图片数组
     [self.bridge registerHandler:@"previewImages" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self previewImages:data];
+        [weakSelf previewImages:data];
     }];
     
     //----设置标题（setTitle)//每次页面显示都会重新去js脚本中获取；
     [self.bridge registerHandler:@"setTitle" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self setNavTitle:data];
+        [weakSelf setNavTitle:data];
     }];
     
     //----设置导航右侧按钮(setRight)
     [self.bridge registerHandler:@"setRight" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self setRight:data];
+        [weakSelf setRight:data];
     }];
     
     //----js跳转native页面
     [self.bridge registerHandler:@"route" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self route:data];
+        [weakSelf route:data];
         
     }];
     
@@ -786,18 +784,18 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     //产品管理列表状态更新
     [self.bridge registerHandler:@"productChangeType" handler:^(id data, WVJBResponseCallback responseCallback) {
         
-        [self postNotiToProdectList];
+        [weakSelf postNotiToProdectList];
     }];
     
     //反馈给js传值value
     [_bridge registerHandler:@"h5NeedData" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self h5NeedData:responseCallback];
+        [weakSelf h5NeedData:responseCallback];
     }];
 }
 
 
 
-#pragma mark --------JS调用原生方法实现------------
+#pragma mark - JS调用原生方法实现
 
 //1.结束当前页面(finish)，无参
 - (void)finish{
@@ -809,21 +807,33 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 -(void)share:(NSDictionary *)dic
 {
     //    "type" : "bussinessCardDetail",
-//    NSString *picStr = [dic objectForKey:@"image"];
-//    NSString *title = [dic objectForKey:@"title"];
-//    NSString *content = [dic objectForKey:@"text"];
-//    NSString *link = [dic objectForKey:@"link"];
+    NSString *picStr = [dic objectForKey:@"image"];
+    NSString *title = [dic objectForKey:@"title"];
+    NSString *content = [dic objectForKey:@"text"];
+    NSString *link = [dic objectForKey:@"link"];
 //    [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
 }
 
 //3.跳转到大图浏览(previewImages)，参数为下标和图片数组
 -(void)previewImages:(NSDictionary *)dic{
     //大图浏览
-//    NSInteger index = [[dic objectForKey:@"position"] integerValue];
-//    self.picArray = [NSArray arrayWithArray: [dic objectForKey:@"images"] ];
-//    self.imagesProcutsArray = [NSArray arrayWithArray:[dic objectForKey:@"products"]];
-//    NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
+    id images = [dic objectForKey:@"images"];
+    id imagesProducts = [dic objectForKey:@"products"];
+    if (!images || ![images isKindOfClass:[NSArray class]]) {
+        [MBProgressHUD zx_showError:@"images empty!" toView:self.view];
+        return;
+    }
+    if (imagesProducts && ![imagesProducts isKindOfClass:[NSArray class]]) {
+        [MBProgressHUD zx_showError:@"images Products is not Array!" toView:self.view];
+        return;
+    }
     
+    
+    NSInteger index = [[dic objectForKey:@"position"] integerValue];
+    self.picArray = [NSArray arrayWithArray: images ];
+    self.imagesProcutsArray = [NSArray arrayWithArray:imagesProducts];
+    NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
+
 //    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
 //    browser.browserStyle = XLPhotoBrowserStyleCustom;
 //    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
@@ -860,7 +870,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 -(void)setNavTitle:(NSDictionary *)dic
 {
     self.navigationItem.title = [dic objectForKey:@"title"];
-//    [self setTitle:[dic objectForKey:@"title"]];
 }
 
 
@@ -894,7 +903,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 - (UIBarButtonItem *)jsBarBtnWithButtonDic:(NSDictionary *)btnDic action:(SEL)action
 {
     NSString *icon = [btnDic objectForKey:@"icon"];
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] init];
+    UIBarButtonItem *barButtonItem = nil;
     if (icon.length)
     {
         barButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:action];

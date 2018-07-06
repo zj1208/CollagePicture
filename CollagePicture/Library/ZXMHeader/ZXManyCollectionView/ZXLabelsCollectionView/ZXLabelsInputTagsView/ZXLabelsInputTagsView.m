@@ -70,7 +70,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
+//    self.collectionView.frame = self.bounds;
 }
 
 //- (void)setDefaultAddTagTitle:(NSString *)defaultAddTagTitle
@@ -424,16 +424,17 @@ static NSString * const reuseInputTagsCell = @"Cell";
 
 #pragma mark - 计算collectionView的总高度
 
-- (CGFloat)getCellHeightWithContentData:(NSArray *)data
+- (CGFloat)getCellHeightWithContentData:(nullable NSArray *)data
 {
-    if (!self.existInputItem && [data count]==0)
+    if (!self.existInputItem && (!data || [data count]==0))
     {
         return 0.f;
     }
     else
     {
-        if ([data count] ==0)
+        if (!data || [data count]==0)
         {
+            self.collectionView.frame =CGRectZero;
             return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+_itemHeight;
         }
         [self setData:data];
@@ -462,6 +463,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
         }
         
         [self.dataMArray addObjectsFromArray:data];
+        self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         [self.collectionView reloadData];
     }
 }

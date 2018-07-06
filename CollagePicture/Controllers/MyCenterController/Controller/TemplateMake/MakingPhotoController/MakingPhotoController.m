@@ -221,7 +221,7 @@
 - (void)addLeftBarButtonItem
 {
     UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image landscapeImagePhone:image style:UIBarButtonItemStylePlain target:self action:@selector(customBackAction:)];
+     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image landscapeImagePhone:image style:UIBarButtonItemStyleDone target:self action:@selector(customBackAction:)];
 }
 
 
@@ -541,7 +541,7 @@
         return;
     }
     dispatch_main_async_safe((^{
-        [self zhHUD_showHUDAddedTo:self.view labelText:@"正在保存..."];
+        [MBProgressHUD zx_showLoadingWithStatus:NSLocalizedString(@"正在保存...", nil) toView:self.view];
     }));
     
     NSMutableArray *subImageMArray = [NSMutableArray arrayWithCapacity:self.imageEditViewMArray.count];
@@ -577,8 +577,7 @@
 
   
 //    [self addOriginalImageModelWith:saveImg displayImage:displayImg];
-    
-    [self zhHUD_showSuccessWithStatus:@"保存成功"];
+    [MBProgressHUD zx_showSuccess:NSLocalizedString(@"保存成功", nil) toView:self.view];
     
     UIImageWriteToSavedPhotosAlbum(saveImg, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     

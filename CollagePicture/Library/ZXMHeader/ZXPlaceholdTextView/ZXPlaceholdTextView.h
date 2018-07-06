@@ -6,6 +6,7 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  2018.4.27 修改举例注释
+//  2018.5.24 block 造成的循环引用；还有海狮调用的一些没有释放；
 
 #import <UIKit/UIKit.h>
 
@@ -41,15 +42,17 @@ NS_ASSUME_NONNULL_END
 - (void)viewDidLoad
 {
  
-    [self.containerTextView zh_setCornerRadius:2.f borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xE1E1E1)];
+    [self.containerTextView xm_setCornerRadius:2.f borderWidth:1.f borderColor:UIColorFromRGB_HexValue(0xE1E1E1)];
 
     self.textView.text = nil;
     _remainLab.text =@"还可输入200字";
     self.textView.placeholder = @"请输入规格尺寸，多个尺寸用“逗号”分隔；";
+    WS(weakSelf);
+ 
     [self.textView setMaxCharacters:200 textDidChange:^(ZXPlaceholdTextView *textView, NSUInteger remainCount) {
  
         // NSLog(@"%ld",remainCount);
-        _remainLab.text = [NSString stringWithFormat:@"还可输入%ld字",remainCount];
+        weakSelf.remainLab.text = [NSString stringWithFormat:@"还可输入%ld字",remainCount];
     }];
  
 }

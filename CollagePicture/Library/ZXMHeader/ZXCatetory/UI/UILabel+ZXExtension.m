@@ -11,7 +11,7 @@
 @implementation UILabel (ZXExtension)
 -(void)jl_changeStringOfNumberStyle:(NSString *)text numberColor:(UIColor *)numColr numberFont:(UIFont *)font
 {
-    NSString* str = [NSString string];
+    NSString* str = nil;
     if (!text) {
         if (self.text) {
             str = [NSString stringWithString:self.text];
@@ -51,7 +51,7 @@
 }
 -(void)jl_addMediumLineWithText:(NSString*)text lineColor:(UIColor*)color
 {
-    NSString* str = [NSString string];
+    NSString* str = nil;
     if (!text) {
         if (self.text) {
             str = [NSString stringWithString:self.text];
@@ -72,7 +72,7 @@
 }
 -(void)jl_setAttributedText:(NSString *)text withMinimumLineHeight:(float)spacing
 {
-    NSString* str = [NSString string];
+    NSString* str = nil;
     if (!text) {
         if (self.text) {
             str = [NSString stringWithString:self.text];
@@ -94,7 +94,7 @@
 }
 -(void)jl_setAttributedText:(NSString *)text withLineSpacing:(float)spacing
 {
-    NSString* str = [NSString string];
+    NSString* str = nil;
     if (!text) {
         if (self.text) {
             str = [NSString stringWithString:self.text];
@@ -128,7 +128,7 @@
     {
         aDigitalTitle = @"99+";
     }
-    self.text = aDigitalTitle;
+    self.text = NSLocalizedString(aDigitalTitle, @"角标数字");
  
 //   注意：不要用NSStringDrawingUsesDeviceMetrics，不然iOS8时候计算的高度就比较大；
 //   从新的SDK之后，计算出来的高度已经包括了一定的上下边距，并不是实际文字的高度；

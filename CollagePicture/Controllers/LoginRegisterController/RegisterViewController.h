@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NoMenuTextField.h"
+#import "ZXNoMenuTextField.h"
 @interface RegisterViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UIView *tableHeaderView;
-@property (weak, nonatomic) IBOutlet NoMenuTextField *userNameField;
+@property (weak, nonatomic) IBOutlet ZXNoMenuTextField *userNameField;
 
 @property (weak, nonatomic) IBOutlet UITextField *verificationCodeField;
 

@@ -59,7 +59,7 @@ typedef BOOL(^ZXHTTPCookieFilter)(NSHTTPCookie *cookie,NSURL *url);
  [[ZXHTTPCookieManager sharedInstance]handleResponseHeaderFields:response.allHeaderFields forURL:response.URL];
 
  */
-- (NSArray <NSHTTPCookie *> *)handleResponseHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL;
+- (nullable NSArray <NSHTTPCookie *> *)handleResponseHeaderFields:(NSDictionary *)headerFields forURL:(NSURL *)URL;
 
 
 #pragma mark - 请求头数据：获取请求头cookie字典格式的字符串；

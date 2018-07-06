@@ -72,7 +72,7 @@
         [self.delegate zxDeleteBtnAction:sender];
     }
     [self.picBtn setImage:nil forState:UIControlStateNormal];
-    self.origContainerView.hidden = [self.picBtn currentImage];
+    self.origContainerView.hidden = [self.picBtn currentImage]?YES:NO;
     self.deleteBtn.hidden = !self.origContainerView.hidden;
 }
 @end

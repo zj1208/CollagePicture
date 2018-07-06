@@ -14,7 +14,6 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "XLPhotoBrowser.h"
 #import "ZXHTTPCookieManager.h"
-//#import "ZXPrintPageRenderer.h"
 
 #ifndef  IS_IPHONE_X
 #define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
@@ -29,6 +28,7 @@
 #ifndef  HEIGHT_TABBAR_SAFE
 #define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_X ? (34.f) : 0)
 #endif
+
 typedef NS_ENUM(NSInteger, WebLoadType) {
     
     WebLoadType_URLString =0,//网络html地址
@@ -132,10 +132,6 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewWillAppear:animated];
     
-    if (!self.bridge)
-    {
-        [self addWebViewJavascriptBridge]; //重新建立桥街
-    }
 
     if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
     {//h5调用系统相册、相机、文件系统后不resume
@@ -162,8 +158,6 @@ static NSString* const SixSpaces = @"      ";
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.navigationController.navigationBar setShadowImage:nil];
-    self.bridge = nil;
-
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -182,8 +176,8 @@ static NSString* const SixSpaces = @"      ";
 - (void)dealloc
 {
     NSLog(@"dealloc");
+    self.webView.navigationDelegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress))];
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(title)) ];
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(URL)) ];
@@ -216,7 +210,7 @@ static NSString* const SixSpaces = @"      ";
     [self setLoadTitle];
 
     //不要用animated，不然有bug
-    NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
+    NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
     self.navigationItem.leftBarButtonItems = items;
     
     NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
@@ -236,7 +230,7 @@ static NSString* const SixSpaces = @"      ";
     NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
     if (rangeCFB.location != NSNotFound)
     {
-        self.barTitle = @"平安财富宝理财专区";
+        self.barTitle = NSLocalizedString(@"平安财富宝理财专区", nil);
     }
     self.navigationItem.title = self.barTitle;
 }
@@ -812,7 +806,7 @@ static NSString* const SixSpaces = @"      ";
     if ([self.shareButtonItem.title isEqualToString:SixSpaces]) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.shareButtonItem.enabled = YES; //H5调用setRight方法，偶尔会在didFinishNavigation之后执行（桥异步原因）,导致分享刚出来，又被H5重置rightBarButtonItems;eg：我的收入页面,体验不太好，暂时性解决方案！
-            self.shareButtonItem.title = @"分享";
+            self.shareButtonItem.title = NSLocalizedString(@"分享", nil);
         });
     }
     [_emptyViewController hideEmptyViewInController:self hasLocalData:YES];
@@ -922,8 +916,10 @@ static NSString* const SixSpaces = @"      ";
     WS(weakSelf);
     BOOL isIntercepted = [[AlipaySDK defaultService] payInterceptorWithUrl:[request.URL absoluteString] fromScheme:appScheme callback:^(NSDictionary *resultDic) {
         NSLog(@"result = %@",resultDic);
-        [self paymentAlipayResult:[resultDic objectForKey:@"resultCode"]];
-        if ([resultDic[@"isProcessUrlPay"] boolValue]) {
+        NSString *resultCode = [resultDic objectForKey:@"resultCode"];
+        [self paymentAlipayResult:resultCode];
+        if ([resultCode isEqualToString:@"9000"])
+        {
             // returnUrl 代表 第三方App需要跳转的成功页URL
             NSString* urlStr = resultDic[@"returnUrl"];
             if (urlStr.length ==0)
@@ -941,8 +937,8 @@ static NSString* const SixSpaces = @"      ";
 }
 
 
-//支付宝支付结果反馈
-- (void) paymentAlipayResult:(NSNumber *)code{
+//支付宝支付结果反馈,可以不展示;失败时不做任何处理
+- (void) paymentAlipayResult:(NSString *)code{
     switch (code.integerValue) {
         case 9000:
         {
@@ -964,10 +960,10 @@ static NSString* const SixSpaces = @"      ";
         case 6002:
             [MBProgressHUD zx_showError:@"网络好像有点问题噢，请检查您的网络设置" toView:self.view];
             break;
+            // 这个比较模糊，不处理
         case 6004:
-            [MBProgressHUD zx_showError:@"正在处理支付结果，稍后注意查看结果" toView:self.view];
+            //  [MBProgressHUD zx_showError:@"正在处理支付结果，稍后注意查看结果" toView:self.view];
             break;
-            
         default:
             [MBProgressHUD zx_showError:@"支付失败" toView:self.view];
             break;
@@ -994,7 +990,7 @@ static NSString* const SixSpaces = @"      ";
         //        UIImage* backItemHlImage = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
         UIButton* backButton = [[UIButton alloc] init];
-        [backButton setTitle:@"返回" forState:UIControlStateNormal];
+        [backButton setTitle:NSLocalizedString(@"返回", nil)  forState:UIControlStateNormal];
         [backButton setTitleColor:self.navigationController.navigationBar.tintColor forState:UIControlStateNormal];
         [backButton setTitleColor:[self.navigationController.navigationBar.tintColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
         [backButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
@@ -1017,7 +1013,7 @@ static NSString* const SixSpaces = @"      ";
     if (!_closeButtonItem) {
         
         UIButton* backButton = [[UIButton alloc] init];
-        [backButton setTitle:@"关闭" forState:UIControlStateNormal];
+        [backButton setTitle:NSLocalizedString(@"关闭", nil) forState:UIControlStateNormal];
         [backButton setTitleColor:self.navigationController.navigationBar.tintColor forState:UIControlStateNormal];
         [backButton setTitleColor:[self.navigationController.navigationBar.tintColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
         [backButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
@@ -1036,7 +1032,7 @@ static NSString* const SixSpaces = @"      ";
 {
     if ([self.webView canGoBack])
     {
-        NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,self.negativeSpacerItem]];
+        NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,self.negativeSpacerItem]];
         [self.navigationItem setLeftBarButtonItems:items animated:NO];
     }
     else
@@ -1044,7 +1040,7 @@ static NSString* const SixSpaces = @"      ";
         NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:4;
         if (self.navigationItem.leftBarButtonItems.count==numItems)
         {
-            NSArray *items = [self zhNavigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
+            NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
             [self.navigationItem setLeftBarButtonItems:items animated:NO];
         }
     }
@@ -1116,7 +1112,7 @@ static NSString* const SixSpaces = @"      ";
     // 开启日志
     [WKWebViewJavascriptBridge enableLogging];
     //  实例化WebViewJavascriptBridge,建立JS与OjbC的沟通桥梁
-    self.bridge = [WKWebViewJavascriptBridge bridgeForWebView:_webView];
+    self.bridge = [WKWebViewJavascriptBridge bridgeForWebView:self.webView];
     // 添加webviewDelegate
     [self.bridge setWebViewDelegate:self];
     // JS主动调用OjbC的方法
@@ -1124,48 +1120,49 @@ static NSString* const SixSpaces = @"      ";
     //  data就是JS所传的参数，不一定需要传,OC端通过responseCallback回调JS端，JS就可以得到所需要的数据
     
     //-----结束当前页面(返回上一层)，无参
+    WS(weakSelf);
     [self.bridge registerHandler:@"finish" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self finish];
+        [weakSelf finish];
     }];
     //从堆栈中移除并销毁当前H5页面
     [self.bridge registerHandler:@"dellocH5" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self jsDellocH5];
+        [weakSelf jsDellocH5];
     }];
     
     //----调用分享(share)，参数为分享的标题以及点击的链接地址{'title':xxx,'text':xxx,'link':xxx,'image':xxx}
     [self.bridge registerHandler:@"share" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self share:data];
+        [weakSelf share:data];
     }];
     //----跳转到大图浏览(previewImages)，参数为下标和图片数组
     [self.bridge registerHandler:@"previewImages" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self previewImages:data];
+        [weakSelf previewImages:data];
     }];
     //----设置标题（setTitle)
     [self.bridge registerHandler:@"setTitle" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self setNavTitle:data];
+        [weakSelf setNavTitle:data];
     }];
     //----设置导航右侧按钮(setRight)
     [self.bridge registerHandler:@"setRight" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self setRight:data];
+        [weakSelf setRight:data];
     }];
     //----js跳转native页面
     [self.bridge registerHandler:@"route" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self route:data];
+        [weakSelf route:data];
         
     }];
     
     //产品管理列表状态更新
     [self.bridge registerHandler:@"productChangeType" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self postNotiToProdectList];
+        [weakSelf postNotiToProdectList];
     }];
     //反馈给js传值value
     [_bridge registerHandler:@"h5NeedData" handler:^(id data, WVJBResponseCallback responseCallback) {
  
-        [self h5NeedData:responseCallback];
+        [weakSelf h5NeedData:responseCallback];
     }];
 }
 
-#pragma mark --------JS调用原生方法实现------------
+#pragma mark - JS调用原生方法实现
 //1.结束当前页面(finish)，无参
 - (void)finish{
     [self.navigationController popViewControllerAnimated:YES];
@@ -1174,10 +1171,10 @@ static NSString* const SixSpaces = @"      ";
 //2.调用分享(share)，参数为分享的标题以及点击的链接地址
 -(void)share:(NSDictionary *)dic
 {
-//    NSString *picStr = [dic objectForKey:@"image"];
-//    NSString *title = [dic objectForKey:@"title"];
-//    NSString *content = [dic objectForKey:@"text"];
-//    NSString *link = [dic objectForKey:@"link"];
+    NSString *picStr = [dic objectForKey:@"image"];
+    NSString *title = [dic objectForKey:@"title"];
+    NSString *content = [dic objectForKey:@"text"];
+    NSString *link = [dic objectForKey:@"link"];
 //    [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
 }
 
@@ -1185,10 +1182,21 @@ static NSString* const SixSpaces = @"      ";
 //3.跳转到大图浏览(previewImages)，参数为下标和图片数组
 -(void)previewImages:(NSDictionary *)dic{
     //大图浏览
-//    NSInteger index = [[dic objectForKey:@"position"] integerValue];
-//    self.picArray = [NSArray arrayWithArray: [dic objectForKey:@"images"] ];
-//    self.imagesProcutsArray = [NSArray arrayWithArray:[dic objectForKey:@"products"]];
-//    NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
+    id images = [dic objectForKey:@"images"];
+    id imagesProducts = [dic objectForKey:@"products"];
+    if (!images || ![images isKindOfClass:[NSArray class]]) {//一定有，老版本使用该字段
+        [MBProgressHUD zx_showError:@"images empty!" toView:self.view];
+        return;
+    }
+    if (imagesProducts && ![imagesProducts isKindOfClass:[NSArray class]]) {
+        [MBProgressHUD zx_showError:@"images Products is not Array!" toView:self.view];
+        return;
+    }
+    
+    NSInteger index = [[dic objectForKey:@"position"] integerValue];
+    self.picArray = [NSArray arrayWithArray: images ];
+    self.imagesProcutsArray = [NSArray arrayWithArray:imagesProducts];
+    NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
     
 //    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
 //    browser.browserStyle = XLPhotoBrowserStyleCustom;
@@ -1264,7 +1272,7 @@ static NSString* const SixSpaces = @"      ";
 - (UIBarButtonItem *)jsBarBtnWithButtonDic:(NSDictionary *)btnDic action:(SEL)action
 {
     NSString *icon = [btnDic objectForKey:@"icon"];
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] init];
+    UIBarButtonItem *barButtonItem = nil;
     if (icon.length)
     {
         barButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:action];

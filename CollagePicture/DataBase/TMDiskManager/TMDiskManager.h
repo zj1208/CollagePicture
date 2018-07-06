@@ -6,12 +6,15 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //model一定要继承于BaseModel才行，不然闪退，不知道原因
+
+// 6.07 设置本地数据的时候，增加是否发送通知；
+
 #import <Foundation/Foundation.h>
 
 
-static NSString *TMDiskAddProcutKey = @"diskAddProcutKey";
+static NSString *const TMDiskAddProcutKey = @"diskAddProcutKey";
 //经营信息
-static NSString *TMDiskShopManageInfoKey = @"shopManagerKey";
+static NSString *const TMDiskShopManageInfoKey = @"shopManagerKey";
 
 @interface TMDiskManager : NSObject
 
@@ -20,6 +23,13 @@ static NSString *TMDiskShopManageInfoKey = @"shopManagerKey";
 - (instancetype)initWithObjectKey:(NSString *)objectKey;
 
 - (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key;
+
+/**
+ 设置本地数据指定key的value值；
+
+ @param flag 是否发送通知；
+ */
+- (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key postNotification:(BOOL)flag;
 
 - (void)setData:(id)object;
 - (id)getData;

@@ -148,7 +148,7 @@ static NSInteger const kAPPErrorCode = 5000;
 
 
 
-- (NSString *)getAppVersionFromItunes:(NSString *)appId
+- (nullable NSString *)getAppVersionFromItunes:(NSString *)appId
 {
     NSURL *url =[NSURL appStoreAppInfomationURLForApplicationIdentifier:appId];
     NSString *jsonData  = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];

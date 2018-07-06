@@ -245,7 +245,7 @@
 
 
 
-- (NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view
+- (nullable NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view
 {
     UIView *superview = self.superview;
     while (superview) {

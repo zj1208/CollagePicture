@@ -72,17 +72,17 @@
 
 - (void)setApperanceForAllController
 {
-    [UIViewController zhNavigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
+    [UIViewController xm_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
     
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14.f]} forState:UIControlStateNormal];
-    [UIViewController zhNavigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
+    [UIViewController xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
 
 }
 
 - (void)setApperanceForSigleNavController:(UIViewController *)viewController
 {
-    [viewController zhNavigationBar_Single_BackIndicatorImage:@"back" isOriginalImage:YES];
-    [viewController zhNavigationBar_barItemColor:UIColorFromRGB_HexValue(0x525252)];
+    [viewController xm_navigationBar_Single_BackIndicatorImage:@"back" isOriginalImage:YES];
+    [viewController xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x525252)];
 }
 
 #pragma mark-JPush
@@ -309,10 +309,10 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 #pragma mark - 3个方法接收本地通知
 
 //iOS8以前的接收本地通知：不支持用户通知交互，如果在前台也是这个收
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
-}
+//- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+//{
+//    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+//}
 
 ///2个方法新方法只适用于后台模式的推送通知，而且必须要点击交互事件按钮才会调用；
 //如果不支持iOS8的用户通知交互，则可以不实现iOS8/ios9方法；

@@ -4,11 +4,13 @@
 //
 //  Created by simon on 17/2/21.
 //  Copyright © 2017年 com.Microants. All rights reserved.
-//  标签展示；
+
+//  简介：标签展示；reloadData之前，必须设置collectionView的frame，不然不会回调数据源代理,也无法内部布局；
 //  例子 看ZXLabelsInputTagsView的
 
-//  2017.12.26
-//  修改nibName 常量定义 改为NSStringFromClass；
+//  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
+//  2018.3.19,增加注释
+//  2018.6.07  修改高度计算；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
@@ -67,16 +69,16 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 
 @property (nonatomic, strong) NSMutableArray *dataMArray;
 
-// 设置collectionView的sectionInset;
+// 设置collectionView的sectionInset; 默认UIEdgeInsetsMake(15, 15, 15, 15)
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距;
+// item之间的间距;默认12.f
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
-// 行间距;
+// 行间距;默认12.f
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
-// 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除;
+// 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除; 默认10
 @property (nonatomic, assign) NSInteger maxItemCount;
 
 // 添加tag标签的额外设置;
@@ -85,16 +87,16 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 // 设置cell标签宽度是否随它的内容自适应：default NO;
 @property (nonatomic, assign) BOOL apportionsItemWidthsByContent;
 
-// item同样size的值；只有效于apportionsItemWidthsByContent = NO的时候；
+// item同样size的值；默认CGSizeMake(82.f, 29.f)；只有效于apportionsItemWidthsByContent = NO的时候；
 @property (nonatomic, assign) CGSize itemSameSize;
 
-// 字体大小
+// 字体大小；默认14
 @property (nonatomic, assign) CGFloat titleFontSize;
 
 // 设置选中某个item
 @property (nonatomic, assign) NSInteger selectedIndex;
 
-// 是否支持选中样式展现
+// 是否支持选中样式展现；默认NO；
 @property (nonatomic, assign) BOOL cellSelectedStyle;
 
 

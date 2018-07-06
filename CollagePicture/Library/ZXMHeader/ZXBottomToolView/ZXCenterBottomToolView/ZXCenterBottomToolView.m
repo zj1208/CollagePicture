@@ -17,13 +17,11 @@
     // Drawing code
 }
 */
-
 - (void)layoutSubviews
 {
-    [self.onlyCenterBtn setCornerRadius:(CGRectGetHeight(self.frame)-2*self.centerBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
     [super layoutSubviews];
+    [self.onlyCenterBtn setCornerRadius:(CGRectGetHeight(self.frame)-2*self.centerBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
 }
-
 // 由于是xib加载，所以如果及时赋值数据的时候，会先加载出xib的数据，然后再替换；这样会有视觉过渡bug，一定要去掉文字；
 - (void)awakeFromNib
 {

@@ -9,7 +9,10 @@
 //  按钮水平垂直居中显示，可以设置左右边距，也可以设置上下边距；
 //  可以自己设置按钮的背景，title，image等基本属性；
 
+//  注意：可能是系统原因，放在屏幕底部的button，高亮有延迟问题，就连UIToolBar上的button也有问题；
+
 //  待优化： 由于是xib加载，所以如果及时赋值数据的时候，会先加载出xib的数据，然后再替换我们写的数据；这样会有视觉过渡bug，一定不要有xib上的文字；
+//  5.11 添加注释
 
 #import <UIKit/UIKit.h>
 #import "ZXTowBtnBottomToolView.h"
@@ -45,8 +48,8 @@ static NSString *nibName_ZXCenterBottomToolView = @"ZXCenterBottomToolView";
         make.centerX.mas_equalTo(self.view.mas_centerX);
         make.height.mas_equalTo(LCDScale_iPhone6_Width(49.f));
     }];
-    [view.onlyCenterBtn setTitle:@"发送给采购商" forState:UIControlStateNormal];
-    [view.onlyCenterBtn setImage:[UIImage imageNamed:@"发送给采购商"] forState:UIControlStateNormal];
+    [view.onlyCenterBtn setTitle:NSLocalizedString(@"发送给采购商", nil)  forState:UIControlStateNormal];
+    [view.onlyCenterBtn setImage:[UIImage imageNamed:NSLocalizedString(@"发送给采购商", nil)] forState:UIControlStateNormal];
     [view.onlyCenterBtn addTarget:self action:@selector(postDataAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -96,7 +99,7 @@ static NSString *nibName_ZXCenterBottomToolView = @"ZXCenterBottomToolView";
     view.centerBtnTopLayout.constant = LCDScale_5Equal6_To6plus(8.f);
     UIImage *backgroundImage2 = [WYUTILITY getCommonVersion2RedGradientImageWithSize:view.onlyCenterBtn.frame.size];
     [view.onlyCenterBtn setBackgroundImage:backgroundImage2 forState:UIControlStateNormal];
-    [view.onlyCenterBtn setTitle:@"在线沟通" forState:UIControlStateNormal];
+    [view.onlyCenterBtn setTitle:NSLocalizedString(@"在线沟通",nil) forState:UIControlStateNormal];
     [view.onlyCenterBtn setImage:[UIImage imageNamed:@"im"] forState:UIControlStateNormal];
     [view.onlyCenterBtn zh_centerHorizontalImageAndTitleWithTheirSpace:10.f];
 

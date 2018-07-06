@@ -204,12 +204,12 @@ static NSString * const reuseIdentifier = @"Cell";
     NSIndexPath* indexPath = [self indexPathForItemAtPoint:point];
     
     self.editIndexPath = indexPath;
-    NSLog(@"indexPath =%@,section:%ld,row=%ld",self.editIndexPath,(long)self.editIndexPath.section,self.editIndexPath.item);
+    NSLog(@"indexPath =%@,section:%ld,row=%ld",self.editIndexPath,(long)self.editIndexPath.section,(long)self.editIndexPath.item);
     if (_uploadPicBtnActionBlock)
     {
         _uploadPicBtnActionBlock(self.editIndexPath);
     }
-//    [self.imagePickerVCManager zxPresentActionSheetToMoreUIImagePickerControllerFromSourceController:self];
+//    [self.imagePickerVCManager zxPresentActionSheetToImagePickerWithSourceController:self];
 }
 
 

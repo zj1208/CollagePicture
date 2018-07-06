@@ -5,10 +5,11 @@
 //  Created by simon on 15/11/17.
 //  Copyright © 2015年 mac. All rights reserved.
 //
-// 2017.12.20
-// 获取文本占几行空间
+// 2017.12.20 获取文本占几行空间
 // 2018.1.18  新增获取文字所需要的尺寸
 // 2018.4.18  新增计算平均item宽带方法
+// 2018.5.31  内存优化
+
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -276,7 +277,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *	@brief	根据jsonSerialization方法把json格式（NSArray／NSDictionary）对象转换为字符串
  */
-+ (NSString *)zhGetJSONSerializationStringFromObject:(nullable id)responseObject;
++ (nullable NSString *)zhGetJSONSerializationStringFromObject:(nullable id)responseObject;
 
 
 /**
@@ -289,7 +290,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 //根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；
-+ (NSString *)zhGetUMOpenUDIDString;
+//+ (NSString *)zhGetUMOpenUDIDString;
 
 
 #pragma mark-获取[from, to]之间的随机整数。

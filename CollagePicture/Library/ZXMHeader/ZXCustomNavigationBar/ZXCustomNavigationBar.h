@@ -12,6 +12,7 @@
 //  待优化可以自定义添加左边，右边按钮；
 
 //  4.28  优化功能；
+//  5.10  修改注释
 
 
 #import <UIKit/UIKit.h>
@@ -74,12 +75,14 @@ NS_ASSUME_NONNULL_END
 
 - (void)addNavigationBarView
 {
+    _stausBarStyle =UIStatusBarStyleDefault;
+
     ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar xm_viewFromNib];
     [self.view addSubview:navigationBar];
-    //    navigationBar.hidden = YES;
     [navigationBar zx_setBarBackgroundColor:UIColorFromRGB_HexValue(0xBF352D)];
     self.customNavigationBar = navigationBar;
-    
+    self.customNavigationBar.hidden = YES;
+
     [self.customNavigationBar.leftBarButton addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.customNavigationBar.rightBarButton1 addTarget:self action:@selector(shareAction:) forControlEvents:UIControlEventTouchUpInside];

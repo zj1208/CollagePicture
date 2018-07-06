@@ -147,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param view tableview/collectionview
  @return 未找到父视图为cell(tableViewCell、collectionviewCell) 则return nil
  */
-- (NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view;
+- (nullable NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view;
 
 @end
 

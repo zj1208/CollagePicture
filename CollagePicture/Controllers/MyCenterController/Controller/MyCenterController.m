@@ -64,13 +64,13 @@ static NSInteger IndexSection_Set =1;
         [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
             if (![context isCancelled])
             {
-                [self zhNavigationBar_BackgroundAlpah:0.f];
+                [self xm_navigationBar_BackgroundAlpah:0.f];
             }
         }];
     }
     else
     {
-        [self zhNavigationBar_BackgroundAlpah:0.f];
+        [self xm_navigationBar_BackgroundAlpah:0.f];
     }
 
     UIInterfaceOrientation currentDirection = [[UIApplication sharedApplication] statusBarOrientation];
@@ -103,7 +103,7 @@ static NSInteger IndexSection_Set =1;
 
     if (!self.presentedViewController)
     {
-        [self zhNavigationBar_BackgroundAlpah:1.f];
+        [self xm_navigationBar_BackgroundAlpah:1.f];
     }
 }
 
@@ -270,7 +270,7 @@ static NSInteger IndexSection_Set =1;
 {
      if (indexPath.section==IndexSection_Set)
     {
-        [self pushStoryboardViewControllerWithStoryboardName:sb_SetStoryboard identifier:SBID_SetControllerID withData:nil];
+        [self xm_pushStoryboardViewControllerWithStoryboardName:sb_SetStoryboard identifier:SBID_SetControllerID withData:nil];
     }
     
     if (indexPath.section == 0 && indexPath.row == 1) {

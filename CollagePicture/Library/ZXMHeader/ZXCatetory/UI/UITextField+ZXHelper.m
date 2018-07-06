@@ -15,7 +15,7 @@
 
 #pragma mark - 字符串的邮箱／手机号／URL／密码等验证
 
-+ (BOOL)zh_validateEmail:(nullable NSString *)email
++ (BOOL)xm_validateEmail:(nullable NSString *)email
 {
     if ([email rangeOfString:@"@"].length != 0 && [email rangeOfString:@"."].length !=0)
     {
@@ -55,7 +55,7 @@
 }
 
 
-+ (BOOL)zh_validateEmail2:(nullable NSString *)email
++ (BOOL)xm_validateEmail2:(nullable NSString *)email
 {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
@@ -63,14 +63,14 @@
 }
 
 
-+ (BOOL)zh_validatePhoneNumber:(nullable NSString *)phone
++ (BOOL)xm_validatePhoneNumber:(nullable NSString *)phone
 {
     NSString *number = @"^1[3|4|5|7|8][0-9]\\d{8}$";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
     return [emailTest evaluateWithObject:phone];
 }
 
-+ (BOOL)zh_validatePassword:(NSString *)pass
++ (BOOL)xm_validatePassword:(NSString *)pass
 {
     NSString *number = @"^[A-Za-z0-9]+$";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
@@ -80,7 +80,7 @@
 
 #pragma mark - textField输入限制
 
-+ (BOOL)zh_validateURL:(NSString *)url
++ (BOOL)xm_validateURL:(NSString *)url
 {
     NSError *error;
     // 正则1
@@ -108,7 +108,7 @@
 #define myDotNumbers @"0123456789.\n"
 #define myNumbers   @"0123456789\n"
 
-+ (BOOL)zh_limitPayMoneyDot:(UITextField *)textField
++ (BOOL)xm_limitPayMoneyDot:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
           replacementString:(NSString *)string
                  dotPreBits:(int)dotPreBits
@@ -188,7 +188,7 @@ shouldChangeCharactersInRange:(NSRange)range
 }
 
 
-+ (BOOL)zh_limitRemainText:(UITextField *)textField
++ (BOOL)xm_limitRemainText:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
          replacementString:(NSString *)string
                  maxLength:(NSInteger)maxLength
@@ -259,12 +259,12 @@ shouldChangeCharactersInRange:(NSRange)range
  *	@brief	自定义数字键盘,在数字键盘添加完成按钮; 先遍历windows获取键盘所在的window,然后在windows遍历view获得view(UIInputSetContainerView,frame是整个windows大小)
  */
 
-- (void)zh_keyboardToAddFinishButton
+- (void)xm_keyboardToAddFinishButton
 {
     // create custom button
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
     //最好用2张图片替换/不然有点不混合;
-    [doneButton setTitle:@"完成" forState:UIControlStateNormal];
+    [doneButton setTitle:NSLocalizedString(@"完成", nil)  forState:UIControlStateNormal];
     [doneButton setTintColor:[UIColor blackColor]];
     
     [doneButton addTarget:self action:@selector(finishSelectedAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -317,25 +317,25 @@ shouldChangeCharactersInRange:(NSRange)range
 
 
 
-+ (NSString *)zh_TextFieldPassword:(NSString *)str
++ (nullable NSString *)zh_TextFieldPassword:(NSString *)str
 {
     NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:str];
     NSString *reTitle = nil;
     if (password.length==0)
     {
-        reTitle= @"密码不能为空";
+        reTitle= NSLocalizedString(@"密码不能为空", nil) ;
     }
     else if (password.length<4 ||password.length>12)
     {
-        reTitle= @"请填写有效的密码长度";
+        reTitle= NSLocalizedString(@"请填写有效的密码长度", nil);
     }
-    else if (![UITextField zh_validatePassword:password])
+    else if (![UITextField xm_validatePassword:password])
     {
-        reTitle= @"请使用数字或字母的密码";
+        reTitle= NSLocalizedString(@"请使用数字或字母的密码", nil);
     }
     //    else if ([NSString zhuIsScanInt:password])
     //    {
-    //        reTitle=@"您的密码过于简单，请使用数字+字母的组合";
+    //        reTitle= NSLocalizedString(@"您的密码过于简单，请使用数字+字母的组合", nil);
     //    }
     return reTitle;
     

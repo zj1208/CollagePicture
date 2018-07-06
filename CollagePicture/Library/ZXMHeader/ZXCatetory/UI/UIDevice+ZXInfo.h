@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 // 获取mac地址
-+ (NSString *)getMacAddress;
++ (nullable NSString *)getMacAddress;
 
 // 获取ip地址
 // 获取设备当前网络IP地址
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 // CPU使用的总比例
 + (CGFloat)getCPUUsage;
 // 获取每个cpu的使用比例
-+ (NSArray *)getPerCPUUsage;
++ (nullable NSArray *)getPerCPUUsage;
 
 
 // 获取磁盘总空间

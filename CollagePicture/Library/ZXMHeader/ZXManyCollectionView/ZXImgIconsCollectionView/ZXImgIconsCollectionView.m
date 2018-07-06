@@ -60,9 +60,11 @@ static NSString * const reuseCell = @"Cell";
     self.maxItemCount = ZXMaxItemCount;
     self.apportionsItemWidthsByContent = YES;
     self.itemSameSize = CGSizeMake(15.f, 15.f);
-//    self.backgroundColor = [UIColor orangeColor];
     self.iconWidth = ZXAddPicItemWidth;
     self.iconHeight = ZXAddPicItemHeight;
+    self.clipsToBounds = YES;
+    //    self.backgroundColor = [UIColor greenColor];
+    //    self.collectionView.backgroundColor = [UIColor orangeColor];
 }
 
 
@@ -72,17 +74,13 @@ static NSString * const reuseCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.dataMArray.count>0)
-    {
-        self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-    }
-//    NSLog(@"ZXImgIconsCollectionView=%@",NSStringFromCGRect(self.bounds));
+//    NSLog(@"self.bounds =%@",NSStringFromCGRect(self.bounds));
 }
 
 
 - (NSMutableArray *)dataMArray {
     if (_dataMArray == nil) {
-        _dataMArray = [NSMutableArray arrayWithCapacity:0];
+        _dataMArray = [NSMutableArray array];
     }
     return _dataMArray;
 }
@@ -175,41 +173,40 @@ static NSString * const reuseCell = @"Cell";
                 cell = [[NSBundle mainBundle]loadNibNamed:nibName_ZXImgIconsCell owner:nil options:nil][0];
             }
         });
-        if (self.dataMArray.count>0)
+        if (self.dataMArray.count>indexPath.item)
         {
             ZXImgIcons *icon = [self.dataMArray objectAtIndex:indexPath.item];
             CGFloat iconWidth = self.iconHeight*(icon.width/icon.height);
-            return CGSizeMake(iconWidth, self.iconHeight);
+            return CGSizeMake(ceilf(iconWidth), self.iconHeight);
         }
-  
     }
-    
     return self.itemSameSize;
 }
 
 
-//计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；可以在父视图用layoutIfNeed先执行layoutSubviews的设置frame方法；
-// 在约束做的时候，无法计算高度，宽度； 如商铺主页；
-- (CGSize)sizeWithContentData:(NSArray *)data
+// 计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；
+- (CGSize)sizeWithContentData:(nullable NSArray *)data
 {
-    if ([data count]==0)
+    if (!data || [data count]==0)
     {
+        self.collectionView.frame =CGRectZero;
         return CGSizeZero;
     }
     [self setData:data];
-    
+
     NSInteger maxIndex = [self.dataMArray count]-1;
     NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
     CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
     CGFloat width = CGRectGetMaxX(attributes.frame) +self.sectionInset.right;
     CGSize size = CGSizeMake(ceilf(width), ceilf(height));
-    NSLog(@"sizeWithContentData:%@",NSStringFromCGSize(size));
+//    NSLog(@"sizeWithContentData:%@",NSStringFromCGSize(size));
 
+    self.collectionView.frame = CGRectMake(0, 0, width, height);
     return size;
 }
 
-- (void)setData:(NSArray *)data
+- (void)setData:(nullable NSArray *)data
 {
     if (![self.dataMArray isEqualToArray:data])
     {
@@ -223,6 +220,7 @@ static NSString * const reuseCell = @"Cell";
         };
         
         [self.dataMArray addObjectsFromArray:data];
+        self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         [self.collectionView reloadData];
         
     }
