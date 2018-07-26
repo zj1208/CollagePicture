@@ -10,6 +10,7 @@
 //  2018.5.09 优化代码
 
 #import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -54,6 +55,25 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)jl_changeStringOfNumberStyle:(nullable NSString*)text numberColor:(UIColor*)numColr numberFont:(UIFont*)font;
 
 @end
+
+
+/**
+ 分类：给UILabel加个长按复制功能
+ 会触发window层级发生改变，导致加载最上层window的toast不展示，具体原因可能和交换UIResponder相关方法有关、而长按的menu复制组件直接继承NSObject，有空再研究，先该用子类JLCopyLabel来实现需求
+ 
+//========WYTextCopy==========
+typedef void(^TextDidCopyHandler)(UILabel *label);
+@interface UILabel (WYTextCopy)
+//长按复制功能，默认NO
+@property (nonatomic, assign) BOOL isNeedCopy;
+//长按手势，默认nil,isNeedCopy=YES即立即创建长按手势
+@property (nonatomic, strong, nullable) UILongPressGestureRecognizer * longCopyPressGesture;
+//长按复制完成回调
+@property (nonatomic, copy) TextDidCopyHandler textDidCopyHandler;
+@end
+*/
+
+
 
 
 NS_ASSUME_NONNULL_END

@@ -1,29 +1,30 @@
 //
 //  ZXAreaPickerView.h
-//  areapicker
+//  ZXAreaPickerView
 //
 //  Created by simon on 14-9-9.
 //  Copyright (c) 2014年 simon.com. All rights reserved.
 //
+//  7.11 修改plist本地文件名,方法修改
 
 #import <UIKit/UIKit.h>
 #import "ZXLocation.h"
 
 typedef enum {
-    HZAreaPickerWithStateAndCity,   //省和地级市市
-    HZAreaPickerWithStateAndCityAndDistrict //省，地级市，县城／区
-} HZAreaPickerStyle;
+    ZXAreaPickerWithStateAndCity,   //省和地级市市
+    ZXAreaPickerWithStateAndCityAndDistrict //省，地级市，县城／区
+} ZXAreaPickerStyle;
 
 
 @class ZXAreaPickerView;
 
-@protocol HZAreaPickerDelegate <NSObject>
+@protocol ZXAreaPickerDelegate <NSObject>
 
 /**
  *  @brief 代理回调
  */
 @optional
-- (void)pickerDidChaneStatus:(ZXAreaPickerView *)picker;
+- (void)zx_pickerDidChaneStatus:(ZXAreaPickerView *)picker;
 
 @end
 
@@ -32,10 +33,10 @@ typedef enum {
 
 @interface ZXAreaPickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource>
 
-@property (assign, nonatomic) id <HZAreaPickerDelegate> delegate;
+@property (assign, nonatomic) id <ZXAreaPickerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIPickerView *locatePicker;
 @property (strong, nonatomic) ZXLocation *locate;
-@property (nonatomic) HZAreaPickerStyle pickerStyle;
+@property (nonatomic) ZXAreaPickerStyle pickerStyle;
 
 
 
@@ -47,8 +48,8 @@ typedef enum {
  *  @param textField   第一响应者textField;
  *
  */
-- (instancetype)initTextFieldOfInputViewWithStyle:(HZAreaPickerStyle)pickerStyle
-                               delegate:(id <HZAreaPickerDelegate>)delegate
+- (instancetype)initTextFieldOfInputViewWithStyle:(ZXAreaPickerStyle)pickerStyle
+                               delegate:(id <ZXAreaPickerDelegate>)delegate
                               textField:(UITextField*)textField;
 
 
@@ -60,7 +61,7 @@ typedef enum {
  *  @param pickerStyle  选择显示数据样式
  */
 
-- (instancetype)initWithStyle:(HZAreaPickerStyle)pickerStyle delegate:(id <HZAreaPickerDelegate>)delegate;
+- (instancetype)initWithStyle:(ZXAreaPickerStyle)pickerStyle delegate:(id <ZXAreaPickerDelegate>)delegate;
 
 /**
  *  @brief 在view试图中弹出显示pickerView
@@ -83,16 +84,16 @@ typedef enum {
 /* 
  
  
- <HZAreaPickerDelegate>
+ <ZXAreaPickerDelegate>
  
  @property(nonatomic,strong)ZXAreaPickerView *areaPickerView;
 
  
-self.areaPickerView = [[ZXAreaPickerView alloc] initTextFieldOfInputViewWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self textField:_txtArea ];
+self.areaPickerView = [[ZXAreaPickerView alloc] initTextFieldOfInputViewWithStyle:ZXAreaPickerWithStateAndCityAndDistrict delegate:self textField:_txtArea ];
 
  
  #pragma mark - HZAreaPicker delegate
- -(void)pickerDidChaneStatus:(ZXAreaPickerView *)picker
+ -(void)zx_pickerDidChaneStatus:(ZXAreaPickerView *)picker
  {
      NSString *string = [NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district];
  
@@ -100,7 +101,7 @@ self.areaPickerView = [[ZXAreaPickerView alloc] initTextFieldOfInputViewWithStyl
      [self.textField3 setTitle:string forState:UIControlStateNormal];
  
  
- //    if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict)
+ //    if (picker.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
  //    {
  //        self.textField3.text = [NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district];
  //    }

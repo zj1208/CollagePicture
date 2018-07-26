@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -54,6 +54,7 @@
                 <outlet property="badgeLab" destination="Vsv-D6-Hsn" id="Yer-pE-6Va"/>
                 <outlet property="iconImageView" destination="6uN-l6-vOJ" id="WuP-Mv-QVU"/>
                 <outlet property="imgViewLayoutWidth" destination="tlJ-Sb-r1O" id="U43-cb-9NL"/>
+                <outlet property="labLayoutLeadingConstraint" destination="zL5-Gd-Q8S" id="Fyq-iF-DfU"/>
                 <outlet property="titleLab" destination="2Uv-nA-QT1" id="whE-Ap-tTk"/>
             </connections>
             <point key="canvasLocation" x="106.5" y="6.5"/>

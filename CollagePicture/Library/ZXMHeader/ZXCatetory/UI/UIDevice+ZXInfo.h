@@ -94,7 +94,7 @@ NSString *systemName = [UIDevice currentDevice].systemName;
 NSLog(@"当前系统名称-->%@", systemName);
 
 // 获取设备的系统版本 @"4.0",@"11.0"
-NSString *systemVersion = [UIDevice currentDevice].systemVersion;
+NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
 NSLog(@"当前系统版本号-->%@", systemVersion);
 
 // 获取电量的等级，[0 ,1.0]，-1.0

@@ -12,9 +12,9 @@
 
 // 2018.2.5； 增加pageControl
 // 2018.2.8； 优化功能；修改bug；
-// 2018.3.22 增加注释
 // 2018.4.20 优化代码
-
+// 2018.6.26 优化代码
+// 7.02 把设置的所有约束放到updateConstraints
 
 #import <UIKit/UIKit.h>
 #import "ZXBadgeCollectionCell.h"

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXModalAnimation : ZXBaseAnimation
 
+// 设置整个控制器view的大小；比如弹框中整个就是controller的view；
 @property (nonatomic, assign) CGSize contentSize;
 
 

@@ -46,11 +46,6 @@ XLPhotoBrowserDatasource,XLPhotoBrowserDelegate, ZXEmptyViewControllerDelegate,U
 //进度条
 @property (nonatomic, strong) UIProgressView *progressView;
 
-//标题
-@property (nonatomic, copy) NSString *barTitle;
-
-@property (nonatomic, copy) NSString *changeURLString;
-
 // 导航条按钮;
 // 返回按钮
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
@@ -295,6 +290,8 @@ static NSString* const SixSpaces = @"      ";
         }
         
         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
+//       self.view.frame = (0 0; 375 667);
+//         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:configuration];
         wkWebView.backgroundColor = self.view.backgroundColor;
         wkWebView.allowsBackForwardNavigationGestures = YES;
         if ([wkWebView respondsToSelector:@selector(allowsLinkPreview)])
@@ -645,7 +642,6 @@ static NSString* const SixSpaces = @"      ";
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
 
 //加载本地文件资源：- (void)loadData:(NSData *)data MIMEType:(NSString *)MIMEType textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL;
 - (void)loadRequestFileResource:(NSString *)name ofType:(nullable NSString *)ext MIMEType:(NSString *)mimeType
@@ -653,7 +649,10 @@ static NSString* const SixSpaces = @"      ";
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
     NSURL *url = [NSURL fileURLWithPath:path];
     NSData *data = [NSData dataWithContentsOfFile:path];
-    [self.webView loadData:data MIMEType:mimeType characterEncodingName:@"UTF-8" baseURL:url];
+    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+    {
+        [self.webView loadData:data MIMEType:mimeType characterEncodingName:@"UTF-8" baseURL:url];
+    }
 }
 
 
@@ -666,10 +665,12 @@ static NSString* const SixSpaces = @"      ";
         NSData *data = [content dataUsingEncoding:NSUTF8StringEncoding];
         NSURL *url = [NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]];
         
-        [self.webView loadData:data MIMEType:@"text/plain" characterEncodingName:@"UTF-8" baseURL:url];
+        if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+        {
+            [self.webView loadData:data MIMEType:@"text/plain" characterEncodingName:@"UTF-8" baseURL:url];
+        }
     }
 }
-#endif
 
 //加载本地html文件
 
@@ -691,17 +692,14 @@ static NSString* const SixSpaces = @"      ";
 
 #pragma mark - ------------------------WKWebView Delegate-------------------------
 #pragma mark WKNavigationDelegate
+
+
 // 1 在发送请求之前，决定是否请求
-
-
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-    NSLog(@"1.在发送请求之前，决定是否请求跳转%@",navigationAction.request);
+    NSLog(@"1.在发送请求之前，决定是否请求跳转:%@",navigationAction.request);
     NSURLRequest *request = navigationAction.request;
- 
 //    NSLog(@"wkWebViewAllHTTPHeaderFieldes = %@",request.allHTTPHeaderFields);
-
-  
     // 阿里支付加载
     if ([self payWithAliPayWithRequest:request])
     {
@@ -770,21 +768,19 @@ static NSString* const SixSpaces = @"      ";
 // 2 页面开始加载时调用
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-//    NSLog(@"2.页面开始加载时调用");
+    NSLog(@"2.页面开始加载时调用");
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
-// 3 在收到响应后，决定导航响应策略是否加载； 即使请求头有cookie，响应为何无cookie?
+// 3 在收到服务器响应后，决定导航响应策略是否加载； 即使请求头有cookie，响应为何无cookie?
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
     [self updateNavigationItems];
     NSLog(@"3.在收到响应后，决定是否加载");
     //能读取到，但是没有存入NSHTTPCookieStorage
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-    NSString *cookieString =  [[ZXHTTPCookieManager sharedInstance]cookieStringWithResponse:response];
+//    NSString *cookieString =  [[ZXHTTPCookieManager sharedInstance]cookieStringWithResponse:response];
     [[ZXHTTPCookieManager sharedInstance]handleResponseHeaderFields:response.allHeaderFields forURL:response.URL];
-    NSLog(@"wkwebview中的cookie:%@", cookieString);
-    
 
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
@@ -835,10 +831,14 @@ static NSString* const SixSpaces = @"      ";
         NSLog(@"帧框加载已中断");
         return;
     }
-    
-    [_emptyViewController addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+    NSURL *url = [NSURL URLWithString:[error.userInfo objectForKey:NSURLErrorFailingURLStringErrorKey]];
+    NSURL *appUrl = [NSURL URLWithString:[WYUserDefaultManager getkAPP_H5URL]];
+    if([url.host isEqualToString:appUrl.host] ||([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]))
+    {
+        [_emptyViewController addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        return;
+    }
 }
-
 
 // 主机地址被重定向时调用
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation
@@ -882,13 +882,11 @@ static NSString* const SixSpaces = @"      ";
 }
 
 //web内容处理中断时会触发
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView API_AVAILABLE(macosx(10.11), ios(9.0))
 {
     [webView reload];
     NSLog(@"web内容处理中断时会触发");
 }
-#endif
 
 //#pragma mark - -----------UIDelegate----------
 //// 可以指定配置对象、导航动作对象、window特性。如果没有实现这个方法，不会加载链接，如果返回的是原webview会崩溃。
@@ -1171,11 +1169,11 @@ static NSString* const SixSpaces = @"      ";
 //2.调用分享(share)，参数为分享的标题以及点击的链接地址
 -(void)share:(NSDictionary *)dic
 {
-    NSString *picStr = [dic objectForKey:@"image"];
-    NSString *title = [dic objectForKey:@"title"];
-    NSString *content = [dic objectForKey:@"text"];
-    NSString *link = [dic objectForKey:@"link"];
-//    [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
+//    NSString *picStr = [dic objectForKey:@"image"];
+//    NSString *title = [dic objectForKey:@"title"];
+//    NSString *content = [dic objectForKey:@"text"];
+//    NSString *link = [dic objectForKey:@"link"];
+//   [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
 }
 
 
@@ -1201,13 +1199,13 @@ static NSString* const SixSpaces = @"      ";
 //    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
 //    browser.browserStyle = XLPhotoBrowserStyleCustom;
 //    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
-    
+//
     
 //    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:_picArray.count datasource:self];
 //    browser.browserStyle = XLPhotoBrowserStyleCustom;
 //    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
 }
-
+/*
 #pragma mark  XLPhotoBrowserDatasource
 - (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
 
@@ -1220,22 +1218,23 @@ static NSString* const SixSpaces = @"      ";
         return url;
     }
 }
+
 -(NSArray *)getGoodsUrlList
 {
     NSMutableArray *arrayM = [NSMutableArray array];
-//    for (int i=0; i<self.imagesProcutsArray.count; ++i) {
-//        XLPhotoUrlModel *model = [[XLPhotoUrlModel alloc] init];
-//
-//        NSDictionary *objc = self.imagesProcutsArray[i];
-//        NSString *link = [objc objectForKey:@"link"];
-//        if ( ![NSString zhIsBlankString:link]) {
-//            model.goodsUrl = link;
-//        }
-//        [arrayM addObject:model];
-//    }
+    for (int i=0; i<self.imagesProcutsArray.count; ++i) {
+        XLPhotoUrlModel *model = [[XLPhotoUrlModel alloc] init];
+        
+        NSDictionary *objc = self.imagesProcutsArray[i];
+        NSString *link = [objc objectForKey:@"link"];
+        if ( ![NSString zhIsBlankString:link]) {
+            model.goodsUrl = link;
+        }
+        [arrayM addObject:model];
+    }
     return arrayM;
 }
-
+*/
 //4.设置标题（setTitle)
 -(void)setNavTitle:(NSDictionary *)dic{
     self.navigationItem.title = [dic objectForKey:@"title"];
@@ -1332,9 +1331,11 @@ static NSString* const SixSpaces = @"      ";
 // 8.更新产品列表
 - (void)postNotiToProdectList
 {
-//    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePrivacy object:nil];
-//    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePublic object:nil];
-//    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updateSoldouting object:nil];
+    /*
+    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePrivacy object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePublic object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updateSoldouting object:nil];
+     */
 }
 
 // 9.h5需要的数据
@@ -1388,6 +1389,8 @@ static NSString* const SixSpaces = @"      ";
 //  self.URLString = @"http://183280454.scene.eqxiu.com/s/3a1oDSh8?eqrcode=1&from=groupmessage&isappinstalled=0";
 //    self.URLString = @"http://mp.weixin.qq.com/s/Q1pVsi3w9b98k8gm_WwbjQ";
     self.URLString = urlString;
+//    self.URLString = @"http://taobao.com";
+//    self.URLString = @"https://faertu.m.tmall.com/shop/shop_auction_search.htm?spm=a222m.7628550.1998338745.1&sort=default";
 }
 
 - (void)setWebUrl:(NSString *)webUrl
@@ -1424,6 +1427,17 @@ static NSString* const SixSpaces = @"      ";
 {
     self.localTxtFileContent = content;
     self.webLoadType = WebLoadType_LocalFileContent;
+}
+
+#pragma mark - UIPreviewActionItem
+// 为了保证能分享，title，url链接地址必须外面传值进来
+- (NSArray <id<UIPreviewActionItem>> *)previewActionItems
+{
+    UIPreviewAction *itemShare = [UIPreviewAction actionWithTitle:NSLocalizedString(@"分享", nil) style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"previewActionShare" object:nil userInfo:@{@"title":self.navigationItem.title,@"url":self.URLString}];
+    }];
+    return @[itemShare];
 }
 
 /*

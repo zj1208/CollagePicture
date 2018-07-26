@@ -6,6 +6,7 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  2018.2.11，修改cell高度；增加字体大小适配；
+//  cell优化修改
 
 #import <UIKit/UIKit.h>
 

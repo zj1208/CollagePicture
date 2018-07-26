@@ -41,9 +41,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 @interface ZXWebViewController ()<UIWebViewDelegate,ZXEmptyViewControllerDelegate,XLPhotoBrowserDatasource>
 
-//标题
-@property (nonatomic, copy) NSString *barTitle;
-
 // 导航条按钮;
 // 返回按钮
 @property (nonatomic, strong)UIBarButtonItem *backButtonItem;
@@ -495,8 +492,13 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         NSLog(@"帧框加载已中断");
         return;
     }
-    
-    [_emptyViewController addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+    NSURL *url = [NSURL URLWithString:[error.userInfo objectForKey:NSURLErrorFailingURLStringErrorKey]];
+    NSURL *appUrl = [NSURL URLWithString:[WYUserDefaultManager getkAPP_H5URL]];
+    if([url.host isEqualToString:appUrl.host] ||([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]))
+    {
+        [_emptyViewController addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        return;
+    }
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -828,16 +830,18 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         return;
     }
     
-    
+    /*
     NSInteger index = [[dic objectForKey:@"position"] integerValue];
     self.picArray = [NSArray arrayWithArray: images ];
     self.imagesProcutsArray = [NSArray arrayWithArray:imagesProducts];
     NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
 
-//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
-//    browser.browserStyle = XLPhotoBrowserStyleCustom;
-//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
+    browser.browserStyle = XLPhotoBrowserStyleCustom;
+    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+     */
 }
+/*
 #pragma mark  XLPhotoBrowserDatasource
 - (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
     
@@ -853,19 +857,19 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 -(NSArray *)getGoodsUrlList
 {
     NSMutableArray *arrayM = [NSMutableArray array];
-//    for (int i=0; i<self.imagesProcutsArray.count; ++i) {
-//        XLPhotoUrlModel *model = [[XLPhotoUrlModel alloc] init];
-//
-//        NSDictionary *objc = self.imagesProcutsArray[i];
-//        NSString *link = [objc objectForKey:@"link"];
-//        if ( ![NSString zhIsBlankString:link]) {
-//            model.goodsUrl = link;
-//        }
-//        [arrayM addObject:model];
-//    }
+    for (int i=0; i<self.imagesProcutsArray.count; ++i) {
+        XLPhotoUrlModel *model = [[XLPhotoUrlModel alloc] init];
+        
+        NSDictionary *objc = self.imagesProcutsArray[i];
+        NSString *link = [objc objectForKey:@"link"];
+        if ( ![NSString zhIsBlankString:link]) {
+            model.goodsUrl = link;
+        }
+        [arrayM addObject:model];
+    }
     return arrayM;
 }
-
+*/
 //4.设置标题（setTitle)
 -(void)setNavTitle:(NSDictionary *)dic
 {
@@ -955,9 +959,11 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 // 8.更新产品列表
 - (void)postNotiToProdectList
 {
-//    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePrivacy object:nil];
-//    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePublic object:nil];
-//    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updateSoldouting object:nil];
+    /*
+    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePrivacy object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePublic object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updateSoldouting object:nil];
+     */
 }
 
 // 9.h5需要的数据
@@ -1056,6 +1062,17 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     self.localTxtFileContent = content;
     self.webLoadType = WebLoadType_LocalFileContent;
+}
+
+#pragma mark - UIPreviewActionItem
+// 为了保证能分享，title，url链接地址必须外面传值进来
+- (NSArray <id<UIPreviewActionItem>> *)previewActionItems
+{
+    UIPreviewAction *itemShare = [UIPreviewAction actionWithTitle:NSLocalizedString(@"分享", nil) style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"previewActionShare" object:nil userInfo:@{@"title":self.navigationItem.title,@"url":self.URLString}];
+    }];
+    return @[itemShare];
 }
 
 @end

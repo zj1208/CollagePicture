@@ -1,23 +1,21 @@
 //
 //  ZXAreaPickerView.m
-//  areapicker
+//  ZXAreaPickerView
 //
 //  Created by simon on 14-9-9.
 //  Copyright (c) 2014年 simon.com. All rights reserved.
 //
 
 #import "ZXAreaPickerView.h"
-#import <QuartzCore/QuartzCore.h>
 
-#define kDuration 0.3
 
 @interface ZXAreaPickerView ()
 
-@property(nonatomic,strong) NSArray *provinces;//35个字典省份组合的数组
-@property(nonatomic,strong) NSArray *cities;
-@property(nonatomic,strong) NSArray *areas;
+@property (nonatomic, copy) NSArray *provinces;//35个字典省份组合的数组
+@property (nonatomic, copy) NSArray *cities;
+@property (nonatomic, copy) NSArray *areas;
 
-@property (nonatomic,strong)UITextField *inputTextField;
+@property (nonatomic, strong) UITextField *inputTextField;
 @end
 
 @implementation ZXAreaPickerView
@@ -44,7 +42,7 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithStyle:(HZAreaPickerStyle)pickerStyle delegate:(id<HZAreaPickerDelegate>)delegate
+- (instancetype)initWithStyle:(ZXAreaPickerStyle)pickerStyle delegate:(id<ZXAreaPickerDelegate>)delegate
 {
     
     self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
@@ -58,8 +56,8 @@
     return self;
     
 }
-- (instancetype)initTextFieldOfInputViewWithStyle:(HZAreaPickerStyle)pickerStyle
-                               delegate:(id <HZAreaPickerDelegate>)delegate
+- (instancetype)initTextFieldOfInputViewWithStyle:(ZXAreaPickerStyle)pickerStyle
+                               delegate:(id <ZXAreaPickerDelegate>)delegate
                               textField:(UITextField*)textField
 {
     self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
@@ -83,10 +81,10 @@
     self.locatePicker.dataSource = self;
     self.locatePicker.delegate = self;
     //加载数据
-    if (self.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict)
+    if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
     {
         //35个字典组合的数组，更细分一点，先地级市，后面还有县城
-        self.provinces = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.json" ofType:nil]];
+        self.provinces = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ZXarea.plist" ofType:nil]];
         //得到index相对应的cities－－n个字典的组合
         self.cities = [[self.provinces objectAtIndex:0] objectForKey:@"cities"];//n个城市字典组合， 以cities为key。
         //得到相对应的state省份，城市city，
@@ -108,7 +106,7 @@
     }
     else
     {
-        self.provinces = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil]];//城市，地级市
+        self.provinces = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ZXcity.plist" ofType:nil]];//城市，地级市
         self.cities = [[self.provinces objectAtIndex:0] objectForKey:@"cities"];
         self.locate.state = [[self.provinces objectAtIndex:0] objectForKey:@"state"];
         self.locate.city = [self.cities objectAtIndex:0];
@@ -124,7 +122,7 @@
 {
     UIToolbar *toolbar=[[UIToolbar alloc] init];
     
-    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,40);
+    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,44);
     
     UIBarButtonItem *lefttem=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelClick)];
     lefttem.tintColor =[UIColor blackColor];
@@ -144,8 +142,8 @@
 {
     
     [self cancelClick];
-    if([self.delegate respondsToSelector:@selector(pickerDidChaneStatus:)]) {
-        [self.delegate pickerDidChaneStatus:self];
+    if([self.delegate respondsToSelector:@selector(zx_pickerDidChaneStatus:)]) {
+        [self.delegate zx_pickerDidChaneStatus:self];
     }
 }
 
@@ -167,7 +165,7 @@
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    if (self.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict)
+    if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
     {
         return 3;
     }
@@ -187,7 +185,7 @@
             return [self.cities count];
             break;
         case 2:
-            if (self.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict)
+            if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
             {
                 return [self.areas count];
                 break;
@@ -200,7 +198,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (self.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict)
+    if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
     {
         switch (component)
         {
@@ -238,7 +236,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (self.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
+    if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict) {
         switch (component) {
             case 0:
                 //如果选择改变了第一列省份，则需要重新赋值第二列的城市，第三列的县级市数组
@@ -301,8 +299,8 @@
         }
     }
     
-    if([self.delegate respondsToSelector:@selector(pickerDidChaneStatus:)]) {
-        [self.delegate pickerDidChaneStatus:self];
+    if([self.delegate respondsToSelector:@selector(zx_pickerDidChaneStatus:)]) {
+        [self.delegate zx_pickerDidChaneStatus:self];
     }
 
 }

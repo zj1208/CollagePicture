@@ -10,6 +10,9 @@
 //  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
 //  2018.2.11；修改在达到最大数量时候删除的bug；
 //  2018.6.07  修改高度计算；
+//  2018.6.25  修改高度计算造成的bug；
+//  2018.6.29  优化组件；
+
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
@@ -21,7 +24,9 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
     
     ZXLabelsInputCellEditingStyleNone,
     ZXLabelsInputCellEditingStyleDelete, // 删除
-    ZXLabelsInputCellEditingStyleInsert  // 添加
+    ZXLabelsInputCellEditingStyleInserting,  // 添加中
+    ZXLabelsInputCellEditingStyleInserted  // 已经添加
+
 };
 
 
@@ -40,41 +45,35 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
 - (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView  willDisplayCell:(LabelCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
- 自定义 点击添加label事件回调
+ 点击添加标签事件回调-是否弹出默认输入弹框
  
- @param collectionView collectionView description
- @param indexPath indexPath description
  */
-- (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath didAddTags:(NSMutableArray *)tagsArray;
-
+- (BOOL)zx_shuoldPopAddTagAlertViewLabelsInputTagsView:(ZXLabelsInputTagsView *)tagsView;
 
 /**
- 用默认添加label事件回调，提示输入框文字输入监听；
+ 默认输入弹框中的文字输入监听回调；  可以自定义处理判断或再增加弹框；一般不用；
 
  @param notification notification description
  */
-- (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView handleTextFieldTextDidChangeNotification:(NSNotification *)notification;
+- (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView textFieldTextDidChangeNotification:(NSNotification *)notification;
 
-- (void)zx_labelsInputTagsViewWithAlertViewDoButtonAction;
+// 是否可以添加这个输入标签title
+- (BOOL)zx_shuoldAddTagTitleWithLabelsInputTagsView:(ZXLabelsInputTagsView *)tagsView tagTitle:(nullable NSString *)title;
 
 
-// 这个代理影响ZXLabelsInputTagsView在tableView的整体布局高度，所以一定要回调，重新计算总高度；
 @required
-/**
-  用默认添加labe事件回调,点击确定添加tag到数组后的回调，或点击移除数据后的回调；
 
- @param tagsView tagsView description
- @param tagsArray 已经加入/或删除后的当前数组数据
+
+/**
+ 编辑（已经添加,已经删除）的时候回调；
+
+ @param tagsView self
+ @param editingStyle ZXLabelsInputCellEditingStyle
+ @param indexPath 指定indexPath，添加的时候无意义；
  */
-- (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView didChangedTagsWithTags:(NSMutableArray *)tagsArray;
+- (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView commitEditingStyle:(ZXLabelsInputCellEditingStyle)editingStyle forRowAtIndexPath:(nullable NSIndexPath *)indexPath addTagTitle:(nullable NSString *)title;
 
 @end
-
-
-
-// 只能一开始设置这些属性，在重用的时候，如果在awakFromNib方法里初始化这些属性，有效果；
-// 如果不在awakFromNib，另外动态改变的，则无法记住属性，获取的时候依然是初始化的值；
-// 所以，即使重用，也一定要用同一个一个强引用的cell，才能保证；
 
 
 @interface ZXLabelsInputTagsView : UIView<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
@@ -88,8 +87,9 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
 // 设置collectionView的sectionInset
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距
+// 标签item之间的最小间距
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
+
 // 行间距
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
@@ -99,10 +99,8 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
 // 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除
 @property (nonatomic, assign) NSInteger maxItemCount;
 
-// 设置item的width，height，size；
-@property (nonatomic, assign) CGFloat itemWidth;
+// 设置item的height；
 @property (nonatomic, assign) CGFloat itemHeight;
-@property (nonatomic, assign) CGSize itemSize;
 
 // 设置添加tag的提示文本，默认@"点击输入标签"
 @property (nonatomic, copy) NSString *defaultAddTagTitle;
@@ -111,13 +109,18 @@ typedef NS_ENUM(NSInteger, ZXLabelsInputCellEditingStyle) {
 // 点击添加tag时,默认提示框中的textField的最长文本长度；默认10个长度
 @property (nonatomic, assign) NSInteger defaultAlertFieldTextLength;
 
-// 添加tag标签的额外设置
-@property (nonatomic, strong) UIColor *addTagColor;
+// 添加tag标签的文字颜色，边框颜色，圆角设置，添加标签的背景色
+@property (nonatomic, strong) UIColor *addTagTextColor;
 @property (nonatomic, strong) UIColor *addTagBorderColor;
 @property (nonatomic, assign) CGFloat addTagCornerRadius;
-
-@property (nonatomic, strong) UIColor *tagBackgroudColor;
 @property (nonatomic, strong) UIColor *addTagBackgroudColor;
+
+// 标签背景色
+@property (nonatomic, strong) UIColor *tagTextColor;
+@property (nonatomic, strong) UIColor *tagBorderColor;
+@property (nonatomic, assign) CGFloat tagCornerRadius;
+@property (nonatomic, strong) UIColor *tagBackgroudColor;
+
 
 - (void)setData:(NSArray *)data;
 
@@ -210,7 +213,6 @@ NS_ASSUME_NONNULL_END
  
  - (CGFloat)getCellHeightWithContentIndexPath:(NSIndexPath *)indexPath data:(id)data
  {
-     [self layoutIfNeeded];
     return [self.labelsTagsView getCellHeightWithContentData:data];
  }
  @end
@@ -236,21 +238,18 @@ controller.h-用tableViewController做
 @property (nonatomic, strong)TMDiskManager *diskManager;
 @property (nonatomic, strong) NSMutableArray *dataMArray; //纯展示推荐标签组
 @property (nonatomic, strong) NSMutableArray *addedMArray;//编辑添加标签组
-//编辑添加cell，要保证唯一
-@property (nonatomic,strong)AddProLabelTagCell *editLabelTagCell;
+
 @end
 
 @implementation AddProLabelsController
 
-static NSString * tagsCell = @"recdLabelCell";
-static NSString *editTagsCell = @"editTagsCell";
+static NSString *const reuse_recommendTagsCell = @"recdTagsCell";
+static NSString *const reuse_editTagsCell = @"editTagsCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = WYUISTYLE.colorBGgrey;
-    self.editLabelTagCell =[self.tableView dequeueReusableCellWithIdentifier:editTagsCell];
-    
+    self.tableView.backgroundColor = WYUISTYLE.colorBGgrey;    
     [self setData];
     
 }
@@ -315,22 +314,23 @@ static NSString *editTagsCell = @"editTagsCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //ZXLabelsInputTagsView
+    //ZXLabelsInputTagsView-需要添加标签
     if (indexPath.section ==0)
     {
-        self.editLabelTagCell.inputTagsView.delegate = self;
-        [self.editLabelTagCell setData:self.addedMArray];
-        return self.editLabelTagCell;
+         AddProLabelTagCell *cell = [tableView dequeueReusableCellWithIdentifier:reuse_editTagsCell forIndexPath:indexPath];
+         cell.inputTagsView.delegate = self;
+         [cell setData:self.addedMArray];
+         return cell;
     }
-    //ZXLabelsTagsView
+    //ZXLabelsTagsView-推荐标签
     if (indexPath.section==2)
     {
-        AddProRecdLabelCell *cell1 = [tableView dequeueReusableCellWithIdentifier:tagsCell forIndexPath:indexPath];
+        AddProRecdLabelCell *cell1 = [tableView dequeueReusableCellWithIdentifier:reuse_recommendTagsCell forIndexPath:indexPath];
         [cell1 setData:self.dataMArray];
         cell1.labelsTagsView.delegate = self;
         return cell1;
     }
-    // Configure the cell...
+    // 提示语展示
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.textLabel.text = @"例如产品名称为:全新冰雪奇缘二代姐妹音乐批发大套装礼盒玩具艾莎芭比娃娃\n标签:冰雪奇缘、音乐、艾莎、芭比娃娃、艾尔莎、玩具礼盒、娃娃、安娜";
     cell.textLabel.font = [UIFont systemFontOfSize:14];
@@ -341,11 +341,19 @@ static NSString *editTagsCell = @"editTagsCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //ZXLabelsInputTagsView的高度
+    // ZXLabelsInputTagsView的高度-需要添加标签
     if (indexPath.section ==0)
     {
-        return [self.editLabelTagCell getCellHeightWithContentIndexPath:indexPath data:self.addedMArray];
+         static AddProLabelTagCell *cell =  nil;
+         static dispatch_once_t onceToken;
+ 
+         dispatch_once(&onceToken, ^{
+ 
+         cell = [tableView dequeueReusableCellWithIdentifier:reuse_editTagsCell];
+         });
+         return [cell getCellHeightWithContentIndexPath:indexPath data:self.addedMArray];
     }
+     // 提示语展示
     else if (indexPath.section ==1)
     {
         if (self.dataMArray.count>0)
@@ -366,7 +374,7 @@ static NSString *editTagsCell = @"editTagsCell";
         
         return size.height;
     }
-    //ZXLabelsTagsView推荐标签的总高度
+    //ZXLabelsTagsView推荐标签的总高度-推荐常用标签
     else if (indexPath.section ==2)
     {
         static AddProRecdLabelCell *cell =  nil;
@@ -374,7 +382,7 @@ static NSString *editTagsCell = @"editTagsCell";
         
         dispatch_once(&onceToken, ^{
             
-            cell = [tableView dequeueReusableCellWithIdentifier:tagsCell];
+            cell = [tableView dequeueReusableCellWithIdentifier:reuse_recommendTagsCell];
         });
         return [cell getCellHeightWithContentIndexPath:indexPath data:self.dataMArray];
     }
@@ -382,9 +390,7 @@ static NSString *editTagsCell = @"editTagsCell";
     
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
-}
+
 
 #pragma mark - 组头，组尾展示提示
 
@@ -442,16 +448,36 @@ static NSString *editTagsCell = @"editTagsCell";
     
 }
 
-//添加删除之后的回调，刷新tableView，重新取高度
+
 #pragma mark -ZXLabelsInputTagsViewDelegate
+ 
+ - (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView commitEditingStyle:(ZXLabelsInputCellEditingStyle)editingStyle forRowAtIndexPath:(nullable NSIndexPath *)indexPath addTagTitle:(nullable NSString *)title
+ {
+     if (editingStyle ==ZXLabelsInputCellEditingStyleDelete)
+     {
+         [self.addedMArray removeObjectAtIndex:indexPath.item];
+         [self.tableView reloadData];
+     }
+     else if (editingStyle ==ZXLabelsInputCellEditingStyleInserted)
+     {
+         [self.addedMArray insertObject:title atIndex:0];
+         [self.tableView reloadData];
+     }
+ }
+ 
+ - (BOOL)zx_shuoldAddTagTitleWithLabelsInputTagsView:(ZXLabelsInputTagsView *)tagsView tagTitle:(NSString *)title
+ {
+     if ([self.addedMArray containsObject:title])
+     {
+         [MBProgressHUD zx_showError:NSLocalizedString(@"经营品牌不能重复，请更换", nil) toView:self.view];
+         return NO;
+     }
+     return YES;
+ }
 
-- (void)zx_labelsInputTagsView:(ZXLabelsInputTagsView *)tagsView didChangedTagsWithTags:(NSMutableArray *)tagsArray
-{
-    self.addedMArray = tagsArray;
-    [self.tableView reloadData];
-}
 
-//点击labelsTagsView，加入到ZXLabelsInputTagsView 展示
+//点击labelsTagsView推荐常用标签，加入到ZXLabelsInputTagsView 展示
+ 
 #pragma mark- ZXLabelsTagsViewDelegate
 
 - (void)zx_labelsTagsView:(ZXLabelsTagsView *)labelsTagView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -467,15 +493,16 @@ static NSString *editTagsCell = @"editTagsCell";
 //确定－保存下来，及返回
 - (IBAction)saveBarItemAction:(UIBarButtonItem *)sender {
     
-    if (self.addedMArray.count ==0)
-    {
-        [self zhHUD_showErrorWithStatus:@"请添加产品标签"];
-        return;
-    }
-    //如果数组个数为0，则labels也会为@""
-    NSString *labels = [self.addedMArray componentsJoinedByString:@","];
-    [self.diskManager setPropertyImplementationValue:labels forKey:@"labels"];
-    [self.navigationController popViewControllerAnimated:YES];
+ if (self.dataMArray.count>0)
+ {
+     NSString *labels = [self.dataMArray componentsJoinedByString:@","];
+     [self.diskManager setPropertyImplementationValue:labels forKey:@"mainBrand"];
+ }
+ else
+ {
+     [self.diskManager setPropertyImplementationValue:nil forKey:@"mainBrand"];
+ }
+ [self.navigationController popViewControllerAnimated:YES];
 
 }
 

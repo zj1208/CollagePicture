@@ -5,6 +5,13 @@
 //  Created by 杨建亮 on 2017/10/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+
+//  简介：webView中所有设计的内容（不包括滚动列表）不要被屏幕圆角、上方传感器区域和下方home键指示器区域遮挡，要在安全区域safeArea布局content；但是webView中底部有可能会有按钮，除非前端做适配；
+//  （1）支持3DTouch预览的向上滑动事件处理-分享；
+
+//  注意：如果用self.view.frame设置webView的frame，微信的页面（https://mp.weixin.qq.com）会往上偏移；如果用计算大小设置，当vc当主控制器展示预览view的时候，顶部导航条空白区域会留白；
+//  WKWebView框架 还需要重点学习研究！
+
 //  2017.12.22
 //  更改默认分享 标题没有的问题；调试cookie
 //  2018.3.29 修改第二个wkWebView无法加载请求的bug；
@@ -13,6 +20,8 @@
 //  2018.5.9 优化代码
 //  2018.5.28 修改WebViewJavascriptBridge/delloc没释放的问题；
 //  2018.6.22 修改支付宝支付后回调支付不成功造出页面刷新的问题；
+//  7.05  修改请求中遇到内部无效协议请求的，不是最终请求，造成错误页面覆盖；
+
 
 
 #import <UIKit/UIKit.h>
@@ -31,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 初始化;指定固定标题
 - (instancetype)initWithBarTitle:(nullable NSString *)aTitle;
+// 标题-保证默认分享的时候能取到标题和链接
+@property (nonatomic, copy) NSString *barTitle;
+
 
 //1.加载网络html页面
 - (void)loadWebPageWithURLString:(NSString *)urlString;

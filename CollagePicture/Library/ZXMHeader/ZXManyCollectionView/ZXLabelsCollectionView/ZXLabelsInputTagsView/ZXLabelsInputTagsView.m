@@ -18,7 +18,7 @@ static NSString *ZXDefaultAlertTitle =@"输入产品标签";
 static CGFloat ZXMinimumInteritemSpacing = 12.f;//item之间最小间隔
 static CGFloat ZXMinimumLineSpacing = 12.f; //最小行间距
 
-static CGFloat const ZXAddPicItemWidth = 60.f;
+//static CGFloat const ZXAddPicItemWidth = 60.f;
 static CGFloat const ZXAddPicItemHeight = 24.f;
 
 static NSString * const reuseInputTagsCell = @"Cell";
@@ -70,7 +70,6 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-//    self.collectionView.frame = self.bounds;
 }
 
 //- (void)setDefaultAddTagTitle:(NSString *)defaultAddTagTitle
@@ -100,9 +99,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)commonInit
 {
     self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-    self.itemWidth = ZXAddPicItemWidth;
     self.itemHeight = ZXAddPicItemHeight;
-    self.itemSize = CGSizeMake(ZXAddPicItemWidth, ZXAddPicItemHeight);
     self.minimumInteritemSpacing = LCDScale_iPhone6_Width(ZXMinimumInteritemSpacing) ;
     self.minimumLineSpacing =LCDScale_iPhone6_Width(ZXMinimumLineSpacing);
     self.defaultAlertTitle = ZXDefaultAlertTitle;
@@ -110,6 +107,16 @@ static NSString * const reuseInputTagsCell = @"Cell";
     self.existInputItem = YES;//输入标签默认存在
     self.maxItemCount = ZXMaxItemCount;
     self.defaultAddTagTitle = ZXDefaultAddTagTitle;
+    
+    self.tagTextColor = [UIColor redColor];
+    self.tagBorderColor =  [UIColor redColor];
+    self.tagBackgroudColor = [UIColor whiteColor];
+    self.tagCornerRadius = self.itemHeight/2;
+    
+    self.addTagTextColor = [UIColor redColor];
+    self.addTagBorderColor =  [UIColor redColor];
+    self.addTagBackgroudColor = [UIColor whiteColor];
+    self.addTagCornerRadius = self.itemHeight/2;
 }
 
 
@@ -166,7 +173,8 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     LabelCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseInputTagsCell forIndexPath:indexPath];
-    
+    cell.height = self.itemHeight;
+
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
     {
         cell.title = self.defaultAddTagTitle;
@@ -221,9 +229,11 @@ static NSString * const reuseInputTagsCell = @"Cell";
     if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
     {
         cell.title = self.defaultAddTagTitle;
+        cell.height = self.itemHeight;
         return [cell sizeForCell];
     }
     cell.title = [NSString stringWithFormat:@"%@ X",[self.dataMArray objectAtIndex:indexPath.item]];
+    cell.height = self.itemHeight;
     return [cell sizeForCell];
 }
 
@@ -240,21 +250,17 @@ static NSString * const reuseInputTagsCell = @"Cell";
     {
         
         //默认设置
-        newCell.titleLab.textColor = [UIColor redColor];
-        newCell.layer.borderColor = [UIColor redColor].CGColor;
-        newCell.titleLab.backgroundColor = self.tagBackgroudColor?self.tagBackgroudColor:[UIColor whiteColor];
-        
+        newCell.titleLab.textColor = self.tagTextColor;
+        newCell.layer.borderColor = self.tagBorderColor.CGColor;
+        newCell.titleLab.backgroundColor = self.tagBackgroudColor;
+        newCell.layer.cornerRadius = self.tagCornerRadius;
+//        添加按钮设置
         if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
         {
-            if (self.addTagColor)
-            {
-                newCell.titleLab.textColor =self.addTagColor;
-            }
-            if (self.addTagBorderColor)
-            {
-                newCell.layer.borderColor = self.addTagBorderColor.CGColor;
-            }
-            newCell.titleLab.backgroundColor = self.addTagBackgroudColor?self.addTagBackgroudColor:[UIColor whiteColor];
+            newCell.titleLab.textColor =self.addTagTextColor;
+            newCell.layer.borderColor = self.addTagBorderColor.CGColor;
+            newCell.titleLab.backgroundColor = self.addTagBackgroudColor;
+            newCell.layer.cornerRadius = self.addTagCornerRadius;
         }
     }
 }
@@ -265,7 +271,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
     // 添加标签
     if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
     {
-        [self labelsInputTagsView:self commitEditingStyle:ZXLabelsInputCellEditingStyleInsert forRowAtIndexPath:indexPath];
+        [self labelsInputTagsView:self commitEditingStyle:ZXLabelsInputCellEditingStyleInserting forRowAtIndexPath:indexPath];
     }
     // 其余选中事件是删除标签
     else
@@ -274,57 +280,55 @@ static NSString * const reuseInputTagsCell = @"Cell";
     }
 }
 
+#pragma mark - 添加/删除标签 处理；
 - (void)labelsInputTagsView:(ZXLabelsInputTagsView *)collectionView commitEditingStyle:(ZXLabelsInputCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 删除标签事件
     if (editingStyle == ZXLabelsInputCellEditingStyleDelete)
     {
-        [self reloadDataWithDeleteObjectWithCollectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+        [self deleteTagsWithCommitEditingStyle:ZXLabelsInputCellEditingStyleDelete didSelectItemAtIndexPath:indexPath];
     }
     // 添加标签事件
-    else if (editingStyle == ZXLabelsInputCellEditingStyleInsert)
+    else if (editingStyle == ZXLabelsInputCellEditingStyleInserting)
     {
-        if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:collectionView:didSelectItemAtIndexPath:didAddTags:)])
+        if ([self.delegate respondsToSelector:@selector(zx_shuoldPopAddTagAlertViewLabelsInputTagsView:)])
         {
-            [self.delegate zx_labelsInputTagsView:self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath didAddTags:_dataMArray];
+           BOOL should =  [self.delegate zx_shuoldPopAddTagAlertViewLabelsInputTagsView:self];
+            if (!should)
+            {
+                return;
+            }
         }
-        else
-        {
-            [self addLabelsWithPresentAlertController];
-        }
+        [self popAlertControllerWithSelectItemAtIndexPath:indexPath];
     }
 }
 
 
 // 删除标签
-- (void)reloadDataWithDeleteObjectWithCollectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)deleteTagsWithCommitEditingStyle:(ZXLabelsInputCellEditingStyle)editingStyle didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 当存在输入标签，而且已经到最大个数
     if (_dataMArray.count == self.maxItemCount && self.isExistInputItem)
     {
-//        加入后总数量 = 之前总数量，会崩溃；删除后的总数量 = 之前总数量也会崩溃；
-//        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:_dataMArray.count inSection:0];
-//        [collectionView insertItemsAtIndexPaths:@[lastIndexPath]];
         [self.dataMArray removeObjectAtIndex:indexPath.item];
         [self.collectionView reloadData];
     }
-    // 不存在输入标签，或有输入标签但点击的不是输入标签
+    // 有输入标签但点击的不是输入标签;或不存在输入标签
     else
     {
         [self.dataMArray removeObjectAtIndex:indexPath.item];
-        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
     }
-    // 删除事件
-    if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:didChangedTagsWithTags:)])
+
+    if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:commitEditingStyle:forRowAtIndexPath:addTagTitle:)])
     {
-        NSMutableArray *tagsArray = [_dataMArray mutableCopy];
-        [self.delegate zx_labelsInputTagsView:self didChangedTagsWithTags:tagsArray];
+        [self.delegate zx_labelsInputTagsView:self commitEditingStyle:editingStyle forRowAtIndexPath:indexPath addTagTitle:nil];
     }
 }
 
 #pragma mark - 默认添加标签弹框
 
-- (void)addLabelsWithPresentAlertController
+- (void)popAlertControllerWithSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *aTitle = NSLocalizedString(@"", nil);
     NSString *aMessage = NSLocalizedString(self.defaultAlertTitle, nil);
@@ -332,10 +336,10 @@ static NSString * const reuseInputTagsCell = @"Cell";
     NSString *otherButtonTitle = NSLocalizedString(@"确定", @"OK");
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
-    
+//    每次弹框都添加监听
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
         
     }];
     __weak typeof (self) weakSelf = self;
@@ -349,17 +353,15 @@ static NSString * const reuseInputTagsCell = @"Cell";
         
         UITextField *textField = [alertController.textFields firstObject];
         if (![ZXLabelsInputTagsView zhIsBlankString:textField.text])
-        {   // 如果已经有这个内容item，则提示；
-            if ([self.dataMArray containsObject:textField.text])
+        {
+            BOOL should  = YES;
+            if ([self.delegate respondsToSelector:@selector(zx_shuoldAddTagTitleWithLabelsInputTagsView:tagTitle:)])
             {
-                if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsViewWithAlertViewDoButtonAction)])
-                {
-                    [self.delegate zx_labelsInputTagsViewWithAlertViewDoButtonAction];
-                }
+              should = [self.delegate zx_shuoldAddTagTitleWithLabelsInputTagsView:self tagTitle:textField.text];
             }
-            else
+            if (should)
             {
-                [weakSelf reloadDataWithAddObject:textField.text];
+                [weakSelf addTag:textField.text];
             }
             [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:alertController.textFields.firstObject];
         }
@@ -379,13 +381,13 @@ static NSString * const reuseInputTagsCell = @"Cell";
 
 
 #pragma mark 默认点击输入添加按钮 警告提示中的textField的 通知监听回调
-- (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification
+- (void)textFieldTextDidChangeNotification:(NSNotification *)notification
 {
      UITextField *textField = notification.object;
     self.textAlertAction.enabled = ![ZXLabelsInputTagsView zhIsBlankString:textField.text];
-    if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:handleTextFieldTextDidChangeNotification:)])
+    if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:textFieldTextDidChangeNotification:)])
     {
-        [self.delegate zx_labelsInputTagsView:self handleTextFieldTextDidChangeNotification:notification];
+        [self.delegate zx_labelsInputTagsView:self textFieldTextDidChangeNotification:notification];
     }
     else
     {
@@ -398,8 +400,8 @@ static NSString * const reuseInputTagsCell = @"Cell";
 }
 
 
-// 添加标签时候的数据业务处理；虽然我增加了一个数据，但是在tableViewCell重用那，其实数据根本没有改变；所以要用同一个cell
-- (void)reloadDataWithAddObject:(NSString *)title
+
+- (void)addTag:(NSString *)title
 {
     [_dataMArray insertObject:title atIndex:0];
     
@@ -413,11 +415,9 @@ static NSString * const reuseInputTagsCell = @"Cell";
         [self.collectionView reloadData];
     }
     
-    if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:didChangedTagsWithTags:)])
+    if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:commitEditingStyle:forRowAtIndexPath:addTagTitle:)])
     {
-        //需要强引用，如果弱引用，在循环引用的时候，数据会被释放；
-        NSMutableArray *tagsArray = [NSMutableArray arrayWithArray:self.dataMArray];
-        [self.delegate zx_labelsInputTagsView:self didChangedTagsWithTags:tagsArray];
+        [self.delegate zx_labelsInputTagsView:self commitEditingStyle:ZXLabelsInputCellEditingStyleInserted forRowAtIndexPath:nil addTagTitle:title];
     }
 }
 
@@ -430,13 +430,13 @@ static NSString * const reuseInputTagsCell = @"Cell";
     {
         return 0.f;
     }
+    else if (self.existInputItem && (!data || [data count]==0))
+    {
+        return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+self.itemHeight;
+    }
     else
     {
-        if (!data || [data count]==0)
-        {
-            self.collectionView.frame =CGRectZero;
-            return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+_itemHeight;
-        }
+
         [self setData:data];
         
         NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
@@ -463,6 +463,11 @@ static NSString * const reuseInputTagsCell = @"Cell";
         }
         
         [self.dataMArray addObjectsFromArray:data];
+        self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        [self.collectionView reloadData];
+    }
+    else if ([self.dataMArray isEqualToArray:data] && data.count ==0)
+    {
         self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         [self.collectionView reloadData];
     }

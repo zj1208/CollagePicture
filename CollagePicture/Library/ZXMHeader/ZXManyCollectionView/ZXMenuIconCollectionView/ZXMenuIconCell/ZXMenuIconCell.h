@@ -11,7 +11,7 @@
 //  修改ZXMenuIconCell实例方法；倒入MessageModel
 
 //  2018.2.11,新增默认Model模型；ZXMenuIconModel；
-
+//  7.18,改动xib 角标约束；
 
 #import <UIKit/UIKit.h>
 #import "ZXMenuIconModel.h"
@@ -41,6 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 设置中心图标的 大小；默认LCDScale_iPhone6_Width(45.f);
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgViewLayoutWidth;
+
+// 在99+的时候可以调整角标往图片里靠
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labLayoutLeadingConstraint;
 
 // 标题文本;默认字体大小14，6plus自适应；
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;

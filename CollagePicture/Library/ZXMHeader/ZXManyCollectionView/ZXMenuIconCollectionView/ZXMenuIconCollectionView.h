@@ -9,7 +9,8 @@
 
 //  2018.2.11; 优化组件；
 //  2018.6.01; 增加裁剪；
-
+//  2018.6.26; 增加设置icon图标大小属性；
+//  7.18 增加item最小宽度属性=图标宽度+角标预留的位置，修改最小item间距=0；
 
 
 #import <UIKit/UIKit.h>
@@ -33,7 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 设置collectionView的sectionInset;UIEdgeInsetsMake(15, 15, 15, 15)
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距;默认12；
+// item之间的间距;默认12；// 设置self.minimumInteritemSpacing是给item宽度计算用的，实际cell设置最小依然为0.2
+
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
 // 行间距;默认12；
@@ -44,18 +46,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) NSInteger columnsCount;
 
-
+// 设置item的宽度，高度；
 @property (nonatomic, assign) CGSize itemSize;
 
-// 设置item中的Icon图标的width，height，size；
+// 设置item中的Icon图标的相同width，height； 一行4个item时，最大值是默认的 LCDScale_iPhone6_Width(45.f)；
+@property (nonatomic, assign) CGFloat iconEqualWidthHeight;
 
-@property (nonatomic, assign) CGSize iconSize;
-
+// 获取最小item的宽度 = iconEqualWidthHeight + 角标预留显示区域，防止"99+"角标显示不下
+@property (nonatomic, readonly) CGFloat minimumItemWidth;
 
 @property (nonatomic, strong, nullable) UIImage *placeholderImage;
 
 
 // 自适应缩放宽度大小：计算出来后用于设置一个总宽度（比如屏幕宽度）下放几个的平均item宽度；
+// 这个宽度是基于item最小宽度的基础上设置的,因为宽度设置小了，角标有可能显示不小；
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing;
 
 
@@ -131,7 +135,7 @@ NS_ASSUME_NONNULL_END
 - (void)awakeFromNib {
     [super awakeFromNib];
      self.menuIconCollectionView.columnsCount = 3;
-     self.menuIconCollectionView.minimumInteritemSpacing = 15.f;
+     self.menuIconCollectionView.minimumInteritemSpacing = 5.f;
  
      CGFloat width = [self.menuIconCollectionView getItemAverageWidthInTotalWidth:LCDW columnsCount:self.menuIconCollectionView.columnsCount sectionInset:self.menuIconCollectionView.sectionInset minimumInteritemSpacing:self.menuIconCollectionView.minimumInteritemSpacing];
      self.menuIconCollectionView.itemSize = CGSizeMake(width,width-LCDScale_iPhone6_Width(20));

@@ -54,10 +54,12 @@ static CGFloat const ZXLineSpacing = 12.f; //固定行间距
     self.itemSize = CGSizeMake(60, 60);
     
     [self addSubview:self.collectionView];
-    [self addCustomConstraintWithItem:self.collectionView];
+    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+
     
     [self addSubview:self.pageControl];
-    [self addPageControlConstraintWithItem:self.pageControl];
+    self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
+
     
 //    self.backgroundColor = [UIColor orangeColor];
 //    self.collectionView.backgroundColor = [UIColor blueColor];
@@ -73,18 +75,22 @@ static CGFloat const ZXLineSpacing = 12.f; //固定行间距
 }
 
 #pragma mark - layoutSubviews
-
-// 如果当前view的父视图在layoutSubViews用.frame设置当前view，那么这里的frame设置才有同步有效；
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
 }
 
+// 如果初始化添加的约束在updateConstrainsts中，则返回YES
++ (BOOL)requiresConstraintBasedLayout
+{
+    return YES;
+}
 // 修改pageControl的width约束
 - (void)updateConstraints
 {
     [super updateConstraints];
+    [self addCustomConstraintWithItem:self.collectionView];
+    [self addPageControlConstraintWithItem:self.pageControl];
 
     if (self.dataMArray.count>0)
     {
@@ -105,7 +111,6 @@ static CGFloat const ZXLineSpacing = 12.f; //固定行间距
 
 - (void)addCustomConstraintWithItem:(UIView *)item
 {
-    item.translatesAutoresizingMaskIntoConstraints = NO;
     NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeTop multiplier:1 constant:0];
     constraint1.active = YES;
     
@@ -124,7 +129,6 @@ static CGFloat const ZXLineSpacing = 12.f; //固定行间距
     CGSize pageSize = [self.pageControl sizeForNumberOfPages:self.pageControl.numberOfPages];//minSize of pageCount
     pageSize = CGSizeMake(pageSize.width+20, 18);
     
-    item.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:pageSize.height];
     constraint1.active = YES;

@@ -66,6 +66,7 @@
 //        toVC.view.translatesAutoresizingMaskIntoConstraints = NO;
         //添加整个控制器的view，且让它是透明的；
         [containerView addSubview:toVC.view];
+        // 设置整个控制器view的大小；
         if (!CGSizeEqualToSize(CGSizeZero, self.contentSize))
         {
             toVC.view.layer.cornerRadius = 4.f;
@@ -151,26 +152,23 @@
 
     
     NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    [containerView addConstraint:constraint3];
+    constraint3.active = YES;
     
     NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.contentSize.height];
-    [modalView addConstraint:constraint4];
+    constraint4.active = YES;
 
     
     NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    [containerView addConstraint:constraint1];
+    constraint1.active = YES;
 
     NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.contentSize.width];
-    [modalView addConstraint:constraint2];
+    constraint2.active = YES;
 
 //    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeTop multiplier:1 constant:100];
-//    [containerView addConstraint:constraint4];
 //
 //    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:400];
-//    [modalView addConstraint:constraint3];
 
 //    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:modalView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:modalView attribute:NSLayoutAttributeWidth multiplier:1.3 constant:0];
-//    [modalView addConstraint:constraint3];
 
 }
 - (void)addUIViewKeyFrameAnimations:(UIView *)view

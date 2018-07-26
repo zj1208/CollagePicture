@@ -9,11 +9,18 @@
 #ifndef ZXCatetories_h
 #define ZXCatetories_h
 
-#import "NSString+ZXEntension.h"
-#import "NSURL+OSSImage.h"
+#import "NSAttributedString+ZXExtension.h"
+#import "NSFileManager+ZXExtension.h"
+#import "NSData+ZXExtension.h"
 #import "NSObject+ZXRuntime.h"
+
+#import "NSString+ZXEntension.h"
+#import "NSString+ZXHTMLString.h"
+
 #import "NSURLComponents+ZXCategory.h"
+#import "NSURL+OSSImage.h"
 #import "NSURL+ZXCategory.h"
+#import "NSURL+ZXAppLinks.h"
 
 #import "UIAlertController+ZXExtension.h"
 #import "UIButton+ZXHelper.h"
@@ -30,9 +37,12 @@
 #import "UIScrollView+ZXCategory.h"
 #import "UIScrollView+ZXMJRefreshing.h"
 #import "UITextField+ZXHelper.h"
-#import "UIView+XMHelper.h"
+
+#import "UIView+ZXHelper.h"
 #import "UIView+ZXChangeSize.h"
-#import "UIView+XMAnimation.h"
+#import "UIView+ZXAnimation.h"
+#import "UIView+ZXAlignmentRectInsets.h"
+
 #import "UIViewController+XMNavBarCustom.h"
 #import "UIViewController+MBProgressHUD.h"
 #import "UIViewController+XMLoginAndAlert.h"

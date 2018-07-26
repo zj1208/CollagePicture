@@ -5,6 +5,7 @@
 //  Created by simon on 17/3/9.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  6.26 添加注释
 
 #import <Foundation/Foundation.h>
 #import "ZXModalAnimation.h"
@@ -13,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXTransitionModalDelegate : NSObject<UIViewControllerTransitioningDelegate>
 
+//设置整个控制器viw页面的大小尺寸
 @property (nonatomic, assign) CGSize contentSize;
 
 @end

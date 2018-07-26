@@ -10,6 +10,8 @@ pod 'AFNetworking', '~> 3.1.0'
 pod 'AFNetworking-Synchronous', '~> 1.1.0'
 pod 'SDWebImage', '~> 4.0.0'
 pod 'SDWebImage/GIF'
+#可选 使用WebP
+#pod 'SDWebImage/WebP’
 pod 'MBProgressHUD', '~> 1.0.0'
 #pod 'SVProgressHUD', '~> 2.1.2'
 

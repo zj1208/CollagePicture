@@ -418,7 +418,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 {
     const char *str = [key UTF8String];//转换成utf-8
     unsigned char result[CC_MD5_DIGEST_LENGTH];//开辟一个16字节（128位：md5加密出来就是128位/bit）的空间（一个字节=8字位=8个二进制数）
-    CC_MD5(str,  (unsigned int)strlen(str), result);
+    CC_MD5(str,  (CC_LONG)strlen(str), result);
     NSMutableString *hash = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH];
     for (int i =0; i<CC_MD5_DIGEST_LENGTH; i++)
     {

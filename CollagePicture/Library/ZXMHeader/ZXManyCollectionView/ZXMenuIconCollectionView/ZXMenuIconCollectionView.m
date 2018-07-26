@@ -68,6 +68,7 @@ static NSString * const reuseTagsCell = @"Cell";
     self.minimumLineSpacing = ZXMinimumLineSpacing;
     self.itemSize = CGSizeMake(LCDScale_iPhone6_Width(ZXItemWidth), LCDScale_iPhone6_Width(ZXItemHeight));
     [self addSubview:self.collectionView];
+    self.iconEqualWidthHeight = LCDScale_iPhone6_Width(45.f);
     self.clipsToBounds = YES;
     self.clearsContextBeforeDrawing = YES;
     
@@ -102,6 +103,14 @@ static NSString * const reuseTagsCell = @"Cell";
     self.collectionFlowLayout.minimumLineSpacing = minimumLineSpacing;
 }
 
+- (CGFloat)minimumItemWidth
+{
+    if (SCREEN_MIN_LENGTH == 320.0)
+    {
+        return self.iconEqualWidthHeight+33;
+    }
+    return self.iconEqualWidthHeight+LCDScale_iPhone6_Width(40);
+}
 
 #pragma mark - UICollectionView
 
@@ -144,7 +153,12 @@ static NSString * const reuseTagsCell = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ZXMenuIconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseTagsCell forIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor redColor];
+//    cell.backgroundColor = [UIColor greenColor];
+//   设置中心图标
+    if (self.iconEqualWidthHeight>0)
+    {
+        cell.imgViewLayoutWidth.constant = self.iconEqualWidthHeight;
+    }
     if (indexPath.item<self.dataMArray.count)
     {
         id data = [self.dataMArray objectAtIndex:indexPath.item];
@@ -175,9 +189,10 @@ static NSString * const reuseTagsCell = @"Cell";
     return self.minimumLineSpacing;
 }
 
+// 设置self.minimumInteritemSpacing是给item宽度计算用的，实际设置最小依然为0.2
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return self.minimumInteritemSpacing;
+    return 0.2;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
@@ -206,7 +221,9 @@ static NSString * const reuseTagsCell = @"Cell";
 - (CGFloat)getItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 {
     CGFloat itemWidth =  (totalWidth - (count-1)*minimumInteritemSpacing-inset.left-inset.right)/count;
-    return floorf(itemWidth);
+//    return itemWidth;
+    CGFloat averageWith =  floorf(itemWidth)<=self.minimumItemWidth?self.minimumItemWidth:floorf(itemWidth);
+    return averageWith;
 }
 
 #pragma mark - 计算方法

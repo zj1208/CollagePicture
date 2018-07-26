@@ -89,6 +89,7 @@
         UILabel *placeholderLabel = [[UILabel alloc] init];
         placeholderLabel.numberOfLines = 0;
         placeholderLabel.font = self.font;
+//        placeholderLabel.backgroundColor = [UIColor redColor];
         _placeholderLabel = placeholderLabel;
     }
     return _placeholderLabel;
@@ -98,18 +99,31 @@
 - (void)addConstraint:(UIView *)item toSuperviewItem:(UIView *)superView
 {
     item.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1 constant:10];
-//    [self addConstraint:constraint1];
-    constraint1.active = YES;
-    
-    
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeft multiplier:1 constant:5];
-//    [self addConstraint:constraint3];
-    constraint3.active = YES;
 
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-//    [self addConstraint:constraint4];
-    constraint4.active = YES;
+    if ([[UIDevice currentDevice].systemVersion floatValue]>=9.0)
+    {
+        UILayoutGuide *layoutGuide_superView = self.layoutMarginsGuide;
+        //  设置View的top 与 superView的top的间距 = 0
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:-8+10];
+        NSLayoutConstraint *constraint_lessBottom = [item.bottomAnchor constraintLessThanOrEqualToAnchor:layoutGuide_superView.bottomAnchor constant:8-10];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:-8+5];
+        NSLayoutConstraint *constraint_centerX = [item.centerXAnchor constraintEqualToAnchor:layoutGuide_superView.centerXAnchor];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_lessBottom,constraint_leading,constraint_centerX]];
+    }
+    else
+    {
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeTop multiplier:1 constant:10];
+        constraint1.active = YES;
+        
+       NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationLessThanOrEqual toItem:superView attribute:NSLayoutAttributeBottom multiplier:1 constant:-10];
+        constraint2.active = YES;
+        
+        NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeft multiplier:1 constant:5];
+        constraint3.active = YES;
+        
+        NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+        constraint4.active = YES;
+    }
 }
 
 - (void)layoutSubviews

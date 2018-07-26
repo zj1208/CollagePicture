@@ -14,6 +14,7 @@
 //  2018.3.30 添加注释
 //  2018.4.08；新增图片按时间排序
 //  2018.5.25；block循坏引用
+//  07.06 添加注释
 
 
 
@@ -114,6 +115,9 @@ typedef void (^ZXImageUploadFailureBlock)(NSError * _Nullable error);
  
  @param userId 用户id，用于产生唯一的objectKey
  @param data 上传的数据
+ @param progressBlock 上传进度回调,子线程异步回调；
+ @param signleCompleteBlock  上传完成回调，主线程；
+ @param failure  上传失败回调，主线程；
  */
 - (void)putOSSObjectSTSTokenInPublicBucketWithUserId:(nullable NSString *)userId
                                      uploadingData:(NSData *)data
