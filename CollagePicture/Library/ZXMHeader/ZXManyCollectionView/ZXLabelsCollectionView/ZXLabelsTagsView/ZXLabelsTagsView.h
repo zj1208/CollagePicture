@@ -11,6 +11,7 @@
 //  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
 //  2018.3.19,增加注释
 //  2018.6.07  修改高度计算；
+//  2018.08.01 优化collectionView添加时机不对造成的高度计算bug；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"

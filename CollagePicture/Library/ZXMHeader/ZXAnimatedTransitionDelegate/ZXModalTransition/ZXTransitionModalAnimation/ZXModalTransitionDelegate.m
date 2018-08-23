@@ -1,28 +1,28 @@
 //
-//  ZXTransitionAlphaDelegate.m
-//  lovebaby
+//  ZXModalTransitionDelegate.m
+//  YiShangbao
 //
-//  Created by simon on 16/6/28.
-//  Copyright © 2016年 . All rights reserved.
+//  Created by simon on 17/3/9.
+//  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "ZXTransitionAlphaDelegate.h"
-#import "ZXPresentAlphaTransitioning.h"
+#import "ZXModalTransitionDelegate.h"
 
-@implementation ZXTransitionAlphaDelegate
 
+@implementation ZXModalTransitionDelegate
 //1
 - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
-    ZXPresentAlphaTransitioning *transition = [[ZXPresentAlphaTransitioning alloc] init];
+    ZXModalAnimatedTranstion *transition = [[ZXModalAnimatedTranstion alloc] init];
     transition.type = ZXAnimationTypePresent;
+    transition.contentSize = self.contentSize;
     return transition;
 }
 
 //4－如果返回nil，就默认用系统的方式－向下移动dismiss了
 - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
-    ZXPresentAlphaTransitioning *transition = [[ZXPresentAlphaTransitioning alloc] init];
+    ZXModalAnimatedTranstion *transition = [[ZXModalAnimatedTranstion alloc] init];
     transition.type = ZXAnimationTypeDismiss;
     return transition;
 }

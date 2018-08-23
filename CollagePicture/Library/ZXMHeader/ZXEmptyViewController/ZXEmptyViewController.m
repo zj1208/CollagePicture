@@ -22,6 +22,8 @@
 #define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
 #endif
 
+// 注意： beginAppearanceTransition: /endAppearanceTransition 方法没必要写，自定义显示回调机制的时候才使用，系统默认也会回调viewWillAppear等方法的
+
 static NSInteger  kAPPErrorCode_Token2 = 5001;
 
 
@@ -58,6 +60,15 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     [self setUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
 - (void)setUI
 {
     UIImageView *imgView = [[UIImageView alloc] init];
@@ -86,8 +97,6 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     self.updateBtn = btn;
  
 }
-
-//- ()
 
 
 //设置圆角

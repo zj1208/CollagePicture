@@ -6,6 +6,7 @@
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 // 6.26  修改代码
+// 8.13  CATransition转场动画移除到新的类目；
 
 
 #import <UIKit/UIKit.h>
@@ -25,29 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)zx_removeMotionEffect;
 
-//使用Core Animation Transitions(过渡，翻页)/使用CATransition只针对图层
-//首先要在framework中引入QuatrtzCore.framework,在头文件中需要
-//#import <QuartzCore/QuartzCore.h>
-
-//animation.type = kCATransitionReveal//揭开
-//animation.type = kCATransitionPush//推挤
-//animation.type = kCATransitionMoveIn;覆盖
-//animation.type = KCATransitionFade;// 淡化
-// @"cube" 立方体
-// @"suckEffect" 吸收
-// @"oglFlip" 翻转
-// @"rippleEffect" 波纹
-// @"pageCurl" 翻页
-// @"pageUnCurl" 反翻页
-// @"cameraIrisHollowOpen" 镜头开
-// @"cameraIrisHollowClose" 镜头关
-/**
- @param kCATransitionType 动画类型
- @param layer 什么图的图层
- */
-+ (void)zx_customDirectionFromTopAnimationType:(NSString *)kCATransitionType layer:(CALayer *)layer;
-
-+ (void)zx_customDirectionFromBottomAnimationType:(NSString *)kCATransitionType layer:(CALayer *)layer;
 
 @end
 

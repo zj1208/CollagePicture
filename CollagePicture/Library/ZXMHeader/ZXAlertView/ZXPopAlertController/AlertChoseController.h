@@ -10,7 +10,7 @@
 //  2018.3.27 添加注释
 
 #import <UIKit/UIKit.h>
-#import "ZXTransitionModalDelegate.h"
+#import "ZXModalTransitionDelegate.h"
 
 //static NSString *const SBID_AlertChoseController = @"AlertChoseControllerID";
 

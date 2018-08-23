@@ -16,9 +16,9 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-#import "ZXModalAnimation.h"
-#import "ZXTransitionModalDelegate.h"
+#import "ZXAlphaTransitionDelegate.h"
 #import "ZXAdvModalController.h"
+#import "CheckVersionManager.h"
 
 static NSInteger IndexSection_Set =1;
 
@@ -31,8 +31,7 @@ static NSInteger IndexSection_Set =1;
 @property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 
 //广告弹窗
-@property (nonatomic, strong) ZXModalAnimation *modalAnimation;
-@property (nonatomic, strong) ZXTransitionModalDelegate *transitonModelDelegate;
+@property (nonatomic, strong) ZXAlphaTransitionDelegate *transitonModelDelegate;
 
 @end
 
@@ -52,6 +51,23 @@ static NSInteger IndexSection_Set =1;
     
 }
 
+#pragma mark - 新功能引导
+//第一步
+- (void)newFunctionGuideOfNextStep:(id)noti
+{
+    [self checkAppVersionAndNotificationPush];
+}
+- (void)lauchFirstNewFunction
+{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFunctionGuideOfNextStep:) name:@"NewFunctionGuide_ShopHomeV1_Dismiss" object:nil];
+//    if (![WYUserDefaultManager getNewNewFunctionGuide_ShopHomeV1])
+//    {
+//        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        GuideShopHomeController *vc = [sb instantiateViewControllerWithIdentifier:SBID_GuideShopHomeController];
+//        [self.tabBarController addChildViewController:vc];
+//        [self.tabBarController.view addSubview:vc.view];
+//    }
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -86,12 +102,10 @@ static NSInteger IndexSection_Set =1;
 {
     [super viewDidAppear:animated];
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        
-        [self lauchPopoverView];
-        
-    });
+//    if ([WYUserDefaultManager getNewNewFunctionGuide_ShopHomeV1])
+//    {
+//        [self checkAppVersionAndNotificationPush];
+//    }
 
 }
 
@@ -377,18 +391,55 @@ static NSInteger IndexSection_Set =1;
 }
 
 
+#pragma mark - 先检查通知跳转再检查更新
+//第三步：先检查推送通知跳转再检查版本更新，如果通知跳转下一页，返回来继续下一步检查更新
 
-#pragma mark - 请求广告图
-- (void)lauchPopoverView
+- (void)checkAppVersionAndNotificationPush
 {
-    self.transitonModelDelegate = [[ZXTransitionModalDelegate alloc] init];
+    if ([WYUserDefaultManager isOpenAppRemoteNoti])
+    {
+        BOOL pushed;
+//        BOOL pushed = [[WYUtility dataUtil]routerWithName:[WYUserDefaultManager getDidFinishLaunchRemoteNoti] withSoureController:self];
+        if (!pushed)
+        {
+            [self checkAppVersion];
+        }
+    }
+    else{
+        
+        [self checkAppVersion];
+    }
+}
+
+#pragma mark -检查版本更新请求
+//第四步：检查完版本更新，再请求广告弹窗
+- (void)checkAppVersion
+{
+    WS(weakSelf);
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        //        版本更新
+        [[CheckVersionManager sharedInstance]checkAppVersionWithNextStep:^{
+            
+            [weakSelf launchHomeAdvViewOrUNNotificationAlert];
+        }];
+    });
+}
+
+
+
+//第五步：检查完请求广告弹窗，再检查推送通知是否关闭
+#pragma mark - 请求广告弹窗图
+
+- (void)launchHomeAdvViewOrUNNotificationAlert
+{
     
     [WYUserDefaultManager addTodayAppLanchAdvTimes];
     if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(8)])
     {
         ZXAdvModel *zxModel =[[ZXAdvModel alloc]initWithDesc:@"义乌市场导航图免费招商" picString:@"http://public-read-bkt.microants.cn/4/adv/JepEashhh5rQ4F2CpGBQWfdJSTz6af4G.jpg" url:@"https://mp.weixin.qq.com/s/bySiG3U8ku0MFixAsee8fQ" advId:@(75)];
 //        advArrModel *advItemModel = [_advmodel.advArr firstObject];
-        [self firstNewFunction:zxModel];
+        [self launchHomeAdvView:zxModel];
     }
     else
     {
@@ -422,28 +473,18 @@ static NSInteger IndexSection_Set =1;
 //    }];
 }
 
-#pragma mark-广告图动画UIViewControllerTransitionDelegate
+#pragma mark launchAdv
 
-- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+- (void)launchHomeAdvView:(ZXAdvModel *)model
 {
-    self.modalAnimation.type = ZXAnimationTypePresent;
-    return self.modalAnimation;
-}
-- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    self.modalAnimation.type = ZXAnimationTypeDismiss;
-    return self.modalAnimation;
-}
-
-
-- (void)firstNewFunction:(ZXAdvModel *)model
-{
-    self.modalAnimation = [[ZXModalAnimation alloc] init];
-
+    if (!self.transitonModelDelegate)
+    {
+        self.transitonModelDelegate = [[ZXAlphaTransitionDelegate alloc] init];
+    }
     ZXAdvModalController *vc = [[ZXAdvModalController alloc] initWithNibName:nil bundle:nil];
     vc.btnActionDelegate = self;
     vc.modalPresentationStyle = UIModalPresentationCustom;
-    vc.transitioningDelegate = self;
+    vc.transitioningDelegate = self.transitonModelDelegate;
     vc.advModel = model;
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -459,7 +500,7 @@ static NSInteger IndexSection_Set =1;
 }
 
 #pragma mark - 检查用户通知关闭 及提示
-
+//第六步：检查推送通知是否关闭
 - (void)addUNNotificationAlert
 {
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0)

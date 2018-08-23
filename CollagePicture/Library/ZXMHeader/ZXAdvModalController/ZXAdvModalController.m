@@ -11,12 +11,13 @@
 #import "NSURL+OSSImage.h"
 #import "UIButton+WebCache.h"
 
-#ifndef LCDScale_iphone6_Width
-#define LCDScale_iphone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
+#ifndef LCDScale_iPhone6_Width
+#define LCDScale_iPhone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
 #endif
 
 
 @interface ZXAdvModalController ()
+@property (nonatomic, strong) UIVisualEffectView *effectView;
 
 @end
 
@@ -39,15 +40,26 @@
     self.advPicBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
     
     [self setView:self.advPicBtn cornerRadius:8.f borderWidth:1.f borderColor:nil];
+    [self.advPicBtn zx_addMotionEffectXAxisWithValue:20 YAxisWithValue:20];
+
+//     [self.advPicBtn addSubview:self.effectView];
+//    [self.view addSubview:self.effectView];
+//    [self.view bringSubviewToFront: self.advPicBtn];
+//    [self.view bringSubviewToFront: self.dismissBtn];
+    
     
     NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
-    
-//    self.dismissBtn.hidden = YES;
-    
+//    NSURL *url = [NSURL URLWithString:@"http://macdn.microants.cn/2/sh/eb738b0ea44830fba171707d3481a7eb1530582553695.jpg"];
     [self.advPicBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
-//        _dismissBtn.hidden = NO;
+//        self.effectView.effect = nil;
+//        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//        [UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//
+//            self.effectView.effect = blur;
+//        } completion:nil];
     }];
+    
 }
 //设置圆角
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
@@ -59,12 +71,23 @@
     view.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
 }
 
-
+- (UIVisualEffectView *)effectView
+{
+    if (!_effectView)
+    {
+        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
+        effectview.alpha = 0;
+        _effectView = effectview;
+    }
+    return _effectView;
+}
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.dismissBtnLayoutWidth.constant = LCDScale_iphone6_Width(44.f);
-    self.leftMaginLayout.constant = LCDScale_iphone6_Width(35.f);
+    self.dismissBtnLayoutWidth.constant = LCDScale_iPhone6_Width(44.f);
+    self.leftMaginLayout.constant = LCDScale_iPhone6_Width(35.f);
+//    self.effectView.frame = self.view.frame;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -9,6 +9,7 @@
 
 // 2018.1.18  目前showInView:方法，如果传tableView，在转换window的时候，有时候会出问题；
 // 2018.4.4 优化代码；
+// 2018.8.01 优化修改window的bug；
 
 #import <UIKit/UIKit.h>
 #import "ZXOverlay.h"

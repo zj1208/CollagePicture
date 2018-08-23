@@ -84,12 +84,13 @@ static NSString * const reuseInputTagsCell = @"Cell";
 //    _minimumLineSpacing = minimumLineSpacing;
 ////    self.collectionFlowLayout.minimumLineSpacing = _minimumLineSpacing;
 //}
-//
-//- (void)setSectionInset:(UIEdgeInsets)sectionInset
-//{
-//    _sectionInset = sectionInset;
-//    self.collectionFlowLayout.sectionInset = _sectionInset;
-//}
+
+// 更新self.collectionFlowLayout.sectionInset
+- (void)setSectionInset:(UIEdgeInsets)sectionInset
+{
+    _sectionInset = sectionInset;
+    self.collectionFlowLayout.sectionInset = _sectionInset;
+}
 //
 //- (void)setMinimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 //{
@@ -117,6 +118,8 @@ static NSString * const reuseInputTagsCell = @"Cell";
     self.addTagBorderColor =  [UIColor redColor];
     self.addTagBackgroudColor = [UIColor whiteColor];
     self.addTagCornerRadius = self.itemHeight/2;
+    
+    [self addSubview:self.collectionView];
 }
 
 
@@ -142,7 +145,6 @@ static NSString * const reuseInputTagsCell = @"Cell";
         collection.backgroundColor = [UIColor whiteColor];
         collection.delegate = self;
         collection.dataSource = self;
-        [self addSubview:collection];
         
         [collection registerNib:[UINib nibWithNibName:NSStringFromClass([LabelCell class]) bundle:nil] forCellWithReuseIdentifier:reuseInputTagsCell];
         collection.scrollEnabled = NO;
@@ -432,7 +434,8 @@ static NSString * const reuseInputTagsCell = @"Cell";
     }
     else if (self.existInputItem && (!data || [data count]==0))
     {
-        return self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+self.itemHeight;
+        CGFloat height = self.collectionFlowLayout.sectionInset.bottom+ self.collectionFlowLayout.sectionInset.top+self.itemHeight;
+        return height;
     }
     else
     {
@@ -466,6 +469,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
         self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         [self.collectionView reloadData];
     }
+//    因为有操作增删，所以数组会变，需要重新更新；
     else if ([self.dataMArray isEqualToArray:data] && data.count ==0)
     {
         self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);

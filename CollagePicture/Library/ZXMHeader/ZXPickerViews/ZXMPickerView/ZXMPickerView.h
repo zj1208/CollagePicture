@@ -5,12 +5,13 @@
 //  Created by 朱新明 on 15/2/11.
 //  Copyright (c) 2015年 朱新明. All rights reserved.
 //
-// 注释： showInView:方法如果传tableView，弹窗在window会有bug；同ZXDatePickerView.h；ZXDatePickerTextField都有这个bug问题；
+// 注释： showInView:方法如果传tableView/collectionView，弹窗在window上；
 
 // 2017.12.25
 // 优化组件，顶部toolbar高度固定优化； pickerView高度约束修改优化；优化代码；
 // 2018.1.12 优化代码；
 // 2018.6.14 优化移除覆盖遮图动画过渡效果；
+// 2018.8.01 优化修改window的bug；
 
 #import <UIKit/UIKit.h>
 #import "ZXOverlay.h"
@@ -95,7 +96,7 @@ NS_ASSUME_NONNULL_END
 {
     [super viewDidLoad];
     
-    ZXMPickerView *picker = [[ZXMPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, LCDScale_iPhone6_Width(230.f))];
+    ZXMPickerView *picker = [[ZXMPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, LCDScale_iPhone6_Width(260.f))];
     picker.delegate = self;
     self.pickerView = picker;
  

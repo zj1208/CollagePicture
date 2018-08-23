@@ -146,6 +146,7 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewDidAppear:animated];
     [self.webView.scrollView flashScrollIndicators];
+//    UIEdgeInsets edge = self.view.layoutMargins;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -192,10 +193,18 @@ static NSString* const SixSpaces = @"      ";
     
     [self addEmptyView];
    
-    if (@available(iOS 11.0, *)){
-        self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else{
+    if (Device_SYSTEMVERSION.floatValue <9.f)
+    {
         self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    else
+    {
+//        if (@available(iOS 11.0, *)){
+//            self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//        }else{
+//            self.automaticallyAdjustsScrollViewInsets = NO;
+//        }
+        [self addConstraint:self.webView toSuperviewItem:self.view];
     }
 }
 
@@ -290,8 +299,6 @@ static NSString* const SixSpaces = @"      ";
         }
         
         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
-//       self.view.frame = (0 0; 375 667);
-//         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:configuration];
         wkWebView.backgroundColor = self.view.backgroundColor;
         wkWebView.allowsBackForwardNavigationGestures = YES;
         if ([wkWebView respondsToSelector:@selector(allowsLinkPreview)])
@@ -329,7 +336,6 @@ static NSString* const SixSpaces = @"      ";
     emptyVC.delegate = self;
     self.emptyViewController = emptyVC;
 }
-
 
 
 #pragma mark - 添加KVO观察者
@@ -1088,6 +1094,7 @@ static NSString* const SixSpaces = @"      ";
 //分享
 -(void)shareAction:(id)sender
 {
+    /*
     // 默认图片地址
     NSString *picStr = @"http://public-read-bkt-oss.oss-cn-hangzhou.aliyuncs.com/app/icon/logo_zj.png";
     NSString *link =nil;
@@ -1097,7 +1104,8 @@ static NSString* const SixSpaces = @"      ";
     }else{
         link = self.webView.URL.absoluteString;
     }
-//    [WYShareManager shareInVC:self withImage:picStr withTitle:self.navigationItem.title withContent:@"用了义采宝，生意就是好!" withUrl:link];
+    [WYShareManager shareInVC:self withImage:picStr withTitle:self.navigationItem.title withContent:@"用了义采宝，生意就是好!" withUrl:link];
+     */
 }
 
 
@@ -1169,16 +1177,19 @@ static NSString* const SixSpaces = @"      ";
 //2.调用分享(share)，参数为分享的标题以及点击的链接地址
 -(void)share:(NSDictionary *)dic
 {
-//    NSString *picStr = [dic objectForKey:@"image"];
-//    NSString *title = [dic objectForKey:@"title"];
-//    NSString *content = [dic objectForKey:@"text"];
-//    NSString *link = [dic objectForKey:@"link"];
-//   [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
+    /*
+    NSString *picStr = [dic objectForKey:@"image"];
+    NSString *title = [dic objectForKey:@"title"];
+    NSString *content = [dic objectForKey:@"text"];
+    NSString *link = [dic objectForKey:@"link"];
+    [WYShareManager shareInVC:self withImage:picStr withTitle:title withContent:content withUrl:link];
+     */
 }
 
 
 //3.跳转到大图浏览(previewImages)，参数为下标和图片数组
 -(void)previewImages:(NSDictionary *)dic{
+    /*
     //大图浏览
     id images = [dic objectForKey:@"images"];
     id imagesProducts = [dic objectForKey:@"products"];
@@ -1196,16 +1207,17 @@ static NSString* const SixSpaces = @"      ";
     self.imagesProcutsArray = [NSArray arrayWithArray:imagesProducts];
     NSInteger count = self.imagesProcutsArray.count>0?self.imagesProcutsArray.count:self.picArray.count;
     
-//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
-//    browser.browserStyle = XLPhotoBrowserStyleCustom;
-//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
-//
+    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoAndProductBrowserWithCurrentImageIndex:index  imageCount:count goodsUrlList:[self getGoodsUrlList] datasource:self];
+    browser.browserStyle = XLPhotoBrowserStyleCustom;
+    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+    
     
 //    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:_picArray.count datasource:self];
 //    browser.browserStyle = XLPhotoBrowserStyleCustom;
 //    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+     */
 }
-/*
+
 #pragma mark  XLPhotoBrowserDatasource
 - (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
 
@@ -1218,7 +1230,7 @@ static NSString* const SixSpaces = @"      ";
         return url;
     }
 }
-
+/*
 -(NSArray *)getGoodsUrlList
 {
     NSMutableArray *arrayM = [NSMutableArray array];
@@ -1330,12 +1342,11 @@ static NSString* const SixSpaces = @"      ";
 
 // 8.更新产品列表
 - (void)postNotiToProdectList
-{
-    /*
+{/*
     [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePrivacy object:nil];
     [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updatePublic object:nil];
     [[NSNotificationCenter defaultCenter]postNotificationName:Noti_ProductManager_updateSoldouting object:nil];
-     */
+  */
 }
 
 // 9.h5需要的数据
@@ -1440,6 +1451,32 @@ static NSString* const SixSpaces = @"      ";
     return @[itemShare];
 }
 
+#pragma constraint
+
+- (void)addConstraint:(UIView *)item toSuperviewItem:(UIView *)superView
+{
+    item.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    if (@available(iOS 11.0, *))         {
+        UILayoutGuide *layoutGuide_superView = self.view.safeAreaLayoutGuide;
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:0];
+        NSLayoutConstraint *constraint_bottom = [item.bottomAnchor constraintEqualToAnchor:layoutGuide_superView.bottomAnchor constant:0];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:0];
+        NSLayoutConstraint *constraint_centerX = [item.centerXAnchor constraintEqualToAnchor:layoutGuide_superView.centerXAnchor];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_bottom,constraint_leading,constraint_centerX]];
+    }
+    else if([[UIDevice currentDevice] systemVersion].floatValue>=9.f)
+    {
+        // Fallback on earlier versions
+        UILayoutGuide *layoutGuide_superView = self.view.layoutMarginsGuide;
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:0];
+        NSLayoutConstraint *constraint_bottom = [item.bottomAnchor constraintEqualToAnchor:layoutGuide_superView.bottomAnchor constant:0];
+        NSLayoutConstraint *constraint_leading = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
+        //x的center
+        NSLayoutConstraint *constraint_centerX = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:superView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_bottom,constraint_leading,constraint_centerX]];
+    }
+}
 /*
  #pragma mark - Navigation
  

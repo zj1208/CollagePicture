@@ -6,6 +6,7 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  2018.4.12  优化延长时间的bug；
+//  2018.08.01  修改获取需要添加toast的window对象，目前debug先用，线上不用
 
 #import <MBProgressHUD/MBProgressHUD.h>
 

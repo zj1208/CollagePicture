@@ -18,8 +18,13 @@
 
 + (void)zx_showLoadingWithStatus:(nullable NSString *)aText toView:(nullable UIView *)view
 {
-    if (view == nil) {
+    if (!view)
+    {
+#ifdef DEBUG
+        view = [MBProgressHUD getFrontWindow];
+#else
         view = [[UIApplication sharedApplication].windows lastObject];
+#endif
     }
     MBProgressHUD *hud = [MBProgressHUD HUDForView:view];
     if (!hud)
@@ -55,27 +60,17 @@
 
 + (MBProgressHUD *)zx_showText:(nullable NSString *)aText customIcon:(nullable NSString *)imageName view:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay
 {
-//    if (view == nil) {
-//
-//        NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
-//        for (UIWindow *window in frontToBackWindows) {
-//            BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
-//            BOOL windowIsVisible = !window.hidden && window.alpha > 0 && window.opaque != NO;
-//            BOOL windowLevelSupported = (window.windowLevel >= UIWindowLevelNormal);
-////            BOOL windowSizeIsEqualToScreen = (window.xl_width == XLScreenW && window.xl_height == XLScreenH);
-//            if(windowOnMainScreen && windowIsVisible && windowLevelSupported) {
-////                return window;
-//                view = window;
-//                break;
-//            }
-//        }
-//    }
-    if (view == nil) {
-        view = [[UIApplication sharedApplication].windows lastObject];
-    }
-    if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+    if (!view)
     {
-        view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        #ifdef DEBUG
+        view = [MBProgressHUD getFrontWindow];
+        #else
+        view = [[UIApplication sharedApplication].windows lastObject];
+        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+        {
+            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        }
+        #endif
     }
     [MBProgressHUD hideHUDForView:view animated:YES];
     
@@ -125,12 +120,17 @@
 //@"litteMoney"
 + (void)zx_showGifWithGifName:(NSString *)gifName toView:(nullable UIView *)view
 {
-    if (view == nil) {
-        view = [[UIApplication sharedApplication].windows lastObject];
-    }
-    if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+    if (!view)
     {
-        view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+#ifdef DEBUG
+        view = [MBProgressHUD getFrontWindow];
+#else
+        view = [[UIApplication sharedApplication].windows lastObject];
+        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+        {
+            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        }
+#endif
     }
     UIImage *image = [UIImage zx_animatedGIFNamed:gifName];
     UIImageView *gifView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,image.size.width/2, image.size.height/2)];
@@ -156,11 +156,17 @@
 
 //自定义加载动画 显示时间
 + (void)zx_showGifWithGifName:(NSString *)gifName Text:(nullable NSString *)aText time:(CGFloat)time toView:(nullable UIView *)view{
-    if (view == nil) {
+    if (!view)
+    {
+#ifdef DEBUG
+        view = [MBProgressHUD getFrontWindow];
+#else
         view = [[UIApplication sharedApplication].windows lastObject];
-    }
-    if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")]){
-        view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+        {
+            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        }
+#endif
     }
     
     UIImage *image = [UIImage zx_animatedGIFNamed:gifName];
@@ -189,10 +195,31 @@
 
 + (BOOL)zx_hideHUDForView:(nullable UIView *)view
 {
-    if (view == nil) {
+    if (!view)
+    {
+        #ifdef DEBUG
+        view = [MBProgressHUD getFrontWindow];
+        #else
         view = [[UIApplication sharedApplication].windows lastObject];
+        #endif
     }
    return [MBProgressHUD hideHUDForView:view animated:NO];
+}
+
++ (nullable UIWindow *)getFrontWindow
+{
+    NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
+    for (UIWindow *window in frontToBackWindows)
+    {
+        BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
+        BOOL windowIsVisible = !window.hidden && window.alpha > 0;
+        BOOL windowLevelSupported = (window.windowLevel >= UIWindowLevelNormal);
+        if(windowOnMainScreen && windowIsVisible && windowLevelSupported) {
+            return window;
+            break;
+        }
+    }
+    return nil;
 }
 
 @end

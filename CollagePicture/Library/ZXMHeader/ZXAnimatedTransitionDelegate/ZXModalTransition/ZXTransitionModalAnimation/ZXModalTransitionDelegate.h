@@ -1,18 +1,19 @@
 //
-//  ZXTransitionModalDelegate.h
+//  ZXModalTransitionDelegate.h
 //  YiShangbao
 //
 //  Created by simon on 17/3/9.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  6.26 添加注释
+//  简介：基础转场动画，非交互式；出现动画：从上往下移动的弹簧动画出现；消失动画：alpha=0，scale=0过渡 ；
+//  2018.8.07  优化代码；
 
 #import <Foundation/Foundation.h>
-#import "ZXModalAnimation.h"
+#import "ZXModalAnimatedTranstion.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZXTransitionModalDelegate : NSObject<UIViewControllerTransitioningDelegate>
+@interface ZXModalTransitionDelegate : NSObject<UIViewControllerTransitioningDelegate>
 
 //设置整个控制器viw页面的大小尺寸
 @property (nonatomic, assign) CGSize contentSize;
@@ -24,7 +25,7 @@ NS_ASSUME_NONNULL_END
 
 /*
 #pragma mark - 请求广告图
-- (void)lauchPopoverView
+- (void)launchHomeAdvViewOrUNNotificationAlert
 {
     [[[AppAPIHelper shareInstance] getMessageAPI] GetAdvWithType:@1005 success:^(id data) {
         
@@ -35,7 +36,7 @@ NS_ASSUME_NONNULL_END
             if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(_advmodel.num)])
             {
                 advArrModel *advItemModel = [_advmodel.advArr firstObject];
-                [self firstNewFunction:advItemModel];
+                [self launchHomeAdvView:advItemModel];
             }
             else
             {
@@ -56,11 +57,11 @@ NS_ASSUME_NONNULL_END
 #pragma mark - 广告图动画UIViewControllerTransitionDelegate
 
 
-- (void)firstNewFunction:(advArrModel *)model
+- (void)launchHomeAdvView:(advArrModel *)model
 {
     if (!self.transitonModelDelegate)
     {
-       self.transitonModelDelegate = [[ZXTransitionModalDelegate alloc] init];
+       self.transitonModelDelegate = [[ZXModalTransitionDelegate alloc] init];
     }
     ZXAdvModalController *vc = [[ZXAdvModalController alloc] initWithNibName:nil bundle:nil];
     vc.btnActionDelegate = self;

@@ -64,7 +64,7 @@
 }
 
 
-
+//216+44
 - (void)initData
 {
     self.backgroundColor = [UIColor whiteColor];
@@ -92,11 +92,12 @@
 {
     if (!_pickerView)
     {
-        UIPickerView *pickerView= [[UIPickerView alloc] init];
-        pickerView.showsSelectionIndicator = YES;
-        pickerView.delegate = self;
-        pickerView.dataSource =self;
-        _pickerView = pickerView;
+        UIPickerView *picker= [[UIPickerView alloc] init];
+//        picker.backgroundColor = [UIColor redColor];
+        picker.showsSelectionIndicator = YES;
+        picker.delegate = self;
+        picker.dataSource =self;
+        _pickerView = picker;
     }
     return  _pickerView;
 }
@@ -109,7 +110,8 @@
     {
         // 高度固定44，不然barButtonItem文字不居中；不能太高；
         UIToolbar *toolbar=[[UIToolbar alloc] init];
-        
+        //          toolbar.barTintColor = [UIColor redColor];
+
         UIBarButtonItem *leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelBarButtonAction:)];
         leftBarButtonItem.tintColor =[UIColor blackColor];
         
@@ -131,18 +133,35 @@
 - (void)addCustomConstraintWithItem:(UIView *)item
 {
     self.pickerView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.toolbar attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    constraint1.active = YES;
-    
-    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    constraint2.active = YES;
 
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeRight multiplier:1 constant:0];
-    constraint3.active = YES;
+    //    -layoutMargins从视图边界的边缘返回一组insets，它表示布局内容的默认间隔。{8，8，8，8}
+    //    left/leading：view的左边内边距8，即x被增大了，你要设置的pickerViewX就应该在之前的基础下-8，才能同等边距；同理右边；
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
+    {
+        UILayoutGuide *layoutGuide_superView = self.layoutMarginsGuide;
 
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    constraint4.active = YES;
-
+        //   “thisAnchor = otherAnchor+constant”
+        NSLayoutConstraint *constraint_top = [self.pickerView.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:44-8];
+        NSLayoutConstraint *constraint_bottom = [self.pickerView.bottomAnchor constraintEqualToAnchor:layoutGuide_superView.bottomAnchor constant:8];
+        NSLayoutConstraint *constraint_leading = [self.pickerView.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:-8];
+        //   “thisAnchor = otherAnchor”
+        NSLayoutConstraint *constraint_centerX = [self.pickerView.centerXAnchor constraintEqualToAnchor:layoutGuide_superView.centerXAnchor];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_bottom,constraint_leading,constraint_centerX]];
+    }
+    else
+    {
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.toolbar attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        constraint1.active = YES;
+        
+        NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        constraint2.active = YES;
+        
+        NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+        constraint3.active = YES;
+        
+        NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+        constraint4.active = YES;
+    }
 }
 
 - (void)reloadDataWithDataArray:(NSArray *)dataArray;
@@ -224,16 +243,12 @@
     [self.pickerView selectRow:_selectedRow inComponent:0 animated:YES];
 }
 
-
 - (void)showInView:(UIView *) view
 {
+//    NSLog(@"windows:%@",[UIApplication sharedApplication].windows);
     if ([view isKindOfClass:[UITableView class]] ||[view isKindOfClass:[UICollectionView class]])
     {
-        view = [[UIApplication sharedApplication].windows lastObject];
-    }
-    if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
-    {
-        view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        view = [[[UIApplication sharedApplication] delegate] window];
     }
     ZXOverlay *overlay = [[ZXOverlay alloc] init];
     overlay.delegate = self;

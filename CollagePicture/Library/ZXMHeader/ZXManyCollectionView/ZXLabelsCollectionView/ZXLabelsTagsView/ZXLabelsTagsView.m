@@ -69,6 +69,7 @@ static NSString * const reuseTagsCell = @"Cell";
     self.titleFontSize = 14.f;
     self.cellSelectedStyle = NO;
     self.clipsToBounds = YES;
+    [self addSubview:self.collectionView];
 }
 
 
@@ -78,7 +79,6 @@ static NSString * const reuseTagsCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-//    self.collectionView.frame = self.bounds;
 }
 
 #pragma mark - Setter
@@ -128,7 +128,7 @@ static NSString * const reuseTagsCell = @"Cell";
         collection.backgroundColor = [UIColor whiteColor];
         collection.delegate = self;
         collection.dataSource = self;
-        [self addSubview:collection];
+
         UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([LabelCell class]) bundle:nil];
         [collection registerNib:cellNib forCellWithReuseIdentifier:reuseTagsCell];
         collection.scrollEnabled = NO;
@@ -328,7 +328,8 @@ static NSString * const reuseTagsCell = @"Cell";
         
         [self.dataMArray addObjectsFromArray:data];
         self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-        [self.collectionView reloadData];    }
+        [self.collectionView reloadData];
+    }
 }
 
 
