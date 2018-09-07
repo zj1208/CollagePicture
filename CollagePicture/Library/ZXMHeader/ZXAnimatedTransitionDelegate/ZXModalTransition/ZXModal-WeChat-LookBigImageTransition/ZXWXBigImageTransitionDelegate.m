@@ -10,12 +10,13 @@
 
 #import "ZXWXBigImageAppearAnimator.h"
 #import "ZXWXBigImageDisappearAnimator.h"
+#import "ZXModalWeChatDrivenInteractiveTransition.h"
 
 @interface ZXWXBigImageTransitionDelegate ()
 
 @property (nonatomic, strong) ZXWXBigImageAppearAnimator *appearAnimator;
 @property (nonatomic, strong) ZXWXBigImageDisappearAnimator *disappearAnimator;
-
+@property (nonatomic, strong) ZXModalWeChatDrivenInteractiveTransition *drivenInteractiveTransition;
 @end
 
 @implementation ZXWXBigImageTransitionDelegate
@@ -26,25 +27,42 @@
     return self.appearAnimator;
 }
 
-//4－如果返回nil，就默认用系统的方式－向下移动dismiss了
+//2
+- (nullable id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator
+{
+//    self.drivenInteractiveTransition = nil;
+    return nil;
+}
+
+// 调用dismissViewController后的回调响应：
+// 第一步－dismiss转场动画； 如果返回nil，就默认用系统的方式向下移动dismiss；
 - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
     return self.disappearAnimator;
 }
 
-
-- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+// 第二步-dismiss交互回调
+- (nullable id <UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id <UIViewControllerAnimatedTransitioning>)animator
 {
-    if (operation == UINavigationControllerOperationPush)
+    if (self.customInteractivePopGestureRecognizer)
     {
-        return self.appearAnimator;
-    }
-    else if (operation == UINavigationControllerOperationPop)
-    {
-        return self.disappearAnimator;
+        return self.drivenInteractiveTransition;
     }
     return nil;
 }
+
+//- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+//{
+//    if (operation == UINavigationControllerOperationPush)
+//    {
+//        return self.appearAnimator;
+//    }
+//    else if (operation == UINavigationControllerOperationPop)
+//    {
+//        return self.disappearAnimator;
+//    }
+//    return nil;
+//}
 
 
 - (ZXWXBigImageAppearAnimator *)appearAnimator
@@ -65,23 +83,54 @@
     return _disappearAnimator;
 }
 
+- (ZXModalWeChatDrivenInteractiveTransition *)drivenInteractiveTransition
+{
+    if (!_drivenInteractiveTransition)
+    {
+        _drivenInteractiveTransition = [[ZXModalWeChatDrivenInteractiveTransition alloc] initWithGestureRecognizer:self.customInteractivePopGestureRecognizer];
+    }
+    return _drivenInteractiveTransition;
+}
 
 /** 转场过渡的图片 */
-- (void)setTransitionImage:(UIImage *)transitionImage{
+- (void)setTransitionImage:(UIImage *)transitionImage
+{
     self.appearAnimator.transitionImage = transitionImage;
     self.disappearAnimator.transitionImage = transitionImage;
 }
 
+// 初始化三个属性
 /** 转场前的图片frame */
-- (void)setTransitionBeforeImgFrame:(CGRect)frame{
+- (void)setTransitionBeforeImgFrame:(CGRect)frame
+{
     self.appearAnimator.transitionBeforeImgFrame = frame;
     self.disappearAnimator.transitionBeforeImgFrame = frame;
+//    self.drivenInteractiveTransition.transitionBeforeImgFrame = frame;
 }
 
 /** 转场后的图片frame */
-- (void)setTransitionAfterImgFrame:(CGRect)frame{
+- (void)setTransitionAfterImgFrame:(CGRect)frame
+{
     self.appearAnimator.transitionAfterImgFrame = frame;
     self.disappearAnimator.transitionAfterImgFrame = frame;
 }
 
+
+
+- (void)setInteractiveBeforeImageViewFrame:(CGRect)interactiveBeforeImageViewFrame
+{
+    _interactiveBeforeImageViewFrame = interactiveBeforeImageViewFrame;
+    self.drivenInteractiveTransition.transitionBeforeImgFrame = interactiveBeforeImageViewFrame;
+}
+
+- (void)setInteractiveCurrentImageViewFrame:(CGRect)interactiveCurrentImageViewFrame
+{
+    _interactiveCurrentImageViewFrame = interactiveCurrentImageViewFrame;
+    self.drivenInteractiveTransition.transitionCurrentImgFrame = interactiveCurrentImageViewFrame;
+}
+- (void)setInteractiveCurrentImage:(UIImage *)interactiveCurrentImage
+{
+    _interactiveCurrentImage = interactiveCurrentImage;
+    self.drivenInteractiveTransition.transitionImage = interactiveCurrentImage;
+}
 @end

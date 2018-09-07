@@ -973,6 +973,13 @@ static CGFloat SYSTEMVERSION = 12.0;
         CGPoint point = [gestureRecognizer locationInView:view];
         BOOL flag = CGRectContainsPoint(cell.imageView.frame, point);
         return flag;
+//        如果是点击在cell上，长按事件是可以失效了，但是cell的点击事件却能马上响应了；
+//        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+//
+//        if (!flag || ![self zx_shouldBegainLongPress:indexPath])
+//        {
+//            return NO;
+//        }
     }
     return YES;
 }

@@ -12,11 +12,12 @@
 #import "ZXOverlay.h"
 #import "SDWebImageManager.h"
 
-@interface ZXPhotoBrowser ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZXOverlayDelegate>
+@interface ZXPhotoBrowser ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZXOverlayDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic, strong) ZXWXBigImageTransitionDelegate * wxBigImageTransitionDelegate;
+
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
@@ -25,6 +26,9 @@
 @property (nonatomic, assign) BOOL showActivityIndicator;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) ZXOverlay *coverView;
+
+@property (nonatomic, assign) CGRect transitionBeforeImgFrame;
+@property (nonatomic, assign) CGPoint transitionImgViewCenter;
 
 ////转场过渡的图片
 //- (void)setTransitionImage:(UIImage *)transitionImage;
@@ -44,15 +48,27 @@
     
     [self commonInit];
     
+    UIPanGestureRecognizer *interactiveTransitionRecognizer;
+    interactiveTransitionRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(interactiveTransitionRecognizerAction2:)];
+    interactiveTransitionRecognizer.delegate = self;
+    [self.view addGestureRecognizer:interactiveTransitionRecognizer];
 }
+
+
+- (void)dealloc
+{
+    
+}
+
 
 - (void)commonInit
 {
-    [self zx_setShowActivityIndicatorView:YES];
+// 待优化：在刚要展示的时候，界面会闪一下
+//    [self zx_setShowActivityIndicatorView:YES];
 
     [self.view addSubview:self.imageView];
     [self placeholderImage];
-    
+    self.transitionImgViewCenter = self.imageView.center;
     [self.imageView addGestureRecognizer:self.tapGesture];
     
     self.currentImageIndex = 0;
@@ -145,6 +161,7 @@
     }
     return _wxBigImageTransitionDelegate;
 }
+
 
 #pragma mark - UICollectionView
 
@@ -278,9 +295,9 @@
 {
     [self.wxBigImageTransitionDelegate setTransitionImage:transitionImage];
     [self.wxBigImageTransitionDelegate setTransitionBeforeImgFrame:frame];
+    self.transitionBeforeImgFrame = frame;
     CGRect afterImageFrame = [self zx_getImageViewRectWithScaleAspectFitImage:transitionImage];
     [self.wxBigImageTransitionDelegate setTransitionAfterImgFrame:afterImageFrame];
-    self.transitioningDelegate = self.wxBigImageTransitionDelegate;
     self.placeholderImage = transitionImage;
 }
 
@@ -310,6 +327,9 @@
 //    if (self.currentImageIndex < 0) {
 //        self.currentImageIndex = 0;
 //    }
+    self.transitioningDelegate = self.wxBigImageTransitionDelegate;
+//  不能使用，会出很多问题，如dismiss时候，设置view的alpha过渡动画无效果了；
+//  self.modalPresentationStyle = UIModalPresentationCustom;
     UIWindow *window = [[[UIApplication sharedApplication]delegate]window];
     UIViewController *vc =window.zx_currentViewController;
     [vc presentViewController:self animated:YES completion:nil];
@@ -438,4 +458,81 @@
 //        UIView *subview = [self.coverView hitTest:touchPoint withEvent:nil];
 //    }
 //}
+
+
+
+- (void)interactiveTransitionRecognizerAction2:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
+//    translation-Y：往上移动-20，往下移动+20； 往上下2边方向缩小
+    
+    CGFloat scale = 1 - fabs(translation.y / LCDH);
+    scale = scale < 0 ? 0 : scale;
+    scale = translation.y<0?1:scale;
+//    CGFloat angle = atanf(translation.y/(fabs(translation.x)));
+//    CGFloat percentage = angle/(M_PI_2);
+//    NSLog(@"tanslation= %@, scale = %f, percentage = %f", NSStringFromCGPoint(translation),scale,percentage);
+
+    switch (gestureRecognizer.state)
+    {
+        case UIGestureRecognizerStatePossible:
+            break;
+        case UIGestureRecognizerStateBegan:
+        {
+        
+//            设置手势，在ZXWXBigImageTransitionDelegate中不同回调；
+//            把fromViewController移除，这样能唤起交互式代理；同时在交互区域添加fromViewController的view，所以一个新的fromViewController存在，也没有释放ZXPhotoBrowser，移动imageView就继续存在了；
+            self.wxBigImageTransitionDelegate.customInteractivePopGestureRecognizer = gestureRecognizer;;
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        break;
+        case UIGestureRecognizerStateChanged:
+        {
+ 
+            self.imageView.center = CGPointMake(self.transitionImgViewCenter.x + translation.x, self.transitionImgViewCenter.y + translation.y);
+            self.imageView.transform = CGAffineTransformMakeScale(scale, scale);
+            self.wxBigImageTransitionDelegate.interactiveBeforeImageViewFrame = self.transitionBeforeImgFrame;
+        }
+            break;
+        case UIGestureRecognizerStateFailed:
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateEnded:
+        {
+    
+            if (scale > 0.9f)
+            {
+                [UIView animateWithDuration:0.2 animations:^{
+                    
+                    self.imageView.center = self.transitionImgViewCenter;
+                    self.imageView.transform = CGAffineTransformMakeScale(1, 1);
+                } completion:^(BOOL finished) {
+                    
+                    self.imageView.transform = CGAffineTransformIdentity;
+                }];
+            }
+            else
+            {
+                
+            }
+            self.wxBigImageTransitionDelegate.interactiveCurrentImage = self.imageView.image;
+            self.wxBigImageTransitionDelegate.interactiveCurrentImageViewFrame = self.imageView.frame;
+            self.wxBigImageTransitionDelegate.customInteractivePopGestureRecognizer = nil;
+      
+        }
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIPanGestureRecognizer *gesture = (UIPanGestureRecognizer *)gestureRecognizer;
+    CGPoint translation = [gesture translationInView:gesture.view];
+    CGFloat angle = atanf(translation.y/(fabs(translation.x)));
+    CGFloat percentage = angle/(M_PI_2);
+//    往上拖动，或小于近30度角度的设置为无效拖动
+    if (translation.y <0 || percentage<0.3)
+    {
+        return NO;
+    }
+    return YES;
+}
 @end

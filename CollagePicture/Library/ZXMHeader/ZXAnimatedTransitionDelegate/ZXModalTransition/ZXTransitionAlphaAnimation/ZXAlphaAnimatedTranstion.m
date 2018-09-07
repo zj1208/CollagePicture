@@ -70,15 +70,19 @@
     
     toView.alpha = 0.f;
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    NSTimeInterval duration = [self transitionDuration:transitionContext];
     
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.f options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:duration delay:0.f options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         self.coverView.alpha = 1.0f;
         toView.alpha = 1.f;
         
     } completion:^(BOOL finished) {
-        [transitionContext completeTransition:YES];
+        
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        BOOL wasCancelled = [transitionContext transitionWasCancelled];
+        [transitionContext completeTransition:!wasCancelled];
+        
     }];
 }
 
@@ -87,7 +91,6 @@
 - (void)zx_dismissAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext withContainerView:(UIView *)containerView
 {
     UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewKey];
-    NSTimeInterval duration = [self transitionDuration:transitionContext];
 
     UIView *snapshot = [fromView snapshotViewAfterScreenUpdates:NO];
     snapshot.frame = fromView.frame;
@@ -100,15 +103,21 @@
     //        snapshot.frame = originalFrame;
     
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    
+    NSTimeInterval duration = [self transitionDuration:transitionContext];
+
     [UIView animateKeyframesWithDuration:duration delay:0 options:0 animations:^{
         
+        
+//        为什么dismiss的时候，动画块中alpha无动画过渡效果；
+        self.coverView.alpha = 0.f;
         [self addUIViewKeyFrameAnimations:snapshot];
         
     } completion:^(BOOL finished) {
-        [transitionContext completeTransition:YES];
-        [self.coverView removeFromSuperview];
+        
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        [self.coverView removeFromSuperview];
+        BOOL wasCancelled = [transitionContext transitionWasCancelled];
+        [transitionContext completeTransition:!wasCancelled];
     }];
 }
 

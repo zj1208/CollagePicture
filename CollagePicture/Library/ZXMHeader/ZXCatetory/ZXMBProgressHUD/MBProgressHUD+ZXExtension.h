@@ -7,6 +7,7 @@
 //
 //  2018.4.12  优化延长时间的bug；
 //  2018.08.01  修改获取需要添加toast的window对象，目前debug先用，线上不用
+//  2018.8.22 添加‘加载由多张图片组成的动画’的方法
 
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -70,6 +71,18 @@ NS_ASSUME_NONNULL_BEGIN
 // 隐藏hud
 + (BOOL)zx_hideHUDForView:(nullable UIView *)view;
 
+
+/**
+ 加载由多张图片组成的动画
+
+ @param gifName 图片命名方式
+ @param imgCount 图片张数
+ @param view 所加的view层，如果传nil，默认window；
+ 
+ //eg： [MBProgressHUD jl_showGifWithGifName:@"load" imagesCount:13 toView:self.view];
+ //即加载@"load1.png" @"load2.png" ....@"load13.png" 组成的gif动画。 动画默认每帧0.05s
+ */
++ (void)jl_showGifWithGifName:(NSString *)gifName imagesCount:(NSInteger )imgCount toView:(nullable UIView *)view;
 @end
 
 

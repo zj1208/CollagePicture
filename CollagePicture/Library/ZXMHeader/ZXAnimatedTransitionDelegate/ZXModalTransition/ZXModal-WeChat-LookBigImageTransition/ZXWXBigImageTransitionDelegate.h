@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXWXBigImageTransitionDelegate : NSObject<UIViewControllerTransitioningDelegate>
 
+// 非交互式
 /** 转场过渡的图片 */
 - (void)setTransitionImage:(UIImage *)transitionImage;
 /** 转场前的图片frame */
@@ -21,6 +22,15 @@ NS_ASSUME_NONNULL_BEGIN
 /** 转场后的图片frame */
 - (void)setTransitionAfterImgFrame:(CGRect)frame;
 
+// 交互式
+@property (nonatomic, strong, nullable) UIPanGestureRecognizer *customInteractivePopGestureRecognizer;
+
+// 图片的frame
+@property (nonatomic, assign) CGRect  interactiveBeforeImageViewFrame;
+// 当前图片的frame
+@property (nonatomic, assign) CGRect  interactiveCurrentImageViewFrame;
+// 当前图片
+@property (nonatomic, strong) UIImage *interactiveCurrentImage;
 
 @end
 

@@ -21,7 +21,7 @@
     return transition;
 }
 
-//4－如果返回nil，就默认用系统的方式－向下移动dismiss了
+//3－如果返回nil，就默认用系统的方式－向下移动dismiss了
 - (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
     ZXAlphaAnimatedTranstion *transition = [[ZXAlphaAnimatedTranstion alloc] init];
@@ -35,7 +35,7 @@
 {
     return nil;
 }
-
+//4
 - (nullable id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
 {
     return nil;

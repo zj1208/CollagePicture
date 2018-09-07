@@ -222,4 +222,52 @@
     return nil;
 }
 
+
+
+//
++ (void)jl_showGifWithGifName:(NSString *)gifName imagesCount:(NSInteger )imgCount toView:(nullable UIView *)view
+{
+    if (!view)
+    {
+#ifdef DEBUG
+        view = [MBProgressHUD getFrontWindow];
+#else
+        view = [[UIApplication sharedApplication].windows lastObject];
+        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+        {
+            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+        }
+#endif
+    }
+    
+    NSMutableArray *arrayM = [NSMutableArray array];
+    for (int i=1; i<=imgCount; ++i) {
+        NSString *strImg = [NSString stringWithFormat:@"%@%d",gifName,i];
+        UIImage *image = [UIImage imageNamed:strImg];
+        if (image) {
+            [arrayM addObject:image];
+        }
+    }
+    
+    UIImage *image = arrayM.firstObject;
+    UIImageView *gifView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,image.size.width/2, image.size.height/2)];
+    gifView.animationImages = arrayM;
+    gifView.animationDuration = 0.05*arrayM.count;
+    gifView.animationRepeatCount = 0;//播放次数（一直循环播放）
+    [gifView startAnimating];//开始播放
+    
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:view];
+    if (!hud)
+    {
+        hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    }
+    //    hud.bezelView.backgroundColor = [UIColor clearColor];
+    //    hud.backgroundView.backgroundColor =[UIColor clearColor];
+    hud.square = NO;
+    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.bezelView.color = [UIColor clearColor];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.customView = gifView;
+}
+
 @end

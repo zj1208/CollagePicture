@@ -8,6 +8,9 @@
 //  简介：类似微信中点击头像查看大图的动画效果；结合ZXWXBigImageTransitionDelegate转场切换；这个控制器页面为最终展示页面；在window上添加覆盖图+UIActivityIndicatorView；
 //  目前只支持单张大图预览，主要适用于头像的大图预览；
 //  依赖ZXOverlay/SDWebImageManager/ZXWXBigImageTransitionDelegate 3个类；
+//  交互式大图预览取消效果封装100%；增加了拖动手势往上和 往下小于近30度角度的无效手势处理；
+
+//  9.06 待优化：由于添加了菊花设置，在刚要展示的时候，界面会闪一下？
 
 #import <UIKit/UIKit.h>
 
