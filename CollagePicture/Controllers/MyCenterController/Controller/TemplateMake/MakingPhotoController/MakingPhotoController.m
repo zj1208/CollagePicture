@@ -943,7 +943,7 @@
   
     if (self.imageEditViewMArray.count>0 && ![self finishedAllEditView])
     {
-        [self zhHUD_showErrorWithStatus:@"您还没有编辑完当前相片"];
+        [MBProgressHUD zx_showError:NSLocalizedString(@"您还没有编辑完当前相片", nil) toView:self.view];
     }
     else
     {

@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_END
     ProductSearchController *vc = (ProductSearchController *)[self xm_getControllerWithStoryboardName:storyboard_ShopStore controllerWithIdentifier:SBID_ProductSearchController];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [nav xm_navigationBar_Single_BackIndicatorImage:@"back" isOriginalImage:YES];
+    [nav xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
     [nav xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     [nav zx_setTransitionDelegatePresentKuGouWithAnimationTransition:YES interactivePopGestureTransition:YES];
     [self presentViewController:nav animated:YES completion:nil];

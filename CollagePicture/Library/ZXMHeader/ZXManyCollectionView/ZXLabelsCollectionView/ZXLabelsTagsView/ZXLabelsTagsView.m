@@ -65,7 +65,8 @@ static NSString * const reuseTagsCell = @"Cell";
     self.minimumLineSpacing = ZXMinimumLineSpacing;
     self.maxItemCount = ZXMaxItemCount;
     self.apportionsItemWidthsByContent = NO;
-    self.itemSameSize = CGSizeMake(82.f, 29.f);
+    // 适合最多4个字的宽度
+    self.itemSameSize = CGSizeMake(82.f, 30.f);
     self.titleFontSize = 14.f;
     self.cellSelectedStyle = NO;
     self.clipsToBounds = YES;
@@ -295,7 +296,8 @@ static NSString * const reuseTagsCell = @"Cell";
 
 
 //计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；
-
+// 获取高度的地方，数据源必须重新赋值
+// 返回cell（view）重用的内存地址-独立重用view获取高度的内存地址，例如：【 ***280-***060，  ***ba0-***060 ， ***100-***060，  ***8b0-***060，  ***280-***060】,总结：cell/tableFooterView/tableHeaderView（返回view）重用原理一样，根据初始化屏幕的几个cell/tableFooterView/tableHeaderView依次重用，但是在获取cell/tableFooterView/tableHeaderView高度独立设置重用的地方永远只重用一个；
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data
 {
     if (!data || [data count]==0)
@@ -309,12 +311,15 @@ static NSString * const reuseTagsCell = @"Cell";
     NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
     CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
-
+//    NSLog(@"%f",height);
     return ceilf(height);
 }
 
+
+
 - (void)setData:(NSArray *)data
 {
+//    在dispatch_once使用的重用中，永远使用第一个collectionView和collectionView的数据源，如果2个重用collectionView的数据源数组是一样的，比如新数组和旧数组都是“查看详情”，只要复用的collectionView所有属性不更新变动，那么collectionView的所有属性也是一样的，布局也是一样的； 外部tableView获取高度的重用，永远是重用第一个cell，所以获取高度的地方永远是跟第一个重用的colletionView比较，遇到被重用的时候，不管是数据更新，还是高度获取，都是2次不同的业务比较； 都实时更新才不会出错，不要复用以前的高度而不更新collectionView；
     if (![self.dataMArray isEqualToArray:data])
     {
         [self.dataMArray removeAllObjects];
@@ -324,13 +329,45 @@ static NSString * const reuseTagsCell = @"Cell";
             NSRange range = NSMakeRange(0, self.maxItemCount);
             NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:range];
             data = [NSMutableArray arrayWithArray:[data objectsAtIndexes:set]];
-        };
-        
+        }
         [self.dataMArray addObjectsFromArray:data];
         self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
         [self.collectionView reloadData];
     }
 }
 
+- (CGFloat)getDispatchOnceCellHeightWithContentData:(NSArray *)data
+{
+    if (!data || [data count]==0)
+    {
+        self.collectionView.frame =CGRectZero;
+        return 0;
+    }
+    if (![self.dataMArray isEqualToArray:data])
+    {
+        [self.dataMArray removeAllObjects];
+        
+        if ([data count] > self.maxItemCount)
+        {
+            NSRange range = NSMakeRange(0, self.maxItemCount);
+            NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:range];
+            data = [NSMutableArray arrayWithArray:[data objectsAtIndexes:set]];
+        }
+        [self.dataMArray addObjectsFromArray:data];
+    }
+    self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    [self.collectionView reloadData];
+    
+    NSInteger maxIndex = [self.dataMArray count]-1;
+    NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
+    CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
+    //    NSLog(@"%f",height);
+    if (height>50)
+    {
+        
+    }
+    return ceilf(height);
+}
 
 @end

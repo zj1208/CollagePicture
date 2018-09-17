@@ -44,7 +44,6 @@
 #import "UIView+ZXAlignmentRectInsets.h"
 
 #import "UIViewController+XMNavBarCustom.h"
-#import "UIViewController+MBProgressHUD.h"
 #import "UIViewController+XMLoginAndAlert.h"
 #import "UIViewController+XMHelper.h"
 #import "UIWindow+ZXHierarchy.h"

@@ -12,6 +12,7 @@
 //  2018.3.19,增加注释
 //  2018.6.07  修改高度计算；
 //  2018.08.01 优化collectionView添加时机不对造成的高度计算bug；
+//  2018.9.11  优化ZXLabelsTagsView作为重用TableFooterView的时候，造成高度获取不准的bug；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
@@ -88,7 +89,7 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 // 设置cell标签宽度是否随它的内容自适应：default NO;
 @property (nonatomic, assign) BOOL apportionsItemWidthsByContent;
 
-// item同样size的值；默认CGSizeMake(82.f, 29.f)；只有效于apportionsItemWidthsByContent = NO的时候；
+// item同样size的值；默认CGSizeMake(82.f, 30.f)；只有效于apportionsItemWidthsByContent = NO的时候；
 @property (nonatomic, assign) CGSize itemSameSize;
 
 // 字体大小；默认14
@@ -105,6 +106,7 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 
 //设置等间距对齐
 - (void)setCollectionViewLayoutWithEqualSpaceAlign:(AlignType)collectionViewCellAlignType withItemEqualSpace:(CGFloat)equalSpace animated:(BOOL)animated;
+
 /**
  获取整个collectionView需要的高度
  
@@ -113,12 +115,21 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
  */
 - (CGFloat)getCellHeightWithContentData:(NSArray *)data;
 
+/**
+ 2018.9.11新增
+ 获取整个collectionView需要的高度2;如果当前view是用dispatch_once重用的，则获取高度
+ 必须用此方法，时刻刷新；
+ 
+ @param data 数组
+ @return 高度
+ */
+- (CGFloat)getDispatchOnceCellHeightWithContentData:(NSArray *)data;
 @end
 
 NS_ASSUME_NONNULL_END
 
 
-//////////////////－－－－－－例如－－－－－－－///////////////
+//////////////////－－－－－－例1－－－－－－－///////////////
 #pragma mark - 例如 显示纯展示的推荐标签数组
 
 /*
@@ -195,4 +206,100 @@ NS_ASSUME_NONNULL_END
     return UITableViewAutomaticDimension;
 }
 */
+
+
+//////////////////－－－－－－例2－－－－－－－///////////////
+// tableFooterView,有订单的各种操作按钮，计算出需要的labelsTagsView的高度再调整整个高度；
+// 其实按钮高度固定，操作栏高度固定，可以自己设置sectionInset来达到居中目的；
+
+// 控制器
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    static OrderCellFooterView *cell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        cell = (OrderCellFooterView *)[tableView dequeueReusableHeaderFooterViewWithIdentifier:reuse_FooterView];
+    });
+    CGFloat height = [cell getCellHeightWithContentData:[self.dataMArray objectAtIndex:section]];
+    return height;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    OrderCellFooterView * footView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuse_FooterView];
+    [footView setData:[self.dataMArray objectAtIndex:section]];
+    [footView.moreBtn addTarget:self action:@selector(moreBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    footView.moreBtn.tag = 200+section;
+    footView.labelsTagsView.delegate = self;
+    footView.labelsTagsView.tag = section;
+    return footView;
+}
+*/
  
+// tableFooterView:
+/*
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.contentView.backgroundColor = WYUISTYLE.colorBGgrey;
+    self.transFeeLab.adjustsFontSizeToFitWidth = YES;
+    [self.moreBtn zh_centerHorizontalImageAndTitleWithTheirSpace:10.f];
+    
+    self.labelsTagsView.maxItemCount = 3;
+    self.labelsTagsView.apportionsItemWidthsByContent = NO;
+    self.labelsTagsView.sectionInset = UIEdgeInsetsMake(7.5, 15, 7.5, 15);
+    [self.labelsTagsView setCollectionViewLayoutWithEqualSpaceAlign:AlignWithRight withItemEqualSpace:10.f animated:NO];
+}
+- (void)setData:(id)data
+{
+    GetOrderManagerModel *model = (GetOrderManagerModel *)data;;
+    self.numProDesLab.text = [NSString stringWithFormat:@"共计%@件产品 合计:",model.prodCount];
+    
+    self.finalPriceLab.text = model.finalPrice;
+    self.transFeeLab.text = [NSString stringWithFormat:@"(含运费%@)",model.transFee];
+    
+    
+    CGFloat moreViewHeight = model.showMore?45.f:0.f;
+    [self.moreContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(moreViewHeight);
+    }];
+    self.moreContainerView.hidden = !model.showMore;
+    
+    NSMutableArray *titleArray = [NSMutableArray array];
+    [model.buttons enumerateObjectsUsingBlock:^(OrderButtonModel*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [titleArray addObject:obj.name];
+    }];
+    CGFloat labelTagsHeiht = [self.labelsTagsView getCellHeightWithContentData:titleArray];
+    [self.labelTagsContainerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        
+        make.height.mas_equalTo(labelTagsHeiht);
+        
+    }];
+    
+    [self.labelsTagsView setData:titleArray];
+}
+
+
+//获取tableFooterView的高度
+- (CGFloat)getCellHeightWithContentData:(id)data
+{
+    GetOrderManagerModel *model = (GetOrderManagerModel *)data;
+    NSMutableArray *titleArray = [NSMutableArray array];
+    [model.buttons enumerateObjectsUsingBlock:^(OrderButtonModel*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [titleArray addObject:obj.name];
+    }];
+    CGFloat labelTagsHeiht = [self.labelsTagsView getDispatchOnceCellHeightWithContentData:titleArray];
+    
+    if (!model.showMore)
+    {
+        return 45*2+10+labelTagsHeiht-45;
+    }
+    return 45*2+10+labelTagsHeiht;
+}
+*/
+
+

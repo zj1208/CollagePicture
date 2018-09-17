@@ -23,7 +23,7 @@
 static NSInteger IndexSection_Set =1;
 
 
-@interface MyCenterController ()<UIViewControllerTransitioningDelegate,ZXAdvModalControllerDelegate>
+@interface MyCenterController ()<ZXAdvModalControllerDelegate>
 
 //导航条按钮
 @property (nonatomic,strong) UIBarButtonItem *backButtonItem;
@@ -181,7 +181,7 @@ static NSInteger IndexSection_Set =1;
     [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeholdPhoto"]];
     self.nameBtn.hidden = YES;
     self.loginInBtn.hidden = !self.nameBtn.hidden;
-    self.signatureLab.text = @"未填写";
+    self.signatureLab.text = NSLocalizedString(@"未填写", nil);
 }
 
 - (void)setPersonalInfomation
@@ -287,11 +287,11 @@ static NSInteger IndexSection_Set =1;
         [self xm_pushStoryboardViewControllerWithStoryboardName:sb_SetStoryboard identifier:SBID_SetControllerID withData:nil];
     }
     
-    if (indexPath.section == 0 && indexPath.row == 1) {
+    if (indexPath.section == 0 && indexPath.row == 1)
+    {
         HLHomePageViewController *lotteryHomePageVC = [[HLHomePageViewController alloc] init];
         [self.navigationController pushViewController:lotteryHomePageVC animated:TRUE];
     }
-    
 }
 
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

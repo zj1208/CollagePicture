@@ -146,8 +146,8 @@ static NSString *const  ud_deviceToken = @"deviceToken";
 
 + (void)loginOut;
 + (void)loginIn;
-//可以区分不同api，处理不同业务
-+ (void)loginOutWithTokenErrorAPI:(NSString *)api;
+//可以区分不同api，处理不同业务用不同方式，比如聊天API的token错误不需要重新登陆，自己服务器API的token错误需要重新登陆；
++ (void)reLoginingWithTokenErrorAPI:(NSString *)api;
 
 
 

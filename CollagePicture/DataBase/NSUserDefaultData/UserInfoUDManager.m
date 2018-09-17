@@ -229,7 +229,7 @@ static NSString *const ud_saveVersion = @"ud_saveVersion";
 }
 
 
-+ (void)loginOutWithTokenErrorAPI:(NSString *)api
++ (void)reLoginingWithTokenErrorAPI:(NSString *)api
 {
     [UserInfoUDManager removeData];
     [UserInfoUDManager removeUserData];

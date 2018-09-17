@@ -68,7 +68,7 @@ static NSString * const reuseIdentifier = @"Cell";
                 dispatch_async(dispatch_get_main_queue(), ^{
                    
                     [weakSelf.collectionView.mj_header endRefreshing];
-                    [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
+                    [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
                 });
               
             }
@@ -124,7 +124,7 @@ static NSString * const reuseIdentifier = @"Cell";
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     [weakSelf.collectionView.mj_footer endRefreshing];
-                    [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
+                    [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
                 });
                 
             }

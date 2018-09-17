@@ -23,8 +23,17 @@
 #endif
 
 
+// app从什么激活的
+typedef NS_ENUM(NSInteger, AppActiveFromType)
+{
+    AppActiveFromType_finishLaunch = 1,//app启动激活
+    AppActiveFromType_background = 0//从后台激活
+};
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
+
+@property (nonatomic, assign) AppActiveFromType appActiveFromType;
+
 
 @end
 
@@ -37,6 +46,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsUserActivityDictionaryKey])
+    {
+        self.appActiveFromType =AppActiveFromType_finishLaunch;
+    }
+     [self setUI];
+    
+    //设置域名环境
+    [self setDomainManager];
+    
+    //监听事件
+    [self commonInitListenEvents];
+    
     //初始化全局
     [self setApperanceForAllController];
 //    [self registerUserNotification]; //自己测试用的；
@@ -68,21 +89,102 @@
 
 
 #pragma mark-
+
+
+- (void)setUI
+{
+    [[UIButton appearance]setExclusiveTouch:YES];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(windowDidBecomeVisibleNotification:) name:UIWindowDidBecomeVisibleNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(windowDidBecomeKeyNotification:) name:UIWindowDidBecomeKeyNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(windowDidBecomeHiddenNotification:) name:UIWindowDidBecomeHiddenNotification object:nil];
+}
+
+- (void)windowDidBecomeVisibleNotification:(id)noti
+{
+    
+}
+
+- (void)windowDidBecomeKeyNotification:(id)noti
+{
+    
+}
+
+- (void)windowDidBecomeHiddenNotification:(id)noti
+{
+    
+}
+
+#pragma mark - 设置域名环境
+- (void)setDomainManager
+{
+    [WYUserDefaultManager setOpenChangeDomain:YES];
+    
+    if (![WYUserDefaultManager getOpenChangeDomain] ||[WYUserDefaultManager getkAPP_BaseURL].length==0)
+    {
+        [WYUserDefaultManager setkAPP_BaseURL:@"https://api.m.microants.cn"];
+        [WYUserDefaultManager setkAPP_H5URL:@"https://wykj.microants.cn"];
+        [WYUserDefaultManager setkURL_WXAPPID:@"wxc8edd69b7a7950ee"];
+    }
+    if (![WYUserDefaultManager getOpenChangeDomain] ||[WYUserDefaultManager getkCookieDomain].length==0)
+    {
+        [WYUserDefaultManager setkCookieDomain:@".microants.cn"];
+    }
+}
+
+
+#pragma mark - 监听事件
+- (void)commonInitListenEvents
+{
+    //token错误
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tokenError:) name:kNotificationUserTokenError object:nil];
+    
+//    //先去获取一下im信息
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginInRepeatRequest:) name:kNotificationUserLoginIn object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:Noti_tryAgainGetNimAccout object:nil];
+//    //监听自动登录
+//    [[[NIMSDK sharedSDK]loginManager]addDelegate:self];;
+    
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginOut:) name:kNotificationUserLoginOut object:nil];
+    
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeDomain:) name:kNotificationUserChangeDomain object:nil];
+    
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(postDataToHost:) name:Noti_PostDataToHost object:nil];
+}
+
+#pragma mark- token错误
+- (void)tokenError:(NSNotification *)notification
+{
+    if ([[notification.userInfo objectForKey:@"api"] isEqualToString:@"第三方API的token失效"])
+    {
+        return;
+    }
+    [self.window.rootViewController xm_presentLoginController];
+}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
 //设置基本数据
 
 - (void)setApperanceForAllController
 {
     [UIViewController xm_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
     
-    [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14.f]} forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateHighlighted];
     [UIViewController xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
-
+    [[UIButton appearance]setExclusiveTouch:YES];
 }
 
 - (void)setApperanceForSigleNavController:(UIViewController *)viewController
 {
-    [viewController xm_navigationBar_Single_BackIndicatorImage:@"back" isOriginalImage:YES];
-    [viewController xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x525252)];
+    [viewController xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [viewController xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
 }
 
 #pragma mark-JPush

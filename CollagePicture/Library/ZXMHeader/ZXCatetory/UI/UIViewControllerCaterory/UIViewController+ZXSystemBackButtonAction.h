@@ -5,6 +5,8 @@
 //  Created by simon on 2017/7/13.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  简介：1.重写系统返回按钮点击事件传递；  2.交互方法设置系统返回按钮文字设置为空
+//  9.11 增加iOS11判断
 
 #import <UIKit/UIKit.h>
 

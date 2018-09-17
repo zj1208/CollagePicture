@@ -89,7 +89,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-//    [self performSelector:@selector(setRootController) withObject:self afterDelay:1.5f];
+    [self performSelector:@selector(setRootController) withObject:self afterDelay:2.f];
 }
 
 - (void)setRootController

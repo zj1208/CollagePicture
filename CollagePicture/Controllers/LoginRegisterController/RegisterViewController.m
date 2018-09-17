@@ -11,11 +11,12 @@
 #import "UserModel.h"
 
 
-static NSInteger const PHONE_MAXLENGTH  = 11 ;
-static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
+static NSInteger const PHONE_MAXLENGTH  = 11;
+static NSInteger const VerfiCode_MAXLENGTH  = 6;
 
 
 @interface RegisterViewController ()<UITextFieldDelegate>
+
 @property (nonatomic,strong)NSTimer *smsDownTimer;
 @property (nonatomic,assign)NSInteger smsDownSeconds;
 
@@ -23,13 +24,10 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
 
 @implementation RegisterViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-64);
-    
-    self.userNameField.delegate = self;
-    self.verificationCodeField.delegate = self;
+    [self setUI];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -38,7 +36,14 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6 ;
 }
 
 
-
+- (void)setUI
+{
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBARSAFE);
+    
+    self.userNameField.delegate = self;
+    self.verificationCodeField.delegate = self;
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {

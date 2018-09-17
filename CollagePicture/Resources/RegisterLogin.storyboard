@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YrM-rm-3Lg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YrM-rm-3Lg">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -208,12 +208,13 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="登陆" id="Vi0-ph-9vD">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="hqF-0V-G6H">
+                        <barButtonItem key="leftBarButtonItem" image="back_imageTitle" style="plain" id="hqF-0V-G6H">
+                            <inset key="imageInsets" minX="1" minY="1" maxX="0.0" maxY="0.0"/>
                             <connections>
                                 <action selector="goBackAction:" destination="bBw-8j-Kin" id="ryF-Pg-ObE"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="注册" id="3za-dt-9sn">
+                        <barButtonItem key="rightBarButtonItem" title="注册" style="plain" id="3za-dt-9sn">
                             <connections>
                                 <segue destination="Hq3-Je-QfR" kind="show" id="BgG-5J-E3C"/>
                             </connections>
@@ -576,7 +577,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YrM-rm-3Lg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gBf-tz-DND">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -608,7 +609,7 @@
     </scenes>
     <resources>
         <image name="Sina_" width="36" height="36"/>
-        <image name="back" width="11" height="20"/>
+        <image name="back_imageTitle" width="12" height="20"/>
         <image name="l_key" width="11" height="14"/>
         <image name="l_mobile" width="11" height="17"/>
         <image name="qq_" width="36" height="36"/>

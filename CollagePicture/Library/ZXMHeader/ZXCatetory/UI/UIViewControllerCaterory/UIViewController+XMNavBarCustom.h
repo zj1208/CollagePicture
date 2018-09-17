@@ -5,6 +5,7 @@
 //  Created by zhuxinming on 14/11/1.
 //  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
 //
+//  9.12  弃用减小barButtonItem与屏幕的边距 偏门方法； 不但所有系统和屏幕无法统一间距，而且不符合逻辑，在iOS11上毫无效果，只是iOS11以前系统的一个bug而已；
 
 #import <UIKit/UIKit.h>
 
@@ -27,9 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)xm_navigationItem_leftBarButtonItem_CustomView_imageName:(nullable NSString*)imageName highImageName:(nullable NSString *)imageName2 title:(nullable NSString *)backTitle action:(nullable SEL)action;
 
-# pragma mark - 减小left／rightBarButtonItem与屏幕的边距
+# pragma mark - 减小left／rightBarButtonItem与屏幕的边距 - 弃用
 
 /**
+     弃用
  *   根据ui设计，如果需要减小leftBarButtonItem／right 与屏幕边界之间的默认距离，就得用这个方法解决；item与item之间默认20间距，也是最小20间距，大一点，但比较合理；
 
  * @param barButtonItems 原生的或者storyboard默认的系统barButtonItem数组
@@ -43,9 +45,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ 弃用：
  NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem]];
  self.navigationItem.leftBarButtonItems = items;
-
+ 文本按钮之系统初始化：-没有经过验证数字准确
+ iOS11以前 边距 = 10
+ iOS11以后 边距 = 15
+ 图片按钮之系统初始化：-没有经过验证数字准确
+ iOS11以前 边距 = 5 || 10
+ iOS11以后 边距 = 12 || 17
+ 自定义视图按钮之初始化：-经过验证数字准确
+ 所有系统 边距 = 16 || 20
+ 
+ 注意：在iOS11设置无效果，这种偏门方法本来就不该起作用，不推荐使用；
+ 为了统一效果，在任何系统都不要使用；
  @param magin 要减少的边距
  @param barButtonItems barButtonItem数组
  @return 返回数组
@@ -91,6 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
  appearance没有效果，storyboard也是如此；
  如果leftBarButtonItem设置了，则此方法会无效；
  只是navigationBar的返回指示，如果设置会替换默认的返回展示； 如果上个页面设置了backBarButtonItem，则2个同时会显示；
+ 注意：为了达到 系统返回按钮图标与屏幕间距  约等于 自定义leftBarButtonItem返回button按钮与屏幕间距，需要设计3个图标，自定义leftBarButtonItem用实际大小的icon，系统返回按钮图标用plus屏幕尺寸的icon1（左边预留26像素）和非plus屏幕尺寸的icon2（左边预留18像素）
  @param aName 返回图的name
  @param originalImage 是否原图颜色显示；
  */

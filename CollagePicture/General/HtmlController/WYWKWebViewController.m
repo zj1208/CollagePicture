@@ -990,8 +990,8 @@ static NSString* const SixSpaces = @"      ";
 
 - (UIBarButtonItem*)backButtonItem{
     if (!_backButtonItem) {
-        UIImage* backItemImage = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        //        UIImage* backItemHlImage = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage* backItemImage = [[UIImage imageNamed:@"back_imageTitle"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        //        UIImage* backItemHlImage = [[UIImage imageNamed:@"back_imageTitle"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
         UIButton* backButton = [[UIButton alloc] init];
         [backButton setTitle:NSLocalizedString(@"返回", nil)  forState:UIControlStateNormal];
@@ -1041,7 +1041,7 @@ static NSString* const SixSpaces = @"      ";
     }
     else
     {
-        NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:4;
+        NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:3;
         if (self.navigationItem.leftBarButtonItems.count==numItems)
         {
             NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];

@@ -46,7 +46,9 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 
 - (void)setUI
 {
-    [(AppDelegate *)APP_Delegate setApperanceForSigleNavController:self];
+//    [(AppDelegate *)APP_Delegate setApperanceForSigleNavController:self];
+    [self.navigationController xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [self xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     
     [self.loginBtn zh_userInteractionEnabledWithAlpha:NO];
     self.userNameField.delegate = self;
@@ -149,30 +151,34 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
     else
     {
         [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
-    
-        [MBProgressHUD zx_showLoadingWithStatus:@"正在登录" toView:nil];
-        WS(weakSelf);
-        [BmobUser loginInbackgroundWithAccount:self.userNameField.text andPassword:password block:^(BmobUser *user, NSError *error) {
-            
-            if (user)
-            {
-                NSLog(@"115 =%@",user);
-                UserModel *userModel = [[UserModel alloc] init];
-                userModel.userId = @([user.objectId integerValue]);
-                userModel.phone = user.mobilePhoneNumber;
-                userModel.username = user.username;
-                [UserInfoUDManager setUserData:userModel];
-                [UserInfoUDManager loginIn];
-                [UserInfoUDManager setUserId:user.objectId];
-                [MBProgressHUD zx_hideHUDForView:nil];
-                [weakSelf dismissViewControllerAnimated:YES completion:nil];
-            }
-            else
-            {
-                [MBProgressHUD zx_showError:@"您输入的用户名或密码错误，请重新输入" toView:nil];
-            }
-        }];
+        [self requestDataWithLoginPassword:password];
     }
+}
+
+- (void)requestDataWithLoginPassword:(NSString *)password
+{
+    [MBProgressHUD zx_showLoadingWithStatus:@"正在登录" toView:nil];
+    WS(weakSelf);
+    [BmobUser loginInbackgroundWithAccount:self.userNameField.text andPassword:password block:^(BmobUser *user, NSError *error) {
+        
+        if (user)
+        {
+            NSLog(@"user =%@",user);
+            UserModel *userModel = [[UserModel alloc] init];
+            userModel.userId = @([user.objectId integerValue]);
+            userModel.phone = user.mobilePhoneNumber;
+            userModel.username = user.username;
+            [UserInfoUDManager setUserData:userModel];
+            [UserInfoUDManager loginIn];
+            [UserInfoUDManager setUserId:user.objectId];
+            [MBProgressHUD zx_hideHUDForView:nil];
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        }
+        else
+        {
+            [MBProgressHUD zx_showError:@"您输入的用户名或密码错误，请重新输入" toView:nil];
+        }
+    }];
 }
 
 - (IBAction)sinaLoginAction:(UIButton *)sender {
@@ -181,7 +187,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
         
         if (error)
         {
-            [self  zhHUD_showErrorWithStatus:[error localizedDescription]];
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
         }
         else {
             UMSocialUserInfoResponse *resp = result;

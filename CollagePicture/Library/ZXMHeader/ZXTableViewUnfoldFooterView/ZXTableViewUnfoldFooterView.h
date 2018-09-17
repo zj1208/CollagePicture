@@ -6,6 +6,7 @@
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 //  简介：可以用于tableView底部视图+收回/展开效果； 只需要对动态伸缩那几组做刷新处理，其它尽量不刷新；
+//  9.11 增加注释
 
 #import <UIKit/UIKit.h>
 
@@ -54,6 +55,10 @@ NS_ASSUME_NONNULL_END
         [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(3, 2)] withRowAnimation:UITableViewRowAnimationFade];
         [weakSelf.tableView endUpdates];
     };
+     if (self.controllerDoingType ==ControllerDoingType_EditProduct)
+     {
+         self.tableView.tableFooterView.hidden = YES;
+     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -44,33 +44,33 @@
 - (NSArray *)xm_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:(NSArray *)barButtonItems
 {
     //由于iOS11把barButtonItem添加在_UIButtonBarStackView上；
-    if (@available(iOS 11.0, *))
-    {
+//    if (@available(iOS 11.0, *))
+//    {
         return barButtonItems;
-    }
+//    }
     //
-    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
-                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                       target:nil action:nil];
-    negativeSpacer.width = -10;
-    NSMutableArray *mArray = [NSMutableArray arrayWithArray:barButtonItems];
-    [mArray insertObject:negativeSpacer atIndex:0];
-    return (NSArray *)mArray;
+//    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+//                                       target:nil action:nil];
+//    negativeSpacer.width = -10;
+//    NSMutableArray *mArray = [NSMutableArray arrayWithArray:barButtonItems];
+//    [mArray insertObject:negativeSpacer atIndex:0];
+//    return (NSArray *)mArray;
 }
 
 - (NSArray *)xm_navigationItem_leftOrRightItemReducedSpaceToMagin:(CGFloat)magin withItems:(NSArray *)barButtonItems
 {
-    if (@available(iOS 11.0, *))
-    {
+//    if (@available(iOS 11.0, *))
+//    {
         return barButtonItems;
-    }
-    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
-                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                       target:nil action:nil];
-    negativeSpacer.width = magin;
-    NSMutableArray *mArray = [NSMutableArray arrayWithArray:barButtonItems];
-    [mArray insertObject:negativeSpacer atIndex:0];
-    return (NSArray *)mArray;
+//    }
+//    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+//                                       target:nil action:nil];
+//    negativeSpacer.width = 10;
+//    NSMutableArray *mArray = [NSMutableArray arrayWithArray:barButtonItems];
+//    [mArray insertObject:negativeSpacer atIndex:0];
+//    return (NSArray *)mArray;
 }
 
 

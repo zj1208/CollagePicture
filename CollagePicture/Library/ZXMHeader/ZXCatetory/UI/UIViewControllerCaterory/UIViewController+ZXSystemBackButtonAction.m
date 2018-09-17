@@ -13,7 +13,10 @@
 + (void)load
 {
    [super load];
-   zxSwizzling_exchangeMethod([self class], @selector(viewDidLoad), @selector(addViewDidLoad));
+    if(@available(iOS 11.0, *))
+    {
+        zxSwizzling_exchangeMethod([self class], @selector(viewDidLoad), @selector(addViewDidLoad));
+    }
 }
 
 - (void)addViewDidLoad
