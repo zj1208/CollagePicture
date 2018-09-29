@@ -42,11 +42,10 @@
     [self setView:self.advPicBtn cornerRadius:8.f borderWidth:1.f borderColor:nil];
     [self.advPicBtn zx_addMotionEffectXAxisWithValue:20 YAxisWithValue:20];
 
-//     [self.advPicBtn addSubview:self.effectView];
 //    [self.view addSubview:self.effectView];
 //    [self.view bringSubviewToFront: self.advPicBtn];
 //    [self.view bringSubviewToFront: self.dismissBtn];
-    
+//    
     
     NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
 //    NSURL *url = [NSURL URLWithString:@"http://macdn.microants.cn/2/sh/eb738b0ea44830fba171707d3481a7eb1530582553695.jpg"];
@@ -77,7 +76,7 @@
     {
         UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
-        effectview.alpha = 0;
+        effectview.alpha = 0.3;
         _effectView = effectview;
     }
     return _effectView;

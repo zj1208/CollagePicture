@@ -9,7 +9,6 @@
 #import "UIButton+WebCache.h"
 #import "MakingPhotoController.h"
 #import "OrientationNaController.h"
-#import "HLHomePageViewController.h"
 #import "AppDelegate.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -289,8 +288,7 @@ static NSInteger IndexSection_Set =1;
     
     if (indexPath.section == 0 && indexPath.row == 1)
     {
-        HLHomePageViewController *lotteryHomePageVC = [[HLHomePageViewController alloc] init];
-        [self.navigationController pushViewController:lotteryHomePageVC animated:TRUE];
+   
     }
 }
 
