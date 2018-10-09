@@ -14,6 +14,7 @@
 		F40228DA1EF293E600E3D07E /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = F40228D81EF293E600E3D07E /* sound.caf */; };
 		F40228EE1EF371E800E3D07E /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228ED1EF371E800E3D07E /* WelcomeViewController.m */; };
 		F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228F41EF37CA400E3D07E /* CopyrightController.m */; };
+		F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */; };
 		F425A282214B520A00C6F724 /* ZXLabelsTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A281214B520A00C6F724 /* ZXLabelsTagsView.m */; };
 		F425A286214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A285214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m */; };
 		F425A289214B541B00C6F724 /* UIViewController+XMNavBarCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A287214B541A00C6F724 /* UIViewController+XMNavBarCustom.m */; };
@@ -21,7 +22,7 @@
 		F42A133E1DDE14E0006F5EF6 /* Set.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42A133D1DDE14E0006F5EF6 /* Set.storyboard */; };
 		F42E7F39215F7C0600AAD913 /* ZXAdvModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E7F38215F7C0600AAD913 /* ZXAdvModalController.m */; };
 		F42E7F41215F7C2800AAD913 /* ZXModalPresentaionController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E7F3C215F7C2800AAD913 /* ZXModalPresentaionController.m */; };
-		F42E7F42215F7C2800AAD913 /* ZXPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E7F40215F7C2800AAD913 /* ZXPopoverBackgroundView.m */; };
+		F42E7F42215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E7F40215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m */; };
 		F4361D7A2109982F00A5C22F /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4361D662109982E00A5C22F /* BaseTableViewCell.m */; };
 		F4361D7B2109982F00A5C22F /* BaseHttpAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F4361D672109982E00A5C22F /* BaseHttpAPI.m */; };
 		F4361D7C2109982F00A5C22F /* PageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4361D6D2109982E00A5C22F /* PageModel.m */; };
@@ -72,6 +73,12 @@
 		F43E6E0420BCEAE900D2E05D /* ZXAddProPicView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43E6DFE20BCEAE800D2E05D /* ZXAddProPicView.m */; };
 		F43E6E0520BCEAE900D2E05D /* AddProductPicController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43E6E0020BCEAE800D2E05D /* AddProductPicController.m */; };
 		F43E6E0820BCEB0A00D2E05D /* ZXImagePickerVCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F43E6E0720BCEB0A00D2E05D /* ZXImagePickerVCManager.m */; };
+		F441BFA2216C7F5900A92D2E /* YWFeedbackFMWK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F441BF9B216C7F5900A92D2E /* YWFeedbackFMWK.framework */; };
+		F441BFA3216C7F5900A92D2E /* BCHybridWebViewFMWK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F441BF9C216C7F5900A92D2E /* BCHybridWebViewFMWK.framework */; };
+		F441BFA5216C7F5900A92D2E /* AlicloudUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F441BF9E216C7F5900A92D2E /* AlicloudUtils.framework */; };
+		F441BFA6216C7F5900A92D2E /* BCConnectorBundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F441BF9F216C7F5900A92D2E /* BCConnectorBundle.framework */; };
+		F441BFA7216C7F5900A92D2E /* UTMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F441BFA0216C7F5900A92D2E /* UTMini.framework */; };
+		F441BFA8216C7F5900A92D2E /* YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F441BFA1216C7F5900A92D2E /* YWFeedbackBundle.bundle */; };
 		F446A92A1FCC082900C82C90 /* ZXLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A7ED1FCC082900C82C90 /* ZXLocalNotification.m */; };
 		F446A92E1FCC082900C82C90 /* ShareInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A7FC1FCC082900C82C90 /* ShareInfo.m */; };
 		F446A92F1FCC082900C82C90 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A7FD1FCC082900C82C90 /* logo.png */; };
@@ -225,19 +232,10 @@
 		F49CFD361FDE5C8D009F2213 /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F49CFD241FDE5C8D009F2213 /* TAPageControl.m */; };
 		F49CFD371FDE5C8D009F2213 /* TAAnimatedDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = F49CFD251FDE5C8D009F2213 /* TAAnimatedDotView.m */; };
 		F49CFD381FDE5C8D009F2213 /* TAAbstractDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = F49CFD261FDE5C8D009F2213 /* TAAbstractDotView.m */; };
-		F49CFD411FDE6246009F2213 /* YWFeedbackFMWK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD3A1FDE6246009F2213 /* YWFeedbackFMWK.framework */; };
-		F49CFD421FDE6246009F2213 /* BCHybridWebViewFMWK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD3B1FDE6246009F2213 /* BCHybridWebViewFMWK.framework */; };
-		F49CFD441FDE6246009F2213 /* AlicloudUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD3D1FDE6246009F2213 /* AlicloudUtils.framework */; };
-		F49CFD451FDE6246009F2213 /* BCConnectorBundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD3E1FDE6246009F2213 /* BCConnectorBundle.framework */; };
-		F49CFD461FDE6246009F2213 /* UTMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD3F1FDE6246009F2213 /* UTMini.framework */; };
-		F49CFD471FDE6246009F2213 /* YWFeedbackBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F49CFD401FDE6246009F2213 /* YWFeedbackBundle.bundle */; };
 		F49CFD491FDE67E3009F2213 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD481FDE67E2009F2213 /* CoreMotion.framework */; };
 		F49CFD4B1FDE6870009F2213 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD4A1FDE6870009F2213 /* SystemConfiguration.framework */; };
 		F49E19451DF1734C00676396 /* copyright.plist in Resources */ = {isa = PBXBuildFile; fileRef = F49E19441DF1734C00676396 /* copyright.plist */; };
 		F49E194D1DF1863000676396 /* AppAPIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E194C1DF1863000676396 /* AppAPIHelper.m */; };
-		F49E199F1DF1875900676396 /* FourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19871DF1875900676396 /* FourViewController.m */; };
-		F49E19A01DF1875900676396 /* CategoryHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E198A1DF1875900676396 /* CategoryHomeController.m */; };
-		F49E19A51DF1875900676396 /* ShopCarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19961DF1875900676396 /* ShopCarController.m */; };
 		F49E19B21DF1903F00676396 /* CopyrightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19B11DF1903F00676396 /* CopyrightCell.m */; };
 		F49E19BC1DF190A000676396 /* SetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19B91DF190A000676396 /* SetViewController.m */; };
 		F49E19C21DF190DA00676396 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19BF1DF190DA00676396 /* AboutViewController.m */; };
@@ -400,6 +398,8 @@
 		F40228ED1EF371E800E3D07E /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		F40228F31EF37CA400E3D07E /* CopyrightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CopyrightController.h; sourceTree = "<group>"; };
 		F40228F41EF37CA400E3D07E /* CopyrightController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyrightController.m; sourceTree = "<group>"; };
+		F40CDF12216C3E43007CFCB4 /* ZXPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPrintPageRenderer.h; sourceTree = "<group>"; };
+		F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPrintPageRenderer.m; sourceTree = "<group>"; };
 		F41A19D5204FD75F00B1945C /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F41A19E9204FD95C00B1945C /* ZXEmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXEmptyViewController.h; sourceTree = "<group>"; };
 		F425A280214B520A00C6F724 /* ZXLabelsTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsTagsView.h; sourceTree = "<group>"; };
@@ -416,8 +416,8 @@
 		F42E7F38215F7C0600AAD913 /* ZXAdvModalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAdvModalController.m; sourceTree = "<group>"; };
 		F42E7F3C215F7C2800AAD913 /* ZXModalPresentaionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXModalPresentaionController.m; sourceTree = "<group>"; };
 		F42E7F3D215F7C2800AAD913 /* ZXModalPresentaionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXModalPresentaionController.h; sourceTree = "<group>"; };
-		F42E7F3F215F7C2800AAD913 /* ZXPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPopoverBackgroundView.h; sourceTree = "<group>"; };
-		F42E7F40215F7C2800AAD913 /* ZXPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPopoverBackgroundView.m; sourceTree = "<group>"; };
+		F42E7F3F215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPopoverPresentaionBackgroundView.h; sourceTree = "<group>"; };
+		F42E7F40215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPopoverPresentaionBackgroundView.m; sourceTree = "<group>"; };
 		F4361D662109982E00A5C22F /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		F4361D672109982E00A5C22F /* BaseHttpAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseHttpAPI.m; sourceTree = "<group>"; };
 		F4361D682109982E00A5C22F /* BaseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCollectionViewCell.h; sourceTree = "<group>"; };
@@ -510,6 +510,12 @@
 		F43E6E0020BCEAE800D2E05D /* AddProductPicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductPicController.m; sourceTree = "<group>"; };
 		F43E6E0620BCEB0A00D2E05D /* ZXImagePickerVCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXImagePickerVCManager.h; sourceTree = "<group>"; };
 		F43E6E0720BCEB0A00D2E05D /* ZXImagePickerVCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXImagePickerVCManager.m; sourceTree = "<group>"; };
+		F441BF9B216C7F5900A92D2E /* YWFeedbackFMWK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YWFeedbackFMWK.framework; sourceTree = "<group>"; };
+		F441BF9C216C7F5900A92D2E /* BCHybridWebViewFMWK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCHybridWebViewFMWK.framework; sourceTree = "<group>"; };
+		F441BF9E216C7F5900A92D2E /* AlicloudUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudUtils.framework; sourceTree = "<group>"; };
+		F441BF9F216C7F5900A92D2E /* BCConnectorBundle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCConnectorBundle.framework; sourceTree = "<group>"; };
+		F441BFA0216C7F5900A92D2E /* UTMini.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTMini.framework; sourceTree = "<group>"; };
+		F441BFA1216C7F5900A92D2E /* YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YWFeedbackBundle.bundle; sourceTree = "<group>"; };
 		F446A7ED1FCC082900C82C90 /* ZXLocalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLocalNotification.m; sourceTree = "<group>"; };
 		F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXSimpleLyricView.h; sourceTree = "<group>"; };
 		F446A7FA1FCC082900C82C90 /* ShareInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareInfo.h; sourceTree = "<group>"; };
@@ -796,23 +802,11 @@
 		F49CFD271FDE5C8D009F2213 /* TADotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TADotView.h; sourceTree = "<group>"; };
 		F49CFD281FDE5C8D009F2213 /* TAAnimatedDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAnimatedDotView.h; sourceTree = "<group>"; };
 		F49CFD291FDE5C8D009F2213 /* TAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPageControl.h; sourceTree = "<group>"; };
-		F49CFD3A1FDE6246009F2213 /* YWFeedbackFMWK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YWFeedbackFMWK.framework; sourceTree = "<group>"; };
-		F49CFD3B1FDE6246009F2213 /* BCHybridWebViewFMWK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCHybridWebViewFMWK.framework; sourceTree = "<group>"; };
-		F49CFD3D1FDE6246009F2213 /* AlicloudUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudUtils.framework; sourceTree = "<group>"; };
-		F49CFD3E1FDE6246009F2213 /* BCConnectorBundle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCConnectorBundle.framework; sourceTree = "<group>"; };
-		F49CFD3F1FDE6246009F2213 /* UTMini.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTMini.framework; sourceTree = "<group>"; };
-		F49CFD401FDE6246009F2213 /* YWFeedbackBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YWFeedbackBundle.bundle; sourceTree = "<group>"; };
 		F49CFD481FDE67E2009F2213 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F49CFD4A1FDE6870009F2213 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F49E19441DF1734C00676396 /* copyright.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = copyright.plist; sourceTree = "<group>"; };
 		F49E194B1DF1863000676396 /* AppAPIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppAPIHelper.h; sourceTree = "<group>"; };
 		F49E194C1DF1863000676396 /* AppAPIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppAPIHelper.m; sourceTree = "<group>"; };
-		F49E19861DF1875900676396 /* FourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourViewController.h; sourceTree = "<group>"; };
-		F49E19871DF1875900676396 /* FourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourViewController.m; sourceTree = "<group>"; };
-		F49E19891DF1875900676396 /* CategoryHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryHomeController.h; sourceTree = "<group>"; };
-		F49E198A1DF1875900676396 /* CategoryHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryHomeController.m; sourceTree = "<group>"; };
-		F49E19951DF1875900676396 /* ShopCarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopCarController.h; sourceTree = "<group>"; };
-		F49E19961DF1875900676396 /* ShopCarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopCarController.m; sourceTree = "<group>"; };
 		F49E19A81DF1876B00676396 /* AppFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppFoundation.h; sourceTree = "<group>"; };
 		F49E19AB1DF1876B00676396 /* NotificationMarco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationMarco.h; sourceTree = "<group>"; };
 		F49E19AC1DF1876B00676396 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -1025,31 +1019,31 @@
 			files = (
 				F49CFD4B1FDE6870009F2213 /* SystemConfiguration.framework in Frameworks */,
 				F49CFD491FDE67E3009F2213 /* CoreMotion.framework in Frameworks */,
+				F441BFA7216C7F5900A92D2E /* UTMini.framework in Frameworks */,
 				F4B9D87F1DD48CB8008F895A /* libresolv.tbd in Frameworks */,
+				F441BFA6216C7F5900A92D2E /* BCConnectorBundle.framework in Frameworks */,
 				F49CFD071FDE5C65009F2213 /* AlipaySDK.framework in Frameworks */,
-				F49CFD421FDE6246009F2213 /* BCHybridWebViewFMWK.framework in Frameworks */,
 				F4B9D87D1DD48CA9008F895A /* UserNotifications.framework in Frameworks */,
 				F40228D91EF293E600E3D07E /* jpush-ios-2.2.0.a in Frameworks */,
-				F49CFD451FDE6246009F2213 /* BCConnectorBundle.framework in Frameworks */,
 				F4B9D87B1DD48C71008F895A /* CoreFoundation.framework in Frameworks */,
 				F4B9D8791DD48C5B008F895A /* CFNetwork.framework in Frameworks */,
 				F44DAEDE1DC8D29D000D9311 /* libc++.tbd in Frameworks */,
 				F44DAEDC1DC8D271000D9311 /* libz.tbd in Frameworks */,
+				F441BFA2216C7F5900A92D2E /* YWFeedbackFMWK.framework in Frameworks */,
 				F44DAEDA1DC8D238000D9311 /* libsqlite3.tbd in Frameworks */,
 				F44DAED81DC8D228000D9311 /* CoreTelephony.framework in Frameworks */,
 				F44DAEC61DC8D187000D9311 /* libSocialQQ.a in Frameworks */,
-				F49CFD411FDE6246009F2213 /* YWFeedbackFMWK.framework in Frameworks */,
 				F44DAECA1DC8D188000D9311 /* libWeiboSDK.a in Frameworks */,
-				F49CFD461FDE6246009F2213 /* UTMini.framework in Frameworks */,
 				F44DAED11DC8D188000D9311 /* UMSocialNetwork.framework in Frameworks */,
 				F44DAECD1DC8D188000D9311 /* libWeChatSDK.a in Frameworks */,
-				F49CFD441FDE6246009F2213 /* AlicloudUtils.framework in Frameworks */,
 				F44DAEC71DC8D187000D9311 /* TencentOpenAPI.framework in Frameworks */,
 				F44DAECC1DC8D188000D9311 /* libSocialWeChat.a in Frameworks */,
 				F44DAEC91DC8D188000D9311 /* libSocialSina.a in Frameworks */,
 				F48F132B1D92775700311F03 /* Photos.framework in Frameworks */,
 				F44DAED01DC8D188000D9311 /* UMSocialCore.framework in Frameworks */,
+				F441BFA3216C7F5900A92D2E /* BCHybridWebViewFMWK.framework in Frameworks */,
 				20B72D866FA5EC63817C0FE7 /* libPods-CollagePicture.a in Frameworks */,
+				F441BFA5216C7F5900A92D2E /* AlicloudUtils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,11 +1120,20 @@
 			path = CopyrightController;
 			sourceTree = "<group>";
 		};
+		F40CDF11216C3E43007CFCB4 /* ZXPrintPageRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				F40CDF12216C3E43007CFCB4 /* ZXPrintPageRenderer.h */,
+				F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */,
+			);
+			path = ZXPrintPageRenderer;
+			sourceTree = "<group>";
+		};
 		F42E7F3A215F7C2800AAD913 /* ZXManyPresentationControllers */ = {
 			isa = PBXGroup;
 			children = (
 				F42E7F3B215F7C2800AAD913 /* ZXModalPresentaionController */,
-				F42E7F3E215F7C2800AAD913 /* ZXPopoverBackgroundView */,
+				F42E7F3E215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView */,
 			);
 			path = ZXManyPresentationControllers;
 			sourceTree = "<group>";
@@ -1138,19 +1141,19 @@
 		F42E7F3B215F7C2800AAD913 /* ZXModalPresentaionController */ = {
 			isa = PBXGroup;
 			children = (
-				F42E7F3C215F7C2800AAD913 /* ZXModalPresentaionController.m */,
 				F42E7F3D215F7C2800AAD913 /* ZXModalPresentaionController.h */,
+				F42E7F3C215F7C2800AAD913 /* ZXModalPresentaionController.m */,
 			);
 			path = ZXModalPresentaionController;
 			sourceTree = "<group>";
 		};
-		F42E7F3E215F7C2800AAD913 /* ZXPopoverBackgroundView */ = {
+		F42E7F3E215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView */ = {
 			isa = PBXGroup;
 			children = (
-				F42E7F3F215F7C2800AAD913 /* ZXPopoverBackgroundView.h */,
-				F42E7F40215F7C2800AAD913 /* ZXPopoverBackgroundView.m */,
+				F42E7F3F215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.h */,
+				F42E7F40215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m */,
 			);
-			path = ZXPopoverBackgroundView;
+			path = ZXPopoverPresentaionBackgroundView;
 			sourceTree = "<group>";
 		};
 		F4361D652109982E00A5C22F /* BaseClasses */ = {
@@ -1361,6 +1364,19 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F441BF9A216C7F5900A92D2E /* OneSDK */ = {
+			isa = PBXGroup;
+			children = (
+				F441BF9B216C7F5900A92D2E /* YWFeedbackFMWK.framework */,
+				F441BF9C216C7F5900A92D2E /* BCHybridWebViewFMWK.framework */,
+				F441BF9E216C7F5900A92D2E /* AlicloudUtils.framework */,
+				F441BF9F216C7F5900A92D2E /* BCConnectorBundle.framework */,
+				F441BFA0216C7F5900A92D2E /* UTMini.framework */,
+				F441BFA1216C7F5900A92D2E /* YWFeedbackBundle.bundle */,
+			);
+			path = OneSDK;
+			sourceTree = "<group>";
+		};
 		F446A7BC1FCC082900C82C90 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -1370,6 +1386,7 @@
 				F446A7BD1FCC082900C82C90 /* ZXAnimatedTransitionDelegates（大） */,
 				F446A9001FCC082900C82C90 /* ZXBadgeView */,
 				F446A8A41FCC082900C82C90 /* ZXBadgeIconButton */,
+				F4858B6D1FE2837600176D0E /* ZXBottomToolViews */,
 				F446A8141FCC082900C82C90 /* ZXCatetorys（类目） */,
 				F446A8C71FCC082900C82C90 /* ZXCustomNavigationBar */,
 				F446A8CB1FCC082900C82C90 /* ZXEmptyViewController */,
@@ -1381,23 +1398,23 @@
 				F47FEB41209AA4D000A67F55 /* ZXKeyboardManager */,
 				F446A8081FCC082900C82C90 /* ZXManyCellFlowLayouts */,
 				F446A7CA1FCC082900C82C90 /* ZXManyCollectionViews（大） */,
-				F4858B6D1FE2837600176D0E /* ZXManyBottomToolViews */,
 				F42E7F3A215F7C2800AAD913 /* ZXManyPresentationControllers */,
 				F446A8BC1FCC082900C82C90 /* ZXNewFunctionGuide */,
+				F446A8E71FCC082900C82C90 /* ZXProgressView */,
 				F446A9061FCC082900C82C90 /* ZXPhotosView */,
 				F456B73B20A5A2D70092A7B2 /* ZXPickerViews */,
-				F446A8E71FCC082900C82C90 /* ZXProgressView */,
 				F446A87E1FCC082900C82C90 /* ZXPinyinConverter */,
 				F446A8FA1FCC082900C82C90 /* ZXPlaceholdTextView */,
+				F40CDF11216C3E43007CFCB4 /* ZXPrintPageRenderer */,
 				F446A8571FCC082900C82C90 /* ZXRefreshTableAndLoadMoreView */,
 				F446A88C1FCC082900C82C90 /* ZXSegmentedPageController */,
 				F4D8086720E080130084D024 /* ZXTextFields */,
-				F4361DE42109A29C00A5C22F /* ZXTableViewUnfoldFooterView */,
 				F446A8D41FCC082900C82C90 /* ZXTableViewTitleViews */,
-				F41A19D5204FD75F00B1945C /* APPCommonDef.h */,
-				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
+				F4361DE42109A29C00A5C22F /* ZXTableViewUnfoldFooterView */,
 				F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */,
 				F446A8B31FCC082900C82C90 /* ZXSimpleLyricView.m */,
+				F41A19D5204FD75F00B1945C /* APPCommonDef.h */,
+				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
 				F4C9186F2004990200D3E158 /* QYHelpFunction.h */,
 				F4C918702004990300D3E158 /* QYHelpFunction.m */,
 				F446A7ED1FCC082900C82C90 /* ZXLocalNotification.m */,
@@ -2270,7 +2287,7 @@
 		F46182841D813BCB0015BC84 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				F49CFD391FDE6246009F2213 /* YWFeedbackFMWK */,
+				F441BF9A216C7F5900A92D2E /* OneSDK */,
 				F49CFD081FDE5C8D009F2213 /* XLPhotoBrowser */,
 				F49CFD031FDE5C65009F2213 /* AlipaySDK */,
 				F446A7BC1FCC082900C82C90 /* ZXMHeader */,
@@ -2338,13 +2355,13 @@
 			path = ZXKeyboardManager;
 			sourceTree = "<group>";
 		};
-		F4858B6D1FE2837600176D0E /* ZXManyBottomToolViews */ = {
+		F4858B6D1FE2837600176D0E /* ZXBottomToolViews */ = {
 			isa = PBXGroup;
 			children = (
 				F4E607CE208D7579008C50CB /* ZXCenterBottomToolView */,
 				F4E607D2208D7579008C50CB /* ZXTowBtnBottomToolView */,
 			);
-			path = ZXManyBottomToolViews;
+			path = ZXBottomToolViews;
 			sourceTree = "<group>";
 		};
 		F49CFD031FDE5C65009F2213 /* AlipaySDK */ = {
@@ -2424,19 +2441,6 @@
 			path = PageControl;
 			sourceTree = "<group>";
 		};
-		F49CFD391FDE6246009F2213 /* YWFeedbackFMWK */ = {
-			isa = PBXGroup;
-			children = (
-				F49CFD3A1FDE6246009F2213 /* YWFeedbackFMWK.framework */,
-				F49CFD3B1FDE6246009F2213 /* BCHybridWebViewFMWK.framework */,
-				F49CFD3D1FDE6246009F2213 /* AlicloudUtils.framework */,
-				F49CFD3E1FDE6246009F2213 /* BCConnectorBundle.framework */,
-				F49CFD3F1FDE6246009F2213 /* UTMini.framework */,
-				F49CFD401FDE6246009F2213 /* YWFeedbackBundle.bundle */,
-			);
-			path = YWFeedbackFMWK;
-			sourceTree = "<group>";
-		};
 		F49E194A1DF1863000676396 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -2460,29 +2464,8 @@
 				F40228EB1EF371E800E3D07E /* StartViewController */,
 				F4F38B321EA6492C007606F9 /* MyCenterController */,
 				F4374B571E0A6C6900081502 /* LoginRegisterController */,
-				F49E19851DF1875900676396 /* FourthViewController */,
-				F49E19881DF1875900676396 /* SecondViewController */,
-				F49E19941DF1875900676396 /* ThirdViewController */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		F49E19851DF1875900676396 /* FourthViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F49E19861DF1875900676396 /* FourViewController.h */,
-				F49E19871DF1875900676396 /* FourViewController.m */,
-			);
-			path = FourthViewController;
-			sourceTree = "<group>";
-		};
-		F49E19881DF1875900676396 /* SecondViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F49E19891DF1875900676396 /* CategoryHomeController.h */,
-				F49E198A1DF1875900676396 /* CategoryHomeController.m */,
-			);
-			path = SecondViewController;
 			sourceTree = "<group>";
 		};
 		F49E198B1DF1875900676396 /* SetViewController */ = {
@@ -2492,15 +2475,6 @@
 				F49E19AF1DF1902500676396 /* View */,
 			);
 			path = SetViewController;
-			sourceTree = "<group>";
-		};
-		F49E19941DF1875900676396 /* ThirdViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F49E19951DF1875900676396 /* ShopCarController.h */,
-				F49E19961DF1875900676396 /* ShopCarController.m */,
-			);
-			path = ThirdViewController;
 			sourceTree = "<group>";
 		};
 		F49E19A71DF1876B00676396 /* Marcoes */ = {
@@ -3326,6 +3300,7 @@
 				F446A99C1FCC082A00C82C90 /* icon_bigLine@3x.png in Resources */,
 				F4EB2FE11D8FCF7300F5B70B /* albumA_style_9.plist in Resources */,
 				F49E19CE1DF543DF00676396 /* ZXPrivacyPolicy.json in Resources */,
+				F441BFA8216C7F5900A92D2E /* YWFeedbackBundle.bundle in Resources */,
 				F446A95D1FCC082900C82C90 /* blackArrow@2x.png in Resources */,
 				F4E607DA208D757A008C50CB /* ZXTowBtnBottomToolView.xib in Resources */,
 				F4EB2FD11D8FCF7300F5B70B /* album_a6@2x.png in Resources */,
@@ -3367,7 +3342,6 @@
 				F4DAC4E3203032A8000428DF /* icon_vip_fill@3x.png in Resources */,
 				A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */,
 				F446A96A1FCC082900C82C90 /* guide_2@2x.png in Resources */,
-				F49CFD471FDE6246009F2213 /* YWFeedbackBundle.bundle in Resources */,
 				F44DAECB1DC8D188000D9311 /* WeiboSDK.bundle in Resources */,
 				F4C91895200622B100D3E158 /* ZXActionTitleView.xib in Resources */,
 				F446A9681FCC082900C82C90 /* guide_1@2x.png in Resources */,
@@ -3492,7 +3466,6 @@
 				F46182291D8129490015BC84 /* CollagePicture.xcdatamodeld in Sources */,
 				F4BA075320A0699B00454095 /* ZXSegmentedPageController.m in Sources */,
 				F43E6E0420BCEAE900D2E05D /* ZXAddProPicView.m in Sources */,
-				F49E19A51DF1875900676396 /* ShopCarController.m in Sources */,
 				F456B73F20A5A3640092A7B2 /* ZXDatePickerTextField.m in Sources */,
 				F49CFD2D1FDE5C8D009F2213 /* XLZoomingScrollView.m in Sources */,
 				F446A94C1FCC082900C82C90 /* UINavigationBar+ShadeColor.m in Sources */,
@@ -3523,7 +3496,7 @@
 				F4D808B420E0838E0084D024 /* UIImage+ZXHelper.m in Sources */,
 				F446A97F1FCC082900C82C90 /* ZXOverlay.m in Sources */,
 				F4C918A720063AF300D3E158 /* NSObject+ZXRuntime.m in Sources */,
-				F42E7F42215F7C2800AAD913 /* ZXPopoverBackgroundView.m in Sources */,
+				F42E7F42215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m in Sources */,
 				F446A9701FCC082900C82C90 /* ZXPinyinConverter.m in Sources */,
 				F4EF35081FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m in Sources */,
 				F4374B5D1E0A6C8400081502 /* LoginViewController.m in Sources */,
@@ -3575,7 +3548,6 @@
 				F44DAED51DC8D188000D9311 /* UMSocialShareScrollView.m in Sources */,
 				F446A9A61FCC082A00C82C90 /* UploadGrowOperation.m in Sources */,
 				F446A9881FCC082A00C82C90 /* ZXInfiniteScrollView.m in Sources */,
-				F49E199F1DF1875900676396 /* FourViewController.m in Sources */,
 				F43E6E0820BCEB0A00D2E05D /* ZXImagePickerVCManager.m in Sources */,
 				F425A289214B541B00C6F724 /* UIViewController+XMNavBarCustom.m in Sources */,
 				F49E194D1DF1863000676396 /* AppAPIHelper.m in Sources */,
@@ -3593,6 +3565,7 @@
 				F446A9621FCC082900C82C90 /* EGORefreshTableHeaderView.m in Sources */,
 				F4361D7B2109982F00A5C22F /* BaseHttpAPI.m in Sources */,
 				F49CFD321FDE5C8D009F2213 /* FSActionSheet.m in Sources */,
+				F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */,
 				F4361DB121099CE900A5C22F /* ZXMenuIconCell.m in Sources */,
 				F4C9189F200622BD00D3E158 /* ZXCenterTitleView.m in Sources */,
 				F49CFD2A1FDE5C8D009F2213 /* XLProgressView.m in Sources */,
@@ -3657,7 +3630,6 @@
 				F4DF1130212E8E5C0072650A /* UINavigationController+ZXKuGouInteractivePopGestureRecognizer.m in Sources */,
 				F4A0FA0C214215BA0053B1E8 /* MBProgressHUD+ZXExtension.m in Sources */,
 				F4BA074920A067F700454095 /* ZXLocation.m in Sources */,
-				F49E19A01DF1875900676396 /* CategoryHomeController.m in Sources */,
 				F466A96621549AC5007143A1 /* ZXModalTransitionDelegate.m in Sources */,
 				F4ACE1B31F4FDE6D006FC573 /* TemplateListCell.m in Sources */,
 				F4A732982074DDB500E405A8 /* ZXTitleView.m in Sources */,

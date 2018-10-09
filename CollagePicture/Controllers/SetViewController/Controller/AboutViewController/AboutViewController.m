@@ -13,7 +13,7 @@
 
 @interface AboutViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property(nonatomic,strong)NSArray *dataArray;
+@property (nonatomic, strong) NSArray *dataArray;
 @property (nonatomic, strong) YWFeedbackKit *feedbackKit;
 
 @end
@@ -22,7 +22,7 @@
 
 static NSString *const XTableViewCellIdentifier = @"Cell";
 static NSString * const kFeedbackAppKey = @"23557047";
-static NSString * const kFeedbackAppSecret = @"******";
+static NSString * const kFeedbackAppSecret = @"bf08c742e1baba2c11df06219282a2a3";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
