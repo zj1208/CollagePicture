@@ -1,5 +1,5 @@
 //
-//  CALayer+ZXTransitionAnimation.h
+//  CALayer+ZXCATransition.h
 //  YiShangbao
 //
 //  Created by simon on 2018/8/13.
@@ -10,11 +10,13 @@
 //  首先要在framework中引入QuatrtzCore.framework,在头文件中需要
 //  #import <QuartzCore/QuartzCore.h>
 
+//  2018.10.30  优化程序，添加注释
+
 #import <QuartzCore/QuartzCore.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CALayer (ZXTransitionAnimation)
+@interface CALayer (ZXCATransition)<CAAnimationDelegate>
 
 
 
@@ -64,7 +66,7 @@ NS_ASSUME_NONNULL_END
   [htmlVc loadWebPageWithURLString:url];
   htmlVc.hidesBottomBarWhenPushed = YES;
   [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
-  [self.navigationController pushViewController:htmlVc animated:NO]
+ [self.navigationController pushViewController:htmlVc animated:NO];
   
 
 （2）modal模态转场：

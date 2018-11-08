@@ -28,10 +28,11 @@ static inline BOOL af_addMethod(Class theClass, SEL selector, Method method) {
 
 @interface NSObject (ZXRuntime)
 
-+ (void)exchangeInstanceMethod1:(SEL)method1 method2:(SEL)method2;
+//交换二个实例方法的IMP（方法实现）
++ (void)zx_exchangeInstanceMethod1:(SEL)selector method2:(SEL)otherSelector;
 
-
-+ (void)exchangeClassMethod1:(SEL)method1 method2:(SEL)method2;
+//交换二个类方法的IMP（方法实现）
++ (void)zx_exchangeClassMethod1:(SEL)selector method2:(SEL)otherSelector;
 
 @end
 

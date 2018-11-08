@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_END
 //转场管理器
 - (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source
 {
-    ZXPresentaionController *presentation =  [[ZXPresentaionController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
+    ZXModalPresentaionController *presentation =  [[ZXModalPresentaionController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
     presentation.frameOfPresentedView = CGRectMake(0, LCDH-300, LCDW, 300);
     return presentation;
 }

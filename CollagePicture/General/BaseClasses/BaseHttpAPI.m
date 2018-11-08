@@ -396,31 +396,35 @@ NSInteger const kAPPErrorCode_Token = 5001;
 - (void)postRequest:(NSString *)path parameters:(id)parameters
 constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
            progress:(void (^)(NSProgress *uploadProgress))uploadProgress
-            success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
-            failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
+            success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
-    //    NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    //    postDictionary =[self addRequestPostData:postDictionary];
-    //    //    用于添加更多参数
-    //    ZX_NSLog_HTTPURL(kAPP_BaseURL, path, postDictionary);
-    //    NSURL *baseURL = [NSURL URLWithString:kAPP_BaseURL];
-    //
-    //    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
-    //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    //
-    //    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-    //    manager.requestSerializer.timeoutInterval =60.f;
-    //    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-    //
-    //    [manager POST:path parameters:postDictionary constructingBodyWithBlock:block progress:uploadProgress success:success failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-    //
-    //        if (failure)
-    //        {
-    //            error = [self getErrorFromError:error];
-    //            failure(task,error);
-    //        }
-    //
-    //    }];
+    NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    postDictionary =[self addRequestPostData:postDictionary apiName:path];
+    //    用于添加更多参数
+    NSString *kBaseURL =[WYUserDefaultManager getkAPP_BaseURL];
+    NSURL *baseURL = [NSURL URLWithString:kBaseURL];
+    //    用于添加更多参数
+    ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    
+    [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
+    manager.requestSerializer.timeoutInterval =10.f;
+    [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+    WS(weakSelf);
+    [manager POST:@"/m" parameters:postDictionary constructingBodyWithBlock:block progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [weakSelf requestSuccessDealWithResponseObeject:responseObject success:success failure:failure];
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (failure)
+        {
+            error = [self getErrorFromError:error];
+            failure(error);
+        }
+    }];
 }
 
 //dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
