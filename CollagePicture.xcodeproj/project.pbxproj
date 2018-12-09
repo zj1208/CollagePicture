@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		20B72D866FA5EC63817C0FE7 /* libPods-CollagePicture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5662408ACF5CCAEC62AADB /* libPods-CollagePicture.a */; };
-		A55A8D1B1F05FB81009ADCE9 /* UIView+UIViewCategoty.m in Sources */ = {isa = PBXBuildFile; fileRef = A55A8D1A1F05FB81009ADCE9 /* UIView+UIViewCategoty.m */; };
 		A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AA2F181F04E9CE00A49A1E /* Lottery.storyboard */; };
 		F40228D91EF293E600E3D07E /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F40228D61EF293E600E3D07E /* jpush-ios-2.2.0.a */; };
 		F40228DA1EF293E600E3D07E /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = F40228D81EF293E600E3D07E /* sound.caf */; };
@@ -388,8 +387,6 @@
 		4D5662408ACF5CCAEC62AADB /* libPods-CollagePicture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollagePicture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72325D5ACA75F5B1FAD0340F /* Pods-CollagePicture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollagePicture.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollagePicture/Pods-CollagePicture.release.xcconfig"; sourceTree = "<group>"; };
 		95B7574EC0BB9FEAB5E48F09 /* Pods-CollagePicture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollagePicture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollagePicture/Pods-CollagePicture.debug.xcconfig"; sourceTree = "<group>"; };
-		A55A8D191F05FB81009ADCE9 /* UIView+UIViewCategoty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+UIViewCategoty.h"; path = "CollagePicture/Sections/Homepage/LotteryInfo/View/UIView+UIViewCategoty.h"; sourceTree = SOURCE_ROOT; };
-		A55A8D1A1F05FB81009ADCE9 /* UIView+UIViewCategoty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+UIViewCategoty.m"; path = "CollagePicture/Sections/Homepage/LotteryInfo/View/UIView+UIViewCategoty.m"; sourceTree = SOURCE_ROOT; };
 		A5AA2F181F04E9CE00A49A1E /* Lottery.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Lottery.storyboard; sourceTree = "<group>"; };
 		F40228D61EF293E600E3D07E /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
 		F40228D71EF293E600E3D07E /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -2250,19 +2247,9 @@
 				F4361D652109982E00A5C22F /* BaseClasses */,
 				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4EF35021FF5D7EB00CCD088 /* AliOSSUploadManager */,
-				F461826E1D813BCB0015BC84 /* Category */,
 				F46182761D813BCB0015BC84 /* Protocol */,
 			);
 			path = General;
-			sourceTree = "<group>";
-		};
-		F461826E1D813BCB0015BC84 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				A55A8D191F05FB81009ADCE9 /* UIView+UIViewCategoty.h */,
-				A55A8D1A1F05FB81009ADCE9 /* UIView+UIViewCategoty.m */,
-			);
-			path = Category;
 			sourceTree = "<group>";
 		};
 		F461826F1D813BCB0015BC84 /* HttpAPI */ = {
@@ -3049,33 +3036,9 @@
 			children = (
 				F4F38B361EA6492C007606F9 /* MyCenterController.h */,
 				F4F38B371EA6492C007606F9 /* MyCenterController.m */,
-				F4F38B381EA6492C007606F9 /* ProductInfoController */,
-				F4F38B3A1EA6492C007606F9 /* ProductListController */,
 				F4F38B3B1EA6492C007606F9 /* TemplateMake */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		F4F38B381EA6492C007606F9 /* ProductInfoController */ = {
-			isa = PBXGroup;
-			children = (
-				F4F38B391EA6492C007606F9 /* View */,
-			);
-			path = ProductInfoController;
-			sourceTree = "<group>";
-		};
-		F4F38B391EA6492C007606F9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		F4F38B3A1EA6492C007606F9 /* ProductListController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ProductListController;
 			sourceTree = "<group>";
 		};
 		F4F38B3B1EA6492C007606F9 /* TemplateMake */ = {
@@ -3453,7 +3416,6 @@
 				F4361DFE2109A5D500A5C22F /* NSString+ZXEntension.m in Sources */,
 				F4A7329D2074DDCC00E405A8 /* ZXActionAdditionalTitleView.m in Sources */,
 				F4D8087520E0809D0084D024 /* ZXPhotosView.m in Sources */,
-				A55A8D1B1F05FB81009ADCE9 /* UIView+UIViewCategoty.m in Sources */,
 				F4DAC4F0203032D9000428DF /* ZXMenuIconModel.m in Sources */,
 				F456B75A20A5A58D0092A7B2 /* ZXImgIcons.m in Sources */,
 				F446A9491FCC082900C82C90 /* UIImage+ZXGIF.m in Sources */,

@@ -172,19 +172,7 @@
     // Do any additional setup after loading the view.
     //初始化数据
     [self initData];
-    
-    [self.previousPageBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
-    [self.nextPageBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
-    [self.againMakingBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
-    
-    //设置左边返回按钮
-    [self addLeftBarButtonItem];
-    
-    //添加主视图
-    [self addMainView];
-    
-    //添加数量按钮
-    [self addNumBtn];
+    [self setUI];
 
     //初始化添加子试图
     [self resetViewByStyleIndex:[self.templateType integerValue]];
@@ -216,50 +204,66 @@
   
 }
 
+- (void)setUI
+{
+    [self.previousPageBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
+    [self.nextPageBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
+    [self.againMakingBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
+    
+    //设置左边返回按钮
+    [self addLeftBarButtonItem];
+    
+    //添加主视图
+    [self.view.layer addSublayer:self.maskLayer];
+
+    //添加数量按钮
+    [self.view addSubview:self.numBtn];
+}
 
 //设置左边返回按钮
 - (void)addLeftBarButtonItem
 {
     UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image landscapeImagePhone:image style:UIBarButtonItemStyleDone target:self action:@selector(customBackAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image landscapeImagePhone:image style:UIBarButtonItemStyleDone target:self action:@selector(customBackAction:)];
 }
 
 
-//添加主视图
-- (void)addMainView
+- (CALayer *)maskLayer
 {
-    CALayer *maskLayer = [[CALayer alloc] init];
-    //    maskLayer.bounds = CGRectMake(0, 0, LCDW-2*5, LCDH-40);
-    //    maskLayer.position = CGPointMake(5, 0);
-    //    maskLayer.anchorPoint = CGPointZero;
-    maskLayer.contentsGravity = kCAGravityResize;
-    //    maskLayer.frame = CGRectMake(5, 0, LCDW-2*5, LCDH-40);
-    //    maskLayer.delegate = self;
-    [self.view.layer addSublayer:maskLayer];
-    self.maskLayer = maskLayer;
-
+    if (!_maskLayer) {
+        
+        CALayer *maskLayer = [[CALayer alloc] init];
+        //    maskLayer.bounds = CGRectMake(0, 0, LCDW-2*5, LCDH-40);
+        //    maskLayer.position = CGPointMake(5, 0);
+        //    maskLayer.anchorPoint = CGPointZero;
+        maskLayer.contentsGravity = kCAGravityResize;
+        //    maskLayer.frame = CGRectMake(5, 0, LCDW-2*5, LCDH-40);
+        //    maskLayer.delegate = self;
+        _maskLayer = maskLayer;
+    }
+    return _maskLayer;
 }
 
-
-//添加数量按钮
-- (void)addNumBtn
+- (UIButton *)numBtn
 {
-    self.numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.numBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.numBtn setBackgroundImage:[UIImage imageNamed:@"s_titleBg"] forState:UIControlStateNormal];
-     [self.numBtn setTitle:[NSString stringWithFormat:@"1/%@",self.pageCount] forState:UIControlStateNormal];
-    [self.view addSubview:self.numBtn];
-   
-
-    [self.numBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(self.view.mas_top).with.offset(5);
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(60);
-        
-    }];
-  
+    if (!_numBtn)
+    {
+        UIButton  *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        numBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [numBtn setBackgroundImage:[UIImage imageNamed:@"s_titleBg"] forState:UIControlStateNormal];
+        [numBtn setTitle:[NSString stringWithFormat:@"1/%@",self.pageCount] forState:UIControlStateNormal];
+        [numBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.top.equalTo(self.view.mas_top).with.offset(5);
+            make.centerX.equalTo(self.view.mas_centerX);
+            make.width.mas_equalTo(60);
+            
+        }];
+        _numBtn = numBtn;
+    }
+    return _numBtn;
 }
+
 #pragma mark - MorePickerController
 - (void)addMorePickerController
 {

@@ -45,17 +45,28 @@ static NSInteger IndexSection_Set =1;
     [self setUpData];
     [self requestMyInfomation];
     
+    [self zx_testData];
+    
 //    //观察者对象
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserInfo:) name:kNotificationUpdateUserInfo object:nil];
     
 }
 
-#pragma mark - 新功能引导
-//第一步
-- (void)newFunctionGuideOfNextStep:(id)noti
+- (void)zx_testData
 {
-    [self checkAppVersionAndNotificationPush];
+    static NSInteger num = 1;
+    NSInteger (^getFull)(NSInteger var) = ^(NSInteger var){
+        num = 3;
+        return num +var;
+    };
+    // Try changing the non-local variable (it won't change the block)
+    num = 2;
+    NSLog(@"%ld",(long)getFull(3));
 }
+
+#pragma mark - 新功能引导
+
+//第一步
 - (void)lauchFirstNewFunction
 {
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFunctionGuideOfNextStep:) name:@"NewFunctionGuide_ShopHomeV1_Dismiss" object:nil];
@@ -67,6 +78,13 @@ static NSInteger IndexSection_Set =1;
 //        [self.tabBarController.view addSubview:vc.view];
 //    }
 }
+
+- (void)newFunctionGuideOfNextStep:(id)noti
+{
+    [self checkAppVersionAndNotificationPush];
+}
+
+#pragma mark -
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -398,10 +416,7 @@ static NSInteger IndexSection_Set =1;
     {
         BOOL pushed;
 //        BOOL pushed = [[WYUtility dataUtil]routerWithName:[WYUserDefaultManager getDidFinishLaunchRemoteNoti] withSoureController:self];
-        if (!pushed)
-        {
-            [self checkAppVersion];
-        }
+
     }
     else{
         

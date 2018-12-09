@@ -262,9 +262,9 @@
                                 failure:(nullable ZXImageUploadFailureBlock)failure;
 
 {
-    _failuerBlock = [failure copy];
-    _uploadProgress = [progressBlock copy];
-    _singleCompletedBlock = [signleCompleteBlock copy];
+    self.failuerBlock = failure;
+    self.uploadProgress = progressBlock;
+    self.singleCompletedBlock = signleCompleteBlock;
     
     // 对象由元信息（Object Meta），用户数据（Data）和文件名（Key）组成；由存储空间内部唯一的 Key 来标识。对象元信息是一个键值对，表示了对象的一些属性，比如最后修改时间、大小等信息，同时用户也可以在元信息中存储一些自定义的信息。
     OSSPutObjectRequest *put = [OSSPutObjectRequest new];

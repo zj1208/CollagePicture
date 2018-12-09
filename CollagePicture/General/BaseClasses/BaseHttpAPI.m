@@ -341,12 +341,12 @@ NSInteger const kAPPErrorCode_Token = 5001;
 
     NSArray *keysArray = @[@"api",HEAD_API_VERSION,HEAD_TTID,@"data",HEAD_AUTHTOKEN,HEAD_TS,HEAD_DID,HEAD_LNG,HEAD_LAT];
     
-    [dicParam setValue:[BaseHttpAPI MD5stringWithDict:dicParam sortKeyArray:keysArray] forKey:@"sign"];
+    [dicParam setValue:[BaseHttpAPI md5StringWithDict:dicParam sortKeyArray:keysArray] forKey:@"sign"];
     
     return dicParam;
 }
 
-+ (NSString *)MD5stringWithDict:(NSDictionary*)dict sortKeyArray:(NSArray *)sortKeys{
++ (NSString *)md5StringWithDict:(NSDictionary*)dict sortKeyArray:(NSArray *)sortKeys{
     
     __block NSString *str = @"";
     [sortKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -375,7 +375,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
     NSString *ttid = [NSString stringWithFormat:@"%@_ysb@iphone",app_Version];
     return ttid;
 }
-//获取当前时间戳
+//获取当前时间戳-毫秒
 + (NSString *)getCurrentDatetime {
     UInt64 recordTime = [[NSDate date] timeIntervalSince1970]*1000;
     NSString *date = [NSString stringWithFormat:@"%llu",recordTime];
