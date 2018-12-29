@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TemplateListController : UICollectionViewController
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *testBarItem;
 
-- (IBAction)shareTestAction:(UIBarButtonItem *)sender;
 @end

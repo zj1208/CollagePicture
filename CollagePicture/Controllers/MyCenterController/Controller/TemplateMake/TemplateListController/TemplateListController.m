@@ -9,12 +9,18 @@
 #import "TemplateListController.h"
 #import <BmobSDK/Bmob.h>
 #import "TemplateListCell.h"
-@interface TemplateListController ()<UICollectionViewDelegateFlowLayout>
+#import "ZXEmptyViewController.h"
 
-@property(nonatomic,strong)NSMutableArray *dataMArray;
+@interface TemplateListController ()<UICollectionViewDelegateFlowLayout,ZXEmptyViewControllerDelegate>
 
-@property(nonatomic)NSInteger pageNo;
-@property (nonatomic)UILocalNotification *notification;
+@property (nonatomic, strong) NSMutableArray *dataMArray;
+
+@property (nonatomic) NSInteger pageNo;
+
+@property (nonatomic, strong) ZXEmptyViewController *emptyViewController;
+
+@property (nonatomic) UILocalNotification *notification;
+
 @end
 
 @implementation TemplateListController
@@ -29,23 +35,28 @@ static NSString * const reuseIdentifier = @"Cell";
     // Uncomment the following line to preserve selection between presentations
      self.clearsSelectionOnViewWillAppear = NO;
 //    self.testBarItem.enabled = NO;
-    // Register cell classes
-//    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    self.dataMArray = [NSMutableArray array];
-    
-
-    // Do any additional setup after loading the view.
-    [self headerRefresh];
-    
-
 //    ZX_NSLog_ClassAllPropertyAndValue(self.collectionView);
     ZX_NSLog_ClassMethodListName(self);
     
+    [self setUI];
+    [self setData];
 }
 
 
+- (void)setUI
+{
+    ZXEmptyViewController *emptyVC =[[ZXEmptyViewController alloc] init];
+    emptyVC.delegate = self;
+    self.emptyViewController = emptyVC;
+}
 
+- (void)setData
+{
+    self.dataMArray = [NSMutableArray array];
+    
+    [self headerRefresh];
+    [self.collectionView.mj_header beginRefreshing];
+}
 #pragma mark - 下拉刷新/上拉加载更多
 /**
  *  下拉刷新
@@ -55,47 +66,55 @@ static NSString * const reuseIdentifier = @"Cell";
     WS(weakSelf);
     
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
-        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
-//        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
-        bquery1.limit = kHTTP_minPageSize;
-        [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-            
-            //失败的时候不在主线程返回
-            NSLog(@"%@",[NSThread currentThread]);
-            if (error)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                   
-                    [weakSelf.collectionView.mj_header endRefreshing];
-                    [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
-                });
-              
-            }
-            else
-            {
-                [self.dataMArray removeAllObjects];
-                [self.dataMArray addObjectsFromArray:array];
-                NSLog(@"bmobArray:%@",array);
-                [self.collectionView reloadData];
-                
-                _pageNo = 1;
-                [weakSelf.collectionView.mj_header endRefreshing];
-                [weakSelf.collectionView.mj_footer endRefreshing];
-                
-                [weakSelf footerWithRefreshing];
-                if ([array count]<kHTTP_minPageSize)
-                {
-                    [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
-                }
-
-            }
-        }];
    
+        [weakSelf requestHeaderData];
     }];
-    [self.collectionView.mj_header beginRefreshing];
-  
 }
+
+- (void)requestHeaderData
+{
+    WS(weakSelf);
+    BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
+    //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
+    bquery1.limit = kHTTP_minPageSize;
+    [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        
+        //失败的时候不在主线程返回
+        NSLog(@"%@",[NSThread currentThread]);
+        if (error)
+        {
+            [weakSelf.collectionView.mj_header endRefreshing];
+            [weakSelf.emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+            
+        }
+        else
+        {
+            [weakSelf.dataMArray removeAllObjects];
+            [weakSelf.dataMArray addObjectsFromArray:array];
+            NSLog(@"bmobArray:%@",array);
+            
+            [weakSelf.emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:nil emptyImage:[UIImage imageNamed:@"粉丝"] emptyTitle:@"粉丝多了以后好处可多了！\n 你可以拿给别人炫耀有这么多粉丝啊，\n去分享你的名片让别人关注即可成为你的粉丝" updateBtnHide:YES];
+            [weakSelf.collectionView reloadData];
+            
+            weakSelf.pageNo = 1;
+            [weakSelf.collectionView.mj_header endRefreshing];
+            [weakSelf.collectionView.mj_footer endRefreshing];
+            
+            [weakSelf footerWithRefreshing];
+            if ([array count]<kHTTP_minPageSize)
+            {
+                [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
+            }
+            
+        }
+    }];
+}
+
+- (void)zxEmptyViewUpdateAction
+{
+    [self.collectionView.mj_header beginRefreshing];
+}
+
 - (void)footerWithRefreshing
 {
     if (self.dataMArray.count==0)
@@ -109,42 +128,40 @@ static NSString * const reuseIdentifier = @"Cell";
     WS(weakSelf);
     self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         
-        NSLog(@"%@",@(_pageNo));
+        [weakSelf requestFooterData];
+    }];
+}
+
+- (void)requestFooterData
+{
+    NSLog(@"%@",@(_pageNo));
+    WS(weakSelf);
+    BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
+    //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
+    bquery1.limit = kHTTP_minPageSize;
+    bquery1.skip = kHTTP_minPageSize*_pageNo;
+    [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         
-        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
-        //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
-        bquery1.limit = kHTTP_minPageSize;
-        bquery1.skip = kHTTP_minPageSize*_pageNo;
-        [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+        //失败的时候不在主线程返回
+        NSLog(@"%@",[NSThread currentThread]);
+        if (error)
+        {
+            [weakSelf.collectionView.mj_footer endRefreshing];
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
+        }
+        else
+        {
+            [self.dataMArray addObjectsFromArray:array];
+            NSLog(@"bmobArray:%@",array);
+            [self.collectionView reloadData];
+            [weakSelf.collectionView.mj_footer endRefreshing];
             
-            //失败的时候不在主线程返回
-            NSLog(@"%@",[NSThread currentThread]);
-            if (error)
+            _pageNo ++;
+            if ([array count]<kHTTP_minPageSize)
             {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    [weakSelf.collectionView.mj_footer endRefreshing];
-                    [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
-                });
-                
+                [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
             }
-            else
-            {
-                [self.dataMArray addObjectsFromArray:array];
-                NSLog(@"bmobArray:%@",array);
-                [self.collectionView reloadData];
-                [weakSelf.collectionView.mj_footer endRefreshing];
-                
-                _pageNo ++;
-                if ([array count]<kHTTP_minPageSize)
-                {
-                    [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
-                }
-
-            }
-        }];
-
-        
+        }
     }];
 }
 
@@ -161,14 +178,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark - <UICollectionViewDataSource>
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
     return 1;
 }
 
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return self.dataMArray.count;
 }
 
@@ -182,8 +199,6 @@ static NSString * const reuseIdentifier = @"Cell";
         
         [cell setData:model];
     }
-
-
     return cell;
 }
 
