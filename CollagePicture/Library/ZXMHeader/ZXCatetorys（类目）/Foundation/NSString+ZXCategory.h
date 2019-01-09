@@ -1,5 +1,5 @@
 //
-//  NSString+ZXEntension.h
+//  NSString+ZXCategory.h
 //  
 //
 //  Created by simon on 15/11/17.

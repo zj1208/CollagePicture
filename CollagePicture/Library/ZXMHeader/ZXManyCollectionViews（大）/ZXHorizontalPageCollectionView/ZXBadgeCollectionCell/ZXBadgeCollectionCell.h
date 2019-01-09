@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BadgeMarkItemModel.h"
-#import "UILabel+ZXExtension.h"
+#import "UILabel+ZXCategory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

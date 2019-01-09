@@ -1,5 +1,5 @@
 //
-//  NSAttributedString+ZXExtension.h
+//  NSAttributedString+ZXCategory.h
 //  YiShangbao
 //
 //  Created by simon on 2018/6/25.
@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSAttributedString (ZXExtension)
+@interface NSAttributedString (ZXCategory)
 
 
 

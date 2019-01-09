@@ -1,19 +1,19 @@
 //
-//  MBProgressHUD+ZXExtension.m
+//  MBProgressHUD+ZXCategory.m
 //  YiShangbao
 //
 //  Created by simon on 17/6/22.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "MBProgressHUD+ZXExtension.h"
+#import "MBProgressHUD+ZXCategory.h"
 #import "UIImage+ZXGIF.h"
 
 #ifndef UIColorFromRGB_HexValue
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
 #endif
 
-@implementation MBProgressHUD (ZXExtension)
+@implementation MBProgressHUD (ZXCategory)
 
 
 + (void)zx_showLoadingWithStatus:(nullable NSString *)aText toView:(nullable UIView *)view

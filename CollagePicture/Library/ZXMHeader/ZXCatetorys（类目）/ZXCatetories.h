@@ -5,16 +5,17 @@
 //  Created by 朱新明 on 16/11/17.
 //  Copyright © 2016年 simon. All rights reserved.
 //
+//  2019.1.7  修改类目名，基本不用延展/扩展的
 
 #ifndef ZXCatetories_h
 #define ZXCatetories_h
 
-#import "NSAttributedString+ZXExtension.h"
-#import "NSFileManager+ZXExtension.h"
-#import "NSData+ZXExtension.h"
+#import "NSAttributedString+ZXCategory.h"
+#import "NSFileManager+ZXCategory.h"
+#import "NSData+ZXCategory.h"
 #import "NSObject+ZXRuntime.h"
 
-#import "NSString+ZXEntension.h"
+#import "NSString+ZXCategory.h"
 #import "NSString+ZXHTMLString.h"
 
 #import "NSURLComponents+ZXCategory.h"
@@ -22,7 +23,7 @@
 #import "NSURL+ZXCategory.h"
 #import "NSURL+ZXAppLinks.h"
 
-#import "UIAlertController+ZXExtension.h"
+#import "UIAlertController+ZXCategory.h"
 #import "UIButton+ZXHelper.h"
 #import "UIColor+ZXHex.h"
 #import "UIControl+ZXFastClick.h"
@@ -30,7 +31,7 @@
 #import "UIImage+ZXGIF.h"
 #import "UIImage+ZXHelper.h"
 
-#import "UILabel+ZXExtension.h"
+#import "UILabel+ZXCategory.h"
 #import "UINavigationItem+ZXSpace.h"
 #import "UINavigationBar+ShadeColor.h"
 
@@ -50,6 +51,6 @@
 
 
 
-#import "MBProgressHUD+ZXExtension.h"
+#import "MBProgressHUD+ZXCategory.h"
 
 #endif /* ZXCatetories_h */

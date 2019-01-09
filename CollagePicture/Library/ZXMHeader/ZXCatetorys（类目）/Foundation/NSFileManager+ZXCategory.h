@@ -1,5 +1,5 @@
 //
-//  NSFileManager+ZXExtension.h
+//  NSFileManager+ZXCategory.h
 //  YiShangbao
 //
 //  Created by simon on 2018/1/9.
@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSFileManager (ZXExtension)
+@interface NSFileManager (ZXCategory)
 
 
 #pragma mark-计算缓存图片大小-如SDWebImage下的

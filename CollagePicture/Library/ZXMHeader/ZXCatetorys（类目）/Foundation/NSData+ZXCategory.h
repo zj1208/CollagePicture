@@ -1,5 +1,5 @@
 //
-//  NSData+ZXExtension.h
+//  NSData+ZXCategory.h
 //  YiShangbao
 //
 //  Created by simon on 2018/7/11.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSData (ZXExtension)
+@interface NSData (ZXCategory)
 
 - (NSString *)zhMD5String;
 

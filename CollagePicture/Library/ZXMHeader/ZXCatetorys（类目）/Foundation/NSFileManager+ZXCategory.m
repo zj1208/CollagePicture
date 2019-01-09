@@ -1,14 +1,14 @@
 //
-//  NSFileManager+ZXExtension.m
+//  NSFileManager+ZXCategory.m
 //  YiShangbao
 //
 //  Created by simon on 2018/1/9.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 
-#import "NSFileManager+ZXExtension.h"
+#import "NSFileManager+ZXCategory.h"
 
-@implementation NSFileManager (ZXExtension)
+@implementation NSFileManager (ZXCategory)
 
 
 #pragma mark-计算缓存图片大小-如SDWebImage下的

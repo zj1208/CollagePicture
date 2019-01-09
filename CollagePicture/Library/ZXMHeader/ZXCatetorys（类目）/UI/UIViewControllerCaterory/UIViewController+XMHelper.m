@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+XMHelper.h"
-#import "MBProgressHUD+ZXExtension.h"
+#import "MBProgressHUD+ZXCategory.h"
 
 
 //iTunesLink 链接－－iTunesLink＋appID，ios6以后有直接跳转appStore的item应用Controller页面

@@ -1,12 +1,12 @@
 //
-//  NSString+ZXEntension.m
+//  NSString+ZXCategory.m
 //  wqk8
 //
 //  Created by simon on 15/11/17.
 //  Copyright © 2015年 mac. All rights reserved.
 //
 
-#import "NSString+ZXEntension.h"
+#import "NSString+ZXCategory.h"
 
 #import <CommonCrypto/CommonDigest.h>
 

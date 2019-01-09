@@ -1,14 +1,14 @@
 //
-//  NSAttributedString+ZXExtension.m
+//  NSAttributedString+ZXCategory.m
 //  YiShangbao
 //
 //  Created by simon on 2018/6/25.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 
-#import "NSAttributedString+ZXExtension.h"
+#import "NSAttributedString+ZXCategory.h"
 
-@implementation NSAttributedString (ZXExtension)
+@implementation NSAttributedString (ZXCategory)
 
 - (NSAttributedString *)addLineSpace:(float)lineSpace
 {

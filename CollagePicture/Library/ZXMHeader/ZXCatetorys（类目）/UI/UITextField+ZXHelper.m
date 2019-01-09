@@ -8,7 +8,7 @@
 
 
 #import "UITextField+ZXHelper.h"
-#import "NSString+ZXEntension.h"
+#import "NSString+ZXCategory.h"
 
 @implementation UITextField (ZXHelper)
 

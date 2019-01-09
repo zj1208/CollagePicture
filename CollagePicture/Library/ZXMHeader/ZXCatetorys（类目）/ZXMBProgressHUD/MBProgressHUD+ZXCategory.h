@@ -1,5 +1,5 @@
 //
-//  MBProgressHUD+ZXExtension.h
+//  MBProgressHUD+ZXCategory.h
 //  YiShangbao
 //
 //  Created by simon on 17/6/22.
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 当业务遇到“上传”，“正在干什么”等，要在window上提示；
 // 当在UITabelViewController，UICollectionViewController，也要在window上提示；
 
-@interface MBProgressHUD (ZXExtension)
+@interface MBProgressHUD (ZXCategory)
 
 
 

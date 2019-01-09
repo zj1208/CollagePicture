@@ -1,5 +1,5 @@
 //
-//  UIAlertController+ZXExtension.h
+//  UIAlertController+ZXCategory.h
 //  YiShangbao
 //
 //  Created by simon on 17/6/27.
@@ -33,7 +33,7 @@ typedef void (^UIAlertControllerPopoverPresentationControllerBlock) (UIPopoverPr
 typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex);
 
 
-@interface UIAlertController (ZXExtension)
+@interface UIAlertController (ZXCategory)
 
 
 #pragma mark - AlertControllerAlertStyle

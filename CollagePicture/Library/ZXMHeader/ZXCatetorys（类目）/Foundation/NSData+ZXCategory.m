@@ -1,15 +1,15 @@
 //
-//  NSData+ZXExtension.m
+//  NSData+ZXCategory.m
 //  YiShangbao
 //
 //  Created by simon on 2018/7/11.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 
-#import "NSData+ZXExtension.h"
+#import "NSData+ZXCategory.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@implementation NSData (ZXExtension)
+@implementation NSData (ZXCategory)
 
 - (NSString *)zhMD5String
 {

@@ -1,19 +1,19 @@
 //
-//  UIAlertController+ZXExtension.m
+//  UIAlertController+ZXCategory.m
 //  YiShangbao
 //
 //  Created by simon on 17/6/27.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "UIAlertController+ZXExtension.h"
+#import "UIAlertController+ZXCategory.h"
 
 
 static NSInteger const UIAlertControllerBlocksCancelButtonIndex = 0;
 static NSInteger const UIAlertControllerBlocksDestructiveButtonIndex = 1;
 static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 
-@implementation UIAlertController (ZXExtension)
+@implementation UIAlertController (ZXCategory)
 
 
 //+ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController

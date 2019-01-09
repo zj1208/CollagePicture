@@ -1,14 +1,14 @@
 //
-//  UILabel+ZXExtension.m
+//  UILabel+ZXCategory.m
 //  YiShangbao
 //
 //  Created by simon on 17/6/19.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "UILabel+ZXExtension.h"
+#import "UILabel+ZXCategory.h"
 
-@implementation UILabel (ZXExtension)
+@implementation UILabel (ZXCategory)
 -(void)jl_changeStringOfNumberStyle:(NSString *)text numberColor:(UIColor *)numColr numberFont:(UIFont *)font
 {
     NSString* str = nil;
