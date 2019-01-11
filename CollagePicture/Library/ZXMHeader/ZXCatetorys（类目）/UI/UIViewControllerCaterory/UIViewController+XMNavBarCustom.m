@@ -155,8 +155,8 @@
     {
         navigationController = self.navigationController;
     }
-    [navigationController.navigationBar setBackIndicatorImage:backImage];
-    [navigationController.navigationBar setBackIndicatorTransitionMaskImage:backImage];
+    navigationController.navigationBar.backIndicatorImage =backImage;
+    navigationController.navigationBar.backIndicatorTransitionMaskImage =backImage;
 }
 
 
@@ -292,7 +292,7 @@
     if (aShadowName)
     {
         UIImage *navLineImg = [UIImage imageNamed:aShadowName];
-        [[UINavigationBar appearance]setShadowImage:navLineImg];
+        [UINavigationBar appearance].shadowImage =navLineImg;
     }
 }
 

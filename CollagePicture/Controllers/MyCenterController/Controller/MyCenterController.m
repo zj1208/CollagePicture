@@ -49,6 +49,9 @@ static NSInteger IndexSection_Set =1;
     
 //    //观察者对象
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserInfo:) name:kNotificationUpdateUserInfo object:nil];
+    NSString *str = @"NSNotificationCenter defaultCenter \
+addObserver:self selector:@selector(updateUserInfo:) name:\
+    kNot22";
     
 }
 

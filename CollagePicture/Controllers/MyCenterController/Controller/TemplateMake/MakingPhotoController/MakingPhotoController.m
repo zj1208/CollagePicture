@@ -81,7 +81,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage alloc] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage alloc]];
+    self.navigationController.navigationBar.shadowImage =[UIImage new];
     OrientationNaController *nav = (OrientationNaController *)self.navigationController;
     [nav rotateToDirection:UIInterfaceOrientationLandscapeRight];
     [super viewWillAppear:animated];

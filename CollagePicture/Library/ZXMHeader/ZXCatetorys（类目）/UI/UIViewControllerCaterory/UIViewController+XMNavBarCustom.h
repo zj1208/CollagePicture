@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
 //
 //  9.12  弃用减小barButtonItem与屏幕的边距 偏门方法； 不但所有系统和屏幕无法统一间距，而且不符合逻辑，在iOS11上毫无效果，只是iOS11以前系统的一个bug而已；
+//  2019.1.10  添加例子
 
 #import <UIKit/UIKit.h>
 
@@ -223,3 +224,60 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+/*
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    [self initTabBar];
+    [self setApperanceForSigleNavController];
+    [self setApperanceForAllController];
+    
+    [self addNoticationCenter];
+    
+    [self requestNewFansAndVisitor];
+    [self updateMessageBadge:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:kNotificationUserLoginIn object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginOut:) name:kNotificationUserLoginOut object:nil];
+}
+#pragma mark-
+//设置基本数据：返回按钮，item文字颜色
+- (void)setApperanceForSigleNavController
+{
+    [self.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [obj xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+        [obj xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+        
+    }];
+}
+//设置基本数据：navigationBar的背景及title颜色/font大小
+- (void)setApperanceForAllController
+{
+    [UIViewController xm_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
+    
+    [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateHighlighted];
+    
+    
+    [UIViewController xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
+    
+    [[UIButton appearance]setExclusiveTouch:YES];
+
+}
+
+- (void)initTabBar
+{
+    NSArray *imgSelectArray = @[@"toolbar_shangpu_sel",@"toolbar_message_sel",@"toolbar_fuwu-sel",@"toolbar_myCenter_sel"];
+    NSArray *imgArray = @[@"toolbar_shangpu-nor",@"toolbar_message",@"toolbar_fuwu-nor",@"toolbar_myCenter_nor"];
+    
+    [self xm_tabBarController_tabBarItem_ImageArray:imgArray selectImages:imgSelectArray slectedItemTintColor:nil unselectedItemTintColor:nil];
+    self.tabBar.translucent = NO;
+    UIImage *tabImage = [UIImage zh_imageWithColor:UIColorFromRGB_HexValue(0xFAFAFA) andSize:self.tabBar.frame.size];
+    self.tabBar.backgroundImage = tabImage;
+    UIImage *shadowImage = [UIImage zh_imageWithColor:UIColorFromRGB_HexValue(0xD8D8D8) andSize:CGSizeMake(self.tabBar.frame.size.width, 0.5)];
+    self.tabBar.shadowImage = shadowImage;
+}
+*/

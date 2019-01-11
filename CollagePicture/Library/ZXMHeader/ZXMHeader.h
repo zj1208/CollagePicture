@@ -19,3 +19,7 @@
 
 
 // yicaibao 中 ZXManyCollectionViews的注释已删除
+
+
+// UIViewController+XMNavBarCustom.h 2019.1.10  添加例子
+// 修改所有shadowImage设置方法

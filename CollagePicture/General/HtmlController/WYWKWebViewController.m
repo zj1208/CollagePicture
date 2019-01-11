@@ -139,7 +139,7 @@ static NSString* const SixSpaces = @"      ";
     {
        self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    self.navigationController.navigationBar.shadowImage =[UIImage new];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -153,7 +153,7 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self.navigationController.navigationBar setShadowImage:nil];
+    self.navigationController.navigationBar.shadowImage =nil;
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -371,7 +371,7 @@ static NSString* const SixSpaces = @"      ";
                                      [_progressView setAlpha:0.0f];
                                  }completion:^(BOOL finished) {
                                      [_progressView setProgress:0.0f animated:NO];
-                                     [self.navigationController.navigationBar setShadowImage:nil];
+                                     self.navigationController.navigationBar.shadowImage =nil;
                                  }];
             }
         });
