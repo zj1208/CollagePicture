@@ -1,0 +1,6 @@
+framework module AFNetworking_Synchronous {
+  umbrella header "AFNetworking-Synchronous-umbrella.h"
+
+  export *
+  module * { export * }
+}

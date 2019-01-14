@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1FD80E102F2B6897286A9BD173416712'
-               BlueprintName = 'AliyunOSSiOS'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libAliyunOSSiOS.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6768AB6C928DA5F7D598499ACC501A60"
+               BlueprintName = "AliyunOSSiOS"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "AliyunOSSiOS.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

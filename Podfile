@@ -1,4 +1,8 @@
 platform:ios,8.0
+#忽略警告
+inhibit_all_warnings!
+#使用动态库，不用静态库加载，优化APP体积
+use_frameworks!
 
 #source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git'
 #source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecsMirror.git'

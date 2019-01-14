@@ -1,1 +1,0 @@
-../../../AFNetworking-Synchronous/3.x/AFHTTPSessionManager+Synchronous.h
