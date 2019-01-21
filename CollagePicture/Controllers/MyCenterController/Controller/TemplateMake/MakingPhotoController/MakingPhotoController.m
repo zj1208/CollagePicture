@@ -206,9 +206,9 @@
 
 - (void)setUI
 {
-    [self.previousPageBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
-    [self.nextPageBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
-    [self.againMakingBtn setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
+    [self.previousPageBtn zx_setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
+    [self.nextPageBtn zx_setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
+    [self.againMakingBtn zx_setCornerRadius:5.0f borderWidth:1.0f borderColor:[UIColor grayColor]];
     
     //设置左边返回按钮
     [self addLeftBarButtonItem];

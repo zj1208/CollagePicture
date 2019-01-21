@@ -8,7 +8,6 @@
 
 
 #import "UITextField+ZXHelper.h"
-#import "NSString+ZXCategory.h"
 
 @implementation UITextField (ZXHelper)
 
@@ -319,7 +318,13 @@ shouldChangeCharactersInRange:(NSRange)range
 
 + (nullable NSString *)zh_TextFieldPassword:(NSString *)str
 {
-    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:str];
+    NSString *password = nil;
+    NSCharacterSet *whitespaceLine = [NSCharacterSet  whitespaceAndNewlineCharacterSet];
+    NSRange spaceRange = [password rangeOfCharacterFromSet:whitespaceLine];
+    if (spaceRange.location != NSNotFound)
+    {
+        password = [password stringByTrimmingCharactersInSet:whitespaceLine];
+    }
     NSString *reTitle = nil;
     if (password.length==0)
     {

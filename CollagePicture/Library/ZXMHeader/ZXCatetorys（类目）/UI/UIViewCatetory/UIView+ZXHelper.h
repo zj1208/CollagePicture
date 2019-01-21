@@ -26,8 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @param borderColor  边框颜色；边框颜色默认是黑色的，如果传nil，则用clearColor赋值；
  */
 
-- (void)setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
-
 - (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
 
 //  直接设置半圆；

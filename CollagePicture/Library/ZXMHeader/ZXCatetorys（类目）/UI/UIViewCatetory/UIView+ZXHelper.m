@@ -38,13 +38,6 @@
 
 
 //设置圆角
-- (void)setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
-{
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = radius;
-    self.layer.borderWidth = width;
-    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
-}
 
 - (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
 {

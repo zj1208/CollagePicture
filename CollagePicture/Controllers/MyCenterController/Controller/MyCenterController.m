@@ -162,7 +162,7 @@ static NSInteger IndexSection_Set =1;
     self.nameBtn.hidden = YES;
     self.signatureLab.text = @"未填写";
     
-    [self.headBtn setCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
+    [self.headBtn zx_setCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
     [self.headBtn zh_setButtonImageViewScaleAspectFill];
     
     

@@ -20,7 +20,7 @@
 */
 - (void)setData:(id)data
 {
-    [self setCornerRadius:5 borderWidth:1 borderColor:[UIColor clearColor]];
+    [self zx_setCornerRadius:5 borderWidth:1 borderColor:[UIColor clearColor]];
     NSString *string = [data objectForKey:@"picUrl"];
     NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w828_hX relativeToImgPath:string];
       
