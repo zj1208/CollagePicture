@@ -1,5 +1,5 @@
 //
-//  UIViewController+XMNavBarCustom.h
+//  UIViewController+ZXNavBarCustom.h
 //  ShiChunTang
 //
 //  Created by zhuxinming on 14/11/1.
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIViewController (XMNavBarCustom)
+@interface UIViewController (ZXNavBarCustom)
 
 #pragma mark
 #pragma mark NavigationBar有关
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param imageName ： 自定义的图片名；
  */
 
--(void)xm_navigationItem_leftBarButtonItem_CustomView_imageName:(nullable NSString*)imageName highImageName:(nullable NSString *)imageName2 title:(nullable NSString *)backTitle action:(nullable SEL)action;
+-(void)zx_navigationItem_leftBarButtonItem_CustomView_imageName:(nullable NSString*)imageName highImageName:(nullable NSString *)imageName2 title:(nullable NSString *)backTitle action:(nullable SEL)action;
 
 # pragma mark - 减小left／rightBarButtonItem与屏幕的边距 - 弃用
 
@@ -38,16 +38,16 @@ NS_ASSUME_NONNULL_BEGIN
  * @param barButtonItems 原生的或者storyboard默认的系统barButtonItem数组
  * @return 返回一个添加了UIBarButtonSystemItemFixedSpace的items；
  * 例如： 控制item显示及边距：
-    self.navigationItem.leftBarButtonItems = [self xm_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:@[self.personCenterBarItem]];
+    self.navigationItem.leftBarButtonItems = [self zx_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:@[self.personCenterBarItem]];
 
  *
  */
-- (NSArray *)xm_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:(NSArray *)barButtonItems;
+- (NSArray *)zx_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:(NSArray *)barButtonItems;
 
 
 /**
  弃用：
- NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem]];
+ NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem]];
  self.navigationItem.leftBarButtonItems = items;
  文本按钮之系统初始化：-没有经过验证数字准确
  iOS11以前 边距 = 10
@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param barButtonItems barButtonItem数组
  @return 返回数组
  */
-- (NSArray *)xm_navigationItem_leftOrRightItemReducedSpaceToMagin:(CGFloat)magin withItems:(NSArray *)barButtonItems;
+- (NSArray *)zx_navigationItem_leftOrRightItemReducedSpaceToMagin:(CGFloat)magin withItems:(NSArray *)barButtonItems;
 
 
 #pragma mark - 设置UINavigationBar返回按钮的背景图／文字偏移
@@ -81,21 +81,21 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param aName         返回按钮图片
  *  @param highlightName 返回按钮高亮图片--没有效果 不懂？
  */
-- (void)xm_navigationBar_UIBarButtonItem_appearance_systemBack_BackgroundImage:(nullable NSString *)aName highlightImage:(nullable NSString *)highlightName;
+- (void)zx_navigationBar_UIBarButtonItem_appearance_systemBack_BackgroundImage:(nullable NSString *)aName highlightImage:(nullable NSString *)highlightName;
 
 
 /**
  设置返回按钮背景－测试使用；可以有效的观察到返回按钮的大小区域；
  */
-//- (void)xm_navigationBar_UIBarButtonItem_appearance_systemBack_background_Test;
+//- (void)zx_navigationBar_UIBarButtonItem_appearance_systemBack_background_Test;
 
 /**
  *  @brief set all navigationBar 's 系统返回按钮为没有文字； 把文字移至看不到; iOS11无法移出title，只能小范围运动一点距离；
  这个全局方法有缺点：虽然返回按钮文字向左移动到屏幕外了，但是按钮实际大小并没有改变，在计算这个barItem的宽度的时候，依然会以图片＋文字的宽度计算；甚至会影响中间标题；
- 需要调用xm_navigationItem_titleCenter方法解决返回按钮文本为空；按钮宽度也会变小；
+ 需要调用zx_navigationItem_titleCenter方法解决返回按钮文本为空；按钮宽度也会变小；
  *
  */
-+ (void)xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle;
++ (void)zx_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle;
 
 
 
@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param aName 返回图的name
  @param originalImage 是否原图颜色显示；
  */
-- (void)xm_navigationBar_Single_BackIndicatorImage:(nullable NSString *)aName isOriginalImage:(BOOL)originalImage;
+- (void)zx_navigationBar_Single_BackIndicatorImage:(nullable NSString *)aName isOriginalImage:(BOOL)originalImage;
 
 
 
@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  @brief set 一个navigationBar上UIBarButtonItem的文本颜色和按钮图片颜色;(只能设置系统按钮)
  */
-- (void)xm_navigationBar_tintColor:(UIColor *)tintColor;
+- (void)zx_navigationBar_tintColor:(UIColor *)tintColor;
 
 
 
@@ -129,12 +129,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  @brief 自定义系统下一个页面的返回按钮文字title,如果aTitle==nil,only arrow;
  *
  */
-- (void)xm_navigationItem_backBarButtonItem_title:(nullable NSString *)aTitle font:(NSInteger)aFont;
+- (void)zx_navigationItem_backBarButtonItem_title:(nullable NSString *)aTitle font:(NSInteger)aFont;
 
 /**
  解决当上个控制器页面的title文本太长，导致下一级的控制器title不居中问题；
  */
-- (void)xm_navigationItem_titleCenter;
+- (void)zx_navigationItem_titleCenter;
 
 
 # pragma mark - 其他
@@ -143,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief 自定义模态页面barButtonItem按钮，也是为了适应ios6和ios7兼容；默认自动加载了点击事件，加载dismissViewController；
  * @param flag ：YES＝ leftBarItem； NO＝ rightBarItem
  */
-- (void)xm_navigationBar_presentedViewController_leftOrRightBarItem:(BOOL)flag   title:(NSString *)aTitle;
+- (void)zx_navigationBar_presentedViewController_leftOrRightBarItem:(BOOL)flag   title:(NSString *)aTitle;
 
 - (void)modelLeftButtonClickHandler;
 
@@ -155,14 +155,14 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief set appearance With all navigationBar's background and 标题
  appearance方法不适用于 多个模块不同主题色的ui设计； 当遇到不同的时候，只能每个navigationController独立设置；
  */
-+ (void)xm_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
++ (void)zx_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
                                        ShadowImageName:(nullable NSString *)aShadowName
                                      orBackgroundColor:(nullable UIColor *)backgoundColor
                                             titleColor:(nullable UIColor *)aColor
                                              titleFont:(UIFont *)aFont;
 
 //每个navigationController有一个navigationBar，会影响某个navigationController上的所有barButtonItem的color;
-- (void)xm_navigationBar_barItemColor:(nullable UIColor *)tintColor;
+- (void)zx_navigationBar_barItemColor:(nullable UIColor *)tintColor;
 
 
 #pragma mark - 设置NavigationBar的透明度
@@ -172,9 +172,9 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param alpha navigationBar的子视图的透明度；
  */
-- (void)xm_navigationBar_BackgroundAlpah:(CGFloat)alpha;
+- (void)zx_navigationBar_BackgroundAlpah:(CGFloat)alpha;
 
-- (void)xm_navigationBar_BackgroundAlpah:(CGFloat)alpha navigationBar:(UINavigationBar *)navigationBar;
+- (void)zx_navigationBar_BackgroundAlpah:(CGFloat)alpha navigationBar:(UINavigationBar *)navigationBar;
 
 
 // lingh add
@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief add logo--titleView's imageView。
  * @param imageName  图片名字
  */
-- (void)xm_navigationBar_titleView_Logo_imageName:(nullable NSString*)imageName;
+- (void)zx_navigationBar_titleView_Logo_imageName:(nullable NSString*)imageName;
 
 
 
@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param aFont   文字字体；
  * @param aColor  文字颜色
  */
-- (void)xm_navigationBar_titleView_Logo_Label_title:(nullable NSString*)aTitle font:(NSInteger)aFont titleColor:(UIColor*)aColor;
+- (void)zx_navigationBar_titleView_Logo_Label_title:(nullable NSString*)aTitle font:(NSInteger)aFont titleColor:(UIColor*)aColor;
 
 
 
@@ -218,7 +218,7 @@ NS_ASSUME_NONNULL_BEGIN
  如果不是统一颜色:可以用tabBarItem分别对图片文字设置,而且可以针对不同状态如选择前,选择后;
  */
 
-- (void)xm_tabBarController_tabBarItem_ImageArray:(nullable NSArray *)aArray selectImages:(nullable NSArray *)selectArray slectedItemTintColor:(nullable UIColor *)aSleColor unselectedItemTintColor:(nullable UIColor *)unSleColor;
+- (void)zx_tabBarController_tabBarItem_ImageArray:(nullable NSArray *)aArray selectImages:(nullable NSArray *)selectArray slectedItemTintColor:(nullable UIColor *)aSleColor unselectedItemTintColor:(nullable UIColor *)unSleColor;
 
 
 @end
@@ -248,21 +248,21 @@ NS_ASSUME_NONNULL_END
 {
     [self.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        [obj xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
-        [obj xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+        [obj zx_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+        [obj zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
         
     }];
 }
 //设置基本数据：navigationBar的背景及title颜色/font大小
 - (void)setApperanceForAllController
 {
-    [UIViewController xm_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
+    [UIViewController zx_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
     
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateNormal];
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateHighlighted];
     
     
-    [UIViewController xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
+    [UIViewController zx_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
     
     [[UIButton appearance]setExclusiveTouch:YES];
 
@@ -273,7 +273,7 @@ NS_ASSUME_NONNULL_END
     NSArray *imgSelectArray = @[@"toolbar_shangpu_sel",@"toolbar_message_sel",@"toolbar_fuwu-sel",@"toolbar_myCenter_sel"];
     NSArray *imgArray = @[@"toolbar_shangpu-nor",@"toolbar_message",@"toolbar_fuwu-nor",@"toolbar_myCenter_nor"];
     
-    [self xm_tabBarController_tabBarItem_ImageArray:imgArray selectImages:imgSelectArray slectedItemTintColor:nil unselectedItemTintColor:nil];
+    [self zx_tabBarController_tabBarItem_ImageArray:imgArray selectImages:imgSelectArray slectedItemTintColor:nil unselectedItemTintColor:nil];
     self.tabBar.translucent = NO;
     UIImage *tabImage = [UIImage zh_imageWithColor:UIColorFromRGB_HexValue(0xFAFAFA) andSize:self.tabBar.frame.size];
     self.tabBar.backgroundImage = tabImage;

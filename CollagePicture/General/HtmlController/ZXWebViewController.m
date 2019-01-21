@@ -205,7 +205,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     [self setLoadTitle];
 
     //不要用animated，不然有bug
-    NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
+    NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
     self.navigationItem.leftBarButtonItems = items;
     
     
@@ -649,7 +649,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     if ([self.webView canGoBack])
     {
-        NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,_negativeSpacerItem]];
+        NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,_negativeSpacerItem]];
         [self.navigationItem setLeftBarButtonItems:items animated:NO];
     }
     else
@@ -657,7 +657,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:3;
         if (self.navigationItem.leftBarButtonItems.count == numItems)
         {
-            NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,_negativeSpacerItem]];
+            NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,_negativeSpacerItem]];
             [self.navigationItem setLeftBarButtonItems:items animated:NO];
         }
     }

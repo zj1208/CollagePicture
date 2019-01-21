@@ -1,5 +1,5 @@
 //
-//  UIViewController+XMHelper.h
+//  UIViewController+ZXHelper.h
 //  Baby
 //
 //  Created by simon on 16/2/24.
@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIViewController (XMHelper)<SKStoreProductViewControllerDelegate,UIActionSheetDelegate>
+@interface UIViewController (ZXHelper)<SKStoreProductViewControllerDelegate,UIActionSheetDelegate>
 /**
  *  storyboard跳转-push
  *
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param storyboardId  storyboardID
  *  @param data  参数－dictionary格式
  */
-- (void)xm_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data;
+- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data;
 
 
 /**
@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param data 参数－dictionary格式;kvc传值；
  @param toControllerBlock 返回目标controller
  */
-- (void)xm_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock;
+- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock;
 
 
 /**
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param data 参数－dictionary格式;kvc传值；
  @param completion 跳转完成
  */
-- (void)xm_presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion;
+- (void)zx_presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion;
 
 
 /**
@@ -55,20 +55,20 @@ NS_ASSUME_NONNULL_BEGIN
  @param storyboardId storyboardId description
  @return return value description
  */
-- (UIViewController *)xm_getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(nullable NSString *)storyboardId;
+- (UIViewController *)zx_getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(nullable NSString *)storyboardId;
 
 
 
 /**
  *  过滤modalController的返回；如果是模态的，则dismiss；
  */
-- (void)xm_goBackPreController;
+- (void)zx_goBackPreController;
 
 
 /**
  去appStore
  */
-- (void)xm_goAppStoreWithAppId:(NSString *)appId;
+- (void)zx_goAppStoreWithAppId:(NSString *)appId;
 
 
 /**
@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
  // UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"您还没有登录，是否需要登录", nil) preferredStyle:UIAlertControllerStyleAlert];
 
  */
-- (void)xm_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController;
+- (void)zx_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController;
 
 @end
 

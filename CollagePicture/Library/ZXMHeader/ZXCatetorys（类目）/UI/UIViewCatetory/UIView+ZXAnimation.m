@@ -8,7 +8,7 @@
 
 #import "UIView+ZXAnimation.h"
 
-@implementation UIView (XMAnimation)
+@implementation UIView (ZXAnimation)
 
 
 - (void)zx_showSnapshotSelectedCell:(UITableView *)tableView selectIndexPath:(NSIndexPath *)indexPath onTransformBgViewScaleSuperView:(UIView *)superView
@@ -24,7 +24,7 @@
     [superView addSubview:clipView];
     [UIView animateWithDuration:1 animations:^{
         view.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:.3];
-        view.transform = CGAffineTransformMakeScale(1, LCDH/clipFrame.size.height*2);
+        view.transform = CGAffineTransformMakeScale(1, [[UIScreen mainScreen] bounds].size.height/clipFrame.size.height*2);
     } completion:^(BOOL finished) {
         [clipView removeFromSuperview];
         [view removeFromSuperview];

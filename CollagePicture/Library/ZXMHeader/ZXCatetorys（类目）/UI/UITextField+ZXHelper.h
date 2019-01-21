@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  *	@param  email  邮箱;
  *	@return	YES／NO
  */
-+ (BOOL)xm_validateEmail:(nullable NSString *)email;
++ (BOOL)zx_validateEmail:(nullable NSString *)email;
 
 
 /**
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  *	@param  email    邮箱
  *	@return	YES／NO
  */
-+ (BOOL)xm_validateEmail2:(nullable NSString *)email;
++ (BOOL)zx_validateEmail2:(nullable NSString *)email;
 
 
 /**
@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
  *	@return	YES／NO
  */
 
-+ (BOOL)xm_validatePhoneNumber:(nullable NSString *)phone;
++ (BOOL)zx_validatePhoneNumber:(nullable NSString *)phone;
 
 
 /**
@@ -49,11 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
  *	@return	YES／NO  -NO-@"请使用数字或字母的密码"
  */
 
-+ (BOOL)xm_validatePassword:(NSString *)pass;
++ (BOOL)zx_validatePassword:(NSString *)pass;
 
 
 //验证url网址，链接是否正常
-+ (BOOL)xm_validateURL:(NSString *)url;
++ (BOOL)zx_validateURL:(NSString *)url;
 
 
 #pragma mark - textField输入限制
@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param dotAfterBits 小数点后面最多几位
  @return 是否允许输入；
  */
-+ (BOOL)xm_limitPayMoneyDot:(UITextField *)textField
++ (BOOL)zx_limitPayMoneyDot:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
           replacementString:(NSString *)string
                  dotPreBits:(int)dotPreBits
@@ -78,7 +78,7 @@ shouldChangeCharactersInRange:(NSRange)range
 //利用代理方法：- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 //设置textField最多输入几个文字，支持表情，支持删除键；回调剩余还有几个文字；
 
-+ (BOOL)xm_limitRemainText:(UITextField *)textField
++ (BOOL)zx_limitRemainText:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
          replacementString:(NSString *)string
                  maxLength:(NSInteger)maxLength
@@ -94,7 +94,7 @@ shouldChangeCharactersInRange:(NSRange)range
 /** //有问题:出来的时候,慢一点;  退出键盘的时候,也延迟移除;不能同步
  *	@brief	自定义数字键盘,在数字键盘添加完成按钮;
  */
-- (void)xm_keyboardToAddFinishButton;
+- (void)zx_keyboardToAddFinishButton;
 
 
 @end

@@ -88,7 +88,7 @@
         switch (indexPath.row)
         {
             case 0:;break;
-            case 1: [self xm_goAppStoreWithAppId:kAPPID]; break;
+            case 1: [self zx_goAppStoreWithAppId:kAPPID]; break;
             case 2: [self checkVersionUpdate]; break;
             default:
                 break;
@@ -170,7 +170,7 @@
     WS(weakSelf);
     [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
         
-        [weakSelf xm_goAppStoreWithAppId:kAPPID];
+        [weakSelf zx_goAppStoreWithAppId:kAPPID];
 
     }];
 }

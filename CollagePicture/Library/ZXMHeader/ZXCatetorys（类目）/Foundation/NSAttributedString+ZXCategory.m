@@ -7,6 +7,7 @@
 //
 
 #import "NSAttributedString+ZXCategory.h"
+#import <UIKit/UIKit.h>
 
 @implementation NSAttributedString (ZXCategory)
 

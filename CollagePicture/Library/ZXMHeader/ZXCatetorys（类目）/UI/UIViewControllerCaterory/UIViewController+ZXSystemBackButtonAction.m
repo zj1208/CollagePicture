@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+ZXSystemBackButtonAction.h"
+#import "NSObject+ZXRuntime.h"
 
 @implementation UIViewController (ZXSystemBackButtonAction)
 

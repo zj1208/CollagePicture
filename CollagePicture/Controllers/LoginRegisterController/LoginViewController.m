@@ -47,8 +47,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 - (void)setUI
 {
 //    [(AppDelegate *)APP_Delegate setApperanceForSigleNavController:self];
-    [self.navigationController xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
-    [self xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+    [self.navigationController zx_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [self zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     
     [self.loginBtn zh_userInteractionEnabledWithAlpha:NO];
     self.userNameField.delegate = self;
@@ -140,7 +140,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
     NSString *userName = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
     NSString *password = self.passwordTextField.text;
     NSString *passError = [UITextField zh_TextFieldPassword:password];
-    if (![UITextField xm_validatePhoneNumber:userName])
+    if (![UITextField zx_validatePhoneNumber:userName])
     {
       [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }

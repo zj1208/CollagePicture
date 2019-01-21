@@ -44,9 +44,9 @@
 #import "UIView+ZXAnimation.h"
 #import "UIView+ZXAlignmentRectInsets.h"
 
-#import "UIViewController+XMNavBarCustom.h"
-#import "UIViewController+XMLoginAndAlert.h"
-#import "UIViewController+XMHelper.h"
+#import "UIViewController+ZXNavBarCustom.h"
+#import "UIViewController+ZXLoginAndAlert.h"
+#import "UIViewController+ZXHelper.h"
 #import "UIWindow+ZXHierarchy.h"
 
 

@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_END
 {
     _stausBarStyle =UIStatusBarStyleDefault;
 
-    ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar xm_viewFromNib];
+    ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar zx_viewFromNib];
     [self.view addSubview:navigationBar];
     [navigationBar zx_setBarBackgroundColor:UIColorFromRGB_HexValue(0xBF352D)];
     self.customNavigationBar = navigationBar;

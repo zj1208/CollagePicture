@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIView (XMAnimation)
+@interface UIView (ZXAnimation)
 
 // 让选中的独立tableViewCell 作为快照 换算指定坐标后 添加到 控制器view上；
 - (void)zx_showSnapshotSelectedCell:(UITableView *)tableView selectIndexPath:(NSIndexPath *)indexPath onTransformBgViewScaleSuperView:(UIView *)superView;

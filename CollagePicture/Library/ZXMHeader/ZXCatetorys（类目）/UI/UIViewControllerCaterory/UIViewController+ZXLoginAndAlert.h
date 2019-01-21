@@ -1,5 +1,5 @@
 //
-//  UIViewController+XMLoginAndAlert.h
+//  UIViewController+ZXLoginAndAlert.h
 //  CollagePicture
 //
 //  Created by simon on 15/7/6.
@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface UIViewController (XMLoginAndAlert)
+@interface UIViewController (ZXLoginAndAlert)
 
 /**
  判断是否有登录过，如果没有登录则弹出登录界面
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return 返回是否登录过；
  */
 
-- (BOOL)xm_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag;
+- (BOOL)zx_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag;
 
 /**
  判断是否有登录过，如果没有登录弹出登录界面； 如果登录过则执行action事件
@@ -28,16 +28,16 @@ NS_ASSUME_NONNULL_BEGIN
  @param action 如果是登录的，则执行这个事件；
  */
 
-- (void)xm_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)action withPopAlertView:(BOOL)flag;
+- (void)zx_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)action withPopAlertView:(BOOL)flag;
 
 
 
-- (void)xm_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)aSelector withObject:(id)object1 withObject:(id)object2 withPopAlertView:(BOOL)flag;
+- (void)zx_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)aSelector withObject:(id)object1 withObject:(id)object2 withPopAlertView:(BOOL)flag;
 
 
 
 
-- (void)xm_presentLoginController;
+- (void)zx_presentLoginController;
 
 
 

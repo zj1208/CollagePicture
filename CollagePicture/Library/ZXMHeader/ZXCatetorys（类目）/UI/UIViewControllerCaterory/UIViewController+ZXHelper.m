@@ -1,12 +1,12 @@
 //
-//  UIViewController+XMHelper.m
+//  UIViewController+ZXHelper.m
 //  Baby
 //
 //  Created by simon on 16/2/24.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
-#import "UIViewController+XMHelper.h"
+#import "UIViewController+ZXHelper.h"
 #import "MBProgressHUD+ZXCategory.h"
 
 
@@ -15,11 +15,11 @@
 #define ITUNESLINK @"http://itunes.apple.com/cn/app/id"
 #endif
 
-@implementation UIViewController (XMHelper)
+@implementation UIViewController (ZXHelper)
 
-- (void)xm_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data
+- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data
 {
-    UIViewController *controller = [self xm_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
+    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
     if (controller)
     {
         if (data)
@@ -34,20 +34,20 @@
     }
 }
 
-- (void)xm_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock
+- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock
 {
-    UIViewController *controller = [self xm_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
+    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
     if (toControllerBlock)
     {
         toControllerBlock(controller);
     }
-    [self xm_pushStoryboardViewControllerWithStoryboardName:name identifier:storyboardId withData:data];
+    [self zx_pushStoryboardViewControllerWithStoryboardName:name identifier:storyboardId withData:data];
 }
 
 
-- (void)xm_presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion
+- (void)zx_presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion
 {
-    UIViewController *controller = [self xm_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
+    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
     if (controller)
     {
         if (data)
@@ -69,7 +69,7 @@
     }
 }
 
--(UIViewController *)xm_getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(nullable NSString *)storyboardId
+-(UIViewController *)zx_getControllerWithStoryboardName:(NSString *)name controllerWithIdentifier:(nullable NSString *)storyboardId
 {
     if (!name)
     {
@@ -81,7 +81,7 @@
     if ([resoureUrl checkResourceIsReachableAndReturnError:&error]==NO)
     {
         NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: NSLocalizedStringFromTable(@"File URL not reachable.", @"", nil)};
-        error = [[NSError alloc] initWithDomain:AFURLRequestSerializationErrorDomain code:NSURLErrorBadURL userInfo:userInfo];
+        error = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSURLErrorBadURL userInfo:userInfo];
         NSLog(@"%@",error);
         return nil;
     }
@@ -101,7 +101,7 @@
 }
 
 
-- (void)xm_goBackPreController
+- (void)zx_goBackPreController
 {
     if (self.presentingViewController)
     {
@@ -115,7 +115,7 @@
 
 
 #pragma mark - SKStoreProductViewController
-- (void)xm_goAppStoreWithAppId:(NSString *)appId
+- (void)zx_goAppStoreWithAppId:(NSString *)appId
 {
     Class skStore = NSClassFromString(@"SKStoreProductViewController");
     UIDevice *device = [UIDevice currentDevice];
@@ -174,7 +174,7 @@
 
 
 
-- (void)xm_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController
+- (void)zx_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController
 {
     if (phone && phone.length>0)
     {

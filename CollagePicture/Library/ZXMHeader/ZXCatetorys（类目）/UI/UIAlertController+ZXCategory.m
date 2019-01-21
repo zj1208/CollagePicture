@@ -225,7 +225,7 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 {
     if (self.preferredStyle == UIAlertControllerStyleAlert)
     {
-        WS(weakSelf);
+        __weak __typeof(&*self)weakSelf = self;
         [self.actions enumerateObjectsUsingBlock:^(UIAlertAction * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             if ([obj.title isEqualToString:prefreredTitle])

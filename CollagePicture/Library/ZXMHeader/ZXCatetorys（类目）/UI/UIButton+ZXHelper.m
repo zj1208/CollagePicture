@@ -7,7 +7,6 @@
 //
 
 #import "UIButton+ZXHelper.h"
-#import"APPCommonDef.h"
 #import "UIImage+ZXHelper.h"
 
 @implementation UIButton (ZXHelper)
@@ -25,11 +24,11 @@
     self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
     
     //    这个一定要是image 和 title ／sizeToThat 下的最小尺寸；如果你设置btn的width比较小，这里的self.imageView和self.titleLabel就会被压缩变小；因为高度只能取到最大的高度，所以没法取；
-    CGSize size = [self sizeThatFits:CGSizeMake(LCDW, LCDH)];
+    CGSize size = [self sizeThatFits:CGSizeMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
     CGFloat tenmpt  = CGRectGetWidth(self.frame);
     if (CGRectGetWidth(self.frame)<size.width)
     {
-        self.frame = ZX_FRAME_W(self,size.width);
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width,CGRectGetHeight(self.frame));
     }
     CGSize imageSize = self.imageView.frame.size;
     CGSize titleSize = self.titleLabel.frame.size;
@@ -37,14 +36,14 @@
     
     if (CGRectGetHeight(self.frame)<totalHeight)
     {
-        self.frame = ZX_FRAME_H(self,totalHeight);
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), CGRectGetWidth(self.frame),totalHeight);
     }
     
     self.imageEdgeInsets = UIEdgeInsetsMake(- (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
     self.titleEdgeInsets = UIEdgeInsetsMake(0.0, - imageSize.width, - (totalHeight - titleSize.height),0.0);
     
     //    如果设置所要求的btnframe的width是固定的比较小，可以先设置中间，然后再设置回原来的width；
-    self.frame = ZX_FRAME_W(self, tenmpt);
+    self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), tenmpt,CGRectGetHeight(self.frame));
 }
 
 

@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
     {
         return;
     }
-    [self.window.rootViewController xm_presentLoginController];
+    [self.window.rootViewController zx_presentLoginController];
 }
 
 
@@ -173,18 +173,18 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 
 - (void)setApperanceForAllController
 {
-    [UIViewController xm_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
+    [UIViewController zx_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
     
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateNormal];
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateHighlighted];
-    [UIViewController xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
+    [UIViewController zx_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
     [[UIButton appearance]setExclusiveTouch:YES];
 }
 
 - (void)setApperanceForSigleNavController:(UIViewController *)viewController
 {
-    [viewController xm_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
-    [viewController xm_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+    [viewController zx_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [viewController zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
 }
 
 #pragma mark-JPush

@@ -1,21 +1,21 @@
 //
-//  UIViewController+XMNavBarCustom.m
+//  UIViewController+ZXNavBarCustom.m
 //  ShiChunTang
 //
 //  Created by zhuxinming on 14/11/1.
 //  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
 //
 
-#import "UIViewController+XMNavBarCustom.h"
+#import "UIViewController+ZXNavBarCustom.h"
 #import "UIButton+ZXHelper.h"
 
 
-@implementation UIViewController (XMNavBarCustom)
+@implementation UIViewController (ZXNavBarCustom)
 
 
 #pragma mark-LeftBarBut
 
--(void)xm_navigationItem_leftBarButtonItem_CustomView_imageName:(nullable NSString*)imageName highImageName:(nullable NSString *)imageName2 title:(nullable NSString *)backTitle action:(nullable SEL)action
+-(void)zx_navigationItem_leftBarButtonItem_CustomView_imageName:(nullable NSString*)imageName highImageName:(nullable NSString *)imageName2 title:(nullable NSString *)backTitle action:(nullable SEL)action
 {
     UIImage* backItemImage = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImage* backItemHlImage = [[UIImage imageNamed:imageName2] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -41,7 +41,7 @@
 
 
 
-- (NSArray *)xm_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:(NSArray *)barButtonItems
+- (NSArray *)zx_navigationItem_leftOrRightItemReducedSpaceToMaginWithItems:(NSArray *)barButtonItems
 {
     //由于iOS11把barButtonItem添加在_UIButtonBarStackView上；
 //    if (@available(iOS 11.0, *))
@@ -58,7 +58,7 @@
 //    return (NSArray *)mArray;
 }
 
-- (NSArray *)xm_navigationItem_leftOrRightItemReducedSpaceToMagin:(CGFloat)magin withItems:(NSArray *)barButtonItems
+- (NSArray *)zx_navigationItem_leftOrRightItemReducedSpaceToMagin:(CGFloat)magin withItems:(NSArray *)barButtonItems
 {
 //    if (@available(iOS 11.0, *))
 //    {
@@ -79,7 +79,7 @@
  *
  */
 
-- (void)xm_navigationBar_UIBarButtonItem_appearance_systemBack_BackgroundImage:(nullable NSString *)aName highlightImage:(nullable NSString *)highlightName
+- (void)zx_navigationBar_UIBarButtonItem_appearance_systemBack_BackgroundImage:(nullable NSString *)aName highlightImage:(nullable NSString *)highlightName
 {
     UIImage *backImage = [UIImage imageNamed:aName];
     backImage= [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -107,7 +107,7 @@
 }
 
 
-//- (void)xm_navigationBar_UIBarButtonItem_appearance_systemBack_background_Test
+//- (void)zx_navigationBar_UIBarButtonItem_appearance_systemBack_background_Test
 //{
 //    UIImage *backImage = [UIImage zh_imageWithColor:[UIColor orangeColor] andSize:CGSizeMake(10, 10)];
 //    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -117,7 +117,7 @@
  *  @brief set all navigationBar 's 系统返回按钮为没有文字； 把文字移至看不到; 注意: storyboard中遇到很长文字的时候，中间标题会受影响，必须改变前面控制器返回按钮的文字为空，才能解决；
  *
  */
-+ (void)xm_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle
++ (void)zx_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle
 {
     if(@available(iOS 11.0, *))
     {
@@ -139,7 +139,7 @@
  *
  *  @param aName aName description
  */
-- (void)xm_navigationBar_Single_BackIndicatorImage:(nullable NSString *)aName isOriginalImage:(BOOL)originalImage
+- (void)zx_navigationBar_Single_BackIndicatorImage:(nullable NSString *)aName isOriginalImage:(BOOL)originalImage
 {
     UIImage *backImage = [UIImage imageNamed:aName];
     if (originalImage)
@@ -160,7 +160,7 @@
 }
 
 
-- (void)xm_navigationBar_tintColor:(UIColor *)tintColor
+- (void)zx_navigationBar_tintColor:(UIColor *)tintColor
 {
     if (!tintColor) {
         return;
@@ -173,7 +173,7 @@
  *  navigationItem的backBarButtonItem的action是不会执行的.无论怎么改，除了popViewController什么都不执行。
  *
  */
-- (void)xm_navigationItem_backBarButtonItem_title:(nullable NSString *)aTitle font:(NSInteger)aFont
+- (void)zx_navigationItem_backBarButtonItem_title:(nullable NSString *)aTitle font:(NSInteger)aFont
 {
     NSString *string = aTitle ? aTitle : @"";
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:string style:UIBarButtonItemStylePlain target:self action:nil];
@@ -188,7 +188,7 @@
 }
 
 
-- (void)xm_navigationItem_titleCenter
+- (void)zx_navigationItem_titleCenter
 {
     UIViewController *previousVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
     previousVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
@@ -203,7 +203,7 @@
  * @brief 自定义模态页面barButtonItem按钮，也是为了适应ios6和ios7兼容；默认自动加载了点击事件，加载dismissViewController；
  * @param flag ：YES＝ leftBarItem； NO＝ rightBarItem
  */
-- (void)xm_navigationBar_presentedViewController_leftOrRightBarItem:(BOOL)flag   title:(NSString *)aTitle
+- (void)zx_navigationBar_presentedViewController_leftOrRightBarItem:(BOOL)flag   title:(NSString *)aTitle
 {
     UIBarButtonItem *barBtn = nil;
     if (__IPHONE_7_0)
@@ -250,7 +250,7 @@
 
 
 #pragma mark-设定所有导航条背景
-+ (void)xm_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
++ (void)zx_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
                                        ShadowImageName:(nullable NSString *)aShadowName
                                      orBackgroundColor:(nullable UIColor *)backgoundColor
                                             titleColor:(nullable UIColor *)aColor
@@ -297,7 +297,7 @@
 }
 
 
-- (void)xm_navigationBar_barItemColor:(nullable UIColor *)tintColor
+- (void)zx_navigationBar_barItemColor:(nullable UIColor *)tintColor
 {
     if ([self isKindOfClass:[UINavigationController class]])
     {
@@ -323,7 +323,7 @@
     
 }
 
-- (void)xm_navigationBar_BackgroundAlpah:(CGFloat)alpha navigationBar:(UINavigationBar *)navigationBar
+- (void)zx_navigationBar_BackgroundAlpah:(CGFloat)alpha navigationBar:(UINavigationBar *)navigationBar
 {
     //默认opaque = NO;
 //    NSArray *subViews = navigationBar.subviews;
@@ -372,9 +372,9 @@
 
 
 //iOS11不管用啊
-- (void)xm_navigationBar_BackgroundAlpah:(CGFloat)alpha
+- (void)zx_navigationBar_BackgroundAlpah:(CGFloat)alpha
 {
-    [self xm_navigationBar_BackgroundAlpah:alpha navigationBar:self.navigationController.navigationBar];
+    [self zx_navigationBar_BackgroundAlpah:alpha navigationBar:self.navigationController.navigationBar];
 
 }
 
@@ -403,7 +403,7 @@
 
 /*----------------------------------------------------*/
 //给navigationBar上添加 logo-titleView的imageView／title
-- (void)xm_navigationBar_titleView_Logo_imageName:(nullable NSString*)imageName
+- (void)zx_navigationBar_titleView_Logo_imageName:(nullable NSString*)imageName
 {
     UIImage *img = [UIImage imageNamed:imageName];
     if (!img)
@@ -415,7 +415,7 @@
 }
 
 
-- (void)xm_navigationBar_titleView_Logo_Label_title:(nullable NSString*)aTitle font:(NSInteger)aFont titleColor:(UIColor*)aColor
+- (void)zx_navigationBar_titleView_Logo_Label_title:(nullable NSString*)aTitle font:(NSInteger)aFont titleColor:(UIColor*)aColor
 {
     UILabel *navLab = [[UILabel alloc] initWithFrame:CGRectZero];
     navLab.text = aTitle;
@@ -429,7 +429,7 @@
 
 
 
-- (void)xm_tabBarController_tabBarItem_ImageArray:(nullable NSArray *)aArray selectImages:(nullable NSArray *)selectArray slectedItemTintColor:(nullable UIColor *)aSleColor unselectedItemTintColor:(nullable UIColor *)unSleColor;
+- (void)zx_tabBarController_tabBarItem_ImageArray:(nullable NSArray *)aArray selectImages:(nullable NSArray *)selectArray slectedItemTintColor:(nullable UIColor *)aSleColor unselectedItemTintColor:(nullable UIColor *)unSleColor;
 {
     NSMutableArray *imgArray = [NSMutableArray arrayWithCapacity:4];
     for(int i =0;i<aArray.count;i++)

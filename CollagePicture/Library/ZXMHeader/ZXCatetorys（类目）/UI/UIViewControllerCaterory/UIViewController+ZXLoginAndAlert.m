@@ -1,12 +1,12 @@
 //
-//  UIViewController+XMLoginAndAlert.m
+//  UIViewController+ZXLoginAndAlert.m
 //  CollagePicture
 //
 //  Created by simon on 15/7/6.
 //  Copyright (c) 2015年 . All rights reserved.
 //
 
-#import "UIViewController+XMLoginAndAlert.h"
+#import "UIViewController+ZXLoginAndAlert.h"
 #import <objc/runtime.h>
 
 static  NSString *const sbLoginStoryboard=@"RegisterLogin";
@@ -17,11 +17,11 @@ static  NSString *const sLoginController = @"WYLoginViewController";
 static  BOOL sLoginControllerFromStroyboard = NO;
 
 
-@implementation UIViewController (XMLoginAndAlert)
+@implementation UIViewController (ZXLoginAndAlert)
 
 
 
-- (BOOL)xm_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag
+- (BOOL)zx_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag
 {
     if (!isLogin)
     {
@@ -31,7 +31,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
         }
         else
         {
-            [self xm_presentLoginController];
+            [self zx_presentLoginController];
         }
         return NO;
     }
@@ -40,7 +40,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 
 
 
-- (void)xm_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)action withPopAlertView:(BOOL)flag
+- (void)zx_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)action withPopAlertView:(BOOL)flag
 {
     if (isLogin)
     {
@@ -56,13 +56,13 @@ static  BOOL sLoginControllerFromStroyboard = NO;
         }
         else
         {
-            [self xm_presentLoginController];
+            [self zx_presentLoginController];
         }
     }
 }
 
 
-- (void)xm_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)aSelector withObject:(id)object1 withObject:(id)object2 withPopAlertView:(BOOL)flag
+- (void)zx_performIsLoginAction:(BOOL)isLogin withSelector:(nonnull SEL)aSelector withObject:(id)object1 withObject:(id)object2 withPopAlertView:(BOOL)flag
 {
     
     if (isLogin)
@@ -77,7 +77,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
         }
         else
         {
-            [self xm_presentLoginController];
+            [self zx_presentLoginController];
         }
     }
 }
@@ -92,7 +92,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
         }];
         UIAlertAction *otherAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            [self xm_presentLoginController];
+            [self zx_presentLoginController];
         }];
         [alertController addAction:cancelAction];
         [alertController addAction:otherAction];
@@ -115,7 +115,7 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 
 
 
-- (void)xm_presentLoginController
+- (void)zx_presentLoginController
 {
     if (sLoginControllerFromStroyboard)
     {
