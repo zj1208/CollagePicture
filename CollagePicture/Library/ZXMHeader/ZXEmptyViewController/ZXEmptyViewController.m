@@ -9,19 +9,6 @@
 #import "ZXEmptyViewController.h"
 #import "MBProgressHUD+ZXCategory.h"
 
-#ifndef UIColorFromRGB_HexValue
-#define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
-
-#define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
-#endif
-
-#ifndef LCDW
-#define LCDW ([[UIScreen mainScreen] bounds].size.width)
-#define LCDH ([[UIScreen mainScreen] bounds].size.height)
-//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
-#endif
-
 // 注意： beginAppearanceTransition: /endAppearanceTransition 方法没必要写，自定义显示回调机制的时候才使用，系统默认也会回调viewWillAppear等方法的
 
 static NSInteger  kAPPErrorCode_Token2 = 5001;

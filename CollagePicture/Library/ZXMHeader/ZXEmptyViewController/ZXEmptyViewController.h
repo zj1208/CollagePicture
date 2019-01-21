@@ -12,6 +12,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#ifndef UIColorFromRGB_HexValue
+#define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
+
+#define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
+#endif
+
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
+#endif
+
 @class ZXEmptyViewController;
 @protocol ZXEmptyViewControllerDelegate <NSObject>
 

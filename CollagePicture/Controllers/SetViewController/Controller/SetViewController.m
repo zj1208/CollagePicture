@@ -41,7 +41,7 @@
 
 
 - (void)reloadVersionUI
-{
+{    
     float tempSize = [[SDImageCache sharedImageCache] getSize]/1024.0/1024;
     NSString *sizeStr =tempSize>=1?[NSString stringWithFormat:@"%.2fM",tempSize]:[NSString stringWithFormat:@"%.2fK",tempSize*1024];
     

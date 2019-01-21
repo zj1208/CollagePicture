@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 朱新明. All rights reserved.
 //
 
-#import <Mantle.h>
+#import <Mantle/Mantle.h>
 
 @interface BaseModel : MTLModel<MTLJSONSerializing>
   

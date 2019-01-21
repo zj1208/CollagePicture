@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_END
   [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
 
   例如：
-  WYWKWebViewController *htmlVc = [[WYWKWebViewController alloc] init];
+  ZXWKWebViewController *htmlVc = [[ZXWKWebViewController alloc] init];
   [htmlVc loadWebPageWithURLString:url];
   htmlVc.hidesBottomBarWhenPushed = YES;
   [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_END
 （2）modal模态转场：
   [self.view.window.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
   例如：
-  WYWKWebViewController *htmlVc = [[WYWKWebViewController alloc] init];
+  ZXWKWebViewController *htmlVc = [[ZXWKWebViewController alloc] init];
   [htmlVc loadWebPageWithURLString:url];
   htmlVc.hidesBottomBarWhenPushed = YES;
   [self.view.window.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];

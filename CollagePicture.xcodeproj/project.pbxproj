@@ -285,7 +285,7 @@
 		F4BBAA47212BF74700BF10F2 /* UIWindow+ZXHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA46212BF74700BF10F2 /* UIWindow+ZXHierarchy.m */; };
 		F4BBAA4A212BF7B400BF10F2 /* UIView+ZXAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA49212BF7B300BF10F2 /* UIView+ZXAnimation.m */; };
 		F4BBAA54212BF83D00BF10F2 /* ZXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA53212BF83D00BF10F2 /* ZXWebViewController.m */; };
-		F4BBAA57212BF84B00BF10F2 /* WYWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA55212BF84A00BF10F2 /* WYWKWebViewController.m */; };
+		F4BBAA57212BF84B00BF10F2 /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA55212BF84A00BF10F2 /* ZXWKWebViewController.m */; };
 		F4BBAA5A212BFD7200BF10F2 /* CheckVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA59212BFD7200BF10F2 /* CheckVersionManager.m */; };
 		F4BBAA5F212BFE1600BF10F2 /* HKVersionAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA5E212BFE1600BF10F2 /* HKVersionAlertView.m */; };
 		F4C257801DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */; };
@@ -894,8 +894,8 @@
 		F4BBAA49212BF7B300BF10F2 /* UIView+ZXAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXAnimation.m"; sourceTree = "<group>"; };
 		F4BBAA52212BF83D00BF10F2 /* ZXWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWebViewController.h; sourceTree = "<group>"; };
 		F4BBAA53212BF83D00BF10F2 /* ZXWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWebViewController.m; sourceTree = "<group>"; };
-		F4BBAA55212BF84A00BF10F2 /* WYWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYWKWebViewController.m; sourceTree = "<group>"; };
-		F4BBAA56212BF84A00BF10F2 /* WYWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYWKWebViewController.h; sourceTree = "<group>"; };
+		F4BBAA55212BF84A00BF10F2 /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
+		F4BBAA56212BF84A00BF10F2 /* ZXWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWKWebViewController.h; sourceTree = "<group>"; };
 		F4BBAA58212BFD7200BF10F2 /* CheckVersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckVersionManager.h; sourceTree = "<group>"; };
 		F4BBAA59212BFD7200BF10F2 /* CheckVersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckVersionManager.m; sourceTree = "<group>"; };
 		F4BBAA5D212BFE1600BF10F2 /* HKVersionAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKVersionAlertView.h; sourceTree = "<group>"; };
@@ -2947,8 +2947,8 @@
 			children = (
 				F4BBAA52212BF83D00BF10F2 /* ZXWebViewController.h */,
 				F4BBAA53212BF83D00BF10F2 /* ZXWebViewController.m */,
-				F4BBAA56212BF84A00BF10F2 /* WYWKWebViewController.h */,
-				F4BBAA55212BF84A00BF10F2 /* WYWKWebViewController.m */,
+				F4BBAA56212BF84A00BF10F2 /* ZXWKWebViewController.h */,
+				F4BBAA55212BF84A00BF10F2 /* ZXWKWebViewController.m */,
 			);
 			path = HtmlController;
 			sourceTree = "<group>";
@@ -3602,7 +3602,7 @@
 				F4361DD821099DF400A5C22F /* ZXAddPicBaseContentView.m in Sources */,
 				F446A98C1FCC082A00C82C90 /* UIViewController+UMThirdLogin.m in Sources */,
 				F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */,
-				F4BBAA57212BF84B00BF10F2 /* WYWKWebViewController.m in Sources */,
+				F4BBAA57212BF84B00BF10F2 /* ZXWKWebViewController.m in Sources */,
 				F456B73420A5A2530092A7B2 /* ZXCustomNavigationBar.m in Sources */,
 				F446A93B1FCC082900C82C90 /* UINavigationItem+ZXSpace.m in Sources */,
 				F446A97E1FCC082900C82C90 /* KxMenu.m in Sources */,

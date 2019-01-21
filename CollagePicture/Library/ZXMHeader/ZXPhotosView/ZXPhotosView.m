@@ -7,7 +7,7 @@
 //
 
 #import "ZXPhotosView.h"
-#import <UIButton+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
 
 #import "APPCommonDef.h"
 #import "UIView+ZXChangeSize.h"

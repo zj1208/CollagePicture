@@ -143,6 +143,22 @@
 #define IS_IPHONE_6 (SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
 #define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
+//iphoneX系列判断是否有safeAreaInsets的值，其他是0;
+#define IS_IPHONE_XX ({\
+int tmp = 0;\
+if (@available(iOS 11.0, *)) { \
+UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
+ tmp = 1;\
+}else{\
+tmp = 0;\
+}\
+}\
+else{\
+tmp = 0;\
+}\
+tmp;\
+})
 #endif
 
 

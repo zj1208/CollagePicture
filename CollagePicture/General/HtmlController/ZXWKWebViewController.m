@@ -1,12 +1,12 @@
 //
-//  WYWKWebViewController.m
+//  ZXWKWebViewController.m
 //  YiShangbao
 //
-//  Created by 杨建亮 on 2017/10/20.
+//  Created by simon on 2017/10/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "WYWKWebViewController.h"
+#import "ZXWKWebViewController.h"
 
 #import "ZXEmptyViewController.h"
 
@@ -14,6 +14,23 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "XLPhotoBrowser.h"
 #import "ZXHTTPCookieManager.h"
+
+#ifndef LCDW
+#define LCDW ([[UIScreen mainScreen] bounds].size.width)
+#define LCDH ([[UIScreen mainScreen] bounds].size.height)
+//设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
+#define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
+#endif
+
+#ifndef SCREEN_WIDTH
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#endif
+
+#ifndef SCREEN_MAX_LENGTH
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+#endif
 
 #ifndef  IS_IPHONE_X
 #define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
@@ -29,6 +46,10 @@
 #define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_X ? (34.f) : 0)
 #endif
 
+#ifndef  APP_Version
+#define APP_Version          [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+#endif
+
 typedef NS_ENUM(NSInteger, WebLoadType) {
     
     WebLoadType_URLString =0,//网络html地址
@@ -38,7 +59,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 };
 
 
-@interface WYWKWebViewController ()<WKNavigationDelegate,WKUIDelegate,
+@interface ZXWKWebViewController ()<WKNavigationDelegate,WKUIDelegate,
 XLPhotoBrowserDatasource,XLPhotoBrowserDelegate, ZXEmptyViewControllerDelegate,UIGestureRecognizerDelegate>
 
 
@@ -91,7 +112,7 @@ XLPhotoBrowserDatasource,XLPhotoBrowserDelegate, ZXEmptyViewControllerDelegate,U
 
 @end
 static NSString* const SixSpaces = @"      ";
-@implementation WYWKWebViewController
+@implementation ZXWKWebViewController
 
 #pragma mark - life cycle
 
@@ -146,7 +167,6 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewDidAppear:animated];
     [self.webView.scrollView flashScrollIndicators];
-//    UIEdgeInsets edge = self.view.layoutMargins;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -182,7 +202,7 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark - UI加载
 -(void) buildUI
 {
-    self.view.backgroundColor = [UIColor colorWithHexString:@"F3F3F3"];
+    self.view.backgroundColor = UIColorFromRGB_HexValue(0xF3F3F3);
 
     //设置导航条
     [self setupNav];
@@ -193,17 +213,12 @@ static NSString* const SixSpaces = @"      ";
     
     [self addEmptyView];
    
-    if (Device_SYSTEMVERSION.floatValue <9.f)
+    if ([[UIDevice currentDevice] systemVersion].floatValue <9.f)
     {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     else
     {
-//        if (@available(iOS 11.0, *)){
-//            self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//        }else{
-//            self.automaticallyAdjustsScrollViewInsets = NO;
-//        }
         [self addConstraint:self.webView toSuperviewItem:self.view];
     }
 }
@@ -213,9 +228,8 @@ static NSString* const SixSpaces = @"      ";
 {
     [self setLoadTitle];
 
-    //不要用animated，不然有bug
-    NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
-    self.navigationItem.leftBarButtonItems = items;
+
+    self.navigationItem.leftBarButtonItems = @[self.backButtonItem,self.negativeSpacerItem];
     
     NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
     NSRange rangeDuiBa = [self.URLString rangeOfString:@"duiba.com.cn"];
@@ -271,31 +285,22 @@ static NSString* const SixSpaces = @"      ";
         {
             configuration.allowsAirPlayForMediaPlayback  = YES;
         }
-        //  iOS10以上
-        if ([configuration respondsToSelector:@selector(dataDetectorTypes)])
-        {
+        if (@available(iOS 10.0, *)) {
+            // 音乐自动播放；iOS10
+            configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
+            //数据链接
             configuration.dataDetectorTypes = !WKDataDetectorTypeAddress;
-        }
-        // 音乐自动播放；iOS10
-        if (Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(10))
-        {
-            if ([configuration respondsToSelector:@selector(mediaTypesRequiringUserActionForPlayback)])
-            {
-                configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
-            }
-        }
-        else
-        {
+        } else {
             // ios9
             if ([configuration respondsToSelector:@selector(requiresUserActionForMediaPlayback)])
             {
                 configuration.requiresUserActionForMediaPlayback = NO;
             }
-            // ios8
-            if ([configuration respondsToSelector:@selector(mediaPlaybackRequiresUserAction)])
-            {
-                configuration.mediaPlaybackRequiresUserAction = NO;
-            }
+            //            // ios8
+            //            if ([configuration respondsToSelector:@selector(mediaPlaybackRequiresUserAction)])
+            //            {
+            //                configuration.mediaPlaybackRequiresUserAction = NO;
+            //            }
         }
         
         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
@@ -319,9 +324,9 @@ static NSString* const SixSpaces = @"      ";
         _progressView.frame = CGRectMake(0,HEIGHT_NAVBAR, self.view.bounds.size.width, 2);
         _progressView.trackTintColor = [UIColor clearColor];
         if ([WYUserDefaultManager getUserTargetRoleType] == WYTargetRoleType_seller) {
-            _progressView.progressTintColor = [UIColor colorWithHexString:@"FF5434"];
+            _progressView.progressTintColor = UIColorFromRGB_HexValue(0xFF5434);
         }else{
-            _progressView.progressTintColor = [UIColor colorWithHexString:@"F58F23"];
+            _progressView.progressTintColor = UIColorFromRGB_HexValue(0xF58F23);
         }
     }
     return _progressView;
@@ -465,7 +470,7 @@ static NSString* const SixSpaces = @"      ";
 }
 - (void)loginIn:(id)notification
 {
-    if (Device_SYSTEMVERSION.floatValue<11)
+    if ([[UIDevice currentDevice] systemVersion].floatValue<11)
     {
         // 为了解决登陆完，cookie还没有被写进浏览器；
         [MBProgressHUD zx_showSuccess:@"登陆成功，正在刷新数据" toView:self.view hideAfterDelay:2.5f];
@@ -505,7 +510,7 @@ static NSString* const SixSpaces = @"      ";
         newAgent = [oldAgent stringByAppendingString:customString];
     }
 //    NSLog(@"%@",newAgent);
-    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+    if ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
     {
         self.webView.customUserAgent = newAgent;
     }
@@ -578,7 +583,7 @@ static NSString* const SixSpaces = @"      ";
             NSArray *arr = [self.navigationController.viewControllers subarrayWithRange:NSMakeRange(0, self.navigationController.viewControllers.count-1)];
             [arr enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 
-                if ([obj isKindOfClass:[WYWKWebViewController class]])
+                if ([obj isKindOfClass:[ZXWKWebViewController class]])
                 {
                     loadedWkWebView = YES;
                 }
@@ -655,7 +660,7 @@ static NSString* const SixSpaces = @"      ";
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
     NSURL *url = [NSURL fileURLWithPath:path];
     NSData *data = [NSData dataWithContentsOfFile:path];
-    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+    if ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
     {
         [self.webView loadData:data MIMEType:mimeType characterEncodingName:@"UTF-8" baseURL:url];
     }
@@ -671,7 +676,7 @@ static NSString* const SixSpaces = @"      ";
         NSData *data = [content dataUsingEncoding:NSUTF8StringEncoding];
         NSURL *url = [NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]];
         
-        if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+        if ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
         {
             [self.webView loadData:data MIMEType:@"text/plain" characterEncodingName:@"UTF-8" baseURL:url];
         }
@@ -733,13 +738,11 @@ static NSString* const SixSpaces = @"      ";
 {
     if ([[UIApplication sharedApplication] canOpenURL:request.URL] && ![request.URL.scheme isEqualToString:@"http"]&& ![request.URL.scheme isEqualToString:@"https"])
     {
-        if ([[UIApplication sharedApplication]respondsToSelector:@selector(openURL:options:completionHandler:)])
-        {
+        if (@available(iOS 10.0, *)) {
             [[UIApplication sharedApplication] openURL:request.URL options:@{} completionHandler:nil];
-        }
-        else
-        {
+        } else {
             [[UIApplication sharedApplication] openURL:request.URL];
+            
         }
         return YES;
     }
@@ -753,13 +756,10 @@ static NSString* const SixSpaces = @"      ";
     
     if ([urlString hasPrefix:@"https://itunes.apple.com"])
     {
-        if ([[UIApplication sharedApplication]respondsToSelector:@selector(openURL:options:completionHandler:)])
-        {
+        if (@available(iOS 10.0, *)) {
             [[UIApplication sharedApplication] openURL:request.URL options:@{} completionHandler:^(BOOL success) {
             }];
-        }
-        else
-        {
+        } else {
             [[UIApplication sharedApplication] openURL:request.URL];
         }
         if ([self.webView canGoBack])
@@ -1002,7 +1002,8 @@ static NSString* const SixSpaces = @"      ";
         //        [backButton setImage:backItemHlImage forState:UIControlStateHighlighted];
         //        [backButton sizeToFit];
         backButton.frame = CGRectMake(0, 0, 50, 44);
-        [backButton zh_centerHorizontalImageAndTitleWithTheirSpace:10.f];
+        backButton.imageEdgeInsets= UIEdgeInsetsMake(0, 0, 0,floorf(10/2));
+        backButton.titleEdgeInsets= UIEdgeInsetsMake(0, floorf(10/2), 0, 0);
         //              [backButton setBackgroundColor:[UIColor redColor]];
         [backButton addTarget:self action:@selector(customBackItemAction:) forControlEvents:UIControlEventTouchUpInside];
         _backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -1036,15 +1037,15 @@ static NSString* const SixSpaces = @"      ";
 {
     if ([self.webView canGoBack])
     {
-        NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,self.negativeSpacerItem]];
+        NSArray *items = @[self.backButtonItem,self.closeButtonItem,self.negativeSpacerItem];
         [self.navigationItem setLeftBarButtonItems:items animated:NO];
     }
     else
     {
-        NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:3;
+        NSInteger numItems = [[UIDevice currentDevice] systemVersion].floatValue>=11?3:3;
         if (self.navigationItem.leftBarButtonItems.count==numItems)
         {
-            NSArray *items = [self xm_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
+            NSArray *items = @[self.backButtonItem,self.negativeSpacerItem];
             [self.navigationItem setLeftBarButtonItems:items animated:NO];
         }
     }

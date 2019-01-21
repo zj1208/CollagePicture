@@ -2,7 +2,7 @@
 //  WKWebViewController.h
 //  
 //
-//  Created by 杨建亮 on 2017/10/20.
+//  Created by simon on 2017/10/20.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
@@ -32,7 +32,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface WYWKWebViewController: UIViewController
+@interface ZXWKWebViewController: UIViewController
 
 @property (nonatomic, strong) WKWebView  *webView;
 
@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_END
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"发布求购";
-    WYWKWebViewController *moreVc = [[WYWKWebViewController alloc] init];
+    ZXWKWebViewController *moreVc = [[ZXWKWebViewController alloc] init];
     moreVc.webUrl = [NSString stringWithFormat:@"%@/ycb/page/ycbPurchaseForm.html",[WYUserDefaultManager getkAPP_H5URL]];
     [self addChildViewController:moreVc];
     [self.view addSubview:moreVc.view];
