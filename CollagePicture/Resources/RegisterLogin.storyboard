@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YrM-rm-3Lg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YrM-rm-3Lg">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,16 +32,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rnh-B7-Z43" userLabel="phoneContainer">
-                                        <rect key="frame" x="-1" y="0.0" width="301" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="I3f-FZ-RcO">
-                                                <rect key="frame" x="46" y="16" width="235" height="19"/>
+                                                <rect key="frame" x="58" y="15.5" width="222" height="19"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_mobile" translatesAutoresizingMaskIntoConstraints="NO" id="XHo-dc-rVP">
-                                                <rect key="frame" x="20" y="17" width="11" height="17"/>
+                                                <rect key="frame" x="20" y="8" width="23" height="34"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,7 +57,7 @@
                                         <rect key="frame" x="0.0" y="51" width="300" height="50"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GwY-im-pUQ">
-                                                <rect key="frame" x="46" y="16" width="234" height="19"/>
+                                                <rect key="frame" x="58" y="15.5" width="222" height="19"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -67,7 +66,7 @@
                                                 </connections>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_key" translatesAutoresizingMaskIntoConstraints="NO" id="b5b-y3-Id2">
-                                                <rect key="frame" x="20" y="18" width="11" height="14"/>
+                                                <rect key="frame" x="20" y="10.5" width="23" height="29"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -128,20 +127,20 @@
                                 </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyb-KS-THh">
-                                <rect key="frame" x="8" y="468" width="80" height="1"/>
+                                <rect key="frame" x="8" y="468" width="79.5" height="1"/>
                                 <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="MqM-FX-1qm"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用第三方帐号登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al7-KE-fa5">
-                                <rect key="frame" x="96" y="460" width="129" height="17"/>
+                                <rect key="frame" x="95.5" y="460" width="129" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sgD-bY-ihz">
-                                <rect key="frame" x="233" y="468" width="79" height="1"/>
+                                <rect key="frame" x="232.5" y="468" width="79.5" height="1"/>
                                 <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="68v-nc-PZO"/>
@@ -250,10 +249,10 @@
                                     <rect key="frame" x="8" y="8" width="304" height="45"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_mobile" translatesAutoresizingMaskIntoConstraints="NO" id="CRV-6I-huM">
-                                            <rect key="frame" x="15" y="15" width="11" height="15"/>
+                                            <rect key="frame" x="15" y="15" width="23" height="15"/>
                                         </imageView>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4Zz-O9-ezq" customClass="NoMenuTextField">
-                                            <rect key="frame" x="41" y="2" width="255" height="41"/>
+                                            <rect key="frame" x="53" y="2" width="243" height="41"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -275,10 +274,10 @@
                                     <rect key="frame" x="8" y="118" width="304" height="45"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_key" translatesAutoresizingMaskIntoConstraints="NO" id="Ynp-YO-r8F">
-                                            <rect key="frame" x="15" y="16" width="11" height="14"/>
+                                            <rect key="frame" x="15" y="8" width="23" height="29"/>
                                         </imageView>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="6-12位密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0ll-9c-uZu">
-                                            <rect key="frame" x="41" y="2" width="255" height="43"/>
+                                            <rect key="frame" x="53" y="2" width="243" height="41"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -308,7 +307,7 @@
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Lj-nd-WiT">
-                                            <rect key="frame" x="216" y="5" width="80" height="36"/>
+                                            <rect key="frame" x="216" y="5" width="80" height="35"/>
                                             <color key="backgroundColor" red="0.93053488760000003" green="0.48519588279999998" blue="0.2019970566" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="gUC-Ul-J2d"/>
@@ -344,10 +343,10 @@
                                     <rect key="frame" x="8" y="173" width="304" height="45"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="l_key" translatesAutoresizingMaskIntoConstraints="NO" id="Ww6-yY-dZO">
-                                            <rect key="frame" x="15" y="15" width="11" height="14"/>
+                                            <rect key="frame" x="15" y="8" width="23" height="29"/>
                                         </imageView>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zfT-Yb-imb">
-                                            <rect key="frame" x="41" y="2" width="255" height="41"/>
+                                            <rect key="frame" x="53" y="2" width="243" height="41"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -517,7 +516,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFc-B1-d0g">
-                                <rect key="frame" x="100" y="333" width="121" height="30"/>
+                                <rect key="frame" x="100" y="333" width="120" height="30"/>
                                 <color key="backgroundColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="bFc-B1-d0g" secondAttribute="height" multiplier="35:6" id="2zk-1E-rkp"/>
@@ -608,12 +607,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Sina_" width="36" height="36"/>
+        <image name="Sina_" width="36.5" height="36.5"/>
         <image name="back_imageTitle" width="12" height="20"/>
-        <image name="l_key" width="11" height="14"/>
-        <image name="l_mobile" width="11" height="17"/>
-        <image name="qq_" width="36" height="36"/>
-        <image name="register_one_" width="375" height="170"/>
-        <image name="weixing_" width="36" height="36"/>
+        <image name="l_key" width="23" height="29"/>
+        <image name="l_mobile" width="23" height="34"/>
+        <image name="qq_" width="36.5" height="36.5"/>
+        <image name="register_one_" width="375.5" height="170.5"/>
+        <image name="weixing_" width="36.5" height="36.5"/>
     </resources>
 </document>

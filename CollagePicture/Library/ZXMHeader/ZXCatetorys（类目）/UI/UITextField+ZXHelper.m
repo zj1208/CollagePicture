@@ -64,18 +64,38 @@
 
 + (BOOL)zx_validatePhoneNumber:(nullable NSString *)phone
 {
-    NSString *number = @"^1[3|4|5|7|8][0-9]\\d{8}$";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
+    NSString *regexExp = @"^1[3|4|5|7|8][0-9]\\d{8}$";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexExp];
     return [emailTest evaluateWithObject:phone];
 }
 
 + (BOOL)zx_validatePassword:(NSString *)pass
-{
-    NSString *number = @"^[A-Za-z0-9]+$";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
+{ 
+    NSString *regexExp = @"^[A-Za-z0-9]+$";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexExp];
     return [emailTest evaluateWithObject:pass];
 }
 
++ (BOOL)zx_validatePassword2WithOnlyLetterAndDigital:(NSString *)pass
+{
+    NSString *regexExp = @"[0-9]+[a-zA-Z]+[0-9a-zA-Z]*|[a-zA-Z]+[0-9]+[0-9a-zA-Z]*";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexExp];
+    return [emailTest evaluateWithObject:pass];
+}
+
+
++ (BOOL)zx_validatePassword3WithContainLetterAndDigital:(NSString *)pass
+{
+    NSCharacterSet *digitalSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    NSCharacterSet *letterSet = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz"];
+    NSRange digitalRange = [pass rangeOfCharacterFromSet:digitalSet];
+    NSRange letterRange = [pass rangeOfCharacterFromSet:letterSet options:NSCaseInsensitiveSearch];
+    if ((digitalRange.location != NSNotFound) && (letterRange.location != NSNotFound))
+    {
+        return YES;
+    }
+    return NO;
+}
 
 #pragma mark - textField输入限制
 

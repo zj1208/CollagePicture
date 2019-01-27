@@ -11,28 +11,10 @@
 #import "UIImageView+WebCache.h"
 #import <Photos/Photos.h>
 #import "ZXAddPicPlaceholderCell.h"
-
-
-
-
-static NSInteger const ZXMaxItemCount = 3;
-
-static CGFloat const ZXMinimumInteritemSpacing = 12.f;//item之间最小间隔
-static CGFloat const ZXMinimumLineSpacing = 12.f; //最小行间距
-static CGFloat const ZXAddPicItemWidth = 60.f;
-static CGFloat const ZXAddPicItemHeight = 60.f;
-
-NSInteger const ZXAddPicMaxColoum = 3;  // 图片每行默认最多个数
-//设置的时候，xib也要同时调整；与删除按钮有关；
-static CGFloat const ZXPicItemLayoutTop =  10.f;
-static CGFloat const ZXPicItemLayoutRight = 10.f;
+#import "ZXAddPicCollectionConst.h"
 
 static NSString * const reuseCell = @"Cell";
 static NSString * const reusePlaceholderCell = @"placeholderCell";
-
-#ifndef Device_SYSTEMVERSION
-#define Device_SYSTEMVERSION    [[UIDevice currentDevice] systemVersion]
-#endif
 
 // SYSTEMVERSION以上用iOS9移动方法，以下用iOS8可以用的通用方法；
 static CGFloat SYSTEMVERSION = 12.0;
@@ -713,16 +695,16 @@ static CGFloat SYSTEMVERSION = 12.0;
                     }
                     else
                     {
-                        _isChangeMoveItem = YES;
-                        _destinationIndexPath = attributes.indexPath;
-                        id object = [_dataMArray objectAtIndex:indexPath.item];
-                        [_dataMArray removeObjectAtIndex:indexPath.item];
-                        [_dataMArray insertObject:object atIndex:attributes.indexPath.item];
+                        self.isChangeMoveItem = YES;
+                        self.destinationIndexPath = attributes.indexPath;
+                        id object = [self.dataMArray objectAtIndex:indexPath.item];
+                        [self.dataMArray removeObjectAtIndex:indexPath.item];
+                        [self.dataMArray insertObject:object atIndex:attributes.indexPath.item];
                         
                         cell.transform = CGAffineTransformIdentity;
-                        [_collectionView  moveItemAtIndexPath:indexPath toIndexPath:attributes.indexPath];
+                        [self.collectionView  moveItemAtIndexPath:indexPath toIndexPath:attributes.indexPath];
                         cell.transform = CGAffineTransformMakeScale(1.2, 1.2);
-                        cell.center = CGPointMake(pressPoint.x+_pressCellCenterOffest.x, pressPoint.y+_pressCellCenterOffest.y);
+                        cell.center = CGPointMake(pressPoint.x+self.pressCellCenterOffest.x, pressPoint.y+self.pressCellCenterOffest.y);
                         [cell.layer removeAllAnimations];
                     }
                 }
@@ -864,7 +846,7 @@ static CGFloat SYSTEMVERSION = 12.0;
     CGAffineTransform transformA = CGAffineTransformMakeScale(1.2, 1.2);
 
     [UIView animateWithDuration:0.2 animations:^{
-        _beganSelectCell.transform = transformA;
+        self.beganSelectCell.transform = transformA;
     }];
 }
 
@@ -929,7 +911,7 @@ static CGFloat SYSTEMVERSION = 12.0;
         _beganSelectCell.contentView.alpha = 1.0;
 
         [UIView animateWithDuration:0.2 animations:^{
-            _beganSelectCell.transform = CGAffineTransformIdentity;
+            self.beganSelectCell.transform = CGAffineTransformIdentity;
         }];
     }
     if (!self.showDeleteIconButton)

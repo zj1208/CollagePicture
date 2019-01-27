@@ -7,6 +7,7 @@
 //
 
 #import "ZXAddPicCoverView.h"
+#import "ZXAddPicCollectionConst.h"
 
 @implementation ZXAddPicCoverView
 
@@ -23,7 +24,7 @@
     self.titleLabel.font = [UIFont systemFontOfSize:13];
     // 默认文案提示
     self.titleLabel.text = [NSString stringWithFormat:@"添加图片或视频\n(最多9个，视频时长不能超过10秒)"];
-    self.titleLabel.textColor = [UIColor colorWithHexString:@"9D9D9D"];
+    self.titleLabel.textColor = UIColorFromRGB_HexValue(0x9D9D9D);
     [self zh_setButtonImageViewScaleAspectFillWithButton:self.addButton];
     self.titleLabLeading.constant = 15.f;
 }

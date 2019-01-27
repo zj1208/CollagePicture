@@ -7,15 +7,7 @@
 //
 
 #import "ZXAddPicViewCell.h"
-
-#ifndef UIColorFromRGB_HexValue
-/**
- * @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#333333--ZX_RGBHexString(0X333333)
- */
-#define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
-
-#define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
-#endif
+#import "ZXAddPicCollectionConst.h"
 
 
 @implementation ZXAddPicViewCell
@@ -113,7 +105,7 @@
             if ([obj isKindOfClass:[UILongPressGestureRecognizer class]])
             {
                 UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)obj;
-                if ([Device_SYSTEMVERSION floatValue] <12 && flag)
+                if ([[UIDevice currentDevice] systemVersion].floatValue<12 && flag)
                 {
                     
                     longPress.enabled = YES;

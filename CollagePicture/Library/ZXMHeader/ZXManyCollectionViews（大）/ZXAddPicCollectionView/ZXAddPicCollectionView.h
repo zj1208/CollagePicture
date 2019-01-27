@@ -28,6 +28,7 @@
 //  5.17  增加长按item移动功能；
 //  6.01  增加裁剪；
 //  6.08  过滤9宫格编辑图片组件中cell空白区域的无效长按事件，点击事件；
+//  2019.1.23  把常量 和 宏移动到新类ZXAddPicCollectionConst中；（改动很多文件）
 
 #import <UIKit/UIKit.h>
 #import "ZXAddPicViewCell.h"
@@ -242,28 +243,12 @@ NS_ASSUME_NONNULL_END
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    ZXAddPicCollectionView *picView = [[ZXAddPicCollectionView alloc] init];
-    picView.maxItemCount = 9;
-    picView.minimumInteritemSpacing = 12.f;
-    picView.photosState = ZXPhotosViewStateDidCompose;
-    picView.sectionInset = UIEdgeInsetsMake(5, 15, 10, 15);
-    picView.picItemWidth = [picView getItemAverageWidthInTotalWidth:LCDW columnsCount:4 sectionInset:picView.sectionInset minimumInteritemSpacing:picView.minimumInteritemSpacing];
-    picView.picItemHeight = picView.picItemWidth;
-    picView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddAssetImageName];
-    
-    picView.addPicCoverView.titleLabel.text = [NSString stringWithFormat:@"添加图片或视频\n(最多9个，视频时长不能超过10秒)"];
-    picView.addPicCoverView.titleLabLeading.constant = 23.f;
-
-    self.picsCollectionView = picView;
-    [self.contentView addSubview:picView];
-    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+ 
+    [self.contentView addSubview:self.picsCollectionView];
+ 
     [self.picsCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.mas_equalTo(picView.superview.mas_top).offset(0);
-        make.bottom.mas_equalTo(picView.superview.mas_bottom).offset(0);
-        make.left.mas_equalTo(picView.superview.mas_left).offset(0);
-        make.right.mas_equalTo(picView.superview.mas_right).offset(0);
+       make.edges.mas_equalTo(self.contentView);
     }];
     //    已经不用了，隐藏就行
     self.containerView.hidden = YES;
@@ -271,6 +256,27 @@ NS_ASSUME_NONNULL_END
     [[ZXAddPicViewKit sharedKit]registerLayoutConfig:[CustomAddPicLayoutConfig new]];
 
 }
+- (ZXAddPicCollectionView *)picsCollectionView
+{
+    if (!_picsCollectionView)
+    {
+        ZXAddPicCollectionView *picView = [[ZXAddPicCollectionView alloc] init];
+        picView.maxItemCount = 9;
+        picView.minimumInteritemSpacing = 12.f;
+        picView.photosState = ZXPhotosViewStateDidCompose;
+        picView.sectionInset = UIEdgeInsetsMake(5, 15, 10, 15);
+        picView.picItemWidth = [picView getItemAverageWidthInTotalWidth:LCDW columnsCount:4 sectionInset:picView.sectionInset minimumInteritemSpacing:picView.minimumInteritemSpacing];
+        picView.picItemHeight = picView.picItemWidth;
+        picView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddAssetImageName];
+        
+        picView.addPicCoverView.titleLabel.text = [NSString stringWithFormat:@"添加图片或视频\n(最多9个，视频时长不能超过10秒)"];
+        picView.addPicCoverView.titleLabLeading.constant = 23.f;
+        picView.canMoveItem = YES;
+        _picsCollectionView = picView;
+    }
+    return _picsCollectionView;
+}
+
 
 // 当有数据的时候
 - (void)setData:(id)data

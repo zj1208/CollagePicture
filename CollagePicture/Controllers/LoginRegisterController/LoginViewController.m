@@ -50,6 +50,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
     [self.navigationController zx_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
     [self zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     
+    self.userNameField.keyboardType = UIKeyboardTypeNumberPad;
+    
     [self.loginBtn zh_userInteractionEnabledWithAlpha:NO];
     self.userNameField.delegate = self;
     

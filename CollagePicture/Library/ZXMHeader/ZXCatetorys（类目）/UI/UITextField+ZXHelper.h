@@ -44,12 +44,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *	@brief	利用正则表达式验证 密码合法性,使用数字或字母的密码
+ *	@brief	利用正则表达式验证 密码合法性,判断是否有数字或字母的密码
  *	@param  pass  密码
  *	@return	YES／NO  -NO-@"请使用数字或字母的密码"
  */
 
 + (BOOL)zx_validatePassword:(NSString *)pass;
+
+/**
+ *    @brief    利用正则表达式验证 密码合法性,判断是否同时使用数字和字母，且只能是数字和字母的密码，不可输入特殊字符
+ *    @param  pass  密码
+ *    @return    YES／NO  -NO-@"请使用数字和字母组合的密码"
+ */
++ (BOOL)zx_validatePassword2WithOnlyLetterAndDigital:(NSString *)pass;
+
+// 判断是否同时包含数字和字母，可输入特殊字符；
++ (BOOL)zx_validatePassword3WithContainLetterAndDigital:(NSString *)pass;
+
 
 
 //验证url网址，链接是否正常

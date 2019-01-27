@@ -7,10 +7,7 @@
 //
 
 #import "ZXAddPicPlaceholderCell.h"
-
-#ifndef AppPlaceholderImage
-#define AppPlaceholderImage [UIImage imageNamed:@"zxPhoto_addImage"]
-#endif
+#import "ZXAddPicCollectionConst.h"
 
 
 @implementation ZXAddPicPlaceholderCell
@@ -23,7 +20,7 @@
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         imageView.contentMode =UIViewContentModeScaleAspectFill;
         [self setView:imageView cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
-        imageView.image =  AppPlaceholderImage;
+        imageView.image =  [UIImage imageNamed:AppPlaceholderAddButtonImageName];
         [self.contentView addSubview:imageView];
         self.imageView = imageView;
         [self addConstraint:imageView toItem:self.contentView];
