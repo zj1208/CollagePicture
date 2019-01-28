@@ -24,7 +24,7 @@
         self.minimumInteritemSpacing = 5;
         self.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
         _betweenOfCell = 5.0;
-        _cellType = AlignWithLeft;
+        _cellType = AlignTypeLeft;
     }
     return self;
 }
@@ -87,7 +87,7 @@
 -(void)setCellFrameWith:(NSMutableArray*)layoutAttributes{
     CGFloat nowWidth = 0.0;
     switch (_cellType) {
-        case AlignWithLeft:
+        case AlignTypeLeft:
             nowWidth = self.sectionInset.left;
             for (UICollectionViewLayoutAttributes * attributes in layoutAttributes) {
                 CGRect nowFrame = attributes.frame;
@@ -98,7 +98,7 @@
             _sumWidth = 0.0;
             [layoutAttributes removeAllObjects];
             break;
-        case AlignWithCenter:
+        case AlignTypeCenter:
             nowWidth = (self.collectionView.frame.size.width - _sumWidth - ((layoutAttributes.count - 1) * _betweenOfCell)) / 2;
             for (UICollectionViewLayoutAttributes * attributes in layoutAttributes) {
                 CGRect nowFrame = attributes.frame;
@@ -110,7 +110,7 @@
             [layoutAttributes removeAllObjects];
             break;
             
-        case AlignWithRight:
+        case AlignTypeRight:
             nowWidth = self.collectionView.frame.size.width - self.sectionInset.right;
   
             for (NSInteger index = layoutAttributes.count - 1 ; index >= 0 ; index-- ) {

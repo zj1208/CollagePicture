@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger,AlignType){
-    AlignWithLeft,
-    AlignWithCenter,
-    AlignWithRight
+    AlignTypeLeft,
+    AlignTypeCenter,
+    AlignTypeRight
 };
 
 @interface EqualSpaceFlowLayoutEvolve : UICollectionViewFlowLayout

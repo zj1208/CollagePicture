@@ -105,7 +105,7 @@ static CGFloat SYSTEMVERSION = 12.0;
     self.maxItemCount = ZXMaxItemCount;
     self.photosState = ZXPhotosViewStateWillCompose;
     self.columnsCount = 4;
-    self.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddPhotoImageName];
+    self.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddButtonImageName_AddPhoto];
     
     [self addSubview:self.collectionView];
     self.clipsToBounds = YES;

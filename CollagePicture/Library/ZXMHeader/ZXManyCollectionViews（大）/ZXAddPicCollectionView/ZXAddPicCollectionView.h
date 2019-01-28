@@ -54,8 +54,9 @@ typedef NS_ENUM(NSInteger, ZXAddPicCellEditingStyle) {
     ZXAddPicCellEditingStyleInsert  // 添加
 };
 
-static NSString * const ZXAddAssetImageName = @"zxPhoto_addAsset";
-static NSString * const ZXAddPhotoImageName = @"zxPhoto_addImage";
+static NSString * const ZXAddButtonImageName_AddAsset = @"zxPhoto_addAsset";
+static NSString * const ZXAddButtonImageName_AddPhoto = @"zxPhoto_addImage";
+
 
 @protocol ZXAddPicCollectionViewDelegate;
 

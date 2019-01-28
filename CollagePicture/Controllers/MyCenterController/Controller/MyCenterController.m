@@ -158,7 +158,7 @@ static NSInteger IndexSection_Set =1;
 - (void)setUI
 {
     [APP_Delegate setApperanceForSigleNavController:self];
-
+    
     self.nameBtn.hidden = YES;
     self.signatureLab.text = @"未填写";
     

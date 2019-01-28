@@ -135,14 +135,12 @@ static NSString * const reuseTagsCell = @"Cell";
         collection.scrollEnabled = NO;
         
         _collectionView = collection;
-
     }
     return _collectionView;
 }
 
 - (void)setCollectionViewLayoutWithEqualSpaceAlign:(AlignType)alignType withItemEqualSpace:(CGFloat)equalSpace animated:(BOOL)animated
 {
-    
     EqualSpaceFlowLayoutEvolve * flowLayout = [[EqualSpaceFlowLayoutEvolve alloc]initWthType:alignType];
     flowLayout.betweenOfCell = equalSpace ==NSNotFound?10:equalSpace;
     self.collectionFlowLayout = flowLayout;
@@ -241,7 +239,7 @@ static NSString * const reuseTagsCell = @"Cell";
         // 默认设置
         newCell.titleLab.textColor = [UIColor redColor];
         newCell.titleLab.layer.borderColor = [UIColor redColor].CGColor;
-        newCell.titleLab.backgroundColor = self.tagBackgroudColor?self.tagBackgroudColor:[UIColor whiteColor];
+        newCell.titleLab.backgroundColor = self.tagNormarBackgroudColor?self.tagNormarBackgroudColor:[UIColor whiteColor];
     }
 
  

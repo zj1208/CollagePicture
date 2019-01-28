@@ -5,14 +5,15 @@
 //  Created by simon on 17/2/21.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 
-//  简介：标签展示；reloadData之前，必须设置collectionView的frame，不然不会回调数据源代理,也无法内部布局；
+//  简介：标签展示；利用collectionView展示N个文字标签,支持设置collectionView的基本属性：标签之间的间距，行间距，sectionInset,同时也支持最多展示多少个标签，标签默认背景色，标签宽度是否随文字自适应，设置标签文字字体大小，设置选中索引，设置是否支持选中样式； 动态获取整个collectionView的高度；依赖第三方"EqualSpaceFlowLayoutEvolve"设置左对齐
+//  reloadData之前，必须设置collectionView的frame，不然不会回调数据源代理,也无法内部布局；
 //  例子 看ZXLabelsInputTagsView的
 
 //  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
-//  2018.3.19,增加注释
 //  2018.6.07  修改高度计算；
 //  2018.08.01 优化collectionView添加时机不对造成的高度计算bug；
 //  2018.9.11  优化ZXLabelsTagsView作为重用TableFooterView的时候，造成高度获取不准的bug；
+//  2019.1.28  增加注释
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
@@ -83,8 +84,8 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 // 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除; 默认10
 @property (nonatomic, assign) NSInteger maxItemCount;
 
-// 添加tag标签的额外设置;
-@property (nonatomic, strong) UIColor *tagBackgroudColor;
+// 设置标签的背景颜色;
+@property (nonatomic, strong) UIColor *tagNormarBackgroudColor;
 
 // 设置cell标签宽度是否随它的内容自适应：default NO;
 @property (nonatomic, assign) BOOL apportionsItemWidthsByContent;
@@ -153,8 +154,9 @@ NS_ASSUME_NONNULL_END
 
 - (void)awakeFromNib
 {
-    self.labelsTagsView.maxItemCount = 50;
     [super awakeFromNib];
+    self.labelsTagsView.maxItemCount = 50;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setData:(id)data
@@ -178,8 +180,7 @@ NS_ASSUME_NONNULL_END
     if (indexPath.section ==3)
     {
         RecentlyFindLabCell *recentlyFindProCell = [tableView dequeueReusableCellWithIdentifier:reuse_recentlyFindCell forIndexPath:indexPath];
-        recentlyFindProCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+ 
         if (self.purchaserModel.lastProducts.count>0)
         {
             [recentlyFindProCell setData:self.purchaserModel.lastProducts];
@@ -250,7 +251,7 @@ NS_ASSUME_NONNULL_END
     self.labelsTagsView.maxItemCount = 3;
     self.labelsTagsView.apportionsItemWidthsByContent = NO;
     self.labelsTagsView.sectionInset = UIEdgeInsetsMake(7.5, 15, 7.5, 15);
-    [self.labelsTagsView setCollectionViewLayoutWithEqualSpaceAlign:AlignWithRight withItemEqualSpace:10.f animated:NO];
+    [self.labelsTagsView setCollectionViewLayoutWithEqualSpaceAlign:AlignTypeRight withItemEqualSpace:10.f animated:NO];
 }
 - (void)setData:(id)data
 {

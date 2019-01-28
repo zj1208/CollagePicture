@@ -1203,6 +1203,8 @@
 		F4361D9C21099C9700A5C22F /* ZXLabelsCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				F446A80C1FCC082900C82C90 /* EqualSpaceFlowLayoutEvolve.h */,
+				F446A8101FCC082900C82C90 /* EqualSpaceFlowLayoutEvolve.m */,
 				F4361D9D21099C9700A5C22F /* ZXLabelsTagsView */,
 				F4361DA021099C9700A5C22F /* LabelCell */,
 				F4361DA421099C9700A5C22F /* ZXLabelsInputTagsView */,
@@ -1474,8 +1476,6 @@
 		F446A8081FCC082900C82C90 /* ZXManyCellFlowLayouts */ = {
 			isa = PBXGroup;
 			children = (
-				F446A80C1FCC082900C82C90 /* EqualSpaceFlowLayoutEvolve.h */,
-				F446A8101FCC082900C82C90 /* EqualSpaceFlowLayoutEvolve.m */,
 				F446A8091FCC082900C82C90 /* ZXCeilingFlowLayout */,
 				F446A80D1FCC082900C82C90 /* ZXNoGapCellFlowLayout */,
 				F446A8111FCC082900C82C90 /* ZXWaterfallFlowLayout */,

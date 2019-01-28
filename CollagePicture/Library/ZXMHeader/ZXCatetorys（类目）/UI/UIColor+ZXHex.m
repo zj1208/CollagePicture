@@ -66,7 +66,6 @@
 
 + (UIColor *)colorWithRandomColor
 {
-    
     CGFloat r = arc4random_uniform(256);
     CGFloat g = arc4random_uniform(256);
     CGFloat b = arc4random_uniform(256);
