@@ -43,40 +43,43 @@ static NSInteger const ZXColumnsCount = 4;
 - (nullable NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     
-    NSArray *mAttributes = [super layoutAttributesForElementsInRect:rect];
+    NSArray *originalAttributes = [super layoutAttributesForElementsInRect:rect];
 //    NSLog(@"%@",mAttributes);
     __weak __typeof(self)weakSelf = self;
 
-    [mAttributes enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [originalAttributes enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if ([self.delegate respondsToSelector:@selector(ZXNoGapCellFlowLayout:shouldNoGapAtIndexPath:)] && obj.representedElementCategory == UICollectionElementCategoryCell)
         {
             if ([self.delegate ZXNoGapCellFlowLayout:self shouldNoGapAtIndexPath:obj.indexPath])
             {
-                [weakSelf recomputeCellAttributesFrame:obj index:idx layoutAttributes:mAttributes];
+                [weakSelf recomputeCellAttributesFrame:obj index:idx layoutAttributes:originalAttributes];
             }
         }
 //        NSLog(@"obj = %@",obj);
        }];
-    return mAttributes;
+    return originalAttributes;
 }
 
 
-- (void)recomputeCellAttributesFrame:(UICollectionViewLayoutAttributes *)attributes index:(NSUInteger)index  layoutAttributes:(NSArray *)mlayoutAttributes
+- (void)recomputeCellAttributesFrame:(UICollectionViewLayoutAttributes *)currentAttributes index:(NSUInteger)index  layoutAttributes:(NSArray *)originalAttributes
 {
+//  当前layoutAttributes
+    UICollectionViewLayoutAttributes *currentItemAttributes = currentAttributes;
+    UICollectionViewLayoutAttributes *previousItemLayoutAtrributes = [originalAttributes objectAtIndex:index-1];
     
-    UICollectionViewLayoutAttributes *currentLayoutAttributes = attributes;
-    UICollectionViewLayoutAttributes *preLayoutAtrributes = [mlayoutAttributes objectAtIndex:index-1];
     NSInteger maximumSpacing = 0;
-    NSInteger preX = CGRectGetMaxX(preLayoutAtrributes.frame);
-    NSInteger col_idx = currentLayoutAttributes.indexPath.row%self.columnsCount;
-    CGFloat itemWidth = CGRectGetWidth(self.collectionView.bounds)/self.columnsCount;
-    //如果当前一个cell的最右边加上我们想要的间距加上当前cell的宽度依然在contentSize中，我们改变当前cell的原点位置
-    if(preX + maximumSpacing + currentLayoutAttributes.frame.size.width < self.collectionViewContentSize.width)
+    CGFloat previousFrameRightPoint = CGRectGetMaxX(previousItemLayoutAtrributes.frame);
+////  当前item是第几列
+//    NSInteger column_idx = currentItemAttributes.indexPath.row%self.columnsCount;
+//    CGFloat itemWidth = CGRectGetWidth(self.collectionView.bounds)/self.columnsCount;
+//  判断上一个item和当前item是否在同一行，如果上一个item的最右边+我们想要的间距+当前cell的宽度依然在contentSize中的同一行，则我们改变当前item的原点位置
+    if(previousFrameRightPoint + maximumSpacing + currentItemAttributes.frame.size.width < self.collectionViewContentSize.width)
     {
-        CGRect frame = currentLayoutAttributes.frame;
-        frame.origin.x = col_idx * itemWidth;
-        currentLayoutAttributes.frame = frame;
+        CGRect frame = currentItemAttributes.frame;
+//        frame.origin.x = column_idx * itemWidth;
+        frame.origin.x = previousFrameRightPoint + maximumSpacing;
+        currentItemAttributes.frame = frame;
     }
 }
 

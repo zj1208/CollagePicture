@@ -14,6 +14,7 @@
 		F40228EE1EF371E800E3D07E /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228ED1EF371E800E3D07E /* WelcomeViewController.m */; };
 		F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228F41EF37CA400E3D07E /* CopyrightController.m */; };
 		F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */; };
+		F41E3BEA220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F41E3BE8220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m */; };
 		F425A282214B520A00C6F724 /* ZXLabelsTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A281214B520A00C6F724 /* ZXLabelsTagsView.m */; };
 		F425A286214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A285214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m */; };
 		F425A289214B541B00C6F724 /* UIViewController+ZXNavBarCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A287214B541A00C6F724 /* UIViewController+ZXNavBarCustom.m */; };
@@ -401,6 +402,8 @@
 		F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPrintPageRenderer.m; sourceTree = "<group>"; };
 		F41A19D5204FD75F00B1945C /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F41A19E9204FD95C00B1945C /* ZXEmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXEmptyViewController.h; sourceTree = "<group>"; };
+		F41E3BE7220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
+		F41E3BE8220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCollectionViewLeftAlignedLayout.m; sourceTree = "<group>"; };
 		F425A280214B520A00C6F724 /* ZXLabelsTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsTagsView.h; sourceTree = "<group>"; };
 		F425A281214B520A00C6F724 /* ZXLabelsTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLabelsTagsView.m; sourceTree = "<group>"; };
 		F425A283214B525000C6F724 /* ZXTableViewUnfoldFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTableViewUnfoldFooterView.h; sourceTree = "<group>"; };
@@ -1476,6 +1479,8 @@
 		F446A8081FCC082900C82C90 /* ZXManyCellFlowLayouts */ = {
 			isa = PBXGroup;
 			children = (
+				F41E3BE7220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.h */,
+				F41E3BE8220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m */,
 				F446A8091FCC082900C82C90 /* ZXCeilingFlowLayout */,
 				F446A80D1FCC082900C82C90 /* ZXNoGapCellFlowLayout */,
 				F446A8111FCC082900C82C90 /* ZXWaterfallFlowLayout */,
@@ -3536,6 +3541,7 @@
 				F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */,
 				F4361DD921099DF400A5C22F /* ZXAddPicPlaceholderCell.m in Sources */,
 				F466A96B21549ADB007143A1 /* ZXAlphaAnimatedTranstion.m in Sources */,
+				F41E3BEA220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m in Sources */,
 				F446A9A81FCC082A00C82C90 /* UploadTable.m in Sources */,
 				F49CFD2B1FDE5C8D009F2213 /* UIView+XLExtension.m in Sources */,
 				F4D8086F20E080130084D024 /* ZXTextRectTextField.m in Sources */,

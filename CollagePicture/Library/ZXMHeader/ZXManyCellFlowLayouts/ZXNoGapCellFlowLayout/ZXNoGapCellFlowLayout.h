@@ -6,11 +6,11 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-// collectionViewCell之间无间隙的collectionView布局；解决一个屏幕宽度需要无间隙的排列n个平均宽度的item；
+// 简介：解决2个平行collectionViewCell之间因为存在细微间距而产生分割线,在屏幕宽度/item个数不是整数的时候，间距是无法保证=0的，所以需要自己重写设置item的frame原点坐标；这种无间隙的collectionView布局适合需要无间隙的排列n个平均宽度的item；
+
 // plus模拟器上还能看到分割线，真机上看不到的；
 
-// 2017.12.27
-// 注释添加
+// 2019.1.30 优化代码
 
 #import <UIKit/UIKit.h>
 
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXNoGapCellFlowLayout : UICollectionViewFlowLayout
 
-// 多少列
+// 设置多少列，默认4列
 @property (nonatomic, assign) NSInteger columnsCount;
 
 // 设置代理
