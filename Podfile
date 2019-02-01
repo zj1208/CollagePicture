@@ -12,7 +12,8 @@ target "CollagePicture" do
 #通用标准库
 pod 'AFNetworking', '~> 3.1.0'
 pod 'AFNetworking-Synchronous', '~> 1.1.0'
-pod 'SDWebImage', '~> 4.0.0'
+#4.0.0 ->5.0.0-beta3
+pod 'SDWebImage', '~> 5.0.0-beta3'
 pod 'SDWebImage/GIF'
 #可选 使用WebP
 #pod 'SDWebImage/WebP’

@@ -9,6 +9,7 @@
 #import "ZXAddPicCollectionView.h"
 #import "UIView+ZXChangeSize.h"
 #import "UIImageView+WebCache.h"
+#import "SDImageCache.h"
 #import <Photos/Photos.h>
 #import "ZXAddPicPlaceholderCell.h"
 #import "ZXAddPicCollectionConst.h"

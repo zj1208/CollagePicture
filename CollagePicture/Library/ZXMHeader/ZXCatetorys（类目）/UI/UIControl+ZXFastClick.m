@@ -7,7 +7,7 @@
 //
 
 #import "UIControl+ZXFastClick.h"
-
+#import <objc/runtime.h>
 
 static const char *uiControl_kIgnoreEventChar = "uiControl_kIgnoreEvent";
 static const char *uiControl_kTimeIntervalChar = "uiControl_kTimeInterval";
