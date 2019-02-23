@@ -13,7 +13,6 @@
 #import "UserInfoUDManager.h"
 #import "ZXCatetories.h"
 #import"APPCommonDef.h"
-#import"QYHelpFunction.h"
 
 #endif
 

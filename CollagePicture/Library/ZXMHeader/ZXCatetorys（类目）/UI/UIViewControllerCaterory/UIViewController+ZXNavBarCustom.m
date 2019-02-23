@@ -89,12 +89,14 @@
     highlightImage =  [highlightImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, highlightImage.size.width, 0, 0)];
     UIBarButtonItem *item =nil;
     //ios9
-    if ([UIBarButtonItem instancesRespondToSelector:@selector(appearanceWhenContainedInInstancesOfClasses:)])
+    if (@available(iOS 9.0,*))
     {
-        item= [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationController class]]];
+        if ([UIBarButtonItem instancesRespondToSelector:@selector(appearanceWhenContainedInInstancesOfClasses:)])
+        {
+            item= [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationController class]]];
+        }
     }
-    else
-    {
+    else{
         item = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil];
     }
     [item setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -459,7 +461,13 @@
     tabBar.tintColor = aSleColor;
     if ([tabBar respondsToSelector:@selector(setUnselectedItemTintColor:)])
     {
-        [tabBar setUnselectedItemTintColor:unSleColor];
+        if (@available(iOS 10.0, *))
+        {
+            [tabBar setUnselectedItemTintColor:unSleColor];
+        }
+        else{
+            
+        }
     }
 //    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys: aColor,NSForegroundColorAttributeName, nil];
 //    [[UITabBarItem appearance] setTitleTextAttributes:dic forState:UIControlStateSelected];

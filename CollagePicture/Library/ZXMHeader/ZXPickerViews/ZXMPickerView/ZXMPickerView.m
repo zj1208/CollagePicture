@@ -26,11 +26,13 @@
 
 
 @interface ZXMPickerView ()
-@property (nonatomic , assign) int row;
 
 @property (nonatomic, copy) NSArray *dataArray;
 
 @property (nonatomic, strong) UIToolbar *toolbar;
+
+//@property (nonatomic, assign) NSInteger selectedRow;
+
 @end
 
 
@@ -64,6 +66,7 @@
 }
 
 
+
 //216+44
 - (void)initData
 {
@@ -71,9 +74,14 @@
     NSArray *array = [NSArray array];
     self.dataArray = array;
     
-    _selectedRow =0;
-    [self addSubview:self.toolbar];
+    if (CGRectEqualToRect(self.frame, CGRectZero))
+    {
+        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6_Width(260.f));
+    }
     
+    [self addSubview:self.toolbar];
+    [self addToolBarConstraintWithItem:self.toolbar];
+
     [self addSubview:self.pickerView];
     // 添加pickerView的约束
     [self addCustomConstraintWithItem:self.pickerView];
@@ -83,7 +91,7 @@
 {
     [super layoutSubviews];
     
-    self.toolbar.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame),44);
+//    self.toolbar.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame),44);
 }
 
 #pragma mark -pickerView
@@ -94,7 +102,7 @@
     {
         UIPickerView *picker= [[UIPickerView alloc] init];
 //        picker.backgroundColor = [UIColor redColor];
-        picker.showsSelectionIndicator = YES;
+        picker.showsSelectionIndicator = NO;
         picker.delegate = self;
         picker.dataSource =self;
         _pickerView = picker;
@@ -128,6 +136,37 @@
     return _toolbar;
 }
 
+#pragma mark - toolBar约束
+- (void)addToolBarConstraintWithItem:(UIView *)item
+{
+    self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+    //    -layoutMargins从视图边界的边缘返回一组insets，它表示布局内容的默认间隔。{8，8，8，8}
+    //    left/leading：view的左边内边距8，即x被增大了，你要设置的pickerViewX就应该在之前的基础下-8，才能同等边距；同理右边；
+    if ([[UIDevice currentDevice].systemVersion floatValue]>=9.0)
+    {
+        UILayoutGuide *layoutGuide_superView = self.layoutMarginsGuide;
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:-8];
+        NSLayoutConstraint *constraint_height = [item.heightAnchor constraintEqualToConstant:44];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:-8];
+        NSLayoutConstraint *constraint_trailing = [item.trailingAnchor constraintEqualToAnchor:layoutGuide_superView.trailingAnchor constant:8];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_height,constraint_leading,constraint_trailing]];
+    }
+    else
+    {
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeTop multiplier:1 constant:0];
+        constraint1.active = YES;
+        
+        NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:44];
+        constraint2.active = YES;
+        
+        NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+        constraint3.active = YES;
+        
+        NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+        constraint4.active = YES;
+    }
+    
+}
 #pragma mark - 添加pickView的约束
 
 - (void)addCustomConstraintWithItem:(UIView *)item
@@ -164,18 +203,25 @@
     }
 }
 
+
 - (void)reloadDataWithDataArray:(NSArray *)dataArray;
 {
     _dataArray =[dataArray copy];
+//     可以不写刷新，由于本身就会刷新好几次
     [self.pickerView reloadAllComponents];
 }
 
-- (void)selectRow:(NSInteger)row inComponent:(NSInteger)component animated:(BOOL)animated
+- (void)reloadConstellationData
 {
-    [self.pickerView selectRow:row inComponent:component animated:animated];
+    _dataArray =@[@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座"];
 }
 
-- (void)selectObject:(NSString *)object animated:(BOOL)animated
+- (void)selectRow:(NSInteger)row animated:(BOOL)animated
+{
+    [self.pickerView selectRow:row inComponent:0 animated:animated];
+}
+
+- (void)selectObject:(nullable NSString *)object animated:(BOOL)animated
 {
     if ([self.dataArray containsObject:object])
     {
@@ -217,35 +263,40 @@
 //    return 100;
 //}
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    _row =(int)row;
-}
-
+//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+//{
+//    UIView* selectView = [pickerView viewForRow:row forComponent:component];
+//}
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+//{
+//    UILabel* pickerLabel = (UILabel*)view;
+//    if (!pickerLabel) {
+//        pickerLabel = [[UILabel alloc] init];
+//        pickerLabel.font = [UIFont systemFontOfSize:15];
+//        pickerLabel.textAlignment = NSTextAlignmentCenter;
+//        pickerLabel.textColor = [UIColor blueColor];
+//    }
+//    pickerLabel.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+//    return pickerLabel;
+//}
 
 #pragma mark - show
-
+// 这里待优化测试
 - (void)showInTabBarView:(UIView *)view
 {
-    ZXOverlay *overlay = [[ZXOverlay alloc] init];
-    overlay.delegate = self;
-    [overlay addSubview:self];
-    [view addSubview:overlay];
-    overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)-49);
-    
-    self.frame = CGRectMake(0, CGRectGetHeight(view.frame), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        self.frame = CGRectMake(0, CGRectGetHeight(view.frame) - CGRectGetHeight(self.frame)-49, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    }];
-    
-    [self.pickerView selectRow:_selectedRow inComponent:0 animated:YES];
+    [self showInTabBarViewOrView:view isTabBarView:YES];
+//    [self.pickerView selectRow:_selectedRow inComponent:0 animated:YES];
 }
 
-- (void)showInView:(UIView *) view
+- (void)showInView:(UIView *)view
 {
 //    NSLog(@"windows:%@",[UIApplication sharedApplication].windows);
+    [self showInTabBarViewOrView:view isTabBarView:NO];
+}
+
+
+- (void)showInTabBarViewOrView:(UIView *)view isTabBarView:(BOOL)flag
+{
     if ([view isKindOfClass:[UITableView class]] ||[view isKindOfClass:[UICollectionView class]])
     {
         view = [[[UIApplication sharedApplication] delegate] window];
@@ -254,21 +305,49 @@
     overlay.delegate = self;
     [overlay addSubview:self];
     [view addSubview:overlay];
-    overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame));
-    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
     
+    CGFloat safeAreaBottom = 0.f;
+    if (@available(iOS 11.0, *))
+    {
+        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
+            safeAreaBottom = areaInset.bottom;
+        }else{
+        }
+    }
+
+    if (flag)
+    {
+        overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)-safeAreaBottom-49);
+    }
+    else
+    {
+        overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame));
+//      设置增加安全区域显示；
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            
+            self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame)+safeAreaBottom);
+        });
+    }
+    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
-
-        self.frame = CGRectMake(0, CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-
+        
+        if (flag)
+        {
+            self.frame = CGRectMake(0, CGRectGetHeight(view.frame) - CGRectGetHeight(self.frame)-safeAreaBottom-49, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+        }
+        else
+        {
+            self.frame = CGRectMake(0, CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+        }
+        
     } completion:^(BOOL finished) {
-
+        
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     }];
 }
-
-
 
 
 
@@ -313,12 +392,13 @@
 
 - (void)finishBarButtonAction:(UIBarButtonItem *)sender
 {
-    NSString *tit = [self.dataArray objectAtIndex:_row];
+    NSInteger selectedRow = [self.pickerView selectedRowInComponent:0]<0?0:[self.pickerView selectedRowInComponent:0];
+    NSString *tit = [self.dataArray objectAtIndex:selectedRow];
     [self cancelPicker];
 
     if ([self.delegate respondsToSelector:@selector(zx_pickerDidDoneStatus:index:itemTitle:)])
     {
-        [self.delegate zx_pickerDidDoneStatus:self index:_row itemTitle:tit];
+        [self.delegate zx_pickerDidDoneStatus:self index:selectedRow itemTitle:tit];
     }
 }
 

@@ -9,6 +9,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 // 参考云信封装-NIMKitPhotoFetcher；
 //#import "ImagePickerViewController.h"
@@ -99,7 +100,7 @@ typedef NS_ENUM(NSInteger, PhotosAlbumListType)
 - (void)zxPresentActionSheetToImagePickerWithSourceController:(UIViewController *)sourceController;
 
 //根据sourceType直接调用相册列表或相机
-- (void)presentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController;
+- (void)zxPresentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController;
 
 @end
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YFG-Du-iEM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YFG-Du-iEM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -118,10 +117,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Lsp-uQ-5Bg" firstAttribute="top" secondItem="XS2-8s-Yq4" secondAttribute="bottom" constant="5" id="0ak-7n-dNg"/>
+                            <constraint firstItem="Lsp-uQ-5Bg" firstAttribute="top" secondItem="XS2-8s-Yq4" secondAttribute="bottom" constant="5" id="0Ak-dV-xgq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XS2-8s-Yq4" secondAttribute="trailing" constant="4" id="42w-Sr-iu5"/>
                             <constraint firstItem="Lsp-uQ-5Bg" firstAttribute="top" secondItem="qI2-lr-Dle" secondAttribute="bottom" constant="5" id="4PL-eY-39G"/>
-                            <constraint firstItem="qI2-lr-Dle" firstAttribute="leading" secondItem="d0B-SH-YM4" secondAttribute="leading" constant="20" id="Gtt-PN-H8s"/>
-                            <constraint firstAttribute="trailing" secondItem="XS2-8s-Yq4" secondAttribute="trailing" constant="20" id="M92-ke-CP0"/>
+                            <constraint firstItem="qI2-lr-Dle" firstAttribute="leading" secondItem="d0B-SH-YM4" secondAttribute="leadingMargin" constant="4" id="4W3-Vh-Z3f"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
@@ -223,7 +222,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qsw-Xa-b1k">
-                                    <rect key="frame" x="156" y="70" width="64" height="64"/>
+                                    <rect key="frame" x="155.5" y="70" width="64" height="64"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="qsw-Xa-b1k" secondAttribute="height" multiplier="1:1" id="Iyl-po-1Fn"/>
                                         <constraint firstAttribute="width" constant="64" id="Srv-yU-ggZ"/>
@@ -231,7 +230,7 @@
                                     <state key="normal" backgroundImage="placeholdPhoto"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWM-gb-ixx">
-                                    <rect key="frame" x="160" y="136" width="56" height="34"/>
+                                    <rect key="frame" x="159.5" y="136" width="56" height="34"/>
                                     <state key="normal" title="小凤飞">
                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
@@ -246,7 +245,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UGb-up-xqa">
-                                    <rect key="frame" x="153" y="142" width="70" height="30"/>
+                                    <rect key="frame" x="152.5" y="142" width="70" height="30"/>
                                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="70" id="Yfe-HS-1Il"/>
@@ -13487,7 +13486,7 @@ AAAAAAAAC/btA
         </image>
         <image name="m_iconAlbum" width="20" height="20"/>
         <image name="m_set" width="30" height="30"/>
-        <image name="placeholdPhoto" width="64" height="64"/>
+        <image name="placeholdPhoto" width="64.5" height="64.5"/>
         <image name="shareIcon" width="20" height="18"/>
     </resources>
 </document>

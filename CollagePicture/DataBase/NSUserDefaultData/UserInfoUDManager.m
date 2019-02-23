@@ -124,7 +124,7 @@ static NSString *const ud_saveVersion = @"ud_saveVersion";
 
 + (void)cleanWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
 {
-    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
+    if ([[UIDevice currentDevice] systemVersion].floatValue >=9.f)
     {
         NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
         //移除cookie，不删除WK的本地cookie

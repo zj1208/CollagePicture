@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)zh_userSwitchWhiteAndLightGrayColorWithInteractionEnabled:(BOOL)enabled;
 
-- (void)zh_userInteractionEnabledWithAlpha:(BOOL)enabled;
+- (void)zh_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled;
 
 /**
  * @brief 未选中的时候背景颜色是白色,边框颜色和文字颜色为boardColor;选中的按钮背景颜色动态改变为边框颜色boardColor,文字颜色改为白色;

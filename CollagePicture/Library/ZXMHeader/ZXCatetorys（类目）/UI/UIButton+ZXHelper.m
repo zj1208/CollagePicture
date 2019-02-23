@@ -147,7 +147,7 @@
     
 }
 
-- (void)zh_userInteractionEnabledWithAlpha:(BOOL)enabled
+- (void)zh_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled
 {
     self.userInteractionEnabled = enabled;
     if (enabled)

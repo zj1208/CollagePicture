@@ -52,7 +52,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
     
     self.userNameField.keyboardType = UIKeyboardTypeNumberPad;
     
-    [self.loginBtn zh_userInteractionEnabledWithAlpha:NO];
+    [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:NO];
     self.userNameField.delegate = self;
     
     [self.whiteBgView zx_setCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
@@ -72,7 +72,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 - (void)signInBtnChangeAlpha:(NSNotification *)notification
 {
     NSString *str = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
-    [self.loginBtn zh_userInteractionEnabledWithAlpha:str.length==11&&self.passwordTextField.text.length>3?YES:NO];
+    BOOL flag = str.length==11&&self.passwordTextField.text.length>3?YES:NO;
+    [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:flag];
 }
 
 

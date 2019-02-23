@@ -40,6 +40,18 @@ static NSString * const reuseIdentifier = @"Cell";
     
     [self setUI];
     [self setData];
+    
+    CGFloat safeAreaBottom = 0.f;
+    if (@available(iOS 11.0, *))
+    {
+        //      iPhoneX :{44, 0, 34, 0}
+        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
+            safeAreaBottom = areaInset.bottom;
+        }else{
+        }
+    }
+
 }
 
 

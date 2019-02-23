@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
+//2019.2.23. 优化加载模版数据，及iPhoneX系列适配；
+
 @class AlbumListModel;
 
 

@@ -8,7 +8,7 @@
 
 #import "ZXImagePickerVCManager.h"
 #include <MobileCoreServices/UTCoreTypes.h>
-
+#import <objc/runtime.h>
 
 
 static char pickerControllerActionKey;
@@ -34,7 +34,7 @@ static char pickerControllerActionKey;
             }
             else
             {
-                [self presentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeCamera sourceController:sourceController];
+                [self zxPresentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeCamera sourceController:sourceController];
             }
         }];
         [alertController addAction:cameraAction];
@@ -42,7 +42,7 @@ static char pickerControllerActionKey;
 
     UIAlertAction *doAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"从相册选择", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-          [self presentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum sourceController:sourceController];
+          [self zxPresentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum sourceController:sourceController];
     }];
     [alertController addAction:doAction];
     [sourceController presentViewController:alertController animated:YES completion:nil];
@@ -80,7 +80,7 @@ static char pickerControllerActionKey;
 
 #pragma mark - actionsheet delegate
 
-- (void)presentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController
+- (void)zxPresentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController
 {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;

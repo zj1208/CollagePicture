@@ -22,8 +22,39 @@
 #import "SDWebImageDownloader.h"
 #import "SDImageCache.h"
 #import "SDWebImageManager.h"
-#define LCDScale_LandX(X) X*(LCDW-10)/(568-10)
-#define LCDScale_LandY(X) X*(LCDH-40)/(320-40)
+#define LCDScale_LandX(X)   X*(LCDW-10)/(568-10)
+#define LCDScale_LandY(X)  X*(LCDH-40)/(320-40)
+
+// iphoneX系列判断是否有safeAreaInsets的值，其他是0;
+// iPhoneX :{44, 0, 34, 0}
+#ifndef IS_IPHONE_XX
+#define IS_IPHONE_XX ({\
+int tmp = 0;\
+if (@available(iOS 11.0, *)) { \
+UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
+tmp = 1;\
+}else{\
+tmp = 0;\
+}\
+}\
+else{\
+tmp = 0;\
+}\
+tmp;\
+})
+#endif
+
+// 注意：在旋转的视图中，view需要用magin跟屏幕做约束，这样才能自动以安全区域为准；
+
+// 1.添加主图层和编剧区域数组视图到self.view上；
+//（1）.先添加主图层，（2）.再 根据模版索引获取plist文件中设置的编辑区域坐标布局数组，根据坐标布局数组 初始化对应数量的编剧view数组，添加到self.view上；
+
+// 2.设置图层的横屏frame，加载模版数据image，设置图层的content内容显示；
+//在旋转后，再设置图层的横屏frame；再在异步全局队列中 加载 指定索引的 图片模版数据，转为image；然后再在主队列中把模版image设置为图层的content内容；
+
+// 3.设置编剧区域数组的每个视图的约束到指定位置上；
+
 
 
 @interface MakingPhotoController ()<ImageEditViewPickerDelegate,ZXImagePickerVCManagerDelegate>
@@ -114,17 +145,31 @@
 //    return UIInterfaceOrientationLandscapeRight;
 //}
 
-//可以优化让加载图片视图放在viewDidLoad里
+//2.设置图层的横屏frame，加载模版数据image，设置图层的content内容显示；
+//3.设置编剧区域数组的每个视图的约束到指定位置上；
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator
 {
      [super viewWillTransitionToSize:size withTransitionCoordinator: coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         
         NSLog(@"%@",[NSThread currentThread]);//<NSThread: 0x60000006eb40>{number = 1, name = main}
+        //竖屏： iPhoneX :{44, 0, 34, 0}
+        //横屏: {0, 44, 21, 44}
         //这里肯定是横屏的
         if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
         {
-            self.maskLayer.frame = CGRectMake(5, 0, size.width-2*5, size.height-40);
+            UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+            if (@available(iOS 11.0, *))
+            {
+                UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+                if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
+                    safeAreaInsets = areaInset;
+                }else{
+                }
+            }
+            self.maskLayer.frame = CGRectMake(5+safeAreaInsets.left, 0, size.width-2*5-safeAreaInsets.left-safeAreaInsets.right, size.height-40-safeAreaInsets.bottom);
+//            加载模版数据image，设置图层的content内容显示
+//            3.设置编剧区域数组的每个视图的约束到指定位置上；
             [self loadTemplateDataWithIndex:self.templateType];
             
             [UIView animateWithDuration:1.f animations:^{
@@ -138,6 +183,17 @@
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         
         //旋转完成的时候回调；
+        [self.numBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            if (@available(iOS 11.0, *)) {
+                make.top.equalTo(self.view.mas_top).with.offset(5 + [UIApplication sharedApplication].delegate.window.safeAreaInsets.top);
+            } else {
+                make.top.equalTo(self.view.mas_top).with.offset(5);
+            }
+            make.centerX.equalTo(self.view.mas_centerX);
+            make.width.mas_equalTo(60);
+            make.height.mas_equalTo(26);
+        }];
         
     }];
 }
@@ -148,15 +204,6 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    
-    
-    [self.numBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(self.view.mas_top).with.offset(5);
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(60);
-
-    }];
     
 //    if (!UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
 //    {
@@ -216,7 +263,7 @@
     //添加主视图
     [self.view.layer addSublayer:self.maskLayer];
 
-    //添加数量按钮
+    //添加数量按钮;一定要旋转之后设置约束，因为安全区域，哪个为top还没有确定；
     [self.view addSubview:self.numBtn];
 }
 
@@ -233,12 +280,7 @@
     if (!_maskLayer) {
         
         CALayer *maskLayer = [[CALayer alloc] init];
-        //    maskLayer.bounds = CGRectMake(0, 0, LCDW-2*5, LCDH-40);
-        //    maskLayer.position = CGPointMake(5, 0);
-        //    maskLayer.anchorPoint = CGPointZero;
         maskLayer.contentsGravity = kCAGravityResize;
-        //    maskLayer.frame = CGRectMake(5, 0, LCDW-2*5, LCDH-40);
-        //    maskLayer.delegate = self;
         _maskLayer = maskLayer;
     }
     return _maskLayer;
@@ -250,15 +292,9 @@
     {
         UIButton  *numBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         numBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [numBtn setBackgroundImage:[UIImage imageNamed:@"s_titleBg"] forState:UIControlStateNormal];
+//        [numBtn setBackgroundImage:[UIImage imageNamed:@"s_titleBg"] forState:UIControlStateNormal];
+        numBtn.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
         [numBtn setTitle:[NSString stringWithFormat:@"1/%@",self.pageCount] forState:UIControlStateNormal];
-        [numBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.top.equalTo(self.view.mas_top).with.offset(5);
-            make.centerX.equalTo(self.view.mas_centerX);
-            make.width.mas_equalTo(60);
-            
-        }];
         _numBtn = numBtn;
     }
     return _numBtn;
@@ -281,30 +317,20 @@
  */
 - (void)loadTemplateDataWithIndex:(NSNumber *)type
 {
-
-    
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    
-    
-    
-    
     dispatch_async(queue, ^{
         
         NSString *templateName = [NSString stringWithFormat:@"album_a%@@2x",type];
         UIImage *image = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(templateName, @"png")];
         NSLog(@"%@",NSStringFromCGSize(self.maskLayer.frame.size));
         image = [UIImage zh_scaleImage:image toSize:CGSizeMake(self.maskLayer.frame.size.width*1.5, self.maskLayer.frame.size.height*1.5)];
-//        image = [UIImage zhuScaleToSize:image size:imgSize];
         dispatch_async(dispatch_get_main_queue(), ^{
            
             self.maskLayer.contents = (__bridge id _Nullable)(image.CGImage);
             [self makeSubviewConstraint:[self.templateType integerValue]];
 
-            
         });
     });
-
-    
 }
 
 #pragma mark - 返回
@@ -421,7 +447,7 @@
 
 
 
-#pragma mark - 获取plist文件中设置的坐标数组和编辑视图
+#pragma mark - 根据索引获取plist文件中设置的坐标数组；
 /**
  *  根据索引获取plist文件中设置的坐标数组；
  *
@@ -444,7 +470,7 @@
 }
 
 /**
- *  根据索引获取plist的坐标数组，再添加对应的imageEditView编辑视图；
+ *  在ViewDidLoad中 先根据模版索引获取plist文件中设置的编辑区域坐标布局数组，同时初始化对应数量的编剧view数组；添加到self.view上
  *
  */
 - (void)resetViewByStyleIndex:(NSInteger)styleIndex
@@ -454,7 +480,6 @@
         [self.imageEditViewMArray makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [self.imageEditViewMArray removeAllObjects];
     }
-//  NSLog(@"%@",self.imageEditViewMArray);
     NSArray *subViewArray = [self getSubViewArrayFromBundleResourceWithIndex:styleIndex];
     if (subViewArray.count==0)
     {
@@ -462,8 +487,8 @@
     }
     [subViewArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSDictionary *subDic = (NSDictionary *)obj;
-        NSArray *layoutArray = [subDic objectForKey:@"layoutArray"];
+//        NSDictionary *subDic = (NSDictionary *)obj;
+//        NSArray *layoutArray = [subDic objectForKey:@"layoutArray"];
         
         ImageEditView *editView =[[ImageEditView alloc] init];
         editView.delegate = self;
@@ -473,19 +498,20 @@
         
         [self.imageEditViewMArray addObject:editView];
         
-        if (layoutArray.count<4)
-        {
-            NSLog(@"缺少点");
-        }
+//        if (layoutArray.count<4)
+//        {
+//            NSLog(@"缺少点");
+//        }
     }];
     NSLog(@"resetViewByStyle=%@",self.imageEditViewMArray);
 
 }
 
-#pragma mark -设置imageEditViewMArray的约束
+#pragma mark -设置self.imageEditViewMArray编剧区域数组的每个视图的约束到指定位置上
 
 - (void)makeSubviewConstraint:(NSInteger)styleIndex
 {
+//    根据索引获取plist文件中设置的坐标数组；
     NSArray *subViewArray = [self getSubViewArrayFromBundleResourceWithIndex:styleIndex];
 
     [self.imageEditViewMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -496,12 +522,34 @@
        
         [editView mas_makeConstraints:^(MASConstraintMaker *make) {
             
-            CGFloat landTop = LCDScale_LandY([[layoutArray objectAtIndex:0] integerValue]);
-            CGFloat landLeft = LCDScale_LandX([[layoutArray objectAtIndex:1] integerValue])+5;
-            CGFloat landBottom = LCDScale_LandY([[layoutArray objectAtIndex:2] integerValue])+40;
-            CGFloat landRight = LCDScale_LandX([[layoutArray objectAtIndex:3] integerValue])+5;
-            UIEdgeInsets inset = UIEdgeInsetsMake(landTop,landLeft, landBottom,landRight);
-//            make.edges.mas_equalTo(inset);
+            CGFloat mas_Top;
+            CGFloat mas_Left;
+            CGFloat mas_Bottom;
+            CGFloat mas_Right;
+            UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+            if (@available(iOS 11.0, *)) {
+                
+                UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+                if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
+                    safeAreaInsets = areaInset;
+                }else{
+                }
+                CGFloat safeAreaWidth = LCDW-safeAreaInsets.left-safeAreaInsets.right;
+                CGFloat safeAreaHeight = LCDH-safeAreaInsets.top-safeAreaInsets.bottom;
+
+                mas_Left = ([[layoutArray objectAtIndex:1] integerValue]*(safeAreaWidth-10)/(568-10)) + 5 + safeAreaInsets.left;
+                mas_Top = ([[layoutArray objectAtIndex:0] integerValue]*(safeAreaHeight-40)/(320-40))+ safeAreaInsets.top;
+                mas_Bottom = ([[layoutArray objectAtIndex:2] integerValue]*(safeAreaHeight-40)/(320-40)) + safeAreaInsets.bottom + 40;
+                
+                mas_Right = ([[layoutArray objectAtIndex:3] integerValue]*(safeAreaWidth-10)/(568-10)) + 5 + safeAreaInsets.right;
+                
+            } else {
+                mas_Top = LCDScale_LandY([[layoutArray objectAtIndex:0] integerValue]);
+                mas_Left = LCDScale_LandX([[layoutArray objectAtIndex:1] integerValue])+5;
+                mas_Bottom = LCDScale_LandY([[layoutArray objectAtIndex:2] integerValue])+40;
+                mas_Right = LCDScale_LandX([[layoutArray objectAtIndex:3] integerValue])+5;
+            }
+            UIEdgeInsets inset = UIEdgeInsetsMake(mas_Top,mas_Left, mas_Bottom,mas_Right);
             make.edges.mas_equalTo(self.view).with.insets(inset);
         }];
  

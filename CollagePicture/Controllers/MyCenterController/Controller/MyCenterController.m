@@ -40,7 +40,6 @@ static NSInteger IndexSection_Set =1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = YES;
-
     [self setUI];
     [self setUpData];
     [self requestMyInfomation];

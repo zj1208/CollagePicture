@@ -241,7 +241,7 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
     
     [MBProgressHUD zx_showLoadingWithStatus:@"正在注册..." toView:nil];
 
-    WS(weakSelf);
+    WS(weakSelf) ;
     BmobQuery *query = [BmobQuery queryForUser];
     [query whereKey:@"username" equalTo:self.userNameField.text];
     [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {

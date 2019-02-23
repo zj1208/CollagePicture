@@ -6,6 +6,8 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  注释：collectionView菜单列表展示，每个item可以展示图标+下面文字+图标右上角的badge数字角标，可以计算出动态数量的item所需要的collectionView总高度；可以使用自定义Model数据数组+代理方法设置cell的UI数据，也可以使用默认ZXMunuIconModel+默认方法设置；
+//  self.menuIconCollectionView.itemSize = CGSizeMake(width,width+10);
+
 
 //  2018.2.11; 优化组件；
 //  2018.6.01; 增加裁剪；
