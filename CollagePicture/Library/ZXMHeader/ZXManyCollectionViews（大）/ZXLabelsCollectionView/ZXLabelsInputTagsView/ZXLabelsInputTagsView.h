@@ -578,16 +578,14 @@ static NSString *editTagsCell = @"editTagsCell";
     ManageMainProCell *cell =[self.tableView dequeueReusableCellWithIdentifier:editTagsCell];
     self.editLabelTagCell = cell;
     
-    [self setData];
-    
+    [self setData];    
 }
 
 - (void)setData
 {
     NSMutableArray *addArray = [NSMutableArray array];
     self.addedMArray = addArray;
-    
-    
+ 
     TMDiskManager *manager = [[TMDiskManager alloc] initWithObjectKey:TMDiskShopManageInfoKey];
     self.diskManager = manager;
     ShopManagerInfoModel *model = (ShopManagerInfoModel *)[self.diskManager getData];

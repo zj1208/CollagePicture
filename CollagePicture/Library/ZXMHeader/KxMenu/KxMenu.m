@@ -18,7 +18,7 @@
 
 @interface KxMenu ()
 @property(nonatomic,strong) KxMenuView  *menuView;
-@property(nonatomic,strong) ZXOverlay *overlay;
+@property(nonatomic,strong) ZXKxMenuOverlay *overlay;
 
 @end
 

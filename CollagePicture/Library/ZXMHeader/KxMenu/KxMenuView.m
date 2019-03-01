@@ -43,7 +43,7 @@ const CGFloat kMarginY = 0; // button 按钮 上下边距
     
     [self setupFrameInView:view fromRect:rect];//在KxMenuView 上动态改变箭头坐标，箭头和contentView之间的距离
     
-    ZXOverlay *overlay = [[ZXOverlay alloc] initWithFrame:view.frame];
+    ZXKxMenuOverlay *overlay = [[ZXKxMenuOverlay alloc] initWithFrame:view.frame];
     overlay.delegate = self;
     overlay.backgroundColor = [KxMenu sharedMenu].kxMenuOverlayBackgroundColor;
     [overlay addSubview:self];
@@ -333,14 +333,14 @@ const CGFloat kMarginY = 0; // button 按钮 上下边距
                                  
                              } completion:^(BOOL finished) {
                                  
-                                 if ([self.superview isKindOfClass:[ZXOverlay class]])
+                                 if ([self.superview isKindOfClass:[ZXKxMenuOverlay class]])
                                      [self.superview removeFromSuperview];
                                  [self removeFromSuperview];
                              }];
             
         } else {
             
-            if ([self.superview isKindOfClass:[ZXOverlay class]])
+            if ([self.superview isKindOfClass:[ZXKxMenuOverlay class]])
                 [self.superview removeFromSuperview];
             [self removeFromSuperview];
         }
@@ -630,7 +630,7 @@ const CGFloat kMarginY = 0; // button 按钮 上下边距
 }
 
 
-- (void)zxOverlaydissmissAction
+- (void)zxKxMenuOverlaydissmissAction
 {
     [self dismissMenu:YES];
 }

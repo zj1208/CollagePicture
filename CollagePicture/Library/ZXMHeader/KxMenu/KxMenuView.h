@@ -21,10 +21,10 @@ typedef enum {
 
 
 
-#import "ZXOverlay.h"
+#import "ZXKxMenuOverlay.h"
 #import "KxMenuItem.h"
 #import "KxMenu.h"
-@interface KxMenuView : UIView<ZXOverlayDelegate>
+@interface KxMenuView : UIView<ZXKxMenuOverlayDelegate>
 
 @property(nonatomic,strong) UIView*contentView;
 @property(nonatomic,strong)NSArray*menuItems;

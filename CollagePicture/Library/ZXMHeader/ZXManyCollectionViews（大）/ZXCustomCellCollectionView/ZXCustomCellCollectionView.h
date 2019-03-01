@@ -5,10 +5,11 @@
 //  Created by simon on 2018/1/8.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
-// 简介：建立的自定义collectionViewCell需要继承于ZXCustomCollectionVCell
-// 2018.01.11
-// 修复collectionView的frame大小设置bug；
+// 简介：封装一个可以外部自定义cell的collectionView的UIView组件；但是建立的自定义collectionViewCell需要继承于ZXCustomCollectionVCell；这样完全开放了cell自定义显示，非常方便，但是cell里不能包含事件，因为无法传递； 适合一种独立的显示符合collectionView视图排版的View；
+
+// 2018.01.11 修复collectionView的frame大小设置bug；
 // 2018.01.19  增加例子注释
+// 2019.02.25  修改注释；
 
 #import <UIKit/UIKit.h>
 #import "ZXCustomCollectionVCell.h"
@@ -90,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 
-//例如
+//例如，显示一组由颜色，产品名字，价格的多个item；这个很符合当前组件使用的特征；
 /*
 #import "ZXCustomCellCollectionView.h"
 #import "SaleGoodsLegendCollectionCell.h"
