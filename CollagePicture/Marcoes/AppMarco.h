@@ -52,9 +52,9 @@ static NSString *kBMOB_APPID =  @"69c52eeb7424886debae08af8dad3e2f";
 #define AppPlaceholderImage [UIImage imageNamed:@"默认图正方形"]
 //#define AppPlaceholderImage [UIImage zh_imageWithColor:UIColorFromRGB(229., 229., 229.) andSize:CGSizeMake(200, 200)]
 //人头像
-#define AppPlaceholderHeadImage [UIImage imageNamed:@"ic_empty_person"]
+#define AppPlaceholderImage_Head [UIImage imageNamed:@"ic_empty_person"]
 //商铺空头像
-#define AppPlaceholderShopImage [UIImage imageNamed:@"ic_empty_shop"]
+#define AppPlaceholderImage_Shop [UIImage imageNamed:@"ic_empty_shop"]
 
 
 

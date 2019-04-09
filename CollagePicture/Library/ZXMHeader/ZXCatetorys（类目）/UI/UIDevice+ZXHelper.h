@@ -1,26 +1,33 @@
 //
-//  UIDevice+ZXInfo.h
+//  UIDevice+ZXHelper.h
 //  YiShangbao
 //
 //  Created by simon on 2017/11/3.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  2018.04.03  优化注释
+//  2019.3.20  增加设备大体类型model方法
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ZXDeviceModelType) {
+    ZXDeviceModelType_iPad,
+    ZXDeviceModelType_iPhone,
+    ZXDeviceModelType_iPodTouch,
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIDevice (ZXInfo)
+@interface UIDevice (ZXHelper)
 
 // 每次初始化后生成一个随机的UUID；格式如"E621E1F8-C36C-495A-93FC-0C247A3E6E5F”的字符串；
-- (NSString *)getUUID;
+- (NSString *)zx_getUUID;
 
 // 获取IDFV的UUID；
 // 每个APP根据bundleID（供应商）独立一个不同的ADFV，但相同bundleID的app，ADFV是相同的；
 // 注意：如果用户将属于此Vender的所有App卸载，则IDFV的值会被重置，即再重装此Vender的App，IDFV的值和之前不同。F47873A0-B382-42CA-B863-F405B87E8682
 // 目前解决方法：获取一次后，使用钥匙串保存起来，这样即使你删除了App，再重新安装，只有BundleId不变，那么从钥匙串中获取的UUID不会变的。
-- (NSString *)getIDFVUUIDString;
+- (NSString *)zx_getIDFVUUIDString;
 
 // 获取广告id标识符；
 // 广告id，在同一个设备上的所有App都会取到相同的值，是苹果专门给各广告提供商用来追踪用户而设的，Apple默认是允许追踪的，而且一般用户都不知道有这么个设置，所以基本上用来监测推广效果，是戳戳有余了。
@@ -28,28 +35,34 @@ NS_ASSUME_NONNULL_BEGIN
 // 用户完全重置系统(设置程序 -> 通用 -> 还原 -> 还原位置与隐私)
 // 用户明确还原广告(设置程序-> 通用 -> 关于本机 -> 广告 -> 还原广告标示符)
 // 注意：由于idfa会出现取不到的情况，故绝不可以作为业务分析的主id，来识别用户。
-- (nullable NSString *)getIDFAUUIDString;
+- (nullable NSString *)zx_getIDFAUUIDString;
 
 
 // 获取openUDID-第三方
 // 根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；
 
-- (nullable NSString *)getUMOpenUDIDString;
+- (nullable NSString *)zx_getUMOpenUDIDString;
 
 
 
-// 获取设备类型名称；
-+ (NSString *)getDeviceName;
+// 获取设备具体类型名称；
++ (NSString *)zx_getDeviceName;
 
 
+/**
+ 获取设备大体类型-model：iPad，iPhone，iPod touch
+ 例如：使用AlertController-actionSheet样式弹出的时候，在iPad上需要不同设置处理；
+ @return 设备类型
+ */
++ (ZXDeviceModelType)zx_getDeviceModelType;
 
 
 // 获取mac地址
-+ (nullable NSString *)getMacAddress;
++ (nullable NSString *)zx_getMacAddress;
 
 // 获取ip地址
 // 获取设备当前网络IP地址
-+ (NSString *)getIPAddress:(BOOL)preferIPv4;
++ (NSString *)zx_getIPAddress:(BOOL)preferIPv4;
 
 
 
@@ -57,20 +70,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 // CPU总数目
-+ (NSUInteger)getCPUCount;
++ (NSUInteger)zx_getCPUCount;
 // CPU使用的总比例
-+ (CGFloat)getCPUUsage;
++ (CGFloat)zx_getCPUUsage;
 // 获取每个cpu的使用比例
-+ (nullable NSArray *)getPerCPUUsage;
++ (nullable NSArray *)zx_getPerCPUUsage;
 
 
 // 获取磁盘总空间
-+ (int64_t)getTotalDiskSpace;
++ (int64_t)zx_getTotalDiskSpace;
 // 获取未使用的磁盘空间
-+ (int64_t)getFreeDiskSpace;
++ (int64_t)zx_getFreeDiskSpace;
 // 获取已使用的磁盘空间
-+ (int64_t)getUsedDiskSpace;
++ (int64_t)zx_getUsedDiskSpace;
 
+
+/********内存空间*************/
+
+// 系统总内存空间
+- (int64_t)zx_getTotalMemory;
+// 空闲的内存空间
+- (int64_t)zx_getFreeMemory;
+
+// 已使用的内存空间
+- (int64_t)zx_getUsedMemory;
+
+// 活跃的内存,正在使用或者很短时间内被使用过
+- (int64_t)zx_getActiveMemory;
+
+// 最近使用过,但是目前处于不活跃状态的内存
+- (int64_t)zx_getInActiveMemory;
+
+// 用来存放内核和数据结构的内存,framework、用户级别的应用无法分配
+- (int64_t)zx_getWiredMemory;
+
+// 可释放的内存空间：内存吃紧自动释放，针对大对象存放所需的大块内存空间
+- (int64_t)zx_getPurgableMemory;
 
 @end
 

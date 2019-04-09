@@ -2,8 +2,8 @@
 //  ZXWebViewController.h
 //  ···
 //
-//  Created by 朱新明 on 15/2/10.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by simon on 15/2/10.
+//  Copyright (c) 2015年 simon. All rights reserved.
 //
 //  简介：webView中所有设计的内容（不包括滚动列表）不要被屏幕圆角、上方传感器区域和下方home键指示器区域遮挡，要在安全区域safeArea布局content；但是webView中底部有可能会有按钮，除非前端做适配；
 // （1）支持3DTouch预览的向上滑动事件处理-分享；（2）iOS9及以上使用约束设置webView，保留自动调整scrollView的inset的效果；相反使用frame设置，同时设置self.automaticallyAdjustsScrollViewInsets = NO;

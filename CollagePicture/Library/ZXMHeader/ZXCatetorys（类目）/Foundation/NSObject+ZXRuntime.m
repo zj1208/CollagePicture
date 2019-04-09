@@ -2,7 +2,7 @@
 //  NSObject+ZXRuntime.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/11/17.
+//  Created by simon on 16/11/17.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 

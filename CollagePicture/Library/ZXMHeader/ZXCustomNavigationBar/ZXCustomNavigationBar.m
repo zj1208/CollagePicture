@@ -31,14 +31,12 @@
     self.alpha = 1.f; //当前父视图必须是1，不能隐藏，不然导航上的按钮也看不到了;
 
     self.barBackgroundContainerView.backgroundColor = [UIColor whiteColor];
+    [self.rightBarButton1 setTitle:nil forState:UIControlStateNormal];
+    [self.rightBarButton2 setTitle:nil forState:UIControlStateNormal];
+    [self.leftBarButton setTitle:nil forState:UIControlStateNormal];
+    [self.leftBarButton setTitle:nil forState:UIControlStateHighlighted];
     [self zx_setBarBackgroundContainerAlpha:1.f animated:NO];
 }
-
-- (void)setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem
-{
-    _leftBarButtonItem = leftBarButtonItem;
-}
-
 
 
 - (void)zx_setBarBackgroundContainerAlpha:(CGFloat)alpha animated:(BOOL)animated
@@ -51,7 +49,7 @@
     {
         [UIView animateWithDuration:0.2 animations:^{
             
-            _barBackgroundContainerView.alpha = alpha;
+            self.barBackgroundContainerView.alpha = alpha;
         }];
     }
 }

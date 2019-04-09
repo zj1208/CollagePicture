@@ -1,12 +1,12 @@
 //
-//  UIDevice+ZXInfo.m
+//  UIDevice+ZXHelper.m
 //  YiShangbao
 //
 //  Created by simon on 2017/11/3.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "UIDevice+ZXInfo.h"
+#import "UIDevice+ZXHelper.h"
 
 //设备类型
 #import "sys/utsname.h"
@@ -35,23 +35,23 @@
 
 #import <AdSupport/AdSupport.h>
 
-@implementation UIDevice (ZXInfo)
+@implementation UIDevice (ZXHelper)
 
 #pragma mark - UUID
 
-- (NSString *)getUUID
+- (NSString *)zx_getUUID
 {
     return  [[NSUUID UUID] UUIDString];
 }
 //po [[UIDevice currentDevice]getIDFVUUIDString]
-- (NSString *)getIDFVUUIDString
+- (NSString *)zx_getIDFVUUIDString
 {
     NSUUID *uuid = [[UIDevice currentDevice]identifierForVendor];
     NSString *identifier =uuid.UUIDString;
     return identifier;
 }
 
-- (NSString *)getIDFAUUIDString
+- (NSString *)zx_getIDFAUUIDString
 {
 //    NSBundle *adSupportBundle = [NSBundle bundleWithPath:@"/System/Library/Frameworks/AdSupport.framework"];
 //    if (![adSupportBundle isLoaded])
@@ -77,7 +77,7 @@
 }
 
 
-- (nullable NSString *)getUMOpenUDIDString
+- (nullable NSString *)zx_getUMOpenUDIDString
 {
     Class cls = NSClassFromString(@"UMANUtil");
     SEL deviceIDSelector = @selector(openUDIDString);
@@ -97,7 +97,7 @@
 
 #pragma mark - Device
 
-+ (NSString *)getDeviceVersionInfo
++ (NSString *)zx_getDeviceVersionInfo
 {
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -107,9 +107,9 @@
 }
 
 //获取设备类型名称；
-+ (NSString *)getDeviceName
++ (NSString *)zx_getDeviceName
 {
-    NSString *deviceString = [self getDeviceVersionInfo];
+    NSString *deviceString = [self zx_getDeviceVersionInfo];
     
     if ([deviceString isEqualToString:@"i386"])      return @"iPhone Simulator";
     if ([deviceString isEqualToString:@"x86_64"])    return @"iPhone Simulator";
@@ -214,12 +214,26 @@
     
 }
 
++ (ZXDeviceModelType)zx_getDeviceModelType
+{
+    NSString *model = [UIDevice currentDevice].model;
+//    NSLog(@"设备类型model-->%@", model);
+    if ([model isEqualToString:@"iPhone"])
+    {
+        return ZXDeviceModelType_iPhone;
+    }
+    else if ([model isEqualToString:@"iPad"])
+    {
+        return ZXDeviceModelType_iPad;
+    }
+    return ZXDeviceModelType_iPodTouch;
+}
 
 #pragma mark - MAC，IP地址
 
 
 //获取mac地址
-+ (nullable NSString *)getMacAddress
++ (nullable NSString *)zx_getMacAddress
 {
     int mib[6];
     size_t len;
@@ -273,13 +287,13 @@
 
 //获取ip地址
 //获取设备当前网络IP地址
-+ (NSString *)getIPAddress:(BOOL)preferIPv4
++ (NSString *)zx_getIPAddress:(BOOL)preferIPv4
 {
     NSArray *searchArray = preferIPv4 ?
     @[ /*IOS_VPN @"/" IP_ADDR_IPv4, IOS_VPN @"/" IP_ADDR_IPv6,*/ IOS_WIFI @"/" IP_ADDR_IPv4, IOS_WIFI @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6 ] :
     @[ /*IOS_VPN @"/" IP_ADDR_IPv6, IOS_VPN @"/" IP_ADDR_IPv4,*/ IOS_WIFI @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4 ] ;
     
-    NSDictionary *addresses = [self getIPAddresses];
+    NSDictionary *addresses = [self zx_getIPAddresses];
     NSLog(@"addresses: %@", addresses);
     
     __block NSString *address;
@@ -292,7 +306,7 @@
 }
 
 //获取所有相关IP信息
-+ (NSDictionary *)getIPAddresses
++ (NSDictionary *)zx_getIPAddresses
 {
     NSMutableDictionary *addresses = [NSMutableDictionary dictionaryWithCapacity:8];
     
@@ -338,17 +352,17 @@
 
 
 // CPU总数目
-+ (NSUInteger)getCPUCount
++ (NSUInteger)zx_getCPUCount
 {
     return [NSProcessInfo processInfo].activeProcessorCount;
 }
 
 
 // CPU使用的总比例
-+ (CGFloat)getCPUUsage
++ (CGFloat)zx_getCPUUsage
 {
     float cpu = 0;
-    NSArray *cpus = [self getPerCPUUsage];
+    NSArray *cpus = [self zx_getPerCPUUsage];
     if (cpus.count == 0) return -1;
     for (NSNumber *n in cpus) {
         cpu += n.floatValue;
@@ -358,7 +372,7 @@
 
 
 // 获取每个cpu的使用比例
-+ (nullable NSArray *)getPerCPUUsage
++ (nullable NSArray *)zx_getPerCPUUsage
 {
     processor_info_array_t _cpuInfo, _prevCPUInfo = nil;
     mach_msg_type_number_t _numCPUInfo, _numPrevCPUInfo = 0;
@@ -409,7 +423,7 @@
 #pragma mark - 磁盘空间
 
 // 获取磁盘总空间
-+ (int64_t)getTotalDiskSpace
++ (int64_t)zx_getTotalDiskSpace
 {
     NSError *error = nil;
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
@@ -420,7 +434,7 @@
 }
 
 // 获取未使用的磁盘空间
-+ (int64_t)getFreeDiskSpace
++ (int64_t)zx_getFreeDiskSpace
 {
     NSError *error = nil;
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
@@ -431,10 +445,10 @@
 }
 
 // 获取已使用的磁盘空间
-+ (int64_t)getUsedDiskSpace
++ (int64_t)zx_getUsedDiskSpace
 {
-    int64_t totalDisk = [self getTotalDiskSpace];
-    int64_t freeDisk = [self getFreeDiskSpace];
+    int64_t totalDisk = [self zx_getTotalDiskSpace];
+    int64_t freeDisk = [self zx_getFreeDiskSpace];
     if (totalDisk < 0 || freeDisk < 0) return -1;
     int64_t usedDisk = totalDisk - freeDisk;
     if (usedDisk < 0) usedDisk = -1;
@@ -445,7 +459,7 @@
 #pragma mark - 内存
 
 // 系统总内存空间
-- (int64_t)getTotalMemory
+- (int64_t)zx_getTotalMemory
 {
     int64_t totalMemory = [[NSProcessInfo processInfo] physicalMemory];
     if (totalMemory < -1) totalMemory = -1;
@@ -453,7 +467,7 @@
 }
 
 // 空闲的内存空间
-- (int64_t)getFreeMemory {
+- (int64_t)zx_getFreeMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -468,7 +482,7 @@
 }
 
 // 已使用的内存空间
-- (int64_t)getUsedMemory {
+- (int64_t)zx_getUsedMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -484,7 +498,7 @@
 
 
 // 活跃的内存,正在使用或者很短时间内被使用过
-- (int64_t)getActiveMemory
+- (int64_t)zx_getActiveMemory
 {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
@@ -500,7 +514,7 @@
 }
 
 // 最近使用过,但是目前处于不活跃状态的内存
-- (int64_t)getInActiveMemory {
+- (int64_t)zx_getInActiveMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -516,7 +530,7 @@
 
 
 // 用来存放内核和数据结构的内存,framework、用户级别的应用无法分配
-- (int64_t)getWiredMemory {
+- (int64_t)zx_getWiredMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;
@@ -531,7 +545,7 @@
 }
 
 // 可释放的内存空间：内存吃紧自动释放，针对大对象存放所需的大块内存空间
-- (int64_t)getPurgableMemory {
+- (int64_t)zx_getPurgableMemory {
     mach_port_t host_port = mach_host_self();
     mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
     vm_size_t page_size;

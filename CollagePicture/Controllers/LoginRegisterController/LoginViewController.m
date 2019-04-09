@@ -2,7 +2,7 @@
 //  LoginViewController.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/12/21.
+//  Created by simon on 16/12/21.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
@@ -101,15 +101,10 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 {
    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 //移除第一响应事件
 - (IBAction)touchDownAction:(UIControl *)sender {

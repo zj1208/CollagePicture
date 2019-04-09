@@ -5,16 +5,18 @@
 //  Created by simon on 17/2/16.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//model一定要继承于BaseModel才行，不然闪退，不知道原因
+//  model一定要实现NSCoding协议，不然闪退；
 
 // 6.07 设置本地数据的时候，增加是否发送通知；
+// 2019.3.14  swifth调用setValue：forKey：会崩溃；
 
 #import <Foundation/Foundation.h>
+#import "TMCache.h"
+#import "UserModel.h"
 
-
-static NSString *const TMDiskAddProcutKey = @"diskAddProcutKey";
+static NSString *const TMDiskUserInfoKey = @"TMDiskUserInfoKey";
 //经营信息
-static NSString *const TMDiskShopManageInfoKey = @"shopManagerKey";
+//static NSString *const TMDiskShopManageInfoKey = @"shopManagerKey";
 
 @interface TMDiskManager : NSObject
 
@@ -22,17 +24,22 @@ static NSString *const TMDiskShopManageInfoKey = @"shopManagerKey";
 
 - (instancetype)initWithObjectKey:(NSString *)objectKey;
 
+
+/**
+ @brief 设置本地数据指定key的value值；swift的model不支持setValue：forKey，不然会崩溃；
+ 
+ */
 - (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key;
 
 /**
- 设置本地数据指定key的value值；
-
+ @brief 设置本地数据指定key的value值；
+ 
  @param flag 是否发送通知；
  */
 - (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key postNotification:(BOOL)flag;
 
 - (void)setData:(id)object;
-- (id)getData;
+- (nullable id)getData;
 - (void)removeData;
 
 @end

@@ -2,7 +2,7 @@
 //  NSTimer+Addition.m
 //  baohuai_iPhone
 //
-//  Created by 朱新明 on 14-5-2.
+//  Created by simon on 14-5-2.
 //  Copyright (c) 2014年 summer. All rights reserved.
 //
 

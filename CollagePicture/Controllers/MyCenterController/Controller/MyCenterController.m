@@ -89,32 +89,81 @@ static NSInteger IndexSection_Set =1;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
     [super viewWillAppear:animated];
-    
-    id<UIViewControllerTransitionCoordinator>tc = self.transitionCoordinator;
-    if (tc && [tc initiallyInteractive])
-    {
-        [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-            if (![context isCancelled])
-            {
-                [self zx_navigationBar_BackgroundAlpah:0.f];
-            }
-        }];
-    }
-    else
-    {
-        [self zx_navigationBar_BackgroundAlpah:0.f];
-    }
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 
+    if (self.presentedViewController)
+    {
+        return;
+    }
     UIInterfaceOrientation currentDirection = [[UIApplication sharedApplication] statusBarOrientation];
     if (UIInterfaceOrientationIsLandscape(currentDirection))
     {
         OrientationNaController *nav = (OrientationNaController *)self.navigationController;
         [nav rotateToDirection:UIInterfaceOrientationPortrait];
     }
-    
+    id<UIViewControllerTransitionCoordinator>tc = self.transitionCoordinator;
+    if (tc && [tc initiallyInteractive])
+    {
+        if (@available(iOS 10.0, *))
+        {
+            [tc notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+                if (![context isCancelled])
+                {
+                    UIViewController *fromViewController = [context viewControllerForKey: UITransitionContextFromViewControllerKey];
+                    if (![fromViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+                    {
+                        [self.navigationController setNavigationBarHidden:NO animated:animated];
+                    }
+                }
+            }];
+        }
+        else
+        {
+            [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+                if (![context isCancelled])
+                {
+                    UIViewController *fromViewController = [context viewControllerForKey: UITransitionContextFromViewControllerKey];
+                    if (![fromViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+                    {
+                        [self.navigationController setNavigationBarHidden:NO animated:animated];
+                    }                }
+            }];
+        }
+    }
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (self.presentedViewController)
+    {
+        return;
+    }
+    if (self.transitionCoordinator != nil)
+    {
+        //非交互式回调,完成转场了再设置navigationBar是否隐藏已经无意义了,所以completion的block不用
+        BOOL flag  = [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+            UIViewController *toViewController = [context viewControllerForKey: UITransitionContextToViewKey];
+            if (![toViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+            {
+                [self.navigationController setNavigationBarHidden:NO animated:animated];
+            }
+        } completion:nil];
+        //交互式中断
+        if (!flag)
+        {
+            UIViewController *toViewController = self.navigationController.topViewController;
+            if (![toViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+            {
+                [self.navigationController setNavigationBarHidden:NO animated:animated];
+            }
+        }
+    }
+}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -128,16 +177,6 @@ static NSInteger IndexSection_Set =1;
 }
 
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    
-    [super viewWillDisappear:animated];
-
-    if (!self.presentedViewController)
-    {
-        [self zx_navigationBar_BackgroundAlpah:1.f];
-    }
-}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -159,7 +198,18 @@ static NSInteger IndexSection_Set =1;
     
     self.nameBtn.hidden = YES;
     self.signatureLab.text = @"未填写";
+//    UIFont *font1 = [UIFont systemFontOfSize:12];
+//    UIFont *font2 = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+//    UIFont *font3 = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+//
+//    UIFont *font4 = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
+//    UIFont *font5 = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+//    UIFont *font6 = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+//
+//    NSLog(@"%@,%@,%@",font4,font5,font6);
+//    self.signatureLab.font = [UIFont systemFontOfSize:12];
     
+//    NSLog(@"%@",self.signatureLab.font);
     [self.headBtn zx_setCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
     [self.headBtn zh_setButtonImageViewScaleAspectFill];
     

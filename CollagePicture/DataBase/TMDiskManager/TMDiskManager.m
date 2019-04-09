@@ -38,7 +38,7 @@
         return;
     }
     [object setValue:value forKey:key];
-    [[TMDiskCache sharedCache]removeObjectForKey:self.objectKey];
+    [[TMDiskCache sharedCache] removeObjectForKey:self.objectKey];
     [[TMDiskCache sharedCache] setObject:object forKey:self.objectKey];
     if (flag)
     {
@@ -59,7 +59,7 @@
 //    [[NSNotificationCenter defaultCenter]postNotificationName:self.objectKey object:self];
 }
 
-- (id)getData
+- (nullable id)getData
 {
     id object = [[TMDiskCache sharedCache] objectForKey:self.objectKey];
     if (!object)

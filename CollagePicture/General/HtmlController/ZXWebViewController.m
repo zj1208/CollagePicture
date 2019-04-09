@@ -2,8 +2,8 @@
 //  ZXWebViewController.m
 //  ···
 //
-//  Created by 朱新明 on 15/2/10.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by simon on 15/2/10.
+//  Copyright (c) 2015年 simon. All rights reserved.
 //
 
 #import "ZXWebViewController.h"
@@ -984,7 +984,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 // 9.h5需要的数据
 - (void)h5NeedData:(WVJBResponseCallback)responseCallback
 {
-    NSString *idfa = [[UIDevice currentDevice]getIDFAUUIDString];
+    NSString *idfa = [[UIDevice currentDevice]zx_getIDFAUUIDString];
     NSDictionary *dic = @{@"deviceId":idfa};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];

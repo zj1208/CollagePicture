@@ -2,8 +2,8 @@
 //  ZXMPickerView.h
 //  ICBC
 //
-//  Created by 朱新明 on 15/2/11.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by simon on 15/2/11.
+//  Copyright (c) 2015年 simon. All rights reserved.
 //
 // 简介： 只有一列的UIPickerView，根据数据源显示封装好的组件，支持toolBar的取消事件，完成事件；
 // 注释： showInView:方法如果传tableView/collectionView，弹窗在window上；

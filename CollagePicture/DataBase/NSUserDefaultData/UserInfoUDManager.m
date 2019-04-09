@@ -2,7 +2,7 @@
 //  UserInfoUDManager.m
 //  
 //
-//  Created by 朱新明 on 15/6/17.
+//  Created by simon on 15/6/17.
 //  Copyright (c) 2015年 sina. All rights reserved.
 //
 
@@ -16,6 +16,10 @@ NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
 
 
 static NSString *const ud_saveVersion = @"ud_saveVersion";
+
+static NSString *const ud_saveLoginInputPhone_develop = @"ud_saveLoginInputPhone_develop";
+static NSString *const ud_saveLoginInputPhone_test = @"ud_saveLoginInputPhone_test";
+static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_online";
 
 @implementation UserInfoUDManager
 
@@ -104,7 +108,7 @@ static NSString *const ud_saveVersion = @"ud_saveVersion";
             [cookieStorage deleteCookie:obj];
         }
     }
-// getAllCookies:不能使用，即使上面方法没有，使用下面方法也会崩溃；刚登陆的时候使用getAllCookies:也会崩溃
+// getAllCookies:不能使用，即使上面方法没有，使用下面方法也会崩溃；刚登录的时候使用getAllCookies:也会崩溃
 //    不会崩溃？
 //    if (@available(iOS 11.0, *))
 //    {
@@ -219,7 +223,7 @@ static NSString *const ud_saveVersion = @"ud_saveVersion";
 
 
 
-#pragma mark -登陆／退出
+#pragma mark -登录／退出
 
 + (void)loginOut {
     
@@ -310,4 +314,62 @@ static NSString *const ud_saveVersion = @"ud_saveVersion";
 {
     return [UserDefault objectForKey:ud_saveVersion];
 }
+
+//#pragma mark - 本地记录用户历史输入电话号码、国家区号
+//+ (void)saveLoginInputPhone:(NSDictionary *)phone
+//{
+//    NSMutableArray *arrayM = [NSMutableArray arrayWithObject:phone];
+//    NSMutableArray *history = [NSMutableArray array];
+//    [history addObjectsFromArray:[UserInfoUDManager getLoginInputPhones]];
+//    for (NSDictionary *dict in history) { //去重复数据
+//        if ([[dict objectForKey:@"phone"] isEqualToString:[phone objectForKey:@"phone"] ]&&[[dict objectForKey:@"countryCode"] isEqualToString:[phone objectForKey:@"countryCode"] ]) {
+//            [history removeObject:dict];
+//            break;
+//        }
+//    }
+//    if (history.count>4) {
+//        NSArray *subHistory = [history subarrayWithRange:NSMakeRange(0, 4)];
+//        [arrayM addObjectsFromArray:subHistory];
+//    }else{
+//        [arrayM addObjectsFromArray:history];
+//    }
+//
+//    NSString *ud_saveLoginInputPhone;
+//    NSString *appURL = [WYUserDefaultManager getkAPP_BaseURL];
+//    if ([appURL isEqualToString:@"http://api.m-internal.s-ant.cn"])
+//    {
+//        ud_saveLoginInputPhone = ud_saveLoginInputPhone_develop;
+//    }
+//    else if ([appURL isEqualToString:@"http://api.m-internal.microants.com.cn"])
+//    {
+//        ud_saveLoginInputPhone = ud_saveLoginInputPhone_test;
+//    }
+//    else if ([appURL isEqualToString:@"https://api.m.microants.cn"])
+//    {
+//        ud_saveLoginInputPhone = ud_saveLoginInputPhone_online;
+//    }
+//
+//    [UserDefault setObject:arrayM forKey:ud_saveLoginInputPhone];
+//    [UserDefault synchronize];
+//}
+//+ (NSArray *)getLoginInputPhones
+//{
+//    NSString *ud_saveLoginInputPhone;
+//    NSString *appURL = [WYUserDefaultManager getkAPP_BaseURL];
+//    if ([appURL isEqualToString:@"http://api.m-internal.s-ant.cn"])
+//    {
+//        ud_saveLoginInputPhone = ud_saveLoginInputPhone_develop;
+//    }
+//    else if ([appURL isEqualToString:@"http://api.m-internal.microants.com.cn"])
+//    {
+//        ud_saveLoginInputPhone = ud_saveLoginInputPhone_test;
+//    }
+//    else if ([appURL isEqualToString:@"https://api.m.microants.cn"])
+//    {
+//        ud_saveLoginInputPhone = ud_saveLoginInputPhone_online;
+//    }
+//    NSArray *arr = [UserDefault objectForKey:ud_saveLoginInputPhone];
+//    return arr;
+//}
+
 @end

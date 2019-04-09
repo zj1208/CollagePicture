@@ -5,6 +5,8 @@
 //  Created by simon on 15/7/6.
 //  Copyright (c) 2015年 . All rights reserved.
 //
+//  3.14 增加方法
+
 
 #import <UIKit/UIKit.h>
 
@@ -12,6 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface UIViewController (ZXLoginAndAlert)
+
+
+/**
+ 判断是否有登录过，如果没有登录则弹出登录界面
+ 
+ @param isLogin 是否登录
+ @return 返回是否登录过；
+ */
+- (BOOL)zx_performActionWithIsLogin:(BOOL)isLogin;
 
 /**
  判断是否有登录过，如果没有登录则弹出登录界面

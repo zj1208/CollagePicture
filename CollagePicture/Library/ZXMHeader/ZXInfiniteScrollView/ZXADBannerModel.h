@@ -2,8 +2,8 @@
 //  ZXADBannerModel.h
 //  baohuai_iPhone
 //
-//  Created by 朱新明 on 14/5/2.
-//  Copyright (c) 2014年 朱新明. All rights reserved.
+//  Created by simon on 14/5/2.
+//  Copyright (c) 2014年 simon. All rights reserved.
 //
 //  2018.3.21 添加areaId
 

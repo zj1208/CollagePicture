@@ -2,7 +2,7 @@
 //  ZXNoMenuTextField.h
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/12/21.
+//  Created by simon on 16/12/21.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 

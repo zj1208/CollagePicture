@@ -2,7 +2,7 @@
 //  ZXLocalNotification.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/11/16.
+//  Created by simon on 16/11/16.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 

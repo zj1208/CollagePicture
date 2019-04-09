@@ -2,7 +2,7 @@
 //  ShareViewController.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/10/21.
+//  Created by simon on 16/10/21.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
@@ -36,12 +36,7 @@ static NSString * const reuseIdentifier = @"Cell";
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 #pragma mark <UICollectionViewDataSource>
 

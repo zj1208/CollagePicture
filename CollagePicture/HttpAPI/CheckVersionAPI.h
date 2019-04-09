@@ -2,7 +2,7 @@
 //  CheckVersionAPI.h
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/11/18.
+//  Created by simon on 16/11/18.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 //  2018.3.26 修改固定路径为类目获取；

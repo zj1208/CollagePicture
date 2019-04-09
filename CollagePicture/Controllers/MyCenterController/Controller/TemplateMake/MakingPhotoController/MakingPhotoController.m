@@ -323,7 +323,7 @@ tmp;\
         NSString *templateName = [NSString stringWithFormat:@"album_a%@@2x",type];
         UIImage *image = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(templateName, @"png")];
         NSLog(@"%@",NSStringFromCGSize(self.maskLayer.frame.size));
-        image = [UIImage zh_scaleImage:image toSize:CGSizeMake(self.maskLayer.frame.size.width*1.5, self.maskLayer.frame.size.height*1.5)];
+        image = [UIImage zx_scaleImage:image toSize:CGSizeMake(self.maskLayer.frame.size.width*1.5, self.maskLayer.frame.size.height*1.5)];
         dispatch_async(dispatch_get_main_queue(), ^{
            
             self.maskLayer.contents = (__bridge id _Nullable)(image.CGImage);
@@ -625,7 +625,7 @@ tmp;\
     UIImage *bigImage = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(path, @"png")];
     
     UIImage *saveImg = [self addImageArray:subImageMArray toImage:bigImage];
-    self.shareImage = [UIImage zh_scaleImage:saveImg toSize:self.maskLayer.frame.size];
+    self.shareImage = [UIImage zx_scaleImage:saveImg toSize:self.maskLayer.frame.size];
 
   
 //    [self addOriginalImageModelWith:saveImg displayImage:displayImg];
@@ -638,9 +638,9 @@ tmp;\
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UIViewController *vc = segue.destinationViewController;
     if ([segue.identifier isEqualToString:segue_ShareController])
     {
-        UIViewController *vc = segue.destinationViewController;
         if ([vc respondsToSelector:@selector(setShareImage:)])
         {
             [vc setValue:self.shareImage forKey:@"shareImage"];

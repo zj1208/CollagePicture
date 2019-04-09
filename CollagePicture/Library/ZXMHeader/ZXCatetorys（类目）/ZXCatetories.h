@@ -2,7 +2,7 @@
 //  ZXCatetories.h
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/11/17.
+//  Created by simon on 16/11/17.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 //  2019.1.7  修改类目名，基本不用延展/扩展的
@@ -27,7 +27,7 @@
 #import "UIButton+ZXHelper.h"
 #import "UIColor+ZXHex.h"
 #import "UIControl+ZXFastClick.h"
-#import "UIDevice+ZXInfo.h"
+#import "UIDevice+ZXHelper.h"
 #import "UIImage+ZXGIF.h"
 #import "UIImage+ZXHelper.h"
 

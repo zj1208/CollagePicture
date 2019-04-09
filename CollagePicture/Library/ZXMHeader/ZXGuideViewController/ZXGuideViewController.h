@@ -2,7 +2,7 @@
 //  ZXGuideViewController.h
 //  SiChunTang
 //
-//  Created by 朱新明 on 15/11/18.
+//  Created by simon on 15/11/18.
 //  Copyright © 2015年 simon. All rights reserved.
 //
 

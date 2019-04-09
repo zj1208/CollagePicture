@@ -2,7 +2,7 @@
 //  UserInfoUDManager.h
 //  
 //
-//  Created by 朱新明 on 15/6/17.
+//  Created by simon明 on 15/6/17.
 //  Copyright (c) 2015年 sina. All rights reserved.
 //
 // 2017.12.22
@@ -83,24 +83,24 @@ static NSString *const  ud_deviceToken = @"deviceToken";
 
 /******************************************************************************/
 /**
- *  利用TMCache保存自定义对象,不仅仅是集合类;
+ *  @brief 利用TMCache保存自定义对象,不仅仅是集合类;
  */
 + (void)setUserData:(id)object;
 
 + (void)removeData;
 /**
- *  从本地获取用户信息model
+ *  @brief 从本地获取用户信息model
  */
 + (id)getUserData;
 
 
 /**
- *  修改用户信息，根据key设置model里的其中一个值；
+  @brief 修改用户信息，根据key设置model里的其中一个值；swift的model不支持setValue：forKey，不然会崩溃；
  */
 + (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key;
 
 /**
- *  从本地删除用户信息model
+ *  @brief 从本地删除用户信息model
  */
 + (void)removeUserData;
 
@@ -142,15 +142,16 @@ static NSString *const  ud_deviceToken = @"deviceToken";
 
 + (id)getSaveVersion;
 
-#pragma mark - 登陆／退出
+#pragma mark - 登录／退出
 
 + (void)loginOut;
 + (void)loginIn;
-//可以区分不同api，处理不同业务用不同方式，比如聊天API的token错误不需要重新登陆，自己服务器API的token错误需要重新登陆；
+//可以区分不同api，处理不同业务用不同方式，比如聊天API的token错误不需要重新登录，自己服务器API的token错误需要重新登录；
 + (void)reLoginingWithTokenErrorAPI:(NSString *)api;
 
-
-
+////本地记录用户历史输入电话号码、国家区号
+//+ (void)saveLoginInputPhone:(NSDictionary *)phone;
+//+ (NSArray *)getLoginInputPhones;
 
 @end
 
@@ -180,7 +181,7 @@ static NSString *const  ud_deviceToken = @"deviceToken";
      {
         return;
      }
-     [self.window.rootViewController zx_presentLoginController];
+     [self.window.rootViewController xm_presentLoginController];
  }
  
  - (void)changeDomain:(id)notification
@@ -188,7 +189,7 @@ static NSString *const  ud_deviceToken = @"deviceToken";
     [self initNIMSDK];
     [self registerGetuiAndRemoteNotification];
  }
- #pragma mark - app登陆后，云信登陆处理，手动登陆；
+ #pragma mark - app登录后，云信登录处理，手动登录；
  
  - (void)loginIn:(id)notification
  {
@@ -215,7 +216,7 @@ static NSString *const  ud_deviceToken = @"deviceToken";
     }];
  }
  
- #pragma mark - app退出后，注销NIM登陆；
+ #pragma mark - app退出后，注销NIM登录；
  
  - (void)loginOut:(id)notification
  {

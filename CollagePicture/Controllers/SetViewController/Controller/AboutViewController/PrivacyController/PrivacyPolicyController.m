@@ -2,7 +2,7 @@
 //  PrivacyPolicyController.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/12/5.
+//  Created by simon on 16/12/5.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
@@ -87,11 +87,7 @@
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
+
 */
 
 @end

@@ -299,7 +299,7 @@ NS_ASSUME_NONNULL_BEGIN
 //  arc4random() % 10： 获取[0－9]的随机数
 //  [zhGetRandomNumberWithFrom:2 to 10]:获取[2-10]的随机数;
 //  同arc4random_uniform(10):获取[0-10]的随机整数;
-- (int)zhGetRandomNumberWithFrom:(int)from to:(int)to;
++ (int)zhGetRandomNumberWithFrom:(int)from to:(int)to;
 
 
 

@@ -149,9 +149,21 @@
 - (UIImage *)placeholderImage
 {
     if (!_placeholderImage) {
-        _placeholderImage = [UIImage zh_imageWithColor:[UIColor grayColor] andSize:CGSizeMake(100, 100)];
+        _placeholderImage = [self imageWithColor:[UIColor grayColor] andSize:CGSizeMake(100, 100) opaque:NO];
     }
     return _placeholderImage;
+}
+
+- (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size opaque:(BOOL)opaque
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, opaque, 1);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 - (ZXWXBigImageTransitionDelegate *)wxBigImageTransitionDelegate

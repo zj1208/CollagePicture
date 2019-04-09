@@ -10,7 +10,6 @@
  Copyright (c) 2013 Konstantin Bukreev. All rights reserved.
  
  */
-
 // 2019.3.01 增加ZXKxMenuOverlay类
 
 
@@ -77,32 +76,19 @@ typedef enum {
 
 
 /*************** eg**************
-// #import "KxMenu.h"
  
  - (IBAction)rightBarItemAction:(UIBarButtonItem *)sender
  {
     KxMenuItem *item1 = [KxMenuItem menuItem:@"发消息" image:nil target:self action:@selector(sendMessageTo:)];
     KxMenuItem *item2 = [KxMenuItem menuItem:@"找好友" image:nil target:self
-    action:@selector(findFriends:)];
+ action:@selector(findFriends:)];
     NSArray * menuItems =@[item1,item2];
 
-    // 设置外观
     KxMenu *kxMenu = [KxMenu sharedMenu];
     kxMenu.tintColor =[UIColor colorWithWhite:0.2 alpha:0.7];
     kxMenu.selectionBackgroundImageStyle = KxMenuSelectionStyleSolidColorBackground;
     kxMenu.contentViewEdge = UIEdgeInsetsMake(5, 5, 5, 5);
- 
-    CGFloat safeAreaTop  = 0;
-    if @available(iOS 11.0, *) {
-        UIWindow *window = ((UIApplication.shared.delegate?.window)!)!;
-        UIEdgeInsets areaInset = window.safeAreaInsets
-        if areaInset != UIEdgeInsets.zero
-        {
-            safeAreaTop = Int(areaInset.top);
-        }
-    }else {
-    };
-    [KxMenu showMenuInView:APP_keyWindow fromRect:CGRectMake(LCDW-44-5, safeAreaTop +44 - 2, 44, 2) menuItems:menuItems];
+    [KxMenu showMenuInView:APP_keyWindow fromRect:CGRectMake(LCDW-44-5, 20-10, 44, 44) menuItems:menuItems];
  }
  
  

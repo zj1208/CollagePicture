@@ -8,24 +8,20 @@
 
 #import "UIImage+ZXHelper.h"
 
-@implementation UIImage (ZXImageHelper)
-
-
-
-
+@implementation UIImage (ZXHelper)
 
 
 /*
  @brief  用color 和 size 创建 image；
  
  */
-+ (UIImage *)zh_imageWithColor:(UIColor *)color andSize:(CGSize)size
++ (UIImage *)zx_imageWithColor:(UIColor *)color andSize:(CGSize)size
 {
 //    UIGraphicsBeginImageContext(CGSize size)
-      return [UIImage zh_imageWithColor:color andSize:size opaque:NO];;
+      return [UIImage zx_imageWithColor:color andSize:size opaque:NO];;
 }
 
-+ (UIImage *)zh_imageWithColor:(UIColor *)color andSize:(CGSize)size opaque:(BOOL)opaque
++ (UIImage *)zx_imageWithColor:(UIColor *)color andSize:(CGSize)size opaque:(BOOL)opaque
 {
     CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
     UIGraphicsBeginImageContextWithOptions(rect.size, opaque, 1);
@@ -38,7 +34,7 @@
 }
 
 
-+ (UIImage *)zh_getGradientImageWithSize:(CGSize)size
++ (UIImage *)zx_getGradientImageWithSize:(CGSize)size
                                locations:(const CGFloat[_Nullable])locations
                               components:(const CGFloat[_Nullable])components
                                    count:(NSInteger)count
@@ -85,7 +81,7 @@
     return image;
 }
 
-+ (UIImage *)zh_getGradientImageWithSize:(CGSize)size
++ (UIImage *)zx_getGradientImageWithSize:(CGSize)size
                                locations:(const CGFloat[_Nullable])locations
                               components:(const CGFloat[_Nullable])components
                                    count:(NSInteger)count
@@ -127,7 +123,7 @@
     
 }
 
-+ (UIImage *)zh_getGradientImageFromHorizontalTowColorWithSize:(CGSize)size startColor:(UIColor *)startColor endColor:(UIColor *)endColor
++ (UIImage *)zx_getGradientImageFromHorizontalTowColorWithSize:(CGSize)size startColor:(UIColor *)startColor endColor:(UIColor *)endColor
 {
     CGFloat startRed, startGreen, startBlue,startAlpha;
     [startColor getRed:&startRed green:&startGreen blue:&startBlue alpha:&startAlpha];
@@ -140,11 +136,11 @@
         startRed,startGreen,startBlue,startAlpha,
         endRed,endGreen,endBlue,endAlpha
     };
-    UIImage *backgroundImage = [UIImage zh_getGradientImageWithSize:size locations:location components:components count:2 directionType:ZXGradientImageDirectionHorizontal];
+    UIImage *backgroundImage = [UIImage zx_getGradientImageWithSize:size locations:location components:components count:2 directionType:ZXGradientImageDirectionHorizontal];
     return backgroundImage;
 }
 
-+ (UIImage *)zh_getGradientImageFromVerticalTowColorWithSize:(CGSize)size topColor:(UIColor *)topColor bottomColor:(UIColor *)bottomColor
++ (UIImage *)zx_getGradientImageFromVerticalTowColorWithSize:(CGSize)size topColor:(UIColor *)topColor bottomColor:(UIColor *)bottomColor
 {
     CGFloat startRed, startGreen, startBlue,startAlpha;
     [topColor getRed:&startRed green:&startGreen blue:&startBlue alpha:&startAlpha];
@@ -157,11 +153,11 @@
         startRed,startGreen,startBlue,startAlpha,
         endRed,endGreen,endBlue,endAlpha
     };
-    UIImage *backgroundImage = [UIImage zh_getGradientImageWithSize:size locations:location components:components count:2 directionType:ZXGradientImageDirectionVertical];
+    UIImage *backgroundImage = [UIImage zx_getGradientImageWithSize:size locations:location components:components count:2 directionType:ZXGradientImageDirectionVertical];
     return backgroundImage;
 }
 
-+ (UIImage *)zh_scaleImage:(UIImage *)image toSize:(CGSize)size
++ (UIImage *)zx_scaleImage:(UIImage *)image toSize:(CGSize)size
 {
     UIGraphicsBeginImageContext(size);
     [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
@@ -171,7 +167,7 @@
 }
 
 
-+ (UIImage *)zh_scaleImage:(UIImage *)image toScale:(float)scaleSize
++ (UIImage *)zx_scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
@@ -190,7 +186,7 @@
  [view setAlpha:0.0];
  由于我们设置afterUpdates参数为YES，而视图的透明度值被设置成了0，所以方法将在该设置应用在视图上了之后才进行快照，于是乎屏幕空白；
  */
-+ (UIImage *)zh_getContextImageFromView: (UIView *)view
++ (UIImage *)zx_getContextImageFromView: (UIView *)view
 {
     // draw a view's contents into an image context
     UIGraphicsBeginImageContext(view.frame.size);
@@ -202,7 +198,7 @@
 }
 
 
-+ (BOOL)zh_checkIsValidJPGImageByImageData:(nullable NSData *)imageData
++ (BOOL)zx_checkIsValidJPGImageByImageData:(nullable NSData *)imageData
 {
     UIImage *image = [UIImage imageWithData:imageData];
     if (!imageData || !image)
@@ -219,7 +215,7 @@
 }
 
 
-- (void)zh_saveImageWithName:(NSString *)imageName
+- (void)zx_saveImageWithName:(NSString *)imageName
 {
     NSData *imageData;
     if (self.size.width>800)

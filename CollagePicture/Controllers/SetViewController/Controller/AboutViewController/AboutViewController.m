@@ -2,7 +2,7 @@
 //  AboutViewController.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/12/2.
+//  Created by simon明 on 16/12/2.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 

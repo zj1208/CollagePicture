@@ -1353,7 +1353,7 @@ static NSString* const SixSpaces = @"      ";
 // 9.h5需要的数据
 - (void)h5NeedData:(WVJBResponseCallback)responseCallback
 {
-    NSString *idfa = [[UIDevice currentDevice]getIDFAUUIDString];
+    NSString *idfa = [[UIDevice currentDevice]zx_getIDFAUUIDString];
     NSDictionary *dic = @{@"deviceId":idfa};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];

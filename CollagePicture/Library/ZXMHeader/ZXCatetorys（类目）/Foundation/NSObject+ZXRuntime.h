@@ -2,7 +2,7 @@
 //  NSObject+ZXRuntime.h
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/11/17.
+//  Created by simon on 16/11/17.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 //  简介：交换二个实例方法的IMP（方法实现）

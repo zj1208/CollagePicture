@@ -2,7 +2,7 @@
 //  AppAPIHelper.m
 //  SiChunTang
 //
-//  Created by 朱新明 on 15/6/7.
+//  Created by simon on 15/6/7.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
 

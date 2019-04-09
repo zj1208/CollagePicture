@@ -8,11 +8,12 @@
 //  简介：自定义导航条，根据iOS11系统导航条设计；背景容器view+ 放按钮的容器View；
 //       放按钮的容器View:navigationBarContentView的高度固定44；
 //       背景容器view：barBackgroundContainerView高度自适应；iphoneX 设置64+24，其余设置64
+//  如果当前控制器是隐藏导航条的， 二级页面有的是隐藏导航条的，有些是不隐藏导航条的；需要在viewWillDisapear正常转场和滑动中断时期根据下个显示的控制器判断是否显示navigationBar；返回的时候，需要在viewWillAppear滑动中断时期根据之前显示的的页面判断是否显示navigationBar；
 
 //  待优化可以自定义添加左边，右边按钮；
 
-//  4.28  优化功能；
 //  5.10  修改注释
+//  2019.4.01  修改默认值，添加完整例子；
 
 
 #import <UIKit/UIKit.h>
@@ -31,20 +32,39 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-// 按钮容器视图
+// 整个按钮区域+titleView 的容器视图
 @property (weak, nonatomic) IBOutlet UIView *navigationBarContentView;
 // 中间titleView
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 
-@property (weak, nonatomic) IBOutlet UIView *rightContainerView;
 
+/**
+ 左边按钮的容器view
+ */
 @property (weak, nonatomic) IBOutlet UIView *leftContainerView;
 
-@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
-
+/**
+ 最左边的按钮
+ */
 @property (weak, nonatomic) IBOutlet UIButton *leftBarButton;
+
+
+/**
+ 右边按钮的容器view
+ */
+@property (weak, nonatomic) IBOutlet UIView *rightContainerView;
+/**
+ 右边倒数第二的按钮
+ */
 @property (weak, nonatomic) IBOutlet UIButton *rightBarButton2;
+
+
+/**
+ 最右边的按钮
+ */
 @property (weak, nonatomic) IBOutlet UIButton *rightBarButton1;
+
+
 
 // 设置背景图
 - (void)zx_setBarBackgroundImage:(nullable UIImage *)backgroundImage;
@@ -73,20 +93,23 @@ NS_ASSUME_NONNULL_END
     self.customNavigationBar.frame = CGRectMake(0, 0, LCDW, HEIGHT_NAVBAR);
 }
 
+- (ZXCustomNavigationBar *)customNavigationBar{
+    if(!_customNavigationBar)
+    {
+        ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar zx_viewFromNib];
+        [navigationBar zx_setBarBackgroundColor:UIColorFromRGB_HexValue(0xBF352D)];
+        navigationBar.hidden = YES;
+        _customNavigationBar = navigationBar;
+    }
+    return _customNavigationBar;
+}
+
 - (void)addNavigationBarView
 {
     _stausBarStyle =UIStatusBarStyleDefault;
-
-    ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar zx_viewFromNib];
-    [self.view addSubview:navigationBar];
-    [navigationBar zx_setBarBackgroundColor:UIColorFromRGB_HexValue(0xBF352D)];
-    self.customNavigationBar = navigationBar;
-    self.customNavigationBar.hidden = YES;
-
+    [self.view addSubview:self.customNavigationBar];
     [self.customNavigationBar.leftBarButton addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.customNavigationBar.rightBarButton1 addTarget:self action:@selector(shareAction:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.customNavigationBar.rightBarButton2 addTarget:self action:@selector(previewBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -96,8 +119,6 @@ NS_ASSUME_NONNULL_END
     self.collectionView.backgroundColor = [UIColor clearColor];
     _topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDW*100.f/375.0)];
     _topImageView.backgroundColor = UIColorFromRGB_HexValue(0xBF352D);
-    //    UIImage *image = [UIImage zh_getGradientImageFromTowColorComponentWithSize:CGSizeMake(LCDW, LCDW*100.f/375.0) startColor:UIColorFromRGB(255.f, 180.f, 94.f) endColor:UIColorFromRGB(243.f, 117.f, 80.f)];
-    //    _topImageView.image =image;
     [self.view insertSubview:_topImageView belowSubview:self.collectionView];
     _topImageView.hidden = YES;
 }
@@ -145,26 +166,48 @@ NS_ASSUME_NONNULL_END
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+
     if (self.presentedViewController)
     {
         return;
     }
+ 
     id<UIViewControllerTransitionCoordinator>tc = self.transitionCoordinator;
     if (tc && [tc initiallyInteractive])
     {
         [self.customNavigationBar zx_setBarBackgroundContainerAlpha:0 animated:animated];
-        [self.navigationController setNavigationBarHidden:YES animated:animated];
-        
-        [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-            if ([context isCancelled])
-            {
-                [self.navigationController setNavigationBarHidden:NO animated:animated];
-            }
-        }];
+        // 如果上级页面本来就是需要隐藏导航条的控制器，则不复原；
+        if (@available(iOS 10.0, *))
+        {
+            [tc notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+                if (![context isCancelled])
+                {
+                    UIViewController *fromViewController = [context viewControllerForKey: UITransitionContextFromViewControllerKey];
+                    if (![fromViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+                    {
+                        [self.navigationController setNavigationBarHidden:NO animated:animated];
+                    }
+                }
+            }];
+        }
+        else
+        {
+            [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+                if (![context isCancelled])
+                {
+                    UIViewController *fromViewController = [context viewControllerForKey: UITransitionContextFromViewControllerKey];
+                    if (![fromViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+                    {
+                        [self.navigationController setNavigationBarHidden:NO animated:animated];
+                    }
+                }
+            }];
+        }
+
     }
     else
     {
-        [self.navigationController setNavigationBarHidden:YES animated:animated];
         CGFloat offsetY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
         if (offsetY<=0)
         {
@@ -179,5 +222,69 @@ NS_ASSUME_NONNULL_END
 }
 */
 
+// 要显示的页面本来就是需要隐藏导航条的控制器，则不复原；
+/*
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (self.presentedViewController)
+    {
+        return;
+    }
+    if (self.transitionCoordinator != nil)
+    {
+        //非交互式回调,完成转场了再设置navigationBar是否隐藏已经无意义了,所以completion的block不用
+        BOOL flag  = [self.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+            UIViewController *toViewController = [context viewControllerForKey: UITransitionContextToViewKey];
+            if (![toViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+            {
+                [self.navigationController setNavigationBarHidden:NO animated:animated];
+            }
+        } completion:nil];
+        //交互式中断
+        if (!flag)
+        {
+            UIViewController *toViewController = self.navigationController.topViewController;
+            if (![toViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
+            {
+                [self.navigationController setNavigationBarHidden:NO animated:animated];
+            }
+        }
+    }
+}
+*/
 
 
+// 如果二级页面也是隐藏系统导航条，使用自定义view的，则在viewWillDisappear需要判断下个显示的控制器是否需要展示navigationBar；
+// 如果返回页面本来就是需要隐藏导航条的控制器，则不复原；
+
+/*
+override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true);
+    if (self.transitionCoordinator != nil)
+    {
+        self.transitionCoordinator?.animate(alongsideTransition: { (context:UIViewControllerTransitionCoordinatorContext) in
+            
+            let toViewController = context.viewController(forKey: UITransitionContextViewControllerKey.to);
+            if (!(toViewController is MineViewController))
+            {
+                self.navigationController?.setNavigationBarHidden(false, animated: animated);
+            }
+        }, completion:nil);
+    }
+}
+
+override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated);
+    self.navigationController?.setNavigationBarHidden(true, animated: animated);
+    if (self.navigationController?.viewControllers.count)! > 1
+    {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate;
+    }
+}
+override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews();
+    self.barHeightConstraint.constant = kNavigationBarHeight;
+}
+*/

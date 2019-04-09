@@ -7,7 +7,6 @@
 //
 
 #import "UIView+ZXHelper.h"
-#import <objc/runtime.h>
 
 ////不能用，一旦用了，会无法打包
 //#ifndef __OPTIMIZE__
@@ -37,16 +36,68 @@
 
 
 //设置圆角
-
-- (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor
+- (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor
 {
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = radius;
-    self.layer.borderWidth = width;
+    self.layer.borderWidth = borderWidth;
     self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
 
-- (void)zx_setRoundItem
+- (void)zx_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor
+{
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = radius;
+    self.layer.borderWidth = borderWidth;
+    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
+}
+
+
+
+- (void)zx_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor maskedCorners:(CACornerMask) maskedCorners
+{
+    [self zx_setBorderWithCornerRadius:radius borderWidth:borderWidth borderColor:borderColor];
+    if (@available(iOS 11.0, *)) {
+        self.layer.maskedCorners = maskedCorners;
+    } else {
+        // Fallback on earlier versions
+    }
+}
+
+- (void)zx_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor byRoundingCorners:(UIRectCorner) cornersType
+{
+    //如果只是设置mask，则无法显示边框宽度，边框颜色等信息，只有mask部分展示；所以一定要另外添加一个透明layer用于展示边框信息；
+
+//    UIRectCorner type = UIRectCornerTopRight | UIRectCornerBottomRight | UIRectCornerBottomLeft;
+    CGRect rect = CGRectMake(borderWidth/2.0, borderWidth/2.0, CGRectGetWidth(self.frame)-borderWidth, CGRectGetHeight(self.frame)-borderWidth);
+    CGSize radii = CGSizeMake(radius, borderWidth);
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:cornersType cornerRadii:radii];
+    
+    //设置layer的属性，填充颜色，画线颜色，线条宽度；如果是透明的，则底下的layer内容可见；
+    CAShapeLayer *shapeLayer  = [CAShapeLayer layer];
+    shapeLayer.strokeColor = borderColor.CGColor;
+    shapeLayer.fillColor = [UIColor clearColor].CGColor;
+    shapeLayer.lineWidth = borderWidth;
+    shapeLayer.lineJoin = kCALineJoinRound;
+    shapeLayer.lineCap = kCALineCapRound;
+    shapeLayer.path = path.CGPath;
+    
+    [self.layer addSublayer:shapeLayer];
+    
+    //2. 加一个layer 按形状 把外面的减去;只允许这个路径内的内容通过alpha通道显示；
+    CGRect clipRect = CGRectMake(0, 0,
+                                 CGRectGetWidth(self.frame)-1, CGRectGetHeight(self.frame)-1);
+    CGSize clipRadii = CGSizeMake(radius, borderWidth);
+    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRoundedRect:clipRect byRoundingCorners:cornersType cornerRadii:clipRadii];
+    
+    CAShapeLayer *clipLayer = [CAShapeLayer layer];
+    clipLayer.path = clipPath.CGPath;
+    
+    self.layer.mask = clipLayer;
+}
+
+- (void)zx_setBorderWithRoundItem
 {
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = CGRectGetHeight(self.frame)/2;
@@ -54,6 +105,17 @@
     self.layer.borderColor =[UIColor clearColor].CGColor;
 }
 
+
+- (void)zx_setMasksToBoundsRoundedCornerWithBounds:(CGRect)rect
+{
+    CGFloat x = rect.size.width/2.0;
+    CGFloat y = rect.size.height/2.0;
+    CGFloat radius = MIN(x, y);
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(x, y) radius:radius startAngle:0 endAngle:2*M_PI clockwise:YES];
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.path = bezierPath.CGPath;
+    self.layer.mask = maskLayer;
+}
 
 
 - (void)zx_setShadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius

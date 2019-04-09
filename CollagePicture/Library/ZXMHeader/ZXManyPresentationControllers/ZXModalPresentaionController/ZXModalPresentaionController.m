@@ -18,11 +18,29 @@
 
 @implementation ZXModalPresentaionController
 
+- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController presentingViewController:(UIViewController *)presentingViewController
+{
+    self = [super initWithPresentedViewController:presentedViewController presentingViewController:presentingViewController];
+    if (self)
+    {
+        self.dimmingViewAlpha = 0.3;
+    }
+    return self;
+}
+
 // 在呈现过渡即将开始的时候被调用
 - (void)presentationTransitionWillBegin
 {
     [self.visualView addGestureRecognizer:self.tapGestureRecognizer];
     [self.containerView addSubview:self.visualView];
+    
+    id<UIViewControllerTransitionCoordinator> transitionCoordinator = self.presentingViewController.transitionCoordinator;
+    self.visualView.alpha = 0;
+    [transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.visualView.alpha = self.dimmingViewAlpha;
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        
+    }];
 }
 
 //在呈现过渡结束时被调用
@@ -66,7 +84,7 @@
         UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
         effectView.frame = self.containerView.bounds;
-        effectView.alpha = 0.3;
+        effectView.alpha = self.dimmingViewAlpha;
         effectView.backgroundColor = [UIColor blackColor];
         _visualView = effectView;
     }

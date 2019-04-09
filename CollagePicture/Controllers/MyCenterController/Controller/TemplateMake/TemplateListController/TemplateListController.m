@@ -178,15 +178,10 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 #pragma mark - <UICollectionViewDataSource>
 
@@ -224,6 +219,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     return UIEdgeInsetsMake(10, 5, 10, 5);
 }
+
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -232,12 +228,12 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
-/*
+
 // Uncomment this method to specify if the specified item should be highlighted during tracking
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
 	return YES;
 }
-*/
+
 
 /*
 // Uncomment this method to specify if the specified item should be selected

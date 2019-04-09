@@ -2,7 +2,7 @@
 //  APPCommonDef.h
 //  UI_APPCommonDef
 //
-//  Created by 朱新明 on 12-10-18.
+//  Created by simon on 12-10-18.
 //  Copyright (c) 2012年 Ibokan. All rights reserved.
 //
 // 2018.3.7

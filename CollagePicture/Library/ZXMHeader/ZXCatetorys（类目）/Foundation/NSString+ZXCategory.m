@@ -549,7 +549,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 //  arc4random() % 5： 获取0－4的随机数
 //  [zhGetRandomNumberWithFrom:2 to 10]:获取2-10的随机数
 //  arc4random_uniform(5):同上
-- (int)zhGetRandomNumberWithFrom:(int)from to:(int)to
++ (int)zhGetRandomNumberWithFrom:(int)from to:(int)to
 {
     return (int)(from + (arc4random() % (to-from + 1)));
 }

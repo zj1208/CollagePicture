@@ -2,7 +2,7 @@
 //  BaseHttpAPI.h
 //  SiChunTang
 //
-//  Created by 朱新明 on 15/6/4.
+//  Created by simon on 15/6/4.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
 // 2017.12.22 调试cookie

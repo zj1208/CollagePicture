@@ -2,8 +2,8 @@
 //  ZXMPickerView.m
 //  ICBC
 //
-//  Created by 朱新明 on 15/2/11.
-//  Copyright (c) 2015年 朱新明. All rights reserved.
+//  Created by simon on 15/2/11.
+//  Copyright (c) 2015年 simon. All rights reserved.
 //
 
 #import "ZXMPickerView.h"

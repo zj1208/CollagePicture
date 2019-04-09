@@ -5,6 +5,7 @@
 //  Created by apple on 15/1/7.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
+//  2019.3.28  增加新方法；
 
 #import <UIKit/UIKit.h>
 

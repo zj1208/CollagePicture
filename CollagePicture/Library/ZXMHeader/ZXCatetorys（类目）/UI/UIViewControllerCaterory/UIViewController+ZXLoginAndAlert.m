@@ -9,17 +9,20 @@
 #import "UIViewController+ZXLoginAndAlert.h"
 #import <objc/runtime.h>
 
-static  NSString *const sbLoginStoryboard=@"RegisterLogin";
-static  NSString *const sbLoginNavControllerID = @"sLoginNavControllerID" ;
+static  NSString *const Storyboard_Login = @"RegisterLogin";
+static  NSString *const SBID_LoginNavController = @"LoginNavControllerID" ;
 
-static  NSString *const sLoginController = @"WYLoginViewController";
+static  NSString *const clas_LoginController = @"WYLoginViewController";
 
-static  BOOL sLoginControllerFromStroyboard = NO;
+static  BOOL sLoginControllerFromStroyboard = YES;
 
 
 @implementation UIViewController (ZXLoginAndAlert)
 
-
+- (BOOL)zx_performActionWithIsLogin:(BOOL)isLogin
+{
+    return [self zx_performActionWithIsLogin:isLogin withPopAlertView:NO];
+}
 
 - (BOOL)zx_performActionWithIsLogin:(BOOL)isLogin withPopAlertView:(BOOL)flag
 {
@@ -119,13 +122,13 @@ static  BOOL sLoginControllerFromStroyboard = NO;
 {
     if (sLoginControllerFromStroyboard)
     {
-        UIStoryboard *sb=[UIStoryboard  storyboardWithName:sbLoginStoryboard  bundle:[NSBundle mainBundle]];
-        UIViewController *loginViewController = [sb instantiateViewControllerWithIdentifier:sbLoginNavControllerID];
+        UIStoryboard *sb=[UIStoryboard  storyboardWithName:Storyboard_Login  bundle:[NSBundle mainBundle]];
+        UIViewController *loginViewController = [sb instantiateViewControllerWithIdentifier:SBID_LoginNavController];
         [self presentViewController:loginViewController animated:YES completion:nil];
     }
     else
     {
-        UIViewController * vc = (UIViewController *)[[NSClassFromString(sLoginController) alloc] init];
+        UIViewController * vc = (UIViewController *)[[NSClassFromString(clas_LoginController) alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         if (nav)
         {

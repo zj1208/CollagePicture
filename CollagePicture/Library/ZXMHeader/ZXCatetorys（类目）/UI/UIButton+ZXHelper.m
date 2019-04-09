@@ -7,7 +7,6 @@
 //
 
 #import "UIButton+ZXHelper.h"
-#import "UIImage+ZXHelper.h"
 
 @implementation UIButton (ZXHelper)
 
@@ -147,6 +146,7 @@
     
 }
 
+
 - (void)zh_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled
 {
     self.userInteractionEnabled = enabled;
@@ -158,8 +158,8 @@
     {
         self.alpha = 0.5;
     }
-
 }
+
 - (void)zh_userSelectedEnabled:(BOOL)enabled boardColor:(UIColor*)boardColor
 {
     self.layer.masksToBounds = YES;
@@ -170,11 +170,22 @@
     self.selected = enabled;
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [self setTitleColor:boardColor forState:UIControlStateNormal];
-    UIImage *img = [UIImage zh_imageWithColor:boardColor andSize:self.frame.size];
+    UIImage *img = [self imageWithColor:boardColor andSize:self.frame.size opaque:NO];
     [self setBackgroundImage:img forState:UIControlStateSelected];
     [self setBackgroundImage:nil forState:UIControlStateNormal];
 }
 
+- (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size opaque:(BOOL)opaque
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, opaque, 1);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 
 
 - (void)zh_setImage:(UIImage *)image1 selectImage:(UIImage *)image2  titleColor:(UIColor *)color1 selectTitleColor:(UIColor *)color2

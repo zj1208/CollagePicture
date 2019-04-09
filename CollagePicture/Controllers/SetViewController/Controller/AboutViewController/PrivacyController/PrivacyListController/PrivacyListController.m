@@ -2,7 +2,7 @@
 //  PrivacyListController.m
 //  CollagePicture
 //
-//  Created by 朱新明 on 16/12/5.
+//  Created by simon on 16/12/5.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
@@ -124,20 +124,7 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-//    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//    NSDictionary *modelDic = [self.dataArray objectAtIndex:indexPath.row];
-//    NSString *content =[modelDic objectForKey:@"content"];
-    
-//    UIViewController *vc = segue.destinationViewController;
-//    if (vc respondsToSelector:@selector()) {
-//        <#statements#>
-//    }
 
-}
 
 
 @end

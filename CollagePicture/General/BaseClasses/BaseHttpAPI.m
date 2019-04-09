@@ -2,7 +2,7 @@
 //  BaseHttpAPI.m
 //  SiChunTang
 //
-//  Created by 朱新明 on 15/6/4.
+//  Created by simon on 15/6/4.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
 
@@ -334,7 +334,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
         [dicParam setObject:@"" forKey:HEAD_AUTHTOKEN];
     }
     [dicParam setObject:[BaseHttpAPI getCurrentDatetime] forKey:HEAD_TS];
-    [dicParam setObject:[[UIDevice currentDevice]getIDFAUUIDString] forKey:HEAD_DID];
+    [dicParam setObject:[[UIDevice currentDevice]zx_getIDFAUUIDString] forKey:HEAD_DID];
     [dicParam setObject:@"" forKey:HEAD_LNG];
     [dicParam setObject:@"" forKey:HEAD_LAT];
     
