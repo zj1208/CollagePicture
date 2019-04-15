@@ -71,7 +71,7 @@
 {
     if (!_webView)
     {
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0,HEIGHT_STATEBAR, LCDW, LCDH-HEIGHT_STATEBAR-HEIGHT_TABBAR_SAFE)];
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0,0, LCDW, LCDH)];
         webView.delegate = self;
         webView.scalesPageToFit = YES;
         webView.dataDetectorTypes = !UIDataDetectorTypeAddress;

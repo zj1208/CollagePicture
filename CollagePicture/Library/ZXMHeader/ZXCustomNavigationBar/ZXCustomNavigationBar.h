@@ -14,6 +14,7 @@
 
 //  5.10  修改注释
 //  2019.4.01  修改默认值，添加完整例子；
+//  2019.4.15  增加设置title标题属性；
 
 
 #import <UIKit/UIKit.h>
@@ -36,7 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *navigationBarContentView;
 // 中间titleView
 @property (weak, nonatomic) IBOutlet UIView *titleView;
-
+// 设置标题
+@property (nullable,nonatomic,copy) NSString *title;
 
 /**
  左边按钮的容器view
@@ -80,10 +82,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-//  例如：
+//  例如： 如果是纯代码添加自定义NavigationBarView，则需要修改tableView的约束值；
 /*
 @property (nonatomic, strong) UIImageView * topImageView;
 @property (nonatomic, strong) ZXCustomNavigationBar *customNavigationBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopLayoutConstraint;
 */
 
 /*
@@ -91,6 +94,7 @@ NS_ASSUME_NONNULL_END
 {
     [super viewDidLayoutSubviews];
     self.customNavigationBar.frame = CGRectMake(0, 0, LCDW, HEIGHT_NAVBAR);
+    self.tableViewTopLayoutConstraint.constant = HEIGHT_NAVBAR;
 }
 
 - (ZXCustomNavigationBar *)customNavigationBar{
@@ -117,10 +121,20 @@ NS_ASSUME_NONNULL_END
 - (void)createScaleImageView
 {
     self.collectionView.backgroundColor = [UIColor clearColor];
-    _topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDW*100.f/375.0)];
-    _topImageView.backgroundColor = UIColorFromRGB_HexValue(0xBF352D);
-    [self.view insertSubview:_topImageView belowSubview:self.collectionView];
-    _topImageView.hidden = YES;
+    [self.view insertSubview:self.topImageView belowSubview:self.collectionView];
+    self.topImageView.hidden = YES;
+    _contentInsetTop = 0;
+ //    self.tableView.contentInset = UIEdgeInsetsMake(64-20, 0, 0, 0);
+ //    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64-20+ _contentInsetTop, 0, 0, 0);
+}
+- (UIImageView *)topImageView
+{
+    if (!_topImageView)
+    {
+        _topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDW*100.f/375.0)];
+        _topImageView.backgroundColor = UIColorFromRGB_HexValue(0xBF352D);
+    }
+    return _topImageView;
 }
 */
 
@@ -133,9 +147,9 @@ NS_ASSUME_NONNULL_END
     //    NSLog(@"%f,%f,%f",scrollView.contentOffset.y,scrollView.contentInset.top,offsetY);
     if (offsetY <= 0) {
         
-        CGRect frame = _topImageView.frame;
-        frame.size.height= HEIGHT_NAVBAR+_contentInsetTop-offsetY;
-        _topImageView.frame = frame;
+        CGRect frame = self.topImageView.frame;
+        frame.size.height= HEIGHT_NAVBAR+_contentInsetTop+ABS(offsetY);
+        self.topImageView.frame = frame;
         
         [self.customNavigationBar zx_setBarBackgroundContainerAlpha:0 animated:YES];
     }
@@ -154,9 +168,9 @@ NS_ASSUME_NONNULL_END
             //            _stausBarStyle = UIStatusBarStyleLightContent;
             //            [self setNeedsStatusBarAppearanceUpdate];
         }
-        CGRect frame = _topImageView.frame;
+        CGRect frame = self.topImageView.frame;
         frame.size.height= HEIGHT_NAVBAR+_contentInsetTop;
-        _topImageView.frame = frame;
+        self.topImageView.frame = frame;
     }
 }
  */
@@ -181,7 +195,7 @@ NS_ASSUME_NONNULL_END
         if (@available(iOS 10.0, *))
         {
             [tc notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-                if (![context isCancelled])
+                if ([context isCancelled])
                 {
                     UIViewController *fromViewController = [context viewControllerForKey: UITransitionContextFromViewControllerKey];
                     if (![fromViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])
@@ -194,7 +208,7 @@ NS_ASSUME_NONNULL_END
         else
         {
             [tc notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-                if (![context isCancelled])
+                if ([context isCancelled])
                 {
                     UIViewController *fromViewController = [context viewControllerForKey: UITransitionContextFromViewControllerKey];
                     if (![fromViewController isKindOfClass:NSClassFromString(@"MyLevelViewController")])

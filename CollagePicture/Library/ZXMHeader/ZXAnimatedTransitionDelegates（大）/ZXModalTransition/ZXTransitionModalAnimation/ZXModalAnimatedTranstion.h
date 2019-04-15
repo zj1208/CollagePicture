@@ -3,7 +3,7 @@
 //  ZXControllerTransition
 //
 //  Created by simon on 15/11/10.
-//  Copyright © 2015年 zhuxinming. All rights reserved.
+//  Copyright © 2015年 simon. All rights reserved.
 //
 //  简介：出现动画：从上往下移动的弹簧动画出现；消失动画：alpha=0，scale=0过渡 ；
 
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_END
 
 - (void)firstLogin
 {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"RegisterLogin" bundle:nil];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     UIViewController *vc = [sb instantiateViewControllerWithIdentifier:@"ModalControllerID"];
     vc.modalPresentationStyle = UIModalPresentationCustom;
     vc.transitioningDelegate = self;

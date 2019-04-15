@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 
 
-static NSInteger const PHONE_MAXLENGTH  = 11 ;
+static NSInteger const PHONE_MAXLENGTH  = 11;
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
@@ -50,13 +50,23 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
     [self.navigationController zx_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
     [self zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     
-    self.userNameField.keyboardType = UIKeyboardTypeNumberPad;
+    self.userNameTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:NO];
-    self.userNameField.delegate = self;
+    self.userNameTextField.delegate = self;
     
     [self.whiteBgView zx_setCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
     [self.loginBtn zx_setCornerRadius:LCDScale_5Equal6_To6plus(40.f)/2 borderWidth:1.f borderColor:nil];
+    
+    UIFont *font = nil;
+    if (Device_SYSTEMVERSION_IOS9_OR_LATER) {
+       font  = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+    }
+    else{
+        font = [UIFont fontWithName:@"Courier" size:14];
+    }
+    self.userNameTextField.font = font;
+    self.passwordTextField.font =font;
 }
 
 
@@ -71,7 +81,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 
 - (void)signInBtnChangeAlpha:(NSNotification *)notification
 {
-    NSString *str = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    NSString *str = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameTextField.text];
     BOOL flag = str.length==11&&self.passwordTextField.text.length>3?YES:NO;
     [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:flag];
 }
@@ -81,14 +91,13 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if ([textField isEqual:self.userNameField])
+    if ([textField isEqual:self.userNameTextField])
     {
         if (range.location>= PHONE_MAXLENGTH)
         {
             textField.text = [textField.text substringToIndex:PHONE_MAXLENGTH];
             return NO;
         }
-
     }
     return YES;
 }
@@ -135,19 +144,27 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 
 - (void)validatePhoneAndPassword
 {
-    NSString *userName = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
-    NSString *password = self.passwordTextField.text;
-    NSString *passError = [UITextField zh_TextFieldPassword:password];
+    NSString *userName = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameTextField.text];
+    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:self.passwordTextField.text];;
     if (![UITextField zx_validatePhoneNumber:userName])
     {
       [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }
-    else if (passError.length>0)
+    else if (password.length == 0)
     {
-        [MBProgressHUD zx_showError:passError toView:self.view];
+        [MBProgressHUD zx_showError:NSLocalizedString(@"密码不能为空", nil) toView:self.view];
+    }
+    else if (password.length<4 ||password.length>12)
+    {
+        [MBProgressHUD zx_showError:NSLocalizedString(@"请填写有效的密码长度", nil) toView:self.view];
+    }
+    else if (![UITextField zx_validatePassword:password])
+    {
+        [MBProgressHUD zx_showError:NSLocalizedString(@"请使用数字或字母的密码", nil) toView:self.view];
     }
     else
     {
+//        一旦用了这个方法，MBProgressHUD不能用window，会被移除？
         [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
         [self requestDataWithLoginPassword:password];
     }
@@ -155,9 +172,9 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
 
 - (void)requestDataWithLoginPassword:(NSString *)password
 {
-    [MBProgressHUD zx_showLoadingWithStatus:@"正在登录" toView:nil];
+    [MBProgressHUD zx_showLoadingWithStatus:@"正在登录" toView:self.view];
     WS(weakSelf);
-    [BmobUser loginInbackgroundWithAccount:self.userNameField.text andPassword:password block:^(BmobUser *user, NSError *error) {
+    [BmobUser loginInbackgroundWithAccount:self.userNameTextField.text andPassword:password block:^(BmobUser *user, NSError *error) {
         
         if (user)
         {
@@ -174,7 +191,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11 ;
         }
         else
         {
-            [MBProgressHUD zx_showError:@"您输入的用户名或密码错误，请重新输入" toView:nil];
+            [MBProgressHUD zx_showError:@"您输入的用户名或密码错误，请重新输入" toView:weakSelf.view];
         }
     }];
 }

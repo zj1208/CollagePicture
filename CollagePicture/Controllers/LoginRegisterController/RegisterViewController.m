@@ -139,92 +139,15 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
 
 - (IBAction)requestSmsCodeBtnAction:(UIButton *)sender {
     
-    NSString *mobilePhoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
 
-    if (![UITextField zx_validatePhoneNumber:mobilePhoneNumber])
+    if (![UITextField zx_validatePhoneNumber:phoneNumber])
     {
         [MBProgressHUD zx_showError:@"请您输入正确的手机号码" toView:nil];
         return;
     }
-    //我暂时没有自定义模版，用系统短信
-    WS(weakSelf);
-    [BmobSMS requestSMSCodeInBackgroundWithPhoneNumber:mobilePhoneNumber andTemplate:nil resultBlock:^(int number, NSError *error) {
-        
-        if (error)
-        {
-            [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
-        }
-        else
-        {
-            NSLog(@"smsID:%d",number);
-            [weakSelf smsCodeRequestSuccess];
-        }
-    }];
-}
-
-
-
-#pragma mark - 验证码获取成功后执行
-
-- (void)smsCodeRequestSuccess
-{
-    self.verfiCodeBtn.enabled = NO;
-    self.verfiCodeBtn.backgroundColor = [UIColor lightGrayColor];
-    self.smsDownSeconds = 60;
-    
-    self.smsDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downTimeWithSeconds:) userInfo:nil repeats:YES];
-    [self.smsDownTimer fire];
-    
-}
-
-- (void)downTimeWithSeconds:(NSTimer *)timer
-{
-    if (self.smsDownSeconds ==0)
-    {
-        self.verfiCodeBtn.enabled = NO;
-        self.verfiCodeBtn.backgroundColor = [UIColor orangeColor];
-        [self.verfiCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [self.smsDownTimer invalidate];
-    }
-    else
-    {
-           [self.verfiCodeBtn setTitle:[[NSNumber numberWithInt:(int)self.smsDownSeconds] description] forState:UIControlStateNormal];
-        self.smsDownSeconds--;
-    }
-}
-
-- (IBAction)registerAction:(UIButton *)sender {
-    
-    [self validatePhoneAndPassword];
-}
-
-
-- (void)validatePhoneAndPassword
-{
-    NSString *mobilePhoneNumer = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
-    NSString *passwordError = [UITextField zh_TextFieldPassword:self.passwordField.text];
-    if (![UITextField zx_validatePhoneNumber:mobilePhoneNumer])
-    {
-        [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
-    }
-    else if ([NSString zhFilterInputTextWithWittespaceAndLine:self.verificationCodeField.text].length==0)
-    {
-        [MBProgressHUD zx_showError:@"请输入验证码" toView:self.view];
-    }
-    else if (passwordError.length>0)
-    {
-        [MBProgressHUD zx_showError:passwordError toView:self.view];
-    }
-    else if (![self.passwordField.text isEqualToString:self.passwordAgainField.text])
-    {
-        [MBProgressHUD zx_showError:@"二次密码不一样，请重新输入" toView:self.view];
-    }
-    else
-    {
-        [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
-      
-        [self requestFindAccountIsRegister];
-    }
+//     检查手机号是否已经注册？
+    [self requestFindAccountIsRegister];
 }
 
 
@@ -232,12 +155,12 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
 
 - (void)requestFindAccountIsRegister
 {
-    
-    [MBProgressHUD zx_showLoadingWithStatus:@"正在注册..." toView:nil];
+    [MBProgressHUD zx_showLoadingWithStatus:nil toView:nil];
+    NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
 
     WS(weakSelf) ;
     BmobQuery *query = [BmobQuery queryForUser];
-    [query whereKey:@"username" equalTo:self.userNameField.text];
+    [query whereKey:@"username" equalTo:phoneNumber];
     [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         if (error)
         {
@@ -258,22 +181,112 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
             }
             else
             {
-                [weakSelf requestRegisterAccount];
+                [weakSelf requestSMSCode];
             }
-            
         }
     }];
-
 }
+
+- (void)requestSMSCode
+{
+    NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    //我暂时没有自定义模版，用系统短信
+    WS(weakSelf);
+    [BmobSMS requestSMSCodeInBackgroundWithPhoneNumber:phoneNumber andTemplate:nil resultBlock:^(int number, NSError *error) {
+        
+        if (error)
+        {
+            [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+        }
+        else
+        {
+            NSLog(@"smsID:%d",number);
+            [MBProgressHUD zx_showSuccess:NSLocalizedString(@"已发送验证码", nil) toView:nil];
+            [weakSelf smsCodeRequestSuccess];
+        }
+    }];
+}
+
+#pragma mark - 验证码获取成功后执行
+
+- (void)smsCodeRequestSuccess
+{
+    self.verfiCodeBtn.enabled = NO;
+    self.verfiCodeBtn.backgroundColor = [UIColor lightGrayColor];
+    self.smsDownSeconds = 60;
+    
+    self.smsDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downTimeWithSeconds:) userInfo:nil repeats:YES];
+    [self.smsDownTimer fire];
+}
+
+- (void)downTimeWithSeconds:(NSTimer *)timer
+{
+    if (self.smsDownSeconds ==0)
+    {
+        self.verfiCodeBtn.enabled = NO;
+        self.verfiCodeBtn.backgroundColor = [UIColor orangeColor];
+        [self.verfiCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [self.smsDownTimer invalidate];
+    }else
+    {
+        [self.verfiCodeBtn setTitle:[[NSNumber numberWithInt:(int)self.smsDownSeconds] description] forState:UIControlStateNormal];
+        self.smsDownSeconds--;
+    }
+}
+
+- (IBAction)registerAction:(UIButton *)sender {
+    
+    [self validatePhoneAndPassword];
+}
+
+
+- (void)validatePhoneAndPassword
+{
+    NSString *mobilePhoneNumer = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:self.passwordField.text];;
+    if (![UITextField zx_validatePhoneNumber:mobilePhoneNumer])
+    {
+        [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
+    }
+    else if ([NSString zhFilterInputTextWithWittespaceAndLine:self.verificationCodeField.text].length==0)
+    {
+        [MBProgressHUD zx_showError:@"请输入验证码" toView:self.view];
+    }
+    else if (password.length == 0)
+    {
+        [MBProgressHUD zx_showError:NSLocalizedString(@"密码不能为空", nil) toView:self.view];
+    }
+    else if (password.length<4 ||password.length>12)
+    {
+        [MBProgressHUD zx_showError:NSLocalizedString(@"请填写有效的密码长度", nil) toView:self.view];
+    }
+    else if (![UITextField zx_validatePassword:password])
+    {
+        [MBProgressHUD zx_showError:NSLocalizedString(@"请使用数字或字母的密码", nil) toView:self.view];
+    }
+    else if (![self.passwordField.text isEqualToString:self.passwordAgainField.text])
+    {
+        [MBProgressHUD zx_showError:@"二次密码不一样，请重新输入" toView:self.view];
+    }
+    else
+    {
+        [[UIApplication sharedApplication]sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+      
+        [self requestFindAccountIsRegister];
+    }
+}
+
+
+
 
 
 #pragma mark - 注册
 
 - (void)requestRegisterAccount
 {
-    
-    WS(weakSelf);
+    [MBProgressHUD zx_showLoadingWithStatus:NSLocalizedString(@"正在注册...", nil) toView:nil];
 
+    WS(weakSelf);
     [BmobUser signOrLoginInbackgroundWithMobilePhoneNumber:self.userNameField.text SMSCode:self.verificationCodeField.text andPassword:self.passwordField.text block:^(BmobUser *user, NSError *error) {
         
         if (user)

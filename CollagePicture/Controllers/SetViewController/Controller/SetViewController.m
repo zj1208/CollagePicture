@@ -21,22 +21,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
-    
-
     [self setUI];
-    
-
-      
+    [self setData];
 }
 
 - (void)setUI
 {
+    self.view.backgroundColor = [UIColor colorWithHexString:@"ECECEC"];
+    self.tableView.separatorColor =  self.view.backgroundColor;
+    self.tableView.estimatedRowHeight = 45;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     self.versionLab.text = APP_Version;
     [self reloadVersionUI];
-
 }
 
 
@@ -46,6 +45,46 @@
     NSString *sizeStr =tempSize>=1?[NSString stringWithFormat:@"%.2fM",tempSize]:[NSString stringWithFormat:@"%.2fK",tempSize*1024];
     
     self.cacheSizeLab.text =sizeStr;
+}
+
+- (void)setData{
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateFonts:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+}
+
+- (void)updateFonts:(id)sender
+{
+//    static NSDictionary *cellHeight;
+//
+//    if (!cellHeight) {
+//
+//        cellHeight = @{UIContentSizeCategoryExtraSmall: @44,// 没有 Accessibility 是普通字体的大小
+//                       UIContentSizeCategorySmall: @44,
+//                       UIContentSizeCategoryMedium: @44,
+//                       UIContentSizeCategoryLarge: @44,
+//                       UIContentSizeCategoryExtraLarge: @55,
+//                       UIContentSizeCategoryExtraExtraLarge: @65,
+//                       UIContentSizeCategoryExtraExtraExtraLarge: @75,
+//                       UIContentSizeCategoryAccessibilityMedium: @75, // 注意这个是更大字体的方法
+//                       UIContentSizeCategoryAccessibilityLarge: @85,
+//                       UIContentSizeCategoryAccessibilityExtraLarge: @95,
+//                       UIContentSizeCategoryAccessibilityExtraExtraLarge: @105,
+//                       UIContentSizeCategoryAccessibilityExtraExtraExtraLarge: @115};
+//    }
+//
+//    // Application 单例自带方法判断内容尺寸
+//    NSString *tableViewSize = [[UIApplication sharedApplication] preferredContentSizeCategory];
+//    // 根据尺寸在 cellHeight 字典中选择相应的行高
+//    NSNumber *tableViewRowHeight = cellHeight[tableViewSize];
+//
+//    self.tableView.rowHeight = tableViewRowHeight.floatValue;
+//
+//    [self.tableView reloadData];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

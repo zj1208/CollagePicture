@@ -2,7 +2,7 @@
 //  UIViewController+UMThirdLogin.m
 //  wqk8
 //
-//  Created by zhuxinming on 15/11/27.
+//  Created by simon on 15/11/27.
 //  Copyright © 2015年 simon. All rights reserved.
 //
 

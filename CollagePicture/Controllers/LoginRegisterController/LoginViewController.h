@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *whiteBgView;
 
-@property (weak, nonatomic) IBOutlet UITextField *userNameField;
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 

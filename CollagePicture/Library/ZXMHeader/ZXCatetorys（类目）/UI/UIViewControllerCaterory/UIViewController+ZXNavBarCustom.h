@@ -2,8 +2,8 @@
 //  UIViewController+ZXNavBarCustom.h
 //  ShiChunTang
 //
-//  Created by zhuxinming on 14/11/1.
-//  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
+//  Created by simon on 14/11/1.
+//  Copyright (c) 2014年 simon. All rights reserved.
 //
 //  9.12  弃用减小barButtonItem与屏幕的边距 偏门方法； 不但所有系统和屏幕无法统一间距，而且不符合逻辑，在iOS11上毫无效果，只是iOS11以前系统的一个bug而已；
 //  2019.1.10  添加例子

@@ -10,6 +10,7 @@
 
 @interface ZXCustomNavigationBar()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
 @end
 
@@ -36,8 +37,18 @@
     [self.leftBarButton setTitle:nil forState:UIControlStateNormal];
     [self.leftBarButton setTitle:nil forState:UIControlStateHighlighted];
     [self zx_setBarBackgroundContainerAlpha:1.f animated:NO];
+    self.titleLab.text = nil;
+    self.titleLab.textColor = [UIColor whiteColor];
 }
 
+- (void)setTitle:(NSString *)title
+{
+    if (_title != title)
+    {
+        _title = title;
+        self.titleLab.text = title;
+    }
+}
 
 - (void)zx_setBarBackgroundContainerAlpha:(CGFloat)alpha animated:(BOOL)animated
 {

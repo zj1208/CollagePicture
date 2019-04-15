@@ -9,7 +9,7 @@
 #import "UIViewController+ZXLoginAndAlert.h"
 #import <objc/runtime.h>
 
-static  NSString *const Storyboard_Login = @"RegisterLogin";
+static  NSString *const Storyboard_Login = @"Login";
 static  NSString *const SBID_LoginNavController = @"LoginNavControllerID" ;
 
 static  NSString *const clas_LoginController = @"WYLoginViewController";

@@ -2,8 +2,8 @@
 //  ZXMHeader.h
 //  ShiChunTang
 //
-//  Created by zhuxinming on 14/12/1.
-//  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
+//  Created by simon on 14/12/1.
+//  Copyright (c) 2014年 simon. All rights reserved.
 //
 
 #ifndef ShiChunTang_ZhuHeader_h

@@ -3,7 +3,7 @@
 //  ZXControllerTransition
 //
 //  Created by simon on 15/11/10.
-//  Copyright © 2015年 zhuxinming. All rights reserved.
+//  Copyright © 2015年 simon. All rights reserved.
 //
 
 #import "ZXBaseAnimator.h"

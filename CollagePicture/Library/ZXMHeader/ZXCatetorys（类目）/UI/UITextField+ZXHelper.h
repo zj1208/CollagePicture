@@ -98,7 +98,7 @@ shouldChangeCharactersInRange:(NSRange)range
 
 
 
-+ (nullable NSString *)zh_TextFieldPassword:(NSString *)str;
+//+ (nullable NSString *)zh_TextFieldPassword:(NSString *)str;
 
 
 

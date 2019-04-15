@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -73,13 +73,27 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zym-QB-Xec" userLabel="titleView">
-                            <rect key="frame" x="152" y="0.0" width="181" height="44"/>
+                            <rect key="frame" x="200.5" y="0.0" width="42" height="44"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRC-Te-BiJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="42" height="44"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="KRC-Te-BiJ" firstAttribute="centerY" secondItem="Zym-QB-Xec" secondAttribute="centerY" id="15W-Zv-wBI"/>
+                                <constraint firstItem="KRC-Te-BiJ" firstAttribute="centerX" secondItem="Zym-QB-Xec" secondAttribute="centerX" id="4As-b8-zEM"/>
+                                <constraint firstItem="KRC-Te-BiJ" firstAttribute="top" secondItem="Zym-QB-Xec" secondAttribute="top" id="5cV-gd-nYC"/>
+                                <constraint firstItem="KRC-Te-BiJ" firstAttribute="leading" secondItem="Zym-QB-Xec" secondAttribute="leading" id="xoO-BL-4hh"/>
+                            </constraints>
                         </view>
-                        <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-eA-gFi" userLabel="leftView">
+                        <view tag="100" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-eA-gFi" userLabel="leftView">
                             <rect key="frame" x="15" y="0.0" width="122" height="44"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQe-rh-DY9">
-                                    <rect key="frame" x="0.0" y="0.0" width="122" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="122" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="122" id="vMx-tv-QaJ"/>
                                     </constraints>
@@ -99,14 +113,15 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Zym-QB-Xec" firstAttribute="leading" secondItem="zPq-eA-gFi" secondAttribute="trailing" constant="15" id="2gq-bP-7uh"/>
+                        <constraint firstItem="Zym-QB-Xec" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zPq-eA-gFi" secondAttribute="trailing" constant="15" id="2gq-bP-7uh"/>
                         <constraint firstItem="ipI-FM-8iP" firstAttribute="centerY" secondItem="c5U-c7-xiI" secondAttribute="centerY" id="Gd6-ZJ-c8T"/>
                         <constraint firstItem="zPq-eA-gFi" firstAttribute="top" secondItem="c5U-c7-xiI" secondAttribute="top" id="LTv-zS-lH5"/>
                         <constraint firstItem="Zym-QB-Xec" firstAttribute="top" secondItem="c5U-c7-xiI" secondAttribute="top" id="MRK-C9-Qfl"/>
                         <constraint firstItem="ipI-FM-8iP" firstAttribute="top" secondItem="c5U-c7-xiI" secondAttribute="top" id="VDV-gN-2h0"/>
+                        <constraint firstItem="Zym-QB-Xec" firstAttribute="centerX" secondItem="c5U-c7-xiI" secondAttribute="centerX" id="XeK-wv-pF6"/>
                         <constraint firstItem="Zym-QB-Xec" firstAttribute="centerY" secondItem="c5U-c7-xiI" secondAttribute="centerY" id="Xgs-y8-ZRU"/>
                         <constraint firstAttribute="height" constant="44" id="lUg-Rf-Rfd"/>
-                        <constraint firstItem="ipI-FM-8iP" firstAttribute="leading" secondItem="Zym-QB-Xec" secondAttribute="trailing" constant="10" id="ldY-2T-kU3"/>
+                        <constraint firstItem="ipI-FM-8iP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Zym-QB-Xec" secondAttribute="trailing" constant="10" id="ldY-2T-kU3"/>
                         <constraint firstItem="zPq-eA-gFi" firstAttribute="centerY" secondItem="c5U-c7-xiI" secondAttribute="centerY" id="m61-v7-Clh"/>
                         <constraint firstItem="zPq-eA-gFi" firstAttribute="leading" secondItem="c5U-c7-xiI" secondAttribute="leading" constant="15" id="uzb-CP-XEr"/>
                         <constraint firstAttribute="trailing" secondItem="ipI-FM-8iP" secondAttribute="trailing" constant="15" id="zkF-tr-XDx"/>
@@ -133,6 +148,7 @@
                 <outlet property="rightBarButton1" destination="Om4-e5-bQg" id="eXp-Lr-okP"/>
                 <outlet property="rightBarButton2" destination="31l-2N-93c" id="tdi-nQ-UPg"/>
                 <outlet property="rightContainerView" destination="ipI-FM-8iP" id="Y8f-Ok-ELA"/>
+                <outlet property="titleLab" destination="KRC-Te-BiJ" id="fkY-jO-6PV"/>
                 <outlet property="titleView" destination="Zym-QB-Xec" id="13B-Tb-8gN"/>
             </connections>
             <point key="canvasLocation" x="-89.5" y="-166.5"/>

@@ -335,10 +335,10 @@ shouldChangeCharactersInRange:(NSRange)range
 }
 
 
-
+/*
 + (nullable NSString *)zh_TextFieldPassword:(NSString *)str
 {
-    NSString *password = nil;
+    NSString *password = str;
     NSCharacterSet *whitespaceLine = [NSCharacterSet  whitespaceAndNewlineCharacterSet];
     NSRange spaceRange = [password rangeOfCharacterFromSet:whitespaceLine];
     if (spaceRange.location != NSNotFound)
@@ -365,6 +365,6 @@ shouldChangeCharactersInRange:(NSRange)range
     return reTitle;
     
 }
-
+*/
 
 @end

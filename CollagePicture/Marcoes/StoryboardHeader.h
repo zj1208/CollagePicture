@@ -12,11 +12,9 @@
 /*
   @brief  Main Storyboard Name
  */
-static NSString *sb_FirstStoryboard = @"FirstTabSB";
-static NSString *sb_SecondStoryboard =@"SecondTab";
-static NSString *sb_SetStoryboard = @"Set";
+static NSString *const storyboard_Set  = @"Set";
+static NSString *const storyboard_Login  = @"Login";
 
-static NSString *sb_LoginStoryboard = @"RegisterLogin";
 /*
  @brief Storyboard Segue
  */

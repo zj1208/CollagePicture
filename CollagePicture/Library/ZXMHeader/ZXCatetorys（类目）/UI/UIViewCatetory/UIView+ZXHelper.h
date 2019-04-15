@@ -2,8 +2,8 @@
 //  UIView+ZXHelper.h
 //  ShiChunTang
 //
-//  Created by zhuxinming on 14/11/1.
-//  Copyright (c) 2014年 ZhuXinMing. All rights reserved.
+//  Created by simon on 14/11/1.
+//  Copyright (c) 2014年 simon. All rights reserved.
 //
 // 2018.1.29 新增方法：可以同时设置圆角和阴影
 // 2018.3.19  新增xib方法
