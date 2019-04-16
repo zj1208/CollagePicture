@@ -297,29 +297,31 @@
                                     </variation>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="Ycn-Rp-hcn" imageView="eHF-Jh-IVZ" rowHeight="44" style="IBUITableViewCellStyleDefault" id="aGJ-e6-eDa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="aGJ-e6-eDa">
                                         <rect key="frame" x="0.0" y="264.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aGJ-e6-eDa" id="vVs-ls-E54">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="照片拼图" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ycn-Rp-hcn">
-                                                    <rect key="frame" x="50" y="0.0" width="290" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_iconAlbum" translatesAutoresizingMaskIntoConstraints="NO" id="uyK-oJ-XHY">
+                                                    <rect key="frame" x="15" y="12" width="20" height="20"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="照片拼图" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v82-0B-JM7">
+                                                    <rect key="frame" x="50" y="13" width="61.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="m_iconAlbum" id="eHF-Jh-IVZ">
-                                                    <rect key="frame" x="15" y="11" width="20" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="v82-0B-JM7" secondAttribute="bottom" constant="12.5" id="MCq-UY-yTu"/>
+                                                <constraint firstItem="v82-0B-JM7" firstAttribute="top" secondItem="vVs-ls-E54" secondAttribute="top" constant="13" id="On1-AO-8Oh"/>
+                                                <constraint firstItem="uyK-oJ-XHY" firstAttribute="centerY" secondItem="vVs-ls-E54" secondAttribute="centerY" id="QnT-0U-LjQ"/>
+                                                <constraint firstItem="v82-0B-JM7" firstAttribute="leading" secondItem="uyK-oJ-XHY" secondAttribute="trailing" constant="15" id="qXK-lw-CEv"/>
+                                                <constraint firstItem="uyK-oJ-XHY" firstAttribute="leading" secondItem="vVs-ls-E54" secondAttribute="leading" constant="15" id="tzb-87-BqM"/>
+                                            </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="UjY-Yx-CMC" kind="show" id="PNq-hK-9iF"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -346,11 +348,12 @@
                         <outlet property="signatureLab" destination="BCD-jZ-xyb" id="FMu-HX-boM"/>
                         <outlet property="tableView" destination="f2W-Hc-IDg" id="jK7-jr-azW"/>
                         <outlet property="tableViewTopLayoutConstraint" destination="Kg2-mD-xkr" id="dSN-eS-JAF"/>
+                        <segue destination="UjY-Yx-CMC" kind="show" identifier="TemplateListController" id="3dD-cd-Iac"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FaI-bq-aAe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="240"/>
+            <point key="canvasLocation" x="125.59999999999999" y="239.73013493253376"/>
         </scene>
     </scenes>
     <resources>

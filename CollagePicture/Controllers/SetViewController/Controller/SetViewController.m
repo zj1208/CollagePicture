@@ -34,7 +34,7 @@
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.versionLab.text = APP_Version;
+    self.versionLab.text = [NSString stringWithFormat:@"V %@",APP_Version];
     [self reloadVersionUI];
 }
 
@@ -79,7 +79,7 @@
 //
 //    self.tableView.rowHeight = tableViewRowHeight.floatValue;
 //
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)dealloc

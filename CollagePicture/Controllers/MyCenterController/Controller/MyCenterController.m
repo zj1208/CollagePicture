@@ -20,6 +20,7 @@
 #import "CheckVersionManager.h"
 
 #import "ZXCustomNavigationBar.h"
+#import "BaseTableViewCell.h"
 //static NSInteger IndexSection_Set =1;
 
 
@@ -74,41 +75,7 @@
     
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    //    UIFont *font1 = [UIFont systemFontOfSize:12];
-    //    UIFont *font2 = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
-    //    UIFont *font3 = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
-    //
-    //    UIFont *font1 = [UIFont preferredFontForTextStyle:UIFontTextStyleLargeTitle];
-    //    UIFont *font2 = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle1];
-    //
-    //    UIFont *font3 = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
-    //    UIFont *font4 = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
-    //    NSLog(@"%@,%@,%@,%@",font1,font2,font3,font4);
-    //
-    //    UIFont *font5 = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
-    //    UIFont *font6 = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-    //    UIFont *font7 = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    //    UIFont *font8 = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-    //    NSLog(@"%@,%@,%@,%@",font5,font6,font7,font8);
-    //
-    //    UIFont *font9 = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    //    UIFont *font10 = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-    //    UIFont *font11 = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    //    NSLog(@"%@,%@,%@",font9,font10,font11);
-    
-    //    self.signatureLab.font = [UIFont systemFontOfSize:12];
-    //    UIFontDescriptor *attributeFontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:
-    //                                                 @{UIFontDescriptorFamilyAttribute: @"Marion",
-    //                                                   UIFontDescriptorNameAttribute:@"Marion-Regular",
-    //                                                   UIFontDescriptorSizeAttribute: @12.0,
-    //                                                   UIFontDescriptorMatrixAttribute:[NSValue valueWithCGAffineTransform:CGAffineTransformMakeScale(2, 2)
-    //                                                                                    ]}];
-    //    self.signatureLab.font = [UIFont fontWithDescriptor:attributeFontDescriptor size:0.0];
-    //    NSLog(@"%@",self.signatureLab.font.fontDescriptor);
-    //    UIFont *font1 = [UIFont fontWithName:self.signatureLab.font.fontName size:12];
-    //    UIFont *font2 =[self.signatureLab.font fontWithSize:12];
-    
+    self.tableView.tableFooterView = [[UIView alloc] init];
     
     [self.headBtn zx_setCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
     [self.headBtn zh_setButtonImageViewScaleAspectFill];
@@ -119,7 +86,6 @@
     //    self.signatureLab.text = nil;
     //    [self.nameBtn setTitle:nil forState:UIControlStateNormal];
     
-    self.tableView.tableFooterView = [[UIView alloc] init];
     
     [self addScaleImageView];
 }
@@ -436,10 +402,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section==0)
-    {
-        return LCDScale_5Equal6_To6plus(10);
-    }
     return 0.1;
 }
 
@@ -449,24 +411,23 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return tableView.rowHeight;
+}
 
-    cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+     UITableViewCell*cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+//    cell.imageView.image = [UIImage imageNamed:@"m_iconAlbum"];
+//    cell.textLabel.text = @"美颜拼图";
     // Configure the cell...
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //     if (indexPath.section==IndexSection_Set)
-    //    {
-    //    }
-    //
-    //    if (indexPath.section == 0 && indexPath.row == 1)
-    //    {
-    //
-    //    }
+    
+    [self performSegueWithIdentifier:@"TemplateListController" sender:nil];
 }
 
 /*

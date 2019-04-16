@@ -218,6 +218,7 @@
 		F47FEB3B209AA43400A67F55 /* UIAlertController+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F47FEB3A209AA43400A67F55 /* UIAlertController+ZXCategory.m */; };
 		F47FEB3F209AA4AB00A67F55 /* ZXCustomNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47FEB3C209AA4AA00A67F55 /* ZXCustomNavigationBar.xib */; };
 		F47FEB44209AA4D000A67F55 /* ZXKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F47FEB43209AA4D000A67F55 /* ZXKeyboardManager.m */; };
+		F48B3B612265BA6200AB0067 /* MyCenterTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F48B3B602265BA6200AB0067 /* MyCenterTableCell.m */; };
 		F48F132B1D92775700311F03 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F132A1D92775700311F03 /* Photos.framework */; };
 		F49CFD061FDE5C65009F2213 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F49CFD041FDE5C65009F2213 /* AlipaySDK.bundle */; };
 		F49CFD071FDE5C65009F2213 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F49CFD051FDE5C65009F2213 /* AlipaySDK.framework */; };
@@ -780,6 +781,8 @@
 		F47FEB42209AA4D000A67F55 /* ZXKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXKeyboardManager.h; sourceTree = "<group>"; };
 		F47FEB43209AA4D000A67F55 /* ZXKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXKeyboardManager.m; sourceTree = "<group>"; };
 		F481E89B1FDFB61000D115D3 /* CollagePicture.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = CollagePicture.entitlements; sourceTree = "<group>"; };
+		F48B3B5F2265BA6200AB0067 /* MyCenterTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCenterTableCell.h; sourceTree = "<group>"; };
+		F48B3B602265BA6200AB0067 /* MyCenterTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCenterTableCell.m; sourceTree = "<group>"; };
 		F48F132A1D92775700311F03 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		F49CFD041FDE5C65009F2213 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		F49CFD051FDE5C65009F2213 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -3117,6 +3120,8 @@
 				F4ACE1B01F4FDE6D006FC573 /* TemplateMake */,
 				F4F38B4A1EA6492C007606F9 /* HeaderView.h */,
 				F4F38B4B1EA6492C007606F9 /* HeaderView.m */,
+				F48B3B5F2265BA6200AB0067 /* MyCenterTableCell.h */,
+				F48B3B602265BA6200AB0067 /* MyCenterTableCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3470,6 +3475,7 @@
 				F456B75A20A5A58D0092A7B2 /* ZXImgIcons.m in Sources */,
 				F446A9491FCC082900C82C90 /* UIImage+ZXGIF.m in Sources */,
 				F4A0FA0E214216050053B1E8 /* ZXAddPicCollectionView.m in Sources */,
+				F48B3B612265BA6200AB0067 /* MyCenterTableCell.m in Sources */,
 				F4D808A820E082CF0084D024 /* ZXImgIconsCollectionView.m in Sources */,
 				F4BBAA5F212BFE1600BF10F2 /* HKVersionAlertView.m in Sources */,
 				F4DF112D212E8E5C0072650A /* ZXNavKuGouPushAnimator.m in Sources */,

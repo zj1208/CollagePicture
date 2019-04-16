@@ -2,14 +2,33 @@
 //  UIColor+ZXHex.m
 //  simon
 //
-//  Created by apple on 15/1/7.
+//  Created by simon on 15/1/7.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
 
 #import "UIColor+ZXHex.h"
 
 @implementation UIColor (ZXHex)
+
+
 #pragma mark - 颜色转换 IOS中十六进制的颜色转换为UIColor
+
+/**
+ the hex color spec for aquamarine is #7FFFD4, or rgb(127,255,212), so we can use the following code
+ 
+ import AppKit
+ 
+ let redPercentage = CGFloat(0x7F)/255
+ let greenPercentage = CGFloat(0xFF)/255
+ let bluePercentage = CGFloat(0xD4)/255
+ 
+ let aquamarineColor = NSColor(red: redPercentage, green: greenPercentage, blue: bluePercentage, alpha: 1.0)
+ 
+
+ @param color color description
+ @param alpha 透明度
+ @return UIColor对象
+ */
 + (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
 {
     //删除字符串中的空格
