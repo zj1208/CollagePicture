@@ -72,7 +72,15 @@
     [[NSScanner scannerWithString:rString] scanHexInt:&r];
     [[NSScanner scannerWithString:gString] scanHexInt:&g];
     [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    return [UIColor colorWithRed:((float)r / 255.0f) green:((float)g / 255.0f) blue:((float)b / 255.0f) alpha:alpha];
+    
+    CGFloat red = (float)r / 255.0f ;
+    CGFloat green = (float)g / 255.0f;
+    CGFloat blue = (float)b / 255.0f;
+    if (@available(iOS 10.0, *))
+    {
+        return [UIColor colorWithDisplayP3Red:red green:green blue:blue alpha:alpha];
+    }
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
 //默认alpha值为1

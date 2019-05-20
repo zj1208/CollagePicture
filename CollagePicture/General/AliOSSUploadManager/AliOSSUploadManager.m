@@ -53,7 +53,7 @@
 {
     if (bucketType ==OSSBucketType_public)
     {
-        self.bucketName = kOSS_bucketName_public;
+        self.bucketName = kOSS_bucketName_public_read;
     }
     else
     {
@@ -189,7 +189,7 @@
 {
     
     
-    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:nil uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public_read fileCatalog:nil uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
 }
 
 //多了指定文件目录类型
@@ -202,7 +202,7 @@
 {
     
     NSString *fileType = [self getFileCatalogWithType:fileCatalog];
-    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:fileType uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+    [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public_read fileCatalog:fileType uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
     
 }
 
@@ -214,7 +214,7 @@
                                     singleComplete:(nullable ZXImageUploadSingleCompletedBlock)signleCompleteBlock
                                            failure:(nullable ZXImageUploadFailureBlock)failure
 {
-      [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public fileCatalog:fileCatalog uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
+      [self putObjectWithUserId:userId bucketName:kOSS_bucketName_public_read fileCatalog:fileCatalog uploadingData:data progress:progressBlock singleComplete:signleCompleteBlock failure:failure];
 }
 
 

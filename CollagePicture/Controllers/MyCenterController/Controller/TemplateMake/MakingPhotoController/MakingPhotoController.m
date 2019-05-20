@@ -191,8 +191,8 @@ tmp;\
                 make.top.equalTo(self.view.mas_top).with.offset(5);
             }
             make.centerX.equalTo(self.view.mas_centerX);
-            make.width.mas_equalTo(60);
-            make.height.mas_equalTo(26);
+            make.width.mas_greaterThanOrEqualTo(60);
+            make.height.mas_greaterThanOrEqualTo(26);
         }];
         
     }];

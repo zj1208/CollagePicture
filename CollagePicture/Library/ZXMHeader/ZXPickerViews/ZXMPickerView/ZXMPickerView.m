@@ -137,10 +137,15 @@
 }
 
 #pragma mark - toolBar约束
+/*
+注意：
+ iOS9-iOS11以下用layoutMarginsGuide,需要考虑margin，【普通view{8，8，8，8}】，【viewController的rootView：iphone5尺寸屏幕:{0，16，0，16},iphone6及以上屏幕:{0，20，0，20}】
+ iOS11及以上用safeAreaLayoutGuide，不需要考虑margin；
+*/
 - (void)addToolBarConstraintWithItem:(UIView *)item
 {
     self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-    //    -layoutMargins从视图边界的边缘返回一组insets，它表示布局内容的默认间隔。{8，8，8，8}
+    //    -layoutMarginsGuide从视图边界的边缘返回一组insets，它表示布局内容的默认间隔。{8，8，8，8}
     //    left/leading：view的左边内边距8，即x被增大了，你要设置的pickerViewX就应该在之前的基础下-8，才能同等边距；同理右边；
     if ([[UIDevice currentDevice].systemVersion floatValue]>=9.0)
     {

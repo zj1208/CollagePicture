@@ -230,7 +230,13 @@
                     <navigationItem key="navigationItem" title="设置" id="lwq-M9-yJm"/>
                     <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
                     <connections>
+                        <outlet property="aboutTitleLab" destination="75o-36-hoU" id="weQ-vl-vRC"/>
+                        <outlet property="accountTitleLab" destination="yDf-gy-Xju" id="gPL-0W-6js"/>
                         <outlet property="cacheSizeLab" destination="rhF-Lo-UXr" id="0TN-z5-U1t"/>
+                        <outlet property="changePassWordTitleLab" destination="4FD-Fo-usb" id="ABT-CU-R5E"/>
+                        <outlet property="cleanMemoryTitleLab" destination="ety-8N-vWO" id="enS-tE-s1Z"/>
+                        <outlet property="currentVersionTitleLab" destination="OM3-tm-Z9O" id="7Yq-EA-j9A"/>
+                        <outlet property="goAppStoreTitleLab" destination="zAB-X4-8xj" id="6O8-Jf-DRM"/>
                         <outlet property="versionLab" destination="lh0-DI-RxJ" id="elS-2n-X3c"/>
                     </connections>
                 </tableViewController>

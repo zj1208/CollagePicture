@@ -13,6 +13,12 @@
 
 
 @interface SetViewController ()<CheckVersionDelegate,UIActionSheetDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *accountTitleLab;
+@property (weak, nonatomic) IBOutlet UILabel *changePassWordTitleLab;
+@property (weak, nonatomic) IBOutlet UILabel *aboutTitleLab;
+@property (weak, nonatomic) IBOutlet UILabel *goAppStoreTitleLab;
+@property (weak, nonatomic) IBOutlet UILabel *currentVersionTitleLab;
+@property (weak, nonatomic) IBOutlet UILabel *cleanMemoryTitleLab;
 
 
 @end
@@ -36,8 +42,35 @@
     
     self.versionLab.text = [NSString stringWithFormat:@"V %@",APP_Version];
     [self reloadVersionUI];
+    [self dynamicTitleLabelFont];
 }
 
+- (void)dynamicTitleLabelFont
+{
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    self.accountTitleLab.font = font;
+    self.changePassWordTitleLab.font = font;
+    self.aboutTitleLab.font = font;
+    self.goAppStoreTitleLab.font =font;
+    self.currentVersionTitleLab.font =font;
+    self.cleanMemoryTitleLab.font =font;
+    
+    UIFont *font_detail = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    self.versionLab.font = font_detail;
+    self.cacheSizeLab.font = font_detail;
+    
+    if (@available(iOS 10.0, *))
+    {
+        self.accountTitleLab.adjustsFontForContentSizeCategory = YES;
+        self.changePassWordTitleLab.adjustsFontForContentSizeCategory = YES;
+        self.aboutTitleLab.adjustsFontForContentSizeCategory =YES;
+        self.goAppStoreTitleLab.adjustsFontForContentSizeCategory = YES;
+        self.currentVersionTitleLab.adjustsFontForContentSizeCategory = YES;
+        self.cleanMemoryTitleLab.adjustsFontForContentSizeCategory = YES;
+        self.versionLab.adjustsFontForContentSizeCategory = YES;
+        self.cacheSizeLab.adjustsFontForContentSizeCategory = YES;
+    }
+}
 
 - (void)reloadVersionUI
 {    
@@ -49,7 +82,14 @@
 
 - (void)setData{
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateFonts:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    if (@available(iOS 10.0, *))
+    {
+        
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateFonts:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
 }
 
 - (void)updateFonts:(id)sender
@@ -80,6 +120,7 @@
 //    self.tableView.rowHeight = tableViewRowHeight.floatValue;
 //
     [self.tableView reloadData];
+    [self dynamicTitleLabelFont];
 }
 
 - (void)dealloc

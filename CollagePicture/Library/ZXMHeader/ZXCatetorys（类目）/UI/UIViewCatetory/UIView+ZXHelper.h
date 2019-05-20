@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
 
 /**
- * @brief 设置UIView的边框及圆角，将mask遮罩应用到边界；边框颜色默认是黑色的；
+ * @brief 设置UIView的边框bound为圆角，将mask遮罩应用到边界为止；边框颜色默认是黑色的；
  * @param radius  圆角度数;
  * @param width   线条宽度；
  * @param borderColor  边框颜色；边框颜色默认是黑色的，如果传nil，则用clearColor赋值；
@@ -71,13 +71,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @brief 直接设置当前view为一个圆型展示，利用设置bounds的圆角方法；
-          需要在layoutSubViews中调用；
+          注意：需要在layoutSubViews中调用；
  */
 - (void)zx_setBorderWithRoundItem;
 
 /**
  * @brief 设置UIView圆形头像展示；利用设置mask遮罩间接设置圆,只有CAShapeLayer的path区域能正常展示；
-          需要在layoutSubViews中调用；
+          注意：需要在layoutSubViews中调用；
  * @param rect  view的bounds大小;
  */
 - (void)zx_setMasksToBoundsRoundedCornerWithBounds:(CGRect)rect;

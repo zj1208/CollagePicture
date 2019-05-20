@@ -5,8 +5,22 @@
 //  Created by simon on 16/4/19.
 //  Copyright © 2016年 simon. All rights reserved.
 //
-//  2018.3.28； 优化代码；
+//  简介：相册，相机调用的管理类，支持权限检查及提示，当没有权限的时候会自动弹出默认引导提示;
 
+//  注意：必须在info.plist文件中添加三个隐私权限提示key-value；
+//  key:   Privacy - NSPhotoLibraryAdditionsUsageDescription; 存照片权限；
+//  value：若不允许，你将无法在义采宝中发送及保存照片；
+//  key: Privacy - NSPhotoLibraryUsageDescription 读照片权限；
+//  value：若不允许，你将无法在义采宝中保存照片；
+//  key: Privacy - Camera Usage Description  相机拍照权限
+//  value：用于扫描商铺二维码进商铺首页，和拍摄图片、视频以供上传；
+
+//  待优化：如果是调用第三方相册选择器，该怎么用？
+
+
+//  2018.3.28； 优化代码；
+//  2019.4.04； 优化代码；
+//  4.18 增加权限检查及提示的管理器；
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -16,10 +30,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+/**
+ 相册选择列表类型
+ */
 typedef NS_ENUM(NSInteger, PhotosAlbumListType)
 {
-    PhotosAlbumListType_system =0, //UIImagePickerControllerSourceTypeSavedPhotosAlbum系统相册；
-    PhotosAlbumListType_custom = 1 //自定义列表，可多选; 跳转到封装的多选照片控制器；
+    PhotosAlbumListType_system = 0, // UIImagePickerControllerSourceTypeSavedPhotosAlbum系统相册；
+    PhotosAlbumListType_custom = 1  // 自定义列表，可多选; 跳转到封装的多选照片控制器；
 };
 
 @protocol ZXImagePickerVCManagerDelegate <NSObject>
@@ -64,10 +82,25 @@ typedef NS_ENUM(NSInteger, PhotosAlbumListType)
 
 @property(nonatomic, weak) id<ZXImagePickerVCManagerDelegate>morePickerActionDelegate;
 
-@property (nonatomic, assign) PhotosAlbumListType morePickerAlbumType;
+/**
+ 相册选择列表类型
+ */
+@property (nonatomic, assign) PhotosAlbumListType albumListType;
 
-// 是否允许编辑
+
+/**
+ 是否允许编辑
+ */
 @property (nonatomic, assign) BOOL allowsEditing;
+
+
+
+/**
+ 是否每次检查权限,主要用于测试；
+ */
+@property (nonatomic, assign) BOOL awayCheckAuthorization;
+
+// 这些属性该怎么处理？
 /**
  *  是否显示图片压缩按钮
  */
@@ -118,9 +151,9 @@ NS_ASSUME_NONNULL_END
  
  - (void)initImagePickerVCManager {
     //初始化照片／拍照选择
-    ZXImagePickerVCManager *pickerVCManager = [[ZXImagePickerVCManager alloc] init];
-    pickerVCManager.morePickerActionDelegate = self;
-    self.imagePickerVCManager = pickerVCManager;
+    ZXImagePickerVCManager *imagePickerVCManager = [[ZXImagePickerVCManager alloc] init];
+    imagePickerVCManager.morePickerActionDelegate = self;
+    self.imagePickerVCManager = imagePickerVCManager;
      //初始化oss上传
      [[AliOSSUploadManager sharedInstance] initAliOSSWithSTSTokenCredential];
      //是否需要获取图片信息，长宽

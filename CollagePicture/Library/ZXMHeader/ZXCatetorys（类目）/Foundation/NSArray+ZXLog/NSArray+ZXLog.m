@@ -1,6 +1,20 @@
-#import "NSArray+Log.h"
+//
+//  NSArray+ZXLog.h
+//  YiShangbao
+//
+//  Created by simon on 2016/11/13.
+//  Copyright © 2016年 com.Microants. All rights reserved.
+//
 
-@implementation NSArray (Log)
+
+#import "NSArray+ZXLog.h"
+
+@implementation NSArray (ZXLog)
+
+- (NSString *)description
+{
+    return [self descriptionWithLocale:nil];
+}
 
 - (NSString *)descriptionWithLocale:(id)locale
 {
@@ -8,18 +22,21 @@
     
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
    
-        
         [strM appendFormat:@"\t%@,\n", obj];
     }];
     
     [strM appendString:@")"];
-    
     return strM;
 }
 
 @end
 
-@implementation NSDictionary (Log)
+@implementation NSDictionary (ZXLog)
+
+- (NSString *)description
+{
+    return [self descriptionWithLocale:nil];
+}
 
 - (NSString *)descriptionWithLocale:(id)locale
 {
