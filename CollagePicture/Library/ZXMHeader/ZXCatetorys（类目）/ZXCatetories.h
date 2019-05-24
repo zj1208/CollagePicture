@@ -32,7 +32,6 @@
 #import "UIImage+ZXHelper.h"
 
 #import "UILabel+ZXCategory.h"
-#import "UINavigationItem+ZXSpace.h"
 #import "UINavigationBar+ShadeColor.h"
 
 #import "UIScrollView+ZXCategory.h"

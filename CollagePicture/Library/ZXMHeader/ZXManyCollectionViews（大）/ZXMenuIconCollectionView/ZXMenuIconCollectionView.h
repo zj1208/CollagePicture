@@ -5,7 +5,7 @@
 //  Created by simon on 2017/10/23.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  注释：collectionView菜单列表展示，每个item可以展示图片+下面文字+图片右上角的badge数字角标，可以计算出动态数量的item所需要的collectionView总高度；可以使用自定义Model数据数组+代理方法设置cell的UI数据，也可以使用默认ZXMunuIconModel+默认方法设置；
+//  注释：collectionView菜单列表横向或纵向展示，每个item展示包含 主图片+图片正下方文字（可选的）+图片右上角的badge数字角标（可选的），可以计算出动态数量的item所需要的collectionView总高度；可以使用自定义Model数据数组+代理方法设置cell的UI数据，也可以使用默认ZXMunuIconModel+默认方法设置；
 //  设置图片相同的宽高后,计算得出最小的UI安全显示宽度；如果有右上角的角标，计算宽度的方法会额外增加宽度；
 //  self.menuIconCollectionView.itemSize = CGSizeMake(width,width+10);
 
@@ -32,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (strong, nonatomic) UICollectionViewFlowLayout *collectionFlowLayout;
 
-@property (nonatomic, strong) NSMutableArray *dataMArray;
 
 // 设置collectionView的sectionInset;UIEdgeInsetsMake(15, 15, 15, 15)
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
@@ -59,8 +58,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) UIImage *placeholderImage;
 
+// 设置是否可以滚动
 @property(nonatomic,getter=isScrollEnabled) BOOL       scrollEnabled; 
 
+// 设置滚动布局方向
 @property (nonatomic) UICollectionViewScrollDirection scrollDirection; // default is UICollectionViewScrollDirectionVertical
 
 
@@ -116,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param collectionView collectionView description
  @param indexPath indexPath description
  */
-- (void)zx_menuIconView:(ZXMenuIconCollectionView *)labelsTagView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
+- (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 
 
 @end

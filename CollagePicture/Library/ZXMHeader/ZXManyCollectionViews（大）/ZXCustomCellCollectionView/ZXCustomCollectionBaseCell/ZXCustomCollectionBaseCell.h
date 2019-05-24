@@ -1,5 +1,5 @@
 //
-//  ZXCustomCollectionVCell.h
+//  ZXCustomCollectionBaseCell.h
 //  YiShangbao
 //
 //  Created by simon on 2018/1/9.
@@ -12,8 +12,8 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ZXCustomCollectionVCellProtocol.h"
+#import "ZXCustomCollectionBaseCellProtocol.h"
 
-@interface ZXCustomCollectionVCell : UICollectionViewCell<ZXCustomCollectionVCellProtocol>
+@interface ZXCustomCollectionBaseCell : UICollectionViewCell<ZXCustomCollectionBaseCellProtocol>
 
 @end

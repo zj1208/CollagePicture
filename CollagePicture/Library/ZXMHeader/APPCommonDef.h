@@ -277,7 +277,9 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 }
 
 //定义block使用的weak引用
+#ifndef WS
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
+#endif
 
 //用来读取应用程序的文件，比如图片等
 #define ZX_ContentFile(aFileName,aFileType) [[NSBundle mainBundle]pathForResource:aFileName ofType:aFileType]
@@ -299,15 +301,24 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 
 #pragma mark - UIColor utility
 
-#define UIColorFromRGB(R,G,B)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
-#define UIColorFromRGBA(R,G,B,A)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 
+#ifndef UIColorFromRGB
+#define UIColorFromRGB(R,G,B)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
+#endif
+
+#ifndef UIColorFromRGBA
+#define UIColorFromRGBA(R,G,B,A)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
+#endif
 /**
  * @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#333333--ZX_RGBHexString(0X333333)
  */
+#ifndef UIColorFromRGB_HexValue
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
+#endif
 
+#ifndef UIColorFromRGBA_HexValue
 #define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
+#endif
 
 
 
@@ -352,29 +363,6 @@ attributes:@{NSFontAttributeName:font} context:nil].size : CGSizeZero;
 #define ZX_TEXTSIZE_MULTILINE(text, font, maxSize, mode) [text length] > 0 ? [text \
 sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 #endif
-
-
-
-
-
-//状态栏样式
-#if __IPHONE_7_0
-#define ZX_UIStatusBarStyleLightContent UIStatusBarStyleLightContent
-
-#else
-#define ZX_UIStatusBarStyleLightContent UIStatusBarStyleBlackOpaque\
-
-#endif
-
-
-//tabBarItme按钮的颜色。selectedImageTintColor在ios8.0已经废弃；在ios7和之前， seletedImageTintColor 用UITabBar的tintColor属性获取
-#if __IPHONE_8_0
-#define ZX_UITabBar_TintColor(tabBar) tabBar.tintColor
-#else
-#define ZX_UITabBar_TintColor(tabBar) tabBar.selectedImageTintColor
-#endif
-
-
 
 
 

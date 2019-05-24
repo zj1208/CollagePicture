@@ -1,5 +1,5 @@
 //
-//  ZXCustomCollectionVCellProtocol.h
+//  ZXCustomCollectionBaseCellProtocol.h
 //  YiShangbao
 //
 //  Created by simon on 2018/1/9.
@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol ZXCustomCollectionVCellProtocol <NSObject>
+@protocol ZXCustomCollectionBaseCellProtocol <NSObject>
 
 - (void)setData:(id)data;
 
+//- (void)setData:(id)data placeholderImage:(UIImage *)placeholderImage;
+
 - (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath;
+
 
 @end

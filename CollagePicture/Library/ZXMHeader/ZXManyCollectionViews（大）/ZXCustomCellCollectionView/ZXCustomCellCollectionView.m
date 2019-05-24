@@ -12,6 +12,7 @@
 
 @interface ZXCustomCellCollectionView ()
 
+@property (nonatomic, strong) NSMutableArray *dataMArray;
 
 @property (strong, nonatomic)  UICollectionViewFlowLayout *collectionFlowLayout;
 
@@ -54,7 +55,6 @@ static NSString *const cellReuse_defaultCell = @"Cell";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    //注意：collectionView不能设置比当前view大很多宽度的，不然第二个cell可能超过当前可视区域，看不到；
     self.collectionView.frame = self.bounds;
 }
 
@@ -65,11 +65,19 @@ static NSString *const cellReuse_defaultCell = @"Cell";
     self.sectionInset = UIEdgeInsetsMake(10, 15, 10, 15);
     self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
     self.minimumLineSpacing = ZXMinimumLineSpacing;
+    self.itemSize = CGSizeMake(45, 45);
+    
     [self addSubview:self.collectionView];
+    
+    self.scrollEnabled = NO;
+    
+    self.clipsToBounds = YES;
+    self.clearsContextBeforeDrawing = YES;
+    self.collectionView.scrollEnabled = self.scrollEnabled;
 //    self.collectionView.backgroundColor = [UIColor orangeColor];
 }
 
-- (void)registerClassWithCollectionViewCell:(ZXCustomCollectionVCell <ZXCustomCollectionVCellProtocol>*)collectionViewCell forCellWithReuseIdentifier:(NSString *)identifier
+- (void)registerClassWithCollectionViewCell:(ZXCustomCollectionBaseCell <ZXCustomCollectionBaseCellProtocol>*)collectionViewCell forCellWithReuseIdentifier:(NSString *)identifier
 {
     [self.collectionView registerClass:collectionViewCell.class forCellWithReuseIdentifier:identifier];
     self.customCellReuse = identifier;
@@ -90,6 +98,30 @@ static NSString *const cellReuse_defaultCell = @"Cell";
     return _dataMArray;
 }
 
+- (void)setScrollEnabled:(BOOL)scrollEnabled
+{
+    _scrollEnabled = scrollEnabled;
+    self.collectionView.scrollEnabled = scrollEnabled;
+}
+
+- (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection
+{
+    _scrollDirection = scrollDirection;
+    self.collectionFlowLayout.scrollDirection = scrollDirection;
+}
+
+- (void)setSectionInset:(UIEdgeInsets)sectionInset
+{
+    _sectionInset = sectionInset;
+    self.collectionFlowLayout.sectionInset = sectionInset;
+}
+
+- (void)setMinimumLineSpacing:(CGFloat)minimumLineSpacing
+{
+    _minimumLineSpacing = minimumLineSpacing;
+    self.collectionFlowLayout.minimumLineSpacing = minimumLineSpacing;
+}
+
 #pragma mark - UICollectionView
 
 - (UICollectionView *)collectionView
@@ -98,18 +130,23 @@ static NSString *const cellReuse_defaultCell = @"Cell";
     {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.sectionInset = self.sectionInset;
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
         self.collectionFlowLayout = flowLayout;
         
         UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
+        collection.alwaysBounceVertical = YES;
+        collection.directionalLockEnabled = YES;
         collection.backgroundColor = [UIColor clearColor];
+        
         collection.delegate = self;
         collection.dataSource = self;
         
-        collection.scrollEnabled = NO;
+        collection.showsVerticalScrollIndicator = NO;
+        collection.showsHorizontalScrollIndicator = NO;
+        [collection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellReuse_defaultCell];
         
         _collectionView = collection;
-        
-        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellReuse_defaultCell];
+
     }
     return _collectionView;
 }
@@ -124,6 +161,7 @@ static NSString *const cellReuse_defaultCell = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    return 8;
     return self.dataMArray.count;
 }
 
@@ -137,11 +175,16 @@ static NSString *const cellReuse_defaultCell = @"Cell";
     return self.minimumLineSpacing;
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return self.minimumInteritemSpacing;
+}
+
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.customCellReuse)
     {
-        ZXCustomCollectionVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.customCellReuse forIndexPath:indexPath];
+        ZXCustomCollectionBaseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.customCellReuse forIndexPath:indexPath];
         if ([cell respondsToSelector:@selector(setData:)] && indexPath.item<self.dataMArray.count)
         {
             [cell setData:[self.dataMArray objectAtIndex:indexPath.item]];
@@ -160,23 +203,32 @@ static NSString *const cellReuse_defaultCell = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataMArray.count>0)
-    {
-        CGSize size = CGSizeMake((CGRectGetWidth(self.bounds)-self.sectionInset.left-self.sectionInset.right)/2, (CGRectGetHeight(self.bounds)-self.sectionInset.top-self.sectionInset.bottom-self.minimumLineSpacing*(self.dataMArray.count-1))/self.dataMArray.count);
-        if (CGSizeEqualToSize(self.itemSize, CGSizeZero))
-        {
-            return size;
-        }
-    }
+//    if (self.dataMArray.count>0)
+//    {
+//        CGSize size = CGSizeMake((CGRectGetWidth(self.bounds)-self.sectionInset.left-self.sectionInset.right)/2, (CGRectGetHeight(self.bounds)-self.sectionInset.top-self.sectionInset.bottom-self.minimumLineSpacing*(self.dataMArray.count-1))/self.dataMArray.count);
+//        if (CGSizeEqualToSize(self.itemSize, CGSizeZero))
+//        {
+//            return size;
+//        }
+//    }
     return self.itemSize;
 }
 
-
-- (CGFloat)getCellHeightWithContentData:(NSArray *)data
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([data count]==0)
+    if ([self.delegate respondsToSelector:@selector(zx_customCellCollectionView:collectionView:didSelectItemAtIndexPath:)])
     {
-        return 0.f;
+        [self.delegate zx_customCellCollectionView:self collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+    }
+}
+
+// 计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；
+- (CGSize)sizeWithContentData:(nullable NSArray *)data
+{
+    if (!data || [data count]==0)
+    {
+        self.collectionView.frame =CGRectZero;
+        return CGSizeZero;
     }
     [self setData:data];
     
@@ -184,7 +236,12 @@ static NSString *const cellReuse_defaultCell = @"Cell";
     NSIndexPath *itemIndexPath = [NSIndexPath indexPathForItem:maxIndex inSection:0];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
     CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
-    return ceilf(height);
+    CGFloat width = CGRectGetMaxX(attributes.frame) +self.sectionInset.right;
+    CGSize size = CGSizeMake(ceilf(width), ceilf(height));
+    //    NSLog(@"sizeWithContentData:%@",NSStringFromCGSize(size));
+    
+    self.collectionView.frame = CGRectMake(0, 0, width, height);
+    return size;
 }
 
 

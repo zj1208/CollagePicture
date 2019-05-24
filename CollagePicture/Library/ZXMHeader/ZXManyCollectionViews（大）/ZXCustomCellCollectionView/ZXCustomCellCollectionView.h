@@ -5,14 +5,15 @@
 //  Created by simon on 2018/1/8.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
-// 简介：封装一个可以外部自定义cell的collectionView的UIView组件；但是建立的自定义collectionViewCell需要继承于ZXCustomCollectionVCell；这样完全开放了cell自定义显示，非常方便，但是cell里不能包含事件，因为无法传递； 适合一种独立的显示符合collectionView视图排版的View；
+// 简介：封装一个可以外部自定义cell的collectionView的UIView组件；但是建立的自定义collectionViewCell需要继承于ZXCustomCollectionBaseCell；这样完全开放了cell自定义显示，非常方便； 可以横向或纵向展示，把这个view添加到父视图view上；
 
 // 2018.01.11 修复collectionView的frame大小设置bug；
 // 2018.01.19  增加例子注释
 // 2019.02.25  修改注释；
+// 2019.05.25  增加点击item事件；
 
 #import <UIKit/UIKit.h>
-#import "ZXCustomCollectionVCell.h"
+#import "ZXCustomCollectionBaseCell.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -25,21 +26,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
-// 设置collectionView的sectionInset
+// 设置collectionView的sectionInset；默认UIEdgeInsetsMake(10, 15, 10, 15)
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距,忽略删除按钮; 在做一行固定显示几个item的时候，可以用于增大间距来减小item的width；
+// item之间的间距,默认10; 在做一行固定显示几个item的时候，可以用于增大间距来减小item的width；
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
-// 行间距，忽略删除按钮
+// 行间距,默认10
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
-// 设置itemSize大小；默认N个item平均高度；
+/**
+ *  一个屏幕显示多少列；最好小于等于4列；
+ */
+@property (nonatomic, assign) NSInteger columnsCount;
+
+
+// 设置itemSize大小；
 @property (nonatomic, assign) CGSize itemSize;
 
+@property (nonatomic, strong, nullable) UIImage *placeholderImage;
 
-@property (nonatomic, strong) NSMutableArray *dataMArray;
+// 设置是否可以滚动
+@property(nonatomic,getter=isScrollEnabled) BOOL       scrollEnabled;
 
+// 设置滚动布局方向
+@property (nonatomic) UICollectionViewScrollDirection scrollDirection; // default is UICollectionViewScrollDirectionVertical
 
 
 /**
@@ -48,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param collectionViewCell 继承于ZXCustomCellCollectionVCell
  @param identifier 标识
  */
-- (void)registerClassWithCollectionViewCell:(ZXCustomCollectionVCell <ZXCustomCollectionVCellProtocol>*)collectionViewCell forCellWithReuseIdentifier:(NSString *)identifier;
+- (void)registerClassWithCollectionViewCell:(ZXCustomCollectionBaseCell <ZXCustomCollectionBaseCellProtocol>*)collectionViewCell forCellWithReuseIdentifier:(NSString *)identifier;
 
 
 /**
@@ -70,12 +81,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- 获取整个collectionView需要的高度
+ 获取整个collectionView需要的大小
  
  @param data 数组
- @return 高度
+ @return size
  */
-- (CGFloat)getCellHeightWithContentData:(NSArray *)data;
+- (CGSize)sizeWithContentData:(nullable NSArray *)data;
 
 @end
 
@@ -85,14 +96,27 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ZXCustomCellCollectionViewDelegate <NSObject>
 
 
+/**
+ 自定义 点击添加cell事件回调
+ 
+ @param collectionView collectionView description
+ @param indexPath indexPath description
+ */
+- (void)zx_customCellCollectionView:(ZXCustomCellCollectionView *)customCellCollectionView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
+
+
 @end
 
 
 NS_ASSUME_NONNULL_END
 
 
-//例如，显示一组由颜色，产品名字，价格的多个item；这个很符合当前组件使用的特征；
+//例如，显示一个由颜色，产品名字，价格属性组合的item的item列表；这个很符合当前组件使用的特征；
+
+//父视图 SaleGoodgraphMainCell 上添加自定义的ZXCustomCellCollectionView；
 /*
+#import "SaleGoodgraphMainCell.h"
+
 #import "ZXCustomCellCollectionView.h"
 #import "SaleGoodsLegendCollectionCell.h"
 
@@ -127,11 +151,12 @@ NS_ASSUME_NONNULL_END
 }
 */
 
-// 自定义cell
-/*
-#import "ZXCustomCollectionVCell.h"
 
-@interface SaleGoodsLegendCollectionCell :ZXCustomCollectionVCell
+// ZXCustomCellCollectionView使用的自定义CollectionViewcell
+/*
+#import "ZXCustomCollectionBaseCell.h"
+
+@interface SaleGoodsLegendCollectionCell :ZXCustomCollectionBaseCell
 
 @property (weak, nonatomic) IBOutlet UILabel *colorLab;
 
@@ -184,4 +209,33 @@ NS_ASSUME_NONNULL_END
     self.priceLab.text = [NSString stringWithFormat:@"¥%@",model.totalFee];
 }
 @end
+*/
+
+
+//例2:横向排列可滚动的数据，根据屏幕适配设置itemSize，根据有几列算出自适应的item间距；
+/*
+#import "VideoHomeNewCollectionCell.h"
+
+@implementation VideoHomeNewCollectionCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+    
+    [self.customCellCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoHomeNewLIstCollectionCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([VideoHomeNewLIstCollectionCell class])];
+    
+    self.customCellCollectionView.sectionInset = UIEdgeInsetsMake(0, 15, 10, 15);
+    self.customCellCollectionView.itemSize = CGSizeMake(LCDScale_iPhone6_Width(64), LCDScale_iPhone6_Width(92));
+    self.customCellCollectionView.minimumLineSpacing = (LCDW - 30 - LCDScale_iPhone6_Width(64)*4)/3;
+    self.customCellCollectionView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    self.customCellCollectionView.scrollEnabled = YES;
+}
+
+- (void)setData:(id)data
+{
+    NSArray *saleGoodgraphs = (NSArray *)data;
+    [self.customCellCollectionView setData:saleGoodgraphs];
+}
+@end
+
 */

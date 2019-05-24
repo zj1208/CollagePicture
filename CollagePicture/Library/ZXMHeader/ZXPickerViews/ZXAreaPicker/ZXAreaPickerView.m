@@ -7,23 +7,26 @@
 //
 
 #import "ZXAreaPickerView.h"
+#import "ZXOverlay.h"
 
-
-@interface ZXAreaPickerView ()
+@interface ZXAreaPickerView ()<ZXOverlayDelegate>
 
 @property (nonatomic, copy) NSArray *provinces;//35个字典省份组合的数组
 @property (nonatomic, copy) NSArray *cities;
 @property (nonatomic, copy) NSArray *areas;
 
 @property (nonatomic, strong) UITextField *inputTextField;
+
+@property (nonatomic, strong) UIToolbar *toolbar;
+
 @end
 
 @implementation ZXAreaPickerView
 
-@synthesize delegate=_delegate;
-@synthesize pickerStyle=_pickerStyle;
-@synthesize locate=_locate;
-@synthesize locatePicker = _locatePicker;
+//@synthesize delegate=_delegate;
+//@synthesize pickerStyle=_pickerStyle;
+//@synthesize locate=_locate;
+//@synthesize locatePicker = _locatePicker;
 
 
 @synthesize provinces;
@@ -45,7 +48,8 @@
 - (instancetype)initWithStyle:(ZXAreaPickerStyle)pickerStyle delegate:(id<ZXAreaPickerDelegate>)delegate
 {
     
-    self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
+//    self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
+    self = [super init];
     if (self)
     {
         self.delegate = delegate;
@@ -56,28 +60,28 @@
     return self;
     
 }
-- (instancetype)initTextFieldOfInputViewWithStyle:(ZXAreaPickerStyle)pickerStyle
-                               delegate:(id <ZXAreaPickerDelegate>)delegate
-                              textField:(UITextField*)textField
-{
-    self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
-    if (self)
-    {
-        self.delegate = delegate;
-        self.pickerStyle = pickerStyle;
-        self.inputTextField = textField;
-        [self initData];
-        textField.inputView = self;
-        textField.inputAccessoryView = [self getToolBar];
-
-    }
-    return self;
-}
+//- (instancetype)initTextFieldOfInputViewWithStyle:(ZXAreaPickerStyle)pickerStyle
+//                               delegate:(id <ZXAreaPickerDelegate>)delegate
+//                              textField:(UITextField*)textField
+//{
+//    self = [[[NSBundle mainBundle] loadNibNamed:@"ZXAreaPickerView" owner:self options:nil] objectAtIndex:0] ;
+//    if (self)
+//    {
+//        self.delegate = delegate;
+//        self.pickerStyle = pickerStyle;
+//        self.inputTextField = textField;
+//        [self initData];
+//        textField.inputView = self;
+//        textField.inputAccessoryView = self.toolbar;
+//
+//    }
+//    return self;
+//}
 
 
 - (void)initData
 {
-   
+    self.backgroundColor = [UIColor whiteColor];
     self.locatePicker.dataSource = self;
     self.locatePicker.delegate = self;
     //加载数据
@@ -102,7 +106,6 @@
         {
             self.locate.district = @"";
         }
-        
     }
     else
     {
@@ -112,51 +115,129 @@
         self.locate.city = [self.cities objectAtIndex:0];
     }
 
-  
-}
-
-#pragma mark - 
-
-
--(UIToolbar *)getToolBar
-{
-    UIToolbar *toolbar=[[UIToolbar alloc] init];
-    
-    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,44);
-    
-    UIBarButtonItem *lefttem=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelClick)];
-    lefttem.tintColor =[UIColor blackColor];
-    UIBarButtonItem *borderSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    borderSpace.width = 5;
-    
-    UIBarButtonItem *centerSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    UIBarButtonItem *right=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"确定", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneClick)];
-    right.tintColor =[UIColor blackColor];
-    NSArray *items = @[borderSpace,lefttem,centerSpace,right,borderSpace];
-    toolbar.items= items;
-    return toolbar;
-}
-
-- (void)doneClick
-{
-    
-    [self cancelClick];
-    if([self.delegate respondsToSelector:@selector(zx_pickerDidChaneStatus:)]) {
-        [self.delegate zx_pickerDidChaneStatus:self];
-    }
-}
-
-// 取消按钮action
-- (void)cancelClick
-{
-    if (self.inputTextField)
+    if (CGRectEqualToRect(self.frame, CGRectZero))
     {
-        [self.inputTextField resignFirstResponder];
+        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6_Width(260.f));
+    }
+    [self addSubview:self.toolbar];
+    [self addToolBarConstraintWithItem:self.toolbar];
+    
+    [self addSubview:self.locatePicker];
+    // 添加pickerView的约束
+    [self addCustomConstraintWithItem:self.locatePicker];
+    
+}
+
+#pragma mark -pickerView
+
+- (UIPickerView *)locatePicker
+{
+    if (!_locatePicker)
+    {
+        UIPickerView *picker= [[UIPickerView alloc] init];
+        //        picker.backgroundColor = [UIColor redColor];
+        picker.showsSelectionIndicator = NO;
+        picker.delegate = self;
+        picker.dataSource =self;
+        _locatePicker = picker;
+    }
+    return  _locatePicker;
+}
+
+#pragma mark - 添加pickView的约束
+
+- (void)addCustomConstraintWithItem:(UIView *)item
+{
+    self.locatePicker.translatesAutoresizingMaskIntoConstraints = NO;
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0)
+    {
+        UILayoutGuide *layoutGuide_superView = self.layoutMarginsGuide;
+        
+        //   “thisAnchor = otherAnchor+constant”
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:44-8];
+        NSLayoutConstraint *constraint_bottom = [item.bottomAnchor constraintEqualToAnchor:layoutGuide_superView.bottomAnchor constant:8];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:-8];
+        //   “thisAnchor = otherAnchor”
+        NSLayoutConstraint *constraint_centerX = [item.centerXAnchor constraintEqualToAnchor:layoutGuide_superView.centerXAnchor];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_bottom,constraint_leading,constraint_centerX]];
     }
     else
     {
-        [self cancelPicker];
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.toolbar attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        constraint1.active = YES;
+        
+        NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        constraint2.active = YES;
+        
+        NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+        constraint3.active = YES;
+        
+        NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+        constraint4.active = YES;
+    }
+}
+
+
+#pragma mark -toolbar
+
+- (UIToolbar *)toolbar
+{
+    if (!_toolbar)
+    {
+        // 高度固定44，不然barButtonItem文字不居中；不能太高；
+        UIToolbar *toolbar=[[UIToolbar alloc] init];
+        //          toolbar.barTintColor = [UIColor redColor];
+        
+        UIBarButtonItem *leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelBarButtonAction:)];
+        leftBarButtonItem.tintColor =[UIColor blackColor];
+        
+        UIBarButtonItem *borderSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+        borderSpaceBarItem.width = LCDScale_iPhone6_Width(12);
+        
+        UIBarButtonItem *centerSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        
+        UIBarButtonItem *rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"确定", nil) style:UIBarButtonItemStylePlain target:self action:@selector(finishBarButtonAction:)];
+        rightBarButtonItem.tintColor =[UIColor blackColor];
+        toolbar.items =@[borderSpaceBarItem,leftBarButtonItem,centerSpaceBarItem,rightBarButtonItem,borderSpaceBarItem];;
+        _toolbar = toolbar;
+    }
+    return _toolbar;
+}
+
+#pragma mark - toolBar约束
+/*
+ 注意：
+ iOS9-iOS11以下用layoutMarginsGuide,需要考虑margin，【普通view{8，8，8，8}】，【viewController的rootView：iphone5尺寸屏幕:{0，16，0，16},iphone6及以上屏幕:{0，20，0，20}】
+ iOS11及以上用safeAreaLayoutGuide，不需要考虑margin；
+ */
+- (void)addToolBarConstraintWithItem:(UIView *)item
+{
+    self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+    //    -layoutMarginsGuide从视图边界的边缘返回一组insets，它表示布局内容的默认间隔。{8，8，8，8}
+    //    left/leading：view的左边内边距8，即x被增大了，你要设置的pickerViewX就应该在之前的基础下-8，才能同等边距；同理右边；
+    if ([[UIDevice currentDevice].systemVersion floatValue]>=9.0)
+    {
+        UILayoutGuide *layoutGuide_superView = self.layoutMarginsGuide;
+        
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:-8];
+        NSLayoutConstraint *constraint_height = [item.heightAnchor constraintEqualToConstant:44];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:-8];
+        NSLayoutConstraint *constraint_trailing = [item.trailingAnchor constraintEqualToAnchor:layoutGuide_superView.trailingAnchor constant:8];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_height,constraint_leading,constraint_trailing]];
+    }
+    else
+    {
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeTop multiplier:1 constant:0];
+        constraint1.active = YES;
+        
+        NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:44];
+        constraint2.active = YES;
+        
+        NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+        constraint3.active = YES;
+        
+        NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:item attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:item.superview attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+        constraint4.active = YES;
     }
 }
 
@@ -307,29 +388,128 @@
 
 #pragma mark - animation
 
-- (void)showInView:(UIView *) view
+#pragma mark - show
+//// 这里待优化测试,效果不好；也没有这种需求；
+//- (void)showInTabBarView:(UIView *)view
+//{
+//    [self showInTabBarViewOrView:view isTabBarView:YES];
+//    //    [self.pickerView selectRow:_selectedRow inComponent:0 animated:YES];
+//}
+
+- (void)showInView:(UIView *)view
 {
-    self.frame = CGRectMake(0, view.frame.size.height, self.frame.size.width, self.frame.size.height);
-    [view addSubview:self];
+    [self showInTabBarViewOrView:view isTabBarView:NO];
+}
+
+- (void)showInTabBarViewOrView:(UIView *)view isTabBarView:(BOOL)flag
+{
+    if ([view isKindOfClass:[UITableView class]] ||[view isKindOfClass:[UICollectionView class]])
+    {
+        view = [[[UIApplication sharedApplication] delegate] window];
+    }
+    ZXOverlay *overlay = [[ZXOverlay alloc] init];
+    overlay.backgroundColor = [UIColor clearColor];
+    overlay.delegate = self;
+    [overlay addSubview:self];
+    [view addSubview:overlay];
     
+    CGFloat safeAreaBottom = 0.f;
+    if (@available(iOS 11.0, *))
+    {
+        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
+            safeAreaBottom = areaInset.bottom;
+        }else{
+        }
+    }
+    
+    overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame));
+    //  设置增加安全区域显示 view高度 = 当前view高度+底部安全区域距离
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        CGRect rect = self.frame;
+        rect.size.height = CGRectGetHeight(self.frame)+safeAreaBottom;
+        self.frame = rect;
+    });
+    
+    self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+        
+        CGRect rect = self.frame;
+        rect.origin.y = CGRectGetHeight(view.bounds) - CGRectGetHeight(self.frame);
+        self.frame = rect;
+        
+    } completion:^(BOOL finished) {
+        
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     }];
+}
+
+#pragma mark - barButtonItemAction
+
+// 取消按钮action
+- (void)cancelBarButtonAction:(id)sender
+{
+//    if (self.inputTextField)
+//    {
+//        [self.inputTextField resignFirstResponder];
+//    }else{
     
+        [self cancelPicker];
+//    }
 }
 
 - (void)cancelPicker
 {
-    
-    [UIView animateWithDuration:0.3
+    [[UIApplication sharedApplication]beginIgnoringInteractionEvents];
+    [UIView animateWithDuration:0.2
                      animations:^{
-                         self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
+                         
+                         CGRect rect = self.frame;
+                         rect.origin.y = CGRectGetMinY(self.frame)+CGRectGetHeight(self.frame);
+                         self.frame = rect;
                      }
                      completion:^(BOOL finished){
-                         [self removeFromSuperview];
                          
+                         
+                         [UIView animateWithDuration:0.1 animations:^{
+                             
+                             self.superview.alpha = 0;
+                             
+                         } completion:^(BOOL finished) {
+                             
+                             if ([self.superview isKindOfClass:[ZXOverlay class]])
+                             {
+                                 [self.superview removeFromSuperview];
+                             }
+                             [self removeFromSuperview];
+                             [[UIApplication sharedApplication]endIgnoringInteractionEvents];
+                         }];
                      }];
     
+    
+    if ([self.delegate respondsToSelector:@selector(pickerCancel)]) {
+        [self.delegate pickerCancel];
+    }
 }
 
+- (void)finishBarButtonAction:(UIBarButtonItem *)sender
+{
+    [self cancelPicker];
+    if([self.delegate respondsToSelector:@selector(zx_pickerDidDoneStatus:)]) {
+        [self.delegate zx_pickerDidDoneStatus:self];
+    }
+}
+
+
+
+#pragma mark -zxOverlayDelegate
+
+- (void)zxOverlaydissmissAction
+{
+    [self cancelPicker];
+}
 @end

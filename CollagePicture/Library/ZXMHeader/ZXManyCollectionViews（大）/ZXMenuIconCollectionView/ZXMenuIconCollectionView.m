@@ -38,6 +38,8 @@ static NSString * const reuseTagsCell = @"Cell";
 
 @property (nonatomic, assign) BOOL hasBadge;
 
+@property (nonatomic, strong) NSMutableArray *dataMArray;
+
 @end
 
 @implementation ZXMenuIconCollectionView
@@ -278,6 +280,7 @@ static NSString * const reuseTagsCell = @"Cell";
     //计算有几行的简单方法
     if (count%self.columnsCount>0)
     {
+        //假装填满
         NSInteger totalItems = count+(self.columnsCount-(count%self.columnsCount));
         rows = totalItems /self.columnsCount;
     }
