@@ -7,6 +7,8 @@
 //
 //  4.24 新增类目
 //  2018.8.01 增加获取键盘window，可见window的方法；
+//  2019.06.11 增加注释；
+
 
 #import <UIKit/UIKit.h>
 
@@ -22,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 返回topestMostWindowController堆栈中的topViewController；
 // [[[[UIApplication sharedApplication]delegate]window] zh_currentViewController]
+// 注意：在UIAlertController事件回调中是已经dismiss后的，所以如果获取zx_currentViewController跟UIAlertController一点关系也没有；
 @property (nullable, nonatomic, readonly, strong) UIViewController *zx_currentViewController;
 //- (UIViewController*)zh_currentViewController;
 

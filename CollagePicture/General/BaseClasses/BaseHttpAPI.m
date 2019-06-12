@@ -25,6 +25,8 @@ static NSInteger const kRequestSuccess_Value = 1;
 static NSString *const kRequestSuccess_Key = @"success";//请求是否成功key
 static NSString *const kRequestSuccess_ErrorMsg = @"msg"; //请求成功，接收错误信息
 
+static NSString *const kAPP_BaseURL = @"";
+
 /**
  *  请求发生错误的自定义参数
  */
@@ -33,19 +35,23 @@ static NSInteger const kAPPErrorCode = 5000;
 
 NSInteger const kAPPErrorCode_Token = 5001;
 
-
+- (NSURL *)baseURL
+{
+    //    NSString *baseURLString =[WYUserDefaultManager getkAPP_BaseURL];
+    //    NSURL *baseURL = [NSURL URLWithString:baseURLString];
+    NSURL *baseURL =  [NSURL URLWithString:kAPP_BaseURL];
+    return baseURL;
+}
 
 
 -(void)postRequest:(NSString *)path parameters:(NSDictionary *)parameter success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameter];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
-//    NSURL *baseURL = [NSURL URLWithString:kAPP_BaseURL];
-    NSString *kBaseURL =[WYUserDefaultManager getkAPP_BaseURL];
-    NSURL *baseURL = [NSURL URLWithString:kBaseURL];
+    NSURL *baseURL = [self baseURL];
 
     //    用于添加更多参数
-    ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
+    ZX_NSLog_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
 //        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
 //    AFJSONResponseSerializer *response =[AFJSONResponseSerializer serializer];
@@ -88,11 +94,9 @@ NSInteger const kAPPErrorCode_Token = 5001;
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameter];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
 
-//    NSURL *baseURL = [NSURL URLWithString:kAPP_BaseURL];
-    NSString *kBaseURL =[WYUserDefaultManager getkAPP_BaseURL];
-    NSURL *baseURL = [NSURL URLWithString:kBaseURL];
+   NSURL *baseURL = [self baseURL];
     //    用于添加更多参数
-    ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
+    ZX_NSLog_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
 //    AFJSONResponseSerializer *response =[AFJSONResponseSerializer serializer];
@@ -401,10 +405,9 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameters];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
     //    用于添加更多参数
-    NSString *kBaseURL =[WYUserDefaultManager getkAPP_BaseURL];
-    NSURL *baseURL = [NSURL URLWithString:kBaseURL];
+   NSURL *baseURL = [self baseURL];
     //    用于添加更多参数
-    ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
+    ZX_NSLog_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
@@ -458,12 +461,10 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
 {
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameter];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
-    //    NSURL *baseURL = [NSURL URLWithString:kAPP_BaseURL];
-    NSString *kBaseURL =[WYUserDefaultManager getkAPP_BaseURL];
-    NSURL *baseURL = [NSURL URLWithString:kBaseURL];
+    NSURL *baseURL = [self baseURL];
     
     //    用于添加更多参数
-    ZX_NSLog_HTTPURL(kBaseURL, @"/m", postDictionary);
+    ZX_NSLog_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     

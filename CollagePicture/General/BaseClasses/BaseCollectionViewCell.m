@@ -10,6 +10,11 @@
 
 @implementation BaseCollectionViewCell
 
+// 重写方法，继承它的子类调用super方法执行才会调用父类的方法；
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+}
  - (void)setData:(id)data
 {
     

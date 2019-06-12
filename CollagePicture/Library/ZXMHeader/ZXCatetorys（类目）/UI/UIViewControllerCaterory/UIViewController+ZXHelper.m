@@ -202,4 +202,20 @@
     }
 }
 
+
+
+/**
+ 回退到根控制器;
+ 1）原理上是presentingViewController对象负责dismiss，即使你用presentedViewController对象调用dismiss方法；
+ 2）如果您连续prensent呈现几个视图控制器，从而构建一个呈现的视图控制器堆栈，那么在堆栈中较低的视图控制器上调用此方法将会丢弃它的当前子视图控制器以及堆栈中该子视图控制器之上的所有视图控制器。
+ 例如：A页面prenset到页面B-B又prenset到C-C又prensent到D;只要A调用dismissViewController方法就会移除堆栈中该子视图控制器之上的所有控制器B，C，D；
+ */
+- (void)zx_dismissToRootViewController
+{
+    UIViewController *vc = self;
+    while (vc.presentingViewController) {
+        vc = vc.presentingViewController;
+    }
+    [vc dismissViewControllerAnimated:YES completion:nil];
+}
 @end

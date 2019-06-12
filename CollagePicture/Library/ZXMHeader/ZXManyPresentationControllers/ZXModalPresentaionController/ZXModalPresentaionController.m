@@ -28,7 +28,7 @@
     return self;
 }
 
-// 在呈现过渡即将开始的时候被调用
+// 在呈现过渡即将开始的时候被调用;在弹框即将显示时执行所需要的操作;
 - (void)presentationTransitionWillBegin
 {
     [self.visualView addGestureRecognizer:self.tapGestureRecognizer];
@@ -43,7 +43,7 @@
     }];
 }
 
-//在呈现过渡结束时被调用
+//在呈现过渡结束时被调用;在弹框显示完毕时执行所需要的操作
 - (void)presentationTransitionDidEnd:(BOOL)completed
 {
     if (!completed)
@@ -53,12 +53,13 @@
     }
 }
 
-//添加淡出动画并且在它消失后移除它
+//在弹框即将消失时执行所需要的操作;添加淡出动画并且在它消失后移除它;
 - (void)dismissalTransitionWillBegin
 {
     self.visualView.alpha = 0;
 }
 
+//在弹框消失之后执行所需要的操作；
 - (void)dismissalTransitionDidEnd:(BOOL)completed
 {
     if (completed)
@@ -68,13 +69,40 @@
     }
 }
 
+// 当在presentedViewController（A）上设置过自定义frame，A再用presentViewController:方法弹起B，A会被移除，当Bdismiss的时候，会重新添加A控制器且frame为全屏；
+- (nullable UIView *)presentedView
+{
+    UIView *view  = [super presentedView];
+    view.frame = self.frameOfPresentedView;
+    return view;
+}
+
 - (CGRect)frameOfPresentedViewInContainerView
 {
-    self.presentedView.frame = self.frameOfPresentedView;
+//    self.presentedView.frame = self.frameOfPresentedView;
 //    CGFloat windowH = [UIScreen mainScreen].bounds.size.height;
 //    CGFloat windowW = [UIScreen mainScreen].bounds.size.width;
 //    self.presentedView.frame = CGRectMake(0, windowH - 300, windowW, 300);
-    return self.presentedView.frame;
+    return self.frameOfPresentedView;
+}
+
+- (BOOL)shouldPresentInFullscreen
+{
+    return YES;
+}
+- (BOOL)shouldRemovePresentersView
+{
+    return NO;
+}
+
+- (void)containerViewWillLayoutSubviews
+{
+//    self.presentedView.frame = self.frameOfPresentedView;
+}
+
+- (void)containerViewDidLayoutSubviews
+{
+    
 }
 
 - (UIVisualEffectView *)visualView

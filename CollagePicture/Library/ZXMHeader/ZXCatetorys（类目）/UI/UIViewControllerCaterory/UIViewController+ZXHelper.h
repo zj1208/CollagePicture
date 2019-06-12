@@ -5,8 +5,8 @@
 //  Created by simon on 16/2/24.
 //  Copyright © 2016年 simon. All rights reserved.
 //
-// 2018.01.04
-// 修改优化方法；
+// 2018.01.04 修改优化方法；
+// 2019.06.11 增加连续present的最后页面dismiss到最初的页面；
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -81,6 +81,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)zx_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController;
 
+
+/**
+ 回退到根控制器
+ */
+- (void)zx_dismissToRootViewController;
 @end
 
 

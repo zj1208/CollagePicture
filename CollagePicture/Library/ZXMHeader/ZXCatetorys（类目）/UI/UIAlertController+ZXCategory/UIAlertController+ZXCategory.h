@@ -5,11 +5,16 @@
 //  Created by simon on 17/6/27.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  简介：在超过2个按钮的时候，布局中cancel按钮始终在底部；destructiveButton销毁按钮始终在第一个；其余按钮在中间依次从上往下排列；
+//
+//  注意：UIAlertAction的回调：点击各种按钮后在当前UIAlertController执行dismiss完成后，且在栈区移除了UIAlertController才会回调block；
 //  待优化：如果没有用NSLocalizedString传值过来，则使用NSLocalizedString(x, nil)；如果已经用了，则不使用；
 
 // 2018.2.12； 新增预选按钮事件 设置；
 // 2018.3.28； 优化代码；
 // 2018.4.26 , 修改国际本地化问题，去除NSLocalizedString(x, nil)；
+
+// 2019.06.11 , 优化otherButtonTitles数组只有title不是nil的情况才添加事件；
 
 
 
@@ -44,7 +49,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param title 警告框标题
  @param message 警告框内容
  @param cancelButtonTitle 取消按钮文本，加粗；
- @param handler 取消按钮点击事件回调；默认取消事件－dismiss；
+ @param handler 取消按钮的点击事件在当前UIAlertController执行dismiss完成后才回调block；
  @param doButtonTitle 另外一个按钮文本
  @param doHandler 另外一个按钮的点击事件回调；默认取消事件－dismiss；
  */
@@ -71,7 +76,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param cancelButtonTitle 取消按钮文本（加粗）
  @param destructiveButtonTitle 红色销毁按钮文本
  @param otherButtonTitles 另外按钮数组
- @param tapBlock 点击各种按钮的block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
+ @param tapBlock 点击各种按钮后在当前UIAlertController执行dismiss完成后才回调block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
  @return 返回AlertController
  */
 + (instancetype)zx_presentCustomAlertInViewController:(UIViewController *)viewController
@@ -95,7 +100,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  @param cancelButtonTitle 取消按钮文本，加粗；
  @param destructiveButtonTitle 销毁警告按钮文本，红色
  @param otherButtonTitles 另外的按钮数组文本
- @param tapBlock 点击各种按钮的block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
+ @param tapBlock 点击各种按钮后在当前UIAlertController执行dismiss完成后回调block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
  @return 返回AlertController对象；
  */
 + (instancetype)zx_presentActionSheetInViewController:(UIViewController *)viewController

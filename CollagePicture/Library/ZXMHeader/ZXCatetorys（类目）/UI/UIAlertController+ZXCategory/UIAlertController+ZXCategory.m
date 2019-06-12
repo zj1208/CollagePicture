@@ -115,15 +115,16 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
         for(NSUInteger i=0; i<otherButtonTitles.count;i++)
         {
             NSString *otherButtonTitle = otherButtonTitles[i];
-            UIAlertAction *otherAction = [UIAlertAction actionWithTitle:otherButtonTitle
-                                                                  style:UIAlertActionStyleDefault
-                                                                handler:^(UIAlertAction *action){
-                                                                    if (tapBlock) {
-                                                                        tapBlock(alertController, action, UIAlertControllerBlocksFirstOtherButtonIndex + i);
-                                                                    }
-                                                                }];
-            [alertController addAction:otherAction];
-
+            if (otherButtonTitle.length >0) {
+                UIAlertAction *otherAction = [UIAlertAction actionWithTitle:otherButtonTitle
+                                                                      style:UIAlertActionStyleDefault
+                                                                    handler:^(UIAlertAction *action){
+                                                                        if (tapBlock) {
+                                                                            tapBlock(alertController, action, UIAlertControllerBlocksFirstOtherButtonIndex + i);
+                                                                        }
+                                                                    }];
+                [alertController addAction:otherAction];
+            }
         }
     }
     
