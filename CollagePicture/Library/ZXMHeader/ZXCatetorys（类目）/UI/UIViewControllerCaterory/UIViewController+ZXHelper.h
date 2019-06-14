@@ -9,7 +9,7 @@
 // 2019.06.11 增加连续present的最后页面dismiss到最初的页面；
 
 #import <UIKit/UIKit.h>
-#import <StoreKit/StoreKit.h>
+@import StoreKit;
 #import "UIViewController+ZXSystemBackButtonAction.h"
 
 NS_ASSUME_NONNULL_BEGIN

@@ -10,9 +10,9 @@
 //  首先要在framework中引入QuatrtzCore.framework,在头文件中需要
 //  #import <QuartzCore/QuartzCore.h>
 
-//  2018.10.30  优化程序，添加注释
+//  2019.06.12  修改@import
 
-#import <QuartzCore/QuartzCore.h>
+@import QuartzCore;
 
 NS_ASSUME_NONNULL_BEGIN
 
