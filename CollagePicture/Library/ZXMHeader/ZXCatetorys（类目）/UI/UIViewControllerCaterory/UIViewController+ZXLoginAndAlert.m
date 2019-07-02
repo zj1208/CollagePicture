@@ -9,6 +9,18 @@
 #import "UIViewController+ZXLoginAndAlert.h"
 #import <objc/runtime.h>
 
+
+
+#ifndef ZXSuppressPerformSelectorLeakWarning
+#define ZXSuppressPerformSelectorLeakWarning(Stuff) \
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+Stuff; \
+_Pragma("clang diagnostic pop") \
+} while (0)
+#endif
+
 static  NSString *const Storyboard_Login = @"Login";
 static  NSString *const SBID_LoginNavController = @"LoginNavControllerID" ;
 
@@ -70,7 +82,7 @@ static  BOOL sLoginControllerFromStroyboard = YES;
     
     if (isLogin)
     {
-        [self performSelector:aSelector withObject:object1 withObject:object2];
+       ZXSuppressPerformSelectorLeakWarning([self performSelector:aSelector withObject:object1 withObject:object2]);
     }
     else
     {

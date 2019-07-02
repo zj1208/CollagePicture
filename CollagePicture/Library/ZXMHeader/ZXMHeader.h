@@ -18,9 +18,8 @@
 
 // 把所有系统库引用 都改为 @import ，优化编译；
 
-// yicaibao 中 ZXManyCollectionViews的注释已删除
-
 
 // UIViewController+ZXNavBarCustom.h 2019.1.10  添加例子
-// 修改所有shadowImage设置方法
 // CALayer+ZXCATransition //  2019.06.12  修改@import
+// 新增 ZXPushKitAVNotification //  2019.06.12
+// UIViewController+ZXLoginAndAlert //  2019.06.12  修复内存警告；

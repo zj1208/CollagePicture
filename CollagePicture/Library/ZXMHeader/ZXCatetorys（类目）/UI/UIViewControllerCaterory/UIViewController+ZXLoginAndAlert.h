@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 . All rights reserved.
 //
 //  3.14 增加方法
-
+//  2019.06.12  修复内存警告；
 
 #import <UIKit/UIKit.h>
 

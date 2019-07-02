@@ -9,20 +9,25 @@
 #import "RegisterViewController.h"
 #import "FullTextViewController.h"
 #import "UserModel.h"
-
+#import "ZXTimer.h"
 
 static NSInteger const PHONE_MAXLENGTH  = 11;
 static NSInteger const VerfiCode_MAXLENGTH  = 6;
 
 
-@interface RegisterViewController ()<UITextFieldDelegate>
+@interface RegisterViewController ()<UITextFieldDelegate,ZXTimerDelegate>
 
-@property (nonatomic,strong)NSTimer *smsDownTimer;
-@property (nonatomic,assign)NSInteger smsDownSeconds;
+@property (nonatomic, strong) ZXTimer *smsDownTimer;
+@property (nonatomic, assign) NSInteger smsDownSeconds;
 
 @end
 
 @implementation RegisterViewController
+
+- (void)dealloc
+{
+    [self.smsDownTimer stopTimer];
+}
 
 - (void)viewDidLoad
 {
@@ -40,7 +45,6 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
 {
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBARSAFE);
-    
     self.userNameField.delegate = self;
     self.verificationCodeField.delegate = self;
 }
@@ -207,6 +211,14 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
     }];
 }
 
+- (ZXTimer *)smsDownTimer
+{
+    if (!_smsDownTimer) {
+        _smsDownTimer = [[ZXTimer alloc] init];
+    }
+    return _smsDownTimer;
+}
+
 #pragma mark - 验证码获取成功后执行
 
 - (void)smsCodeRequestSuccess
@@ -215,23 +227,28 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
     self.verfiCodeBtn.backgroundColor = [UIColor lightGrayColor];
     self.smsDownSeconds = 60;
     
-    self.smsDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(downTimeWithSeconds:) userInfo:nil repeats:YES];
-    [self.smsDownTimer fire];
+    [self.smsDownTimer scheduledTimerWithTimeInterval:1 delegate:self userInfo:nil  repeats:YES];
 }
 
-- (void)downTimeWithSeconds:(NSTimer *)timer
+#pragma mark - ZXTimerDelegate
+- (void)zxTimerFired:(ZXTimer *)timer
 {
     if (self.smsDownSeconds ==0)
     {
         self.verfiCodeBtn.enabled = NO;
         self.verfiCodeBtn.backgroundColor = [UIColor orangeColor];
         [self.verfiCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [self.smsDownTimer invalidate];
+        [self.smsDownTimer stopTimer];
     }else
     {
         [self.verfiCodeBtn setTitle:[[NSNumber numberWithInt:(int)self.smsDownSeconds] description] forState:UIControlStateNormal];
         self.smsDownSeconds--;
     }
+}
+
+- (void)downTimeWithSeconds:(NSTimer *)timer
+{
+
 }
 
 - (IBAction)registerAction:(UIButton *)sender {

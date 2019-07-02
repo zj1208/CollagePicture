@@ -36,39 +36,45 @@ static NSString * const reuseIdentifier = @"Cell";
      self.clearsSelectionOnViewWillAppear = NO;
 //    self.testBarItem.enabled = NO;
 //    ZX_NSLog_ClassAllPropertyAndValue(self.collectionView);
-    ZX_NSLog_ClassMethodListName(self);
+//    ZX_NSLog_ClassMethodListName(self);
     
     [self setUI];
     [self setData];
     
-    CGFloat safeAreaBottom = 0.f;
-    if (@available(iOS 11.0, *))
-    {
-        //      iPhoneX :{44, 0, 34, 0}
-        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-            safeAreaBottom = areaInset.bottom;
-        }else{
-        }
-    }
-
+//    CGFloat safeAreaBottom = 0.f;
+//    if (@available(iOS 11.0, *))
+//    {
+//        //      iPhoneX :{44, 0, 34, 0}
+//        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+//        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
+//            safeAreaBottom = areaInset.bottom;
+//        }else{
+//        }
+//    }
 }
 
 
 - (void)setUI
 {
-    ZXEmptyViewController *emptyVC =[[ZXEmptyViewController alloc] init];
-    emptyVC.delegate = self;
-    self.emptyViewController = emptyVC;
+
+}
+
+- (ZXEmptyViewController *)emptyViewController
+{
+    if (!_emptyViewController) {
+        _emptyViewController =[[ZXEmptyViewController alloc] init];
+        _emptyViewController.delegate = self;
+    }
+    return _emptyViewController;
 }
 
 - (void)setData
 {
     self.dataMArray = [NSMutableArray array];
-    
     [self headerRefresh];
     [self.collectionView.mj_header beginRefreshing];
 }
+
 #pragma mark - 下拉刷新/上拉加载更多
 /**
  *  下拉刷新
@@ -90,15 +96,14 @@ static NSString * const reuseIdentifier = @"Cell";
     //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
     bquery1.limit = kHTTP_minPageSize;
     [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        
-        //失败的时候不在主线程返回
+        //回调都是在主线程
         NSLog(@"%@",[NSThread currentThread]);
         if (error)
         {
             [weakSelf.collectionView.mj_header endRefreshing];
             [weakSelf.emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
-            
         }
+        //主线程
         else
         {
             [weakSelf.dataMArray removeAllObjects];
@@ -112,12 +117,8 @@ static NSString * const reuseIdentifier = @"Cell";
             [weakSelf.collectionView.mj_header endRefreshing];
             [weakSelf.collectionView.mj_footer endRefreshing];
             
-            [weakSelf footerWithRefreshing];
-            if ([array count]<kHTTP_minPageSize)
-            {
-                [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
-            }
             
+            [weakSelf footerWithRefreshingMorePage:weakSelf.dataMArray.count/kHTTP_minPageSize == 1 ?YES:NO];
         }
     }];
 }
@@ -127,9 +128,9 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView.mj_header beginRefreshing];
 }
 
-- (void)footerWithRefreshing
+- (void)footerWithRefreshingMorePage:(BOOL)flag
 {
-    if (self.dataMArray.count==0)
+    if (!flag)
     {
         if (self.collectionView.mj_footer)
         {
@@ -146,15 +147,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)requestFooterData
 {
-    NSLog(@"%@",@(_pageNo));
+    NSLog(@"%@",@(self.pageNo));
     WS(weakSelf);
     BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
     //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
     bquery1.limit = kHTTP_minPageSize;
-    bquery1.skip = kHTTP_minPageSize*_pageNo;
+    bquery1.skip = kHTTP_minPageSize*self.pageNo;
     [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         
-        //失败的时候不在主线程返回
         NSLog(@"%@",[NSThread currentThread]);
         if (error)
         {
@@ -168,7 +168,7 @@ static NSString * const reuseIdentifier = @"Cell";
             [self.collectionView reloadData];
             [weakSelf.collectionView.mj_footer endRefreshing];
             
-            _pageNo ++;
+            weakSelf.pageNo ++;
             if ([array count]<kHTTP_minPageSize)
             {
                 [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
@@ -197,15 +197,10 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    TemplateListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    // Configure the cell
-    if (self.dataMArray.count>0)
-    {
-        BmobObject *model = (BmobObject *)[self.dataMArray objectAtIndex:indexPath.item];
-        
-        [cell setData:model];
-    }
+    TemplateListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    BmobObject *model = (BmobObject *)[self.dataMArray objectAtIndex:indexPath.item];    
+    [cell setData:model];
     return cell;
 }
 
@@ -267,8 +262,5 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
-- (IBAction)shareTestAction:(UIBarButtonItem *)sender {
-    
-    
-}
+
 @end

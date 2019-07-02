@@ -53,6 +53,7 @@ _Pragma("clang diagnostic pop") \
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
         self.vibrateCount = 15;
+        self.soundName = @"video_chat_push.mp3";
     }
     return self;
 }
@@ -107,7 +108,7 @@ _Pragma("clang diagnostic pop") \
 
 - (void)presentLocalNotificationWithAlertBody:(NSString *)text
 {
-    self.currentNotification.soundName = @"video_chat_push.mp3";
+    self.currentNotification.soundName = self.soundName;
     self.currentNotification.alertBody = text;
     
     [[UIApplication sharedApplication]presentLocalNotificationNow:self.currentNotification];

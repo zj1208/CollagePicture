@@ -111,21 +111,23 @@ tmp;\
 #pragma mark - 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+
     [self.navigationController.navigationBar setBackgroundImage:[UIImage alloc] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage =[UIImage new];
     OrientationNaController *nav = (OrientationNaController *)self.navigationController;
     [nav rotateToDirection:UIInterfaceOrientationLandscapeRight];
-    [super viewWillAppear:animated];
 }
 
 
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     OrientationNaController *nav = (OrientationNaController *)self.navigationController;
     [nav rotateToDirection:UIInterfaceOrientationPortrait];
-    [super viewWillDisappear:animated];
 }
 //没有执行
 - (CGSize)sizeForChildContentContainer:(id<UIContentContainer>)container withParentContainerSize:(CGSize)parentSize
@@ -204,12 +206,6 @@ tmp;\
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    
-//    if (!UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-//    {
-//        [self updateNOLandscapeSubviewConstraint:[self.templateType integerValue]];
-//    }
-    
 }
 
 #pragma  mark - viewDidLoad
@@ -220,7 +216,9 @@ tmp;\
     //初始化数据
     [self initData];
     [self setUI];
-
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+    });
     //初始化添加子试图
     [self resetViewByStyleIndex:[self.templateType integerValue]];
     
@@ -228,7 +226,9 @@ tmp;\
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     dispatch_async(queue, ^{
         
-        [self addMorePickerController];
+        @autoreleasepool {
+            [self addMorePickerController];
+        }
     });
   
 }
@@ -319,17 +319,19 @@ tmp;\
 {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     dispatch_async(queue, ^{
-        
-        NSString *templateName = [NSString stringWithFormat:@"album_a%@@2x",type];
-        UIImage *image = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(templateName, @"png")];
-        NSLog(@"%@",NSStringFromCGSize(self.maskLayer.frame.size));
-        image = [UIImage zx_scaleImage:image toSize:CGSizeMake(self.maskLayer.frame.size.width*1.5, self.maskLayer.frame.size.height*1.5)];
-        dispatch_async(dispatch_get_main_queue(), ^{
-           
-            self.maskLayer.contents = (__bridge id _Nullable)(image.CGImage);
-            [self makeSubviewConstraint:[self.templateType integerValue]];
-
-        });
+        @autoreleasepool {
+            
+            NSString *templateName = [NSString stringWithFormat:@"album_a%@@2x",type];
+            UIImage *image = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(templateName, @"png")];
+            NSLog(@"%@",NSStringFromCGSize(self.maskLayer.frame.size));
+            image = [UIImage zx_scaleImage:image toSize:CGSizeMake(self.maskLayer.frame.size.width*1.5, self.maskLayer.frame.size.height*1.5)];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.maskLayer.contents = (__bridge id _Nullable)(image.CGImage);
+                [self makeSubviewConstraint:[self.templateType integerValue]];
+                
+            });
+        }
     });
 }
 

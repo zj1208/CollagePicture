@@ -5,6 +5,7 @@
 //  Created by hzidea on 16/2/19.
 //  Copyright © 2016年 simon. All rights reserved.
 //  欢迎界面
+//  这个页面的gif动画有问题，不建议使用这个页面；
 
 #import "WelcomeViewController.h"
 #import "OrientationNaController.h"
