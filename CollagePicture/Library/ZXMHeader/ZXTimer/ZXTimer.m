@@ -57,7 +57,7 @@
 
 - (void)stopTimer
 {
-    [self.timer invalidate];
+    [_timer invalidate];
     self.timer = nil;
     self.timerDelegate = nil;
 }
