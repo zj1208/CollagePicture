@@ -10,9 +10,9 @@
 #import "SDImageCache.h"
 
 #import "CheckVersionAPI.h"
+#import "ZXImagePickerController.h"
 
-
-@interface SetViewController ()<CheckVersionDelegate,UIActionSheetDelegate>
+@interface SetViewController ()<CheckVersionDelegate,UIActionSheetDelegate,ZXImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *accountTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *changePassWordTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *aboutTitleLab;
@@ -162,8 +162,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.section==1)
+    if (indexPath.section == 1)
     {
         switch (indexPath.row)
         {
@@ -175,17 +174,18 @@
         }
     }
     
-    if (indexPath.section ==2)
+    else if (indexPath.section == 2)
     {
         switch (indexPath.row)
         {
+//            case 0:[self editInfomation]; break;
             case 0:[self showCacheAlertView]; break;
             default:
                 break;
         }
         
     }
-    if (indexPath.section ==3)
+   else if (indexPath.section == 3)
     {
         [self loginOut];
     }
@@ -210,6 +210,12 @@
     }];
 }
 
+
+- (void)editInfomation
+{
+    ZXImagePickerController *vc = [[ZXImagePickerController alloc]initWithMaxImagesCount:9 delegate:self];
+    [self presentViewController:vc animated:YES completion:nil];
+}
 
 
 #pragma  mark - 清除缓存

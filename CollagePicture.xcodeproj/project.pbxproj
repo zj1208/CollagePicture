@@ -302,6 +302,15 @@
 		F4C1C3C622DC4F110065C22A /* NSData+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3C422DC4F110065C22A /* NSData+ZXCategory.m */; };
 		F4C1C3CB22DC4F2C0065C22A /* NSNotificationCenter+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3C922DC4F2C0065C22A /* NSNotificationCenter+ZXCategory.m */; };
 		F4C1C3CF22DC4F420065C22A /* NSObject+ZXRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3CD22DC4F420065C22A /* NSObject+ZXRuntime.m */; };
+		F4C1C40522E55B520065C22A /* ZXPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3F222E55B510065C22A /* ZXPhotoPickerController.m */; };
+		F4C1C40622E55B520065C22A /* ZXAssetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3F322E55B510065C22A /* ZXAssetCollectionCell.m */; };
+		F4C1C40722E55B520065C22A /* ZXImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3F522E55B510065C22A /* ZXImagePickerController.m */; };
+		F4C1C40822E55B520065C22A /* ZXAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3F622E55B510065C22A /* ZXAssetModel.m */; };
+		F4C1C40922E55B520065C22A /* NSBundle+ZXImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3F922E55B510065C22A /* NSBundle+ZXImagePicker.m */; };
+		F4C1C40A22E55B520065C22A /* ZXAlbumTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3FF22E55B510065C22A /* ZXAlbumTableCell.m */; };
+		F4C1C40B22E55B520065C22A /* ZXAlbumPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C40022E55B510065C22A /* ZXAlbumPickerController.m */; };
+		F4C1C40C22E55B520065C22A /* ZXImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4C1C40122E55B510065C22A /* ZXImagePickerController.bundle */; };
+		F4C1C40D22E55B520065C22A /* ZXPHPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C40322E55B510065C22A /* ZXPHPhotoManager.m */; };
 		F4C257801DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */; };
 		F4C9186E2004983E00D3E158 /* NSFileManager+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9186D2004983E00D3E158 /* NSFileManager+ZXCategory.m */; };
 		F4C91894200622B100D3E158 /* ZXActionTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9188F200622B100D3E158 /* ZXActionTitleView.m */; };
@@ -937,6 +946,23 @@
 		F4C1C3CA22DC4F2C0065C22A /* NSNotificationCenter+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+ZXCategory.h"; sourceTree = "<group>"; };
 		F4C1C3CD22DC4F420065C22A /* NSObject+ZXRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZXRuntime.m"; sourceTree = "<group>"; };
 		F4C1C3CE22DC4F420065C22A /* NSObject+ZXRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZXRuntime.h"; sourceTree = "<group>"; };
+		F4C1C3F122E55B510065C22A /* ZXAssetCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAssetCollectionCell.h; sourceTree = "<group>"; };
+		F4C1C3F222E55B510065C22A /* ZXPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPhotoPickerController.m; sourceTree = "<group>"; };
+		F4C1C3F322E55B510065C22A /* ZXAssetCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAssetCollectionCell.m; sourceTree = "<group>"; };
+		F4C1C3F422E55B510065C22A /* ZXPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPhotoPickerController.h; sourceTree = "<group>"; };
+		F4C1C3F522E55B510065C22A /* ZXImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXImagePickerController.m; sourceTree = "<group>"; };
+		F4C1C3F622E55B510065C22A /* ZXAssetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAssetModel.m; sourceTree = "<group>"; };
+		F4C1C3F822E55B510065C22A /* NSBundle+ZXImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+ZXImagePicker.h"; sourceTree = "<group>"; };
+		F4C1C3F922E55B510065C22A /* NSBundle+ZXImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+ZXImagePicker.m"; sourceTree = "<group>"; };
+		F4C1C3FA22E55B510065C22A /* ZXImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXImagePickerController.h; sourceTree = "<group>"; };
+		F4C1C3FB22E55B510065C22A /* ZXAssetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAssetModel.h; sourceTree = "<group>"; };
+		F4C1C3FD22E55B510065C22A /* ZXAlbumTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlbumTableCell.h; sourceTree = "<group>"; };
+		F4C1C3FE22E55B510065C22A /* ZXAlbumPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlbumPickerController.h; sourceTree = "<group>"; };
+		F4C1C3FF22E55B510065C22A /* ZXAlbumTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlbumTableCell.m; sourceTree = "<group>"; };
+		F4C1C40022E55B510065C22A /* ZXAlbumPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlbumPickerController.m; sourceTree = "<group>"; };
+		F4C1C40122E55B510065C22A /* ZXImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZXImagePickerController.bundle; sourceTree = "<group>"; };
+		F4C1C40322E55B510065C22A /* ZXPHPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPHPhotoManager.m; sourceTree = "<group>"; };
+		F4C1C40422E55B510065C22A /* ZXPHPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPHPhotoManager.h; sourceTree = "<group>"; };
 		F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "越剧-天上掉下个林妹妹.mp3"; sourceTree = "<group>"; };
 		F4C9186C2004983E00D3E158 /* NSFileManager+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ZXCategory.h"; sourceTree = "<group>"; };
 		F4C9186D2004983E00D3E158 /* NSFileManager+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ZXCategory.m"; sourceTree = "<group>"; };
@@ -1408,6 +1434,7 @@
 		F446A7BC1FCC082900C82C90 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
+				F4C1C3EF22E55B510065C22A /* ZXImagePickerController */,
 				F4AC3CC522BCC90900B1D5BD /* ZXTimer */,
 				F4AC3CB422B38F3000B1D5BD /* ZXFramework */,
 				F446A84C1FCC082900C82C90 /* ZXMBProgressHUD */,
@@ -2968,6 +2995,62 @@
 			path = "NSObject+ZXRuntime";
 			sourceTree = "<group>";
 		};
+		F4C1C3EF22E55B510065C22A /* ZXImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1C3FA22E55B510065C22A /* ZXImagePickerController.h */,
+				F4C1C3F522E55B510065C22A /* ZXImagePickerController.m */,
+				F4C1C3F022E55B510065C22A /* ZXPhotoPickerController */,
+				F4C1C3F622E55B510065C22A /* ZXAssetModel.m */,
+				F4C1C3F722E55B510065C22A /* NSBundle+ZXImagePicker */,
+				F4C1C3FB22E55B510065C22A /* ZXAssetModel.h */,
+				F4C1C3FC22E55B510065C22A /* ZXAlbumPickerController */,
+				F4C1C40122E55B510065C22A /* ZXImagePickerController.bundle */,
+				F4C1C40222E55B510065C22A /* ZXPHPhotoManager */,
+			);
+			path = ZXImagePickerController;
+			sourceTree = "<group>";
+		};
+		F4C1C3F022E55B510065C22A /* ZXPhotoPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1C3F122E55B510065C22A /* ZXAssetCollectionCell.h */,
+				F4C1C3F222E55B510065C22A /* ZXPhotoPickerController.m */,
+				F4C1C3F322E55B510065C22A /* ZXAssetCollectionCell.m */,
+				F4C1C3F422E55B510065C22A /* ZXPhotoPickerController.h */,
+			);
+			path = ZXPhotoPickerController;
+			sourceTree = "<group>";
+		};
+		F4C1C3F722E55B510065C22A /* NSBundle+ZXImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1C3F822E55B510065C22A /* NSBundle+ZXImagePicker.h */,
+				F4C1C3F922E55B510065C22A /* NSBundle+ZXImagePicker.m */,
+			);
+			path = "NSBundle+ZXImagePicker";
+			sourceTree = "<group>";
+		};
+		F4C1C3FC22E55B510065C22A /* ZXAlbumPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1C3FD22E55B510065C22A /* ZXAlbumTableCell.h */,
+				F4C1C3FF22E55B510065C22A /* ZXAlbumTableCell.m */,
+				F4C1C3FE22E55B510065C22A /* ZXAlbumPickerController.h */,
+				F4C1C40022E55B510065C22A /* ZXAlbumPickerController.m */,
+			);
+			path = ZXAlbumPickerController;
+			sourceTree = "<group>";
+		};
+		F4C1C40222E55B510065C22A /* ZXPHPhotoManager */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1C40322E55B510065C22A /* ZXPHPhotoManager.m */,
+				F4C1C40422E55B510065C22A /* ZXPHPhotoManager.h */,
+			);
+			path = ZXPHPhotoManager;
+			sourceTree = "<group>";
+		};
 		F4C9188A200622B100D3E158 /* ZXTitleView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3517,6 +3600,7 @@
 				F446A92F1FCC082900C82C90 /* logo.png in Resources */,
 				F4DAC4E3203032A8000428DF /* icon_vip_fill@3x.png in Resources */,
 				A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */,
+				F4C1C40C22E55B520065C22A /* ZXImagePickerController.bundle in Resources */,
 				F446A96A1FCC082900C82C90 /* guide_2@2x.png in Resources */,
 				F44DAECB1DC8D188000D9311 /* WeiboSDK.bundle in Resources */,
 				F4C91895200622B100D3E158 /* ZXActionTitleView.xib in Resources */,
@@ -3660,6 +3744,7 @@
 				F46F07432292D04500C79566 /* UIDevice+ZXHelper.m in Sources */,
 				F4BA075320A0699B00454095 /* ZXSegmentedPageController.m in Sources */,
 				F43E6E0420BCEAE900D2E05D /* ZXAddProPicView.m in Sources */,
+				F4C1C40822E55B520065C22A /* ZXAssetModel.m in Sources */,
 				F456B73F20A5A3640092A7B2 /* ZXDatePickerTextField.m in Sources */,
 				F49CFD2D1FDE5C8D009F2213 /* XLZoomingScrollView.m in Sources */,
 				F446A94C1FCC082900C82C90 /* UINavigationBar+ShadeColor.m in Sources */,
@@ -3701,6 +3786,8 @@
 				F44DAED31DC8D188000D9311 /* UMShareMenuItem.m in Sources */,
 				F446A98F1FCC082A00C82C90 /* DrawRectView.m in Sources */,
 				F4A846FC22546803009E1592 /* ZXCustomNavigationBar.m in Sources */,
+				F4C1C40D22E55B520065C22A /* ZXPHPhotoManager.m in Sources */,
+				F4C1C40722E55B520065C22A /* ZXImagePickerController.m in Sources */,
 				F4361E012109A5FA00A5C22F /* NSAttributedString+ZXCategory.m in Sources */,
 				F4F38B511EA6492C007606F9 /* TemplateListController.m in Sources */,
 				F4F38B4F1EA6492C007606F9 /* ShareViewController.m in Sources */,
@@ -3754,6 +3841,7 @@
 				F49E19BC1DF190A000676396 /* SetViewController.m in Sources */,
 				F456B75720A5A54E0092A7B2 /* ZXHTTPCookieManager.m in Sources */,
 				F4361D9B21099C1900A5C22F /* ZXHorizontalPageCollectionView.m in Sources */,
+				F4C1C40B22E55B520065C22A /* ZXAlbumPickerController.m in Sources */,
 				F4BBAA44212BF70700BF10F2 /* ZXLabelsInputTagsView.m in Sources */,
 				F46F074A2292D0BE00C79566 /* ZXAuthorizationManager.m in Sources */,
 				F4BBAA4A212BF7B400BF10F2 /* UIView+ZXAnimation.m in Sources */,
@@ -3788,13 +3876,16 @@
 				F446A9AE1FCC082A00C82C90 /* ZXPhotoBrowserConst.m in Sources */,
 				F47FEB44209AA4D000A67F55 /* ZXKeyboardManager.m in Sources */,
 				F4A732B22074DF7600E405A8 /* ZXBadgeCollectionCell.m in Sources */,
+				F4C1C40A22E55B520065C22A /* ZXAlbumTableCell.m in Sources */,
 				F4361DE021099E6200A5C22F /* ZXPlaceholdTextView.m in Sources */,
+				F4C1C40522E55B520065C22A /* ZXPhotoPickerController.m in Sources */,
 				F4DF1131212E8E5C0072650A /* ZXNavKuGouDrivenInteractiveTransition.m in Sources */,
 				F446A9901FCC082A00C82C90 /* ZXNewFunctionController.m in Sources */,
 				F446A98A1FCC082A00C82C90 /* ZXSimpleLyricView.m in Sources */,
 				F446A9691FCC082900C82C90 /* ZXGuideViewController.m in Sources */,
 				F42AFC622187EF5B002A7DC4 /* CALayer+ZXCATransition.m in Sources */,
 				F425A286214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m in Sources */,
+				F4C1C40922E55B520065C22A /* NSBundle+ZXImagePicker.m in Sources */,
 				F44DBD452297D14A00739DFB /* ZXCustomCollectionBaseCell.m in Sources */,
 				F4730CDF1EA064A200952AF1 /* AddProductModel.m in Sources */,
 				F44EC7FF225EF47C00AD4010 /* ZXMenuIconModel.m in Sources */,
@@ -3809,6 +3900,7 @@
 				F4BBAA10212BF5CC00BF10F2 /* ZXBaseAnimator.m in Sources */,
 				F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */,
 				F46F07462292D08500C79566 /* NSArray+ZXLog.m in Sources */,
+				F4C1C40622E55B520065C22A /* ZXAssetCollectionCell.m in Sources */,
 				F4689FAF223A7B0C00A3607E /* UIImage+ZXHelper.m in Sources */,
 				F4CBDAA2202D4A4B00FF506D /* ZXBadgeView.m in Sources */,
 				F446A92E1FCC082900C82C90 /* ShareInfo.m in Sources */,
@@ -3947,7 +4039,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3986,7 +4078,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -4014,7 +4106,7 @@
 				);
 				GCC_PREFIX_HEADER = CollagePicture/Marcoes/PrefixHeader.pch;
 				INFOPLIST_FILE = CollagePicture/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4054,7 +4146,7 @@
 				);
 				GCC_PREFIX_HEADER = CollagePicture/Marcoes/PrefixHeader.pch;
 				INFOPLIST_FILE = CollagePicture/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
