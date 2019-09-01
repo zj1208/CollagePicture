@@ -229,7 +229,14 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [paths objectAtIndex:0];
     NSString *fullPath = [filePath stringByAppendingPathComponent:imageName];
-    [imageData writeToFile:fullPath atomically:NO];
-
+    NSError *__autoreleasing error = nil;
+    if(![imageData writeToFile:fullPath options:NSDataWritingAtomic error:&error])
+    {
+        NSLog(@"%@", error);
+    }
+    else
+    {
+        [imageData writeToFile:fullPath atomically:NO];
+    }
 }
 @end

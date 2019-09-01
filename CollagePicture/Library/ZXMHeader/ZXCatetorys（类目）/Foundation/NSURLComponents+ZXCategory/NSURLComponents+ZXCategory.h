@@ -28,6 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 - (nullable NSString *)zhObjectForKey:(NSString *)key;
+
+
+- (void)jlRemoveObjectForKey:(NSString *)key;
+
 @end
 
 

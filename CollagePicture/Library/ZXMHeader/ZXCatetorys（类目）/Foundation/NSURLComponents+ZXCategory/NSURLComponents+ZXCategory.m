@@ -40,6 +40,18 @@
         }
     }];
     return value;
- 
+}
+
+- (void)jlRemoveObjectForKey:(NSString *)key;
+{
+    NSMutableArray *queryItems = [NSMutableArray arrayWithArray:self.queryItems];
+    [self.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([obj.name isEqualToString:key])
+        {
+            [queryItems removeObject:obj];
+        }
+    }];
+    self.queryItems = queryItems;
 }
 @end
