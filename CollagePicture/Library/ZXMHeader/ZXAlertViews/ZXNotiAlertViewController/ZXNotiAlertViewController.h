@@ -5,15 +5,16 @@
 //  Created by simon on 2017/8/5.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  注释： 一个自定义UI效果的通知广告；
+//  注释： 一个用于提示是否打开用户远程推送通知开关的自定义UI,有不打开和打开2个按钮；
 //  2018.2.2 添加注释
+//  2019.8.31 解决block调用循环引用的问题：ZXNotiAlertViewController * __weak SELF = alertView;
 
 #import <UIKit/UIKit.h>
 
 @interface ZXNotiAlertViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-//void(^photoModelItemViewBlock)(UIView* itemView);
+
 @property (nonatomic, copy) void (^cancleActionHandleBlock)(void);
 @property (nonatomic, copy) void (^doActionHandleBlock)(void);
 
@@ -35,7 +36,7 @@
         [self.tabBarController addChildViewController:alertView];
         alertView.view.frame = self.tabBarController.view.frame;
         [self.tabBarController.view addSubview:alertView.view];
-        __block ZXNotiAlertViewController *SELF = alertView;
+        ZXNotiAlertViewController * __weak SELF = alertView;
         alertView.cancleActionHandleBlock = ^{
             
             [SELF removeFromParentViewController];

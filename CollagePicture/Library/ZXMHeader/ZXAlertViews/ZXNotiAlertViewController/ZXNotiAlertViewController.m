@@ -21,9 +21,12 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     
     [self setView:self.containerView cornerRadius:10.f borderWidth:0 borderColor:nil];
-
 }
 
+- (void)dealloc
+{
+    
+}
 
 //设置圆角
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
