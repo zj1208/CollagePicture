@@ -3,14 +3,17 @@
 //  FunLive
 //
 //  Created by simon on 2019/4/18.
-//  Copyright © 2019 facebook. All rights reserved.
+//  Copyright © 2019 com.Microants. All rights reserved.
 //
-//  简介：各种授权的检查，及默认提示引导；支持当检查到没有授权的时候，回调代理或block状态判断，来执行自定义弹窗引导提示；
+// 简介：各种授权的检查，及默认UIAlertController提示引导；当检查到某权限没有被授权时，会回调代理或block，可以根据统一的ZXAuthorizationStatus状态来判断，执行自定义弹窗引导提示；当使用实例方法且传控制器参数，则会显示默认警告弹窗提示；
+
 //  2019.5.09  优化检查权限的时候应该为主线程检查，未对访问授权做出选择的情况返回才需要特殊改为异步主线程回调；
+//  2019.9.07  增加检查用户通知权限；没有实际测试；
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @import Photos;
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -52,6 +55,13 @@ typedef NS_ENUM(NSUInteger, ZXAuthorizationStatus){
 @property (nonatomic,weak)id<ZXAuthorizationManagerDelegate>delegate;
 
 
+
+/**
+ 检查用户通知授权
+
+ @param callback 回调block
+ */
++ (void)zx_requestUserNotificationAuthorization:(void(^)(ZXAuthorizationStatus status))callback;
 
 /**
  检查相册授权及回调

@@ -3,7 +3,7 @@
 //  DS
 //
 //  Created by simon on 2019/5/29.
-//  Copyright © 2019 ds. All rights reserved.
+//  Copyright © 2019 com.Microants. All rights reserved.
 //
 
 #import "ZXAudioServicesManager.h"

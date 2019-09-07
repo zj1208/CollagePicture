@@ -3,7 +3,7 @@
 //  DS
 //
 //  Created by simon on 2019/5/29.
-//  Copyright © 2019 ds. All rights reserved.
+//  Copyright © 2019 com.Microants. All rights reserved.
 //
 //  简介：SystemSoundService的优点：（1）能够立即播放（2）能够在同一时间播放多次音乐（3）可以加上振动效果;
 //  SystemSoundService的缺点：（1）不能循环播放（2）不能控制播放时间（3）不能控制声道（4）不能控制音量（5）不能暂停音乐；

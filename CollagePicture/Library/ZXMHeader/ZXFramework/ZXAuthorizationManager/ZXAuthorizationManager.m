@@ -3,11 +3,13 @@
 //  FunLive
 //
 //  Created by simon on 2019/4/18.
-//  Copyright © 2019 facebook. All rights reserved.
+//  Copyright © 2019 com.Microants All rights reserved.
 //
 
 #import "ZXAuthorizationManager.h"
-
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+#import <UserNotifications/UserNotifications.h>
+#endif
 
 @interface ZXAuthorizationManager ()
 
@@ -43,6 +45,50 @@
     }
     return self;
 }
+#pragma mark - 用户通知授权
++ (void)zx_requestUserNotificationAuthorization:(void(^)(ZXAuthorizationStatus status))callback
+{
+    [[self alloc] zx_requestUserNotificationAuthorizationWithDeniedAlertViewInViewController:nil call:callback];
+}
+
+- (void)zx_requestUserNotificationAuthorizationWithDeniedAlertViewInViewController:(nullable UIViewController *)sourceController call:(void(^)(ZXAuthorizationStatus status))callback
+{
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0)
+    {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            
+            if (settings.authorizationStatus ==UNAuthorizationStatusDenied)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+
+                [self executeCallback:callback status: ZXAuthorizationStatusDenied];
+                });
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self executeCallback:callback status:ZXAuthorizationStatusAuthorized];
+                });
+            }
+        }];
+    }
+    else
+    {
+        UIUserNotificationSettings * notiSettings = [[UIApplication sharedApplication]currentUserNotificationSettings];
+        if (notiSettings.types == UIUserNotificationTypeNone)
+        {
+            [self executeCallback:callback status: ZXAuthorizationStatusDenied];
+        }
+        else
+        {
+            [self executeCallback:callback status:ZXAuthorizationStatusAuthorized];
+        }
+    }
+}
+
 
 #pragma mark - 相机授权
 

@@ -3,7 +3,7 @@
 //  DS
 //
 //  Created by simon on 2019/6/13.
-//  Copyright © 2019 ds. All rights reserved.
+//  Copyright © 2019 com.Microants. All rights reserved.
 //
 //  简介：主要用于在PushKit激活在后台，因为收到PushKit的通知后会立即唤醒app，
 //  由于没有弹窗（alert提醒，图标badge标记，播放声音），在进入回调的时候 可以利用这个类来自己发送本地通知+播放声音及震动 来达到提醒效果；

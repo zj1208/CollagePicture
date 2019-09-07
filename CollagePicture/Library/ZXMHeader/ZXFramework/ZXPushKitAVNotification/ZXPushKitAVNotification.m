@@ -3,7 +3,7 @@
 //  DS
 //
 //  Created by simon on 2019/6/13.
-//  Copyright © 2019 ds. All rights reserved.
+//  Copyright © 2019 com.Microants. All rights reserved.
 //
 
 #import "ZXPushKitAVNotification.h"
