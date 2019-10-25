@@ -55,8 +55,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
     [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:NO];
     self.userNameTextField.delegate = self;
     
-    [self.whiteBgView zx_setCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
-    [self.loginBtn zx_setCornerRadius:LCDScale_5Equal6_To6plus(40.f)/2 borderWidth:1.f borderColor:nil];
+    [self.whiteBgView zx_setBorderWithCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
+    [self.loginBtn zx_setBorderWithCornerRadius:LCDScale_5Equal6_To6plus(40.f)/2 borderWidth:1.f borderColor:nil];
     
     UIFont *font = nil;
     if (Device_SYSTEMVERSION_IOS9_OR_LATER) {

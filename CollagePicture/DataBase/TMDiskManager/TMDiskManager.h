@@ -14,9 +14,10 @@
 #import "TMCache.h"
 #import "UserModel.h"
 
-static NSString *const TMDiskUserInfoKey = @"TMDiskUserInfoKey";
-//经营信息
-//static NSString *const TMDiskShopManageInfoKey = @"shopManagerKey";
+NS_ASSUME_NONNULL_BEGIN
+
+static NSString *const TMDSearchHistoryKey = @"TMDSearchHistoryKey";
+
 
 @interface TMDiskManager : NSObject
 
@@ -43,17 +44,15 @@ static NSString *const TMDiskUserInfoKey = @"TMDiskUserInfoKey";
 - (void)removeData;
 
 @end
+NS_ASSUME_NONNULL_END
 
 //初始化本地数据model
 
 /*
+ @property (nonatomic, strong) TMDiskManager *diskManager;
+
 - (void)initData
 {
- 
-    
-    TMDiskManager *manager = [[TMDiskManager alloc] initWithObjectKey:TMDiskAddProcutKey];
-    self.diskManager = manager;
-    
     AddProductModel *model = [[AddProductModel alloc] init];
     
     if (self.controllerDoingType ==ControllerDoingType_AddProduct)
@@ -67,6 +66,14 @@ static NSString *const TMDiskUserInfoKey = @"TMDiskUserInfoKey";
     
  }
 
+ - (TMDiskManager *)diskManager
+ {
+     if (!_diskManager) {
+         
+         _diskManager = [[TMDiskManager alloc] initWithObjectKey:TMDiskAddProcutKey];
+     }
+     return _diskManager;
+ }
 
  - (void)productInfoChange:(id)notification
  {

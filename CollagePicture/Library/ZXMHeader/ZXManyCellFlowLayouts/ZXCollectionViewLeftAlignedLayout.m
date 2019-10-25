@@ -1,9 +1,9 @@
 //
 //  ZXCollectionViewLeftAlignedLayout.m
-//  YZL
+//  YiShangbao
 //
 //  Created by simon on 2019/1/29.
-//  Copyright © 2019 YZL. All rights reserved.
+//  Copyright © 2019 com.Microants. All rights reserved.
 //
 
 #import "ZXCollectionViewLeftAlignedLayout.h"

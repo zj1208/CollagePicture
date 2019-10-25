@@ -19,12 +19,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>BlocksKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>FLAnimatedImage.xcscheme</key>
+		<key>BmobSDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -85,6 +80,11 @@
 			<false/>
 		</dict>
 		<key>TZImagePickerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UMengAnalytics.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

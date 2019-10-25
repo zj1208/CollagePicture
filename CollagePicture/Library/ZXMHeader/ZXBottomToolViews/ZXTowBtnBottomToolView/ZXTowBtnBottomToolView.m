@@ -28,8 +28,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    [self.leftBtn zx_setCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
-    [self.rightBtn zx_setCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
+    [self.leftBtn zx_setBorderWithCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
+    [self.rightBtn zx_setBorderWithCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
 }
 
 @end

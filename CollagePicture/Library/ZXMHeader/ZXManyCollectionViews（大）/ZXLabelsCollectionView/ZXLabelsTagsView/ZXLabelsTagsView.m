@@ -215,7 +215,7 @@ static NSString * const reuseTagsCell = @"Cell";
         cell.titleLab.font = [UIFont systemFontOfSize:self.titleFontSize];
         cell.title = [self.dataMArray objectAtIndex:indexPath.item];
         cell.height = 26.f;
-        return [cell sizeForCell];
+        return [cell sizeForCellThatWidthFits:collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right];
     }
     
     return self.itemSameSize;

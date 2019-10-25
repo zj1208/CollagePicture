@@ -232,11 +232,11 @@ static NSString * const reuseInputTagsCell = @"Cell";
     {
         cell.title = self.defaultAddTagTitle;
         cell.height = self.itemHeight;
-        return [cell sizeForCell];
+        return [cell sizeForCellThatWidthFits:collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right];
     }
     cell.title = [NSString stringWithFormat:@"%@ X",[self.dataMArray objectAtIndex:indexPath.item]];
     cell.height = self.itemHeight;
-    return [cell sizeForCell];
+    return [cell sizeForCellThatWidthFits:collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right];
 }
 
 // 展示数据外观更改

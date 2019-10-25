@@ -87,9 +87,9 @@
     _titleLab.text = _title;
 }
 
-- (CGSize)sizeForCell
+- (CGSize)sizeForCellThatWidthFits:(CGFloat)maxWidth
 {
-    CGFloat width = [_titleLab sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width+ self.height;
-    return CGSizeMake(floorf(width), self.height);
+    CGFloat width = [self.titleLab sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width+ self.height;
+    return CGSizeMake(ceilf(width)<maxWidth?ceilf(width):maxWidth, self.height);
 }
 @end

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4BF4353E61FE0523209007F3B8324E55"
+               BlueprintIdentifier = "EE35381040AA3EA084E1DFE2593CDE55"
+               BuildableName = "THSegmentedPager.framework"
                BlueprintName = "THSegmentedPager"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "THSegmentedPager.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

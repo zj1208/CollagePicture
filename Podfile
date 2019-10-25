@@ -13,16 +13,14 @@ target "CollagePicture" do
 pod 'AFNetworking', '~> 3.1.0'
 pod 'AFNetworking-Synchronous', '~> 1.1.0'
 #4.0.0 ->5.0.0-beta3
-pod 'SDWebImage', '~> 5.0.0-beta3'
-pod 'SDWebImage/GIF'
+pod 'SDWebImage', '~> 5.0.6'
+#pod 'SDWebImage/GIF'
 #可选 使用WebP
 #pod 'SDWebImage/WebP’
-pod 'MBProgressHUD', '~> 1.0.0'
-#pod 'SVProgressHUD', '~> 2.1.2'
+pod 'MBProgressHUD', '1.1.0'
 
 #工具
 pod 'Masonry', '~> 1.1.0'
-pod 'BlocksKit', '~> 2.2.5'
 pod 'WebViewJavascriptBridge', '~> 6.0.2'
 #pod 'AvoidCrash', '~> 2.3.0-beta'
 

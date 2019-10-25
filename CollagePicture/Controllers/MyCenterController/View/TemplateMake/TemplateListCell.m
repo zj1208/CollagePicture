@@ -21,7 +21,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self zx_setCornerRadius:5 borderWidth:1 borderColor:[UIColor clearColor]];
+    [self zx_setBorderWithCornerRadius:5 borderWidth:1 borderColor:[UIColor clearColor]];
 }
 
 - (void)setData:(id)data

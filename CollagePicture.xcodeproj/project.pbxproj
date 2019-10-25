@@ -181,6 +181,23 @@
 		F456B75720A5A54E0092A7B2 /* ZXHTTPCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B75620A5A54E0092A7B2 /* ZXHTTPCookieManager.m */; };
 		F456B75A20A5A58D0092A7B2 /* ZXImgIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B75920A5A58C0092A7B2 /* ZXImgIcons.m */; };
 		F456B76920A5A64E0092A7B2 /* CheckVersionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B76820A5A64E0092A7B2 /* CheckVersionAPI.m */; };
+		F457BAC1236146ED00B1E1B4 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAC0236146ED00B1E1B4 /* SearchViewController.m */; };
+		F457BAC82361772B00B1E1B4 /* SearchTitleHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAC72361772B00B1E1B4 /* SearchTitleHistoryModel.m */; };
+		F457BACC23617C7C00B1E1B4 /* SearchCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BACA23617C7C00B1E1B4 /* SearchCollectionReusableView.m */; };
+		F457BACD23617C7C00B1E1B4 /* SearchCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F457BACB23617C7C00B1E1B4 /* SearchCollectionReusableView.xib */; };
+		F457BAD4236182D000B1E1B4 /* SearchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAD2236182D000B1E1B4 /* SearchCollectionViewCell.m */; };
+		F457BAD5236182D000B1E1B4 /* SearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F457BAD3236182D000B1E1B4 /* SearchCollectionViewCell.xib */; };
+		F457BAD92361842200B1E1B4 /* SearchCollectionViewHotCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAD72361842200B1E1B4 /* SearchCollectionViewHotCell.m */; };
+		F457BADA2361842200B1E1B4 /* SearchCollectionViewHotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F457BAD82361842200B1E1B4 /* SearchCollectionViewHotCell.xib */; };
+		F457BADE23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BADC23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.m */; };
+		F457BADF23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F457BADD23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.xib */; };
+		F457BAE22361BF3200B1E1B4 /* SearchTitleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAE12361BF3200B1E1B4 /* SearchTitleModel.m */; };
+		F457BAE623628B0500B1E1B4 /* SearchCollectionHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAE423628B0500B1E1B4 /* SearchCollectionHistoryCell.m */; };
+		F457BAE723628B0500B1E1B4 /* SearchCollectionHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F457BAE523628B0500B1E1B4 /* SearchCollectionHistoryCell.xib */; };
+		F457BAE923628F3000B1E1B4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F457BAE823628F3000B1E1B4 /* UIKit.framework */; };
+		F457BAEE2362CA2000B1E1B4 /* SearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */; };
+		F457BAF12362FF5000B1E1B4 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */; };
+		F457BAF92363206700B1E1B4 /* SearchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */; };
 		F4591BB220747B0B0098F671 /* NSURL+ZXAppLinks.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BB020747B0A0098F671 /* NSURL+ZXAppLinks.m */; };
 		F4591BCC20747F560098F671 /* AlertChoseController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BC920747F560098F671 /* AlertChoseController.m */; };
 		F4591BCD20747F560098F671 /* AlertChoseController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4591BCA20747F560098F671 /* AlertChoseController.xib */; };
@@ -722,6 +739,33 @@
 		F456B75920A5A58C0092A7B2 /* ZXImgIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXImgIcons.m; sourceTree = "<group>"; };
 		F456B76720A5A64E0092A7B2 /* CheckVersionAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckVersionAPI.h; sourceTree = "<group>"; };
 		F456B76820A5A64E0092A7B2 /* CheckVersionAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckVersionAPI.m; sourceTree = "<group>"; };
+		F457BABF236146ED00B1E1B4 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		F457BAC0236146ED00B1E1B4 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		F457BAC62361772B00B1E1B4 /* SearchTitleHistoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchTitleHistoryModel.h; sourceTree = "<group>"; };
+		F457BAC72361772B00B1E1B4 /* SearchTitleHistoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchTitleHistoryModel.m; sourceTree = "<group>"; };
+		F457BAC923617C7C00B1E1B4 /* SearchCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCollectionReusableView.h; sourceTree = "<group>"; };
+		F457BACA23617C7C00B1E1B4 /* SearchCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionReusableView.m; sourceTree = "<group>"; };
+		F457BACB23617C7C00B1E1B4 /* SearchCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionReusableView.xib; sourceTree = "<group>"; };
+		F457BAD1236182D000B1E1B4 /* SearchCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCollectionViewCell.h; sourceTree = "<group>"; };
+		F457BAD2236182D000B1E1B4 /* SearchCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionViewCell.m; sourceTree = "<group>"; };
+		F457BAD3236182D000B1E1B4 /* SearchCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionViewCell.xib; sourceTree = "<group>"; };
+		F457BAD62361842200B1E1B4 /* SearchCollectionViewHotCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCollectionViewHotCell.h; sourceTree = "<group>"; };
+		F457BAD72361842200B1E1B4 /* SearchCollectionViewHotCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionViewHotCell.m; sourceTree = "<group>"; };
+		F457BAD82361842200B1E1B4 /* SearchCollectionViewHotCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionViewHotCell.xib; sourceTree = "<group>"; };
+		F457BADB23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCollectionViewLeftHotCell.h; sourceTree = "<group>"; };
+		F457BADC23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionViewLeftHotCell.m; sourceTree = "<group>"; };
+		F457BADD23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionViewLeftHotCell.xib; sourceTree = "<group>"; };
+		F457BAE02361BF3100B1E1B4 /* SearchTitleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchTitleModel.h; sourceTree = "<group>"; };
+		F457BAE12361BF3200B1E1B4 /* SearchTitleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchTitleModel.m; sourceTree = "<group>"; };
+		F457BAE323628B0500B1E1B4 /* SearchCollectionHistoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCollectionHistoryCell.h; sourceTree = "<group>"; };
+		F457BAE423628B0500B1E1B4 /* SearchCollectionHistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionHistoryCell.m; sourceTree = "<group>"; };
+		F457BAE523628B0500B1E1B4 /* SearchCollectionHistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionHistoryCell.xib; sourceTree = "<group>"; };
+		F457BAE823628F3000B1E1B4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F457BAEC2362CA2000B1E1B4 /* SearchSuggestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchSuggestionViewController.h; sourceTree = "<group>"; };
+		F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchSuggestionViewController.m; sourceTree = "<group>"; };
+		F457BAEF2362FF5000B1E1B4 /* SearchResultsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
+		F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
+		F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchStoryboard.storyboard; sourceTree = "<group>"; };
 		F4591BB020747B0A0098F671 /* NSURL+ZXAppLinks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ZXAppLinks.m"; sourceTree = "<group>"; };
 		F4591BB120747B0B0098F671 /* NSURL+ZXAppLinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ZXAppLinks.h"; sourceTree = "<group>"; };
 		F4591BC920747F560098F671 /* AlertChoseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertChoseController.m; sourceTree = "<group>"; };
@@ -1072,6 +1116,7 @@
 				F441BFA7216C7F5900A92D2E /* UTMini.framework in Frameworks */,
 				F4B9D87F1DD48CB8008F895A /* libresolv.tbd in Frameworks */,
 				F441BFA6216C7F5900A92D2E /* BCConnectorBundle.framework in Frameworks */,
+				F457BAE923628F3000B1E1B4 /* UIKit.framework in Frameworks */,
 				F49CFD071FDE5C65009F2213 /* AlipaySDK.framework in Frameworks */,
 				F4B9D87D1DD48CA9008F895A /* UserNotifications.framework in Frameworks */,
 				F40228D91EF293E600E3D07E /* jpush-ios-2.2.0.a in Frameworks */,
@@ -1117,6 +1162,7 @@
 		0D3346137CDBB6FBA5BFF619 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F457BAE823628F3000B1E1B4 /* UIKit.framework */,
 				F49CFD4A1FDE6870009F2213 /* SystemConfiguration.framework */,
 				F49CFD481FDE67E2009F2213 /* CoreMotion.framework */,
 				F4B9D87E1DD48CB8008F895A /* libresolv.tbd */,
@@ -2278,6 +2324,70 @@
 			path = ZXPickerViews;
 			sourceTree = "<group>";
 		};
+		F457BABE236146B300B1E1B4 /* PSearch */ = {
+			isa = PBXGroup;
+			children = (
+				F457BAEA2362C77200B1E1B4 /* View */,
+				F457BABF236146ED00B1E1B4 /* SearchViewController.h */,
+				F457BAC0236146ED00B1E1B4 /* SearchViewController.m */,
+				F457BAEC2362CA2000B1E1B4 /* SearchSuggestionViewController.h */,
+				F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */,
+				F457BAEF2362FF5000B1E1B4 /* SearchResultsController.h */,
+				F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */,
+			);
+			path = PSearch;
+			sourceTree = "<group>";
+		};
+		F457BAC52361771C00B1E1B4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F457BAC62361772B00B1E1B4 /* SearchTitleHistoryModel.h */,
+				F457BAC72361772B00B1E1B4 /* SearchTitleHistoryModel.m */,
+				F457BAE02361BF3100B1E1B4 /* SearchTitleModel.h */,
+				F457BAE12361BF3200B1E1B4 /* SearchTitleModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F457BAEA2362C77200B1E1B4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F457BAF22362FF6000B1E1B4 /* PSearchResults */,
+				F457BAEB2362C77C00B1E1B4 /* PSearchHome */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F457BAEB2362C77C00B1E1B4 /* PSearchHome */ = {
+			isa = PBXGroup;
+			children = (
+				F457BAC923617C7C00B1E1B4 /* SearchCollectionReusableView.h */,
+				F457BACA23617C7C00B1E1B4 /* SearchCollectionReusableView.m */,
+				F457BACB23617C7C00B1E1B4 /* SearchCollectionReusableView.xib */,
+				F457BAD1236182D000B1E1B4 /* SearchCollectionViewCell.h */,
+				F457BAD2236182D000B1E1B4 /* SearchCollectionViewCell.m */,
+				F457BAD3236182D000B1E1B4 /* SearchCollectionViewCell.xib */,
+				F457BAD62361842200B1E1B4 /* SearchCollectionViewHotCell.h */,
+				F457BAD72361842200B1E1B4 /* SearchCollectionViewHotCell.m */,
+				F457BAD82361842200B1E1B4 /* SearchCollectionViewHotCell.xib */,
+				F457BADB23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.h */,
+				F457BADC23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.m */,
+				F457BADD23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.xib */,
+				F457BAE323628B0500B1E1B4 /* SearchCollectionHistoryCell.h */,
+				F457BAE423628B0500B1E1B4 /* SearchCollectionHistoryCell.m */,
+				F457BAE523628B0500B1E1B4 /* SearchCollectionHistoryCell.xib */,
+			);
+			path = PSearchHome;
+			sourceTree = "<group>";
+		};
+		F457BAF22362FF6000B1E1B4 /* PSearchResults */ = {
+			isa = PBXGroup;
+			children = (
+				F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */,
+			);
+			path = PSearchResults;
+			sourceTree = "<group>";
+		};
 		F461820F1D8129490015BC84 = {
 			isa = PBXGroup;
 			children = (
@@ -2303,12 +2413,12 @@
 		F461821A1D8129490015BC84 /* CollagePicture */ = {
 			isa = PBXGroup;
 			children = (
+				F457BAC52361771C00B1E1B4 /* Models */,
 				F49E196E1DF1875900676396 /* Controllers */,
 				F461825C1D813BCB0015BC84 /* General */,
 				F461826F1D813BCB0015BC84 /* HttpAPI */,
 				F49E194A1DF1863000676396 /* Helper */,
 				F46182511D813BCB0015BC84 /* DataBase */,
-				F49E196D1DF1874800676396 /* Models */,
 				F49E19A71DF1876B00676396 /* Marcoes */,
 				F4EB2FAB1D8FCF3D00F5B70B /* Resources */,
 				F46182841D813BCB0015BC84 /* Library */,
@@ -2603,16 +2713,10 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		F49E196D1DF1874800676396 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		F49E196E1DF1875900676396 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F457BABE236146B300B1E1B4 /* PSearch */,
 				F49E198B1DF1875900676396 /* SetViewController */,
 				F40228EB1EF371E800E3D07E /* StartViewController */,
 				F4F38B321EA6492C007606F9 /* MyCenterController */,
@@ -2624,7 +2728,7 @@
 		F49E198B1DF1875900676396 /* SetViewController */ = {
 			isa = PBXGroup;
 			children = (
-				F49E19AF1DF1902500676396 /* SetView */,
+				F49E19AF1DF1902500676396 /* View */,
 				F49E19B31DF1908000676396 /* Controller */,
 			);
 			path = SetViewController;
@@ -2644,13 +2748,13 @@
 			path = Marcoes;
 			sourceTree = "<group>";
 		};
-		F49E19AF1DF1902500676396 /* SetView */ = {
+		F49E19AF1DF1902500676396 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				F49E19B01DF1903F00676396 /* CopyrightCell.h */,
 				F49E19B11DF1903F00676396 /* CopyrightCell.m */,
 			);
-			path = SetView;
+			path = View;
 			sourceTree = "<group>";
 		};
 		F49E19B31DF1908000676396 /* Controller */ = {
@@ -3526,6 +3630,7 @@
 				F4EB2FCA1D8FCF7300F5B70B /* album_a12@2x.png in Resources */,
 				F4EB2FCE1D8FCF7300F5B70B /* album_a3@2x.png in Resources */,
 				F4361DE92109A29C00A5C22F /* ZXTableViewUnfoldFooterView.xib in Resources */,
+				F457BAF92363206700B1E1B4 /* SearchStoryboard.storyboard in Resources */,
 				F446A9601FCC082900C82C90 /* whiteArrowLoadMore@2x.png in Resources */,
 				F4361D9521099B8700A5C22F /* ZXcity.plist in Resources */,
 				F446A9841FCC082A00C82C90 /* bannerPlaceholder@2x.png in Resources */,
@@ -3551,6 +3656,7 @@
 				F4E607F3208D77CF008C50CB /* icon_produce@3x.png in Resources */,
 				F42A133E1DDE14E0006F5EF6 /* Set.storyboard in Resources */,
 				F4DAC4E1203032A8000428DF /* badge_numBgPic@2x.png in Resources */,
+				F457BADA2361842200B1E1B4 /* SearchCollectionViewHotCell.xib in Resources */,
 				F4A732B32074DF7600E405A8 /* ZXBadgeCollectionCell.xib in Resources */,
 				F47FEB3F209AA4AB00A67F55 /* ZXCustomNavigationBar.xib in Resources */,
 				F4648BB11DEC293C009C1620 /* newWelcome.gif in Resources */,
@@ -3582,6 +3688,7 @@
 				F4361DA821099C9700A5C22F /* LabelCell.xib in Resources */,
 				F4361D9321099B8700A5C22F /* ZXcities.txt in Resources */,
 				F4EB2FDD1D8FCF7300F5B70B /* albumA_style_5.plist in Resources */,
+				F457BAE723628B0500B1E1B4 /* SearchCollectionHistoryCell.xib in Resources */,
 				F44EC801225EF47C00AD4010 /* ZXMenuIconCell.xib in Resources */,
 				F4B0DAD01FEA62CD00E1D028 /* ZXAdvModalController.xib in Resources */,
 				F4B0DACD1FEA62CD00E1D028 /* 叉叉@2x.png in Resources */,
@@ -3589,6 +3696,7 @@
 				F446A9671FCC082900C82C90 /* guide_3@2x.png in Resources */,
 				F4EB2FCD1D8FCF7300F5B70B /* album_a2@2x.png in Resources */,
 				F446A9AB1FCC082A00C82C90 /* dot_red@3x.png in Resources */,
+				F457BAD5236182D000B1E1B4 /* SearchCollectionViewCell.xib in Resources */,
 				F44E17AA1FD7B6AB00383A92 /* photo_shexiang@2x.png in Resources */,
 				F4EB2FD91D8FCF7300F5B70B /* albumA_style_13.plist in Resources */,
 				F446A97D1FCC082900C82C90 /* arrows_down@2x.png in Resources */,
@@ -3604,6 +3712,7 @@
 				F446A96A1FCC082900C82C90 /* guide_2@2x.png in Resources */,
 				F44DAECB1DC8D188000D9311 /* WeiboSDK.bundle in Resources */,
 				F4C91895200622B100D3E158 /* ZXActionTitleView.xib in Resources */,
+				F457BADF23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.xib in Resources */,
 				F446A9681FCC082900C82C90 /* guide_1@2x.png in Resources */,
 				F4B0DACE1FEA62CD00E1D028 /* 叉叉@3x.png in Resources */,
 				F44E17A91FD7B6AB00383A92 /* photo_shexiang@3x.png in Resources */,
@@ -3619,6 +3728,7 @@
 				F446A95A1FCC082900C82C90 /* whiteArrow@2x.png in Resources */,
 				F4DAC4DE203032A8000428DF /* badge_dot_red@3x.png in Resources */,
 				F4DAC4E0203032A8000428DF /* icon_vip_fill@2x.png in Resources */,
+				F457BACD23617C7C00B1E1B4 /* SearchCollectionReusableView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3644,15 +3754,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking-Synchronous/AFNetworking_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/AliyunOSSiOS/AliyunOSSiOS.framework",
-				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/HMSegmentedControl/HMSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
@@ -3667,14 +3773,10 @@
 				"${BUILT_PRODUCTS_DIR}/WebViewJavascriptBridge/WebViewJavascriptBridge.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking_Synchronous.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunOSSiOS.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HMSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
@@ -3690,7 +3792,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D534ECBAA26975C5E49D3A56 /* [CP] Check Pods Manifest.lock */ = {
@@ -3718,6 +3820,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F457BAF12362FF5000B1E1B4 /* SearchResultsController.m in Sources */,
 				F4BBAA54212BF83D00BF10F2 /* ZXWebViewController.m in Sources */,
 				F4591BB220747B0B0098F671 /* NSURL+ZXAppLinks.m in Sources */,
 				F446A9A41FCC082A00C82C90 /* UploadOperationModel.m in Sources */,
@@ -3736,6 +3839,7 @@
 				F48B3B612265BA6200AB0067 /* MyCenterTableCell.m in Sources */,
 				F4D808A820E082CF0084D024 /* ZXImgIconsCollectionView.m in Sources */,
 				F4BBAA5F212BFE1600BF10F2 /* HKVersionAlertView.m in Sources */,
+				F457BAD4236182D000B1E1B4 /* SearchCollectionViewCell.m in Sources */,
 				F4DF112D212E8E5C0072650A /* ZXNavKuGouPushAnimator.m in Sources */,
 				F446A9301FCC082900C82C90 /* ShareHelper.m in Sources */,
 				F4361D822109982F00A5C22F /* FullTextViewController.m in Sources */,
@@ -3811,8 +3915,10 @@
 				F44EC7FE225EF47C00AD4010 /* UILabel+ZXTopBadgeIcon.m in Sources */,
 				F49CFD2C1FDE5C8D009F2213 /* UIImage+XLExtension.m in Sources */,
 				F4361DA921099C9700A5C22F /* LabelCell.m in Sources */,
+				F457BAE22361BF3200B1E1B4 /* SearchTitleModel.m in Sources */,
 				F4361D7F2109982F00A5C22F /* BaseCollectionViewCell.m in Sources */,
 				F47FEB31209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m in Sources */,
+				F457BAC82361772B00B1E1B4 /* SearchTitleHistoryModel.m in Sources */,
 				F4689FBB223A7BD000A3607E /* ZXKxMenuOverlay.m in Sources */,
 				F4361D7A2109982F00A5C22F /* BaseTableViewCell.m in Sources */,
 				F4361DFA2109A56C00A5C22F /* UIView+ZXAlignmentRectInsets.m in Sources */,
@@ -3836,6 +3942,7 @@
 				F44DAED51DC8D188000D9311 /* UMSocialShareScrollView.m in Sources */,
 				F446A9A61FCC082A00C82C90 /* UploadGrowOperation.m in Sources */,
 				F446A9881FCC082A00C82C90 /* ZXInfiniteScrollView.m in Sources */,
+				F457BAC1236146ED00B1E1B4 /* SearchViewController.m in Sources */,
 				F425A289214B541B00C6F724 /* UIViewController+ZXNavBarCustom.m in Sources */,
 				F49E194D1DF1863000676396 /* AppAPIHelper.m in Sources */,
 				F49E19BC1DF190A000676396 /* SetViewController.m in Sources */,
@@ -3891,6 +3998,7 @@
 				F44EC7FF225EF47C00AD4010 /* ZXMenuIconModel.m in Sources */,
 				F4B061BC221E577A00099578 /* ZXMPickerView.m in Sources */,
 				F43E6E0520BCEAE900D2E05D /* AddProductPicController.m in Sources */,
+				F457BAD92361842200B1E1B4 /* SearchCollectionViewHotCell.m in Sources */,
 				F4A732B92074E02000E405A8 /* ZXADBannerModel.m in Sources */,
 				F4361DD321099DF400A5C22F /* ZXAddPicViewKit.m in Sources */,
 				F44DBD442297D14A00739DFB /* ZXCustomCellCollectionView.m in Sources */,
@@ -3899,6 +4007,7 @@
 				F4591BCC20747F560098F671 /* AlertChoseController.m in Sources */,
 				F4BBAA10212BF5CC00BF10F2 /* ZXBaseAnimator.m in Sources */,
 				F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */,
+				F457BADE23619F2300B1E1B4 /* SearchCollectionViewLeftHotCell.m in Sources */,
 				F46F07462292D08500C79566 /* NSArray+ZXLog.m in Sources */,
 				F4C1C40622E55B520065C22A /* ZXAssetCollectionCell.m in Sources */,
 				F4689FAF223A7B0C00A3607E /* UIImage+ZXHelper.m in Sources */,
@@ -3908,6 +4017,7 @@
 				F4DF113C212E8E8A0072650A /* ZXModalKuGouTransitionDelegate.m in Sources */,
 				F4361DD821099DF400A5C22F /* ZXAddPicBaseContentView.m in Sources */,
 				F446A98C1FCC082A00C82C90 /* UIViewController+UMThirdLogin.m in Sources */,
+				F457BACC23617C7C00B1E1B4 /* SearchCollectionReusableView.m in Sources */,
 				F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */,
 				F4BBAA57212BF84B00BF10F2 /* ZXWKWebViewController.m in Sources */,
 				F4689FBC223A7BD000A3607E /* KxMenuItem.m in Sources */,
@@ -3939,10 +4049,12 @@
 				F4689FC4223A7C8D00A3607E /* UserInfoUDManager.m in Sources */,
 				F4730CD21EA05FDC00952AF1 /* UMAnalyticsViewMarco.m in Sources */,
 				F446A9631FCC082900C82C90 /* UIScrollView+ZXRefreshHView.m in Sources */,
+				F457BAE623628B0500B1E1B4 /* SearchCollectionHistoryCell.m in Sources */,
 				F4A0FA032142154E0053B1E8 /* ZXPhotoBrowser.m in Sources */,
 				F4A0FA052142154E0053B1E8 /* ZXModalWeChatDrivenInteractiveTransition.m in Sources */,
 				F446A94E1FCC082900C82C90 /* NSURL+ZXCategory.m in Sources */,
 				F4689FBE223A7BD000A3607E /* KxMenu.m in Sources */,
+				F457BAEE2362CA2000B1E1B4 /* SearchSuggestionViewController.m in Sources */,
 				F466A96C21549ADB007143A1 /* ZXAlphaTransitionDelegate.m in Sources */,
 				F4361DDA21099DF400A5C22F /* ZXAddPicCoverView.m in Sources */,
 				F4361E072109A67200A5C22F /* NSString+ZXHTMLString.m in Sources */,

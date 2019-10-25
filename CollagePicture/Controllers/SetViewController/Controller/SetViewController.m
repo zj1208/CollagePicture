@@ -7,7 +7,7 @@
 //
 
 #import "SetViewController.h"
-#import "SDImageCache.h"
+#import <SDWebImage/SDWebImage.h>
 
 #import "CheckVersionAPI.h"
 #import "ZXImagePickerController.h"
@@ -35,7 +35,7 @@
 
 - (void)setUI
 {
-    self.view.backgroundColor = [UIColor colorWithHexString:@"ECECEC"];
+    self.view.backgroundColor = [UIColor zx_colorWithHexString:@"ECECEC"];
     self.tableView.separatorColor =  self.view.backgroundColor;
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -73,11 +73,12 @@
 }
 
 - (void)reloadVersionUI
-{    
-    float tempSize = [[SDImageCache sharedImageCache] getSize]/1024.0/1024;
-    NSString *sizeStr =tempSize>=1?[NSString stringWithFormat:@"%.2fM",tempSize]:[NSString stringWithFormat:@"%.2fK",tempSize*1024];
-    
-    self.cacheSizeLab.text =sizeStr;
+{
+    [[SDImageCache sharedImageCache]calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
+        float tempSize = totalSize/1024.0/1024;
+        NSString *sizeStr =tempSize>=1?[NSString stringWithFormat:@"%.2fM",tempSize]:[NSString stringWithFormat:@"%.2fK",tempSize*1024];
+        self.cacheSizeLab.text =sizeStr;
+    }];
 }
 
 - (void)setData{

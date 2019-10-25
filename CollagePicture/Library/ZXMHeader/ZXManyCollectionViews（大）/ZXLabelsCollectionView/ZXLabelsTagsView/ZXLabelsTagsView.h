@@ -14,6 +14,7 @@
 //  2018.08.01 优化collectionView添加时机不对造成的高度计算bug；
 //  2018.9.11  优化ZXLabelsTagsView作为重用TableFooterView的时候，造成高度获取不准的bug；
 //  2019.1.28  增加注释
+//  2019.10.26 标签宽度小数点进1，限制标签最大宽度不超过collectionView的宽度-inset的最终宽度；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"

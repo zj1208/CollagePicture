@@ -20,6 +20,30 @@
     return attString;
 }
 
+- (void)zx_enumerateRangeOfString:(NSString *)searchString usingBlock:(void(^)(NSRange searchStringRange,NSUInteger idx, BOOL *stop))block
+{
+    if (self.length && searchString.length) {
+        
+        NSArray <NSString *>*separatedArray = [self.string componentsSeparatedByString:searchString];
+        if (separatedArray.count <2) {
+            return;
+        }
+        NSUInteger count = separatedArray.count -1;
+        NSUInteger length = searchString.length;
+        __block NSUInteger location = 0;
+        [separatedArray enumerateObjectsUsingBlock:^(NSString * _Nonnull componentString, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == count) {
+                *stop = YES;
+            }else{
+                location += componentString.length;//跳过待筛选串前面的串长度
+                if (block) {
+                    block(NSMakeRange(location, length),idx,stop);
+                }
+                location += length;//跳过待筛选串的长度
+            }
+        }];
+    }
+}
 
 //- (NSAttributedString *)addForegroundColor:(UIColor *)color range:(NSRange)range
 //{

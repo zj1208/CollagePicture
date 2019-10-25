@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  即将弃用
  */
-- (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
+//- (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
 
 /**
  * @brief 设置UIView的边框bound为圆角，将mask遮罩应用到边界为止；边框颜色默认是黑色的；

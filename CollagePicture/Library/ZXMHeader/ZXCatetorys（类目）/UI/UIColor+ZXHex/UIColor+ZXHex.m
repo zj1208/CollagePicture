@@ -29,7 +29,7 @@
  @param alpha 透明度
  @return UIColor对象
  */
-+ (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
++ (UIColor *)zx_colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
 {
     //删除字符串中的空格
     NSString *cString = [[color stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
@@ -84,14 +84,14 @@
 }
 
 //默认alpha值为1
-+ (UIColor *)colorWithHexString:(NSString *)color
++ (UIColor *)zx_colorWithHexString:(NSString *)color
 {
-    return [self colorWithHexString:color alpha:1.0f];
+    return [self zx_colorWithHexString:color alpha:1.0f];
 }
 
 
 
-+ (UIColor *)colorWithRandomColor
++ (UIColor *)zx_colorWithRandomColor
 {
     CGFloat r = arc4random_uniform(256);
     CGFloat g = arc4random_uniform(256);

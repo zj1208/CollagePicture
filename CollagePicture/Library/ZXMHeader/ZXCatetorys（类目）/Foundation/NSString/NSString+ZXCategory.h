@@ -308,6 +308,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (CGFloat)zhGetItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing;
 
+
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

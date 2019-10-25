@@ -19,7 +19,7 @@
  从十六进制字符串获取颜色；调用colorWithHexString:alpha:方法；
 
  */
-+ (UIColor *)colorWithHexString:(NSString *)color;
++ (UIColor *)zx_colorWithHexString:(NSString *)color;
 
 
 /**
@@ -29,10 +29,10 @@
  @param alpha 透明度
  @return UIColor对象
  */
-+ (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha;
++ (UIColor *)zx_colorWithHexString:(NSString *)color alpha:(CGFloat)alpha;
 
 
 // 获取随机颜色
-+ (UIColor *)colorWithRandomColor;
++ (UIColor *)zx_colorWithRandomColor;
 
 @end

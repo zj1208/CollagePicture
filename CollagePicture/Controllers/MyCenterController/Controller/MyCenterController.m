@@ -77,7 +77,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
     
-    [self.headBtn zx_setCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
+    [self.headBtn zx_setBorderWithCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
     [self.headBtn zh_setButtonImageViewScaleAspectFill];
     
     
@@ -133,9 +133,17 @@
 //    [self.customNavigationBar.rightBarButton2 addTarget:self action:@selector(previewBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+#pragma mark - 设置
+
 - (void)setButtonAction:(id)sender
 {
-    [self zx_pushStoryboardViewControllerWithStoryboardName:storyboard_Set identifier:SBID_SetControllerID withData:nil];
+//    [self zx_pushStoryboardViewControllerWithStoryboardName:storyboard_Set identifier:SBID_SetControllerID withData:nil];
+    Class cls = NSClassFromString(@"SearchViewController");
+    id obj = [[cls alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:obj];
+     nav.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [self presentViewController:nav animated:YES completion:nil];
+//    [self.navigationController pushViewController:obj animated:YES];
 }
 
 - (void)setUpData

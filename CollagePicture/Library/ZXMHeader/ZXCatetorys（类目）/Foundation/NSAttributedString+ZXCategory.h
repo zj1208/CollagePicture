@@ -16,5 +16,11 @@
 - (NSAttributedString *)addLineSpace:(float)lineSpace;
 
 
+/// 字符串关键字检索高亮
+/// @param searchString 搜索关键字
+/// @param block 回调
+- (void)zx_enumerateRangeOfString:(NSString *)searchString usingBlock:(void(^)(NSRange searchStringRange,NSUInteger idx, BOOL *stop))block;
+
+
 //- (void)addForegroundColor:(UIColor *)color range:(NSRange)range;
 @end

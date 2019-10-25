@@ -13,7 +13,7 @@
 //  2018.6.25  修改高度计算造成的bug；
 //  2018.6.29  优化组件；
 //  2018.08.01 优化collectionView添加时机不对造成的高度计算bug；
-
+//  2019.10.26 标签宽度小数点进1，限制标签最大宽度不超过collectionView的宽度-inset的最终宽度；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
