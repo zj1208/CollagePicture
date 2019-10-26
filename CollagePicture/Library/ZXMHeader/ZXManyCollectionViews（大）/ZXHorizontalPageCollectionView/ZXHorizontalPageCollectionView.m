@@ -178,10 +178,10 @@ static CGFloat const ZXLineSpacing = 12.f; //固定行间距
     {
         UIPageControl *pageControl = [[UIPageControl alloc] init];
         pageControl.hidesForSinglePage = YES;
-        pageControl.pageIndicatorTintColor = UIColorFromRGB(194.f, 194.f, 194.f);
+        pageControl.pageIndicatorTintColor = [UIColor colorWithRed:194.f/255.0f green:194.f/255.0f blue:194.f/255.0f alpha:1.0f];
 
         pageControl.defersCurrentPageDisplay = YES;
-        pageControl.currentPageIndicatorTintColor =UIColorFromRGB(229.f, 54.f, 40.f);
+        pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:229.f/255.0f green:54.f/255.0f blue:40.f/255.0f alpha:1.0f];
         pageControl.userInteractionEnabled = NO;
         _pageControl = pageControl;
     }

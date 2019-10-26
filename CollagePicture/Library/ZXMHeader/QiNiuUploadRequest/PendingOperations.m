@@ -7,7 +7,6 @@
 //
 
 #import "PendingOperations.h"
-#import "AppAPIHelper.h"
 #import "Mantle.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <SDWebImage/SDWebImage.h>

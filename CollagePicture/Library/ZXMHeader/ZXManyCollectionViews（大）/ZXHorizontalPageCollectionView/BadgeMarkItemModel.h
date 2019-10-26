@@ -5,7 +5,9 @@
 //  Created by simon on 2018/1/31.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
-#import "BaseModel.h"
+//  2019.10.26 解除BaseModel绑定，增加Mantle
+
+#import <Mantle/Mantle.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +25,7 @@ typedef NS_ENUM(NSInteger, SideMarkType){
     SideMarkType_image = 3,
     
 };
-@interface BadgeMarkItemModel : BaseModel
+@interface BadgeMarkItemModel : MTLModel<MTLJSONSerializing>
 
 // 图片地址
 @property (nonatomic, copy) NSString *icon;

@@ -242,15 +242,16 @@ response.allHTTPHeaderFields = {
 
 - (void)cleanWKWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
 {
-    if (Device_SYSTEMVERSION_IOS9_OR_LATER)
-    {
+    if (@available(iOS 9.0, *)) {
         NSSet *mSet = [NSSet setWithArray:@[WKWebsiteDataTypeMemoryCache,WKWebsiteDataTypeDiskCache]];
-//        NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
-//        //移除cookie，不删除WK的本地cookie
-//        NSMutableSet *mSet = [NSMutableSet setWithSet:websieteDataTypes];
-//        [mSet removeObject:WKWebsiteDataTypeCookies];
+    //        NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+    //        //移除cookie，不删除WK的本地cookie
+    //        NSMutableSet *mSet = [NSMutableSet setWithSet:websieteDataTypes];
+    //        [mSet removeObject:WKWebsiteDataTypeCookies];
         NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
         [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes:mSet modifiedSince:dateFrom completionHandler:completionHandler];
+    } else {
+        // Fallback on earlier versions
     }
 }
 

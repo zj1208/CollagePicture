@@ -8,6 +8,28 @@
 
 #import "ZXKeyboardManager.h"
 
+#ifndef IS_IPHONE_XX
+#define IS_IPHONE_XX ({\
+int tmp = 0;\
+if (@available(iOS 11.0, *)) { \
+UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
+tmp = 1;\
+}else{\
+tmp = 0;\
+}\
+}\
+else{\
+tmp = 0;\
+}\
+tmp;\
+})
+#endif
+
+#ifndef  HEIGHT_NAVBAR
+#define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
+#endif
+
 @interface ZXKeyboardManager ()
 
 @property (nonatomic, copy) NSString * activedTextFieldRect;
@@ -132,9 +154,9 @@
         if ((activeRect.origin.y + activeRect.size.height+HEIGHT_NAVBAR) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height-40))
         {
             [UIView animateWithDuration:2.f animations:^{
-                if ([_superView isKindOfClass:[UITableView class]] ||[_superView isKindOfClass:[UICollectionView class]] ||[_superView isKindOfClass:[UIScrollView class]])
+                if ([self.superView isKindOfClass:[UITableView class]] ||[self.superView isKindOfClass:[UICollectionView class]] ||[self.superView isKindOfClass:[UIScrollView class]])
                 {
-                    UIScrollView*tableView = (UIScrollView *)_superView;
+                    UIScrollView*tableView = (UIScrollView *)self.superView;
                     tableView.contentOffset = CGPointMake(0, HEIGHT_NAVBAR + activeRect.origin.y + activeRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height-40));
                 }
             }];
@@ -157,9 +179,9 @@
     if ((activeRect.origin.y + activeRect.size.height+HEIGHT_NAVBAR) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height-40))
     {
         [UIView animateWithDuration:duration animations:^{
-            if ([_superView isKindOfClass:[UITableView class]] ||[_superView isKindOfClass:[UICollectionView class]] ||[_superView isKindOfClass:[UIScrollView class]])
+            if ([self.superView isKindOfClass:[UITableView class]] ||[self.superView isKindOfClass:[UICollectionView class]] ||[self.superView isKindOfClass:[UIScrollView class]])
             {
-                UIScrollView*tableView = (UIScrollView *)_superView;
+                UIScrollView*tableView = (UIScrollView *)self.superView;
                 tableView.contentOffset = CGPointMake(0, HEIGHT_NAVBAR + activeRect.origin.y + activeRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height-40));
             }
         }];

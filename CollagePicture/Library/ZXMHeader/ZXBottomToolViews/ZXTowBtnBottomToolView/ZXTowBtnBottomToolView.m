@@ -28,8 +28,16 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    [self.leftBtn zx_setBorderWithCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
-    [self.rightBtn zx_setBorderWithCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil];
+    [self c_setBorderWithCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil view:self.leftBtn];
+    
+    [self c_setBorderWithCornerRadius:(CGRectGetHeight(self.frame)-2*self.allBtnTopLayout.constant)/2 borderWidth:1.f borderColor:nil view:self.rightBtn];
 }
 
+- (void)c_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor view:(UIView *)view
+{
+    view.layer.masksToBounds = YES;
+    view.layer.cornerRadius = radius;
+    view.layer.borderWidth = borderWidth;
+    view.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
+}
 @end

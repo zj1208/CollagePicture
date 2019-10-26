@@ -10,6 +10,7 @@
 
 #import "NSURL+OSSImage.h"
 #import "UIButton+WebCache.h"
+#import "UIView+ZXAnimation.h"
 
 #ifndef LCDScale_iPhone6_Width
 #define LCDScale_iPhone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)

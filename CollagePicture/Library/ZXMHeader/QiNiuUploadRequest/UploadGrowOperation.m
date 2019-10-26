@@ -8,7 +8,6 @@
 
 #import "UploadGrowOperation.h"
 //#import <QiniuSDK.h>
-#import "AppAPIHelper.h"
 //#import "GrowthDataManager.h"
 #import "PendingOperations.h"
 #import "SDImageCache.h"

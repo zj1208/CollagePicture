@@ -17,9 +17,36 @@
 #define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 #endif
 
+#ifndef IS_IPHONE_6P
+#define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
+#endif
+
+#ifndef IS_IPHONE_XX
+// iphoneX系列判断是否有safeAreaInsets的值，其他是0;
+// iPhoneX :{44, 0, 34, 0}
+#define IS_IPHONE_XX ({\
+int tmp = 0;\
+if (@available(iOS 11.0, *)) { \
+UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
+ tmp = 1;\
+}else{\
+tmp = 0;\
+}\
+}\
+else{\
+tmp = 0;\
+}\
+tmp;\
+})
+#endif
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
 #ifndef LCDScale_iPhone6_Width
 #define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#endif
+
+#ifndef LCDScale_5Equal6_To6plus
+#define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_XX)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
 #endif
 
 @implementation ZXBadgeCollectionCell
@@ -46,7 +73,7 @@
 {
     BadgeMarkItemModel *model = (BadgeMarkItemModel *)data;
     
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.icon] placeholderImage:AppPlaceholderImage];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.icon] placeholderImage:placeholderImage];
     
     self.titleLab.text = model.desc;
  

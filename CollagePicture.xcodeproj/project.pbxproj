@@ -129,10 +129,8 @@
 		F446A99C1FCC082A00C82C90 /* icon_bigLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A8DD1FCC082900C82C90 /* icon_bigLine@3x.png */; };
 		F446A99F1FCC082A00C82C90 /* icon_bigLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A8E21FCC082900C82C90 /* icon_bigLine@2x.png */; };
 		F446A9A21FCC082A00C82C90 /* ZXProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8E91FCC082900C82C90 /* ZXProgressView.m */; };
-		F446A9A41FCC082A00C82C90 /* UploadOperationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8F11FCC082900C82C90 /* UploadOperationModel.m */; };
 		F446A9A51FCC082A00C82C90 /* GrowthDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8F41FCC082900C82C90 /* GrowthDataManager.m */; };
 		F446A9A61FCC082A00C82C90 /* UploadGrowOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8F61FCC082900C82C90 /* UploadGrowOperation.m */; };
-		F446A9A81FCC082A00C82C90 /* UploadTable.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8F91FCC082900C82C90 /* UploadTable.m */; };
 		F446A9AB1FCC082A00C82C90 /* dot_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A9031FCC082900C82C90 /* dot_red@3x.png */; };
 		F446A9AC1FCC082A00C82C90 /* dot_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A9041FCC082900C82C90 /* dot_red@2x.png */; };
 		F446A9AE1FCC082A00C82C90 /* ZXPhotoBrowserConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A9071FCC082900C82C90 /* ZXPhotoBrowserConst.m */; };
@@ -198,6 +196,8 @@
 		F457BAEE2362CA2000B1E1B4 /* SearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */; };
 		F457BAF12362FF5000B1E1B4 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */; };
 		F457BAF92363206700B1E1B4 /* SearchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */; };
+		F457BE3C23640DBA00B1E1B4 /* UploadOperationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BE3923640DBA00B1E1B4 /* UploadOperationModel.m */; };
+		F457BE3D23640DBB00B1E1B4 /* UploadTable.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BE3B23640DBA00B1E1B4 /* UploadTable.m */; };
 		F4591BB220747B0B0098F671 /* NSURL+ZXAppLinks.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BB020747B0A0098F671 /* NSURL+ZXAppLinks.m */; };
 		F4591BCC20747F560098F671 /* AlertChoseController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BC920747F560098F671 /* AlertChoseController.m */; };
 		F4591BCD20747F560098F671 /* AlertChoseController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4591BCA20747F560098F671 /* AlertChoseController.xib */; };
@@ -630,13 +630,9 @@
 		F446A8E91FCC082900C82C90 /* ZXProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXProgressView.m; sourceTree = "<group>"; };
 		F446A8ED1FCC082900C82C90 /* ZXMHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMHeader.h; sourceTree = "<group>"; };
 		F446A8EF1FCC082900C82C90 /* UploadGrowOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadGrowOperation.h; sourceTree = "<group>"; };
-		F446A8F01FCC082900C82C90 /* UploadTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTable.h; sourceTree = "<group>"; };
-		F446A8F11FCC082900C82C90 /* UploadOperationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadOperationModel.m; sourceTree = "<group>"; };
 		F446A8F31FCC082900C82C90 /* GrowthDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowthDataManager.h; sourceTree = "<group>"; };
 		F446A8F41FCC082900C82C90 /* GrowthDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowthDataManager.m; sourceTree = "<group>"; };
 		F446A8F61FCC082900C82C90 /* UploadGrowOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadGrowOperation.m; sourceTree = "<group>"; };
-		F446A8F81FCC082900C82C90 /* UploadOperationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadOperationModel.h; sourceTree = "<group>"; };
-		F446A8F91FCC082900C82C90 /* UploadTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadTable.m; sourceTree = "<group>"; };
 		F446A9031FCC082900C82C90 /* dot_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot_red@3x.png"; sourceTree = "<group>"; };
 		F446A9041FCC082900C82C90 /* dot_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot_red@2x.png"; sourceTree = "<group>"; };
 		F446A9071FCC082900C82C90 /* ZXPhotoBrowserConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPhotoBrowserConst.m; sourceTree = "<group>"; };
@@ -766,6 +762,10 @@
 		F457BAEF2362FF5000B1E1B4 /* SearchResultsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
 		F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
 		F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchStoryboard.storyboard; sourceTree = "<group>"; };
+		F457BE3823640DBA00B1E1B4 /* UploadTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTable.h; sourceTree = "<group>"; };
+		F457BE3923640DBA00B1E1B4 /* UploadOperationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadOperationModel.m; sourceTree = "<group>"; };
+		F457BE3A23640DBA00B1E1B4 /* UploadOperationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadOperationModel.h; sourceTree = "<group>"; };
+		F457BE3B23640DBA00B1E1B4 /* UploadTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadTable.m; sourceTree = "<group>"; };
 		F4591BB020747B0A0098F671 /* NSURL+ZXAppLinks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ZXAppLinks.m"; sourceTree = "<group>"; };
 		F4591BB120747B0B0098F671 /* NSURL+ZXAppLinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ZXAppLinks.h"; sourceTree = "<group>"; };
 		F4591BC920747F560098F671 /* AlertChoseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertChoseController.m; sourceTree = "<group>"; };
@@ -1255,6 +1255,7 @@
 		F4361D652109982E00A5C22F /* BaseClasses */ = {
 			isa = PBXGroup;
 			children = (
+				F46182761D813BCB0015BC84 /* Protocol */,
 				F4361D6B2109982E00A5C22F /* BaseTableViewCell.h */,
 				F4361D662109982E00A5C22F /* BaseTableViewCell.m */,
 				F4361D682109982E00A5C22F /* BaseCollectionViewCell.h */,
@@ -1522,9 +1523,7 @@
 				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
 				F446A7ED1FCC082900C82C90 /* ZXLocalNotification.m */,
 				F446A8B51FCC082900C82C90 /* ZXLocalNotification.h */,
-				F446A7F91FCC082900C82C90 /* UMShare */,
 				F446A8981FCC082900C82C90 /* KxMenu */,
-				F446A8B61FCC082900C82C90 /* UMThirdLogin */,
 				F446A8B91FCC082900C82C90 /* ADCustomTableView */,
 				F446A8A11FCC082900C82C90 /* UncaughtException */,
 				F446A8EE1FCC082900C82C90 /* QiNiuUploadRequest */,
@@ -1975,15 +1974,12 @@
 		F446A8EE1FCC082900C82C90 /* QiNiuUploadRequest */ = {
 			isa = PBXGroup;
 			children = (
+				F457BE3723640DBA00B1E1B4 /* UploadModel */,
 				F4EF350A1FF5D86300CCD088 /* PendingOperations.h */,
 				F4EF35091FF5D86300CCD088 /* PendingOperations.m */,
 				F446A8EF1FCC082900C82C90 /* UploadGrowOperation.h */,
 				F446A8F61FCC082900C82C90 /* UploadGrowOperation.m */,
 				F446A8F21FCC082900C82C90 /* GrowthDataManager */,
-				F446A8F81FCC082900C82C90 /* UploadOperationModel.h */,
-				F446A8F11FCC082900C82C90 /* UploadOperationModel.m */,
-				F446A8F01FCC082900C82C90 /* UploadTable.h */,
-				F446A8F91FCC082900C82C90 /* UploadTable.m */,
 			);
 			path = QiNiuUploadRequest;
 			sourceTree = "<group>";
@@ -2388,6 +2384,17 @@
 			path = PSearchResults;
 			sourceTree = "<group>";
 		};
+		F457BE3723640DBA00B1E1B4 /* UploadModel */ = {
+			isa = PBXGroup;
+			children = (
+				F457BE3823640DBA00B1E1B4 /* UploadTable.h */,
+				F457BE3923640DBA00B1E1B4 /* UploadOperationModel.m */,
+				F457BE3A23640DBA00B1E1B4 /* UploadOperationModel.h */,
+				F457BE3B23640DBA00B1E1B4 /* UploadTable.m */,
+			);
+			path = UploadModel;
+			sourceTree = "<group>";
+		};
 		F461820F1D8129490015BC84 = {
 			isa = PBXGroup;
 			children = (
@@ -2478,7 +2485,6 @@
 				F4361D652109982E00A5C22F /* BaseClasses */,
 				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4EF35021FF5D7EB00CCD088 /* AliOSSUploadManager */,
-				F46182761D813BCB0015BC84 /* Protocol */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -2505,6 +2511,8 @@
 		F46182841D813BCB0015BC84 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				F446A8B61FCC082900C82C90 /* UMThirdLogin */,
+				F446A7F91FCC082900C82C90 /* UMShare */,
 				F441BF9A216C7F5900A92D2E /* OneSDK */,
 				F49CFD081FDE5C8D009F2213 /* XLPhotoBrowser */,
 				F49CFD031FDE5C65009F2213 /* AlipaySDK */,
@@ -3823,7 +3831,6 @@
 				F457BAF12362FF5000B1E1B4 /* SearchResultsController.m in Sources */,
 				F4BBAA54212BF83D00BF10F2 /* ZXWebViewController.m in Sources */,
 				F4591BB220747B0B0098F671 /* NSURL+ZXAppLinks.m in Sources */,
-				F446A9A41FCC082A00C82C90 /* UploadOperationModel.m in Sources */,
 				F4361D872109985600A5C22F /* OrientationTabController.m in Sources */,
 				F4D8087D20E082590084D024 /* ZXCenterBottomToolView.m in Sources */,
 				F49CFD351FDE5C8D009F2213 /* TADotView.m in Sources */,
@@ -3936,9 +3943,9 @@
 				F4361DD921099DF400A5C22F /* ZXAddPicPlaceholderCell.m in Sources */,
 				F466A96B21549ADB007143A1 /* ZXAlphaAnimatedTranstion.m in Sources */,
 				F41E3BEA220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m in Sources */,
-				F446A9A81FCC082A00C82C90 /* UploadTable.m in Sources */,
 				F49CFD2B1FDE5C8D009F2213 /* UIView+XLExtension.m in Sources */,
 				F4D8086F20E080130084D024 /* ZXTextRectTextField.m in Sources */,
+				F457BE3C23640DBA00B1E1B4 /* UploadOperationModel.m in Sources */,
 				F44DAED51DC8D188000D9311 /* UMSocialShareScrollView.m in Sources */,
 				F446A9A61FCC082A00C82C90 /* UploadGrowOperation.m in Sources */,
 				F446A9881FCC082A00C82C90 /* ZXInfiniteScrollView.m in Sources */,
@@ -3986,6 +3993,7 @@
 				F4C1C40A22E55B520065C22A /* ZXAlbumTableCell.m in Sources */,
 				F4361DE021099E6200A5C22F /* ZXPlaceholdTextView.m in Sources */,
 				F4C1C40522E55B520065C22A /* ZXPhotoPickerController.m in Sources */,
+				F457BE3D23640DBB00B1E1B4 /* UploadTable.m in Sources */,
 				F4DF1131212E8E5C0072650A /* ZXNavKuGouDrivenInteractiveTransition.m in Sources */,
 				F446A9901FCC082A00C82C90 /* ZXNewFunctionController.m in Sources */,
 				F446A98A1FCC082A00C82C90 /* ZXSimpleLyricView.m in Sources */,

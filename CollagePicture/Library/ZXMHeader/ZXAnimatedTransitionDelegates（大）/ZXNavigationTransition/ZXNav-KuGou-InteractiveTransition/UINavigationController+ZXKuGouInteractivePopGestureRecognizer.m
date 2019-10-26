@@ -55,8 +55,8 @@ static char InteractivePopGestureRecognizerKey;
 - (void)interactiveTransitionRecognizerAction:(UIPanGestureRecognizer *)gestureRecognizer
 {
     CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
-    
-    CGFloat scale = 1 - fabs(translation.x / LCDW);
+    CGFloat width = UIScreen.mainScreen.bounds.size.width;
+    CGFloat scale = 1 - fabs(translation.x / width);
     scale = scale < 0 ? 0 : scale;
     
     NSLog(@"nav_滑动后还剩下百分比 = %f", scale);

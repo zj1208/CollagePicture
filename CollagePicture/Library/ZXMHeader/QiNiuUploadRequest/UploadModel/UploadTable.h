@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BaseModel.h"
+#import <Mantle/Mantle.h>
 
 
 typedef NS_ENUM(NSInteger,UploadProgressType) {
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger,UploadProgressType) {
 };
 
 
-@interface UploadTable : BaseModel
+@interface UploadTable : MTLModel<MTLJSONSerializing>
 
 @property(nonatomic,strong)NSNumber *uploadId;
 @property(nonatomic,strong)NSArray *upload_imagesModels;//图片同步model

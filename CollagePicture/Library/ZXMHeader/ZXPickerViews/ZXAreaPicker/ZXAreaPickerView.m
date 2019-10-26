@@ -9,6 +9,10 @@
 #import "ZXAreaPickerView.h"
 #import "ZXOverlay.h"
 
+#ifndef LCDScale_iPhone6_Width
+#define LCDScale_iPhone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
+#endif
+
 @interface ZXAreaPickerView ()<ZXOverlayDelegate>
 
 @property (nonatomic, copy) NSArray *provinces;//35个字典省份组合的数组

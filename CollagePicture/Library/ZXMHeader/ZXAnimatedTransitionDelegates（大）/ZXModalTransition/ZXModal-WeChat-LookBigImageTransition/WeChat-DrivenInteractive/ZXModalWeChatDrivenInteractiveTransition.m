@@ -54,7 +54,8 @@
 {
     CGPoint translation = [gesture translationInView:gesture.view];
     //    translation-Y：往上移动-20，往下移动+20； 往上下2边方向缩小
-    CGFloat scale = 1 - fabs(translation.y / LCDH);
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    CGFloat scale = 1 - fabs(translation.y / screenHeight);
     scale = scale<0?0:scale;
     scale = translation.y<0?1:scale;
     return scale;

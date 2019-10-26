@@ -3,12 +3,12 @@
 //  lovebaby
 //
 //  Created by simon on 16/6/1.
-//  Copyright © 2016年 厦门致上信息科技有限公司. All rights reserved.
+//  Copyright © 2016年 . All rights reserved.
 //
 
-#import "BaseModel.h"
+#import <Mantle/Mantle.h>
 
-@interface UploadOperationModel : BaseModel
+@interface UploadOperationModel : MTLModel<MTLJSONSerializing>
 /**
  *  操作记录id
  */
@@ -33,7 +33,7 @@
 /**
  *  成长集上传相册保存本地的model
  */
-@interface GrowthSavePhotoModel : BaseModel
+@interface GrowthSavePhotoModel : MTLModel<MTLJSONSerializing>
 
 /**
  *  上传相册id/操作记录id

@@ -139,7 +139,10 @@
 {
     if (!_imageView)
     {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDH)];
+        CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+        CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+        
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
         _imageView.userInteractionEnabled = YES;
     }
@@ -287,13 +290,14 @@
 {
     CGSize imageSize = image.size;
     CGFloat imageWidthHeightRatio = imageSize.width / imageSize.height;
-
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     CGSize newSize;
-    CGFloat width = LCDW;
+    CGFloat width = screenWidth;
     CGFloat height = width / imageWidthHeightRatio;
     newSize = CGSizeMake(width, height);
     
-    CGFloat imageY = (LCDH - newSize.height) * 0.5;
+    CGFloat imageY = (screenHeight - newSize.height) * 0.5;
     if (imageY < 0) {
         imageY = 0;
     }
@@ -342,8 +346,7 @@
     self.transitioningDelegate = self.wxBigImageTransitionDelegate;
 //  不能使用，会出很多问题，如dismiss时候，设置view的alpha过渡动画无效果了；
 //  self.modalPresentationStyle = UIModalPresentationCustom;
-    UIWindow *window = [[[UIApplication sharedApplication]delegate]window];
-    UIViewController *vc =window.zx_currentViewController;
+    UIViewController *vc =[self zx_currentViewController];
     [vc presentViewController:self animated:YES completion:nil];
 }
 
@@ -477,8 +480,8 @@
 {
     CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
 //    translation-Y：往上移动-20，往下移动+20； 往上下2边方向缩小
-    
-    CGFloat scale = 1 - fabs(translation.y / LCDH);
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    CGFloat scale = 1 - fabs(translation.y / screenHeight);
     scale = scale < 0 ? 0 : scale;
     scale = translation.y<0?1:scale;
 //    CGFloat angle = atanf(translation.y/(fabs(translation.x)));
@@ -547,4 +550,30 @@
     }
     return YES;
 }
+
+#pragma mark- currentViewController
+
+- (UIViewController*)zx_topMostWindowController
+{
+    UIWindow *window = [[[UIApplication sharedApplication]delegate]window];
+    UIViewController *topController = window.rootViewController;
+    while ([topController presentedViewController])
+    {
+        topController = [topController presentedViewController];
+    }
+    //  Returning topMost ViewController
+    return topController;
+}
+- (UIViewController*)zx_currentViewController;
+{
+    UIViewController *currentViewController = [self zx_topMostWindowController];
+    while ([currentViewController isKindOfClass:[UITabBarController class]])
+    {
+        currentViewController = [(UITabBarController *)currentViewController selectedViewController];
+    }
+    while ([currentViewController isKindOfClass:[UINavigationController class]] && [(UINavigationController*)currentViewController topViewController])
+        currentViewController = [(UINavigationController*)currentViewController topViewController];
+    return currentViewController;
+}
+
 @end
