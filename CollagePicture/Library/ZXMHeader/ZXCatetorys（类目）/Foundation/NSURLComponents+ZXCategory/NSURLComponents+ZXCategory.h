@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param value NSURLQueryItem.Value
  @param key   NSURLQueryItem.Name
  */
-- (void)zhSetQueryItemValue:(nullable NSString *)value forKey:(NSString *)key;
+- (void)zx_SetQueryItemValue:(nullable NSString *)value forKey:(NSString *)key;
 
 /**
  获取一个参数的value
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return    参数对应的value
  */
 
-- (nullable NSString *)zhObjectForKey:(NSString *)key;
+- (nullable NSString *)zx_ObjectForKey:(NSString *)key;
 
 
 - (void)jlRemoveObjectForKey:(NSString *)key;

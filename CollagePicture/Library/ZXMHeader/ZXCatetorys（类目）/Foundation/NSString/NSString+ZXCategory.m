@@ -477,17 +477,17 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return md5String;
 }
 
-+ (nullable id)zhGetJSONSerializationObjectFormString:(nullable NSString *)string
++ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string
 {
     if ([NSString zhIsBlankString:string])
     {
         return nil;
     }
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [NSString zhGetJSONSerializationObjectByJsonData:data];
+    return [NSString zx_getJSONSerializationObjectByJsonData:data];
 }
 
-+ (nullable id)zhGetJSONSerializationObjectByJsonData:(nullable NSData *)data
++ (nullable id)zx_getJSONSerializationObjectByJsonData:(nullable NSData *)data
 {
     NSError *error=nil;
     id dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
@@ -498,7 +498,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return nil;
 }
 
-+ (nullable id)zhGetJSONSerializationObjectFormContentsOfFile:(NSString *)path
++ (nullable id)zx_getJSONSerializationObjectFormContentsOfFile:(NSString *)path
 {
 //    NSString *path = [[NSBundle mainBundle]pathForResource:@"ZXPrivacyPolicy" ofType:@"json"];
 //    NSString *str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
@@ -513,7 +513,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 
 }
 
-+ (NSString *)zhGetJSONSerializationStringFromObject:(nullable id)responseObject
++ (NSString *)zx_getJSONSerializationStringFromObject:(nullable id)responseObject
 {
     if ([NSJSONSerialization isValidJSONObject:responseObject])
     {

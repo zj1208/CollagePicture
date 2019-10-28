@@ -12,7 +12,6 @@
 
 #import <Foundation/Foundation.h>
 #import "TMCache.h"
-#import "UserModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param name 参数名
  @return 一个URL；
  */
-+ (nullable instancetype)zhURLWithString:(nullable NSString *)urlString queryItemValue:(nullable NSString *)value forKey:(nullable NSString *)name;
++ (nullable instancetype)zx_URLWithString:(nullable NSString *)urlString queryItemValue:(nullable NSString *)value forKey:(nullable NSString *)name;
 
 
 
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param name 参数name
  @return 参数对应的value
  */
-- (nullable id)zhURLQueryItemObjectForKey:(NSString *)name;
+- (nullable id)zx_URLQueryItemObjectForKey:(NSString *)name;
 
 
 /**
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param name 参数名
  @return 新的URL
  */
-- (nullable instancetype)zhURLQueryItemSetValue:(nullable NSString *)value forKey:(nullable NSString *)name;
+- (nullable instancetype)zx_URLQueryItemSetValue:(nullable NSString *)value forKey:(nullable NSString *)name;
 @end
 
 NS_ASSUME_NONNULL_END

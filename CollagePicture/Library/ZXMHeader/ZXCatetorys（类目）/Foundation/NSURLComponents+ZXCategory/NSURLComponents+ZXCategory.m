@@ -11,7 +11,7 @@
 @implementation NSURLComponents (ZXCategory)
 
 
-- (void)zhSetQueryItemValue:(nullable NSString *)value forKey:(NSString *)key
+- (void)zx_SetQueryItemValue:(nullable NSString *)value forKey:(NSString *)key
 {
     //如果已经有这个参数，则移除；
     NSMutableArray *queryItems = [NSMutableArray arrayWithArray:self.queryItems];
@@ -29,7 +29,7 @@
 }
 
 
-- (nullable NSString *)zhObjectForKey:(NSString *)key
+- (nullable NSString *)zx_ObjectForKey:(NSString *)key
 {
     __block NSString *value = nil;
     [self.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

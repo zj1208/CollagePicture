@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AcQ-xr-Gyv">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <items>
                                     <navigationItem id="cMo-xT-1wS">
                                         <nil key="title"/>
@@ -54,7 +53,7 @@
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CWy-2n-Dpt">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hSb-aY-bFL">
                                     <size key="itemSize" width="156" height="229"/>
@@ -81,15 +80,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="2Uh-Rd-ctg" firstAttribute="bottom" secondItem="CWy-2n-Dpt" secondAttribute="bottom" id="80e-io-boy"/>
-                            <constraint firstItem="AcQ-xr-Gyv" firstAttribute="leading" secondItem="2Uh-Rd-ctg" secondAttribute="leading" id="Dlf-0M-NQf"/>
+                            <constraint firstAttribute="bottom" secondItem="CWy-2n-Dpt" secondAttribute="bottom" id="80e-io-boy"/>
+                            <constraint firstItem="AcQ-xr-Gyv" firstAttribute="leading" secondItem="Nf8-Ar-Ckr" secondAttribute="leading" id="Dlf-0M-NQf"/>
                             <constraint firstItem="CWy-2n-Dpt" firstAttribute="centerX" secondItem="Nf8-Ar-Ckr" secondAttribute="centerX" id="K7O-Vm-Y8I"/>
                             <constraint firstItem="AcQ-xr-Gyv" firstAttribute="centerX" secondItem="Nf8-Ar-Ckr" secondAttribute="centerX" id="M99-la-1iH"/>
-                            <constraint firstItem="AcQ-xr-Gyv" firstAttribute="top" secondItem="2Uh-Rd-ctg" secondAttribute="top" id="QiC-7s-lDE"/>
-                            <constraint firstItem="CWy-2n-Dpt" firstAttribute="leading" secondItem="2Uh-Rd-ctg" secondAttribute="leading" id="UPk-AN-0kZ"/>
+                            <constraint firstItem="AcQ-xr-Gyv" firstAttribute="top" secondItem="Nf8-Ar-Ckr" secondAttribute="top" id="QiC-7s-lDE"/>
+                            <constraint firstItem="CWy-2n-Dpt" firstAttribute="leading" secondItem="Nf8-Ar-Ckr" secondAttribute="leading" id="UPk-AN-0kZ"/>
                             <constraint firstItem="CWy-2n-Dpt" firstAttribute="top" secondItem="AcQ-xr-Gyv" secondAttribute="bottom" id="ZKo-MJ-FU5"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="2Uh-Rd-ctg"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="CWy-2n-Dpt" id="jT9-aZ-Hik"/>

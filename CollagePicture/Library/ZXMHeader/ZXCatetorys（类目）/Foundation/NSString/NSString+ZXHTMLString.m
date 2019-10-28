@@ -10,7 +10,7 @@
 
 @implementation NSString (ZXHTMLString)
 
-+ (NSUInteger)zhGetImgSrcCountWithHTMLString:(NSString *)htmlString
++ (NSUInteger)zx_GetImgSrcCountWithHTMLString:(NSString *)htmlString
 {
     NSArray *arr =  [htmlString componentsSeparatedByString:@"<img src"];
     return arr.count-1;

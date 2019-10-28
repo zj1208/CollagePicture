@@ -11,7 +11,7 @@
 
 @implementation NSData (ZXCategory)
 
-- (NSString *)zhMD5String
+- (NSString *)zx_md5String
 {
     const char *cstr = [self bytes];
     unsigned char result[16];

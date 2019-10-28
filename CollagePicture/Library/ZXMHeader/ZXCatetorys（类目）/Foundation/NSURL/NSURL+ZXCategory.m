@@ -11,7 +11,7 @@
 
 @implementation NSURL (ZXCategory)
 
-+ (nullable instancetype)zhURLWithString:(NSString *)urlString queryItemValue:(nullable NSString *)value forKey:(nullable NSString *)name;
++ (nullable instancetype)zx_URLWithString:(NSString *)urlString queryItemValue:(nullable NSString *)value forKey:(nullable NSString *)name;
 {
     if (!urlString)
     {
@@ -29,13 +29,13 @@
     }
     if (name)
     {
-        [components zhSetQueryItemValue:value forKey:name];
+        [components zx_SetQueryItemValue:value forKey:name];
     }
 
     return components.URL;
 }
 
-- (id)zhURLQueryItemObjectForKey:(NSString *)name
+- (id)zx_URLQueryItemObjectForKey:(NSString *)name
 {
     NSURLComponents *components = [[NSURLComponents alloc] initWithURL:self resolvingAgainstBaseURL:YES];
     if (!components)
@@ -55,7 +55,7 @@
 }
 
 
-- (nullable instancetype)zhURLQueryItemSetValue:(nullable NSString *)value forKey:(nullable NSString *)name
+- (nullable instancetype)zx_URLQueryItemSetValue:(nullable NSString *)value forKey:(nullable NSString *)name
 {
     NSString *urlString = self.absoluteString;
     if ([urlString canBeConvertedToEncoding:NSUTF8StringEncoding])
@@ -70,7 +70,7 @@
     }
     if (name)
     {
-        [components zhSetQueryItemValue:value forKey:name];
+        [components zx_SetQueryItemValue:value forKey:name];
     }
     return components.URL;
 }

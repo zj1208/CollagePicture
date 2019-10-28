@@ -269,16 +269,16 @@ NS_ASSUME_NONNULL_BEGIN
  *	@param  string  字典or数组格式的字符串
  *	@return	NSArray 或 NSDictionary
  */
-+ (nullable id)zhGetJSONSerializationObjectFormString:(nullable NSString *)string;
++ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string;
 
-+ (nullable id)zhGetJSONSerializationObjectByJsonData:(nullable NSData *)data;
++ (nullable id)zx_getJSONSerializationObjectByJsonData:(nullable NSData *)data;
 
-+ (nullable id)zhGetJSONSerializationObjectFormContentsOfFile:(NSString *)path;
++ (nullable id)zx_getJSONSerializationObjectFormContentsOfFile:(NSString *)path;
 
 /**
  *	@brief	根据jsonSerialization方法把json格式（NSArray／NSDictionary）对象转换为字符串
  */
-+ (nullable NSString *)zhGetJSONSerializationStringFromObject:(nullable id)responseObject;
++ (nullable NSString *)zx_getJSONSerializationStringFromObject:(nullable id)responseObject;
 
 
 /**

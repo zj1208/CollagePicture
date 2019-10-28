@@ -190,7 +190,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     SearchTitleModel *model = [SearchTitleModel new];
     model.groupName = @"才划算杭州滨江店 实时热搜";
     model.groupType = @"1";
-    model.pageEnable = YES;
+    model.ifPaging = YES;
     
     SearchTitleModelSub *modelSub = [SearchTitleModelSub new];
     modelSub.name = @"香蕉";
@@ -210,7 +210,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
       SearchTitleModel *model1 = [SearchTitleModel new];
       model1.groupName = @"实时热搜";
       model1.groupType = @"2";
-      model1.pageEnable = NO;
+      model1.ifPaging = NO;
       
       SearchTitleModelSub *model1Sub1 = [SearchTitleModelSub new];
       model1Sub1.name = @"鸡蛋";
@@ -384,7 +384,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
              
              view.titleLab.text = titleModel.groupName;
 
-             if (titleModel.pageEnable)
+             if (titleModel.ifPaging)
             {
                  [view.rightIconBtn setImage:[UIImage imageNamed:@"icon_form"] forState:UIControlStateNormal];
                  [view.rightIconBtn addTarget:self action:@selector(rightIconBtnUpdateAction:) forControlEvents:UIControlEventTouchUpInside];

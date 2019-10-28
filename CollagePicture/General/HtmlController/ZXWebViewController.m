@@ -401,7 +401,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
             NSString *token = ISLOGIN?[UserInfoUDManager getToken]:@"";
             self.URLString = [self.URLString stringByReplacingOccurrencesOfString:@"{token}" withString:token];
         }
-        url = [NSURL zhURLWithString:self.URLString queryItemValue:[BaseHttpAPI getCurrentAppVersion] forKey:@"ttid"];
+        url = [NSURL zx_URLWithString:self.URLString queryItemValue:[BaseHttpAPI getCurrentAppVersion] forKey:@"ttid"];
     }
     // 如果是平安域名-
     else if ([self.URLString hasPrefix:@"https://ncfb-stg3.pingan.com.cn"] ||[self.URLString hasPrefix:@"https://cfb.pingan.com"])

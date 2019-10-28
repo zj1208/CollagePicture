@@ -63,7 +63,7 @@
 #define APPInfoDictionary    [[NSBundle mainBundle]infoDictionary]
 #define APP_AllInfoShow      CFShow(APPInfoDictionary)
 //应用标识 bundelId
-#define APP_bundleIdentifier [[NSBundle mainBundle]bundleIdentifier] 
+#define APP_bundleIdentifier [[NSBundle mainBundle]bundleIdentifier]
 //包名；根据key值获取本地化资源对象的值
 #define APP_BundleName       [APPInfoDictionary objectForKey:@"CFBundleName"]
 //显示包别名；根据key值获取本地化资源对象的值
@@ -130,8 +130,9 @@
 
 //iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；
 //宏定义的变量数字一定要加()才能准;CGFloat right = (LCDScale_5Equal6_To6plus(-93.f))-15.f
-#define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_XX)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
-
+#ifndef LCDScale_5Equal6_To6plus
+#define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_X)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
+#endif
 
 #pragma mark - 判断是什么设备
 
@@ -140,17 +141,16 @@
 #define IS_IPHONE_4_OR_LESS (SCREEN_MAX_LENGTH < 568.0)
 #define IS_IPHONE_5 (SCREEN_MIN_LENGTH == 320.0 && SCREEN_MAX_LENGTH == 568.0)
 #define IS_IPHONE_6 (SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 667.0)
-
-#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
-#endif
-
-#ifndef IS_IPHONE_6P
 #define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
 #endif
 
+#ifndef IS_IPHONE_X
+#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
+#endif
+
+#ifndef IS_IPHONE_XX
 // iphoneX系列判断是否有safeAreaInsets的值，其他是0;
 // iPhoneX :{44, 0, 34, 0}
-#ifndef IS_IPHONE_XX
 #define IS_IPHONE_XX ({\
 int tmp = 0;\
 if (@available(iOS 11.0, *)) { \
@@ -167,7 +167,6 @@ tmp = 0;\
 tmp;\
 })
 #endif
-
 
 
 
@@ -294,19 +293,6 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 
 
 
-
-
-
-#pragma mark-NSString utility
-
-//去除2端空格；
-#ifndef ZX_StringRemoveSpace
-#define ZX_StringRemoveSpace(string)     [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-#endif
-
-
-
-
 #pragma mark - UIColor utility
 
 
@@ -327,11 +313,6 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 #ifndef UIColorFromRGBA_HexValue
 #define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
 #endif
-
-
-
-
-
 
 
 
@@ -432,6 +413,7 @@ sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 //
 //#define metamacro_dec(VAL) \
 //metamacro_at(VAL, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)
+
 
 
 

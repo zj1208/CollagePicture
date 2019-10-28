@@ -10,6 +10,6 @@
 
 @interface NSData (ZXCategory)
 
-- (NSString *)zhMD5String;
+- (NSString *)zx_md5String;
 
 @end

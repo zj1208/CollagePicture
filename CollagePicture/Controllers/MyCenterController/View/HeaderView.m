@@ -49,7 +49,7 @@
 - (void)setData:(id)data
 {
 //    UserOutPutBean *model = (UserOutPutBean *)data;
-    NSString *str = [NSString stringWithFormat:@"head_b%@",@(1+arc4random() % 8)];
+//    NSString *str = [NSString stringWithFormat:@"head_b%@",@(1+arc4random() % 8)];
     
 //    NSString *appendString=model.headIcon;
 //    if ([model.headIcon hasPrefix:@"avtor/"])

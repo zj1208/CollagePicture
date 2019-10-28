@@ -11,6 +11,6 @@
 @interface NSString (ZXHTMLString)
 
 // 获取<img>标签个数
-+ (NSUInteger)zhGetImgSrcCountWithHTMLString:(NSString *)htmlString;
++ (NSUInteger)zx_GetImgSrcCountWithHTMLString:(NSString *)htmlString;
 
 @end

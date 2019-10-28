@@ -16,7 +16,7 @@
              @"groupCode" : @"groupCode",
              @"groupName" : @"groupName",
              @"groupType" :@"groupType",
-             @"pageEnable" :@"pageEnable",
+             @"ifPaging" :@"ifPaging",
              @"name":@"name",
              @"worlds":@"worlds",
              };
@@ -40,8 +40,8 @@
              @"suffIcon" :@"suffIcon",
              @"bgColor":@"bgColor",
              @"labelColor":@"labelColor",
-             @"activityId":@"activityId",
-             @"linkUrl":@"linkUrl",
+             @"appUrl":@"appUrl",
+             @"httpUrl":@"httpUrl",
              };
 
 }

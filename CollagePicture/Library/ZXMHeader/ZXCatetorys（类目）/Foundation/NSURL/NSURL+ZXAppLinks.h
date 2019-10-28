@@ -21,7 +21,7 @@
  @param appId 每个App的唯一id
  @return 路径地址；
  */
-+ (NSURL *)appStoreURLForApplicationIdentifier:(NSString *)appId;
++ (NSURL *)zx_appStoreURLForApplicationIdentifier:(NSString *)appId;
 
 
 
@@ -31,5 +31,5 @@
  @param appId 每个App的唯一id
  @return AppInfomation详情信息的URL；
  */
-+ (NSURL *)appStoreAppInfomationURLForApplicationIdentifier:(NSString *)appId;
++ (NSURL *)zx_appStoreAppInfomationURLForApplicationIdentifier:(NSString *)appId;
 @end

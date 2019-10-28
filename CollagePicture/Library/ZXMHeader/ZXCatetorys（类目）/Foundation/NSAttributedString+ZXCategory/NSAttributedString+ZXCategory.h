@@ -6,6 +6,7 @@
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 //  可以增加很多类目便捷方法；
+//  2019.10.28  增加关键字检索高亮
 
 #import <Foundation/Foundation.h>
 

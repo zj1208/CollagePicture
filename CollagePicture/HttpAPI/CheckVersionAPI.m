@@ -150,11 +150,11 @@ static NSInteger const kAPPErrorCode = 5000;
 
 - (nullable NSString *)getAppVersionFromItunes:(NSString *)appId
 {
-    NSURL *url =[NSURL appStoreAppInfomationURLForApplicationIdentifier:appId];
+    NSURL *url =[NSURL zx_appStoreAppInfomationURLForApplicationIdentifier:appId];
     NSString *jsonData  = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
     NSLog(@"%@",jsonData);
     
-    id dic =[NSString zhGetJSONSerializationObjectFormString:jsonData];
+    id dic =[NSString zx_getJSONSerializationObjectFormString:jsonData];
     if (dic)
     {
         NSArray *results = [dic objectForKey:@"results"];

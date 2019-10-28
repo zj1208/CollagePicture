@@ -143,7 +143,6 @@
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:obj];
      nav.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
-//    [self.navigationController pushViewController:obj animated:YES];
 }
 
 - (void)setUpData

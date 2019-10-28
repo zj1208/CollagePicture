@@ -17,14 +17,14 @@
 //    return [NSURL URLWithString:link];
 //}
 
-+ (NSURL *)appStoreURLForApplicationIdentifier:(NSString *)appId
++ (NSURL *)zx_appStoreURLForApplicationIdentifier:(NSString *)appId
 {
     NSString *link = [NSString stringWithFormat:@"http://itunes.apple.com/cn/app/id%@",appId];
     return [NSURL URLWithString:link];
 }
 
 
-+ (NSURL *)appStoreAppInfomationURLForApplicationIdentifier:(NSString *)appId
++ (NSURL *)zx_appStoreAppInfomationURLForApplicationIdentifier:(NSString *)appId
 {
     NSString *lookup = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appId];
     return [NSURL URLWithString:lookup];
