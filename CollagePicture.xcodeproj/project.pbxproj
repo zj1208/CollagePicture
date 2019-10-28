@@ -193,9 +193,6 @@
 		F457BAE623628B0500B1E1B4 /* SearchCollectionHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAE423628B0500B1E1B4 /* SearchCollectionHistoryCell.m */; };
 		F457BAE723628B0500B1E1B4 /* SearchCollectionHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F457BAE523628B0500B1E1B4 /* SearchCollectionHistoryCell.xib */; };
 		F457BAE923628F3000B1E1B4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F457BAE823628F3000B1E1B4 /* UIKit.framework */; };
-		F457BAEE2362CA2000B1E1B4 /* SearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */; };
-		F457BAF12362FF5000B1E1B4 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */; };
-		F457BAF92363206700B1E1B4 /* SearchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */; };
 		F457BE3C23640DBA00B1E1B4 /* UploadOperationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BE3923640DBA00B1E1B4 /* UploadOperationModel.m */; };
 		F457BE3D23640DBB00B1E1B4 /* UploadTable.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BE3B23640DBA00B1E1B4 /* UploadTable.m */; };
 		F457BEA22364248100B1E1B4 /* AddProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BEA02364248100B1E1B4 /* AddProductModel.m */; };
@@ -390,6 +387,9 @@
 		F4EB2FE01D8FCF7300F5B70B /* albumA_style_8.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FC61D8FCF7300F5B70B /* albumA_style_8.plist */; };
 		F4EB2FE11D8FCF7300F5B70B /* albumA_style_9.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FC71D8FCF7300F5B70B /* albumA_style_9.plist */; };
 		F4EB2FE31D8FCF8A00F5B70B /* image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FE21D8FCF8A00F5B70B /* image.jpg */; };
+		F4EB705C2366916F0073A2B7 /* SearchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4EB705B2366916F0073A2B7 /* SearchStoryboard.storyboard */; };
+		F4EB705F236692040073A2B7 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB705D236692030073A2B7 /* SearchResultsController.m */; };
+		F4EB7062236692160073A2B7 /* SearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */; };
 		F4EF35081FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF35061FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m */; };
 		F4EF350B1FF5D86300CCD088 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF35091FF5D86300CCD088 /* PendingOperations.m */; };
 		F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B371EA6492C007606F9 /* MyCenterController.m */; };
@@ -757,11 +757,6 @@
 		F457BAE423628B0500B1E1B4 /* SearchCollectionHistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionHistoryCell.m; sourceTree = "<group>"; };
 		F457BAE523628B0500B1E1B4 /* SearchCollectionHistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionHistoryCell.xib; sourceTree = "<group>"; };
 		F457BAE823628F3000B1E1B4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F457BAEC2362CA2000B1E1B4 /* SearchSuggestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchSuggestionViewController.h; sourceTree = "<group>"; };
-		F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchSuggestionViewController.m; sourceTree = "<group>"; };
-		F457BAEF2362FF5000B1E1B4 /* SearchResultsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
-		F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
-		F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchStoryboard.storyboard; sourceTree = "<group>"; };
 		F457BE3823640DBA00B1E1B4 /* UploadTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTable.h; sourceTree = "<group>"; };
 		F457BE3923640DBA00B1E1B4 /* UploadOperationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadOperationModel.m; sourceTree = "<group>"; };
 		F457BE3A23640DBA00B1E1B4 /* UploadOperationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadOperationModel.h; sourceTree = "<group>"; };
@@ -1087,6 +1082,11 @@
 		F4EB2FC61D8FCF7300F5B70B /* albumA_style_8.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = albumA_style_8.plist; sourceTree = "<group>"; };
 		F4EB2FC71D8FCF7300F5B70B /* albumA_style_9.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = albumA_style_9.plist; sourceTree = "<group>"; };
 		F4EB2FE21D8FCF8A00F5B70B /* image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpg; sourceTree = "<group>"; };
+		F4EB705B2366916F0073A2B7 /* SearchStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchStoryboard.storyboard; sourceTree = "<group>"; };
+		F4EB705D236692030073A2B7 /* SearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
+		F4EB705E236692030073A2B7 /* SearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
+		F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSuggestionViewController.m; sourceTree = "<group>"; };
+		F4EB7061236692160073A2B7 /* SearchSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSuggestionViewController.h; sourceTree = "<group>"; };
 		F4EF35041FF5D7EB00CCD088 /* AliOSSPicInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliOSSPicInfoRequest.h; sourceTree = "<group>"; };
 		F4EF35061FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliOSSPicInfoRequest.m; sourceTree = "<group>"; };
 		F4EF35091FF5D86300CCD088 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
@@ -2324,10 +2324,10 @@
 				F457BAEA2362C77200B1E1B4 /* View */,
 				F457BABF236146ED00B1E1B4 /* SearchViewController.h */,
 				F457BAC0236146ED00B1E1B4 /* SearchViewController.m */,
-				F457BAEC2362CA2000B1E1B4 /* SearchSuggestionViewController.h */,
-				F457BAED2362CA2000B1E1B4 /* SearchSuggestionViewController.m */,
-				F457BAEF2362FF5000B1E1B4 /* SearchResultsController.h */,
-				F457BAF02362FF5000B1E1B4 /* SearchResultsController.m */,
+				F4EB7061236692160073A2B7 /* SearchSuggestionViewController.h */,
+				F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */,
+				F4EB705E236692030073A2B7 /* SearchResultsController.h */,
+				F4EB705D236692030073A2B7 /* SearchResultsController.m */,
 			);
 			path = PSearch;
 			sourceTree = "<group>";
@@ -2377,7 +2377,7 @@
 		F457BAF22362FF6000B1E1B4 /* PSearchResults */ = {
 			isa = PBXGroup;
 			children = (
-				F457BAF82363206700B1E1B4 /* SearchStoryboard.storyboard */,
+				F4EB705B2366916F0073A2B7 /* SearchStoryboard.storyboard */,
 			);
 			path = PSearchResults;
 			sourceTree = "<group>";
@@ -3654,7 +3654,7 @@
 				F4EB2FCA1D8FCF7300F5B70B /* album_a12@2x.png in Resources */,
 				F4EB2FCE1D8FCF7300F5B70B /* album_a3@2x.png in Resources */,
 				F4361DE92109A29C00A5C22F /* ZXTableViewUnfoldFooterView.xib in Resources */,
-				F457BAF92363206700B1E1B4 /* SearchStoryboard.storyboard in Resources */,
+				F4EB705C2366916F0073A2B7 /* SearchStoryboard.storyboard in Resources */,
 				F446A9601FCC082900C82C90 /* whiteArrowLoadMore@2x.png in Resources */,
 				F4361D9521099B8700A5C22F /* ZXcity.plist in Resources */,
 				F446A9841FCC082A00C82C90 /* bannerPlaceholder@2x.png in Resources */,
@@ -3844,7 +3844,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F457BAF12362FF5000B1E1B4 /* SearchResultsController.m in Sources */,
+				F4EB705F236692040073A2B7 /* SearchResultsController.m in Sources */,
 				F4BBAA54212BF83D00BF10F2 /* ZXWebViewController.m in Sources */,
 				F4591BB220747B0B0098F671 /* NSURL+ZXAppLinks.m in Sources */,
 				F4361D872109985600A5C22F /* OrientationTabController.m in Sources */,
@@ -3988,6 +3988,7 @@
 				F49CFD331FDE5C8D009F2213 /* FSActionSheetCell.m in Sources */,
 				F44EC7FD225EF47C00AD4010 /* ZXMenuIconCollectionView.m in Sources */,
 				F4361DD721099DF400A5C22F /* ZXAddPicViewCell.m in Sources */,
+				F4EB7062236692160073A2B7 /* SearchSuggestionViewController.m in Sources */,
 				F446A9391FCC082900C82C90 /* EqualSpaceFlowLayoutEvolve.m in Sources */,
 				F446A98E1FCC082A00C82C90 /* NewFunctionController.m in Sources */,
 				F49CFD381FDE5C8D009F2213 /* TAAbstractDotView.m in Sources */,
@@ -4078,7 +4079,6 @@
 				F4A0FA052142154E0053B1E8 /* ZXModalWeChatDrivenInteractiveTransition.m in Sources */,
 				F446A94E1FCC082900C82C90 /* NSURL+ZXCategory.m in Sources */,
 				F4689FBE223A7BD000A3607E /* KxMenu.m in Sources */,
-				F457BAEE2362CA2000B1E1B4 /* SearchSuggestionViewController.m in Sources */,
 				F466A96C21549ADB007143A1 /* ZXAlphaTransitionDelegate.m in Sources */,
 				F4361DDA21099DF400A5C22F /* ZXAddPicCoverView.m in Sources */,
 				F4361E072109A67200A5C22F /* NSString+ZXHTMLString.m in Sources */,

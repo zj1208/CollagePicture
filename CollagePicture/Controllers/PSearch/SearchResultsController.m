@@ -10,6 +10,8 @@
 
 @interface SearchResultsController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
+@property (nonatomic, copy) NSString *searchTitle;
+
 @end
 
 @implementation SearchResultsController
@@ -23,6 +25,9 @@
 
 - (void)setUI
 {
+    self.textField.font = [UIFont systemFontOfSize:13];
+    self.textField.borderStyle = UITextBorderStyleRoundedRect;
+//    [self.textField zx_setBorderWithCornerRadius:10 borderWidth:1 borderColor:[UIColor zx_colorWithHexString:@"EDEFF0"]];
     self.collectionView.backgroundColor = [UIColor zx_colorWithHexString:@"#f3f3f3"];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     self.collectionViewFlowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
@@ -37,14 +42,18 @@
 
 - (IBAction)textFieldEditingBegainAction:(id)sender {
     
-    if ([self.delegate respondsToSelector:@selector(textFieldEditingBegainAction)]) {
-        [self.delegate textFieldEditingBegainAction];
+    if ([self.delegate respondsToSelector:@selector(textFieldEditingBegainActionWithSearchTitle:)]) {
+        [self.delegate textFieldEditingBegainActionWithSearchTitle:self.textField.text];
     }
 }
 
 - (void)requestSearchDataWithText:(NSString *)text{
  
-    
+    self.searchTitle = text;
+    self.textField.text = text;
+}
+
+- (IBAction)carBtnAction:(id)sender {
 }
 
 

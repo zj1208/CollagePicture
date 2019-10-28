@@ -67,8 +67,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     self.suggestionController.view.frame = self.view.frame;
     self.currentController = self.suggestionController;
     
-    self.resultsController.view.frame = self.suggestionController.view.frame;
-    
     self.suggestionController.view.hidden = YES;
     // 点击冥想词回调搜索-跳转到搜索详情3
     WS(weakSelf);
@@ -77,43 +75,46 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         [weakSelf addHistoryDataToArrayWithObject:suggestionTitle];
         
         [weakSelf.searchBar resignFirstResponder];
+
         weakSelf.navigationController.navigationBar.hidden = YES;
+        weakSelf.resultsController.view.hidden = NO;
+        
         [weakSelf addChildViewController:weakSelf.resultsController];
          //我可以自己设置二个来回动画哦
          UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
-         
+
          [weakSelf transitionFromViewController:weakSelf.suggestionController toViewController:weakSelf.resultsController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
-             
+
              //关闭finished判断，不然有时候会NO；
              [weakSelf.resultsController didMoveToParentViewController:weakSelf];
              [weakSelf.suggestionController willMoveToParentViewController:nil];
              [weakSelf.suggestionController removeFromParentViewController];
-             
+
          }];
         
-        [weakSelf.resultsController requestSearchDataWithText:@""];
-        
+        [weakSelf.resultsController requestSearchDataWithText:suggestionTitle];
         
     };
 }
 
-- (void)textFieldEditingBegainAction
+- (void)textFieldEditingBegainActionWithSearchTitle:(NSString *)searchTitle
 {
     [self addChildViewController:self.suggestionController];
+    self.searchBar.text = searchTitle;
     [self.searchBar becomeFirstResponder];
     self.navigationController.navigationBar.hidden = NO;
-     //我可以自己设置二个来回动画哦
+    self.suggestionController.view.hidden = YES;
      UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
-     
+
      [self transitionFromViewController:self.resultsController toViewController:self.suggestionController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
-         
-         //关闭finished判断，不然有时候会NO；
+
          [self.suggestionController didMoveToParentViewController:self];
          [self.resultsController willMoveToParentViewController:nil];
          [self.resultsController removeFromParentViewController];
-         
+
      }];
 }
+
 
 
 - (SearchResultsController *)resultsController

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SearchResultsControllerDelegate <NSObject>
 
-- (void)textFieldEditingBegainAction;
+- (void)textFieldEditingBegainActionWithSearchTitle:(NSString *)searchTitle;
 
 @end
 
@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewFlowLayout;
+@property (weak, nonatomic) IBOutlet UIButton *carBtn;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @property (nonatomic, weak)id<SearchResultsControllerDelegate>delegate;
 
@@ -28,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)textFieldEditingBegainAction:(id)sender;
 
 - (void)requestSearchDataWithText:(NSString *)text;
+
+- (IBAction)carBtnAction:(id)sender;
+
 @end
 
 NS_ASSUME_NONNULL_END
