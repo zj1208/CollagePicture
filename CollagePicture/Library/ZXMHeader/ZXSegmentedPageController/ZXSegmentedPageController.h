@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_END
     self.segPageController.segmentTitles = self.segTitles;
     self.segPageController.viewControllers = self.dataMArray;
     CGRect frame = self.view.frame;
-    CGFloat Y = IS_IPHONE_X?88:64;
+    CGFloat Y = IS_IPHONE_XX?88:64;
     frame.origin.y += Y;
     frame.size.height -= Y;
     self.segPageController.view.frame = frame;

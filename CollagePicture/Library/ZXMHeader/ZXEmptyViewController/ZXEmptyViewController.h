@@ -5,12 +5,14 @@
 //  Created by simon on 17/3/9.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-// 简介：藕和 MBProgressHUD
+// 简介：藕和 MBProgressHUD，Masnary第三方；
+
 // 2018.1.03 新增一些方法，调节属性；
 // 2019.6.03 修改注释
-
+// 2019.10.29  优化代码
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD+ZXCategory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,20 +62,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 static NSString * ZXEmptyRequestFaileTitle = @"数据加载失败~ ";
 
+/*
+ZXEmptyViewController加入到一个隐藏系统navigationBar但自定义view作为导航条的控制器时，会覆盖整个控制器；
+调节方式如下：
+self.emptyViewController.view.frame = CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR);
+ */
+
 @interface ZXEmptyViewController : UIViewController
 
 @property (nullable, nonatomic, weak) id<ZXEmptyViewControllerDelegate>delegate;
 
-@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UILabel *textLabel;
 
-//整体内容偏移调节
+// 整体内容偏移调节(textLabel,imageView,updateBtn一起调节)
 @property (nonatomic, assign) CGSize contentOffest;
 
 // 自定义按钮添加设置
 @property (nonatomic, strong) UIButton *customButton;
-
-
-//+ (instancetype)sharedInstance;
 
 
 // 添加氛围图（数据空氛围图，请求失败氛围图）
@@ -93,9 +98,10 @@ NS_ASSUME_NONNULL_END
 //例1:列表
 /*
 #import "ZXEmptyViewController.h"
-<ZXEmptyViewControllerDelegate>
+@interface SearchResultsController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,CAAnimationDelegate,ZXEmptyViewControllerDelegate>
+ 
 @property (nonatomic, strong) ZXEmptyViewController *emptyViewController;
-
+@end
  
 - (void)setUI
 {
@@ -113,16 +119,17 @@ NS_ASSUME_NONNULL_END
         
         ZXEmptyViewController *emptyVC = [[ZXEmptyViewController alloc] init];
         emptyVC.delegate = self;
-        _emptyViewController = emptyVC
-        }
-        return _emptyViewController;
+        _emptyViewController = emptyVC;
     }
+    return _emptyViewController;
+}
  //自己移除；
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [self.emptyViewController hideEmptyViewInController:self];
     [self.tableView.mj_header beginRefreshing];
 }
+ 
 - (void)headerRefresh
 {
     WS(weakSelf);
@@ -131,6 +138,7 @@ NS_ASSUME_NONNULL_END
         [weakSelf requestHeaderData];
     }];
 }
+ 
 - (void)requestHeaderData
 {
     WS(weakSelf);
@@ -138,7 +146,7 @@ NS_ASSUME_NONNULL_END
         
         [weakSelf.dataMArray removeAllObjects];
         [weakSelf.dataMArray addObjectsFromArray:data];
-        [weakSelf emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:nil emptyImage:[UIImage imageNamed:@"无人接单"] emptyTitle:@"没有搜到相关订单信息" updateBtnHide:YES];
+        [weakSelf.emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:nil emptyImage:[UIImage imageNamed:@"无人接单"] emptyTitle:@"没有搜到相关订单信息" updateBtnHide:YES];
         [weakSelf.tableView reloadData];
         weakSelf.pageNo = 1;
         [weakSelf.tableView.mj_header endRefreshing];
@@ -205,23 +213,24 @@ NS_ASSUME_NONNULL_END
 /*
 - (void)requestData
 {
+    WS(weakSelf);
     [ProductMdoleAPI getMyShopMainInfoWithShopId:[UserInfoUDManager getShopId] Success:^(id data) {
         
-        _shopInfoModel = nil;
-        _shopInfoModel = [[ShopMainInfoModel alloc] init];
-        _shopInfoModel = data;
-        [_emptyViewController hideEmptyViewInController:weakSelf hasLocalData:_shopInfoModel?YES:NO];
-        if (_shopInfoModel)
+        weakSelf.shopInfoModel = nil;
+        weakSelf.shopInfoModel = [[ShopMainInfoModel alloc] init];
+        weakSelf.shopInfoModel = data;
+        [weakSelf.emptyViewController hideEmptyViewInController:weakSelf hasLocalData:weakSelf.shopInfoModel?YES:NO];
+        if (weakSelf.shopInfoModel)
         {
-            _stausBarStyle = UIStatusBarStyleLightContent;
+            weakSelf.stausBarStyle = UIStatusBarStyleLightContent;
             [self setNeedsStatusBarAppearanceUpdate];
         }
-        [_collectionView reloadData];
+        [weakSelf.collectionView reloadData];
         
         
     } failure:^(NSError *error) {
         
-        [_emptyViewController addEmptyViewInController:weakSelf hasLocalData:_shopInfoModel?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        [weakSelf.emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.shopInfoModel?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
     }];
 }
 */

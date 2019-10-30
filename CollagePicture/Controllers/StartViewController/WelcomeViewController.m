@@ -11,20 +11,6 @@
 #import "OrientationNaController.h"
 
 
-#ifndef  IS_IPHONE_X
-#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
-#endif
-
-#ifndef  HEIGHT_NAVBAR
-#define  HEIGHT_NAVBAR      (IS_IPHONE_X ? (44.f+44.f) : (44.f+20.f))
-#define  HEIGHT_STATEBAR    (IS_IPHONE_X ? (44.f) : (20.f))
-#define  HEIGHT_TABBAR      (IS_IPHONE_X ? (34.f+49.f) : 0)
-#endif
-
-#ifndef  HEIGHT_TABBAR_SAFE
-#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_X ? (34.f) : 0)
-#endif
-
 @interface WelcomeViewController ()<UIWebViewDelegate>
 
 @property (nonatomic, strong) UIWebView * webView;

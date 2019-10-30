@@ -15,9 +15,7 @@
     return @{
              @"groupCode" : @"groupCode",
              @"groupName" : @"groupName",
-             @"groupType" :@"groupType",
              @"ifPaging" :@"ifPaging",
-             @"name":@"name",
              @"worlds":@"worlds",
              };
 
@@ -41,7 +39,7 @@
              @"bgColor":@"bgColor",
              @"labelColor":@"labelColor",
              @"appUrl":@"appUrl",
-             @"httpUrl":@"httpUrl",
+             @"htmlUrl":@"htmlUrl",
              };
 
 }

@@ -17,13 +17,35 @@
     // Drawing code
 }
 */
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        if (self.borderStyle != UITextBorderStyleRoundedRect) {
+            self.textPositionAdjustment = UIOffsetMake(8, 0);
+        }
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        if (self.borderStyle != UITextBorderStyleRoundedRect) {
+            self.textPositionAdjustment = UIOffsetMake(8, 0);
+        }
+    }
+    return self;
+}
+
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     CGRect rect = [super textRectForBounds:bounds];
     if (!self.leftView)
     {
-        rect = CGRectInset(rect, 8, 0);
+        rect = CGRectInset(rect, self.textPositionAdjustment.horizontal, self.textPositionAdjustment.vertical);
     }
     return rect;
 }
@@ -32,7 +54,7 @@
     CGRect rect = [super editingRectForBounds:bounds];
     if (!self.leftView)
     {
-         rect = CGRectInset(rect, 8, 0);
+        rect = CGRectInset(rect, self.textPositionAdjustment.horizontal, self.textPositionAdjustment.vertical);
     }
     return rect;
 }

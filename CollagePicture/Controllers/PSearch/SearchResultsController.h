@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZXBadgeIconButton.h"
+#import "ZXTextRectTextField.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewFlowLayout;
-@property (weak, nonatomic) IBOutlet UIButton *carBtn;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet ZXTextRectTextField *textField;
+@property (weak, nonatomic) IBOutlet ZXBadgeIconButton *carBtn;
 
 @property (nonatomic, weak)id<SearchResultsControllerDelegate>delegate;
 

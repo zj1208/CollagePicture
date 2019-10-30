@@ -10,8 +10,8 @@
 
 @interface ZXBadgeIconButton ()
 
-@property (nonatomic, strong) UIImageView *imageView;
-
+@property (nonatomic, strong) UIImageView *iconImageView;
+// 角标label对象
 @property (nonatomic, strong) UILabel *badgeLab;
 
 @property (nonatomic, assign) BOOL autoFit;
@@ -66,25 +66,39 @@
 - (void)sizeToFit
 {
     [super sizeToFit];
-    _autoFit = YES;
+    self.autoFit = YES;
 }
 
 - (void)setUI
 {
     self.backgroundColor = [UIColor clearColor];
-    _badgeValue = 0;
+    self.badgeValue = 0;
     self.badgeLabelContentOffest = CGPointMake(0, 0);
     
-    UIImageView *imageView = [[UIImageView alloc] init];
-    [self addSubview:imageView];
-    self.imageView = imageView;
+    [self addSubview:self.iconImageView];
     
-    UILabel *label = [[UILabel alloc] init];
-    [self addSubview:label];
-    label.translatesAutoresizingMaskIntoConstraints = YES;
-    self.badgeLab = label;
-    
-    [self setBadgeTitleColor:[UIColor whiteColor] badgeBackgroundColor:[UIColor redColor]];
+    [self addSubview:self.badgeLab];
+}
+
+- (UIImageView *)iconImageView
+{
+    if (!_iconImageView) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        _iconImageView = imageView;
+    }
+    return _iconImageView;
+}
+
+- (UILabel *)badgeLab
+{
+    if (!_badgeLab) {
+        UILabel *lab = [[UILabel alloc] init];
+        lab.translatesAutoresizingMaskIntoConstraints = YES;
+        lab.textColor = [UIColor whiteColor];
+        lab.backgroundColor = [UIColor redColor];
+        _badgeLab = lab;
+    }
+    return _badgeLab;
 }
 
 - (void)setBadgeTitleColor:(nullable UIColor *)aTitleColor badgeBackgroundColor:(nullable UIColor*)aBgColor
@@ -122,13 +136,13 @@
 
 - (void)setImage:(UIImage *)image
 {
-    self.imageView.image = image;
-    [self.imageView sizeToFit];
+    self.iconImageView.image = image;
+    [self.iconImageView sizeToFit];
     if (image.size.width>40 && image.size.height>40)
     {
-        CGRect imageViewRect = self.imageView.frame;
+        CGRect imageViewRect = self.iconImageView.frame;
         imageViewRect.size = CGSizeMake(40, 40);
-        self.imageView.frame = imageViewRect;
+        self.iconImageView.frame = imageViewRect;
     }
     [self layoutIfNeeded];
 
@@ -146,14 +160,14 @@
 {
     [super layoutSubviews];
     
-    self.imageView.center = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2);
-    CGSize size = [self zh_digitalIconWithBadgeValue:self.badgeValue maginY:_maginY badgeFont:self.badgeFont];
-    self.badgeLab.frame = CGRectMake(CGRectGetMaxX(self.imageView.frame)-12+self.badgeLabelContentOffest.x, CGRectGetMinY(self.imageView.frame)+self.badgeLabelContentOffest.y, size.width, size.height);
+    self.iconImageView.center = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2);
+    CGSize size = [self zh_digitalIconWithBadgeValue:self.badgeValue maginY:self.maginY badgeFont:self.badgeFont];
+    self.badgeLab.frame = CGRectMake(CGRectGetMaxX(self.iconImageView.frame)-12+self.badgeLabelContentOffest.x, CGRectGetMinY(self.iconImageView.frame)+self.badgeLabelContentOffest.y, size.width, size.height);
     
-    if (_autoFit)
+    if (self.autoFit)
     {
         CGRect rect  = self.frame;
-        rect.size.width = CGRectGetWidth(self.badgeLab.frame)+CGRectGetWidth(self.imageView.frame);
+        rect.size.width = CGRectGetWidth(self.badgeLab.frame)+CGRectGetWidth(self.iconImageView.frame);
         self.frame = rect;
     }
 }

@@ -32,18 +32,14 @@
 #define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 #endif
 
-#ifndef  IS_IPHONE_X
-#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
-#endif
-
 #ifndef  HEIGHT_NAVBAR
-#define  HEIGHT_NAVBAR      (IS_IPHONE_X ? (44.f+44.f) : (44.f+20.f))
-#define  HEIGHT_STATEBAR    (IS_IPHONE_X ? (44.f) : (20.f))
-#define  HEIGHT_TABBAR      (IS_IPHONE_X ? (34.f+49.f) : 0)
+#define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
+#define  HEIGHT_STATEBAR    (IS_IPHONE_XX ? (44.f) : (20.f))
+#define  HEIGHT_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 0)
 #endif
 
 #ifndef  HEIGHT_TABBAR_SAFE
-#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_X ? (34.f) : 0)
+#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_XX ? (34.f) : 0)
 #endif
 
 #ifndef  APP_Version

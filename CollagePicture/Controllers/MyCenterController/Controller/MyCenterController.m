@@ -86,6 +86,8 @@
     //    self.signatureLab.text = nil;
     //    [self.nameBtn setTitle:nil forState:UIControlStateNormal];
     
+//    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+    
     
     [self addScaleImageView];
 }

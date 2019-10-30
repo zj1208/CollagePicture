@@ -9,20 +9,20 @@
 
 // 2018.1.23 新增 badgeLabel相对偏移；默认向image大小左偏移12，上对齐；
 // 2018.4.19 修改文字绘画选项；
+// 2019.10.29 适配Xcode11，父类一定要UIButton才能在sb上的button修改父类；
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZXBadgeIconButton : UIControl
+@interface ZXBadgeIconButton : UIButton
 
 // 设置badgeValue值
 @property (nonatomic, assign) NSInteger badgeValue;
 
-// 角标label对象
-@property (nonatomic, readonly) UILabel *badgeLabel;
 
-// 新增 badgeLabel相对偏移；默认向image大小左偏移12，上对齐；
+
+// badgeLabel相对偏移,默认CGPointMake(0, 0)，表示向image图标左偏移12,上对齐；
 @property (nonatomic, assign) CGPoint badgeLabelContentOffest;
 
 // 设置图标的静态图片
@@ -51,21 +51,31 @@ NS_ASSUME_NONNULL_END
 
 ////使用
 /*
+  //方式一：Storyboard
 @property (weak, nonatomic) IBOutlet ZXBadgeIconButton *messageBadgeButton;
 
 
-- (void)setUI{
+- (void)setBadgeButton{
  
-    _messageBadgeButton = [[ZXBadgeIconButton alloc] init];
-    _messageBadgeButton.frame = CGRectMake(0, 0, 40, 44);
-    [_messageBadgeButton setImage:[UIImage imageNamed:@"icon_meassage_white"]];
-    [_messageBadgeButton setBadgeContentInsetY:2.f badgeFont:[UIFont systemFontOfSize:11]];
-    [_messageBadgeButton addTarget:self action:@selector(messageBtnAction) forControlEvents:UIControlEventTouchUpInside];
-
+    [self.carBtn setImage:[UIImage imageNamed:@"icon_car"]];
+    [self.carBtn setBadgeContentInsetY:2.f badgeFont:[UIFont systemFontOfSize:11]];
+    self.carBtn.badgeLabelContentOffest = CGPointMake(0, -5);
 }
+ //方式二：纯代码
+ - (ZXBadgeIconButton *)messageBadgeButton
+ {
+     if (!_messageBadgeButton) {
+          _messageBadgeButton = [[ZXBadgeIconButton alloc] init];
+          _messageBadgeButton.frame = CGRectMake(0, 0, 40, 44);
+          [_messageBadgeButton setImage:[UIImage imageNamed:@"icon_meassage_white"]];
+          [_messageBadgeButton setBadgeContentInsetY:2.f badgeFont:[UIFont systemFontOfSize:11]];
+         [_messageBadgeButton addTarget:self action:@selector(messageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+     }
+     return _messageBadgeButton
+ }
 
  #pragma mark - action
- -(void)messageBtnAction{
+ -(void)messageBtnAction:(UIButton *)sender{
  
     if ([self zh_performIsLoginActionWithPopAlertView:NO])
     {
@@ -85,9 +95,10 @@ NS_ASSUME_NONNULL_END
     
     if (![UserInfoUDManager isLogin])
     {
-        [_messageBadgeButton setBadgeValue:0];
+        [self.messageBadgeButton setBadgeValue:0];
         return;
     }
+    WS(weakSelf);
     [[[AppAPIHelper shareInstance] messageAPI] getshowMsgCountWithsuccess:^(id data) {
         
         NSLog(@"%@",data);
@@ -99,14 +110,14 @@ NS_ASSUME_NONNULL_END
             NSInteger total =[system integerValue]+[antsteam integerValue]+[market integerValue];
             NSLog(@"system=%ld,antsteam=%ld,market=%ld,total=%ld",[system integerValue],[antsteam integerValue],[market integerValue],total);
             NSInteger value = [[[NIMSDK sharedSDK]conversationManager]allUnreadCount];
-            [_messageBadgeButton setBadgeValue:(value+total)];
+            [weakSelf.messageBadgeButton setBadgeValue:(value+total)];
             
             
         }else{
             if ([[[NIMSDK sharedSDK]conversationManager]allUnreadCount]>0)
             {
                 NSInteger value = [[[NIMSDK sharedSDK]conversationManager]allUnreadCount];
-                [_messageBadgeButton setBadgeValue:value];
+                [weakSelf.messageBadgeButton setBadgeValue:value];
             }
         }
     } failure:^(NSError *error) {
@@ -114,7 +125,7 @@ NS_ASSUME_NONNULL_END
         if ([[[NIMSDK sharedSDK]conversationManager]allUnreadCount]>0)
         {
             NSInteger value = [[[NIMSDK sharedSDK]conversationManager]allUnreadCount];
-            [_messageBadgeButton setBadgeValue:value];
+            [weakSelf.messageBadgeButton setBadgeValue:value];
         }
         
     }];

@@ -58,33 +58,48 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
 
 - (void)setUI
 {
-    UIImageView *imgView = [[UIImageView alloc] init];
-    imgView.contentMode = UIViewContentModeScaleToFill;
-    [self.view addSubview:imgView];
-    self.imageView = imgView;
-    
-    
-    UILabel *label1 = [[UILabel alloc] init];
-    label1.numberOfLines = 0;
-    label1.textAlignment = NSTextAlignmentCenter;
-    label1.textColor = UIColorFromRGB_HexValue(0x666666);
-    label1.font = [UIFont systemFontOfSize:14];
-    [self.view addSubview:label1];
-    self.label = label1;
-    
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"点击加载" forState:UIControlStateNormal];
-    [self setView:btn cornerRadius:5.f borderWidth:1.f borderColor:[UIColor colorWithWhite:0.8 alpha:1]];
-    [btn setTitleColor:[UIColor colorWithWhite:0.3 alpha:1] forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [btn addTarget:self action:@selector(updateNewData:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:btn];
-    self.updateBtn = btn;
- 
+    [self.view addSubview:self.imageView];
+    [self.view addSubview:self.textLabel];
+    [self.view addSubview:self.updateBtn];
 }
 
+- (UIImageView *)imageView
+{
+    if (!_imageView) {
+        UIImageView *imgView = [[UIImageView alloc] init];
+        imgView.contentMode = UIViewContentModeScaleToFill;
+        _imageView = imgView;
+    }
+    return _imageView;
+}
+
+- (UILabel *)textLabel
+{
+    if (!_textLabel) {
+        UILabel *lab = [[UILabel alloc] init];
+        lab.numberOfLines = 0;
+        lab.textAlignment = NSTextAlignmentCenter;
+        lab.textColor = UIColorFromRGB_HexValue(0x666666);
+        lab.font = [UIFont systemFontOfSize:14];
+        _textLabel = lab;
+    }
+    return _textLabel;
+}
+
+- (UIButton *)updateBtn
+{
+    if (!_updateBtn) {
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setTitle:@"点击加载" forState:UIControlStateNormal];
+        [self setView:btn cornerRadius:5.f borderWidth:1.f borderColor:[UIColor colorWithWhite:0.8 alpha:1]];
+        [btn setTitleColor:[UIColor colorWithWhite:0.3 alpha:1] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [btn addTarget:self action:@selector(updateNewData:) forControlEvents:UIControlEventTouchUpInside];
+        _updateBtn = btn;
+    }
+    return _updateBtn;
+}
 
 //设置圆角
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
@@ -121,14 +136,14 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     //先设置图片居中显示
     [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
        
-        make.size.mas_equalTo(_imageView.image.size);
+        make.size.mas_equalTo(self.imageView.image.size);
         make.centerX.mas_equalTo(self.view.mas_centerX);
     }];
     
     //有提示语的时候， 有按钮，无按钮；
-    if (self.label.text.length>0 )
+    if (self.textLabel.text.length>0 )
     {
-        CGRect rect = [self.label.text boundingRectWithSize:CGSizeMake(LCDW-24, LCDH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.label.font} context:nil];
+        CGRect rect = [self.textLabel.text boundingRectWithSize:CGSizeMake(LCDW-24, LCDH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
 
         CGFloat otherContentHeight = 0.f;
         //有点击加载按钮；
@@ -144,22 +159,22 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
         
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
-            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+_contentOffest.height);
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+self.contentOffest.height);
         }];
 
     }
     //无提示语，有加载按钮；
-    else if (self.label.text.length==0 && !self.updateBtn.hidden)
+    else if (self.textLabel.text.length==0 && !self.updateBtn.hidden)
     {
         CGFloat otherContentHeight = 12+40+LCDScale_iPhone6_Width(30);
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
-            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+_contentOffest.height);
+            make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+self.contentOffest.height);
         }];
 
     }
     //无提示语，无加载按钮；
-    else if (self.label.text.length==0 && self.updateBtn.hidden)
+    else if (self.textLabel.text.length==0 && self.updateBtn.hidden)
     {
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
@@ -169,9 +184,9 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     }
 
     
-    [self.label mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.textLabel mas_updateConstraints:^(MASConstraintMaker *make) {
        
-        make.top.mas_equalTo(_imageView.mas_bottom).offset(12);
+        make.top.mas_equalTo(self.imageView.mas_bottom).offset(12);
         make.left.mas_equalTo(self.view.mas_left).offset(12);
         make.centerX.mas_equalTo(self.view.mas_centerX);
 
@@ -179,14 +194,12 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
     
     [self.updateBtn mas_updateConstraints:^(MASConstraintMaker *make) {
        
-        make.top.mas_equalTo(_label.mas_bottom).offset(40);
+        make.top.mas_equalTo(self.textLabel.mas_bottom).offset(40);
         make.width.mas_equalTo(LCDScale_iPhone6_Width(120));
         make.height.mas_equalTo(LCDScale_iPhone6_Width(30));
         make.centerX.mas_equalTo(self.view.mas_centerX);
         
     }];
-    
-
 }
 
 - (void)addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide
@@ -230,7 +243,7 @@ static NSInteger  kAPPErrorCode_Token2 = 5001;
             }];
 
          }
-        self.label.text = title;
+        self.textLabel.text = title;
         self.updateBtn.hidden = hide;
         self.imageView.image = emptyImage;
     }

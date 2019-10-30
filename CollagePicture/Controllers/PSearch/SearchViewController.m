@@ -47,11 +47,20 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 {
     [super viewDidLayoutSubviews];
 }
+
+- (void)dealloc
+{
+    
+}
+
+#pragma mark - setUI
+
 - (void)setUI
 {
     self.view.backgroundColor = [UIColor zx_colorWithHexString:@"#f3f3f3"];
     self.navigationItem.titleView = self.searchBar;
-    
+    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]]
+    setDefaultTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:13]}];
     [self.view addSubview:self.collectionView];
     
     [self.searchBar becomeFirstResponder];
@@ -97,25 +106,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     };
 }
 
-- (void)textFieldEditingBegainActionWithSearchTitle:(NSString *)searchTitle
-{
-    [self addChildViewController:self.suggestionController];
-    self.searchBar.text = searchTitle;
-    [self.searchBar becomeFirstResponder];
-    self.navigationController.navigationBar.hidden = NO;
-    self.suggestionController.view.hidden = YES;
-     UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
-
-     [self transitionFromViewController:self.resultsController toViewController:self.suggestionController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
-
-         [self.suggestionController didMoveToParentViewController:self];
-         [self.resultsController willMoveToParentViewController:nil];
-         [self.resultsController removeFromParentViewController];
-
-     }];
-}
-
-
 
 - (SearchResultsController *)resultsController
 {
@@ -139,25 +129,33 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     {
         UISearchBar *bar = [[UISearchBar alloc] init];
         bar.searchBarStyle = UISearchBarStyleMinimal;
-        bar.tintColor = UIColorFromRGB(255.f, 84.f, 52.f);
+        bar.tintColor = UIColorFromRGB(54.f, 180.f, 77.f);
         bar.placeholder = @"输入商品关键词搜索商品";
         [bar sizeToFit];
         bar.delegate = self;
         bar.barTintColor = [UIColor clearColor];
         bar.showsCancelButton = YES;
+        
+        UIButton *cancelBtn = [bar valueForKey:@"cancelButton"];
+        cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        [cancelBtn setTitleColor:UIColorFromRGB(52.f, 55.f, 58.f) forState:UIControlStateNormal];
+        
+        UIImage *image = [UIImage imageNamed:@"icon_searchText_bg"];
+        UIImage *resizableImage = [image resizableImageWithCapInsets: UIEdgeInsetsMake(0, image.size.width/2, 0, image.size.width/2)];
+        [bar setSearchFieldBackgroundImage:resizableImage forState:UIControlStateNormal];
+        bar.searchTextPositionAdjustment = UIOffsetMake(2, 0);
         _searchBar = bar;
     }
     return _searchBar;
 }
 
-#pragma mark - UICollectionView
+
 
 - (UICollectionView *)collectionView
 {
     if (!_collectionView)
     {
         ZXCollectionViewLeftAlignedLayout *flowLayout = [[ZXCollectionViewLeftAlignedLayout alloc] init];
-//        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         
         UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
         collection.backgroundColor = [UIColor whiteColor];
@@ -183,14 +181,13 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 }
 
 
-
+#pragma mark - setData
 - (void)setData
 {
     self.searchHistoryMArray =  [self.diskManager getData];
     
     SearchTitleModel *model = [SearchTitleModel new];
     model.groupName = @"才划算杭州滨江店 实时热搜";
-    model.groupType = @"1";
     model.ifPaging = YES;
     
     SearchTitleModelSub *modelSub = [SearchTitleModelSub new];
@@ -210,7 +207,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     
       SearchTitleModel *model1 = [SearchTitleModel new];
       model1.groupName = @"实时热搜";
-      model1.groupType = @"2";
       model1.ifPaging = NO;
       
       SearchTitleModelSub *model1Sub1 = [SearchTitleModelSub new];
@@ -266,28 +262,27 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 // 点击搜索按钮-根据searchBar的text搜索-跳转到搜索详情2
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    if ([NSString zhIsBlankString:searchBar.text]) {
+    NSString *text = [NSString zhFilterInputTextWithWittespaceAndLine:searchBar.text];
+    if ([NSString zhIsBlankString:text]) {
         return ;
     }
-    if([searchBar isFirstResponder])
-    {
-        [searchBar resignFirstResponder];
-    }
+
     UIButton *cancelBtn = [searchBar valueForKey:@"cancelButton"];
     cancelBtn.enabled = YES;
     
     [self addHistoryDataToArrayWithObject:searchBar.text];
-
+    [self goToSearchResultControllerWithSearchTitle:text];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSString *text = [NSString zhFilterSpecialCharactersInString:searchBar.text];
-    text = [NSString zhFilterInputTextWithWittespaceAndLine:text];
+    NSString *text = [NSString zhFilterInputTextWithWittespaceAndLine:searchText];
     if ([NSString zhIsBlankString:text]) {
         self.suggestionController.view.hidden = YES;
         return;
     }
+    
+//    [self requestSuggestionWithText:searchText];
 //    请求冥想词数组
     NSArray *arr = @[@"123",@"1899912",@"8712",@"09809812",@"00812481"];
     if (arr.count >0) {
@@ -301,6 +296,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     }
 }
 
+#pragma mark -
 - (void)addHistoryDataToArrayWithObject:(id)obj
 {
     if ([self.searchHistoryMArray containsObject:obj])
@@ -312,12 +308,33 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     else
     {
         [self.searchHistoryMArray insertObject:obj atIndex:0];
-        if (self.searchHistoryMArray.count>20) {
+        if (self.searchHistoryMArray.count>10) {
             [self.searchHistoryMArray removeLastObject];
         }
     }
     [self.diskManager setData:self.searchHistoryMArray];
     [self.collectionView reloadData];
+}
+
+#pragma mark - Delegate
+- (void)textFieldEditingBegainActionWithSearchTitle:(NSString *)searchTitle
+{
+    [self addChildViewController:self.suggestionController];
+    self.searchBar.text = searchTitle;
+    self.navigationController.navigationBar.hidden = NO;
+    self.suggestionController.view.hidden = YES;
+     UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
+
+     [self transitionFromViewController:self.resultsController toViewController:self.suggestionController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
+
+         [self.suggestionController didMoveToParentViewController:self];
+         [self.resultsController willMoveToParentViewController:nil];
+         [self.resultsController removeFromParentViewController];
+
+     }];
+    if ([self.searchBar canBecomeFirstResponder]) {
+        [self.searchBar becomeFirstResponder];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -373,27 +390,27 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
      {
          SearchCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:reuse_HeaderViewIdentifier forIndexPath:indexPath];
          view.backgroundColor = [UIColor whiteColor];
+        [view.rightIconBtn addTarget:self action:@selector(rightIconBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+         view.rightIconBtn.tag = 200 + indexPath.section;
+         view.rightIconBtn.userInteractionEnabled = YES;
          if (indexPath.section ==0)
          {
              view.titleLab.text = @"历史搜索";
              [view.rightIconBtn setImage:[UIImage imageNamed:@"icon_delete"] forState:UIControlStateNormal];
-             [view.rightIconBtn addTarget:self action:@selector(cleanHistoryBtnAction:) forControlEvents:UIControlEventTouchUpInside];
          }
          else
          {
              SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:indexPath.section-1];
              
              view.titleLab.text = titleModel.groupName;
-
              if (titleModel.ifPaging)
             {
                  [view.rightIconBtn setImage:[UIImage imageNamed:@"icon_form"] forState:UIControlStateNormal];
-                 [view.rightIconBtn addTarget:self action:@selector(rightIconBtnUpdateAction:) forControlEvents:UIControlEventTouchUpInside];
             }
             else
             {
+                view.rightIconBtn.userInteractionEnabled = NO;
                 [view.rightIconBtn setImage:nil forState:UIControlStateNormal];
-                [view.rightIconBtn removeTarget:self action:@selector(rightIconBtnUpdateAction:) forControlEvents:UIControlEventTouchUpInside];
             }
          }
       
@@ -498,17 +515,47 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 }
 
 
-- (void)rightIconBtnUpdateAction:(id)sender
+- (void)goToSearchResultControllerWithSearchTitle:(NSString *)searchTitle
 {
-    
+    if([self.searchBar isFirstResponder])
+    {
+        [self.searchBar resignFirstResponder];
+    }
+     self.navigationController.navigationBar.hidden = YES;
+     self.resultsController.view.hidden = NO;
+     
+     [self addChildViewController:self.resultsController];
+      //我可以自己设置二个来回动画哦
+      UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
+
+      [self transitionFromViewController:self.suggestionController toViewController:self.resultsController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
+
+          //关闭finished判断，不然有时候会NO；
+          [self.resultsController didMoveToParentViewController:self];
+          [self.suggestionController willMoveToParentViewController:nil];
+          [self.suggestionController removeFromParentViewController];
+
+      }];
+     
+     [self.resultsController requestSearchDataWithText:searchTitle];
+     
 }
 
-- (void)cleanHistoryBtnAction:(id)sender
+#pragma mark - buttonAction
+- (void)rightIconBtnAction:(id)sender
 {
-    [self.diskManager removeData];
-    [self.searchHistoryMArray removeAllObjects];
-    [self.collectionView reloadData];
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == 200) {
+        [self.diskManager removeData];
+        [self.searchHistoryMArray removeAllObjects];
+        [self.collectionView reloadData];
+    }else
+    {
+        SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:btn.tag-200-1];
+//        [self requestLabelPageDataWithRecommendGroupId:titleModel.groupCode next:titleModel.next];
+    }
 }
+
 /*
 #pragma mark - Navigation
 

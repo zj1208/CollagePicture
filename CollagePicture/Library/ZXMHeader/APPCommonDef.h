@@ -131,7 +131,7 @@
 //iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；
 //宏定义的变量数字一定要加()才能准;CGFloat right = (LCDScale_5Equal6_To6plus(-93.f))-15.f
 #ifndef LCDScale_5Equal6_To6plus
-#define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_X)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
+#define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_XX)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
 #endif
 
 #pragma mark - 判断是什么设备
@@ -144,18 +144,21 @@
 #define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
 #endif
 
-#ifndef IS_IPHONE_X
-#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
-#endif
+//#ifndef IS_IPHONE_X
+//#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
+//#endif
 
-#ifndef IS_IPHONE_XX
-// iphoneX系列判断是否有safeAreaInsets的值，其他是0;
+
+// Xcode 11 之前
+// iphoneX系列判断是否有safeAreaInsets的值，其他手机是UIEdgeInsetsZero;
 // iPhoneX :{44, 0, 34, 0}
+// Xcode 11 之后 其它手机{20, 0, 0, 0}
+#ifndef IS_IPHONE_XX
 #define IS_IPHONE_XX ({\
 int tmp = 0;\
 if (@available(iOS 11.0, *)) { \
 UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
-if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
+if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsMake(20, 0, 0, 0))){\
  tmp = 1;\
 }else{\
 tmp = 0;\
@@ -176,10 +179,11 @@ tmp;\
 #define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
 #define  HEIGHT_STATEBAR    (IS_IPHONE_XX ? (44.f) : (20.f))
 #define  HEIGHT_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 0)
-#define  HEIGHT_TABBARSAFE  (IS_IPHONE_XX ? (34.f) : 0)
-
 #endif
 
+#ifndef  HEIGHT_TABBAR_SAFE
+#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_XX ? (34.f) : 0)
+#endif
 
 #pragma mark - 设置view某个尺寸改变后的frame
 //单独设置view的frame里的高度，其他的值保持不变
