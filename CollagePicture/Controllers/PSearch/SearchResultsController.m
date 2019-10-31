@@ -30,9 +30,11 @@
     [self setUI];
     [self setData];
 }
+// 展示的时候隐藏导航条
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
+    [self.navigationController setNavigationBarHidden:YES];
+//    self.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)setUI
@@ -102,7 +104,7 @@
 
 - (void)requestHeaderData
 {
-  
+    [self.collectionView.mj_header endRefreshing];
 }
 
 - (void)footerWithRefreshingMorePage:(BOOL)flag
@@ -175,16 +177,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 需要重构RootViewController,不然穿插跳转每次都需要遍历查找tabBarController
-//    HomeTypeModels * model = [self.dataMArray objectAtIndex: indexPath.item];
-//    
-//    TTGoodsDetailViewController * next = [[TTGoodsDetailViewController alloc]init];
-//    next.goodsId = model.goodsId;
-//    next.storehouseCode = model.storehouseCode;
-//    next.goodsDetailType = GoodsDetailTypeSearch;
-//    [self.navigationController pushViewController:next animated:YES];
-//    NSString *url = [NSString stringWithFormat:@"microants://productDetail?productId=%@&storehouseCode=%@",model.goodsId,model.storehouseCode];
-//    [[UtilityRouter shareInstance]routerWithName:url withSoureController:self];
 }
 /*
 #pragma mark - Navigation

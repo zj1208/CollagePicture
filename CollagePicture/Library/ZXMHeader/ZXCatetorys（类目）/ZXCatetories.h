@@ -28,6 +28,7 @@
 #import "UIColor+ZXHex.h"
 #import "UIControl+ZXFastClick.h"
 #import "UIDevice+ZXHelper.h"
+#import "UIFont+ZXCategoryFontScale.h"
 #import "UIImage+ZXGIF.h"
 #import "UIImage+ZXHelper.h"
 
@@ -51,5 +52,7 @@
 
 
 #import "MBProgressHUD+ZXCategory.h"
+
+#import "CALayer+ZXCATransition.h"
 
 #endif /* ZXCatetories_h */

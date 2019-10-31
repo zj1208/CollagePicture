@@ -31,7 +31,8 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.rowHeight = 47;
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
+    self.tableView.separatorColor = UIColorFromRGB_HexValue(0xEEEEEE);
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
 }
 

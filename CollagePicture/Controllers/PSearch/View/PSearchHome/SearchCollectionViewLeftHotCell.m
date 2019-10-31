@@ -7,6 +7,7 @@
 //
 
 #import "SearchCollectionViewLeftHotCell.h"
+#import "SearchTitleModel.h"
 
 @implementation SearchCollectionViewLeftHotCell
 
@@ -28,5 +29,16 @@
 {
     [super layoutSubviews];
     [self.contentView zx_setBorderWithRoundItem];
+}
+
+- (void)setData:(id)data
+{
+    SearchTitleModelSub *titleModelSub = (SearchTitleModelSub *)data;
+    self.titleLab.text = titleModelSub.name;
+    self.titleLab.textColor = [NSString zhIsBlankString:titleModelSub.labelColor]? [UIColor zx_colorWithHexString:@"34373A"]: [UIColor zx_colorWithHexString:titleModelSub.labelColor];
+    self.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
+//    [self.hotIconImageView sd_setImageWithURL:[NSURL URLWithString:@"https://gss1.bdstatic.com/5bVXsj_p_tVS5dKfpU_Y_D3/urlicon/14.ebdf9a6364e7ac1185ab172f8bbb7c05.png"] placeholderImage:nil];
+    [self.hotIconImageView sd_setImageWithURL:[NSURL URLWithString:titleModelSub.preIcon] placeholderImage:nil];
+
 }
 @end

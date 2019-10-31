@@ -17,6 +17,7 @@
 #import "ZXCollectionViewLeftAlignedLayout.h"
 #import "SearchSuggestionViewController.h"
 #import "SearchResultsController.h"
+#import "TestHomViewController.h"
 
 static NSString * const reuse_HeaderViewIdentifier = @"Header";
 static NSString * const reuse_FooterViewIdentifier = @"Footer";
@@ -47,11 +48,26 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 {
     [super viewDidLayoutSubviews];
 }
-
+// 离开搜索模块push后的页面返回展示；
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    self.navigationController.navigationBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:NO];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
 - (void)dealloc
 {
     
 }
+
 
 #pragma mark - setUI
 
@@ -85,7 +101,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         
         [weakSelf.searchBar resignFirstResponder];
 
-        weakSelf.navigationController.navigationBar.hidden = YES;
         weakSelf.resultsController.view.hidden = NO;
         
         [weakSelf addChildViewController:weakSelf.resultsController];
@@ -135,6 +150,8 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         bar.delegate = self;
         bar.barTintColor = [UIColor clearColor];
         bar.showsCancelButton = YES;
+        
+        [bar setImage:[UIImage imageNamed:@"ic_searchBar_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
         
         UIButton *cancelBtn = [bar valueForKey:@"cancelButton"];
         cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -214,6 +231,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
       model1Sub1.preIcon = @"";
       model1Sub1.suffIcon = @"";
      model1Sub1.bgColor = @"";
+    model1Sub1.appUrl = @"mic";
 
     model1.worlds = [NSArray arrayWithObjects:model1Sub1, nil];
     
@@ -247,6 +265,29 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         _diskManager = [[TMDiskManager alloc] initWithObjectKey:TMDSearchHistoryKey];
     }
     return _diskManager;
+}
+
+#pragma mark - SearchResultsControllerDelegate
+//searchViewController在搜索结果来回切换的时候依然一直展示着；所以需要自己设置bar隐藏
+- (void)textFieldEditingBegainActionWithSearchTitle:(NSString *)searchTitle
+{
+    [self addChildViewController:self.suggestionController];
+    self.searchBar.text = searchTitle;
+    [self.navigationController setNavigationBarHidden:NO];
+//    self.navigationController.navigationBar.hidden = NO;
+    self.suggestionController.view.hidden = YES;
+     UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
+
+     [self transitionFromViewController:self.resultsController toViewController:self.suggestionController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
+
+         [self.suggestionController didMoveToParentViewController:self];
+         [self.resultsController willMoveToParentViewController:nil];
+         [self.resultsController removeFromParentViewController];
+
+     }];
+    if ([self.searchBar canBecomeFirstResponder]) {
+        [self.searchBar becomeFirstResponder];
+    }
 }
 
 #pragma mark - UISearchBarDelegate
@@ -316,26 +357,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     [self.collectionView reloadData];
 }
 
-#pragma mark - Delegate
-- (void)textFieldEditingBegainActionWithSearchTitle:(NSString *)searchTitle
-{
-    [self addChildViewController:self.suggestionController];
-    self.searchBar.text = searchTitle;
-    self.navigationController.navigationBar.hidden = NO;
-    self.suggestionController.view.hidden = YES;
-     UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
-
-     [self transitionFromViewController:self.resultsController toViewController:self.suggestionController duration:0.2f options:animationOption animations:nil completion:^(BOOL finished) {
-
-         [self.suggestionController didMoveToParentViewController:self];
-         [self.resultsController willMoveToParentViewController:nil];
-         [self.resultsController removeFromParentViewController];
-
-     }];
-    if ([self.searchBar canBecomeFirstResponder]) {
-        [self.searchBar becomeFirstResponder];
-    }
-}
 
 #pragma mark - UICollectionViewDataSource
 
@@ -366,7 +387,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         
         SearchCollectionViewLeftHotCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LeftHotCell" forIndexPath:indexPath];
         cell.titleLab.text = titleModelSub.name;
-        cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"FFF3F3"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
+        cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
         cell.hotIconImageView.image = [UIImage imageNamed:@"m_cleanCache"];
         return cell;
     }
@@ -374,7 +395,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     {
         SearchCollectionViewHotCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HotCell" forIndexPath:indexPath];
         cell.titleLab.text = titleModelSub.name;
-        cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"FFF3F3"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
+        cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
         cell.hotIconImageView.image = [UIImage imageNamed:@"m_cleanCache"];
         return cell;
     }
@@ -505,12 +526,23 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     if (indexPath.section == 0) {
         id obj = [self.searchHistoryMArray objectAtIndex:indexPath.item];
         [self addHistoryDataToArrayWithObject:obj];
+        [self goToSearchResultControllerWithSearchTitle:obj];
     }
     else
     {
         SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:indexPath.section-1];
         SearchTitleModelSub *titleModelSub = [titleModel.worlds objectAtIndex:indexPath.item];
         [self addHistoryDataToArrayWithObject:titleModelSub.name];
+        if (![NSString zhIsBlankString:titleModelSub.appUrl]) {
+              
+            TestHomViewController *vc = [[TestHomViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+//              [self routerWithName:titleModelSub.appUrl navigationItemTitle:titleModelSub.name];
+          }
+          else
+          {
+              [self goToSearchResultControllerWithSearchTitle:titleModelSub.name];
+          }
     }
 }
 
@@ -521,7 +553,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     {
         [self.searchBar resignFirstResponder];
     }
-     self.navigationController.navigationBar.hidden = YES;
      self.resultsController.view.hidden = NO;
      
      [self addChildViewController:self.resultsController];

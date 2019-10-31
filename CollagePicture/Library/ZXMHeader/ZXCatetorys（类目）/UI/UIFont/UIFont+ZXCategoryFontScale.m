@@ -50,6 +50,19 @@ static NSInteger const miniScreenFontSizeSpace = 1.5;
 //    CGFloat transFontSize = [UIFont transSizeWithFontSize:fontSize];
 //    return [UIFont fontWithName:fontName size:transFontSize];
 //}
+
++ (UIFont *)zx_systemFontOfScaleSize:(CGFloat)fontSize
+{
+    CGFloat transFontSize = [UIFont transSizeWithFontSize:fontSize];
+    return [UIFont systemFontOfSize:transFontSize];
+}
+
++ (UIFont *)zx_systemFontOfScaleSize:(CGFloat)fontSize weight:(UIFontWeight)weight
+{
+    CGFloat transFontSize = [UIFont transSizeWithFontSize:fontSize];
+    return [UIFont systemFontOfSize:transFontSize weight:weight];
+}
+
 - (UIFont *)zx_fontWithScaleSize:(CGFloat)fontSize{
     
     CGFloat transFontSize = [UIFont transSizeWithFontSize:fontSize];
