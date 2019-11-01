@@ -11,7 +11,7 @@
 
 @implementation NSAttributedString (ZXCategory)
 
-- (NSAttributedString *)addLineSpace:(float)lineSpace
+- (NSAttributedString *)zx_addLineSpace:(float)lineSpace
 {
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithAttributedString:self];
     NSMutableParagraphStyle * style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -45,6 +45,27 @@
     }
 }
 
++ (NSAttributedString *)zx_addStrikethroughCenterWithString:(NSString *)str
+{
+    NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
+    NSAttributedString *attStr = [[NSAttributedString alloc]initWithString:str attributes:attribtDic];
+    return attStr;
+}
+
+- (NSAttributedString *)zx_addStrikethroughCenterWithCenterlineString:(NSString *)centerlineString centerLineColor:(UIColor *)color
+{
+    NSMutableAttributedString *attMString = [[NSMutableAttributedString alloc] initWithAttributedString:self];
+    if (centerlineString)
+    {
+         NSRange itemRange = [self.string rangeOfString:centerlineString];
+         [attMString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:itemRange];
+         if (color)
+         {
+             [attMString addAttribute:NSStrikethroughColorAttributeName value:color range:itemRange];
+         }
+     }
+    return attMString;
+}
 //- (NSAttributedString *)addForegroundColor:(UIColor *)color range:(NSRange)range
 //{
 //    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithAttributedString:self];

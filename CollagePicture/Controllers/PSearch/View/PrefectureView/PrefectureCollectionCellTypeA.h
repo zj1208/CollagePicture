@@ -7,16 +7,17 @@
 //
 
 #import "BaseCollectionViewCell.h"
-
+#import "PrefectureSubViewB.h"
+#import "PrefectureSubViewD.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PrefectureCollectionCellTypeA : BaseCollectionViewCell
 
-@property (nonatomic, strong) UIView *view1;
+@property (nonatomic, strong) PrefectureSubViewD *view1;
 
-@property (nonatomic, strong) UIView *view2;
+@property (nonatomic, strong) PrefectureSubViewB *view2;
 
-@property (nonatomic, strong) UIView *view3;
+@property (nonatomic, strong) PrefectureSubViewB *view3;
 
 @property (nonatomic, strong) UIView *line_vertical;
 

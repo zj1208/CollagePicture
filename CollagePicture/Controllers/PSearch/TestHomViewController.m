@@ -26,10 +26,9 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     [super viewDidLoad];
     [self setUI];
 }
-
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+//     self.navigationController.navigationBarHidden = YES;
 }
 #pragma mark - setUI
 
@@ -92,13 +91,16 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 {
     if (indexPath.section == 1) {
         PrefectureCollectionCellTypeB *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellB" forIndexPath:indexPath];
+        [cell setData:nil];
         return cell;
     }
     if (indexPath.section == 2) {
         PrefectureCollectionCellTypeC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellC" forIndexPath:indexPath];
+        [cell setData:nil];
         return cell;
     }
     PrefectureCollectionCellTypeA *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    [cell setData:nil];
     return cell;
 }
 

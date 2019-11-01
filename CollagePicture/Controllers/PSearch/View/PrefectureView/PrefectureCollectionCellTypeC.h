@@ -7,18 +7,23 @@
 //
 
 #import "BaseCollectionViewCell.h"
+#import "HomeModel.h"
 
+#import "PrefectureSubViewA.h"
+#import "PrefectureSubViewC.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PrefectureCollectionCellTypeC : BaseCollectionViewCell
 
-@property (nonatomic, strong) UIView *view1;
+@property (nonatomic, strong) PrefectureSubViewC *view1;
 
-@property (nonatomic, strong) UIView *view2;
+@property (nonatomic, strong) PrefectureSubViewC *view2;
 
-@property (nonatomic, strong) UIView *view3;
+@property (nonatomic, strong) PrefectureSubViewC *view3;
 
-@property (nonatomic, strong) UIView *view4;
+@property (nonatomic, strong) PrefectureSubViewA *view4;
+
+@property (nonatomic, strong) PrefectureSubViewA *view5;
 
 @property (nonatomic, strong) UIView *line_vertical;
 @property (nonatomic, strong) UIView *line_vertical2;
