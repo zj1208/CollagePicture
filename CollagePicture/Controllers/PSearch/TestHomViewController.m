@@ -14,6 +14,10 @@
 
 static NSString * const reuse_HeaderViewIdentifier = @"Header";
 static NSString * const reuse_FooterViewIdentifier = @"Footer";
+static NSString * const reuse_CellA = @"CellA";
+static NSString * const reuse_CellB = @"CellB";
+static NSString * const reuse_CellC = @"CellC";
+
 @interface TestHomViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -56,10 +60,10 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         [collection registerNib:headerNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuse_HeaderViewIdentifier];
         [collection registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:reuse_FooterViewIdentifier];
         
-        [collection registerClass:[PrefectureCollectionCellTypeA class] forCellWithReuseIdentifier:@"Cell"];
+        [collection registerClass:[PrefectureCollectionCellTypeA class] forCellWithReuseIdentifier:reuse_CellA];
         
-        [collection registerClass:[PrefectureCollectionCellTypeB class] forCellWithReuseIdentifier:@"CellB"];
-        [collection registerClass:[PrefectureCollectionCellTypeC class] forCellWithReuseIdentifier:@"CellC"];
+        [collection registerClass:[PrefectureCollectionCellTypeB class] forCellWithReuseIdentifier:reuse_CellB];
+        [collection registerClass:[PrefectureCollectionCellTypeC class] forCellWithReuseIdentifier:reuse_CellC];
 
 //        UINib *cellHistoryNib = [UINib nibWithNibName:NSStringFromClass([SearchCollectionHistoryCell class]) bundle:nil];
 //        [collection registerNib:cellHistoryNib forCellWithReuseIdentifier:@"HistoryCell"];
@@ -90,16 +94,16 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 1) {
-        PrefectureCollectionCellTypeB *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellB" forIndexPath:indexPath];
+        PrefectureCollectionCellTypeB *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuse_CellB forIndexPath:indexPath];
         [cell setData:nil];
         return cell;
     }
     if (indexPath.section == 2) {
-        PrefectureCollectionCellTypeC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellC" forIndexPath:indexPath];
+        PrefectureCollectionCellTypeC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuse_CellC forIndexPath:indexPath];
         [cell setData:nil];
         return cell;
     }
-    PrefectureCollectionCellTypeA *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    PrefectureCollectionCellTypeA *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuse_CellA forIndexPath:indexPath];
     [cell setData:nil];
     return cell;
 }

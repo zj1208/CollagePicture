@@ -359,19 +359,19 @@ static NSString* const SixSpaces = @"      ";
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(estimatedProgress))] && object == self.webView)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_progressView setAlpha:1.0f];
-            BOOL animated = _webView.estimatedProgress > _progressView.progress;
+            [self.progressView setAlpha:1.0f];
+            BOOL animated = self.webView.estimatedProgress > self.progressView.progress;
             if (animated)
             {
-                [_progressView setProgress:_webView.estimatedProgress animated:animated];
+                [self.progressView setProgress:self.webView.estimatedProgress animated:animated];
             }
-            if(_webView.estimatedProgress >= 1.0f)
+            if(self.webView.estimatedProgress >= 1.0f)
             {
                 [UIView animateWithDuration:0.5f delay:0.1f options:UIViewAnimationOptionCurveEaseOut
                                  animations:^{
-                                     [_progressView setAlpha:0.0f];
+                                     [self.progressView setAlpha:0.0f];
                                  }completion:^(BOOL finished) {
-                                     [_progressView setProgress:0.0f animated:NO];
+                                     [self.progressView setProgress:0.0f animated:NO];
                                      self.navigationController.navigationBar.shadowImage =nil;
                                  }];
             }
@@ -379,13 +379,13 @@ static NSString* const SixSpaces = @"      ";
     
     }
     //网页title
-    else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))] && object ==_webView)
+    else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))] && object ==self.webView)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            if (!_barTitle && _webView.title.length>0)
+            if (!self.barTitle && self.webView.title.length>0)
             {
-                self.navigationItem.title = _webView.title;
+                self.navigationItem.title = self.webView.title;
             }
         });
    
@@ -395,8 +395,8 @@ static NSString* const SixSpaces = @"      ";
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            if (_webView.URL) {
-                [_urlArrayM addObject:_webView.URL];
+            if (self.webView.URL) {
+                [self.urlArrayM addObject:self.webView.URL];
             }
         });
  
@@ -415,9 +415,9 @@ static NSString* const SixSpaces = @"      ";
 
     self.urlArrayM = [NSMutableArray array];
     
-    _rightBtnJsDic = [NSMutableDictionary new];
-    _lrbtnDic = [NSMutableDictionary new];
-    _rrbtnDic = [NSMutableDictionary new];
+    self.rightBtnJsDic = [NSMutableDictionary new];
+    self.lrbtnDic = [NSMutableDictionary new];
+    self.rrbtnDic = [NSMutableDictionary new];
     
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateInfo:) name:Noti_ProductManager_Edit_goBackUpdate object:nil];
     
@@ -588,7 +588,7 @@ static NSString* const SixSpaces = @"      ";
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    [_webView loadRequest:request];
+                    [self.webView loadRequest:request];
 
                 });
             }
