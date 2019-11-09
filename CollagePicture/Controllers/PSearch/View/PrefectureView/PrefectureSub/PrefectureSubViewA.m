@@ -105,6 +105,7 @@
 
     HomePrefectureModelSubBannerSub *good = [model.goodsList firstObject];
     [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:good.photo] placeholderImage:nil];
+    
     NSNumber *dispalyType = model.displayType;
     if ([dispalyType isEqualToNumber:@(1)]) {
         [self dispalyTypeA];

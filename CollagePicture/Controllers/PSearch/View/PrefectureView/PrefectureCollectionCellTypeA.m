@@ -24,7 +24,11 @@
 {
     self.contentView.layer.cornerRadius = 10;
     self.contentView.backgroundColor = [UIColor whiteColor];
+    self.contentView.clipsToBounds = YES;
 
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizerAction:)];
+    [self.contentView addGestureRecognizer:tapRecognizer];
+    
     [self.contentView addSubview:self.view1];
     [self.contentView addSubview:self.view2];
 
@@ -118,6 +122,9 @@
 
 - (void)setData:(id)data
 {
+    HomePrefectureModel *model = (HomePrefectureModel *)data;
+    self.homeModel = model;
+    
     HomePrefectureModelSubBannerSub *good1 = [HomePrefectureModelSubBannerSub new];
     good1.photo = @"https://gw.alicdn.com/bao/upload/TB1jcNmk4z1gK0jSZSgXXavwpXa.jpg_Q75.jpg";
     good1.salePrice = @"10";
@@ -129,21 +136,45 @@
     good2.referencePrice = @"13.2";
     NSArray *arr1 = @[good1,good2];
     
-    HomePrefectureModelSubBanner *model = [[HomePrefectureModelSubBanner alloc] init];
-    model.displayType = @(1);
-    model.backgroundPhoto = @"https://pics0.baidu.com/feed/10dfa9ec8a136327d96a02a65e470ce90afac7eb.jpeg?token=8213d60bb961523646d6005733d7830a&s=B02380BE14631AA42FB27B8B0300E09C";
-    model.goodsList = arr1;
-    model.suffIcon = @"123";
-    model.preIcon = @"";
-    
-    [self.view1 setData:model];
-    [self.view2 setData:model];
-    
     HomePrefectureModelSubBanner *model1 = [[HomePrefectureModelSubBanner alloc] init];
     model1.displayType = @(1);
     model1.backgroundPhoto = @"https://pics0.baidu.com/feed/10dfa9ec8a136327d96a02a65e470ce90afac7eb.jpeg?token=8213d60bb961523646d6005733d7830a&s=B02380BE14631AA42FB27B8B0300E09C";
     model1.goodsList = arr1;
+    model1.suffIcon = @"123";
+    model1.preIcon = @"";
     
-    [self.view3 setData:model1];
+    [self.view1 setData:model1];
+    [self.view2 setData:model1];
+    
+    HomePrefectureModelSubBanner *model2 = [[HomePrefectureModelSubBanner alloc] init];
+    model2.displayType = @(1);
+    model2.backgroundPhoto = @"https://pics0.baidu.com/feed/10dfa9ec8a136327d96a02a65e470ce90afac7eb.jpeg?token=8213d60bb961523646d6005733d7830a&s=B02380BE14631AA42FB27B8B0300E09C";
+    model2.goodsList = arr1;
+    
+    [self.view3 setData:model2];
+}
+
+
+- (void)tapRecognizerAction:(UITapGestureRecognizer *)sender
+{
+    CGPoint point = [sender locationInView:self.contentView];
+    if (CGRectContainsPoint(self.view1.frame, point))
+    {
+        if ([self.delegate respondsToSelector:@selector(zx_prefectureCollectionCell:didSelectItem:)]) {
+            [self.delegate zx_prefectureCollectionCell:self didSelectItem:[self.homeModel.banners objectAtIndex:0]];
+        }
+    }
+    else if(CGRectContainsPoint(self.view2.frame, point))
+    {
+        if ([self.delegate respondsToSelector:@selector(zx_prefectureCollectionCell:didSelectItem:)]) {
+            [self.delegate zx_prefectureCollectionCell:self didSelectItem:[self.homeModel.banners objectAtIndex:1]];
+        }
+    }
+    else if(CGRectContainsPoint(self.view3.frame, point))
+    {
+        if ([self.delegate respondsToSelector:@selector(zx_prefectureCollectionCell:didSelectItem:)]) {
+            [self.delegate zx_prefectureCollectionCell:self didSelectItem:[self.homeModel.banners objectAtIndex:2]];
+        }
+    }
 }
 @end

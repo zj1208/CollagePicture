@@ -1108,6 +1108,7 @@
 		F4EB2FC61D8FCF7300F5B70B /* albumA_style_8.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = albumA_style_8.plist; sourceTree = "<group>"; };
 		F4EB2FC71D8FCF7300F5B70B /* albumA_style_9.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = albumA_style_9.plist; sourceTree = "<group>"; };
 		F4EB2FE21D8FCF8A00F5B70B /* image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image.jpg; sourceTree = "<group>"; };
+		F4EB52D12373475C00A83874 /* PrefectureCollectionCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefectureCollectionCellDelegate.h; sourceTree = "<group>"; };
 		F4EB705D236692030073A2B7 /* SearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsController.m; sourceTree = "<group>"; };
 		F4EB705E236692030073A2B7 /* SearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
 		F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSuggestionViewController.m; sourceTree = "<group>"; };
@@ -3029,6 +3030,7 @@
 				F4CB0E2B236C3961002BD670 /* PrefectureCollectionCellTypeB.m */,
 				F4CB0E2A236C3961002BD670 /* PrefectureCollectionCellTypeC.h */,
 				F4CB0E35236C3961002BD670 /* PrefectureCollectionCellTypeC.m */,
+				F4EB52D12373475C00A83874 /* PrefectureCollectionCellDelegate.h */,
 				F4CB0E2C236C3961002BD670 /* PrefectureSub */,
 			);
 			path = PrefectureView;
@@ -3265,13 +3267,13 @@
 		F4CB0E2C236C3961002BD670 /* PrefectureSub */ = {
 			isa = PBXGroup;
 			children = (
-				F4CB0E2D236C3961002BD670 /* PrefectureSubViewA.m */,
-				F4CB0E2E236C3961002BD670 /* PrefectureSubViewC.h */,
-				F4CB0E2F236C3961002BD670 /* PrefectureSubViewD.h */,
-				F4CB0E30236C3961002BD670 /* PrefectureSubViewB.m */,
-				F4CB0E31236C3961002BD670 /* PrefectureSubViewC.m */,
 				F4CB0E32236C3961002BD670 /* PrefectureSubViewA.h */,
+				F4CB0E2D236C3961002BD670 /* PrefectureSubViewA.m */,
 				F4CB0E33236C3961002BD670 /* PrefectureSubViewB.h */,
+				F4CB0E30236C3961002BD670 /* PrefectureSubViewB.m */,
+				F4CB0E2E236C3961002BD670 /* PrefectureSubViewC.h */,
+				F4CB0E31236C3961002BD670 /* PrefectureSubViewC.m */,
+				F4CB0E2F236C3961002BD670 /* PrefectureSubViewD.h */,
 				F4CB0E34236C3961002BD670 /* PrefectureSubViewD.m */,
 			);
 			path = PrefectureSub;

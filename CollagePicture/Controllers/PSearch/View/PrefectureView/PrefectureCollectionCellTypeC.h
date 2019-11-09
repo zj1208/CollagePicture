@@ -11,6 +11,8 @@
 
 #import "PrefectureSubViewA.h"
 #import "PrefectureSubViewC.h"
+#import "PrefectureCollectionCellDelegate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PrefectureCollectionCellTypeC : BaseCollectionViewCell
@@ -29,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *line_vertical2;
 
 @property (nonatomic, strong) UIView *line_horizontal;
+
+@property (nonatomic, weak)id<PrefectureCollectionCellDelegate>delegate;
+@property (nonatomic, strong) HomePrefectureModel *homeModel;
 @end
 
 NS_ASSUME_NONNULL_END

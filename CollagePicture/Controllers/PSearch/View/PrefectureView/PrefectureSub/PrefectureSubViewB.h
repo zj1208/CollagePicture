@@ -4,7 +4,7 @@
 //
 //  Created by 朱新明 on 2019/10/31.
 //  Copyright © 2019 timtian. All rights reserved.
-//
+//  一张产品图片 横显示；
 
 #import <UIKit/UIKit.h>
 #import "SetDataProtocol.h"

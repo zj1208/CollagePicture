@@ -184,7 +184,7 @@
     [self.salePriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.mas_equalTo(self.mas_left).with.offset(LCDScale_iPhone6_Width(18));
-        make.top.mas_equalTo(self.photoImageView1.mas_bottom).with.offset(LCDScale_iPhone6_Width(7));
+        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6_Width(-12));
     }];
     [self.originalPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -194,7 +194,7 @@
     [self.salePriceLab2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.mas_equalTo(self.photoImageView2.mas_left).with.offset(LCDScale_iPhone6_Width(8));
-        make.top.mas_equalTo(self.photoImageView2.mas_bottom).with.offset(LCDScale_iPhone6_Width(7));
+        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6_Width(-12));
     }];
     [self.originalPriceLab2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -218,15 +218,14 @@
     
     HomePrefectureModelSubBannerSub *good = [model.goodsList firstObject];
     [self.photoImageView1 sd_setImageWithURL:[NSURL URLWithString:good.photo] placeholderImage:nil];
-
-    NSString *referencePrice=[NSString stringWithFormat:@"￥%.2f",[good.referencePrice floatValue]*0.01];
+    NSString *referencePrice=[NSString stringWithFormat:@"￥%@",good.referencePrice];
     self.originalPriceLab.attributedText = [NSAttributedString zx_addStrikethroughCenterWithString:referencePrice];
-
     self.salePriceLab.text =  [NSString stringWithFormat:@"¥%@",good.salePrice];
+    
     
     HomePrefectureModelSubBannerSub *good2 = [model.goodsList objectAtIndex:1];
     [self.photoImageView2 sd_setImageWithURL:[NSURL URLWithString:good2.photo] placeholderImage:nil];
-    NSString *referencePrice2=[NSString stringWithFormat:@"￥%.2f",[good2.referencePrice floatValue]*0.01];
+    NSString *referencePrice2=[NSString stringWithFormat:@"￥%@",good2.referencePrice];
     self.originalPriceLab2.attributedText = [NSAttributedString zx_addStrikethroughCenterWithString:referencePrice2];
 
     self.salePriceLab2.text =  [NSString stringWithFormat:@"¥%@",good2.salePrice];

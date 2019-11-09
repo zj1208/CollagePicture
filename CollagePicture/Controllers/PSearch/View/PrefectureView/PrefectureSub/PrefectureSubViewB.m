@@ -118,12 +118,15 @@
         
         make.left.mas_equalTo(self.mas_left).with.offset(10);
         make.centerY.mas_equalTo(self.photoImageView.mas_centerY);
+        make.right.mas_greaterThanOrEqualTo(self.photoImageView.mas_left).with.offset(LCDScale_iPhone6_Width(-6));
+
     }];
     
     [self.salePriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.mas_equalTo(self.mas_left).with.offset(10);
-        make.top.mas_equalTo(self.descriptionLab.mas_bottom).with.offset(LCDScale_iPhone6_Width(7));
+        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6_Width(-9));
+
     }];
     [self.originalPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -144,9 +147,8 @@
 
     HomePrefectureModelSubBannerSub *good = [model.goodsList firstObject];
     [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:good.photo] placeholderImage:nil];
-    NSString *referencePrice=[NSString stringWithFormat:@"￥%.2f",[good.referencePrice floatValue]*0.01];
+    NSString *referencePrice=[NSString stringWithFormat:@"￥%@",good.referencePrice];
     self.originalPriceLab.attributedText = [NSAttributedString zx_addStrikethroughCenterWithString:referencePrice];
-
     self.salePriceLab.text =  [NSString stringWithFormat:@"¥%@",good.salePrice];
     
     NSNumber *dispalyType = model.displayType;
