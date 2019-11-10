@@ -48,12 +48,25 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 {
     [super viewDidLayoutSubviews];
 }
-// 离开搜索模块push后的页面返回展示；
+// 不管searchResult还是自己，push离开（搜索模块）后pop回来，父视图控制器一定会回调；
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:NO];
+
+    __block BOOL isContainSearchResults = NO;
+    [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SearchResultsController class]]) {
+            isContainSearchResults = YES;
+        }
+    }];
+    if (!isContainSearchResults) {
+        [self.searchBar becomeFirstResponder];
+    }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -77,9 +90,10 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     self.navigationItem.titleView = self.searchBar;
     [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]]
     setDefaultTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:13]}];
-    [self.view addSubview:self.collectionView];
     
-    [self.searchBar becomeFirstResponder];
+    [self.navigationController.navigationBar zx_removeShadowImage];
+
+    [self.view addSubview:self.collectionView];
     
     [self addChildController];
 }
@@ -273,8 +287,9 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 {
     [self addChildViewController:self.suggestionController];
     self.searchBar.text = searchTitle;
+    
     [self.navigationController setNavigationBarHidden:NO];
-//    self.navigationController.navigationBar.hidden = NO;
+
     self.suggestionController.view.hidden = YES;
      UIViewAnimationOptions  animationOption =UIViewAnimationOptionTransitionCrossDissolve;
 
@@ -285,9 +300,12 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
          [self.resultsController removeFromParentViewController];
 
      }];
-    if ([self.searchBar canBecomeFirstResponder]) {
-        [self.searchBar becomeFirstResponder];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if ([self.searchBar canBecomeFirstResponder]) {
+            [self.searchBar becomeFirstResponder];
+        }
+    });
 }
 
 #pragma mark - UISearchBarDelegate

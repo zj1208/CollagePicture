@@ -34,9 +34,15 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
-//    self.navigationController.navigationBar.hidden = YES;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
 - (void)setUI
 {
     self.textField.font = [UIFont systemFontOfSize:13];

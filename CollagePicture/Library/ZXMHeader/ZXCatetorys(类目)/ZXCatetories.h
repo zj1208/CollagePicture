@@ -34,6 +34,7 @@
 
 #import "UILabel+ZXCategory.h"
 #import "UINavigationBar+ShadeColor.h"
+#import "UINavigationBar+ZXCategory.h"
 
 #import "UIScrollView+ZXCategory.h"
 #import "UIScrollView+ZXMJRefreshing.h"

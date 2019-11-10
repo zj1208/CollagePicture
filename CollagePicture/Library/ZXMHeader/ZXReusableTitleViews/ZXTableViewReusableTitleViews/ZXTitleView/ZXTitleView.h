@@ -22,13 +22,17 @@ static NSString *const nibName_ZXTitleView = @"ZXTitleView";
 @interface ZXTitleView : UIView
 
 // 左侧文字
-@property (weak, nonatomic) IBOutlet UILabel *titleLab;
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
 
 // 左侧图标
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 
 // 底部线条,默认隐藏
 @property (weak, nonatomic) IBOutlet UIView *bottomLine;
+
+//设置textlabel与superView左对齐的约束偏移,默认constant=12;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textLabLeadingSuperViewLayoutConstraint;
+
 
 + (id)viewFromNib;
 
@@ -44,11 +48,10 @@ static NSString *const nibName_ZXTitleView = @"ZXTitleView";
     if (section ==2)
     {
         ZXTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_ZXTitleView owner:self options:nil] firstObject];
-        view.titleLab.text =@"常用标签";
-        view.titleLab.font = [UIFont systemFontOfSize:14];
-        view.backgroundColor =WYUISTYLE.colorBGgrey;
+        view.textLabel.text =@"常用标签";
+        view.textLabel.font = [UIFont systemFontOfSize:14];
+        view.backgroundColor =tableView.backgroundColor;
         return view;
-        
     }
     return [[UIView alloc] init]; //如果有组头高度，则返回view，以免默认背景颜色和tableView（自己设置了背景色）不同；
 }
@@ -62,10 +65,10 @@ static NSString *const nibName_ZXTitleView = @"ZXTitleView";
     }
     ZXTitleView * view = [[[NSBundle mainBundle] loadNibNamed:nibName_ZXTitleView owner:self options:nil] firstObject];
     NSString *string = [NSString stringWithFormat:@"今日新增%@位粉丝，共%@位粉丝关注商铺!",_todayAddCount,_totalCount];
-    view.titleLab.text =string;
-    view.titleLab.font = [UIFont systemFontOfSize:12];
+    view.textLabel.text =string;
+    view.textLabel.font = [UIFont systemFontOfSize:12];
     [view.leftImageView removeFromSuperview];
-    view.backgroundColor =WYUISTYLE.colorBGgrey;
+    view.backgroundColor =tableView.backgroundColor;
     return view;
 }
 */

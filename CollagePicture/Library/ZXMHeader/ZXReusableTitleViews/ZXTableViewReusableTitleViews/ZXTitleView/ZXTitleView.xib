@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,7 +42,7 @@
                 <constraint firstItem="Ctu-Og-kBh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="UuW-sd-xbi"/>
                 <constraint firstItem="RGu-7A-EFY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="XIj-xo-fl4"/>
                 <constraint firstAttribute="trailing" secondItem="Vct-NQ-dvP" secondAttribute="trailing" id="gjy-tB-tNf"/>
-                <constraint firstItem="RGu-7A-EFY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" constant="10" id="voi-sC-pbP"/>
+                <constraint firstItem="RGu-7A-EFY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" constant="12" id="voi-sC-pbP"/>
                 <constraint firstItem="Vct-NQ-dvP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ztR-L8-y2R"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -52,7 +50,8 @@
             <connections>
                 <outlet property="bottomLine" destination="Vct-NQ-dvP" id="d1h-RV-kiQ"/>
                 <outlet property="leftImageView" destination="Ctu-Og-kBh" id="rOJ-mm-bHp"/>
-                <outlet property="titleLab" destination="RGu-7A-EFY" id="YW1-EM-CdJ"/>
+                <outlet property="textLabLeadingSuperViewLayoutConstraint" destination="voi-sC-pbP" id="BuY-4g-kZ0"/>
+                <outlet property="textLabel" destination="RGu-7A-EFY" id="7PT-V3-WVG"/>
             </connections>
             <point key="canvasLocation" x="-108" y="-246.5"/>
         </view>
