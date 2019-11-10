@@ -143,7 +143,7 @@
     Class cls = NSClassFromString(@"SearchViewController");
     id obj = [[cls alloc]init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:obj];
-     nav.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//     nav.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
 }
 

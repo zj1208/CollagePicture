@@ -295,6 +295,8 @@
     
     self.photoImageView1.hidden = NO;
     self.photoImageView2.hidden = self.photoImageView1.hidden;
+    self.salePriceLab.hidden = self.photoImageView1.hidden;
+    self.salePriceLab2.hidden = self.photoImageView1.hidden;
 
     self.bigBgImageView.hidden = YES;
 }
@@ -307,6 +309,8 @@
 
     self.photoImageView1.hidden = YES;
     self.photoImageView2.hidden = self.photoImageView1.hidden;
+    self.salePriceLab.hidden = self.photoImageView1.hidden;
+    self.salePriceLab2.hidden = self.photoImageView1.hidden;
 
     self.bigBgImageView.hidden = NO;
     
@@ -320,6 +324,8 @@
 
     self.photoImageView1.hidden = NO;
     self.photoImageView2.hidden = self.photoImageView1.hidden;
+    self.salePriceLab.hidden = self.photoImageView1.hidden;
+    self.salePriceLab2.hidden = self.photoImageView1.hidden;
 
     self.bigBgImageView.hidden = NO;
 }
