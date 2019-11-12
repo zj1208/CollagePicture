@@ -5,13 +5,14 @@
 //  Created by simon on 15/2/11.
 //  Copyright (c) 2015年 simon. All rights reserved.
 //
-// 简介： 只有一列的UIPickerView，根据数据源显示封装好的组件，支持toolBar的取消事件，完成事件；
-// 注释： showInView:方法如果传tableView/collectionView，弹窗在window上；
+//  简介： 只有一列的UIPickerView，根据数据源显示封装好的组件，支持toolBar的取消事件，完成事件；
+//  注释： showInView:方法如果传tableView/collectionView，弹窗在window上；
 
-// 2017.12.25 优化组件，顶部toolbar高度固定优化； pickerView高度约束修改优化；优化代码；
-// 2018.6.14 优化移除覆盖遮图动画过渡效果；
-// 2018.8.01 优化修改window的bug；
-// 2019.2.20 优化代码,适配iPhoneX系列底部安全区域;
+//  2017.12.25 优化组件，顶部toolbar高度固定优化； pickerView高度约束修改优化；优化代码；
+//  2018.6.14 优化移除覆盖遮图动画过渡效果；
+//  2018.8.01 优化修改window的bug；
+//  2019.2.20 优化代码,适配iPhoneX系列底部安全区域;
+//  2019.11.12 Dark Mode 下文字颜色适配为黑色；
 
 
 #import <UIKit/UIKit.h>

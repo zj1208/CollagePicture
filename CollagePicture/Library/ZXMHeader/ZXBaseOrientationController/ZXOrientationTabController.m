@@ -1,18 +1,18 @@
 //
-//  OrientationTabController.m
+//  ZXOrientationTabController.m
 //  Baby
 //
 //  Created by simon on 16/2/24.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
-#import "OrientationTabController.h"
+#import "ZXOrientationTabController.h"
 
-@interface OrientationTabController ()
+@interface ZXOrientationTabController ()
 
 @end
 
-@implementation OrientationTabController
+@implementation ZXOrientationTabController
 - (BOOL)shouldAutorotate
 {
     return [self.selectedViewController shouldAutorotate];

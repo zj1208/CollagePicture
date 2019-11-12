@@ -281,43 +281,84 @@
     }
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//Dark Mode 下文字颜色适配为黑色；
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
+    NSString *title = nil;
     if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
-    {
-        switch (component)
-        {
-            case 0:
-                return [[self.provinces objectAtIndex:row] objectForKey:@"state"];//省
-                break;
-            case 1:
-                return [[self.cities objectAtIndex:row] objectForKey:@"city"];//市
-                break;
-            case 2:
-                if ([self.areas count] > 0) {
-                    return [self.areas objectAtIndex:row];//县级市或直辖市的区
-                    break;
-                }
-            default:
-                return  @"";
-                break;
-        }
-    }
-    else{
-        switch (component)
-        {
-            case 0:
-                return [[self.provinces objectAtIndex:row] objectForKey:@"state"];
-                break;
-            case 1:
-                return [self.cities objectAtIndex:row];
-                break;
-            default:
-                return @"";
-                break;
-        }
-    }
+     {
+         switch (component)
+         {
+             case 0:
+                 title = [[self.provinces objectAtIndex:row] objectForKey:@"state"];//省
+                 break;
+             case 1:
+                 title =[[self.cities objectAtIndex:row] objectForKey:@"city"];//市
+                 break;
+             case 2:
+                 if ([self.areas count] > 0) {
+                     title =[self.areas objectAtIndex:row];//县级市或直辖市的区
+                 }
+                 break;
+             default:
+                 title = @"";
+                 break;
+         }
+     }
+     else{
+         switch (component)
+         {
+             case 0:
+                 title = [[self.provinces objectAtIndex:row] objectForKey:@"state"];
+                 break;
+             case 1:
+                 title =  [self.cities objectAtIndex:row];
+                 break;
+             default:
+                 title =  @"";
+                 break;
+         }
+     }
+    return [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
 }
+
+//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    if (self.pickerStyle == ZXAreaPickerWithStateAndCityAndDistrict)
+//    {
+//        switch (component)
+//        {
+//            case 0:
+//                return [[self.provinces objectAtIndex:row] objectForKey:@"state"];//省
+//                break;
+//            case 1:
+//                return [[self.cities objectAtIndex:row] objectForKey:@"city"];//市
+//                break;
+//            case 2:
+//                if ([self.areas count] > 0) {
+//                    return [self.areas objectAtIndex:row];//县级市或直辖市的区
+//                    break;
+//                }
+//            default:
+//                return  @"";
+//                break;
+//        }
+//    }
+//    else{
+//        switch (component)
+//        {
+//            case 0:
+//                return [[self.provinces objectAtIndex:row] objectForKey:@"state"];
+//                break;
+//            case 1:
+//                return [self.cities objectAtIndex:row];
+//                break;
+//            default:
+//                return @"";
+//                break;
+//        }
+//    }
+//}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {

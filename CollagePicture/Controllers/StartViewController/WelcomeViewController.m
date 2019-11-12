@@ -8,7 +8,7 @@
 //  这个页面的gif动画有问题，不建议使用这个页面；
 
 #import "WelcomeViewController.h"
-#import "OrientationNaController.h"
+#import "ZXOrientationNaController.h"
 
 
 @interface WelcomeViewController ()<UIWebViewDelegate>
@@ -83,7 +83,7 @@
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
-    OrientationNaController *myCenter = (OrientationNaController *)[sb instantiateViewControllerWithIdentifier:SBID_MyCenterControllerNavID];
+    ZXOrientationNaController *myCenter = (ZXOrientationNaController *)[sb instantiateViewControllerWithIdentifier:SBID_MyCenterControllerNavID];
     APP_MainWindow.rootViewController =myCenter;
 
 
@@ -93,7 +93,7 @@
 //    
 //    LoginRegisterController *welcome = [[LoginRegisterController alloc] init];
 //    
-//    OrientationNaController *welNav = [[OrientationNaController alloc] initWithRootViewController:welcome];
+//    ZXOrientationNaController *welNav = [[ZXOrientationNaController alloc] initWithRootViewController:welcome];
 //   
 //    if ([UserInfoUDManager isLogin])
 //    {

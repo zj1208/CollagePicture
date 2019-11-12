@@ -249,12 +249,15 @@
 }
 
 #pragma mark-Delegate
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//Dark Mode 下文字颜色适配为黑色；
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (row>=self.dataArray.count) {
-        return [self.dataArray lastObject];
+        NSString *title  = [self.dataArray lastObject];
+        return [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     }
-    return [self.dataArray objectAtIndex:row];
+    NSString *title  = [self.dataArray objectAtIndex:row];
+    return [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
 }
 
 #pragma mark - PickerViewDelegate

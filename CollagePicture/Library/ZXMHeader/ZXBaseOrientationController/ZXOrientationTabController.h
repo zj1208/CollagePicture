@@ -1,5 +1,5 @@
 //
-//  OrientationTabController.h
+//  ZXOrientationTabController.h
 //  Baby
 //
 //  Created by simon on 16/2/24.
@@ -12,6 +12,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OrientationTabController : UITabBarController
+@interface ZXOrientationTabController : UITabBarController
 
 @end

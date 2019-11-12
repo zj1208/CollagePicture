@@ -17,7 +17,7 @@
 //#import "UIImage+MultiFormat.h"
 //#import "MyAlbumController.h"
 
-#import "OrientationNaController.h"
+#import "ZXOrientationNaController.h"
 //#import "AlbumDataManager.h"
 #import "SDWebImageDownloader.h"
 #import "SDImageCache.h"
@@ -115,7 +115,7 @@ tmp;\
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage alloc] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage =[UIImage new];
-    OrientationNaController *nav = (OrientationNaController *)self.navigationController;
+    ZXOrientationNaController *nav = (ZXOrientationNaController *)self.navigationController;
     [nav rotateToDirection:UIInterfaceOrientationLandscapeRight];
 }
 
@@ -126,7 +126,7 @@ tmp;\
     [super viewWillDisappear:animated];
 
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    OrientationNaController *nav = (OrientationNaController *)self.navigationController;
+    ZXOrientationNaController *nav = (ZXOrientationNaController *)self.navigationController;
     [nav rotateToDirection:UIInterfaceOrientationPortrait];
 }
 //没有执行
@@ -443,7 +443,7 @@ tmp;\
 //    [self.navigationController popToRootViewControllerAnimated:YES];
 //    PayOderViewController * payVC = [[PayOderViewController alloc] init];
 //    payVC.albumIdStr = [self.albumId stringValue];
-//    OrientationNaController *nav = [[OrientationNaController alloc] initWithRootViewController:payVC];
+//    ZXOrientationNaController *nav = [[ZXOrientationNaController alloc] initWithRootViewController:payVC];
 //    [self presentViewController:nav animated:YES completion:nil];
 //}
 

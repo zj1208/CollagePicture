@@ -1,5 +1,5 @@
 //
-//  OrientationNaController.h
+//  ZXOrientationNaController.h
 //  Baby
 //
 //  Created by simon on 16/2/24.
@@ -12,7 +12,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OrientationNaController : UINavigationController
+@interface ZXOrientationNaController : UINavigationController
 
 - (void)rotateToDirection:(UIInterfaceOrientation)direction;
 

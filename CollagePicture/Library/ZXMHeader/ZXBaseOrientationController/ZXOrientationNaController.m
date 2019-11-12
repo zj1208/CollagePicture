@@ -1,17 +1,17 @@
 //
-//  OrientationNaController.m
+//  ZXOrientationNaController.m
 //  Baby
 //
 //  Created by simon on 16/2/24.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
-#import "OrientationNaController.h"
+#import "ZXOrientationNaController.h"
 
-@interface OrientationNaController ()
+@interface ZXOrientationNaController ()
 @end
 
-@implementation OrientationNaController
+@implementation ZXOrientationNaController
 
 static NSString * const kTopViewController_OrientationRight = @"MakingPhotoController";
 

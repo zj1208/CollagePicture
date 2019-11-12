@@ -45,6 +45,7 @@
 }
 - (void)setUI
 {
+    self.view.backgroundColor = [UIColor whiteColor];
     self.textField.font = [UIFont systemFontOfSize:13];
     [self.textField zx_setBorderWithCornerRadius:10 borderWidth:1 borderColor:[UIColor zx_colorWithHexString:@"EDEFF0"]];
     self.textField.textPositionAdjustment = UIOffsetMake(12, 0);

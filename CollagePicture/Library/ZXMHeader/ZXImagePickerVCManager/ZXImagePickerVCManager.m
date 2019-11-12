@@ -200,7 +200,7 @@ static char pickerControllerActionKey;
 - (void)pushToImagePickerToController:(UIViewController*)vc
 {
     ImagePickerViewController *pickerVC =[[ImagePickerViewController alloc] init];
-    OrientationNaController *navi =[[OrientationNaController alloc] initWithRootViewController:pickerVC];
+    ZXOrientationNaController *navi =[[ZXOrientationNaController alloc] initWithRootViewController:pickerVC];
     pickerVC.minNumberOfSelection =self.minNumberOfSelection;
     pickerVC.maxNumberOfSelection =self.maxNumberOfSelection;
     pickerVC.isNeedUpdate = self.isNeedUpdate;

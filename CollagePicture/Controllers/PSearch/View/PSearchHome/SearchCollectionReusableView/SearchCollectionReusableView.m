@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.titleLab.textColor = [UIColor zx_colorWithHexString:@"34373A"];
 }
 
 @end

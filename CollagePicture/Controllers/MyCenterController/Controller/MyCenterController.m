@@ -8,7 +8,7 @@
 #import "MyCenterController.h"
 #import "UIButton+WebCache.h"
 #import "MakingPhotoController.h"
-#import "OrientationNaController.h"
+#import "ZXOrientationNaController.h"
 #import "AppDelegate.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -205,7 +205,7 @@
     UIInterfaceOrientation currentDirection = [[UIApplication sharedApplication] statusBarOrientation];
     if (UIInterfaceOrientationIsLandscape(currentDirection))
     {
-        OrientationNaController *nav = (OrientationNaController *)self.navigationController;
+        ZXOrientationNaController *nav = (ZXOrientationNaController *)self.navigationController;
         [nav rotateToDirection:UIInterfaceOrientationPortrait];
     }
     id<UIViewControllerTransitionCoordinator>tc = self.transitionCoordinator;
