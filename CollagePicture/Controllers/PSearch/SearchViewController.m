@@ -89,9 +89,6 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     self.view.backgroundColor = [UIColor zx_colorWithHexString:@"#f3f3f3"];
     self.navigationItem.titleView = self.searchBar;
     
-    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]]
-         setDefaultTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:13],NSForegroundColorAttributeName:[UIColor blackColor]}];
-    
     [self.navigationController.navigationBar zx_removeShadowImage];
 
     [self.view addSubview:self.collectionView];
@@ -176,6 +173,15 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         UIImage *resizableImage = [image resizableImageWithCapInsets: UIEdgeInsetsMake(0, image.size.width/2, 0, image.size.width/2)];
         [bar setSearchFieldBackgroundImage:resizableImage forState:UIControlStateNormal];
         bar.searchTextPositionAdjustment = UIOffsetMake(2, 0);
+        
+        if (@available(iOS 13.0, *)) {
+            bar.searchTextField.textColor = [UIColor blackColor];
+            bar.searchTextField.font = [UIFont systemFontOfSize:13];
+        }else
+        {
+            [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]]
+             setDefaultTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:13],NSForegroundColorAttributeName:[UIColor blackColor]}];
+        }
         _searchBar = bar;
     }
     return _searchBar;

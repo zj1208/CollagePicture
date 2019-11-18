@@ -771,7 +771,7 @@
 		F4591BCB20747F560098F671 /* AlertChoseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertChoseController.h; sourceTree = "<group>"; };
 		F4591BD120747FAF0098F671 /* ZXSegmentMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXSegmentMenuView.m; sourceTree = "<group>"; };
 		F4591BD320747FB00098F671 /* ZXSegmentMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXSegmentMenuView.h; sourceTree = "<group>"; };
-		F46182181D8129490015BC84 /* CollagePicture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollagePicture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F46182181D8129490015BC84 /* 美颜拼图.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "美颜拼图.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F461821C1D8129490015BC84 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F461821E1D8129490015BC84 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F461821F1D8129490015BC84 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2432,7 +2432,7 @@
 		F46182191D8129490015BC84 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F46182181D8129490015BC84 /* CollagePicture.app */,
+				F46182181D8129490015BC84 /* 美颜拼图.app */,
 				F46182341D8129490015BC84 /* CollagePictureTests.xctest */,
 				F461823F1D8129490015BC84 /* CollagePictureUITests.xctest */,
 			);
@@ -3666,7 +3666,7 @@
 			);
 			name = CollagePicture;
 			productName = CollagePicture;
-			productReference = F46182181D8129490015BC84 /* CollagePicture.app */;
+			productReference = F46182181D8129490015BC84 /* 美颜拼图.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F46182331D8129490015BC84 /* CollagePictureTests */ = {
@@ -4397,7 +4397,7 @@
 					"$(PROJECT_DIR)/CollagePicture/Library/JPush",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.microants.collagePicture;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "美颜拼图";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CollagePicture/Controllers/MyCenterController/Controller/TemplateMake/TemplateListController/CollagePicture-Bridging-Header.h";
@@ -4437,7 +4437,7 @@
 					"$(PROJECT_DIR)/CollagePicture/Library/JPush",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.microants.collagePicture;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "美颜拼图";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CollagePicture/Controllers/MyCenterController/Controller/TemplateMake/TemplateListController/CollagePicture-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;

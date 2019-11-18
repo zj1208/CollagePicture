@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F46182171D8129490015BC84"
-               BuildableName = "CollagePicture.app"
+               BuildableName = "&#x7f8e;&#x989c;&#x62fc;&#x56fe;.app"
                BlueprintName = "CollagePicture"
                ReferencedContainer = "container:CollagePicture.xcodeproj">
             </BuildableReference>
@@ -27,6 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F46182171D8129490015BC84"
+            BuildableName = "&#x7f8e;&#x989c;&#x62fc;&#x56fe;.app"
+            BlueprintName = "CollagePicture"
+            ReferencedContainer = "container:CollagePicture.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -49,17 +58,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F46182171D8129490015BC84"
-            BuildableName = "CollagePicture.app"
-            BlueprintName = "CollagePicture"
-            ReferencedContainer = "container:CollagePicture.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -76,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F46182171D8129490015BC84"
-            BuildableName = "CollagePicture.app"
+            BuildableName = "&#x7f8e;&#x989c;&#x62fc;&#x56fe;.app"
             BlueprintName = "CollagePicture"
             ReferencedContainer = "container:CollagePicture.xcodeproj">
          </BuildableReference>
@@ -88,8 +86,6 @@
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -102,7 +98,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F46182171D8129490015BC84"
-            BuildableName = "CollagePicture.app"
+            BuildableName = "&#x7f8e;&#x989c;&#x62fc;&#x56fe;.app"
             BlueprintName = "CollagePicture"
             ReferencedContainer = "container:CollagePicture.xcodeproj">
          </BuildableReference>

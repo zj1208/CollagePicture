@@ -148,8 +148,7 @@
         
         if ([[UIApplication sharedApplication] canOpenURL:url])
         {
-            if ([[[UIDevice currentDevice] systemVersion]floatValue]>=10.f)
-            {
+            if (@available(iOS 10.0,*)) {
                 [[UIApplication sharedApplication]openURL:url options:@{UIApplicationOpenURLOptionUniversalLinksOnly:@(YES)} completionHandler:nil];
             }
             else
