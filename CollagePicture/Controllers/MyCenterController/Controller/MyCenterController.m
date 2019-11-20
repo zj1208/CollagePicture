@@ -6,7 +6,6 @@
 //  Copyright © 2016年 simon. All rights reserved.
 //
 #import "MyCenterController.h"
-#import "UIButton+WebCache.h"
 #import "MakingPhotoController.h"
 #import "ZXOrientationNaController.h"
 #import "AppDelegate.h"
@@ -15,15 +14,12 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
+#import "GuideShopHomeController.h"
 #import "ZXAlphaTransitionDelegate.h"
 #import "ZXAdvModalController.h"
 #import "CheckVersionManager.h"
 
 #import "ZXCustomNavigationBar.h"
-#import "BaseTableViewCell.h"
-//static NSInteger IndexSection_Set =1;
-
-
 @interface MyCenterController ()<ZXAdvModalControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) ZXCustomNavigationBar *customNavigationBar;
@@ -34,10 +30,6 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopLayoutConstraint;
 
-//导航条按钮
-//@property (nonatomic,strong) UIBarButtonItem *backButtonItem;
-//
-//@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
 
 //广告弹窗
 @property (nonatomic, strong) ZXAlphaTransitionDelegate *transitonModelDelegate;
@@ -65,33 +57,32 @@
 - (void)setUI
 {
     [APP_Delegate setApperanceForSigleNavController:self];
+    
     [self addNavigationBarView];
     
-    self.nameBtn.hidden = YES;
-    self.signatureLab.text = @"未填写";
-    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-    self.signatureLab.font = font;
-    self.signatureLab.adjustsFontForContentSizeCategory = YES;
+    [self setHeaderView];
     
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
     
+    [self addScaleImageView];
+    
+//    [self lauchFirstNewFunction];
+}
+
+- (void)setHeaderView
+{
+    self.nameBtn.hidden = YES;
+    self.signatureLab.text = @"未填写";
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    self.signatureLab.font = font;
+    self.signatureLab.adjustsFontForContentSizeCategory = YES;
     [self.headBtn zx_setBorderWithCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
     [self.headBtn zh_setButtonImageViewScaleAspectFill];
     
-    
-    //    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeholdPhoto"]];
-    
-    //    self.signatureLab.text = nil;
-    //    [self.nameBtn setTitle:nil forState:UIControlStateNormal];
-    
-//    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-    
-    
-    [self addScaleImageView];
+//    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeholdPhoto"]];
 }
-
 //前提是collectionView的背景要透明
 - (void)addScaleImageView
 {
@@ -129,15 +120,13 @@
 {
 //    _stausBarStyle =UIStatusBarStyleDefault;
     [self.view addSubview:self.customNavigationBar];
-//    [self.customNavigationBar.leftBarButton addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.customNavigationBar.rightBarButton1 setImage:[UIImage imageNamed:@"icon_shezhi"] forState:UIControlStateNormal];
-    [self.customNavigationBar.rightBarButton1 addTarget:self action:@selector(setButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.customNavigationBar.rightBarButton2 addTarget:self action:@selector(previewBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.customNavigationBar.rightBarButton1 addTarget:self action:@selector(setterButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - 设置
 
-- (void)setButtonAction:(id)sender
+- (void)setterButtonAction:(id)sender
 {
 //    [self zx_pushStoryboardViewControllerWithStoryboardName:storyboard_Set identifier:SBID_SetControllerID withData:nil];
     Class cls = NSClassFromString(@"SearchViewController");
@@ -149,7 +138,6 @@
 
 - (void)setUpData
 {
-
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:kNotificationUserLoginIn object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginOut:) name:kNotificationUserLoginOut object:nil];
     
@@ -170,6 +158,7 @@
     // Try changing the non-local variable (it won't change the block)
     num = 2;
     NSLog(@"%ld",(long)getFull(3));
+    
 }
 #pragma mark - 新功能引导
 
@@ -177,13 +166,13 @@
 - (void)lauchFirstNewFunction
 {
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFunctionGuideOfNextStep:) name:@"NewFunctionGuide_ShopHomeV1_Dismiss" object:nil];
-//    if (![WYUserDefaultManager getNewNewFunctionGuide_ShopHomeV1])
-//    {
-//        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        GuideShopHomeController *vc = [sb instantiateViewControllerWithIdentifier:SBID_GuideShopHomeController];
-//        [self.tabBarController addChildViewController:vc];
-//        [self.tabBarController.view addSubview:vc.view];
-//    }
+    if (![WYUserDefaultManager getNewNewFunctionGuide_ShopHomeV1])
+    {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        GuideShopHomeController *vc = [sb instantiateViewControllerWithIdentifier:SBID_GuideShopHomeController];
+        [self.navigationController addChildViewController:vc];
+        [self.navigationController.view addSubview:vc.view];
+    }
 }
 
 - (void)newFunctionGuideOfNextStep:(id)noti
@@ -571,9 +560,12 @@
 {
     if ([WYUserDefaultManager isOpenAppRemoteNoti])
     {
-        BOOL pushed;
+        BOOL pushed = NO;
 //        BOOL pushed = [[WYUtility dataUtil]routerWithName:[WYUserDefaultManager getDidFinishLaunchRemoteNoti] withSoureController:self];
-
+        if (!pushed)
+        {
+            [self checkAppVersion];
+        }
     }
     else{
         
@@ -603,44 +595,45 @@
 
 - (void)launchHomeAdvViewOrUNNotificationAlert
 {
-    
+    /*
+    WS(weakSelf);
+    [[[AppAPIHelper shareInstance] getMessageAPI] GetAdvWithType:@1005 success:^(id data) {
+        
+        weakSelf.advmodel = (AdvModel *)data;
+        if (weakSelf.advmodel.advArr.count>0)
+        {
+            [WYUserDefaultManager addTodayAppLanchAdvTimes];
+            if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(weakSelf.advmodel.num)])
+            {
+                advArrModel *advItemModel = [weakSelf.advmodel.advArr firstObject];
+                [weakSelf launchHomeAdvView:advItemModel];
+            }
+            else
+            {
+                [weakSelf addUNNotificationAlert];
+            }
+        }
+        else
+        {
+            [weakSelf addUNNotificationAlert];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [weakSelf addUNNotificationAlert];
+    }];
+     */
+//    不请求，模拟一定弹出
     [WYUserDefaultManager addTodayAppLanchAdvTimes];
     if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(8)])
     {
         ZXAdvModel *zxModel =[[ZXAdvModel alloc]initWithDesc:@"义乌市场导航图免费招商" picString:@"http://public-read-bkt.microants.cn/4/adv/JepEashhh5rQ4F2CpGBQWfdJSTz6af4G.jpg" url:@"https://mp.weixin.qq.com/s/bySiG3U8ku0MFixAsee8fQ" advId:@(75)];
-//        advArrModel *advItemModel = [_advmodel.advArr firstObject];
         [self launchHomeAdvView:zxModel];
     }
     else
     {
         [self addUNNotificationAlert];
     }
-
-//    [[[AppAPIHelper shareInstance] getMessageAPI] GetAdvWithType:@1005 success:^(id data) {
-//
-//        _advmodel = (AdvModel *)data;
-//        if (_advmodel.advArr.count>0)
-//        {
-//                        [WYUserDefaultManager addTodayAppLanchAdvTimes];
-//                        if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(_advmodel.num)])
-//                        {
-//            advArrModel *advItemModel = [_advmodel.advArr firstObject];
-//            [self firstNewFunction:advItemModel];
-//                        }
-//                        else
-//                        {
-//                            [self addUNNotificationAlert];
-//                        }
-//        }
-//        else
-//        {
-//            [self addUNNotificationAlert];
-//        }
-//        
-//    } failure:^(NSError *error) {
-//        
-//        [self addUNNotificationAlert];
-//    }];
 }
 
 #pragma mark launchAdv

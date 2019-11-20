@@ -96,9 +96,6 @@
             item= [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationController class]]];
         }
     }
-    else{
-        item = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil];
-    }
     [item setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     //横屏
     [item setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsCompact];

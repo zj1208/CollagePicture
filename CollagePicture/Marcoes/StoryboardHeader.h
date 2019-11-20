@@ -32,6 +32,9 @@ static NSString *segue_ThirdBindingSegue = @"ThirdBindingSegue";
  **/
 
 
+// 首页引导图
+static NSString *const SBID_GuideShopHomeController  =@"GuideShopHomeController";
+
 #pragma mark - 设置
 
 static NSString *SBID_SetControllerID = @"SetViewControllerID";

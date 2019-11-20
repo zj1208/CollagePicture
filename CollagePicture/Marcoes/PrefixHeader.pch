@@ -24,4 +24,6 @@
 #import "WYUserDefaultManager.h"
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
+
+#import "WYUserDefaultManager.h"
 #endif

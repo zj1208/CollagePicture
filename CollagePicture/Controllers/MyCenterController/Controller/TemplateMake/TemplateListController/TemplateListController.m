@@ -34,26 +34,20 @@ static NSString * const reuseIdentifier = @"Cell";
     NSLog(@"%@",NSHomeDirectory());
     // Uncomment the following line to preserve selection between presentations
      self.clearsSelectionOnViewWillAppear = NO;
-//    self.testBarItem.enabled = NO;
-//    ZX_NSLog_ClassAllPropertyAndValue(self.collectionView);
-//    ZX_NSLog_ClassMethodListName(self);
-    
     [self setUI];
     [self setData];
     
-//    CGFloat safeAreaBottom = 0.f;
-//    if (@available(iOS 11.0, *))
-//    {
-//        //      iPhoneX :{44, 0, 34, 0}
-//        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-//        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-//            safeAreaBottom = areaInset.bottom;
-//        }else{
-//        }
-//    }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
 - (void)setUI
 {
 

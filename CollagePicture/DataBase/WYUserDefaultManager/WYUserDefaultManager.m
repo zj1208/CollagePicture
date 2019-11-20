@@ -18,7 +18,9 @@ static NSString  *kWxAppId = @"kWxAppID";
 //用户通知允许状态
 static NSString *const ud_userNotificationType = @"ud_UserNotificationType";
 
-
+//开屏广告图地址；
+static NSString *const ud_OpenAPPSellerAdvURL = @"ud_OpenAPPSellerAdvURL";
+static NSString *const ud_OpenAPPPurchaserAdvURL = @"ud_OpenAPPPurchaserAdvURL";
 
 NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain";
 
@@ -96,6 +98,39 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     return NO;
 }
 
+//本地保存广告展示次数判断
++ (BOOL)isShowAdvWithMaxTimes:(NSNumber *)maxTimes advId:(NSNumber *)advId{
+    if ([maxTimes integerValue]==0){
+        return YES;
+    }
+    NSString *advIdString = [NSString stringWithFormat:@"ADV%@",advId];
+    //今天日期
+    NSDateFormatter *dateFor = [[NSDateFormatter alloc] init];
+    dateFor.dateFormat =@"MM-dd";
+    NSString *dateStr = [dateFor stringFromDate:[NSDate date]];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[UserDefault objectForKey:advIdString]];
+    //判断有没有想要数据
+    if (dic.allKeys.count != 2){
+        [dic setValue:@(0) forKey:@"count"];
+        [dic setValue:dateStr forKey:@"time"];
+    }
+    NSString *time = [dic objectForKey:@"time"];
+    //判断是不是同一个日期
+    if (![time isEqualToString:dateStr]){
+        [dic setValue:@(0) forKey:@"count"];
+        [dic setValue:dateStr forKey:@"time"];
+    }
+    NSNumber *count = [dic objectForKey:@"count"];
+    //判断有没有超过次数
+    if (count.integerValue < maxTimes.integerValue){
+        [dic setValue:@(count.integerValue + 1) forKey:@"count"];
+        [UserDefault setObject:dic forKey:advIdString];
+        return YES;
+    }
+
+    return NO;
+}
 
 
 
@@ -183,6 +218,7 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
         unsigned int unitFlags = NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitMinute;
         NSDateComponents *comps = [calendar components:unitFlags fromDate:lastDate toDate:nowDate options:0];
         if (comps.day >interval||comps.month>0)
+//        if (comps.day >interval||comps.month>0 ||comps.minute>=0)
         {
             [UserDefault setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
             [UserDefault synchronize];
@@ -292,35 +328,6 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 }
 
 
-+ (NSString *)getTestKGtAppId
-{
-    return kTestGtAppId;
-}
-+ (NSString *)getOnlineKGtAppId
-{
-    return kOnlineGtAppId;
-}
-
-
-+ (NSString *)getTestkGtAppKey
-{
-    return kTestGtAppKey;
-}
-+ (NSString *)getOnlinekGtAppKey
-{
-    return kOnlineGtAppKey;
-}
-
-
-+ (NSString *)getTestkGtAppSecret
-{
-    return kTestGtAppSecret;
-}
-+ (NSString *)getOnlinekGtAppSecret
-{
-    return kOnlineGtAppSecret;
-}
-
 + (NSString *)getTestNiMCerName
 {
     return @"ycbTestPush";
@@ -356,9 +363,8 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 
 + (void)setNiMMyInfoUrl:(NSString *)key
 {
-     [UserDefault setObject:key forKey:@"nimMyInfo"];
+    [UserDefault setObject:key forKey:@"nimMyInfo"];
     [UserDefault synchronize];
-
 }
 + (NSString *)getNiMMyInfoUrl
 {
@@ -387,39 +393,113 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 }
 
 
-
-+ (void)setNewFunctionGuide_MainV1
+#pragma mark - 功能引导
++ (void)setNewFunctionGuide_Trade
 {
-    [UserDefault setBool:YES forKey:@"NewFunctionGuide_MainV1"];
+    [UserDefault setBool:YES forKey:ud_NewFunctionGuide_Trade];
+    [UserDefault synchronize];
+}
++ (BOOL)getNewFunctionGuide_Trade
+{
+    return [UserDefault boolForKey:ud_NewFunctionGuide_Trade];
+}
+
++(void)setTouchTradeSet
+{
+    [UserDefault setBool:YES forKey:ud_TouchTradeSet];
+    [UserDefault synchronize];
+}
++ (BOOL)getTouchTradeSet
+{
+    return [UserDefault boolForKey:ud_TouchTradeSet];
+}
+
++ (void)setNewFunctionGuide_ShopHomeV1
+{
+    [UserDefault setBool:YES forKey:@"ud_NewFunctionGuide_ShopHome_V1"];
     [UserDefault synchronize];
 }
 
-+ (BOOL)getNewNewFunctionGuide_MainV1
++ (BOOL)getNewNewFunctionGuide_ShopHomeV1
 {
-    return [UserDefault boolForKey:@"NewFunctionGuide_MainV1"];
+    return [UserDefault boolForKey:@"ud_NewFunctionGuide_ShopHome_V1"];
 }
 
 + (void)setNewFunctionGuide_MineV1
 {
-    [UserDefault setBool:YES forKey:@"NewFunctionGuide_MineV1"];
+    [UserDefault setBool:YES forKey:@"ud_NewFunctionGuide_Mine_V1"];
     [UserDefault synchronize];
 }
 
 + (BOOL)getNewNewFunctionGuide_MineV1
 {
-    return [UserDefault boolForKey:@"NewFunctionGuide_MineV1"];
+    return [UserDefault boolForKey:@"ud_NewFunctionGuide_Mine_V1"];
+}
+
+// 商户端-上传产品-引导上传产品图片
++ (void)setNewFunctionGuide_AddProPicV1
+{
+    [UserDefault setBool:YES forKey:@"ud_NewFunctionGuide_AddProPic_V1"];
+    [UserDefault synchronize];
+}
++ (BOOL)getNewFunctionGuide_AddProPicV1
+{
+    return [UserDefault boolForKey:@"ud_NewFunctionGuide_AddProPic_V1"];
 }
 
 
-+ (void)setNewFunctionGuide_ExtendV1
+
+//设置卖家开屏图地址
++ (void)setOpenAPPSellerAdvURL:(NSString *)url
 {
-    [UserDefault setBool:YES forKey:@"NewFunctionGuide_ExtendV1"];
+    [UserDefault setObject:url forKey:ud_OpenAPPSellerAdvURL];
     [UserDefault synchronize];
 }
 
-+ (BOOL)getNewNewFunctionGuide_ExtendV1
++ (NSString *)getOpenAPPSellerAdvURL
 {
-    return [UserDefault boolForKey:@"NewFunctionGuide_ExtendV1"];
+    return [UserDefault objectForKey:ud_OpenAPPSellerAdvURL];
 }
 
++ (void)removeOpenAPPSellerAdvURL
+{
+    [UserDefault removeObjectForKey:ud_OpenAPPSellerAdvURL];
+}
+
+//设置买家开屏图地址
++ (void)setOpenAPPPurchaserAdvURL:(NSString *)url
+{
+    [UserDefault setObject:url forKey:ud_OpenAPPPurchaserAdvURL];
+    [UserDefault synchronize];
+}
+
++ (NSString *)getOpenAPPPurchaserAdvURL
+{
+    return [UserDefault objectForKey:ud_OpenAPPPurchaserAdvURL];
+}
+
++ (void)removeOpenAPPPurchaserAdvURL
+{
+    [UserDefault removeObjectForKey:ud_OpenAPPPurchaserAdvURL];
+}
+
++ (void)setMakeBillPreviewSet
+{
+    [UserDefault setBool:YES forKey:ud_MakeBillPreview_Set];
+    [UserDefault synchronize];
+}
++ (BOOL)getMakeBilglPreviewSet
+{
+    return [UserDefault boolForKey:ud_MakeBillPreview_Set];
+}
++ (void)setMakeBillPreviewPrintf;
+{
+    [UserDefault setBool:YES forKey:ud_MakeBillPreview_Printf];
+    [UserDefault synchronize];
+}
++ (BOOL)getMakeBilglPreviewPrintf
+{
+    return [UserDefault boolForKey:ud_MakeBillPreview_Printf];
+}
 @end
+

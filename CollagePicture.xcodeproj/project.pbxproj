@@ -16,6 +16,7 @@
 		F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */; };
 		F4166B68237ACE05004AD01E /* ZXMPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4166B67237ACE04004AD01E /* ZXMPickerView.m */; };
 		F4166B6B237ACE18004AD01E /* ZXAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4166B6A237ACE18004AD01E /* ZXAreaPickerView.m */; };
+		F41C20EB2384D20D00F895CF /* GuideShopHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41C20E92384D20D00F895CF /* GuideShopHomeController.m */; };
 		F41E3BEA220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F41E3BE8220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m */; };
 		F425A282214B520A00C6F724 /* ZXLabelsTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A281214B520A00C6F724 /* ZXLabelsTagsView.m */; };
 		F425A286214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F425A285214B538300C6F724 /* UIViewController+ZXSystemBackButtonAction.m */; };
@@ -449,6 +450,8 @@
 		F4166B69237ACE18004AD01E /* ZXAreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAreaPickerView.h; sourceTree = "<group>"; };
 		F4166B6A237ACE18004AD01E /* ZXAreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAreaPickerView.m; sourceTree = "<group>"; };
 		F41A19D5204FD75F00B1945C /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
+		F41C20E92384D20D00F895CF /* GuideShopHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideShopHomeController.m; sourceTree = "<group>"; };
+		F41C20EA2384D20D00F895CF /* GuideShopHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideShopHomeController.h; sourceTree = "<group>"; };
 		F41E3BE7220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
 		F41E3BE8220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCollectionViewLeftAlignedLayout.m; sourceTree = "<group>"; };
 		F425A280214B520A00C6F724 /* ZXLabelsTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsTagsView.h; sourceTree = "<group>"; };
@@ -1259,6 +1262,15 @@
 				F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */,
 			);
 			path = ZXPrintPageRenderer;
+			sourceTree = "<group>";
+		};
+		F41C20E82384D1F600F895CF /* StartApp */ = {
+			isa = PBXGroup;
+			children = (
+				F41C20EA2384D20D00F895CF /* GuideShopHomeController.h */,
+				F41C20E92384D20D00F895CF /* GuideShopHomeController.m */,
+			);
+			path = StartApp;
 			sourceTree = "<group>";
 		};
 		F42E7F3A215F7C2800AAD913 /* ZXManyPresentationControllers */ = {
@@ -2452,13 +2464,13 @@
 				F4EB2FAB1D8FCF3D00F5B70B /* Resources */,
 				F46182841D813BCB0015BC84 /* Library */,
 				F461821E1D8129490015BC84 /* AppDelegate.h */,
+				F46182271D8129490015BC84 /* CollagePicture.xcdatamodeld */,
 				F461821F1D8129490015BC84 /* AppDelegate.m */,
 				F46182241D8129490015BC84 /* Main.storyboard */,
 				F481E89B1FDFB61000D115D3 /* CollagePicture.entitlements */,
 				F461822A1D8129490015BC84 /* Assets.xcassets */,
 				F461822C1D8129490015BC84 /* LaunchScreen.storyboard */,
 				F461822F1D8129490015BC84 /* Info.plist */,
-				F46182271D8129490015BC84 /* CollagePicture.xcdatamodeld */,
 				F461821B1D8129490015BC84 /* Supporting Files */,
 			);
 			path = CollagePicture;
@@ -2746,6 +2758,7 @@
 		F49E196E1DF1875900676396 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F41C20E82384D1F600F895CF /* StartApp */,
 				F457BABE236146B300B1E1B4 /* PSearch */,
 				F49E198B1DF1875900676396 /* SetViewController */,
 				F40228EB1EF371E800E3D07E /* StartViewController */,
@@ -3711,7 +3724,7 @@
 		F46182101D8129490015BC84 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = simon;
 				TargetAttributes = {
 					F46182171D8129490015BC84 = {
@@ -3740,10 +3753,9 @@
 			};
 			buildConfigurationList = F46182131D8129490015BC84 /* Build configuration list for PBXProject "CollagePicture" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -4143,6 +4155,7 @@
 				F446A9A51FCC082A00C82C90 /* GrowthDataManager.m in Sources */,
 				F4689FBD223A7BD000A3607E /* KxMenuView.m in Sources */,
 				F446A9A21FCC082A00C82C90 /* ZXProgressView.m in Sources */,
+				F41C20EB2384D20D00F895CF /* GuideShopHomeController.m in Sources */,
 				F43E6E0120BCEAE900D2E05D /* ZXAddBigPicCollectionView.m in Sources */,
 				F466A96521549AC5007143A1 /* ZXModalAnimatedTranstion.m in Sources */,
 				F4BA075220A0699B00454095 /* ZXSegmentedControl.m in Sources */,
@@ -4292,13 +4305,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -4337,13 +4360,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

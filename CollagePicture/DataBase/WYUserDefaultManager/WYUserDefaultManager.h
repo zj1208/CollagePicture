@@ -17,8 +17,18 @@ static NSString *kOnlineGtAppId  =@"nI9gJsDGb99qGnwylak4I1";
 static NSString *kOnlineGtAppKey = @"8lEwqfov90AKQziEqSvd31";
 static NSString *kOnlineGtAppSecret = @"zR9M7HHU3X6k64XZiJ7sh6";
 
-//接生意设置第一次点击
-static NSString * const isFirstTouchSetBtn = @"isFirstTouchSetBtn";
+//第一次使用翻译功能引导
+static NSString * const isFirstUseTranslation = @"isFirstUseTranslation";
+
+//接生意设置第一次小红点-点击消失
+static NSString * const ud_TouchTradeSet = @"firstTouchTradeSet_3";
+//第一次使用接生意功能引导
+static NSString * const ud_NewFunctionGuide_Trade = @"ud_NewFunctionGuide_Trade_2";
+
+//开单预览单据-点击关闭不再出现
+static NSString * const ud_MakeBillPreview_Set = @"ud_MakeBillPreview_Set_1";
+//开单预览单据-第一次使用打印功能引导
+static NSString * const ud_MakeBillPreview_Printf = @"ud_MakeBillPreview_Printf_1";
 
 
 extern NSString *const kNotificationUserChangeDomain;
@@ -80,6 +90,8 @@ typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
  */
 + (BOOL)bisCanLanchAdvWithMaxTimes:(NSNumber *)maxTimes;
 
+//判断广告是否达到当天最大展现次数
++ (BOOL)isShowAdvWithMaxTimes:(NSNumber *)maxTimes advId:(NSNumber *)advId;
 
 #pragma mark - 隔多少天允许执行一次
 + (BOOL)isCanPresentAlertWithIntervalDay:(NSInteger)interval;
@@ -123,17 +135,6 @@ typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
 + (void)setOpenChangeDomain:(BOOL)isOpen;
 + (BOOL)getOpenChangeDomain;
 
-//个推有关的账号配置
-+ (NSString *)getTestKGtAppId;
-+ (NSString *)getOnlineKGtAppId;
-
-+ (NSString *)getTestkGtAppKey;
-+ (NSString *)getOnlinekGtAppKey;
-
-
-+ (NSString *)getTestkGtAppSecret;
-+ (NSString *)getOnlinekGtAppSecre;
-
 //云信有关－
 
 + (NSString *)getTestNiMCerName;
@@ -152,6 +153,7 @@ typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
 //用户当前角色
 
 + (void)setUserTargetRoleType:(NSInteger)key;
+//4卖家，2买家
 + (WYTargetRoleType)getUserTargetRoleType;
 
 // 切换角色来源
@@ -159,25 +161,52 @@ typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
 + (NSInteger)getChangeUserTargetRoleSource;
 
 
+//商户端-商铺-新功能引导
++ (void)setNewFunctionGuide_ShopHomeV1;
++ (BOOL)getNewNewFunctionGuide_ShopHomeV1;
 
-+ (void)setNewFunctionGuide_MainV1;
-+ (BOOL)getNewNewFunctionGuide_MainV1;
+// 商户端-接生意-新功能引导
++ (void)setNewFunctionGuide_Trade;
++ (BOOL)getNewFunctionGuide_Trade;
 
+// 商户端-引导点击接生意设置
++ (void)setTouchTradeSet;
++ (BOOL)getTouchTradeSet;
+
+// 商户端-我的-新功能引导
 + (void)setNewFunctionGuide_MineV1;
 + (BOOL)getNewNewFunctionGuide_MineV1;
 
-+ (void)setNewFunctionGuide_ExtendV1;
-+ (BOOL)getNewNewFunctionGuide_ExtendV1;
 
+// 商户端-上传产品-引导上传产品图片
++ (void)setNewFunctionGuide_AddProPicV1;
++ (BOOL)getNewFunctionGuide_AddProPicV1;
+
+//设置卖家开屏图地址
++ (void)setOpenAPPSellerAdvURL:(NSString *)url;
++ (NSString *)getOpenAPPSellerAdvURL;
++ (void)removeOpenAPPSellerAdvURL;
+
+//设置买家开屏图地址
++ (void)setOpenAPPPurchaserAdvURL:(NSString *)url;
++ (NSString *)getOpenAPPPurchaserAdvURL;
++ (void)removeOpenAPPPurchaserAdvURL;
+
+// 商户端-开单预览点击关闭不再出现
++ (void)setMakeBillPreviewSet;
++ (BOOL)getMakeBilglPreviewSet;
+// 商户端-开单预览第一次使用打印功能引导
++ (void)setMakeBillPreviewPrintf;
++ (BOOL)getMakeBilglPreviewPrintf;
 @end
 
 
 
 #pragma mark - 一天最多弹几次
 /*
-- (void)lauchPopoverView
+- (void)launchHomeAdvViewOrUNNotificationAlert
 {
-    self.modalAnimation = [[ZXModalAnimation alloc] init];
+    self.modalAnimation = [[ZXModalAnimatedTranstion alloc] init];
     [[[AppAPIHelper shareInstance] getMessageAPI] GetAdvWithType:@1005 success:^(id data) {
         
         AdvModel *model = (AdvModel *)data;
@@ -187,7 +216,7 @@ typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
             if ([WYUserDefaultManager isCanLanchAdvWithMaxTimes:@(model.num)])
             {
                 advArrModel *advItemModel = [model.advArr firstObject];
-                [self firstNewFunction:advItemModel];
+                [self launchHomeAdvView:advItemModel];
             }
         }
     } failure:^(NSError *error) {
@@ -264,3 +293,4 @@ typedef NS_ENUM(NSInteger, UDAuthorizationStatus) {
 }
  
  */
+

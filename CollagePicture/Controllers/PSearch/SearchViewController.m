@@ -607,7 +607,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         [self.collectionView reloadData];
     }else
     {
-        SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:btn.tag-200-1];
+//        SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:btn.tag-200-1];
 //        [self requestLabelPageDataWithRecommendGroupId:titleModel.groupCode next:titleModel.next];
     }
 }

@@ -374,8 +374,7 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
     //活跃状态：前台运行； 一般不写业务，如果需要就添加提示框；
     else if (application.applicationState == UIApplicationStateActive)
     {
-        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:nil message:alert delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-        [alerView show];
+        [UIAlertController zx_presentGeneralAlertInViewController:self.window.rootViewController withTitle:nil message:alert cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:nil doHandler:nil];
     }
 
     completionHandler(UIBackgroundFetchResultNewData);
@@ -385,19 +384,7 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 //如果不支持iOS8的用户通知交互，则只需简单写回调，或不实现iOS8/ios9方法；
 //iOS8和iOS9开始支持用户通知交互：用户从你的推送通知中选择一个交互动作后，该方法将会在后台被调用。
 
-#ifdef __IPHONE_8_0
-
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
-{
-    [JPUSHService setBadge:0];
-    //自定义用户通知交互事件
-}
-#endif
-
-
-#ifdef __IPHONE_9_0
-
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)(void))completionHandler
 {
     [JPUSHService setBadge:0];
     //自定义用户通知交互事件
@@ -405,7 +392,7 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
     [alerView show];
 }
 
-#endif
+
 
 
 #pragma mark - 3个方法接收本地通知
@@ -419,26 +406,15 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 ///2个方法新方法只适用于后台模式的推送通知，而且必须要点击交互事件按钮才会调用；
 //如果不支持iOS8的用户通知交互，则可以不实现iOS8/ios9方法；
 //如果在后台，iOS8和iOS9支持用户通知交互：用户从你的本地推送通知中选择一个交互动作后，该方法将会在后台被调用。
-#ifdef __IPHONE_8_0
-
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
-{
-    //调用自定义的本地通知处理
-    [self  handleActionWithIdentifier:identifier forLocalNotification:notification withResponseInfo:nil completionHandler:completionHandler];
-}
-
-#endif
-#ifdef __IPHONE_9_0
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void(^)())completionHandler
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)(void))completionHandler
 {
     //调用自定义的本地通知处理
     [self  handleActionWithIdentifier:identifier forLocalNotification:notification withResponseInfo:responseInfo completionHandler:completionHandler];
     
 }
-#endif
 
 //自己抽离：为了兼容ios8以前的不支持通知事件交互，iOS8和iOS9支持的通知交互代理处理；
-- (void)handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
+- (void)handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)(void))completionHandler
 {
     /*
     if ([identifier isEqualToString:kNotificationActionOneIdent])
