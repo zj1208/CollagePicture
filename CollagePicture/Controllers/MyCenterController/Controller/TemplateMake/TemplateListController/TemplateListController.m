@@ -47,6 +47,8 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+//    UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
 }
 - (void)setUI
 {
@@ -212,6 +214,8 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
+
      BmobObject *model = (BmobObject *)[self.dataMArray objectAtIndex:indexPath.item];
     [self zx_pushStoryboardViewControllerWithStoryboardName:@"Main" identifier:SBID_MakingPhotoController withData:@{@"templateType":[model objectForKey:@"type"]}];
 }

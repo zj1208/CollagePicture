@@ -61,7 +61,7 @@
     [self addNavigationBarView];
     
     [self setHeaderView];
-    
+    UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
