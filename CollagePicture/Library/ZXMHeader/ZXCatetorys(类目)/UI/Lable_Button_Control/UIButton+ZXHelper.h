@@ -16,6 +16,7 @@
 */
 
 // 2019.11.26  增加图片在右标题在左的布局改变方法；
+// 2019.12.09  修改bug；
 
 #import <UIKit/UIKit.h>
 
@@ -57,7 +58,8 @@ typedef NS_ENUM(NSInteger, ZXButtonContentType) {
 
 
 /**
- *  利用UIButton的titleEdgeInsets和imageEdgeInsets来实现图片和标题的自由排布
+ *  利用UIButton的titleEdgeInsets和imageEdgeInsets来实现图片和标题的自由排布；
+ *  内部会调用layoutIfNeed，根据实际内容动态改变frame大小；-2019.12.09 增加
  *  注意：1.该方法需在设置图片和标题之后才调用;
          2.图片和标题改变后需再次调用以重新计算titleEdgeInsets和imageEdgeInsets
  *
