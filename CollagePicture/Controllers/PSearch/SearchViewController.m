@@ -89,7 +89,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     self.view.backgroundColor = [UIColor zx_colorWithHexString:@"#f3f3f3"];
     self.navigationItem.titleView = self.searchBar;
     
-    [self.navigationController.navigationBar zx_removeShadowImage];
+    [self.navigationController zx_navigationBar_removeShadowImage];
 
     [self.view addSubview:self.collectionView];
     

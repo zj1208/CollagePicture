@@ -13,6 +13,7 @@
 #import "NSAttributedString+ZXCategory.h"
 #import "NSFileManager+ZXCategory.h"
 #import "NSData+ZXCategory.h"
+#import "NSDecimalNumber+ZXCategory.h"//2019.12
 #import "NSObject+ZXRuntime.h"
 
 #import "NSString+ZXCategory.h"
@@ -23,8 +24,11 @@
 #import "NSURL+ZXCategory.h"
 #import "NSURL+ZXAppLinks.h"
 
+#import "UIApplication+ZXCategory.h" //2019.11新增
 #import "UIAlertController+ZXCategory.h"
 #import "UIButton+ZXHelper.h"
+#import "UIBarButtonItem+ZXCaterory.h"//2019.11新增
+
 #import "UIColor+ZXHex.h"
 #import "UIControl+ZXFastClick.h"
 #import "UIDevice+ZXHelper.h"
@@ -34,10 +38,12 @@
 
 #import "UILabel+ZXCategory.h"
 #import "UINavigationBar+ShadeColor.h"
-#import "UINavigationBar+ZXCategory.h"
+#import "UINavigationItem+ZXCategory.h"//2019.11
+#import "UINavigationController+ZXCaterory.h"//2019.11新增
 
 #import "UIScrollView+ZXCategory.h"
 #import "UIScrollView+ZXMJRefreshing.h"
+#import "UISearchBar+ZXCategory.h"//2019.11新增
 #import "UITextField+ZXHelper.h"
 
 #import "UIView+ZXHelper.h"
@@ -50,10 +56,8 @@
 #import "UIViewController+ZXHelper.h"
 #import "UIWindow+ZXHierarchy.h"
 
-
+#import "CALayer+ZXCATransition.h"
 
 #import "MBProgressHUD+ZXCategory.h"
-
-#import "CALayer+ZXCATransition.h"
 
 #endif /* ZXCatetories_h */

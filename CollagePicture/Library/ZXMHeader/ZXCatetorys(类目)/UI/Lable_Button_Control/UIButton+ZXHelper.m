@@ -10,15 +10,13 @@
 
 @implementation UIButton (ZXHelper)
 
-- (void)zh_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize
+- (void)zx_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize
 {
     const int DEFAULT_SPACING =6.0f;
-    [self zh_centerVerticalImageAndTitleWithSpace:DEFAULT_SPACING titleFontOfSize:fontSize];
+    [self zx_centerVerticalImageAndTitleWithSpace:DEFAULT_SPACING titleFontOfSize:fontSize];
 }
 
-
-
-- (void)zh_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize
+- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize
 {
     self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
     
@@ -46,29 +44,61 @@
 }
 
 
-/*
- 
- for(int i = 0;i<3;i++)
- {
- UIButton *btn = [self.view zhuButton_orginalFrame:CGRectMake(0, CGRectGetMaxY(titBtn2.frame)+10, 0, 0) imageName:@"placeholder_small" backgroundImageName:nil title:@"热门分类" edegeSpace:0 titleColor:[UIColor blackColor] titleFont:15 backgroundColor:nil];
- btn.tag = 200+i;
- [btn zhuCenterImageAndTitle_titleFont:15];
- btn.frame = [self.view zhuContainSize_LCDWHaveNumItem_MarginX:10 MaginXBool:YES width:0 widthBool:NO numItems:i totalItems:3 orginY:CGRectGetMaxY(titBtn2.frame)+10 height:1];
- [self.headerView addSubview:btn];
- }
- UIButton *bt = (UIButton*)[self.headerView viewWithTag:200];
- 
- */
+- (void)zx_setImagePositionWithType:(ZXButtonContentType)type spacing:(CGFloat)spacing
+{
+    switch (type) {
+        case ZXButtonContentTypeImageLeftTitleRight:{
+            [self zx_centerHorizontalImageAndRightTitleWithTheirSpace:spacing];
+            break;
+        }
+        case ZXButtonContentTypeImageRightTitleLeft:
+            [self zx_centerHorizontalImageAndLeftTitleWithTheirSpace:spacing];
+        default:
+            break;
+    }
+}
 
 
-- (void)zh_centerHorizontalImageAndTitleWithTheirSpace:(float)spacing
+/**
+设置button按钮默认左边图标+右边文字，设置间距；
+@param spacing image和title的间距；
+*/
+- (void)zx_centerHorizontalImageAndRightTitleWithTheirSpace:(CGFloat)spacing
 {
     self.imageEdgeInsets= UIEdgeInsetsMake(0, 0, 0,floorf(spacing/2));
     self.titleEdgeInsets= UIEdgeInsetsMake(0, floorf(spacing/2), 0, 0);
 }
 
+/**
+设置button按钮左边文字+右边图标，设置间距；
+@param spacing image和title的间距；
+*/
+- (void)zx_centerHorizontalImageAndLeftTitleWithTheirSpace:(CGFloat)spacing
+{
+//    UIImage *currentImage = [self imageForState:UIControlStateNormal];
+//    CGSize imageSize = currentImage.size;
+//    NSString *currentTitle = [self titleForState:UIControlStateNormal];
+//    CGSize titleSize = [NSString zx_boundingSizeOfString:currentTitle WithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+//    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+//        CGFloat titleMaxHeight;
+//        NSLineBreakMode lineBreakMode = self.titleLabel.lineBreakMode;
+//        if (lineBreakMode == NSLineBreakByWordWrapping || lineBreakMode == NSLineBreakByCharWrapping) {
+//            titleMaxHeight = HUGE;
+//        } else {
+//            titleMaxHeight = self.titleLabel.font.pointSize;
+//        }
+//
+//        CGSize titleMaxSize = CGSizeMake(CGRectGetWidth(self.frame) - (imageSize.width + spacing), titleMaxHeight);
+//        titleSize =  [NSString zx_boundingSizeOfString:currentTitle WithSize:titleMaxSize font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+//    }
+//    self.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width + spacing, 0, - titleSize.width);
+//    self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, 0, imageSize.width + spacing);
+    self.imageEdgeInsets = UIEdgeInsetsMake(0, CGRectGetWidth(self.titleLabel.bounds) + spacing, 0, - CGRectGetWidth(self.titleLabel.bounds));
+    self.titleEdgeInsets = UIEdgeInsetsMake(0, - CGRectGetWidth(self.imageView.bounds), 0, CGRectGetWidth(self.imageView.bounds) + spacing);
+}
 
-- (void)zh_buttonExclusiveTouch
+
+- (void)zx_buttonExclusiveTouch
 {
     self.exclusiveTouch = YES;
 }

@@ -404,7 +404,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     {
         //计算2个时间相隔多少秒
         NSTimeInterval time = [currentDate timeIntervalSinceDate:date];
-        NSLog(@"时间差=%@",@(time));
+//        (@"时间差=%@",@(time));
         if (time>timeInterval)
         {
             return YES;
@@ -436,16 +436,25 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 }
 
 
-+ (CGSize)zhGetBoundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font
++ (CGSize)zx_boundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font mode:(NSLineBreakMode)lineBreakMode
 {
     if (CGSizeEqualToSize(size, CGSizeZero))
     {
         size = CGSizeMake(MAXFLOAT, MAXFLOAT);
     }
-    NSDictionary *tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    if (!font) {
+        font = [UIFont systemFontOfSize:12];
+    }
+    NSMutableDictionary *attrMDic = [NSMutableDictionary new];
+    [attrMDic setObject:font forKey:NSFontAttributeName];
+    if (lineBreakMode != NSLineBreakByWordWrapping) {
+        NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+         style.lineBreakMode = lineBreakMode;
+        [attrMDic setObject:style forKey:NSParagraphStyleAttributeName];
+    }
     CGSize textSize = [text boundingRectWithSize:size
                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                           attributes:tdic
+                           attributes:attrMDic
                               context:nil].size;
     return textSize;
 }
@@ -477,15 +486,6 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return md5String;
 }
 
-+ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string
-{
-    if ([NSString zhIsBlankString:string])
-    {
-        return nil;
-    }
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [NSString zx_getJSONSerializationObjectByJsonData:data];
-}
 
 + (nullable id)zx_getJSONSerializationObjectByJsonData:(nullable NSData *)data
 {
@@ -496,6 +496,16 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
         return dic;
     }
     return nil;
+}
+
++ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string
+{
+    if ([NSString zhIsBlankString:string])
+    {
+        return nil;
+    }
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    return [NSString zx_getJSONSerializationObjectByJsonData:data];
 }
 
 + (nullable id)zx_getJSONSerializationObjectFormContentsOfFile:(NSString *)path

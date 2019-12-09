@@ -11,9 +11,11 @@
 //  #import <QuartzCore/QuartzCore.h>
 
 //  2019.06.12  修改@import
+//  2019.10.30  其它项目@import会报错，改回<QuartzCore/QuartzCore.h>
 
 
-@import QuartzCore;
+#import <QuartzCore/QuartzCore.h>
+//@import QuartzCore;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,24 +62,27 @@ NS_ASSUME_NONNULL_END
 /*
  (1）Nav导航转场：
   
-  [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
+    [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
 
   例如：
-  ZXWKWebViewController *htmlVc = [[ZXWKWebViewController alloc] init];
-  [htmlVc loadWebPageWithURLString:url];
-  htmlVc.hidesBottomBarWhenPushed = YES;
-  [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
- [self.navigationController pushViewController:htmlVc animated:NO];
-  
+ - (void)pushVCWithTransition{
+    ZXWKWebViewController *htmlVc = [[ZXWKWebViewController alloc] init];
+    [htmlVc loadWebPageWithURLString:url];
+    htmlVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController.view.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
+    [self.navigationController pushViewController:htmlVc animated:NO];
+ }
 
 （2）modal模态转场：
-  [self.view.window.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
+    [self.view.window.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
   例如：
-  ZXWKWebViewController *htmlVc = [[ZXWKWebViewController alloc] init];
-  [htmlVc loadWebPageWithURLString:url];
-  htmlVc.hidesBottomBarWhenPushed = YES;
-  [self.view.window.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
-  [self presentViewController:vc animated:NO completion:nil];
+  - (void)presentVCWithTransition{
+    ZXWKWebViewController *htmlVc = [[ZXWKWebViewController alloc] init];
+    [htmlVc loadWebPageWithURLString:url];
+    htmlVc.hidesBottomBarWhenPushed = YES;
+    [self.view.window.layer zx_addCATansitionWithAnimationType:@"cube" directionOfTransitionSubtype:kCATransitionFromRight];
+    [self presentViewController:vc animated:NO completion:nil];
+ }
 */
 
 

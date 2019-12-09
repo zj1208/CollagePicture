@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-// badgeLabel相对偏移,默认CGPointMake(0, 0)，表示向image图标左偏移12,上对齐；
+// badgeLabel相对偏移,默认CGPointMake(0, 0)，表示向image图标左偏移12,上对齐；图标显示不同，偏移量调整是不同的，所以这个值是根据图标调整的；
 @property (nonatomic, assign) CGPoint badgeLabelContentOffest;
 
 // 设置图标的静态图片

@@ -8,6 +8,7 @@
 //  可以增加很多类目便捷方法；
 //  2019.10.28  增加关键字检索高亮
 //  2019.11.01  增加删除线方法
+//  2019.12.03 遍历数学数字
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -21,7 +22,7 @@
 
 
 /**
- 字符串关键字检索高亮
+ 检索富文本字符串的关键字，回调searchString的range;
  @param searchString 搜索关键字
  @param block 回调
 */
@@ -37,7 +38,7 @@
 
 
 /*
-在富文本字符串中添加删除线；
+在富文本字符串中添加删除线（）；
 
 */
 + (NSAttributedString *)zx_addStrikethroughCenterWithString:(NSString *)str;
@@ -48,4 +49,11 @@
 - (NSAttributedString *)zx_addStrikethroughCenterWithCenterlineString:(NSString *)centerlineString centerLineColor:(UIColor *)color;
 
 //- (void)addForegroundColor:(UIColor *)color range:(NSRange)range;
+
+
+
+/// 遍历数学数字,以小数点为分割获取整数的stringRange；例如10.55
+- (void)zx_enumerateDecimalNumberWithDotSeperateUsingBlock:(void(^)(NSRange dotPrefixStringRange))block;
+
+
 @end

@@ -206,9 +206,7 @@ static NSString* const SixSpaces = @"      ";
     [self.view addSubview:self.webView];
     //添加进度条
     [self.view addSubview:self.progressView];
-    
-    [self addEmptyView];
-   
+       
     if ([[UIDevice currentDevice] systemVersion].floatValue <9.f)
     {
         self.automaticallyAdjustsScrollViewInsets = NO;
@@ -292,11 +290,6 @@ static NSString* const SixSpaces = @"      ";
             {
                 configuration.requiresUserActionForMediaPlayback = NO;
             }
-            //            // ios8
-            //            if ([configuration respondsToSelector:@selector(mediaPlaybackRequiresUserAction)])
-            //            {
-            //                configuration.mediaPlaybackRequiresUserAction = NO;
-            //            }
         }
         
         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
@@ -330,12 +323,16 @@ static NSString* const SixSpaces = @"      ";
 
 
 
--(void)addEmptyView
+- (ZXEmptyViewController *)emptyViewController
 {
-    ZXEmptyViewController *emptyVC =[[ZXEmptyViewController alloc] init];
-    emptyVC.view.frame = self.view.frame;
-    emptyVC.delegate = self;
-    self.emptyViewController = emptyVC;
+    if (!_emptyViewController) {
+        
+        ZXEmptyViewController *emptyVC = [[ZXEmptyViewController alloc] init];
+        emptyVC.delegate = self;
+        emptyVC.view.frame = self.view.frame;
+        _emptyViewController = emptyVC;
+    }
+    return _emptyViewController;
 }
 
 
@@ -419,7 +416,6 @@ static NSString* const SixSpaces = @"      ";
     self.lrbtnDic = [NSMutableDictionary new];
     self.rrbtnDic = [NSMutableDictionary new];
     
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateInfo:) name:Noti_ProductManager_Edit_goBackUpdate object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:kNotificationUserLoginIn object:nil];
     
@@ -807,7 +803,7 @@ static NSString* const SixSpaces = @"      ";
             self.shareButtonItem.title = NSLocalizedString(@"分享", nil);
         });
     }
-    [_emptyViewController hideEmptyViewInController:self hasLocalData:YES];
+    [self.emptyViewController zx_hideEmptyViewInContainerViewConroller];
     
     // 真机连数据线有； 不连数据线没有；该方法无法获取到 httponly 的cookie
     [webView evaluateJavaScript:[NSString stringWithFormat:@"document.cookie"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
@@ -837,7 +833,7 @@ static NSString* const SixSpaces = @"      ";
     NSURL *appUrl = [NSURL URLWithString:[WYUserDefaultManager getkAPP_H5URL]];
     if([url.host isEqualToString:appUrl.host] ||([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]))
     {
-        [_emptyViewController addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        [self.emptyViewController zx_addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle];
         return;
     }
 }
@@ -1407,7 +1403,7 @@ static NSString* const SixSpaces = @"      ";
 }
 #pragma mark - 加载本地网页
 
-- (void)loadWebHTMLSringWithResource:(NSString *)name
+- (void)loadWebHTMLSringWithFileResource:(NSString *)name
 {
     self.localFileName = name;
     self.webLoadType = WebLoadType_LocalHTMLFile;

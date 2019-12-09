@@ -149,32 +149,20 @@
 //#endif
 
 
-// iPhoneX系列判断是否有safeAreaInsets的值;来定义是否是iPhoneX；  可以查找最新的方案，safeArea我觉得是用于做约束的，而不是用来做iPhoneX判断的；
-// 目前自己的组件库中用了很多这种方案，急需查找最新方案；
-// iOS11之前：没有iPhoneX系列；
-// iOS11-iOS13之间
-// iPhoneX :{44, 0, 34, 0};其他手机是UIEdgeInsetsZero;
-// iOS13 之后
-// 其它手机是{20, 0, 0, 0}，没有考虑进去statusBar隐藏的情况，待验证？
-
+/*iOS11之前：没有iPhoneX系列；
+iOS11-iOS12之间
+iPhoneX :{44, 0, 34, 0};其他手机是UIEdgeInsetsZero;
+iOS12 之后
+iPhoneX :{44, 0, 34, 0};其它手机是{20, 0, 0, 0}
+ */
+// iPhoneX系列判断window的safeAreaInsets安全区域底部是否是0;来定义是否是iPhoneX；
 #ifndef IS_IPHONE_XX
 #define IS_IPHONE_XX ({\
 int tmp = 0;\
 if (@available(iOS 11.0, *)) { \
-UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
-    if (@available(iOS 13.0, *)) { \
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsMake(20, 0, 0, 0))){\
+    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+    if (areaInset.bottom >0) { \
         tmp = 1;\
-        }else{\
-        tmp = 0;\
-        }\
-    }\
-    else{\
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsMake(0, 0, 0, 0))){\
-        tmp = 1;\
-        }else{\
-        tmp = 0;\
-        }\
     }\
 }\
 else{\

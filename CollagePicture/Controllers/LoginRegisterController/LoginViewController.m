@@ -47,8 +47,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 - (void)setUI
 {
 //    [(AppDelegate *)APP_Delegate setApperanceForSigleNavController:self];
-    [self.navigationController zx_navigationBar_Single_BackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
-    [self zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+    [self.navigationController zx_navigationBar_allBackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [self.navigationController zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     
     self.userNameTextField.keyboardType = UIKeyboardTypeNumberPad;
     

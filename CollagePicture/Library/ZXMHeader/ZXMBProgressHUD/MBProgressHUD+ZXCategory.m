@@ -13,6 +13,11 @@
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
 #endif
 
+#ifndef TEXT_ERROR_NETWORK
+#define TEXT_ERROR_NETWORK @"哎呀！网路粗问题了，请稍后再试！"
+#define TEXT_ERROR_SERVER @"哎呀！粗问题了，请稍后再试！"
+#endif
+
 @implementation MBProgressHUD (ZXCategory)
 
 
@@ -53,6 +58,24 @@
     [MBProgressHUD zx_showText:error customIcon:nil view:view hideAfterDelay:0];
 }
 
++ (void)zx_showError:(nullable NSString *)error toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay
+{
+    [MBProgressHUD zx_showText:error customIcon:nil view:view hideAfterDelay:delay];
+}
+
++ (void)zx_showErrorTitle:(nullable NSString *)title error:(NSError *)error toView:(UIView *)view
+{
+    NSString * eTitle = nil;
+    if (error.code == -1005 || error.code == -1009 || error.code == -1001) {
+         eTitle = TEXT_ERROR_NETWORK;
+     }else
+     {
+         eTitle = TEXT_ERROR_SERVER;
+     }
+    NSString *errorTitle = [NSString stringWithFormat:@"%@(%@)",eTitle,@(error.code)];
+    [MBProgressHUD zx_showText:errorTitle customIcon:nil view:view hideAfterDelay:0];
+}
+
 + (MBProgressHUD *)zx_showText:(nullable NSString *)aText customIcon:(nullable NSString *)imageName view:(nullable UIView *)view
 {
     return  [MBProgressHUD zx_showText:aText customIcon:imageName view:view hideAfterDelay:0];
@@ -91,12 +114,12 @@
     {
         hud.detailsLabel.text= aText?NSLocalizedString(aText, nil):nil;
         hud.detailsLabel.font = [UIFont systemFontOfSize:15];
-        delayTime = delay>0?delay:(1.f+hud.detailsLabel.text.length*0.1);
+        delayTime = delay>0?delay:(1.f+hud.detailsLabel.text.length*0.05);
     }
     else
     {
         hud.label.text= aText?NSLocalizedString(aText, nil):nil;
-        delayTime = delay>0?delay:(1.f+hud.label.text.length*0.1);
+        delayTime = delay>0?delay:(1.f+hud.label.text.length*0.05);
     }
     
     if (imageName)

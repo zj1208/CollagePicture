@@ -5,19 +5,46 @@
 //  Created by simon on 15/11/21.
 //  Copyright © 2015年 simon. All rights reserved.
 //
+//  简介：
+/**
+默认情况下，imageEdgeInsets和titleEdgeInsets都是UIEdgeInsetsZero
+，且imageView和titleLable之间没有间距。以宽度为例，
+ 
+(1)if (button.width小于imageView上image的width){图像会被压缩，文字不显示}
+(2)if (button.width < imageView.width + label.width){图像正常显示，文字显示不全}
+(3)if (button.width >＝ imageView.width + label.width){图像和文字都居中显示，imageView在左，label在右，没有间距}
+*/
+
+// 2019.11.26  增加图片在右标题在左的布局改变方法；
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+typedef NS_ENUM(NSInteger, ZXButtonContentType) {
+    ZXButtonContentTypeImageLeftTitleRight,   //图片在左，标题在右，默认风格
+    ZXButtonContentTypeImageRightTitleLeft,  //图片在右，标题在左
+//    ZXImagePositionTypeTop,    //图片在上，标题在下
+};
+
+
 @interface UIButton (ZXHelper)
+
+
+/*
+调整contentInset，必须在设置完数据后，获取到真实的frame才能调整，autolayout通过下列方法可以拿到:
+1. layoutSubViews
+2. viewDidLayoutSubviews
+3. 父view调用layoutIfNeeded
+*/
 
 /**
  * @brief 调用zhuCenterImageAndTitle:titleFontOfSize; 默认图文间隔大小是6;
  * @param fontSize  字体大小，根据字体大小会有相应改变高度；
  */
 
-- (void)zh_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize;
+- (void)zx_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize;
 
 
 /**
@@ -26,21 +53,26 @@ NS_ASSUME_NONNULL_BEGIN
  * @param fontSize  字体大小，根据字体大小会有相应改变高度；
  */
 
-- (void)zh_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize;
-
+- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize;
 
 
 /**
- 设置button按钮在默认左边图标和右边文字共存的情况下，设置间距；默认是0个间距；按钮宽度必须大于（ 图片＋文本 ）自适应的宽度；
-
- @param spacing image和title的间距；
+ *  利用UIButton的titleEdgeInsets和imageEdgeInsets来实现图片和标题的自由排布
+ *  注意：1.该方法需在设置图片和标题之后才调用;
+         2.图片和标题改变后需再次调用以重新计算titleEdgeInsets和imageEdgeInsets
+ *
+ *  @param type    图片位置类型
+ *  @param spacing 图片和标题之间的间隙,默认是0个间距；按钮宽度必须大于（图片＋文本）自适应的宽度；
  */
-- (void)zh_centerHorizontalImageAndTitleWithTheirSpace:(float)spacing;
+- (void)zx_setImagePositionWithType:(ZXButtonContentType)type spacing:(CGFloat)spacing;
+
+
+
 
 /**
  * @brief 当前视图独占触摸事件，但是手势识别会忽略exclusiveTouch设置；
  */
-- (void)zh_buttonExclusiveTouch;
+- (void)zx_buttonExclusiveTouch;
 
 
 /**

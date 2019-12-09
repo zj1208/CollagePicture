@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param name 本地HTML文件名
  */
-- (void)loadWebHTMLSringWithResource:(NSString *)name;
+- (void)loadWebHTMLSringWithFileResource:(NSString *)name;
 
 //3.加载本地html字符串
 - (nullable WKNavigation *)loadHTMLString:(NSString *)html baseURL:(nullable NSURL *)baseURL;

@@ -9,8 +9,8 @@
 // 2018.1.18  新增获取文字所需要的尺寸
 // 2018.4.18  新增计算平均item宽带方法
 // 2018.5.31  内存优化
-// 7.11  优化加密代码
-
+// 2018.7.11  优化加密代码
+// 2019.12
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -234,6 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)zhGetNumLinesWithBoundingRectWithSize:(CGSize)size titleFont:(UIFont *)font;
 
 
+#pragma mark - Drawing
 /**
  获取文字所需要的尺寸
 
@@ -242,9 +243,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param font 字体大小
  @return size
  */
-+ (CGSize)zhGetBoundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font;
-
-
++ (CGSize)zx_boundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font mode:(NSLineBreakMode)lineBreakMode;
 /**
  直接绘制文本到某个rect
 
@@ -265,13 +264,19 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)zhCreatMD5StringWithDict:(NSDictionary*)dict sortKeyArray:(NSArray *)sortKeys;
 
 /**
- *	@brief	根据jsonSerialization方法把NSData数据转换为json格式（NSArray／NSDictionary）
- *	@param  string  字典or数组格式的字符串
+ *	@brief	根据jsonSerialization方法把NSData数据转换为json对象（NSArray／NSDictionary）
  *	@return	NSArray 或 NSDictionary
  */
-+ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string;
 
 + (nullable id)zx_getJSONSerializationObjectByJsonData:(nullable NSData *)data;
+
+/**
+*    @brief   把字符串转换为json对象（NSArray／NSDictionary）
+*    @param   string  字典or数组格式的字符串
+*    @return  NSArray 或 NSDictionary
+*/
++ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string;
+
 
 + (nullable id)zx_getJSONSerializationObjectFormContentsOfFile:(NSString *)path;
 

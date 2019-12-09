@@ -192,8 +192,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     [self setLoadTitle];
 
     //不要用animated，不然有bug
-    NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.negativeSpacerItem]];
-    self.navigationItem.leftBarButtonItems = items;
+    self.navigationItem.leftBarButtonItems = @[self.backButtonItem,self.negativeSpacerItem];
     
     
     NSRange rangeCFB = [self.URLString rangeOfString:@"pingan.com"];
@@ -458,7 +457,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 //    [MBProgressHUD zx_hideHUDForView:self.view];
 //    [HKMBProgressHUD wy_loadingDissmiss:self.view];
 
-    [_emptyViewController hideEmptyViewInController:self hasLocalData:YES];
+    [self.emptyViewController zx_hideEmptyViewInContainerViewConroller];
 
     NSString *doTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if (!self.barTitle && doTitle.length>0)
@@ -490,7 +489,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
     NSURL *appUrl = [NSURL URLWithString:[WYUserDefaultManager getkAPP_H5URL]];
     if([url.host isEqualToString:appUrl.host] ||([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]))
     {
-        [_emptyViewController addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        [self.emptyViewController zx_addEmptyViewInController:self hasLocalData:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle];
         return;
     }
 }
@@ -604,7 +603,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         //        [backButton setImage:backItemHlImage forState:UIControlStateHighlighted];
         //        [backButton sizeToFit];
         backButton.frame = CGRectMake(0, 0, 50, 44);
-        [backButton zh_centerHorizontalImageAndTitleWithTheirSpace:10.f];
+        [backButton zx_setImagePositionWithType:ZXButtonContentTypeImageLeftTitleRight spacing:10.f];
         //              [backButton setBackgroundColor:[UIColor redColor]];
         [backButton addTarget:self action:@selector(customBackItemAction:) forControlEvents:UIControlEventTouchUpInside];
         _backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -636,7 +635,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 {
     if ([self.webView canGoBack])
     {
-        NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,self.closeButtonItem,_negativeSpacerItem]];
+        NSArray *items = @[self.backButtonItem,self.closeButtonItem,_negativeSpacerItem];
         [self.navigationItem setLeftBarButtonItems:items animated:NO];
     }
     else
@@ -644,7 +643,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
         NSInteger numItems = Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(11)?3:3;
         if (self.navigationItem.leftBarButtonItems.count == numItems)
         {
-            NSArray *items = [self zx_navigationItem_leftOrRightItemReducedSpaceToMagin:-7 withItems:@[self.backButtonItem,_negativeSpacerItem]];
+            NSArray *items = @[self.backButtonItem,_negativeSpacerItem];
             [self.navigationItem setLeftBarButtonItems:items animated:NO];
         }
     }

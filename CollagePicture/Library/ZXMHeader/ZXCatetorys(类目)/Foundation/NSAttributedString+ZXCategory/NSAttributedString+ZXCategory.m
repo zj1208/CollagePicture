@@ -72,4 +72,17 @@
 //    [attString addAttribute:NSForegroundColorAttributeName value:color range:range];
 //    return attString;
 //}
+
+
+- (void)zx_enumerateDecimalNumberWithDotSeperateUsingBlock:(void(^)(NSRange dotPrefixStringRange))block
+{
+    if (self.length) {
+         
+        NSArray <NSString *>*separatedArray = [self.string componentsSeparatedByString:@"."];
+        NSString *dotPrefixString = [separatedArray firstObject];
+        block([self.string rangeOfString:dotPrefixString]);
+     }
+}
+
+
 @end
