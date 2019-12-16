@@ -1,9 +1,9 @@
 //
 //  UIButton+ZXHelper.m
-//  SiChunTang
+//  MusiceFate
 //
-//  Created by simon on 15/11/21.
-//  Copyright © 2015年 simon. All rights reserved.
+//  Created by simon on 13/3/21.
+//  Copyright © 2013年 yinyuetai.com. All rights reserved.
 //
 
 #import "UIButton+ZXHelper.h"

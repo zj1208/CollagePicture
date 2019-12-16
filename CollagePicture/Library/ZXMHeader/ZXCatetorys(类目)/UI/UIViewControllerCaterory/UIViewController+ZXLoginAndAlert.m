@@ -1,9 +1,9 @@
 //
 //  UIViewController+ZXLoginAndAlert.m
-//  CollagePicture
+//  Baby
 //
 //  Created by simon on 15/7/6.
-//  Copyright (c) 2015年 . All rights reserved.
+//  Copyright (c) 2015年 sian. All rights reserved.
 //
 
 #import "UIViewController+ZXLoginAndAlert.h"

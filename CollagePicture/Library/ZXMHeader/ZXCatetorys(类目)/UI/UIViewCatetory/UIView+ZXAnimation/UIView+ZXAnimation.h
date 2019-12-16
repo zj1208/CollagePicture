@@ -1,9 +1,9 @@
 //
 //  UIView+ZXAnimation.h
-//  YiShangbao
+//  Baby
 //
-//  Created by simon on 2018/5/4.
-//  Copyright © 2018年 com.Microants. All rights reserved.
+//  Created by simon on 2015/11/4.
+//  Copyright © 2015年 sina. All rights reserved.
 //
 // 6.26  修改代码
 // 8.13  CATransition转场动画移除到新的类目；

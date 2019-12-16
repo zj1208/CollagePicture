@@ -1,9 +1,9 @@
 //
 //  CALayer+ZXCATransition.h
-//  YiShangbao
+//  MusiceFate
 //
-//  Created by simon on 2018/8/13.
-//  Copyright © 2018年 com.Microants. All rights reserved.
+//  Created by simon on 2013/8/13.
+//  Copyright © 2013年 yinyuetai.com. All rights reserved.
 //
 //  简介：系统通过CATansition设置转场动画；给某个view的图层layer添加CATransition；CATransition 是CAAnimation的子类，用于页面之间的过度动画，官方提供了四个公有的API动画效果，但是私有API的效果更加炫酷； 高逼格动画效果不适用于普通APP，不然会显得格格不入；研究动画效果也要与产品类型相结合；；
 //  使用Core Animation Transitions(过渡，翻页)/使用CATransition只针对图层

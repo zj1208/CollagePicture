@@ -1,9 +1,9 @@
 //
 //  UIImage+ZXHelper.m
-//  CollagePicture
+//  MusiceFate
 //
-//  Created by simon on 15/6/25.
-//  Copyright (c) 2015年 simon. All rights reserved.
+//  Created by simon on 13/1/25.
+//  Copyright (c) 2013年 yinyuetai.com. All rights reserved.
 //
 
 #import "UIImage+ZXHelper.h"
@@ -232,7 +232,6 @@
     NSError *__autoreleasing error = nil;
     if(![imageData writeToFile:fullPath options:NSDataWritingAtomic error:&error])
     {
-        NSLog(@"%@", error);
     }
     else
     {

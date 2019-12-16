@@ -57,7 +57,6 @@
 //    if (![adSupportBundle isLoaded])
 //    {
 //        return @"模拟器";
-//        NSLog(@"没有加载ADFA资源框架");
 //    }
 #if TARGET_IPHONE_SIMULATOR 
     // iphonex模拟器 66A9243D-A0EF-4BB3-8DBC-2632E09DE21B
@@ -102,7 +101,6 @@
     struct utsname systemInfo;
     uname(&systemInfo);
     NSString *device_model = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    NSLog(@"device_model-->%@", device_model);
     return device_model;
 }
 
@@ -216,7 +214,6 @@
 + (ZXDeviceModelType)zx_getDeviceModelType
 {
     NSString *model = [UIDevice currentDevice].model;
-//    NSLog(@"设备类型model-->%@", model);
     if ([model isEqualToString:@"iPhone"])
     {
         return ZXDeviceModelType_iPhone;
@@ -293,7 +290,6 @@
     @[ /*IOS_VPN @"/" IP_ADDR_IPv6, IOS_VPN @"/" IP_ADDR_IPv4,*/ IOS_WIFI @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4 ] ;
     
     NSDictionary *addresses = [self zx_getIPAddresses];
-    NSLog(@"addresses: %@", addresses);
     
     __block NSString *address;
     [searchArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop)

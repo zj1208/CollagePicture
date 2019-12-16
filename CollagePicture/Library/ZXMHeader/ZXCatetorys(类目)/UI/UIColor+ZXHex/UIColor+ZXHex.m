@@ -1,9 +1,9 @@
 //
 //  UIColor+ZXHex.m
-//  simon
+//  MusiceFate
 //
 //  Created by simon on 15/1/7.
-//  Copyright (c) 2015年 simon. All rights reserved.
+//  Copyright (c) 2015年 yinyuetai.com. All rights reserved.
 //
 
 #import "UIColor+ZXHex.h"

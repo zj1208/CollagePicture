@@ -2,8 +2,8 @@
 //  ZXCatetories.h
 //  CollagePicture
 //
-//  Created by simon on 16/11/17.
-//  Copyright © 2016年 simon. All rights reserved.
+//  Created by simon on 15/11/17.
+//  Copyright © 2015年 simon. All rights reserved.
 //
 //  2019.1.7  修改类目名，基本不用延展/扩展的
 
@@ -13,7 +13,7 @@
 #import "NSAttributedString+ZXCategory.h"
 #import "NSFileManager+ZXCategory.h"
 #import "NSData+ZXCategory.h"
-#import "NSDecimalNumber+ZXCategory.h"//2019.12
+#import "NSDecimalNumber+ZXCategory.h"//  2019.12
 #import "NSObject+ZXRuntime.h"
 
 #import "NSString+ZXCategory.h"
@@ -27,7 +27,7 @@
 #import "UIApplication+ZXCategory.h" //2019.11新增
 #import "UIAlertController+ZXCategory.h"
 #import "UIButton+ZXHelper.h"
-#import "UIBarButtonItem+ZXCaterory.h"//2019.11新增
+#import "UIBarButtonItem+ZXCaterory.h"
 
 #import "UIColor+ZXHex.h"
 #import "UIControl+ZXFastClick.h"
@@ -35,11 +35,13 @@
 #import "UIFont+ZXCategoryFontScale.h"
 #import "UIImage+ZXGIF.h"
 #import "UIImage+ZXHelper.h"
+#import "UIImage+ZXCIImage.h"
 
 #import "UILabel+ZXCategory.h"
 #import "UINavigationBar+ShadeColor.h"
 #import "UINavigationItem+ZXCategory.h"//2019.11
 #import "UINavigationController+ZXCaterory.h"//2019.11新增
+#import "UINavigationController+ZXStoryboard.h"
 
 #import "UIScrollView+ZXCategory.h"
 #import "UIScrollView+ZXMJRefreshing.h"

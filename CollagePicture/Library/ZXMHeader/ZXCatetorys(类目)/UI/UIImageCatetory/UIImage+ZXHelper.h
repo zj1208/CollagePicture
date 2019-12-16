@@ -1,9 +1,9 @@
 //
 //  UIImage+ZXHelper.h
-//  CollagePicture
+//  MusiceFate
 //
-//  Created by simon on 15/6/25.
-//  Copyright (c) 2015年 simon. All rights reserved.
+//  Created by simon on 13/1/25.
+//  Copyright (c) 2013年 yinyuetai.com. All rights reserved.
 //
 //  5.4  获取view的快照视图替换方法；
 //  2018.5.31 增加获取渐变图方式区分垂直/水平方向 ；

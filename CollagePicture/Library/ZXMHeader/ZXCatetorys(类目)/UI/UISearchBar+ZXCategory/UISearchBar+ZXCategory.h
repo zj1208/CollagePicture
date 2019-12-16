@@ -3,7 +3,7 @@
 //  MobileCaiLocal
 //
 //  Created by simon on 2019/11/12.
-//  Copyright © 2019 timtian. All rights reserved.
+//  Copyright © 2019 com.Chs. All rights reserved.
 //
 //  iOS13之后UISearchBar增加UISearchTextField属性；
 //  2019.11.19 改为只读属性

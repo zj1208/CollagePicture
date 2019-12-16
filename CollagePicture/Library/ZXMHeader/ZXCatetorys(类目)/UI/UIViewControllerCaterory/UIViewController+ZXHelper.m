@@ -3,7 +3,7 @@
 //  Baby
 //
 //  Created by simon on 16/2/24.
-//  Copyright © 2016年 simon. All rights reserved.
+//  Copyright © 2016年 sina. All rights reserved.
 //
 
 #import "UIViewController+ZXHelper.h"
@@ -16,33 +16,6 @@
 #endif
 
 @implementation UIViewController (ZXHelper)
-
-- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data
-{
-    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
-    if (controller)
-    {
-        if (data)
-        {
-            [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-                
-                [controller setValue:obj forKey:key];
-            }];
-        }
-        controller.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-
-- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock
-{
-    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
-    if (toControllerBlock)
-    {
-        toControllerBlock(controller);
-    }
-    [self zx_pushStoryboardViewControllerWithStoryboardName:name identifier:storyboardId withData:data];
-}
 
 
 - (void)zx_presentStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId isNavigationController:(BOOL)flag withData:(nullable NSDictionary *)data completion:(void(^ __nullable)(void))completion
@@ -82,7 +55,7 @@
     {
         NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: NSLocalizedStringFromTable(@"File URL not reachable.", @"", nil)};
         error = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSURLErrorBadURL userInfo:userInfo];
-        NSLog(@"%@",error);
+        DLog(@"%@",error);
         return nil;
     }
     UIStoryboard *sb=[UIStoryboard  storyboardWithName:name  bundle:[NSBundle mainBundle]];

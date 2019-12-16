@@ -1,9 +1,9 @@
 //
 //  UIViewController+ZXNavBarCustom.m
-//  ShiChunTang
+//  MusiceFate
 //
 //  Created by simon on 14/11/1.
-//  Copyright (c) 2014年 simon. All rights reserved.
+//  Copyright (c) 2014年 yinyuetai.com. All rights reserved.
 //
 
 #import "UIViewController+ZXNavBarCustom.h"

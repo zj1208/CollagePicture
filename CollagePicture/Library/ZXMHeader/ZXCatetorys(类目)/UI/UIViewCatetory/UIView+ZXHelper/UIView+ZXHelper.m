@@ -2,17 +2,15 @@
 //  UIView+ZXHelper.m
 //  ShiChunTang
 //
-//  Created by simon on 14/11/1.
-//  Copyright (c) 2014年 simon. All rights reserved.
+//  Created by simon on 13/11/1.
+//  Copyright (c) 2013年 yinyuetai.com. All rights reserved.
 //
 
 #import "UIView+ZXHelper.h"
 
 ////不能用，一旦用了，会无法打包
-#ifdef DEBUG
 #ifndef __OPTIMIZE__
 #define NSLitLog(format, ...) printf(" %s\n", [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
-#endif
 #endif
 
 @implementation UIView (ZXHelper)
@@ -248,7 +246,7 @@
             blank = [NSString stringWithFormat:@"  %@", blank];
         }
             // 打印子视图类名,不能用这个函数宏，无法打包
-        NSLitLog(@"%@%ld: %@", blank, level, subview.class);
+//        NSLitLog(@"%@%ld: %@", blank, level, subview.class);
         // 递归获取此视图的子视图
         [self zx_NSLogSubviewsFromView:subview andLevel:(level+1)];
         

@@ -1,9 +1,9 @@
 //
 //  UIViewController+ZXLoginAndAlert.h
-//  CollagePicture
+//  Baby
 //
 //  Created by simon on 15/7/6.
-//  Copyright (c) 2015年 . All rights reserved.
+//  Copyright (c) 2015年 sina. All rights reserved.
 //
 //  3.14 增加方法
 //  2019.06.12  修复内存警告；

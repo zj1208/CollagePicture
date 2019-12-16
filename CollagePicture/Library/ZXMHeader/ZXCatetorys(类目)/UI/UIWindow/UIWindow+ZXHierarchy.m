@@ -2,8 +2,8 @@
 //  UIWindow+ZXHierarchy.m
 //  YiShangbao
 //
-//  Created by simon on 2018/4/24.
-//  Copyright © 2018年 com.Microants. All rights reserved.
+//  Created by simon on 2017/4/24.
+//  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
 #import "UIWindow+ZXHierarchy.h"
@@ -79,6 +79,31 @@ while循环就是循环结构的一种，当事先不知道循环该执行多少
         }
     }
     return nil;
+}
+
+
+- (CGFloat)zx_safeAreaStatusBarHeight
+{
+    CGFloat statusBarHeight = 0;
+    if (@available(iOS 13.0, *)) {
+         statusBarHeight = [[UIApplication sharedApplication] delegate].window.windowScene.statusBarManager.statusBarFrame.size.height;
+    } else
+    {
+        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    return statusBarHeight;
+}
+
+- (CGFloat)zx_safeAreaBottomHeight
+{
+    CGFloat tmp = 0;
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+        if (areaInset.bottom >0) {
+            tmp = areaInset.bottom;
+        }
+    }
+    return tmp;
 }
 @end
 

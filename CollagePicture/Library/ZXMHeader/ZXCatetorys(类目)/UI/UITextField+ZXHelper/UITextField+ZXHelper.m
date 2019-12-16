@@ -1,9 +1,9 @@
 //
 //  UITextField+ZXHelper.m
-//  CollagePicture
+//  Baby
 //
 //  Created by xielei on 15/12/20.
-//  Copyright © 2015年 mac. All rights reserved.
+//  Copyright © 2015年 sina. All rights reserved.
 //
 
 
@@ -115,7 +115,6 @@
     for (NSTextCheckingResult *match in arrayOfAllMatches)
     {
         NSString* substringForMatch = [url substringWithRange:match.range];
-        NSLog(@"匹配:%@",substringForMatch);
         return YES;
     }
     
@@ -241,7 +240,7 @@ shouldChangeCharactersInRange:(NSRange)range
         //没有选中文本标志
         if (!markedRange)
         {
-            NSLog(@"没有正在输入的");
+            //没有正在输入的
             //截取冥想词
             NSRange range2 = [genString rangeOfComposedCharacterSequenceAtIndex:maxLength];
             textField.text = [genString substringToIndex:range2.location];
@@ -251,7 +250,7 @@ shouldChangeCharactersInRange:(NSRange)range
         }
         else
         {
-            NSLog(@"正在输入中文");
+            //正在输入中文
             NSRange range2 = [genString rangeOfComposedCharacterSequenceAtIndex:maxLength];
             NSInteger remainLength = maxLength-range2.location;
             remainTextBlock(remainLength);

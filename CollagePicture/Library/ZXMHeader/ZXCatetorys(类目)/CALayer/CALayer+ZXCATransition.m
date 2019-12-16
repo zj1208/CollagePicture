@@ -1,9 +1,9 @@
 //
 //  CALayer+ZXCATransition.m
-//  YiShangbao
+//  MusiceFate
 //
-//  Created by simon on 2018/8/13.
-//  Copyright © 2018年 com.Microants. All rights reserved.
+//  Created by simon on 2013/8/13.
+//  Copyright © 2013年 yinyuetai.com. All rights reserved.
 //
 
 #import "CALayer+ZXCATransition.h"

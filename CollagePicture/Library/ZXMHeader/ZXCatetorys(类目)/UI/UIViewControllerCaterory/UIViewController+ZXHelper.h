@@ -3,38 +3,18 @@
 //  Baby
 //
 //  Created by simon on 16/2/24.
-//  Copyright © 2016年 simon. All rights reserved.
+//  Copyright © 2016年 sina. All rights reserved.
 //
 // 2018.01.04 修改优化方法；
 // 2019.06.11 增加连续present的最后页面dismiss到最初的页面；
 
 #import <UIKit/UIKit.h>
-@import StoreKit;
+#import <StoreKit/StoreKit.h>
 #import "UIViewController+ZXSystemBackButtonAction.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (ZXHelper)<SKStoreProductViewControllerDelegate,UIActionSheetDelegate>
-/**
- *  storyboard跳转-push
- *
- *  @param name  storyboardName
- *  @param storyboardId  storyboardID
- *  @param data  参数－dictionary格式
- */
-- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data;
-
-
-/**
- 同上 storyboard跳转-push；
-
- @param name storyboardName
- @param storyboardId storyboardID
- @param data 参数－dictionary格式;kvc传值；
- @param toControllerBlock 返回目标controller
- */
-- (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock;
-
 
 /**
  同上storyboard跳转-present
