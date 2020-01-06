@@ -41,7 +41,7 @@ static const double uiControl_kTimeInterval = 0.5;
         self.timeInterval = self.timeInterval ==0?uiControl_kTimeInterval:self.timeInterval;
         if (self.ignoreEvent)
         {
-            DLog(@"重复点击UIControlEventTouchUpInside");
+//            DLog(@"重复点击UIControlEventTouchUpInside");
             return;
         }
         else if (self.timeInterval>0)

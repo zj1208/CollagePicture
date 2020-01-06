@@ -217,7 +217,7 @@ static NSString * const reuseIdentifier = @"Cell";
     UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
 
      BmobObject *model = (BmobObject *)[self.dataMArray objectAtIndex:indexPath.item];
-    [self zx_pushStoryboardViewControllerWithStoryboardName:@"Main" identifier:SBID_MakingPhotoController withData:@{@"templateType":[model objectForKey:@"type"]}];
+    [self.navigationController zx_pushStoryboardViewControllerWithStoryboardName:@"Main" identifier:SBID_MakingPhotoController withData:@{@"templateType":[model objectForKey:@"type"]}];
 }
 
 

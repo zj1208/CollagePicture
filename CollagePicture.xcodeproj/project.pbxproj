@@ -3936,7 +3936,7 @@
 				TargetAttributes = {
 					F46182171D8129490015BC84 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 4997LQZ4ZU;
+						DevelopmentTeam = M48557B98W;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -4634,7 +4634,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 4997LQZ4ZU;
+				DEVELOPMENT_TEAM = M48557B98W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4674,7 +4674,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 4997LQZ4ZU;
+				DEVELOPMENT_TEAM = M48557B98W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
