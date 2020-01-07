@@ -4654,7 +4654,7 @@
 					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/CollagePicture/Library/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.microants.collagePicture;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Chs.collagePicture;
 				PRODUCT_NAME = "美颜拼图";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4694,7 +4694,7 @@
 					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/CollagePicture/Library/JPush",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.microants.collagePicture;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Chs.collagePicture;
 				PRODUCT_NAME = "美颜拼图";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CollagePicture/Controllers/MyCenterController/Controller/TemplateMake/TemplateListController/CollagePicture-Bridging-Header.h";
