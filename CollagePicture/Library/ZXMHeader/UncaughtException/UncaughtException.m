@@ -2,8 +2,8 @@
 //  UncaughtException.m
 //  iflying
 //
-//  Created by 飞扬旅游集团 on 14-1-7.
-//  Copyright (c) 2014年 simon. All rights reserved.
+//  Created by simon on 14-1-7.
+//  Copyright (c) 2014年 yinyuetai.com. All rights reserved.
 //
 
 #import "UncaughtException.h"
@@ -42,15 +42,6 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
     return backtrace;
 }
 
-- (void)alertView:(UIAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)anIndex
-{
-    if (anIndex == 0)
-    {
-        dismissed = YES;
-    }else if (anIndex==1) {
-        NSLog(@"ssssssss");
-    }
-}
 
 - (void)validateAndSaveCriticalApplicationData
 {
@@ -66,19 +57,25 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
                                                                      @"异常原因如下:\n%@\n%@", nil),
                          [exception reason],
                          [[exception userInfo] objectForKey:UncaughtExceptionHandlerAddressesKey]];
-    UIAlertView *alert =
-    [[UIAlertView alloc]
-      initWithTitle:NSLocalizedString(@"抱歉，程序出现了异常", nil)
-      message:message
-      delegate:self
-      cancelButtonTitle:NSLocalizedString(@"退出", nil)
-      otherButtonTitles:NSLocalizedString(@"继续", nil), nil];
-    [alert show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"抱歉，程序出现了异常", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    __weak __typeof (&*self)weakSelf = self;
+    UIAlertAction *action1 =[UIAlertAction actionWithTitle:NSLocalizedString(@"退出", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        weakSelf.dismissed = YES;
+    }];
+    UIAlertAction *action2 =[UIAlertAction actionWithTitle:NSLocalizedString(@"继续", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"ssssssss");
+    }];
+    [alert addAction:action1];
+    [alert addAction:action2];
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    UIViewController *vc = window.rootViewController;
+    [vc presentViewController:alert animated:YES completion:nil];
     
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
     CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
     
-    while (!dismissed)
+    while (!self.dismissed)
     {
         for (NSString *mode in (__bridge NSArray *)allModes)
         {

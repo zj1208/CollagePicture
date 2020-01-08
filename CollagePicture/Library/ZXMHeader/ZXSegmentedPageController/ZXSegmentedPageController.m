@@ -220,7 +220,7 @@
         return nil;
     }
     index ++;
-    NSLog(@"pageViewController,下一页Index=%ld",index);
+    NSLog(@"pageViewController,下一页Index=%ld",(long)index);
     return [self.pages objectAtIndex:index];
     
 }

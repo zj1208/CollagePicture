@@ -72,9 +72,9 @@ NSString *const kNewFunctionGuide = @"kNewFunctionGuide";
     [self dismissViewControllerAnimated:YES completion:^{
        
         [weakSelf firstLaunchApp];
-        if ([_delegate respondsToSelector:@selector(zxNewFuntionGuideControllerAction)])
+        if ([weakSelf.delegate respondsToSelector:@selector(zxNewFuntionGuideControllerAction)])
         {
-            [_delegate zxNewFuntionGuideControllerAction];
+            [weakSelf.delegate zxNewFuntionGuideControllerAction];
         }
        
     }];

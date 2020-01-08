@@ -213,14 +213,13 @@ static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
     {
         selectContent = [_titles objectAtIndex:indexPath.row];
     }
-    WS(weakSelf);
+    __weak __typeof(self)weakSelf = self;
     [self dismissViewControllerAnimated:YES completion:^{
         
-         if ([_btnActionDelegate respondsToSelector:@selector(zx_alertChoseController:clickedButtonAtIndex:content:userInfo:)])
+         if ([weakSelf.btnActionDelegate respondsToSelector:@selector(zx_alertChoseController:clickedButtonAtIndex:content:userInfo:)])
          {
-             [_btnActionDelegate zx_alertChoseController:weakSelf clickedButtonAtIndex:indexPath.row content:selectContent userInfo:_userInfo];
+             [weakSelf.btnActionDelegate zx_alertChoseController:weakSelf clickedButtonAtIndex:indexPath.row content:selectContent userInfo:weakSelf.userInfo];
          }
-
     }];
 }
 

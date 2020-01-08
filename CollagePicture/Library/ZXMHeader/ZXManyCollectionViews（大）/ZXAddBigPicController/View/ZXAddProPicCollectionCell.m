@@ -59,25 +59,24 @@
 
 - (void)setData:(id)data
 {
-    
+    __weak __typeof(&*self)weakSelf = self;
+
     if ([data isEqual:[NSNull null]])
     {
         [self.itemView.picBtn sd_setImageWithURL:nil forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
-            _itemView.origContainerView.hidden = [_itemView.picBtn currentImage]?YES:NO;
-            _itemView.deleteBtn.hidden = !_itemView.origContainerView.hidden;
+            weakSelf.itemView.origContainerView.hidden = [weakSelf.itemView.picBtn currentImage]?YES:NO;
+            weakSelf.itemView.deleteBtn.hidden = !weakSelf.itemView.origContainerView.hidden;
         }];
     }
     else
     {
-         _itemView.origContainerView.hidden =YES;
+        self.itemView.origContainerView.hidden =YES;
         ZXPhoto *photo = (ZXPhoto *)data;
         NSURL *picURL = [NSURL URLWithString:photo.thumbnail_pic];
         [self.itemView.picBtn sd_setImageWithURL:picURL forState:UIControlStateNormal placeholderImage:nil options:SDWebImageHighPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
-            
-            _itemView.deleteBtn.hidden = !_itemView.origContainerView.hidden;
-            
+            weakSelf.itemView.deleteBtn.hidden = !weakSelf.itemView.origContainerView.hidden;
         }];
     }
 }

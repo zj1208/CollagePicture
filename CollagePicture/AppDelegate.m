@@ -388,8 +388,10 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 {
     [JPUSHService setBadge:0];
     //自定义用户通知交互事件
-    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:nil message:@"iOS9-didReceiveRemoteNotification" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-    [alerView show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"iOS9-didReceiveRemoteNotification" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 =[UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:action1];
+    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
 

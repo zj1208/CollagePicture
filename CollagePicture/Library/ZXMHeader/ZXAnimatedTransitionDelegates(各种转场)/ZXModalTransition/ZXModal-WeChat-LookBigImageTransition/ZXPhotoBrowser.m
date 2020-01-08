@@ -12,7 +12,7 @@
 #import "ZXOverlay.h"
 #import "SDWebImageManager.h"
 
-@interface ZXPhotoBrowser ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ZXOverlayDelegate,UIGestureRecognizerDelegate>
+@interface ZXPhotoBrowser ()<ZXOverlayDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIImageView *imageView;
 
@@ -190,8 +190,6 @@
         
         UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:flowLayout];
         collection.backgroundColor = [UIColor clearColor];
-        collection.delegate = self;
-        collection.dataSource = self;
         collection.pagingEnabled = YES;
 //        [collection registerNib:[UINib nibWithNibName:NSStringFromClass([ZXBadgeCollectionCell class]) bundle:nil] forCellWithReuseIdentifier:reuseTagsCell];
         collection.showsHorizontalScrollIndicator = NO;
