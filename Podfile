@@ -1,13 +1,14 @@
-platform:ios,8.0
+platform:ios,9.0
 #忽略警告
 inhibit_all_warnings!
 #使用动态库，不用静态库加载，优化APP体积
 use_frameworks!
-
 #source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git'
 #source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecsMirror.git'
 
 target "CollagePicture" do
+
+#source 'https://github.com/CocoaPods/Specs.git'
 
 #通用标准库
 pod 'AFNetworking', '~> 3.1.0'
@@ -39,8 +40,10 @@ pod 'MJRefresh', '~> 3.1.14'
 #'~> 1.6.9'－2.1.7
 pod 'BmobSDK'
 pod 'AliyunOSSiOS', '~> 2.6.3'
-#  友盟统计
-pod 'UMengAnalytics', '~> 4.2.4'
+
+#友盟统计-自动依赖UMCCommon2.1.1
+pod 'UMCAnalytics','6.0.5'
+
 # U-Share SDK UI模块（分享面板，建议添加）
 #pod 'UMengUShare/UI'
 ## 集成新浪微博

@@ -11,8 +11,8 @@
 
 NSString *const kNotificationUserLoginIn = @"kNotificationUserLoginIn";
 NSString *const kNotificationUserLoginOut =@"kNotificationUserLoginOut";
-NSString *const kNotificationUpdateUserInfo = @"kNotificationUpdateUserInfo";
-NSString *const kNotificationUserTokenError = @"kNotificationUserTokenError";
+NSNotificationName const kNotificationUpdateUserInfo = @"kNotificationUpdateUserInfo";
+NSNotificationName const kNotificationUserTokenError = @"kNotificationUserTokenError";
 
 
 static NSString *const ud_saveVersion = @"ud_saveVersion";
@@ -152,7 +152,6 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
         objc_property_t property = properties [i];
         const char *propertyName = property_getName(property);
         NSString *strName = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",strName);
         [UserDefault removeObjectForKey:strName];
     }
     free(properties);
@@ -171,15 +170,11 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
         objc_property_t property = properties [i];
         const char *propertyName = property_getName(property);
         NSString *strName = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",strName);
         id getIvar = [model valueForKey:strName];
         [UserDefault setObject:getIvar forKey:strName];
         
     }
     free(properties);
-    NSLog(@"%u",count);
-    
-    NSLog(@"%@",[UserDefault objectForKey:@"mobile"]);
 }
 
 + (void)setPropertyImplementationValue:(id)value forKey:(NSString *)key

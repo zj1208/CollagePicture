@@ -462,10 +462,7 @@
     if (@available(iOS 11.0, *))
     {
         UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-            safeAreaBottom = areaInset.bottom;
-        }else{
-        }
+        safeAreaBottom = areaInset.bottom;
     }
     
     overlay.frame = CGRectMake(0, 0, CGRectGetWidth(view.frame), CGRectGetHeight(view.frame));
@@ -480,7 +477,6 @@
     
     self.frame = CGRectMake(0, CGRectGetHeight(view.bounds), CGRectGetWidth(view.frame), CGRectGetHeight(self.frame));
     
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [UIView animateWithDuration:0.3 animations:^{
         
         CGRect rect = self.frame;
@@ -489,7 +485,6 @@
         
     } completion:^(BOOL finished) {
         
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     }];
 }
 

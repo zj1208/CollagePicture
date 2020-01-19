@@ -1,0 +1,281 @@
+//
+//  UIButton+ZXHelper.m
+//  MusiceFate
+//
+//  Created by simon on 13/3/21.
+//  Copyright © 2013年 yinyuetai.com. All rights reserved.
+//
+
+#import "UIButton+ZXHelper.h"
+
+@implementation UIButton (ZXHelper)
+
+- (void)zx_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize
+{
+    const int DEFAULT_SPACING =6.0f;
+    [self zx_centerVerticalImageAndTitleWithSpace:DEFAULT_SPACING titleFontOfSize:fontSize];
+}
+
+- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize
+{
+    self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
+    
+    //    这个一定要是image 和 title ／sizeToThat 下的最小尺寸；如果你设置btn的width比较小，这里的self.imageView和self.titleLabel就会被压缩变小；因为高度只能取到最大的高度，所以没法取；
+    CGSize size = [self sizeThatFits:CGSizeMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    CGFloat tenmpt  = CGRectGetWidth(self.frame);
+    if (CGRectGetWidth(self.frame)<size.width)
+    {
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width,CGRectGetHeight(self.frame));
+    }
+    CGSize imageSize = self.imageView.frame.size;
+    CGSize titleSize = self.titleLabel.frame.size;
+    CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
+    
+    if (CGRectGetHeight(self.frame)<totalHeight)
+    {
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), CGRectGetWidth(self.frame),totalHeight);
+    }
+    
+    self.imageEdgeInsets = UIEdgeInsetsMake(- (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
+    self.titleEdgeInsets = UIEdgeInsetsMake(0.0, - imageSize.width, - (totalHeight - titleSize.height),0.0);
+    
+    //    如果设置所要求的btnframe的width是固定的比较小，可以先设置中间，然后再设置回原来的width；
+    self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), tenmpt,CGRectGetHeight(self.frame));
+}
+
+
+- (void)zx_setImagePositionWithType:(ZXButtonContentType)type spacing:(CGFloat)spacing
+{
+    switch (type) {
+        case ZXButtonContentTypeImageLeftTitleRight:{
+            [self zx_centerXLeftImageAndRightTitleWithSpace:spacing];
+            break;
+        }
+        case ZXButtonContentTypeImageRightTitleLeft:
+            [self zx_centerXRightImageAndLeftTitleWithSpace:spacing];
+        default:
+            break;
+    }
+}
+
+
+/**
+设置button按钮默认左边图标+右边文字，设置间距；
+@param spacing image和title的间距；
+*/
+- (void)zx_centerXLeftImageAndRightTitleWithSpace:(CGFloat)spacing
+{
+    // 如果当前button的frame比实际计算的小，一定要重新设置frame；
+    // 不然动态改变title的时候，当前frame的size和内部控件布局无法及时改变；造成bug;
+    CGSize size = [self sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+    if (CGRectGetWidth(self.frame)< (size.width+spacing))
+    {
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width+spacing,CGRectGetHeight(self.frame));
+        [self layoutIfNeeded];//必须
+    }
+    self.imageEdgeInsets= UIEdgeInsetsMake(0, 0, 0,floorf(spacing/2));
+    self.titleEdgeInsets= UIEdgeInsetsMake(0, floorf(spacing/2), 0, 0);
+}
+
+/**
+设置button按钮左边文字+右边图标，设置间距；
+@param spacing image和title的间距；
+*/
+- (void)zx_centerXRightImageAndLeftTitleWithSpace:(CGFloat)spacing
+{
+//    UIImage *currentImage = [self imageForState:UIControlStateNormal];
+//    CGSize imageSize = currentImage.size;
+//    NSString *currentTitle = [self titleForState:UIControlStateNormal];
+//    CGSize titleSize = [NSString zx_boundingSizeOfString:currentTitle WithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+//    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+//        CGFloat titleMaxHeight;
+//        NSLineBreakMode lineBreakMode = self.titleLabel.lineBreakMode;
+//        if (lineBreakMode == NSLineBreakByWordWrapping || lineBreakMode == NSLineBreakByCharWrapping) {
+//            titleMaxHeight = HUGE;
+//        } else {
+//            titleMaxHeight = self.titleLabel.font.pointSize;
+//        }
+//
+//        CGSize titleMaxSize = CGSizeMake(CGRectGetWidth(self.frame) - (imageSize.width + spacing), titleMaxHeight);
+//        titleSize =  [NSString zx_boundingSizeOfString:currentTitle WithSize:titleMaxSize font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+//    }
+//    self.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width + spacing, 0, - titleSize.width);
+//    self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, 0, imageSize.width + spacing);
+//    self.backgroundColor = [UIColor redColor];
+//    CGFloat width = imageSize.width+titleSize.width+spacing;
+//
+    
+// 如果当前button的frame比实际计算的小，一定要重新设置frame；
+// 不然动态改变title的时候，当前frame的size和内部控件布局无法及时改变；造成bug;
+    CGSize size = [self sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+    if (CGRectGetWidth(self.frame)< (size.width+spacing))
+    {
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width+spacing,CGRectGetHeight(self.frame));
+        [self layoutIfNeeded];//必须
+    }
+    self.imageEdgeInsets = UIEdgeInsetsMake(0, CGRectGetWidth(self.titleLabel.bounds) + spacing, 0, - CGRectGetWidth(self.titleLabel.bounds));
+    self.titleEdgeInsets = UIEdgeInsetsMake(0, - CGRectGetWidth(self.imageView.bounds), 0, CGRectGetWidth(self.imageView.bounds) + spacing);
+}
+
+
+- (void)zx_buttonExclusiveTouch
+{
+    self.exclusiveTouch = YES;
+}
+
+
+
+- (NSIndexPath *)zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:(UIScrollView *)view
+{
+    CGPoint point = self.center;
+    point = [view convertPoint:point fromView:self.superview];
+    if ([view isKindOfClass:[UITableView class]])
+    {
+        UITableView *tableView = (UITableView *)view;
+        NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:point];
+        return indexPath;
+    }
+    if ([view isKindOfClass:[UICollectionView class]])
+    {
+        UICollectionView *tableView = (UICollectionView *)view;
+        NSIndexPath* indexPath = [tableView indexPathForItemAtPoint:point];
+        return indexPath;
+    }
+    return nil;
+}
+
+
+
+
+- (void)zh_userInteractionEnabled:(BOOL)enabled switchEnableTitleColor:(UIColor *)color1 enableBgColor:(UIColor *)color2
+{
+    self.userInteractionEnabled = enabled;
+    if (enabled)
+    {
+        self.layer.borderColor = [color1 CGColor];
+        self.layer.borderWidth = 1;
+        [self setBackgroundColor:color2];
+        [self setTitleColor:color1 forState:UIControlStateNormal];
+    }
+    else
+    {
+        self.layer.borderColor = [[UIColor clearColor]CGColor];
+        [self setBackgroundColor:color1];
+        [self setTitleColor:color2 forState:UIControlStateNormal];
+    }
+}
+
+- (void)zh_userInteractionEnabled:(BOOL)enabled titleColor:(UIColor *)color1 bgColor:(UIColor *)color2
+{
+    self.userInteractionEnabled = enabled;
+    self.layer.borderColor = [color1 CGColor];
+    self.layer.borderWidth = 1;
+    [self setBackgroundColor:color2];
+    [self setTitleColor:color1 forState:UIControlStateNormal];
+
+}
+
+- (void)zh_userSwitchWhiteAndLightGrayColorWithInteractionEnabled:(BOOL)enabled;
+{
+//    self.layer.masksToBounds = YES;
+//    self.layer.cornerRadius = CGRectGetHeight(self.frame)/2;
+    self.userInteractionEnabled = enabled;
+    if (enabled)
+    {
+        self.layer.borderColor = [[UIColor blackColor]CGColor];
+        self.layer.borderWidth = 1;
+        [self setBackgroundColor:[UIColor whiteColor]];
+        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
+    else
+    {
+        self.layer.borderColor = [[UIColor clearColor]CGColor];
+        [self setBackgroundColor:[UIColor lightGrayColor]];
+        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    
+}
+
+
+- (void)zh_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled
+{
+    self.userInteractionEnabled = enabled;
+    if (enabled)
+    {
+        self.alpha = 1;
+    }
+    else
+    {
+        self.alpha = 0.5;
+    }
+}
+
+- (void)zh_userSelectedEnabled:(BOOL)enabled boardColor:(UIColor*)boardColor
+{
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = CGRectGetHeight(self.bounds)/2;
+    self.layer.borderColor = [boardColor CGColor];
+    self.layer.borderWidth = 1;
+    
+    self.selected = enabled;
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [self setTitleColor:boardColor forState:UIControlStateNormal];
+    UIImage *img = [self imageWithColor:boardColor andSize:self.frame.size opaque:NO];
+    [self setBackgroundImage:img forState:UIControlStateSelected];
+    [self setBackgroundImage:nil forState:UIControlStateNormal];
+}
+
+- (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size opaque:(BOOL)opaque
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, opaque, 1);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+
+- (void)zh_setImage:(UIImage *)image1 selectImage:(UIImage *)image2  titleColor:(UIColor *)color1 selectTitleColor:(UIColor *)color2
+{
+    [self setImage:image1 forState:UIControlStateNormal];
+    [self setImage:image2 forState:UIControlStateSelected];
+    [self setTitleColor:color2 forState:UIControlStateSelected];
+    [self setTitleColor:color1 forState:UIControlStateNormal];
+
+}
+
+- (void)zh_setTowOfLinesStringWithLineSpace:(CGFloat)space firstLineWithAttributedTitle:(nullable NSAttributedString *)attributed1 secondLineWithAttributedTitle:(nullable NSAttributedString *)attributed2
+{
+    self.titleLabel.numberOfLines = 0;
+
+    NSMutableAttributedString *mAttributedString = [[NSMutableAttributedString alloc] initWithAttributedString:attributed1];
+//    [mAttributedString appendAttributedString:attributed1];
+    NSAttributedString *lineAttri = [[NSAttributedString alloc] initWithString:@"\n"];
+    [mAttributedString appendAttributedString:lineAttri];
+    [mAttributedString appendAttributedString:attributed2];
+        
+    NSMutableParagraphStyle *paragraph = [[NSParagraphStyle defaultParagraphStyle]mutableCopy];
+    paragraph.lineSpacing = space;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSParagraphStyleAttributeName:paragraph};
+    
+    [mAttributedString addAttributes:attributes range:NSMakeRange(0, mAttributedString.mutableString.length)];
+    
+     [self setAttributedTitle:mAttributedString forState:UIControlStateNormal];
+}
+
+
+- (void)zh_setButtonImageViewScaleAspectFill
+{
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.contentHorizontalAlignment= UIControlContentHorizontalAlignmentFill;
+    self.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+}
+@end
+
+
+

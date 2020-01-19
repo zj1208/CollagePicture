@@ -318,10 +318,7 @@
     if (@available(iOS 11.0, *))
     {
         UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-            safeAreaBottom = areaInset.bottom;
-        }else{
-        }
+        safeAreaBottom = areaInset.bottom;
     }
 
     if (flag)

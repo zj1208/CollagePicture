@@ -13,16 +13,16 @@
 
 + (void)load
 {
-   [super load];
     if(@available(iOS 11.0, *))
     {
-        zxSwizzling_exchangeMethod([self class], @selector(viewDidLoad), @selector(addViewDidLoad));
+        zxSwizzling_exchangeMethod([self class], @selector(viewDidLoad), @selector(zx_ViewDidLoad));
     }
 }
 
-- (void)addViewDidLoad
+- (void)zx_ViewDidLoad
 {
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:nil action:nil];
+    [self zx_ViewDidLoad];
 }
 
 @end
@@ -34,8 +34,6 @@
 // pushViewController的时候，controller已经push过去了；再来pushNatigationItem；
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item
 {
-//    NSLog(@"item.title=%@,topController:%@",item.title,self.topViewController);
-//    NSLog(@"topItem=%@,backItem:%@",navigationBar.topItem,navigationBar.backItem);
 //    如果上一页导航条隐藏，当前页“我接的生意”，下一页“生意”；
 //topItem=<<UINavigationItem: 0x7fe2e77408f0>: title:'我接的生意'>,backItem:<<UINavigationItem: 0x7fe2e752e9b0>: title:'(null)'>
 //   navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:nil action:nil];

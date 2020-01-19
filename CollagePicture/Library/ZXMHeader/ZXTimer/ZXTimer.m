@@ -11,17 +11,16 @@
 
 @interface ZXTimer ()
 
-@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) BOOL repeats;
 
 - (void)onTimer:(NSTimer *)timer;
 @end
 
 @implementation ZXTimer
-
+//在外部直接调用当前对象 = nil，是依然无法进入dealloc的，即无法释放当前对象，因为当前对象被timer强引用添加到runloop了；
 - (void)dealloc
 {
-    [self stopTimer];
+
 }
 
 
@@ -31,7 +30,6 @@
     self.repeats = repeats;
     if (self.timer) {
         [self.timer invalidate];
-        self.timer = nil;
     }
     self.timer = [NSTimer scheduledTimerWithTimeInterval:ti target:self selector:@selector(onTimer:) userInfo:userInfo repeats:repeats];
 }
@@ -45,7 +43,6 @@
     self.repeats = repeats;
     if (self.timer) {
         [self.timer invalidate];
-        self.timer = nil;
     }
     self.timer = [NSTimer timerWithTimeInterval:ti target:self selector:@selector(onTimer:) userInfo:userInfo repeats:repeats];
 }
@@ -57,8 +54,7 @@
 
 - (void)stopTimer
 {
-    [_timer invalidate];
-    self.timer = nil;
+    [self.timer invalidate];
     self.timerDelegate = nil;
 }
 

@@ -294,7 +294,17 @@
 - (void)zx_performCallPhoneApplication:(NSString *)phone
 {
     NSString *allString = [NSString stringWithFormat:@"tel:%@",phone];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:allString]];
+    NSURL *url =[NSURL URLWithString:allString];
+    if ([[UIApplication sharedApplication] canOpenURL:url])
+    {
+        if (@available(iOS 10.0,*)) {
+            [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
+        }
+        else
+        {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
 }
 
 

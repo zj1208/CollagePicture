@@ -8,6 +8,9 @@
 //  简介：自己根据Photos.framework框架封装的相册所属照片选择器；主要根据TZImagePickerController间接优化；
 //       目前还没有完善，只完成40%的功能及效果；待优化；
 
+//  2019.11.28 修改iPhoneX系列判断
+
+
 #import <UIKit/UIKit.h>
 #import "ZXPHPhotoManager.h"
 #import "ZXAuthorizationManager.h"

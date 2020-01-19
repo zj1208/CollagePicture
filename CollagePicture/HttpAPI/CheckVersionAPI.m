@@ -15,7 +15,10 @@
 static NSString *const kAPPErrorDomain = @"com.CheckVersionAPI.domain";
 static NSInteger const kAPPErrorCode = 5000;
 
-
+//检查版本更新请求数据用的
+#ifndef kITUNESURL
+#define kITUNESURL @"http://itunes.apple.com"
+#endif
 
 @implementation CheckVersionAPI
 
@@ -34,17 +37,14 @@ static NSInteger const kAPPErrorCode = 5000;
 - (void)checkVersionSuccessWithAppId:(NSString *)appId success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
     NSURL *baseURL = [NSURL URLWithString:kITUNESURL];
-
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
    
-    
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval =20.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-    
     NSDictionary *dic = @{@"id":appId};
-//    WS(weakSelf);
-   
+    
+    __weak __typeof(&*self)weakSelf = self;
     [manager GET:@"lookup" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -66,18 +66,15 @@ static NSInteger const kAPPErrorCode = 5000;
                      
                      success([di objectForKey:@"version"]);
                  }
-                 
              }
-
          }
         else
         {
             if (failure)
             {
-                NSError *error= [self customErrorWithObject:@"已经是最新版本了" errorCode:kAPPErrorCode userInfoErrorCode:nil];
+                NSError *error= [weakSelf customErrorWithObject:@"已经是最新版本了" errorCode:kAPPErrorCode userInfoErrorCode:nil];
                 failure(error);
             }
-
         }
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -85,12 +82,10 @@ static NSInteger const kAPPErrorCode = 5000;
         NSLog(@"%@,%@",error,@(error.code));
         if (failure)
         {
-            error = [self getErrorFromError:error];
+            error = [weakSelf getErrorFromError:error];
             failure(error);
         }
-
     }];
-
 }
 
 - (NSError *)getErrorFromError:(NSError *)error
@@ -154,7 +149,8 @@ static NSInteger const kAPPErrorCode = 5000;
     NSString *jsonData  = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
     NSLog(@"%@",jsonData);
     
-    id dic =[NSString zx_getJSONSerializationObjectFormString:jsonData];
+    
+    id dic =[self getJSONSerializationObjectFromString:jsonData];
     if (dic)
     {
         NSArray *results = [dic objectForKey:@"results"];
@@ -166,15 +162,31 @@ static NSInteger const kAPPErrorCode = 5000;
 }
 
 
+- (nullable id)getJSONSerializationObjectFromString:(nullable NSString *)string
+{
+    if ([NSString zhIsBlankString:string])
+    {
+        return nil;
+    }
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error=nil;
+    id dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+    if (!error && data)
+    {
+        return dic;
+    }
+    return nil;
+}
+
 
 -(void)checkVersionUpdateWithController:(UIViewController *)controller
 {
     [MBProgressHUD zx_showLoadingWithStatus:@"正在检查版本更新" toView:nil];
-    WS(weakSelf);
+    __weak __typeof(&*self)weakSelf = self;
     [[CheckVersionAPI shareInstance]checkVersionSuccessWithAppId:kAPPID success:^(id data) {
         
         [MBProgressHUD zx_hideHUDForView:nil];
-        _itunesVersion = data;
+        weakSelf.itunesVersion = data;
         [weakSelf versionCompare];
         
     } failure:^(NSError *error) {

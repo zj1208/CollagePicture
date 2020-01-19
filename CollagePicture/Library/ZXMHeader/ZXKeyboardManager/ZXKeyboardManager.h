@@ -8,6 +8,8 @@
 //  简介：针对tableView/collectionView/scrollView /self.view上某个层级的子视图为UITextField，或textView的时候，弹出键盘，让输入控件区域滚动到可见区域；
 //  待优化：没有对self.view不是滚动视图做处理；交互效果待更好优化；
 
+//  2019.11.28 修改iPhoneX系列判断
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

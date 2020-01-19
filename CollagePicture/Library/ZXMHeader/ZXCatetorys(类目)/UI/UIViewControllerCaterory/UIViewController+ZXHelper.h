@@ -7,6 +7,7 @@
 //
 // 2018.01.04 修改优化方法；
 // 2019.06.11 增加连续present的最后页面dismiss到最初的页面；
+// 2020.01.02 openURL方法增加兼容
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -53,13 +54,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  拨打电话，是否需要添加actionSheet提示
-
  @param phone 电话号码
- @param alertController 是否需要添加UIAlertController提示 
- // UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"您还没有登录，是否需要登录", nil) preferredStyle:UIAlertControllerStyleAlert];
+ @param flag 是否需要添加UIAlertController提示
 
+ 注意：
+ 如果指定的URL scheme由另一个app应用程序处理，options可以使用通用链接的key。空的options字典与旧的openURL调用是相同的；
+ 当openURL:options:completionHandler:方法的选项字典中有这个key时，如果设置为YES, 则URL必须是通用链接，并且有一个已安装的应用程序被用于打开该URL时，当前app才会打开URL。
+ 如果没有其它app应用程序配置这个通用链接，或者用户设置NO禁用打开链接，则completion handler 回调里的success为false(NO)；
  */
-- (void)zx_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController;
+- (void)zx_callIphone:(NSString *)phone withAlertControllerFlag:(BOOL)flag;
 
 
 /**

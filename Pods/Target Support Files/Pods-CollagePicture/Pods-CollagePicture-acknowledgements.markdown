@@ -506,9 +506,14 @@ SOFTWARE.
 
 
 
-## UMengAnalytics
+## UMCAnalytics
 
-Copyright 2011 - 2015 UMeng.com. All rights reserved.
+Copyright 2011 - 2019 umeng.com. All rights reserved.
+
+
+## UMCCommon
+
+Copyright 2011 - 2019 umeng.com. All rights reserved.
 
 
 ## WebViewJavascriptBridge

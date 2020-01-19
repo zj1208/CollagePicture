@@ -10,6 +10,7 @@
 // 2019.3.12  增加设置遮罩方法；
 // 2019.3.28  增加设置哪个圆角的二种方法；
 // 2019.11.26 添加DEBUG打印判断
+// 2020.01.02 openURL方法增加兼容
 
 #import <UIKit/UIKit.h>
 
@@ -180,9 +181,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- 拨打电话2-UIApplication openURL方式；
- 这个方式是上面方式的根本；
+ 拨打电话2-UIApplication openURL方式；这个方式是上面方式的根本；
  @param phone 电话号码
+ 
+ 注意：
+ 如果指定的URL scheme由另一个app应用程序处理，options可以使用通用链接的key。空的options字典与旧的openURL调用是相同的；
+ 当openURL:options:completionHandler:方法的选项字典中有这个key时，如果设置为YES, 则URL必须是通用链接，并且有一个已安装的应用程序被用于打开该URL时，当前app才会打开URL。
+ 如果没有其它app应用程序配置这个通用链接，或者用户设置NO禁用打开链接，则completion handler 回调里的success为false(NO)；
  */
 - (void)zx_performCallPhoneApplication:(NSString *)phone;
 

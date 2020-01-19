@@ -29,15 +29,15 @@
 
 + (instancetype)sharedInstance
 {
-    static id  singletonInstance = nil;
+    static id  instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (!singletonInstance)
+        if (!instance)
         {
-            singletonInstance = [[super allocWithZone:NULL] init];
+            instance = [[super allocWithZone:NULL] init];
         }
     });
-    return singletonInstance;
+    return instance;
 }
 
 

@@ -22,20 +22,16 @@
 #endif
 
 #ifndef IS_IPHONE_XX
-// iphoneX系列判断是否有safeAreaInsets的值，其他是0;
-// iPhoneX :{44, 0, 34, 0}
 #define IS_IPHONE_XX ({\
 int tmp = 0;\
 if (@available(iOS 11.0, *)) { \
-UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
-if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
- tmp = 1;\
-}else{\
-tmp = 0;\
-}\
+    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+    if (areaInset.bottom >0) { \
+        tmp = 1;\
+    }\
 }\
 else{\
-tmp = 0;\
+    tmp = 0;\
 }\
 tmp;\
 })
@@ -48,7 +44,6 @@ tmp;\
 #ifndef LCDScale_5Equal6_To6plus
 #define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_XX)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
 #endif
-
 @implementation ZXBadgeCollectionCell
 
 - (void)awakeFromNib

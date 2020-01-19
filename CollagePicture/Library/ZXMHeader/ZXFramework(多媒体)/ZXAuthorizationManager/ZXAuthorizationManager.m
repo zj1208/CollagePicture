@@ -54,8 +54,7 @@
 - (void)zx_requestUserNotificationAuthorizationWithDeniedAlertViewInViewController:(nullable UIViewController *)sourceController call:(void(^)(ZXAuthorizationStatus status))callback
 {
     
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0)
-    {
+    if (@available(iOS 10.0, *)) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
             
@@ -207,10 +206,22 @@
             title =[NSString stringWithFormat:@"请在iPhone的\"设置-隐私-相机\"选项中，\r允许%@访问你的手机相机",self.appDisplayName];
         }
         [self presentGeneralAlertInViewController:sourceController withTitle:title message:nil cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"去设置" doHandler:^(UIAlertAction *action) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            
+//            如果指定的URL scheme由另一个app应用程序处理，options可以使用通用链接的key。空的options字典与旧的openURL调用是相同的；
+//            当openURL:options:completionHandler:方法的选项字典中有这个key时，如果设置为YES, 则URL必须是通用链接，并且有一个已安装的应用程序被用于打开该URL时，当前app才会打开URL。
+//            如果没有其它app应用程序配置这个通用链接，或者用户设置NO禁用打开链接，则completion handler 回调里的success为false(NO);
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            if (@available(iOS 10.0,*)) {
+                [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:url];
+            }
         }];
     }
 }
+
 
 
 

@@ -11,7 +11,7 @@
 //  2018.2.7 新增红点的专用imageView；
 //  2018.3.22 新增注释；
 //  2019.10.26 占位符图片代码修改；
-
+//  2019.11.28 修改iPhoneX系列判断
 
 #import <UIKit/UIKit.h>
 #import "BadgeMarkItemModel.h"

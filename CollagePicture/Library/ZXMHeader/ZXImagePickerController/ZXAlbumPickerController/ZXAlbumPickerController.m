@@ -89,11 +89,7 @@
     UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *))
     {
-        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-            safeAreaInsets = areaInset;
-        }else{
-        }
+        safeAreaInsets = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
     }
     if (@available(iOS 11.0, *))         {
         UILayoutGuide *layoutGuide_superView = self.view.safeAreaLayoutGuide;

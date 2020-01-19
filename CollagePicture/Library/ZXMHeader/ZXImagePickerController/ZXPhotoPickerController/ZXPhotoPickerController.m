@@ -17,15 +17,13 @@
 #define IS_IPHONE_XX ({\
 int tmp = 0;\
 if (@available(iOS 11.0, *)) { \
-UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
-if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
-tmp = 1;\
-}else{\
-tmp = 0;\
-}\
+    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+    if (areaInset.bottom >0) { \
+        tmp = 1;\
+    }\
 }\
 else{\
-tmp = 0;\
+    tmp = 0;\
 }\
 tmp;\
 })
@@ -240,11 +238,7 @@ tmp;\
     UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *))
     {
-        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-            safeAreaInsets = areaInset;
-        }else{
-        }
+        safeAreaInsets = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
     }
     if (@available(iOS 11.0, *))         {
         UILayoutGuide *layoutGuide_superView = self.view.safeAreaLayoutGuide;

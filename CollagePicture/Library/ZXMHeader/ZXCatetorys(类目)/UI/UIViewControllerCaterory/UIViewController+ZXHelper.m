@@ -55,7 +55,6 @@
     {
         NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: NSLocalizedStringFromTable(@"File URL not reachable.", @"", nil)};
         error = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSURLErrorBadURL userInfo:userInfo];
-//        DLog(@"%@",error);
         return nil;
     }
     UIStoryboard *sb=[UIStoryboard  storyboardWithName:name  bundle:[NSBundle mainBundle]];
@@ -122,6 +121,9 @@
         if ([[UIApplication sharedApplication] canOpenURL:url])
         {
             if (@available(iOS 10.0,*)) {
+//              如果指定的URL scheme由另一个app应用程序处理，options可以使用通用链接的key。空的options字典与旧的openURL调用是相同的；
+//              当有这个key，如果设置为YES, 则URL必须是通用链接，并且有一个已安装的应用程序被用于打开该URL时，当前app才会打开URL。
+//              如果没有其它app应用程序配置这个通用链接，或者用户设置NO禁用打开链接，则completion handler 回调里的success为false(NO)；
                 [[UIApplication sharedApplication]openURL:url options:@{UIApplicationOpenURLOptionUniversalLinksOnly:@(YES)} completionHandler:nil];
             }
             else
@@ -131,7 +133,6 @@
         }
     }
     device.proximityMonitoringEnabled = NO;
-    
 }
 
 
@@ -144,33 +145,50 @@
 
 
 
-
-
-- (void)zx_callIphone:(NSString *)phone withAlertController:(UIAlertController *)alertController
+- (void)zx_callIphone:(NSString *)phone withAlertControllerFlag:(BOOL)flag
 {
-    if (phone && phone.length>0)
+    if (!phone || phone.length == 0)
     {
-        if (!alertController)
+        return;
+    }
+    if (!flag)
+    {
+        NSString *allString = [NSString stringWithFormat:@"tel:%@",phone];
+        NSURL *url =[NSURL URLWithString:allString];
+        if ([[UIApplication sharedApplication] canOpenURL:url])
         {
+            if (@available(iOS 10.0,*)) {
+                [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }
+    else
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"提示", nil) message:NSLocalizedString(@"您还没有登录，是否需要登录", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        UIAlertAction *otherAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
             NSString *allString = [NSString stringWithFormat:@"tel:%@",phone];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:allString]];
-        }
-        else
-        {            
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            }];
-            UIAlertAction *otherAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                NSString *allString = [NSString stringWithFormat:@"tel:%@",phone];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:allString]];
-                
-            }];
-            [alertController addAction:cancelAction];
-            [alertController addAction:otherAction];
-            [self presentViewController:alertController animated:YES completion:nil];
-
-        }
-
+            NSURL *url =[NSURL URLWithString:allString];
+            if ([[UIApplication sharedApplication] canOpenURL:url])
+            {
+                if (@available(iOS 10.0,*)) {
+                    [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
+                }
+                else
+                {
+                    [[UIApplication sharedApplication] openURL:url];
+                }
+            }
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:otherAction];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 

@@ -149,7 +149,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 // post/get 通用处理请求成功的业务
 - (void)requestSuccessDealWithResponseObeject:(id)responseObject success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
-    NSString *str = [NSString zx_getJSONSerializationStringFromObject:responseObject];
+    NSString *str = [NSString zx_getJSONSerializationStringFromJSONObject:responseObject];
     
     NSLog(@"%@",str);
 

@@ -603,12 +603,23 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2011 - 2015 UMeng.com. All rights reserved.
+			<string>Copyright 2011 - 2019 umeng.com. All rights reserved.
 </string>
 			<key>License</key>
 			<string>Copyright</string>
 			<key>Title</key>
-			<string>UMengAnalytics</string>
+			<string>UMCAnalytics</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2011 - 2019 umeng.com. All rights reserved.
+</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>UMCCommon</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

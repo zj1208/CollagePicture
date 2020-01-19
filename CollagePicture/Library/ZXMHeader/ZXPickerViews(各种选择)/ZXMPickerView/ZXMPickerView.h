@@ -13,7 +13,7 @@
 //  2018.8.01 优化修改window的bug；
 //  2019.2.20 优化代码,适配iPhoneX系列底部安全区域;
 //  2019.11.12 Dark Mode 下文字颜色适配为黑色；
-
+//  2019.11.28 修改iPhoneX系列判断
 
 #import <UIKit/UIKit.h>
 #import "ZXOverlay.h"

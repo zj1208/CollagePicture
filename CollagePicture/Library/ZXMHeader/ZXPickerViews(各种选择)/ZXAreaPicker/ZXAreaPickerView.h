@@ -10,6 +10,7 @@
 //  7.11 修改plist本地文件名,方法修改
 //  2019.05.25 删除xib文件，重大修改代码；增加overlay底视图，兼容iPhoneX系列；
 //  2019.11.12 Dark Mode 下文字颜色适配为黑色；
+//  2019.11.28 修改iPhoneX系列判断
 
 #import <UIKit/UIKit.h>
 #import "ZXLocation.h"

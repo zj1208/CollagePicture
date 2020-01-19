@@ -213,11 +213,7 @@
     UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *))
     {
-        UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
-        if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){
-            safeAreaInsets = areaInset;
-        }else{
-        }
+        safeAreaInsets = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
     }
     self.tipLabel.frame = CGRectMake(8, 120+safeAreaInsets.top, [UIScreen mainScreen].bounds.size.width - 16, 60);
 }

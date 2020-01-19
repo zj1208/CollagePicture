@@ -84,7 +84,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>UMengAnalytics.xcscheme</key>
+		<key>UMCAnalytics.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UMCCommon.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

@@ -6,8 +6,8 @@
 //  Copyright © 2016年 simon. All rights reserved.
 //
 //  简介：交换二个实例方法的IMP（方法实现）
-//  2018.01.10
-//  添加注释
+//  2018.01.10 添加注释
+//  2019.12.30 优化代码
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
@@ -29,11 +29,10 @@ static inline BOOL af_addMethod(Class theClass, SEL selector, Method method) {
 @interface NSObject (ZXRuntime)
 
 //交换二个实例方法的IMP（方法实现）
-+ (void)zx_exchangeInstanceMethod1:(SEL)selector method2:(SEL)otherSelector;
++ (void)zx_exchangeInstanceMethod1:(SEL)originalSelector method2:(SEL)swizzledSelector;
 
 //交换二个类方法的IMP（方法实现）
-+ (void)zx_exchangeClassMethod1:(SEL)selector method2:(SEL)otherSelector;
-
++ (void)zx_exchangeClassMethod1:(SEL)originalSelector method2:(SEL)swizzledSelector;
 @end
 
 

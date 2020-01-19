@@ -1,9 +1,9 @@
 //
 //  NSString+ZXCategory.m
-//  wqk8
+//  Baby
 //
 //  Created by simon on 15/11/17.
-//  Copyright © 2015年 mac. All rights reserved.
+//  Copyright © 2015年 sina. All rights reserved.
 //
 
 #import "NSString+ZXCategory.h"
@@ -487,35 +487,35 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 }
 
 
-+ (nullable id)zx_getJSONSerializationObjectByJsonData:(nullable NSData *)data
++ (nullable id)zx_getJSONSerializationObjectWithJSONData:(nullable NSData *)data
 {
     NSError *error=nil;
     id dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-    if (error==nil && data!=nil)
+    if (!error && data)
     {
         return dic;
     }
     return nil;
 }
 
-+ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string
++ (nullable id)zx_getJSONSerializationObjectFromString:(nullable NSString *)string
 {
     if ([NSString zhIsBlankString:string])
     {
         return nil;
     }
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [NSString zx_getJSONSerializationObjectByJsonData:data];
+    return [NSString zx_getJSONSerializationObjectWithJSONData:data];
 }
 
-+ (nullable id)zx_getJSONSerializationObjectFormContentsOfFile:(NSString *)path
++ (nullable id)zx_getJSONSerializationObjectFromContentsOfFile:(NSString *)path
 {
 //    NSString *path = [[NSBundle mainBundle]pathForResource:@"ZXPrivacyPolicy" ofType:@"json"];
 //    NSString *str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     id dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-    if (error==nil && data!=nil)
+    if (error==nil && data)
     {
         return dic;
     }
@@ -523,16 +523,16 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 
 }
 
-+ (NSString *)zx_getJSONSerializationStringFromObject:(nullable id)responseObject
++ (NSString *)zx_getJSONSerializationStringFromJSONObject:(nullable id)responseObject
 {
     if ([NSJSONSerialization isValidJSONObject:responseObject])
     {
         NSError *error = nil;
         NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&error];
-        if (error==nil && data!=nil)
+        if (!error && data)
         {
             NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *escapeString = [NSString zhFilterEscapeCharacterWithJsonString:str];
+            NSString *escapeString = [NSString zx_filterEscapeCharacterWithJsonString:str];
             return escapeString;
         }
     }
@@ -540,7 +540,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 }
 
 //过滤转义字符
-+ (NSString *)zhFilterEscapeCharacterWithJsonString:(NSString *)str
++ (NSString *)zx_filterEscapeCharacterWithJsonString:(NSString *)str
 {
     NSMutableString *responseString = [NSMutableString stringWithString:str];
     NSString *character = nil;
@@ -551,6 +551,10 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     }
     return responseString;
 }
+
+
+
+
 
 
 

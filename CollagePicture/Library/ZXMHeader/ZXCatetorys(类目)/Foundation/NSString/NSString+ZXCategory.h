@@ -1,16 +1,16 @@
 //
 //  NSString+ZXCategory.h
-//  
+//  Baby
 //
 //  Created by simon on 15/11/17.
-//  Copyright © 2015年 mac. All rights reserved.
+//  Copyright © 2015年 sina. All rights reserved.
 //
 // 2017.12.20 获取文本占几行空间
 // 2018.1.18  新增获取文字所需要的尺寸
 // 2018.4.18  新增计算平均item宽带方法
 // 2018.5.31  内存优化
 // 2018.7.11  优化加密代码
-// 2019.12
+// 2019.12 17 优化JSON数据注释
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -263,36 +263,50 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)zhCreatMD5StringWithDict:(NSDictionary*)dict sortKeyArray:(NSArray *)sortKeys;
 
+
+
+
 /**
- *	@brief	根据jsonSerialization方法把NSData数据转换为json对象（NSArray／NSDictionary）
+ *	@brief	利用NSJSONSerialization把二进制数据NSData（JSON数据）转换为JSON对象（NSArray／NSDictionary）；
  *	@return	NSArray 或 NSDictionary
  */
 
-+ (nullable id)zx_getJSONSerializationObjectByJsonData:(nullable NSData *)data;
++ (nullable id)zx_getJSONSerializationObjectWithJSONData:(nullable NSData *)data;
 
 /**
-*    @brief   把字符串转换为json对象（NSArray／NSDictionary）
-*    @param   string  字典or数组格式的字符串
-*    @return  NSArray 或 NSDictionary
+*    @brief   把字符串转换为JSON对象（NSArray／NSDictionary格式）;
+              JSON字符串NSString->转换为NSData（JSON格式数据）-->转换为JSON对象（NSArray／NSDictionary格式对象）
+*    @param   string  字典or数组格式的字符串,"{\"name\":\"kaixuan_166\"}"
+*    @return  NSArray 或 NSDictionary的JSON对象；
 */
-+ (nullable id)zx_getJSONSerializationObjectFormString:(nullable NSString *)string;
-
-
-+ (nullable id)zx_getJSONSerializationObjectFormContentsOfFile:(NSString *)path;
++ (nullable id)zx_getJSONSerializationObjectFromString:(nullable NSString *)string;
 
 /**
- *	@brief	根据jsonSerialization方法把json格式（NSArray／NSDictionary）对象转换为字符串
+*  @brief  把文件的数据NSData（JSON格式数据）转换为JSON对象（NSArray／NSDictionary格式）;
+*/
++ (nullable id)zx_getJSONSerializationObjectFromContentsOfFile:(NSString *)path;
+
+/**
+ *	@brief	把JSON对象（NSArray／NSDictionary格式对象）转换为字符串；
+ *          基础数据对象（JSON对象）->二进制数据NSData（JSON数据）-->NSString
+ *  @param  responseObject  JSON对象（NSArray／NSDictionary格式对象）
+ *  @return NSString；
  */
-+ (nullable NSString *)zx_getJSONSerializationStringFromObject:(nullable id)responseObject;
++ (nullable NSString *)zx_getJSONSerializationStringFromJSONObject:(nullable id)responseObject;
 
 
 /**
- 过滤json字符串的转义字符；
+ 过滤JSON字符串的转义字符；
 
- @param str json原字符串
+ @param str JSON原字符串,"{\"name\":\"kaixuan_166\"}"
  @return 过滤后的json字符串
  */
-+ (NSString *)zhFilterEscapeCharacterWithJsonString:(NSString *)str;
++ (NSString *)zx_filterEscapeCharacterWithJsonString:(NSString *)str;
+
+
+
+
+
 
 
 //根据友盟统计SDK获取UDID，和OpenUDID获取的openUDID一样的；

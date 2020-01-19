@@ -10,7 +10,7 @@
 #import <BmobSDK/Bmob.h>
 #import "AppMarco.h"
 #import "ShareHelper.h"
-#import <UMMobClick/MobClick.h>
+#import <UMCommon/UMCommon.h>
 #import "UncaughtException.h"
 
 
@@ -225,16 +225,15 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
     }];
 }
 #pragma mark -友盟统计
-//默认启动时发送策略；默认统计用户时以设备为标准
 -(void)addUMengAnalytics
 {
-    UMConfigInstance.appKey = kUMAppKey;
-    UMConfigInstance.channelId = @"App Store";
-    [MobClick startWithConfigure:UMConfigInstance];
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-//  使用集成测试之后，所有测试数据不会进入应用正式的统计后台，只能在“管理--集成测试--实时日志”里查看
-//    [MobClick setLogEnabled:YES];
+    [UMConfigure initWithAppkey:kUMAppKey channel:@"App Store"];
+    #ifdef DEBUG
+//            [[UMSocialManager defaultManager] openLog:YES];
+        [UMConfigure setLogEnabled:YES];
+    #else
+        [UMConfigure setLogEnabled:NO];
+    #endif
 }
 
 //自己测试用的；

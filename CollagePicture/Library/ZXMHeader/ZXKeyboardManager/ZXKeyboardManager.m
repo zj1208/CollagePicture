@@ -12,15 +12,13 @@
 #define IS_IPHONE_XX ({\
 int tmp = 0;\
 if (@available(iOS 11.0, *)) { \
-UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
-if(!UIEdgeInsetsEqualToEdgeInsets(areaInset, UIEdgeInsetsZero)){\
-tmp = 1;\
-}else{\
-tmp = 0;\
-}\
+    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+    if (areaInset.bottom >0) { \
+        tmp = 1;\
+    }\
 }\
 else{\
-tmp = 0;\
+    tmp = 0;\
 }\
 tmp;\
 })
@@ -68,16 +66,16 @@ tmp;\
 }
 + (instancetype)sharedInstance
 {
-    static id singletonInstance = nil;
+    static id instance = nil;
     static dispatch_once_t  onceToken;
     dispatch_once(&onceToken, ^{
 
-        if (!singletonInstance)
+        if (!instance)
         {
-            singletonInstance = [[super allocWithZone:NULL] init];
+            instance = [self new];
         }
     });
-    return singletonInstance;
+    return instance;
 }
 
 

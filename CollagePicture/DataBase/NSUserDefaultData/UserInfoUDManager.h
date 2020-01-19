@@ -2,12 +2,13 @@
 //  UserInfoUDManager.h
 //  
 //
-//  Created by simon明 on 15/6/17.
+//  Created by simon on 15/6/17.
 //  Copyright (c) 2015年 sina. All rights reserved.
 //
 // 2017.12.22
 // 增加WK的cookie容器清理； 修改wkWebView的清理缓存不包括cookie
 // 2018.4.02；优化代码；
+// 2019.12.31 修改通知定义的参数类型
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
@@ -15,8 +16,8 @@
 
 FOUNDATION_EXPORT NSString *const kNotificationUserLoginIn;
 FOUNDATION_EXPORT NSString *const kNotificationUserLoginOut;
-FOUNDATION_EXPORT NSString *const kNotificationUpdateUserInfo;
-FOUNDATION_EXPORT NSString *const kNotificationUserTokenError;
+FOUNDATION_EXPORT NSNotificationName const kNotificationUpdateUserInfo;
+FOUNDATION_EXPORT NSNotificationName const kNotificationUserTokenError;
 
 
 //用户有关的相对应数据

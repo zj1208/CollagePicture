@@ -6,8 +6,11 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  简介：在超过2个按钮的时候，布局中cancel按钮始终在底部；destructiveButton销毁按钮始终在第一个；其余按钮在中间依次从上往下排列；
-//
+//  UIAlertControllerStyleAlert样式：当title为字符串空时，例title=@"",message=@"***"，message字体为小字体；当title=nil，message字体为大字体；
+//  UIAlertControllerStyleActionSheet样式：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+
 //  注意：UIAlertAction的回调：点击各种按钮后在当前UIAlertController执行dismiss完成后，且在栈区移除了UIAlertController才会回调block；
+//
 //  待优化：如果没有用NSLocalizedString传值过来，则使用NSLocalizedString(x, nil)；如果已经用了，则不使用；
 
 // 2018.2.12； 新增预选按钮事件 设置；
@@ -42,6 +45,11 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 
 #pragma mark - AlertControllerAlertStyle
+
+/*
+ UIAlertControllerStyleAlert样式的时候，当title为字符串空时，例title=@"",message=@"***"，message字体为小字体；当title=nil，message字体为大字体；
+ */
+
 /**
  弹出可以设置最多2个按钮的警告框；－最常见的提示框
  
@@ -91,6 +99,11 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 
 #pragma mark - ActionSheet
+/*
+ UIAlertControllerStyleActionSheet样式：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+ */
+
+
 /**
  弹出ActionSheet
 
