@@ -1,5 +1,5 @@
 //
-//  CheckVersionAPI.h
+//  ZXCheckAppItunesVersionManager.h
 //  CollagePicture
 //
 //  Created by simon on 16/11/18.
@@ -8,7 +8,6 @@
 //  2018.3.26 修改固定路径为类目获取；
 //  2018.5.10 优化代码
 
-#import "BaseHttpAPI.h"
 #import "AFNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -17,7 +16,7 @@ typedef void (^CompleteBlock)(id data);
 typedef void (^ErrorBlock)(NSError* error);
 
 
-@class CheckVersionAPI;
+@class ZXCheckAppItunesVersionManager;
 
 @protocol CheckVersionDelegate <NSObject>
 
@@ -26,31 +25,31 @@ typedef void (^ErrorBlock)(NSError* error);
  *  @brief 已经是最新版本
  *
  */
-- (void)zxCheckVersionWithNoNewVersion:(CheckVersionAPI *)versionAPI;
+- (void)zxCheckVersionWithNoNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI;
 
 /**
  *  @brief 有新版本，回调更新提示
  */
-- (void)zxCheckVersionWithNewVersion:(CheckVersionAPI *)versionAPI;
+- (void)zxCheckVersionWithNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI;
 
 @end
 
 
-@interface CheckVersionAPI : NSObject
+@interface ZXCheckAppItunesVersionManager : NSObject
 
-@property (nonatomic ,assign)NSString *itunesVersion;
+@property (nonatomic, assign) NSString *itunesVersion;
 
-@property (nonatomic,weak)id<CheckVersionDelegate>delegate;
+@property (nonatomic, weak) id<CheckVersionDelegate>delegate;
 
 + (instancetype)shareInstance;
 
 //检查itunes版本数据－请求
 - (void)checkVersionSuccessWithAppId:(NSString *)appId success:(CompleteBlock)success failure:(ErrorBlock)failure;
 
-- (nullable NSString *)getAppVersionFromItunes:(NSString *)appId;
+- (nullable NSString *)getAppVersionFromItunesWithAppId:(NSString *)appId;
 
 //检查版本更新－包括请求业务
--(void)checkVersionUpdateWithController:(UIViewController *)controller;
+- (void)checkVersionUpdateWithAppId:(NSString *)appId controller:(UIViewController *)controller;
 @end
 
 NS_ASSUME_NONNULL_END

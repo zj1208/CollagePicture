@@ -1,12 +1,12 @@
 //
-//  CheckVersionAPI.m
+//  ZXCheckAppItunesVersionManager.m
 //  CollagePicture
 //
 //  Created by simon on 16/11/18.
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
-#import "CheckVersionAPI.h"
+#import "ZXCheckAppItunesVersionManager.h"
 #import "NSURL+ZXAppLinks.h"
 
 /**
@@ -20,7 +20,7 @@ static NSInteger const kAPPErrorCode = 5000;
 #define kITUNESURL @"http://itunes.apple.com"
 #endif
 
-@implementation CheckVersionAPI
+@implementation ZXCheckAppItunesVersionManager
 
 
 + (instancetype)shareInstance
@@ -143,13 +143,11 @@ static NSInteger const kAPPErrorCode = 5000;
 
 
 
-- (nullable NSString *)getAppVersionFromItunes:(NSString *)appId
+- (nullable NSString *)getAppVersionFromItunesWithAppId:(NSString *)appId
 {
     NSURL *url =[NSURL zx_appStoreAppInfomationURLForApplicationIdentifier:appId];
     NSString *jsonData  = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    NSLog(@"%@",jsonData);
-    
-    
+//    NSLog(@"%@",jsonData);
     id dic =[self getJSONSerializationObjectFromString:jsonData];
     if (dic)
     {
@@ -179,11 +177,11 @@ static NSInteger const kAPPErrorCode = 5000;
 }
 
 
--(void)checkVersionUpdateWithController:(UIViewController *)controller
+-(void)checkVersionUpdateWithAppId:(NSString *)appId controller:(UIViewController *)controller
 {
     [MBProgressHUD zx_showLoadingWithStatus:@"正在检查版本更新" toView:nil];
     __weak __typeof(&*self)weakSelf = self;
-    [[CheckVersionAPI shareInstance]checkVersionSuccessWithAppId:kAPPID success:^(id data) {
+    [[ZXCheckAppItunesVersionManager shareInstance]checkVersionSuccessWithAppId:appId success:^(id data) {
         
         [MBProgressHUD zx_hideHUDForView:nil];
         weakSelf.itunesVersion = data;

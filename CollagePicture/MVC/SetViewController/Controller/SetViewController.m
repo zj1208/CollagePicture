@@ -9,7 +9,7 @@
 #import "SetViewController.h"
 #import <SDWebImage/SDWebImage.h>
 
-#import "CheckVersionAPI.h"
+#import "ZXCheckAppItunesVersionManager.h"
 #import "ZXImagePickerController.h"
 
 @interface SetViewController ()<CheckVersionDelegate,UIActionSheetDelegate,ZXImagePickerControllerDelegate>
@@ -247,12 +247,12 @@
 
 -(void)checkVersionUpdate
 {
-    CheckVersionAPI *checkVersion = [CheckVersionAPI shareInstance];
+    ZXCheckAppItunesVersionManager *checkVersion = [ZXCheckAppItunesVersionManager shareInstance];
     checkVersion.delegate = self;
-    [checkVersion checkVersionUpdateWithController:self];
+    [checkVersion checkVersionUpdateWithAppId:kAPPID controller:self];
 }
 
-- (void)zxCheckVersionWithNewVersion:(CheckVersionAPI *)versionAPI
+- (void)zxCheckVersionWithNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
 {
     WS(weakSelf);
     [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
@@ -262,7 +262,7 @@
     }];
 }
 
-- (void)zxCheckVersionWithNoNewVersion:(CheckVersionAPI *)versionAPI
+- (void)zxCheckVersionWithNoNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
 {
     [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
 }

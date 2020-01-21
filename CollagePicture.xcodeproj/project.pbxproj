@@ -159,7 +159,6 @@
 		F456B73F20A5A3640092A7B2 /* ZXDatePickerTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B73E20A5A3640092A7B2 /* ZXDatePickerTextField.m */; };
 		F456B75320A5A5260092A7B2 /* ZXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B75020A5A5250092A7B2 /* ZXPhoto.m */; };
 		F456B75A20A5A58D0092A7B2 /* ZXImgIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B75920A5A58C0092A7B2 /* ZXImgIcons.m */; };
-		F456B76920A5A64E0092A7B2 /* CheckVersionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B76820A5A64E0092A7B2 /* CheckVersionAPI.m */; };
 		F457BAC1236146ED00B1E1B4 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAC0236146ED00B1E1B4 /* SearchViewController.m */; };
 		F457BAC82361772B00B1E1B4 /* SearchTitleHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BAC72361772B00B1E1B4 /* SearchTitleHistoryModel.m */; };
 		F457BACC23617C7C00B1E1B4 /* SearchCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BACA23617C7C00B1E1B4 /* SearchCollectionReusableView.m */; };
@@ -268,6 +267,8 @@
 		F4A151CA23D2D9850018405E /* ZXAssetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151BD23D2D9840018405E /* ZXAssetCollectionCell.m */; };
 		F4A151CB23D2D9850018405E /* ZXImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4A151C023D2D9850018405E /* ZXImagePickerController.bundle */; };
 		F4A151CC23D2D9850018405E /* ZXPHPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151C223D2D9850018405E /* ZXPHPhotoManager.m */; };
+		F4A158C723D57AAD0018405E /* ZXCheckAppItunesVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A158C523D57AAD0018405E /* ZXCheckAppItunesVersionManager.m */; };
+		F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */; };
 		F4A34C7E2377C8720002F891 /* ZXCollectionReusableTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A34C682377C8720002F891 /* ZXCollectionReusableTitleView.m */; };
 		F4A34C7F2377C8720002F891 /* ZXCollectionReusableTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A34C692377C8720002F891 /* ZXCollectionReusableTitleView.xib */; };
 		F4A34C802377C8720002F891 /* ZXTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A34C6E2377C8720002F891 /* ZXTitleView.xib */; };
@@ -730,8 +731,6 @@
 		F456B75520A5A54D0092A7B2 /* ZXHTTPCookieManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXHTTPCookieManager.h; sourceTree = "<group>"; };
 		F456B75820A5A58C0092A7B2 /* ZXImgIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXImgIcons.h; sourceTree = "<group>"; };
 		F456B75920A5A58C0092A7B2 /* ZXImgIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXImgIcons.m; sourceTree = "<group>"; };
-		F456B76720A5A64E0092A7B2 /* CheckVersionAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckVersionAPI.h; sourceTree = "<group>"; };
-		F456B76820A5A64E0092A7B2 /* CheckVersionAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckVersionAPI.m; sourceTree = "<group>"; };
 		F457BABF236146ED00B1E1B4 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		F457BAC0236146ED00B1E1B4 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		F457BAC62361772B00B1E1B4 /* SearchTitleHistoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchTitleHistoryModel.h; sourceTree = "<group>"; };
@@ -937,6 +936,10 @@
 		F4A151C023D2D9850018405E /* ZXImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZXImagePickerController.bundle; sourceTree = "<group>"; };
 		F4A151C223D2D9850018405E /* ZXPHPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPHPhotoManager.m; sourceTree = "<group>"; };
 		F4A151C323D2D9850018405E /* ZXPHPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPHPhotoManager.h; sourceTree = "<group>"; };
+		F4A158C523D57AAD0018405E /* ZXCheckAppItunesVersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCheckAppItunesVersionManager.m; sourceTree = "<group>"; };
+		F4A158C623D57AAD0018405E /* ZXCheckAppItunesVersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCheckAppItunesVersionManager.h; sourceTree = "<group>"; };
+		F4A158EE23D6D5A00018405E /* CHSNotOpenURLBackAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSNotOpenURLBackAppManager.h; sourceTree = "<group>"; };
+		F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSNotOpenURLBackAppManager.m; sourceTree = "<group>"; };
 		F4A34C682377C8720002F891 /* ZXCollectionReusableTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCollectionReusableTitleView.m; sourceTree = "<group>"; };
 		F4A34C692377C8720002F891 /* ZXCollectionReusableTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCollectionReusableTitleView.xib; sourceTree = "<group>"; };
 		F4A34C6A2377C8720002F891 /* ZXCollectionReusableTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionReusableTitleView.h; sourceTree = "<group>"; };
@@ -1578,6 +1581,8 @@
 		F446A7BC1FCC082900C82C90 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
+				F4A158ED23D6D5A00018405E /* CHSNotOpenURLBackAppManager */,
+				F4A158C423D57AAD0018405E /* ZXCheckAppItunesVersionManager */,
 				F4361D742109982F00A5C22F /* ZXBaseOrientationController */,
 				F4C1C3EF22E55B510065C22A /* ZXImagePickerController */,
 				F4AC3CC522BCC90900B1D5BD /* ZXTimer */,
@@ -1619,8 +1624,7 @@
 				F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */,
 				F41A19D5204FD75F00B1945C /* APPCommonDef.h */,
 				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
-				F446A7ED1FCC082900C82C90 /* ZXLocalNotification.m */,
-				F446A8B51FCC082900C82C90 /* ZXLocalNotification.h */,
+				F4A158C323D57A780018405E /* ZXLocalNotification */,
 				F446A8981FCC082900C82C90 /* KxMenu */,
 				F446A8B91FCC082900C82C90 /* ADCustomTableView */,
 				F446A8A11FCC082900C82C90 /* UncaughtException */,
@@ -2399,6 +2403,7 @@
 		F457BABE236146B300B1E1B4 /* PSearch */ = {
 			isa = PBXGroup;
 			children = (
+				F457BAC52361771C00B1E1B4 /* Models */,
 				F457BAEA2362C77200B1E1B4 /* View */,
 				F457BABF236146ED00B1E1B4 /* SearchViewController.h */,
 				F457BAC0236146ED00B1E1B4 /* SearchViewController.m */,
@@ -2496,8 +2501,7 @@
 		F461821A1D8129490015BC84 /* CollagePicture */ = {
 			isa = PBXGroup;
 			children = (
-				F457BAC52361771C00B1E1B4 /* Models */,
-				F49E196E1DF1875900676396 /* Controllers */,
+				F49E196E1DF1875900676396 /* MVC */,
 				F461825C1D813BCB0015BC84 /* General */,
 				F461826F1D813BCB0015BC84 /* HttpAPI */,
 				F49E194A1DF1863000676396 /* Helper */,
@@ -2559,8 +2563,6 @@
 			children = (
 				F4BBAA5B212BFE0400BF10F2 /* Common */,
 				F4361D652109982E00A5C22F /* BaseClasses */,
-				F4E60819208D78F2008C50CB /* HtmlController */,
-				F4EF35021FF5D7EB00CCD088 /* AliOSSUploadManager */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -2570,8 +2572,6 @@
 			children = (
 				F4361E082109AAF600A5C22F /* UserModelAPI.h */,
 				F4361E092109AAF600A5C22F /* UserModelAPI.m */,
-				F456B76720A5A64E0092A7B2 /* CheckVersionAPI.h */,
-				F456B76820A5A64E0092A7B2 /* CheckVersionAPI.m */,
 			);
 			path = HttpAPI;
 			sourceTree = "<group>";
@@ -2797,7 +2797,7 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		F49E196E1DF1875900676396 /* Controllers */ = {
+		F49E196E1DF1875900676396 /* MVC */ = {
 			isa = PBXGroup;
 			children = (
 				F41C20E82384D1F600F895CF /* StartApp */,
@@ -2807,7 +2807,7 @@
 				F4F38B321EA6492C007606F9 /* MyCenterController */,
 				F4374B571E0A6C6900081502 /* LoginRegisterController */,
 			);
-			path = Controllers;
+			path = MVC;
 			sourceTree = "<group>";
 		};
 		F49E198B1DF1875900676396 /* SetViewController */ = {
@@ -2971,6 +2971,33 @@
 				F4A151C323D2D9850018405E /* ZXPHPhotoManager.h */,
 			);
 			path = ZXPHPhotoManager;
+			sourceTree = "<group>";
+		};
+		F4A158C323D57A780018405E /* ZXLocalNotification */ = {
+			isa = PBXGroup;
+			children = (
+				F446A8B51FCC082900C82C90 /* ZXLocalNotification.h */,
+				F446A7ED1FCC082900C82C90 /* ZXLocalNotification.m */,
+			);
+			path = ZXLocalNotification;
+			sourceTree = "<group>";
+		};
+		F4A158C423D57AAD0018405E /* ZXCheckAppItunesVersionManager */ = {
+			isa = PBXGroup;
+			children = (
+				F4A158C623D57AAD0018405E /* ZXCheckAppItunesVersionManager.h */,
+				F4A158C523D57AAD0018405E /* ZXCheckAppItunesVersionManager.m */,
+			);
+			path = ZXCheckAppItunesVersionManager;
+			sourceTree = "<group>";
+		};
+		F4A158ED23D6D5A00018405E /* CHSNotOpenURLBackAppManager */ = {
+			isa = PBXGroup;
+			children = (
+				F4A158EE23D6D5A00018405E /* CHSNotOpenURLBackAppManager.h */,
+				F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */,
+			);
+			path = CHSNotOpenURLBackAppManager;
 			sourceTree = "<group>";
 		};
 		F4A34C652377C8720002F891 /* ZXReusableTitleViews */ = {
@@ -3480,6 +3507,8 @@
 		F4BBAA5B212BFE0400BF10F2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F4EF35021FF5D7EB00CCD088 /* AliOSSUploadManager */,
+				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4BBAA5C212BFE1600BF10F2 /* HKVersionAlertView */,
 				F4BBAA58212BFD7200BF10F2 /* CheckVersionManager.h */,
 				F4BBAA59212BFD7200BF10F2 /* CheckVersionManager.m */,
@@ -4283,13 +4312,13 @@
 				F4591BD620747FB00098F671 /* ZXSegmentMenuView.m in Sources */,
 				F4AE3FF7239BAD5800DF6FE3 /* MBProgressHUD+ZXCategory.m in Sources */,
 				F4361D7C2109982F00A5C22F /* PageModel.m in Sources */,
-				F456B76920A5A64E0092A7B2 /* CheckVersionAPI.m in Sources */,
 				F446A97F1FCC082900C82C90 /* ZXOverlay.m in Sources */,
 				F42E7F42215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m in Sources */,
 				F4AE40C023A7462900DF6FE3 /* UIViewController+ZXNavBarCustom.m in Sources */,
 				F446A9701FCC082900C82C90 /* ZXPinyinConverter.m in Sources */,
 				F4A34C822377C8720002F891 /* ZXActionTitleView.m in Sources */,
 				F4EF35081FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m in Sources */,
+				F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */,
 				F4374B5D1E0A6C8400081502 /* LoginViewController.m in Sources */,
 				F4C9186E2004983E00D3E158 /* NSFileManager+ZXCategory.m in Sources */,
 				F446A9851FCC082A00C82C90 /* InfiniteScrollView.m in Sources */,
@@ -4298,6 +4327,7 @@
 				F4CB0E47236C3A50002BD670 /* HomeModel.m in Sources */,
 				F446A9651FCC082900C82C90 /* ZXAssistiveTouch.m in Sources */,
 				F44DAED41DC8D188000D9311 /* UMShareMenuSelectionView.m in Sources */,
+				F4A158C723D57AAD0018405E /* ZXCheckAppItunesVersionManager.m in Sources */,
 				F4AE3FDC239BA72300DF6FE3 /* UIView+ZXChangeSize.m in Sources */,
 				F44DAED31DC8D188000D9311 /* UMShareMenuItem.m in Sources */,
 				F446A98F1FCC082A00C82C90 /* DrawRectView.m in Sources */,

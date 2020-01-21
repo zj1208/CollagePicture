@@ -12,6 +12,7 @@
 //  2018.3.22 新增注释；
 //  2019.10.26 占位符图片代码修改；
 //  2019.11.28 修改iPhoneX系列判断
+//  2020.1.19 修改增加SDWebImage依赖库
 
 #import <UIKit/UIKit.h>
 #import "BadgeMarkItemModel.h"
