@@ -26,18 +26,13 @@
 // 重复密码
 @property (weak, nonatomic) IBOutlet UITextField *passwordAgainField;
 
+@property (weak, nonatomic) IBOutlet UIButton *registerLoginBtn;
 
 // 点击界面
 - (IBAction)touchDownAction:(UIControl *)sender;
 
 // 点击键盘完成键
 - (IBAction)keywordReturnAction:(UITextField *)sender;
-
-// 发送验证码按钮事件
-- (IBAction)requestSmsCodeBtnAction:(UIButton *)sender;
-
-// 注册按钮事件
-- (IBAction)registerAction:(UIButton *)sender;
 
 // 用户协议
 - (IBAction)userAgreementAction:(UIButton *)sender;

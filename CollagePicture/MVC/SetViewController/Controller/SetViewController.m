@@ -25,6 +25,7 @@
 
 @implementation SetViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
@@ -32,6 +33,13 @@
     [self setUI];
     [self setData];
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - setUI
 
 - (void)setUI
 {
@@ -41,7 +49,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.versionLab.text = [NSString stringWithFormat:@"V %@",APP_Version];
-    [self reloadVersionUI];
+    [self reloadCacheLabel];
     [self dynamicTitleLabelFont];
 }
 
@@ -72,7 +80,7 @@
     }
 }
 
-- (void)reloadVersionUI
+- (void)reloadCacheLabel
 {
     [[SDImageCache sharedImageCache]calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
         float tempSize = totalSize/1024.0/1024;
@@ -80,6 +88,8 @@
         self.cacheSizeLab.text =sizeStr;
     }];
 }
+
+#pragma mark -setData
 
 - (void)setData{
     
@@ -124,10 +134,6 @@
     [self dynamicTitleLabelFont];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -194,6 +200,8 @@
 }
 
 
+#pragma mark - 退出
+
 - (void)loginOut
 {
     WS(weakSelf);
@@ -211,6 +219,7 @@
     }];
 }
 
+#pragma mark -
 
 - (void)editInfomation
 {
@@ -237,7 +246,7 @@
     [[SDImageCache sharedImageCache]clearDiskOnCompletion:^{
         
         [MBProgressHUD zx_showSuccess:@"已清楚所有缓存" toView:nil];
-        [self reloadVersionUI];
+        [self reloadCacheLabel];
     }];
 }
 
@@ -267,15 +276,7 @@
     [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

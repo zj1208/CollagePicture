@@ -12,7 +12,7 @@
 #import "ZXTimer.h"
 
 static NSInteger const PHONE_MAXLENGTH  = 11;
-static NSInteger const VerfiCode_MAXLENGTH  = 6;
+static NSInteger const VERFICODE_MAXLENGTH  = 6;
 
 
 @interface RegisterViewController ()<UITextFieldDelegate,ZXTimerDelegate>
@@ -47,14 +47,18 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
     self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE);
     self.userNameField.delegate = self;
     self.verificationCodeField.delegate = self;
+    
+    [self.verfiCodeBtn addTarget:self action:@selector(requestSmsCodeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.registerLoginBtn addTarget:self action:@selector(registerAction:) forControlEvents:UIControlEventTouchUpInside];
 }
+
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSInteger maxLength = 0;
     if ([textField isEqual:self.userNameField]||[textField isEqual:self.verificationCodeField])
     {
-       maxLength =[textField isEqual:self.userNameField]? PHONE_MAXLENGTH:VerfiCode_MAXLENGTH;
+       maxLength =[textField isEqual:self.userNameField]? PHONE_MAXLENGTH:VERFICODE_MAXLENGTH;
         if (range.location>= maxLength)
         {
             textField.text = [textField.text substringToIndex:maxLength];
@@ -133,15 +137,9 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
 }
 */
 
-#pragma mark - Navigation
-
-
-
-
-
 #pragma mark - 请求验证码
 
-- (IBAction)requestSmsCodeBtnAction:(UIButton *)sender {
+- (void)requestSmsCodeBtnAction:(UIButton *)sender {
     
     NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
 
@@ -230,7 +228,9 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
     [self.smsDownTimer scheduledTimerWithTimeInterval:1 delegate:self userInfo:nil  repeats:YES];
 }
 
+
 #pragma mark - ZXTimerDelegate
+
 - (void)zxTimerFired:(ZXTimer *)timer
 {
     if (self.smsDownSeconds ==0)
@@ -246,12 +246,9 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
     }
 }
 
-- (void)downTimeWithSeconds:(NSTimer *)timer
-{
 
-}
-
-- (IBAction)registerAction:(UIButton *)sender {
+// 注册按钮事件
+- (void)registerAction:(UIButton *)sender {
     
     [self validatePhoneAndPassword];
 }
@@ -294,11 +291,7 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
 }
 
 
-
-
-
 #pragma mark - 注册
-
 - (void)requestRegisterAccount
 {
     [MBProgressHUD zx_showLoadingWithStatus:NSLocalizedString(@"正在注册...", nil) toView:nil];
@@ -341,7 +334,6 @@ static NSInteger const VerfiCode_MAXLENGTH  = 6;
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 
 #pragma mark - 用户协议

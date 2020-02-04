@@ -11,6 +11,8 @@
 // 2018.5.31  内存优化
 // 2018.7.11  优化加密代码
 // 2019.12 17 优化JSON数据注释
+// 2020.02.02 抽取JSON有关的方法去新类；
+
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -262,47 +264,6 @@ NS_ASSUME_NONNULL_BEGIN
  @return 返回经过md5加密后的字符串
  */
 + (NSString *)zhCreatMD5StringWithDict:(NSDictionary*)dict sortKeyArray:(NSArray *)sortKeys;
-
-
-
-
-/**
- *	@brief	利用NSJSONSerialization把二进制数据NSData（JSON数据）转换为JSON对象（NSArray／NSDictionary）；
- *	@return	NSArray 或 NSDictionary
- */
-
-+ (nullable id)zx_getJSONSerializationObjectWithJSONData:(nullable NSData *)data;
-
-/**
-*    @brief   把字符串转换为JSON对象（NSArray／NSDictionary格式）;
-              JSON字符串NSString->转换为NSData（JSON格式数据）-->转换为JSON对象（NSArray／NSDictionary格式对象）
-*    @param   string  字典or数组格式的字符串,"{\"name\":\"kaixuan_166\"}"
-*    @return  NSArray 或 NSDictionary的JSON对象；
-*/
-+ (nullable id)zx_getJSONSerializationObjectFromString:(nullable NSString *)string;
-
-/**
-*  @brief  把文件的数据NSData（JSON格式数据）转换为JSON对象（NSArray／NSDictionary格式）;
-*/
-+ (nullable id)zx_getJSONSerializationObjectFromContentsOfFile:(NSString *)path;
-
-/**
- *	@brief	把JSON对象（NSArray／NSDictionary格式对象）转换为字符串；
- *          基础数据对象（JSON对象）->二进制数据NSData（JSON数据）-->NSString
- *  @param  responseObject  JSON对象（NSArray／NSDictionary格式对象）
- *  @return NSString；
- */
-+ (nullable NSString *)zx_getJSONSerializationStringFromJSONObject:(nullable id)responseObject;
-
-
-/**
- 过滤JSON字符串的转义字符；
-
- @param str JSON原字符串,"{\"name\":\"kaixuan_166\"}"
- @return 过滤后的json字符串
- */
-+ (NSString *)zx_filterEscapeCharacterWithJsonString:(NSString *)str;
-
 
 
 

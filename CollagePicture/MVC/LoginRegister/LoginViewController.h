@@ -27,10 +27,6 @@
 - (IBAction)goBackAction:(UIBarButtonItem *)sender;
 
 
-//登录按钮事件
-- (IBAction)loginAction:(UIButton *)sender;
-
-
 
 //新浪登录
 - (IBAction)sinaLoginAction:(UIButton *)sender;

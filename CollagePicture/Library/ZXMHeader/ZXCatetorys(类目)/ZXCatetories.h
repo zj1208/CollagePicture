@@ -15,6 +15,7 @@
 #import "NSData+ZXCategory.h"
 #import "NSDecimalNumber+ZXCategory.h"//  2019.12
 #import "NSObject+ZXRuntime.h"
+#import "NSObject+ZXJSONCategory.h"
 
 #import "NSString+ZXCategory.h"
 #import "NSString+ZXHTMLString.h"

@@ -517,6 +517,8 @@
 //    }
 }
 
+
+#pragma mark - action
 /**
  *  跳转我的个人信息页面
  *
@@ -548,14 +550,14 @@
 - (IBAction)loginInActioin:(UIButton *)sender {
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard_Login bundle:[NSBundle mainBundle]];
-    UINavigationController *loginViewController = [sb instantiateInitialViewController];
-    [self presentViewController:loginViewController animated:YES completion:nil];
+    UINavigationController *loginNav = [sb instantiateInitialViewController];
+    loginNav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:loginNav animated:YES completion:nil];
 }
 
 
 #pragma mark - 先检查通知跳转再检查更新
 //第三步：先检查推送通知跳转再检查版本更新，如果通知跳转下一页，返回来继续下一步检查更新
-
 - (void)checkAppVersionAndNotificationPush
 {
     if ([WYUserDefaultManager isOpenAppRemoteNoti])

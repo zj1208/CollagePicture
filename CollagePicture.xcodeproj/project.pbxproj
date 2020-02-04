@@ -250,7 +250,6 @@
 		F4A1519123D2BA410018405E /* NSObject+ZXRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1518F23D2BA410018405E /* NSObject+ZXRuntime.m */; };
 		F4A1519423D2BA630018405E /* NSNotificationCenter+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519323D2BA630018405E /* NSNotificationCenter+ZXCategory.m */; };
 		F4A1519723D2D4D50018405E /* NSURL+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519623D2D4D50018405E /* NSURL+ZXCategory.m */; };
-		F4A1519A23D2D4F80018405E /* NSString+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519923D2D4F80018405E /* NSString+ZXCategory.m */; };
 		F4A1519D23D2D57A0018405E /* UIImage+ZXCIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519C23D2D57A0018405E /* UIImage+ZXCIImage.m */; };
 		F4A151A023D2D5B30018405E /* ZXKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519F23D2D5B30018405E /* ZXKeyboardManager.m */; };
 		F4A151A223D2D5DC0018405E /* ZXHTTPCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151A123D2D5DC0018405E /* ZXHTTPCookieManager.m */; };
@@ -331,7 +330,6 @@
 		F4B0DACF1FEA62CD00E1D028 /* ZXAdvModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B0DAC81FEA62CD00E1D028 /* ZXAdvModel.m */; };
 		F4B0DAD01FEA62CD00E1D028 /* ZXAdvModalController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4B0DAC91FEA62CD00E1D028 /* ZXAdvModalController.xib */; };
 		F4B4DF981DB9273F00EC90CB /* ossImage.json in Resources */ = {isa = PBXBuildFile; fileRef = F4B4DF971DB9273F00EC90CB /* ossImage.json */; };
-		F4B70B4623695D9F00C4B4AA /* ZXTextRectTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B70B4523695D9F00C4B4AA /* ZXTextRectTextField.m */; };
 		F4B70B4823695E6800C4B4AA /* SearchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4B70B4723695E6800C4B4AA /* SearchStoryboard.storyboard */; };
 		F4B70B76236ADD0D00C4B4AA /* SearchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B70B74236ADD0C00C4B4AA /* SearchCollectionViewCell.m */; };
 		F4B70B77236ADD0D00C4B4AA /* SearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4B70B75236ADD0C00C4B4AA /* SearchCollectionViewCell.xib */; };
@@ -356,6 +354,9 @@
 		F4BBAA5F212BFE1600BF10F2 /* HKVersionAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA5E212BFE1600BF10F2 /* HKVersionAlertView.m */; };
 		F4C1C3C222DC4EFF0065C22A /* NSURLComponents+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3C122DC4EFF0065C22A /* NSURLComponents+ZXCategory.m */; };
 		F4C1C3C622DC4F110065C22A /* NSData+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3C422DC4F110065C22A /* NSData+ZXCategory.m */; };
+		F4C2302923E6BEDF003A925C /* NSString+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C2302823E6BEDE003A925C /* NSString+ZXCategory.m */; };
+		F4C2302D23E6BEFE003A925C /* NSObject+ZXJSONCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C2302C23E6BEFE003A925C /* NSObject+ZXJSONCategory.m */; };
+		F4C2303023E6BF57003A925C /* ZXTextRectTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C2302E23E6BF56003A925C /* ZXTextRectTextField.m */; };
 		F4C257801DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */; };
 		F4C9186E2004983E00D3E158 /* NSFileManager+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9186D2004983E00D3E158 /* NSFileManager+ZXCategory.m */; };
 		F4CB0E37236C3962002BD670 /* PrefectureCollectionCellTypeA.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E28236C3960002BD670 /* PrefectureCollectionCellTypeA.m */; };
@@ -904,8 +905,6 @@
 		F4A1519323D2BA630018405E /* NSNotificationCenter+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+ZXCategory.m"; sourceTree = "<group>"; };
 		F4A1519523D2D4D50018405E /* NSURL+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ZXCategory.h"; sourceTree = "<group>"; };
 		F4A1519623D2D4D50018405E /* NSURL+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ZXCategory.m"; sourceTree = "<group>"; };
-		F4A1519823D2D4F80018405E /* NSString+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZXCategory.h"; sourceTree = "<group>"; };
-		F4A1519923D2D4F80018405E /* NSString+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZXCategory.m"; sourceTree = "<group>"; };
 		F4A1519B23D2D57A0018405E /* UIImage+ZXCIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZXCIImage.h"; sourceTree = "<group>"; };
 		F4A1519C23D2D57A0018405E /* UIImage+ZXCIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZXCIImage.m"; sourceTree = "<group>"; };
 		F4A1519E23D2D5B30018405E /* ZXKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXKeyboardManager.h; sourceTree = "<group>"; };
@@ -1045,8 +1044,6 @@
 		F4B0DAC91FEA62CD00E1D028 /* ZXAdvModalController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXAdvModalController.xib; sourceTree = "<group>"; };
 		F4B0DACB1FEA62CD00E1D028 /* ZXAdvModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAdvModel.h; sourceTree = "<group>"; };
 		F4B4DF971DB9273F00EC90CB /* ossImage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ossImage.json; sourceTree = "<group>"; };
-		F4B70B4423695D9E00C4B4AA /* ZXTextRectTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTextRectTextField.h; sourceTree = "<group>"; };
-		F4B70B4523695D9F00C4B4AA /* ZXTextRectTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTextRectTextField.m; sourceTree = "<group>"; };
 		F4B70B4723695E6800C4B4AA /* SearchStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchStoryboard.storyboard; sourceTree = "<group>"; };
 		F4B70B73236ADD0C00C4B4AA /* SearchCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCollectionViewCell.h; sourceTree = "<group>"; };
 		F4B70B74236ADD0C00C4B4AA /* SearchCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionViewCell.m; sourceTree = "<group>"; };
@@ -1088,6 +1085,12 @@
 		F4C1C3C122DC4EFF0065C22A /* NSURLComponents+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLComponents+ZXCategory.m"; sourceTree = "<group>"; };
 		F4C1C3C422DC4F110065C22A /* NSData+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZXCategory.m"; sourceTree = "<group>"; };
 		F4C1C3C522DC4F110065C22A /* NSData+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ZXCategory.h"; sourceTree = "<group>"; };
+		F4C2302723E6BEDE003A925C /* NSString+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZXCategory.h"; sourceTree = "<group>"; };
+		F4C2302823E6BEDE003A925C /* NSString+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZXCategory.m"; sourceTree = "<group>"; };
+		F4C2302B23E6BEFE003A925C /* NSObject+ZXJSONCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZXJSONCategory.h"; sourceTree = "<group>"; };
+		F4C2302C23E6BEFE003A925C /* NSObject+ZXJSONCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZXJSONCategory.m"; sourceTree = "<group>"; };
+		F4C2302E23E6BF56003A925C /* ZXTextRectTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTextRectTextField.m; sourceTree = "<group>"; };
+		F4C2302F23E6BF57003A925C /* ZXTextRectTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTextRectTextField.h; sourceTree = "<group>"; };
 		F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "越剧-天上掉下个林妹妹.mp3"; sourceTree = "<group>"; };
 		F4C9186C2004983E00D3E158 /* NSFileManager+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ZXCategory.h"; sourceTree = "<group>"; };
 		F4C9186D2004983E00D3E158 /* NSFileManager+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ZXCategory.m"; sourceTree = "<group>"; };
@@ -1530,7 +1533,7 @@
 			path = ZXTableViewUnfoldFooterView;
 			sourceTree = "<group>";
 		};
-		F4374B571E0A6C6900081502 /* LoginRegisterController */ = {
+		F4374B571E0A6C6900081502 /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
 				F4374B581E0A6C6900081502 /* RegisterViewController.h */,
@@ -1538,7 +1541,7 @@
 				F4374B5B1E0A6C8400081502 /* LoginViewController.h */,
 				F4374B5C1E0A6C8400081502 /* LoginViewController.m */,
 			);
-			path = LoginRegisterController;
+			path = LoginRegister;
 			sourceTree = "<group>";
 		};
 		F43E6DF620BCEAE800D2E05D /* ZXAddBigPicController */ = {
@@ -1789,6 +1792,7 @@
 		F446A83F1FCC082900C82C90 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				F4C2302A23E6BEF7003A925C /* NSObject+ZXJSONCategory */,
 				F4AE3FEA239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory */,
 				F4EB705223668DF60073A2B7 /* NSFileManager+ZXCategory */,
 				F4EB705123668DE80073A2B7 /* NSAttributedString+ZXCategory */,
@@ -2805,7 +2809,7 @@
 				F49E198B1DF1875900676396 /* SetViewController */,
 				F40228EB1EF371E800E3D07E /* StartViewController */,
 				F4F38B321EA6492C007606F9 /* MyCenterController */,
-				F4374B571E0A6C6900081502 /* LoginRegisterController */,
+				F4374B571E0A6C6900081502 /* LoginRegister */,
 			);
 			path = MVC;
 			sourceTree = "<group>";
@@ -3123,8 +3127,8 @@
 		F4AC3CB122B25F0800B1D5BD /* NSString */ = {
 			isa = PBXGroup;
 			children = (
-				F4A1519823D2D4F80018405E /* NSString+ZXCategory.h */,
-				F4A1519923D2D4F80018405E /* NSString+ZXCategory.m */,
+				F4C2302723E6BEDE003A925C /* NSString+ZXCategory.h */,
+				F4C2302823E6BEDE003A925C /* NSString+ZXCategory.m */,
 				F4361E052109A67100A5C22F /* NSString+ZXHTMLString.h */,
 				F4361E062109A67200A5C22F /* NSString+ZXHTMLString.m */,
 			);
@@ -3577,6 +3581,15 @@
 			path = ZXImagePickerController;
 			sourceTree = "<group>";
 		};
+		F4C2302A23E6BEF7003A925C /* NSObject+ZXJSONCategory */ = {
+			isa = PBXGroup;
+			children = (
+				F4C2302B23E6BEFE003A925C /* NSObject+ZXJSONCategory.h */,
+				F4C2302C23E6BEFE003A925C /* NSObject+ZXJSONCategory.m */,
+			);
+			path = "NSObject+ZXJSONCategory";
+			sourceTree = "<group>";
+		};
 		F4CB0E2C236C3961002BD670 /* PrefectureSub */ = {
 			isa = PBXGroup;
 			children = (
@@ -3622,8 +3635,8 @@
 		F4D8086B20E080130084D024 /* ZXTextRectTextField */ = {
 			isa = PBXGroup;
 			children = (
-				F4B70B4423695D9E00C4B4AA /* ZXTextRectTextField.h */,
-				F4B70B4523695D9F00C4B4AA /* ZXTextRectTextField.m */,
+				F4C2302F23E6BF57003A925C /* ZXTextRectTextField.h */,
+				F4C2302E23E6BF56003A925C /* ZXTextRectTextField.m */,
 			);
 			path = ZXTextRectTextField;
 			sourceTree = "<group>";
@@ -4259,6 +4272,7 @@
 				F4AE40D523A746C400DF6FE3 /* UINavigationController+ZXStoryboard.m in Sources */,
 				F4361D872109985600A5C22F /* ZXOrientationTabController.m in Sources */,
 				F4D8087D20E082590084D024 /* ZXCenterBottomToolView.m in Sources */,
+				F4C2302D23E6BEFE003A925C /* NSObject+ZXJSONCategory.m in Sources */,
 				F4A151AE23D2D7690018405E /* ZXBadgeCollectionCell.m in Sources */,
 				F49CFD351FDE5C8D009F2213 /* TADotView.m in Sources */,
 				F446A9821FCC082A00C82C90 /* UncaughtException.m in Sources */,
@@ -4304,7 +4318,6 @@
 				F474B0EC21F8410700C9F9D8 /* ZXAddPicCollectionConst.m in Sources */,
 				F446A9521FCC082900C82C90 /* NSURL+OSSImage.m in Sources */,
 				F4A34C862377C8720002F891 /* ZXCenterTitleView.m in Sources */,
-				F4B70B4623695D9F00C4B4AA /* ZXTextRectTextField.m in Sources */,
 				F4A1519123D2BA410018405E /* NSObject+ZXRuntime.m in Sources */,
 				F49E19D61DF546D600676396 /* PrivacyPolicyController.m in Sources */,
 				F42F5B91217DA57700BDA5CC /* NullSafe.m in Sources */,
@@ -4367,6 +4380,7 @@
 				F4CB0E3A236C3962002BD670 /* PrefectureSubViewB.m in Sources */,
 				F457BAE22361BF3200B1E1B4 /* SearchTitleModel.m in Sources */,
 				F4361D7F2109982F00A5C22F /* BaseCollectionViewCell.m in Sources */,
+				F4C2303023E6BF57003A925C /* ZXTextRectTextField.m in Sources */,
 				F47FEB31209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m in Sources */,
 				F457BAC82361772B00B1E1B4 /* SearchTitleHistoryModel.m in Sources */,
 				F4689FBB223A7BD000A3607E /* ZXKxMenuOverlay.m in Sources */,
@@ -4377,7 +4391,6 @@
 				F4CB0E3B236C3962002BD670 /* PrefectureSubViewC.m in Sources */,
 				F4A1519D23D2D57A0018405E /* UIImage+ZXCIImage.m in Sources */,
 				F4361DDD21099DF400A5C22F /* CustomCoverView.m in Sources */,
-				F4A1519A23D2D4F80018405E /* NSString+ZXCategory.m in Sources */,
 				F4ACE1B61F4FE093006FC573 /* WYUserDefaultManager.m in Sources */,
 				F4C1C3C622DC4F110065C22A /* NSData+ZXCategory.m in Sources */,
 				F4A151A823D2D6830018405E /* ZXAreaPickerView.m in Sources */,
@@ -4461,6 +4474,7 @@
 				F44DBD442297D14A00739DFB /* ZXCustomCellCollectionView.m in Sources */,
 				F49CFD2E1FDE5C8D009F2213 /* XLPhotoBrowser.m in Sources */,
 				F46F074D2292D0E600C79566 /* ZXImagePickerVCManager.m in Sources */,
+				F4C2302923E6BEDF003A925C /* NSString+ZXCategory.m in Sources */,
 				F4591BCC20747F560098F671 /* AlertChoseController.m in Sources */,
 				F4BBAA10212BF5CC00BF10F2 /* ZXBaseAnimator.m in Sources */,
 				F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */,

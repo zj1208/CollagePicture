@@ -46,17 +46,17 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 
 - (void)setUI
 {
-//    [(AppDelegate *)APP_Delegate setApperanceForSigleNavController:self];
     [self.navigationController zx_navigationBar_allBackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
     [self.navigationController zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
     
     self.userNameTextField.keyboardType = UIKeyboardTypeNumberPad;
-    
-    [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:NO];
     self.userNameTextField.delegate = self;
+
+    [self.loginBtn zx_setBorderWithCornerRadius:LCDScale_5Equal6_To6plus(40.f)/2 borderWidth:1.f borderColor:nil];
+    [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:NO];
+    [self.loginBtn addTarget:self action:@selector(loginBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.whiteBgView zx_setBorderWithCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
-    [self.loginBtn zx_setBorderWithCornerRadius:LCDScale_5Equal6_To6plus(40.f)/2 borderWidth:1.f borderColor:nil];
     
     UIFont *font = nil;
     if (Device_SYSTEMVERSION_IOS9_OR_LATER) {
@@ -111,10 +111,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
-#pragma mark - Navigation
-
-
-
+#pragma mark - action
 //移除第一响应事件
 - (IBAction)touchDownAction:(UIControl *)sender {
     
@@ -136,11 +133,13 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
 //登录按钮点击事件
-- (IBAction)loginAction:(UIButton *)sender {
+- (void)loginBtnAction:(UIButton *)sender {
     
     [self validatePhoneAndPassword];
 }
+
 
 - (void)validatePhoneAndPassword
 {
