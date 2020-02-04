@@ -68,7 +68,18 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
        return YES;
 }
 
+//点击完成键盘
+- (IBAction)keywordReturnAction:(UITextField *)sender {
+    
+    [sender resignFirstResponder];
+}
 
+-(BOOL)textFieldShouldReturn:(UITextField*)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+ 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -157,7 +168,10 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 
 - (void)requestFindAccountIsRegister
 {
-    [MBProgressHUD zx_showLoadingWithStatus:nil toView:nil];
+//    键盘window会被移除，键盘window上的所有子视图也会被一并移除；
+    [self.view endEditing:NO];
+    [MBProgressHUD zx_showLoadingWithStatus:nil toView:self.view];
+
     NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
 
     WS(weakSelf) ;
@@ -168,18 +182,19 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
         {
             if (error.code ==20002)
             {
-                [MBProgressHUD zx_showError:@"您的网络出问题了" toView:nil];
+                [MBProgressHUD zx_showError:@"您的网络出问题了" toView:weakSelf.view];
             }
             else
             {
-                [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+                [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
             }
         }
         else
         {
             if (array.count>0)
             {
-                [MBProgressHUD zx_showError:@"这个手机号已经注册过了" toView:nil];
+                [MBProgressHUD zx_showError:@"这个手机号已经注册过了" toView:weakSelf.view];
+                [weakSelf.userNameField becomeFirstResponder];
             }
             else
             {
@@ -198,12 +213,16 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
         
         if (error)
         {
+            [MBProgressHUD zx_hideHUDForView:weakSelf.view];
             [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+            [weakSelf.userNameField becomeFirstResponder];
         }
         else
         {
             NSLog(@"smsID:%d",number);
-            [MBProgressHUD zx_showSuccess:NSLocalizedString(@"已发送验证码", nil) toView:nil];
+            [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+            [MBProgressHUD zx_showSuccess:NSLocalizedString(@"验证码已发送到您的手机...", nil) toView:nil];
+            [weakSelf.verificationCodeField becomeFirstResponder];
             [weakSelf smsCodeRequestSuccess];
         }
     }];
@@ -235,7 +254,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 {
     if (self.smsDownSeconds ==0)
     {
-        self.verfiCodeBtn.enabled = NO;
+        self.verfiCodeBtn.enabled = YES;
         self.verfiCodeBtn.backgroundColor = [UIColor orangeColor];
         [self.verfiCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [self.smsDownTimer stopTimer];
@@ -353,11 +372,6 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 }
 
 
-//点击完成键盘
-- (IBAction)keywordReturnAction:(UITextField *)sender {
-    
-    [sender resignFirstResponder];
-//    [self.loginBtn sendActionsForControlEvents:UIControlEventTouchUpInside];
-}
+
 
 @end

@@ -96,7 +96,6 @@
         #endif
     }
     [MBProgressHUD hideHUDForView:view animated:YES];
-    
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     //默认白色
@@ -231,7 +230,7 @@
 
 + (nullable UIWindow *)getFrontWindow
 {
-    NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
+    NSEnumerator *frontToBackWindows = [[UIApplication sharedApplication].windows reverseObjectEnumerator];
     for (UIWindow *window in frontToBackWindows)
     {
         BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
