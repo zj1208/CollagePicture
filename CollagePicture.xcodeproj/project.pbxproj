@@ -348,7 +348,6 @@
 		F4BBAA0D212BF56800BF10F2 /* ZXDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA0B212BF56700BF10F2 /* ZXDatePickerView.m */; };
 		F4BBAA10212BF5CC00BF10F2 /* ZXBaseAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA0F212BF5CC00BF10F2 /* ZXBaseAnimator.m */; };
 		F4BBAA44212BF70700BF10F2 /* ZXLabelsInputTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA43212BF70700BF10F2 /* ZXLabelsInputTagsView.m */; };
-		F4BBAA54212BF83D00BF10F2 /* ZXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA53212BF83D00BF10F2 /* ZXWebViewController.m */; };
 		F4BBAA57212BF84B00BF10F2 /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA55212BF84A00BF10F2 /* ZXWKWebViewController.m */; };
 		F4BBAA5A212BFD7200BF10F2 /* CheckVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA59212BFD7200BF10F2 /* CheckVersionManager.m */; };
 		F4BBAA5F212BFE1600BF10F2 /* HKVersionAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BBAA5E212BFE1600BF10F2 /* HKVersionAlertView.m */; };
@@ -1073,8 +1072,6 @@
 		F4BBAA0F212BF5CC00BF10F2 /* ZXBaseAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXBaseAnimator.m; sourceTree = "<group>"; };
 		F4BBAA42212BF70600BF10F2 /* ZXLabelsInputTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXLabelsInputTagsView.h; sourceTree = "<group>"; };
 		F4BBAA43212BF70700BF10F2 /* ZXLabelsInputTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLabelsInputTagsView.m; sourceTree = "<group>"; };
-		F4BBAA52212BF83D00BF10F2 /* ZXWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWebViewController.h; sourceTree = "<group>"; };
-		F4BBAA53212BF83D00BF10F2 /* ZXWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWebViewController.m; sourceTree = "<group>"; };
 		F4BBAA55212BF84A00BF10F2 /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
 		F4BBAA56212BF84A00BF10F2 /* ZXWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWKWebViewController.h; sourceTree = "<group>"; };
 		F4BBAA58212BFD7200BF10F2 /* CheckVersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckVersionManager.h; sourceTree = "<group>"; };
@@ -3759,8 +3756,6 @@
 		F4E60819208D78F2008C50CB /* HtmlController */ = {
 			isa = PBXGroup;
 			children = (
-				F4BBAA52212BF83D00BF10F2 /* ZXWebViewController.h */,
-				F4BBAA53212BF83D00BF10F2 /* ZXWebViewController.m */,
 				F4BBAA56212BF84A00BF10F2 /* ZXWKWebViewController.h */,
 				F4BBAA55212BF84A00BF10F2 /* ZXWKWebViewController.m */,
 			);
@@ -4264,7 +4259,6 @@
 			files = (
 				F4A1517323D2B6930018405E /* ZXTimer.m in Sources */,
 				F4EB705F236692040073A2B7 /* SearchResultsController.m in Sources */,
-				F4BBAA54212BF83D00BF10F2 /* ZXWebViewController.m in Sources */,
 				F4A34C7E2377C8720002F891 /* ZXCollectionReusableTitleView.m in Sources */,
 				F4A151C923D2D9850018405E /* ZXPhotoPickerController.m in Sources */,
 				F4A1518423D2B8CB0018405E /* UIAlertController+ZXCategory.m in Sources */,

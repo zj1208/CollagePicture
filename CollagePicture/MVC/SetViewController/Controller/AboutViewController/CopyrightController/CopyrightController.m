@@ -10,7 +10,8 @@
 
 #import "CopyrightCell.h"
 
-#import "ZXWebViewController.h"
+#import "ZXWKWebViewController.h"
+
 @interface CopyrightController ()
 
 @property (nonatomic,copy)NSArray *copyrightArray;
@@ -89,7 +90,7 @@
     NSIndexPath *indexPath = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.tableView];
     NSDictionary *dic = [self.copyrightArray objectAtIndex:indexPath.row];
    
-    ZXWebViewController *webController = [[ZXWebViewController alloc] initWithBarTitle:[dic objectForKey:@"name"]];
+    ZXWKWebViewController *webController = [[ZXWKWebViewController alloc] initWithBarTitle:[dic objectForKey:@"name"]];
     [webController loadWebPageWithURLString:[dic objectForKey:@"homepage"]];
     [self.navigationController pushViewController:webController animated:YES];
 }
@@ -100,7 +101,7 @@
     NSIndexPath *indexPath = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.tableView];
     NSDictionary *dic = [self.copyrightArray objectAtIndex:indexPath.row];
     NSString *licenseAdress = [self getLicenseAddressWithLicenseName:[dic objectForKey:@"license"]];
-    ZXWebViewController *webController = [[ZXWebViewController alloc] initWithBarTitle:[dic objectForKey:@"license"]];
+    ZXWKWebViewController *webController = [[ZXWKWebViewController alloc] initWithBarTitle:[dic objectForKey:@"license"]];
     [webController loadWebPageWithURLString:licenseAdress];
     [self.navigationController pushViewController:webController animated:YES];
 

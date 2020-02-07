@@ -27,7 +27,6 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
-#import "ZXWebViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
