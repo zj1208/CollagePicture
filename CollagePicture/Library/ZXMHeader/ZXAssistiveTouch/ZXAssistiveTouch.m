@@ -103,7 +103,6 @@
 //按钮事件
 -(void)choose
 {
-    NSLog(@"悬浮窗");
 }
 
 - (void)changePostion:(UIPanGestureRecognizer *)pan

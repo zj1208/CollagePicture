@@ -310,7 +310,6 @@ static const char *key_longCopyPressGesture = (void *)@"key_longCopyPressGesture
 #pragma mark 菜单选项
 -(void)addMenuControllerWithPoint:(CGPoint)point
 {
-    NSLog(@"addMenuControllerWithPoint");
     [self becomeFirstResponder];
     
     UIMenuItem *copyMenuItem = [[UIMenuItem alloc]initWithTitle:NSLocalizedString(@"复制", nil) action:@selector(jl_customCopyAction:)];

@@ -49,7 +49,6 @@ static NSInteger const kAPPErrorCode = 5000;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         //这是oc数据格式；不是真的json
-        NSLog(@"+++++++%@",responseObject);
         NSError *parseError = nil;
         NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];

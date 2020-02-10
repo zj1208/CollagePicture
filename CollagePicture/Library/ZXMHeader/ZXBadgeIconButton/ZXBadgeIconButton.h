@@ -101,7 +101,6 @@ NS_ASSUME_NONNULL_END
     WS(weakSelf);
     [[[AppAPIHelper shareInstance] messageAPI] getshowMsgCountWithsuccess:^(id data) {
         
-        NSLog(@"%@",data);
         NSNumber *system = [data objectForKey:@"system"];
         NSNumber *antsteam = [data objectForKey:@"antsteam"];
         NSNumber *market =  [data objectForKey:@"market"];
