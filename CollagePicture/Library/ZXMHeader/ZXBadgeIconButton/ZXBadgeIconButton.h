@@ -107,7 +107,6 @@ NS_ASSUME_NONNULL_END
         if (system.integerValue || antsteam.integerValue || market.integerValue) {
             
             NSInteger total =[system integerValue]+[antsteam integerValue]+[market integerValue];
-            NSLog(@"system=%ld,antsteam=%ld,market=%ld,total=%ld",[system integerValue],[antsteam integerValue],[market integerValue],total);
             NSInteger value = [[[NIMSDK sharedSDK]conversationManager]allUnreadCount];
             [weakSelf.messageBadgeButton setBadgeValue:(value+total)];
             

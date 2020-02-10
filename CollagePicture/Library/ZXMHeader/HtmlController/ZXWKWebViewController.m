@@ -166,7 +166,6 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)dealloc
 {
-    NSLog(@"dealloc");
     self.webView.navigationDelegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress))];

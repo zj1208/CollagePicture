@@ -52,7 +52,7 @@ static NSInteger const kAPPErrorCode = 5000;
         NSError *parseError = nil;
         NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",str);
+//        NSLog(@"%@",str);
         
          if ([[responseObject objectForKey:@"resultCount"] integerValue] == 1)
          {
@@ -78,7 +78,7 @@ static NSInteger const kAPPErrorCode = 5000;
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        NSLog(@"%@,%@",error,@(error.code));
+//        NSLog(@"%@,%@",error,@(error.code));
         if (failure)
         {
             error = [weakSelf getErrorFromError:error];

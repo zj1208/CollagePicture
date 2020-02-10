@@ -53,7 +53,7 @@ static char InteractivePopGestureRecognizerKey2;
     CGFloat scale = 1 - fabs(translation.x / width);
     scale = scale < 0 ? 0 : scale;
     
-    NSLog(@"modal_滑动后还剩下百分比 = %f", scale);
+//    NSLog(@"modal_滑动后还剩下百分比 = %f", scale);
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStatePossible:
             break;
