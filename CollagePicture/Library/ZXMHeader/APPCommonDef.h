@@ -5,8 +5,8 @@
 //  Created by simon on 12-10-18.
 //  Copyright (c) 2012年 Ibokan. All rights reserved.
 //
-// 2018.3.7
-// 新增宏定义：适配iphoneX
+// 2018.3.7 新增宏定义：适配iphoneX
+// 2020.1.20 IS_IPHONE_XX老方法用safeAreaInsets判断已不准，在iOS13支持scene新建立工程下；
 
 //宏定义的参数，就是一个字符串替换；所以参数一定要带括号；
 #ifndef UI_APPCommonDef_h
@@ -21,13 +21,13 @@
 获取系统版本号等信息
  ****************************/
 //获取系统版本
-#ifndef Device_SYSTEMVERSION
-#define Device_SYSTEMVERSION    [[UIDevice currentDevice] systemVersion]
+#ifndef kDevice_SYSTEMVERSION
+#define kDevice_SYSTEMVERSION    [[UIDevice currentDevice] systemVersion]
 #endif
 
-#define Device_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(v) ([Device_SYSTEMVERSION floatValue] >= v)
-#define Device_SYSTEMVERSION_IOS10_OR_LATER ([Device_SYSTEMVERSION floatValue] >= 10.0)
-#define Device_SYSTEMVERSION_IOS9_OR_LATER ([Device_SYSTEMVERSION floatValue] >= 9.0)
+#define kDevice_SYSTEMVERSION_Greater_THAN_OR_EQUAL_TO(v) ([Device_SYSTEMVERSION floatValue] >= v)
+#define kDevice_SYSTEMVERSION_IOS10_OR_LATER ([Device_SYSTEMVERSION floatValue] >= 10.0)
+#define kDevice_SYSTEMVERSION_IOS9_OR_LATER ([Device_SYSTEMVERSION floatValue] >= 9.0)
 
 /*
 //检查系统版本
@@ -40,60 +40,60 @@
 
 #pragma mark - Device设备信息
 //获取系统名
-#ifndef Device_SystemName
-#define Device_SystemName       [[UIDevice currentDevice]systemName]
+#ifndef kDevice_SystemName
+#define kDevice_SystemName       [[UIDevice currentDevice]systemName]
 #endif
 //设备名称－用户自己写的名称
-#ifndef Device_Name
-#define Device_Name             [[UIDevice currentDevice]name]
+#ifndef kDevice_Name
+#define kDevice_Name             [[UIDevice currentDevice]name]
 #endif
 //用户设备实时类型 @"iPhone", @"iPod touch"
-#ifndef Device_model
-#define Device_model            [[UIDevice currentDevice]model]
+#ifndef kDevice_model
+#define kDevice_model            [[UIDevice currentDevice]model]
 #endif
 
-#define Device_UUID             [[[UIDevice currentDevice]identifierForVendor]UUIDString]
-#define Device_localizedModel   [[UIDevice currentDevice]localizedModel]
-
-
+#define kDevice_UUID             [[[UIDevice currentDevice]identifierForVendor]UUIDString]
+#define kDevice_localizedModel   [[UIDevice currentDevice]localizedModel]
 /*********************************************************************************/
 
 #pragma mark - AppBundle信息
 //资源包info.plist文件的所有健值的字典；
-#define APPInfoDictionary    [[NSBundle mainBundle]infoDictionary]
-#define APP_AllInfoShow      CFShow(APPInfoDictionary)
+#define kAPPInfoDictionary    [[NSBundle mainBundle]infoDictionary]
+#define kAPP_AllInfoShow      CFShow(APPInfoDictionary)
 //应用标识 bundelId
-#define APP_bundleIdentifier [[NSBundle mainBundle]bundleIdentifier]
+#define kAPP_bundleIdentifier [[NSBundle mainBundle]bundleIdentifier]
 //包名；根据key值获取本地化资源对象的值
-#define APP_BundleName       [APPInfoDictionary objectForKey:@"CFBundleName"]
+#define kAPP_BundleName       [kAPPInfoDictionary objectForKey:@"CFBundleName"]
 //显示包别名；根据key值获取本地化资源对象的值
-#define APP_DisplayName      [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleDisplayName"]
-#define APP_Name             APP_DisplayName?APP_DisplayName:APP_BundleName
+#define kAPP_DisplayName      [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleDisplayName"]
+#define kAPP_Name             kAPP_DisplayName?kAPP_DisplayName:kAPP_BundleName
 //app版本号version
-#define APP_Version          [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
-#define kAPP_Version    [[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+#define kAPP_Version          [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+#define kAPP_Version2    [[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 //app内部测试版本号Build
-#define APP_build            [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleVersion"]//版本号
+#define kAPP_build            [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleVersion"]//版本号
+
+
 
 #pragma mark - -APP的window
 //返回AppDelegate指针
-#ifndef APP_Delegate
-#define APP_Delegate      (AppDelegate*)[[UIApplication sharedApplication]  delegate]
+#ifndef kAPP_Delegate
+#define kAPP_Delegate      (AppDelegate*)[[UIApplication sharedApplication]  delegate]
 #endif
 //应用当前持有的最高级window
-#ifndef APP_keyWindow
-#define APP_keyWindow     [[UIApplication sharedApplication] keyWindow]
+#ifndef kAPP_keyWindow
+#define kAPP_keyWindow     [[UIApplication sharedApplication] keyWindow]
 #endif
 //应用程序的主window
-#ifndef APP_MainWindow
-#define APP_MainWindow    [[[UIApplication sharedApplication] delegate] window]
+#ifndef kAPP_MainWindow
+#define kAPP_MainWindow    [[[UIApplication sharedApplication] delegate] window]
 #endif
 
 #pragma mark - Itunes链接
 
 //iTunesLink 链接－－iTunesLink＋appID，ios6以后有直接跳转appStore的item应用Controller页面
-#ifndef ITUNESLINK
-#define ITUNESLINK @"http://itunes.apple.com/cn/app/id"
+#ifndef kITUNESLINK
+#define kITUNESLINK @"http://itunes.apple.com/cn/app/id"
 #endif
 
 //检查版本更新请求数据用的
@@ -106,7 +106,12 @@
 #pragma mark
 #pragma mark-屏幕尺寸
 /***************************
- 获取屏幕信息（尺寸，宽，高），bounds 就是屏幕的全部区域：例：0，0，320，568
+ 获取屏幕信息（尺寸，宽，高），bounds 就是屏幕的全部区域：例：
+ iPhone4:{{0, 0},{320，480}}
+ iPhone5:{{0, 0},{320，568}}
+ iPhone6:{{0, 0},{375,667}}
+ plus: {{0, 0}, {414,736}}
+iPhoneX:{{0, 0}, {414, 896}}
  ****************************/
 #ifndef LCDW
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
@@ -144,47 +149,73 @@
 #define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
 #endif
 
-//#ifndef IS_IPHONE_X
-//#define IS_IPHONE_X  ((SCREEN_MIN_LENGTH == 375.0 && SCREEN_MAX_LENGTH == 812.0)?YES:NO)
+//判断iPhoneX，Xs（iPhoneX，iPhoneXs）
+#ifndef IS_IPHONE_X
+#define IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size): NO)
+#endif
+
+//判断iPhoneXr
+#ifndef IS_IPHONE_Xr
+#define IS_IPHONE_Xr ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size): NO)
+#endif
+//判断iPhoneXsMax
+#ifndef IS_IPHONE_Xs_Max
+#define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size): NO)
+#endif
+
+//判断iPhoneX所有系列
+#ifndef IS_IPHONE_XX
+#define IS_IPHONE_XX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
+#endif
+
+/*
+（1）iOS11之前：没有iPhoneX系列；
+（2）iOS11-iOS12之间
+iPhoneX :{44, 0, 34, 0};其他手机是UIEdgeInsetsZero;
+（2）iOS12 之后
+iPhoneX :{44, 0, 34, 0};其它手机是{20, 0, 0, 0}
+（3）iOS13引入scene,导致 [UIApplication sharedApplication].delegate.window.safeAreaInsets不准；
+iPhoneX : {20, 0, 0, 0}
+ */
+// iPhoneX系列判断window的safeAreaInsets安全区域底部是否是0;来定义是否是iPhoneX；
+//#ifndef IS_IPHONE_XX
+//#define IS_IPHONE_XX ({\
+//int tmp = 0;\
+//if (@available(iOS 11.0, *)) { \
+//    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
+//    if (areaInset.bottom >0) { \
+//        tmp = 1;\
+//    }\
+//}\
+//else{\
+//    tmp = 0;\
+//}\
+//tmp;\
+//})
 //#endif
 
 
-/*iOS11之前：没有iPhoneX系列；
-iOS11-iOS12之间
-iPhoneX :{44, 0, 34, 0};其他手机是UIEdgeInsetsZero;
-iOS12 之后
-iPhoneX :{44, 0, 34, 0};其它手机是{20, 0, 0, 0}
- */
-// iPhoneX系列判断window的safeAreaInsets安全区域底部是否是0;来定义是否是iPhoneX；
-#ifndef IS_IPHONE_XX
-#define IS_IPHONE_XX ({\
-int tmp = 0;\
-if (@available(iOS 11.0, *)) { \
-    UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;\
-    if (areaInset.bottom >0) { \
-        tmp = 1;\
-    }\
-}\
-else{\
-    tmp = 0;\
-}\
-tmp;\
-})
+
+#pragma mark - 获取navigationBar，statusBar，tabBar高度
+
+#ifndef  kHEIGHT_SAFEAREA_STATUSBAR
+#define  kHEIGHT_SAFEAREA_STATUSBAR   (IS_IPHONE_XX ? (20.f+24.f) : (20.f))
+#endif
+
+#ifndef  kHEIGHT_SAFEAREA_NAVBAR
+#define  kHEIGHT_SAFEAREA_NAVBAR      (kHEIGHT_SAFEAREA_STATUSBAR+44.f)
+#endif
+
+#ifndef  kHEIGHT_SAFEAREA_TABBAR
+#define  kHEIGHT_SAFEAREA_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 49.f)
+#endif
+
+#ifndef  kHEIGHT_SAFEAREA_NormalBottom
+#define  kHEIGHT_SAFEAREA_NormalBottom      (IS_IPHONE_XX ? 34.f: 0)
 #endif
 
 
-
-#pragma mark - 获取navigationBar，statuBar，tabBar高度
-
-#ifndef  HEIGHT_NAVBAR
-#define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
-#define  HEIGHT_STATEBAR    (IS_IPHONE_XX ? (44.f) : (20.f))
-#define  HEIGHT_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 0)
-#endif
-
-#ifndef  HEIGHT_TABBAR_SAFE
-#define  HEIGHT_TABBAR_SAFE  (IS_IPHONE_XX ? (34.f) : 0)
-#endif
+ 
 
 #pragma mark - 设置view某个尺寸改变后的frame
 //单独设置view的frame里的高度，其他的值保持不变
@@ -215,7 +246,7 @@ tmp;\
 
 #pragma mark - NSLog utility 打印
 
-////NSLog返回更多信息。
+//////NSLog返回更多信息。
 //#ifdef DEBUG
 //#define NSLog(format, ...)  do{ printf("\n <%s : %d行> %s \n %s \n",\
 //[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__,[[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]); \
@@ -224,16 +255,13 @@ tmp;\
 //#define NSLog(format, ...)
 //#endif
 
-#ifndef __OPTIMIZE__
-#define NSLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
-
-#endif
-//不能用，一旦用了，会无法打包
 //#ifndef __OPTIMIZE__
-//#define NSLitLog(format, ...) printf(" %s\n", [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+//#define NSLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+//
 //#endif
 
-//NSLog 根据url和dictionary 参数 打印httpURL请求地址
+
+// 根据url和dictionary 参数 打印httpURL请求地址
 #ifndef ZX_NSLog_HTTPURL
 #define ZX_NSLog_HTTPURL(hostURL,path, parameterDic) \
 NSString *string = [NSString stringWithFormat:@"%@%@?", hostURL, path];\
@@ -260,8 +288,10 @@ NS_INLINE void ZX_NSLog_ClassAllPropertyAndValue(id model)
         objc_property_t property = properties [i];
         const char *propertyName = property_getName(property);
         NSString *strName = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wunused-variable"
         id getIvar = [model valueForKey:strName];
-        NSLog(@"key=%@,value=%@",strName,getIvar);
+        #pragma clang diagnostic pop
     }
     free(properties);
     NSLog(@"%u",count);
@@ -297,7 +327,6 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 #define ZX_ContentFile(aFileName,aFileType) [[NSBundle mainBundle]pathForResource:aFileName ofType:aFileType]
 
 
-
 #pragma mark - UIColor utility
 
 
@@ -309,7 +338,7 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 #define UIColorFromRGBA(R,G,B,A)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 #endif
 /**
- * @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#333333--ZX_RGBHexString(0X333333)
+ * @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#34373A--ZX_RGBHexString(0X34373A)
  */
 #ifndef UIColorFromRGB_HexValue
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
@@ -361,65 +390,5 @@ sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 
 
 #endif
-
-
-
-
-////以下开始是宏定义
-////rac_valuesForKeyPath:observer:是方法名
-//#define RACObserve(TARGET, KEYPATH) \
-//[(id)(TARGET) rac_valuesForKeyPath:@keypath(TARGET, KEYPATH) observer:self]
-//
-//#define keypath(...) \
-//metamacro_if_eq(1, metamacro_argcount(__VA_ARGS__))(keypath1(__VA_ARGS__))(keypath2(__VA_ARGS__))
-//
-////这个宏在取得keypath的同时在编译期间判断keypath是否存在，避免误写
-////您可以先不用介意这里面的巫术..
-//#define keypath1(PATH) \
-//(((void)(NO && ((void)PATH, NO)), strchr(# PATH, '.') + 1))
-//
-//#define keypath2(OBJ, PATH) \
-//(((void)(NO && ((void)OBJ.PATH, NO)), # PATH))
-//
-////A和B是否相等，若相等则展开为后面的第一项，否则展开为后面的第二项
-////eg. metamacro_if_eq(0, 0)(true)(false) => true
-////    metamacro_if_eq(0, 1)(true)(false) => false
-//#define metamacro_if_eq(A, B) \
-//metamacro_concat(metamacro_if_eq, A)(B)
-//
-//#define metamacro_if_eq1(VALUE) metamacro_if_eq0(metamacro_dec(VALUE))
-//
-//#define metamacro_if_eq0(VALUE) \
-//metamacro_concat(metamacro_if_eq0_, VALUE)
-//
-//#define metamacro_if_eq0_1(...) metamacro_expand_
-//
-//#define metamacro_expand_(...) __VA_ARGS__
-//
-//#define metamacro_argcount(...) \
-//metamacro_at(20, __VA_ARGS__, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
-//
-//#define metamacro_at(N, ...) \
-//metamacro_concat(metamacro_at, N)(__VA_ARGS__)
-//
-//#define metamacro_concat(A, B) \
-//metamacro_concat_(A, B)
-//
-//#define metamacro_concat_(A, B) A ## B
-//
-//#define metamacro_at2(_0, _1, ...) metamacro_head(__VA_ARGS__)
-//
-//#define metamacro_at20(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, ...) metamacro_head(__VA_ARGS__)
-//
-//#define metamacro_head(...) \
-//metamacro_head_(__VA_ARGS__, 0)
-//
-//#define metamacro_head_(FIRST, ...) FIRST
-//
-//#define metamacro_dec(VAL) \
-//metamacro_at(VAL, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)
-
-
-
 
 

@@ -27,7 +27,7 @@ static NSString * const kFeedbackAppSecret = @"bf08c742e1baba2c11df06219282a2a3"
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.versionLab.text = [NSString stringWithFormat:@"版本号 %@",APP_Version];
+    self.versionLab.text = [NSString stringWithFormat:@"版本号 %@",kAPP_Version];
     
     self.dataArray = @[@"版本说明",@"反馈",@"隐私权政策",@"版权信息"];
     

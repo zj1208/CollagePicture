@@ -64,7 +64,7 @@
     self.carBtn.badgeLabelContentOffest = CGPointMake(0, -5);
  
 //    self.emptyViewController.contentOffest = CGSizeMake(0, 100);
-    self.emptyViewController.view.frame = CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR);
+    self.emptyViewController.view.frame = CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR);
 }
 
 - (ZXEmptyViewController *)emptyViewController

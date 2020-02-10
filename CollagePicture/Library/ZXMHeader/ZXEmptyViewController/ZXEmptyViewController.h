@@ -57,7 +57,7 @@ static NSString * const ZXEmptyRequestFaileTitle = @"";
 /*
 ZXEmptyViewController的view加入到一个隐藏系统navigationBar的控制器view上时，会覆盖整个控制器view；
 调节方式如下：
-self.emptyViewController.view.frame = CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR);
+self.emptyViewController.view.frame = CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR);
  */
 
 //是否点击屏幕回调代理方法执行刷新数据

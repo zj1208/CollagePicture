@@ -59,7 +59,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
     [self.whiteBgView zx_setBorderWithCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
     
     UIFont *font = nil;
-    if (Device_SYSTEMVERSION_IOS9_OR_LATER) {
+    if (@available(iOS 9.0,*)) {
        font  = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
     }
     else{

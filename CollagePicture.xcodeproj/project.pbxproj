@@ -468,7 +468,6 @@
 		F40228F41EF37CA400E3D07E /* CopyrightController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyrightController.m; sourceTree = "<group>"; };
 		F40CDF12216C3E43007CFCB4 /* ZXPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPrintPageRenderer.h; sourceTree = "<group>"; };
 		F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPrintPageRenderer.m; sourceTree = "<group>"; };
-		F41A19D5204FD75F00B1945C /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F41C20E92384D20D00F895CF /* GuideShopHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideShopHomeController.m; sourceTree = "<group>"; };
 		F41C20EA2384D20D00F895CF /* GuideShopHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideShopHomeController.h; sourceTree = "<group>"; };
 		F41E3BE7220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
@@ -684,6 +683,7 @@
 		F44BD22F23F133D000A866F1 /* ZXEmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXEmptyViewController.h; sourceTree = "<group>"; };
 		F44BD23223F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZXSystemBackButtonAction.h"; sourceTree = "<group>"; };
 		F44BD23323F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZXSystemBackButtonAction.m"; sourceTree = "<group>"; };
+		F44BD5CC23F13A0600A866F1 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F44DAE9B1DC8D187000D9311 /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
 		F44DAE9C1DC8D187000D9311 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		F44DAE9D1DC8D187000D9311 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
@@ -1590,6 +1590,7 @@
 		F446A7BC1FCC082900C82C90 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
+				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4A158ED23D6D5A00018405E /* CHSNotOpenURLBackAppManager */,
 				F4A158C423D57AAD0018405E /* ZXCheckAppItunesVersionManager */,
 				F4361D742109982F00A5C22F /* ZXBaseOrientationController */,
@@ -1631,8 +1632,8 @@
 				F4A34C652377C8720002F891 /* ZXReusableTitleViews */,
 				F446A8B31FCC082900C82C90 /* ZXSimpleLyricView.m */,
 				F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */,
-				F41A19D5204FD75F00B1945C /* APPCommonDef.h */,
 				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
+				F44BD5CC23F13A0600A866F1 /* APPCommonDef.h */,
 				F4A158C323D57A780018405E /* ZXLocalNotification */,
 				F446A8981FCC082900C82C90 /* KxMenu */,
 				F446A8B91FCC082900C82C90 /* ADCustomTableView */,
@@ -3544,7 +3545,6 @@
 			isa = PBXGroup;
 			children = (
 				F4EF35021FF5D7EB00CCD088 /* AliOSSUploadManager */,
-				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4BBAA5C212BFE1600BF10F2 /* HKVersionAlertView */,
 				F4BBAA58212BFD7200BF10F2 /* CheckVersionManager.h */,
 				F4BBAA59212BFD7200BF10F2 /* CheckVersionManager.m */,

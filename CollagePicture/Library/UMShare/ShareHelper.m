@@ -224,7 +224,7 @@ static NSString *appIconUrl = @"http://is3.mzstatic.com/image/thumb/Purple49/" \
         {
             //设置图文 
 //            NSString *text = [NSString stringWithFormat:@"#%@.我刚拼的照片#%@（分享至@%@)",APP_Name,shareInfo.url,APP_Name];
-             NSString *text = [NSString stringWithFormat:@"#%@#（分享至@%@)",APP_Name,APP_Name];
+             NSString *text = [NSString stringWithFormat:@"#%@#（分享至@%@)",kAPP_Name,kAPP_Name];
             [weakSelf shareImageAndTextToPlatformType:platformType share:shareInfo text:text];
            
         }

@@ -79,7 +79,7 @@
     {
         NSDictionary *modelDic = [self.dataArray objectAtIndex:indexPath.row];
         NSString *content = [modelDic objectForKey:@"content"];
-        NSString *content2 = [content stringByReplacingOccurrencesOfString:@"**" withString:APP_Name];
+        NSString *content2 = [content stringByReplacingOccurrencesOfString:@"**" withString:kAPP_Name];
         ZXWKWebViewController *vc = [[ZXWKWebViewController alloc] initWithBarTitle:[modelDic objectForKey:@"title"]];
         [vc loadLocalText:content2];
         [self.navigationController pushViewController:vc animated:YES];

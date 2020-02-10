@@ -727,7 +727,7 @@
                            kTargetRole_KEY:@(targetRole),
                            @"type":@"0",
                            @"systemVersion":[[UIDevice currentDevice] systemVersion],
-                           @"appVersion":APP_Version,
+                           @"appVersion":kAPP_Version,
                            @"mobileBrand":[[UIDevice currentDevice] zx_getDeviceName]};
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:dic];
     [parameters setObject:clientId?clientId:@"" forKey:kClientId_KEY];

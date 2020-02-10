@@ -48,7 +48,7 @@
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.versionLab.text = [NSString stringWithFormat:@"V %@",APP_Version];
+    self.versionLab.text = [NSString stringWithFormat:@"V %@",kAPP_Version];
     [self reloadCacheLabel];
     [self dynamicTitleLabelFont];
 }
@@ -264,7 +264,7 @@
 - (void)zxCheckVersionWithNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
 {
     WS(weakSelf);
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:kAPP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
         
         [weakSelf zx_goAppStoreWithAppId:kAPPID];
 
@@ -273,7 +273,7 @@
 
 - (void)zxCheckVersionWithNoNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
 {
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:kAPP_DisplayName message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
 }
 
 

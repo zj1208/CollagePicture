@@ -27,8 +27,8 @@
 #define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 #endif
 
-#ifndef  HEIGHT_NAVBAR
-#define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
+#ifndef  kHEIGHT_SAFEAREA_NAVBAR
+#define  kHEIGHT_SAFEAREA_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
 #define  HEIGHT_STATEBAR    (IS_IPHONE_XX ? (44.f) : (20.f))
 #define  HEIGHT_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 0)
 #endif
@@ -252,7 +252,7 @@ static NSString* const SixSpaces = @"      ";
             }
         }
         
-        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
+        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
         wkWebView.backgroundColor = self.view.backgroundColor;
         wkWebView.allowsBackForwardNavigationGestures = YES;
         if ([wkWebView respondsToSelector:@selector(allowsLinkPreview)])

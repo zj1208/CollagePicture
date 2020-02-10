@@ -44,7 +44,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 - (void)setUI
 {
     self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE);
+    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-kHEIGHT_SAFEAREA_NAVBAR-kHEIGHT_SAFEAREA_NormalBottom);
     self.userNameField.delegate = self;
     self.verificationCodeField.delegate = self;
     
@@ -360,7 +360,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 - (IBAction)userAgreementAction:(UIButton *)sender {
     
     FullTextViewController *textViewVC = [[FullTextViewController alloc] initWithBarTitle:@"用户服务协议"];
-    [textViewVC loadLocalUserServiceAgreementOfFixResourceWithCompany:@"美颜拼图公司" appName:APP_Name];
+    [textViewVC loadLocalUserServiceAgreementOfFixResourceWithCompany:@"美颜拼图公司" appName:kAPP_Name];
     [self.navigationController pushViewController:textViewVC animated:YES];
 }
 
