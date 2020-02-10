@@ -21,8 +21,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 
@@ -107,7 +107,7 @@ static const NSString *selName = @"valueChange";
         leftBarButtonItem.tintColor =[UIColor blackColor];
         
         UIBarButtonItem *borderSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-        borderSpaceBarItem.width = LCDScale_iPhone6_Width(12);
+        borderSpaceBarItem.width = LCDScale_iPhone6(12);
         
         UIBarButtonItem *centerSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         

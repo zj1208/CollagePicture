@@ -60,7 +60,7 @@
     
     [self.line_vertical2 mas_makeConstraints:^(MASConstraintMaker *make) {
        
-    make.right.mas_equalTo(self.contentView.mas_right).with.offset(LCDScale_iPhone6_Width(-89));
+    make.right.mas_equalTo(self.contentView.mas_right).with.offset(LCDScale_iPhone6(-89));
         make.width.mas_equalTo(@(1));
         make.top.mas_equalTo(self.line_horizontal.mas_bottom);
         make.bottom.mas_equalTo(self.contentView.mas_bottom);

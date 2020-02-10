@@ -76,27 +76,11 @@
 }
 
 
-- (nullable NSString *)zx_getUMOpenUDIDString
-{
-    Class cls = NSClassFromString(@"UMANUtil");
-    SEL deviceIDSelector = @selector(openUDIDString);
-    NSString *deviceID = nil;
-    if(cls && [cls respondsToSelector:deviceIDSelector])
-    {
-        deviceID = [cls performSelector:deviceIDSelector];
-    }
-    return deviceID;
-}
-
-- (void)openUDIDString
-{
-    
-}
 
 
 #pragma mark - Device
 
-+ (NSString *)zx_getDeviceVersionInfo
+- (NSString *)zx_getDeviceVersionInfo
 {
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -105,7 +89,7 @@
 }
 
 //获取设备类型名称；
-+ (NSString *)zx_getDeviceName
+- (NSString *)zx_getDeviceName
 {
     NSString *deviceString = [self zx_getDeviceVersionInfo];
     
@@ -211,9 +195,9 @@
     
 }
 
-+ (ZXDeviceModelType)zx_getDeviceModelType
+- (ZXDeviceModelType)zx_getDeviceModelType
 {
-    NSString *model = [UIDevice currentDevice].model;
+    NSString *model = self.model;
     if ([model isEqualToString:@"iPhone"])
     {
         return ZXDeviceModelType_iPhone;

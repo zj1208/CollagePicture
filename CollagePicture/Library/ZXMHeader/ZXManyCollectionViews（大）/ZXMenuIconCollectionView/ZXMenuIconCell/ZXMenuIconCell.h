@@ -27,8 +27,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 中心图标
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
-// 设置中心图标的 大小；默认LCDScale_iPhone6_Width(45.f);
+// 设置中心图标的 大小；默认LCDScale_iPhone6(45.f);
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgViewLayoutWidth;
 
 // 在99+的时候可以调整角标往图片里靠

@@ -124,8 +124,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 //iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；

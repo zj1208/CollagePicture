@@ -20,8 +20,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 
@@ -77,10 +77,10 @@ static NSString * const reuseTagsCell = @"Cell";
     self.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
     self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
     self.minimumLineSpacing = ZXMinimumLineSpacing;
-    self.itemSize = CGSizeMake(LCDScale_iPhone6_Width(ZXItemWidth), LCDScale_iPhone6_Width(ZXItemHeight));
+    self.itemSize = CGSizeMake(LCDScale_iPhone6(ZXItemWidth), LCDScale_iPhone6(ZXItemHeight));
     self.scrollEnabled = NO;
 
-    self.iconSquareSideLength = LCDScale_iPhone6_Width(45.f);
+    self.iconSquareSideLength = LCDScale_iPhone6(45.f);
     self.clipsToBounds = YES;
     self.clearsContextBeforeDrawing = YES;
     self.hasBadge = YES;
@@ -137,7 +137,7 @@ static NSString * const reuseTagsCell = @"Cell";
         {
             return self.iconSquareSideLength+33;
         }
-        return self.iconSquareSideLength+LCDScale_iPhone6_Width(40);
+        return self.iconSquareSideLength+LCDScale_iPhone6(40);
     }
     return self.iconSquareSideLength;
 }

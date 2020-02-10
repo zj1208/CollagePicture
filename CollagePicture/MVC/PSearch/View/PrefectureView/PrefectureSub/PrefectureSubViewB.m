@@ -112,20 +112,20 @@
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
          make.left.mas_equalTo(self.mas_left).with.offset(10);
-         make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6_Width(9));
+         make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6(9));
     }];
     [self.descriptionLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.mas_equalTo(self.mas_left).with.offset(10);
         make.centerY.mas_equalTo(self.photoImageView.mas_centerY);
-        make.right.mas_greaterThanOrEqualTo(self.photoImageView.mas_left).with.offset(LCDScale_iPhone6_Width(-6));
+        make.right.mas_greaterThanOrEqualTo(self.photoImageView.mas_left).with.offset(LCDScale_iPhone6(-6));
 
     }];
     
     [self.salePriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.mas_equalTo(self.mas_left).with.offset(10);
-        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6_Width(-9));
+        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6(-9));
 
     }];
     [self.originalPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {

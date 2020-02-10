@@ -12,8 +12,8 @@
 #import "UIButton+WebCache.h"
 #import "UIView+ZXAnimation.h"
 
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
 #endif
 
 
@@ -85,8 +85,8 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.dismissBtnLayoutWidth.constant = LCDScale_iPhone6_Width(44.f);
-    self.leftMaginLayout.constant = LCDScale_iPhone6_Width(35.f);
+    self.dismissBtnLayoutWidth.constant = LCDScale_iPhone6(44.f);
+    self.leftMaginLayout.constant = LCDScale_iPhone6(35.f);
 //    self.effectView.frame = self.view.frame;
 }
 

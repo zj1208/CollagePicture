@@ -12,6 +12,10 @@
 //  注意：1.如果用self.view.frame设置webView的frame，微信的页面（https://mp.weixin.qq.com）会往上偏移；如果用计算大小设置，当vc整个页面作为子控制器展示预览view的时候-如3DTouch预览，顶部导航条空白区域会留白；所以iOS9及以上系统需要改为约束设置；
 //  2.WKWebView框架 还需要重点学习研究！
 
+//  待解决问题？
+//  （1）itunes跳转,超链接跳转，h5本地文件加载；需要重新测试？
+// （2）长按图片会有弹窗；应该去除；
+
 //  2017.12.22 更改默认分享 标题没有的问题；调试cookie
 //  2018.3.29 修改第二个wkWebView无法加载请求的bug；
 //  2018.4.2 优化加载超链接的方法；优化没有登录不加载cookie判断；
@@ -22,7 +26,7 @@
 //  2018.7.05  修改请求中遇到内部无效协议请求的，不是最终请求，造成错误页面覆盖；
 //  2018.7.26  支持3DTouch预览的向上滑动事件处理-分享；
 //  2018.7.30  iOS及以上修改webView的frame设置改为约束设置；
-
+//  2020.02.06  优化独立容器，针对urlString做是否需要百分比编码做判断处理；
 
 
 #import <UIKit/UIKit.h>
@@ -64,12 +68,13 @@ NS_ASSUME_NONNULL_BEGIN
 //5. 加载纯文本数据在webView显示
 - (void)loadLocalText:(NSString *)content NS_AVAILABLE_IOS(9_0);
 
-
-
+@property (nonatomic, assign) BOOL appearNavigationBarHide;
 
 // 刷新最新数据
 - (void)reloadData;
 
+//用于退出当前栈顶web控制器
+- (void)exitWebViewApp;
 @end
 
 NS_ASSUME_NONNULL_END
@@ -80,9 +85,9 @@ NS_ASSUME_NONNULL_END
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"发布求购";
-    ZXWKWebViewController *moreVc = [[ZXWKWebViewController alloc] init];
-    moreVc.webUrl = [NSString stringWithFormat:@"%@/ycb/page/ycbPurchaseForm.html",[WYUserDefaultManager getkAPP_H5URL]];
-    [self addChildViewController:moreVc];
-    [self.view addSubview:moreVc.view];
+    ZXWKWebViewController *vc = [[ZXWKWebViewController alloc] init];
+    vc.webUrl = [NSString stringWithFormat:@"%@/ycb/page/ycbPurchaseForm.html",[WYUserDefaultManager getkAPP_H5URL]];
+    [self addChildViewController:vc];
+    [self.view addSubview:vc.view];
 }
 */

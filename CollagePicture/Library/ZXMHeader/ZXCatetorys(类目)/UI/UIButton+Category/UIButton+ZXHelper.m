@@ -125,7 +125,7 @@
 
 
 
-- (NSIndexPath *)zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:(UIScrollView *)view
+- (NSIndexPath *)zx_getIndexPathWithBtnInCellFromTableViewOrCollectionView:(UIScrollView *)view
 {
     CGPoint point = self.center;
     point = [view convertPoint:point fromView:self.superview];
@@ -144,6 +144,19 @@
     return nil;
 }
 
+
+- (void)zx_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled
+{
+    self.userInteractionEnabled = enabled;
+    if (enabled)
+    {
+        self.alpha = 1;
+    }
+    else
+    {
+        self.alpha = 0.5;
+    }
+}
 
 
 
@@ -172,7 +185,6 @@
     self.layer.borderWidth = 1;
     [self setBackgroundColor:color2];
     [self setTitleColor:color1 forState:UIControlStateNormal];
-
 }
 
 - (void)zh_userSwitchWhiteAndLightGrayColorWithInteractionEnabled:(BOOL)enabled;
@@ -197,18 +209,6 @@
 }
 
 
-- (void)zh_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled
-{
-    self.userInteractionEnabled = enabled;
-    if (enabled)
-    {
-        self.alpha = 1;
-    }
-    else
-    {
-        self.alpha = 0.5;
-    }
-}
 
 - (void)zh_userSelectedEnabled:(BOOL)enabled boardColor:(UIColor*)boardColor
 {

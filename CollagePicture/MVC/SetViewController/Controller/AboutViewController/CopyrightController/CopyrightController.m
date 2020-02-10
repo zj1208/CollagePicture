@@ -87,7 +87,7 @@
 
 - (void)goGithubViewAction:(UIButton *)sender
 {
-    NSIndexPath *indexPath = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.tableView];
+    NSIndexPath *indexPath = [sender zx_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.tableView];
     NSDictionary *dic = [self.copyrightArray objectAtIndex:indexPath.row];
    
     ZXWKWebViewController *webController = [[ZXWKWebViewController alloc] initWithBarTitle:[dic objectForKey:@"name"]];
@@ -98,7 +98,7 @@
 
 - (void)goLicenseViewAction:(UIButton *)sender
 {
-    NSIndexPath *indexPath = [sender zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.tableView];
+    NSIndexPath *indexPath = [sender zx_getIndexPathWithBtnInCellFromTableViewOrCollectionView:self.tableView];
     NSDictionary *dic = [self.copyrightArray objectAtIndex:indexPath.row];
     NSString *licenseAdress = [self getLicenseAddressWithLicenseName:[dic objectForKey:@"license"]];
     ZXWKWebViewController *webController = [[ZXWKWebViewController alloc] initWithBarTitle:[dic objectForKey:@"license"]];

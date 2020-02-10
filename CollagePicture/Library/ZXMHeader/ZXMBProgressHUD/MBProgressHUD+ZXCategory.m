@@ -63,16 +63,24 @@
     [MBProgressHUD zx_showText:error customIcon:nil view:view hideAfterDelay:delay];
 }
 
-+ (void)zx_showErrorTitle:(nullable NSString *)title error:(NSError *)error toView:(UIView *)view
++ (void)zx_showErrorContainsCodeWithTitle:(nullable NSString *)title error:(NSError *)error toView:(nullable UIView *)view
 {
+    NSString *errorTitle = nil;
     NSString * eTitle = nil;
-    if (error.code == -1005 || error.code == -1009 || error.code == -1001) {
-         eTitle = TEXT_ERROR_NETWORK;
-     }else
-     {
-         eTitle = TEXT_ERROR_SERVER;
-     }
-    NSString *errorTitle = [NSString stringWithFormat:@"%@(%@)",eTitle,@(error.code)];
+    if(error.code<-990)
+    {
+        if (error.code == -1005 || error.code == -1009 || error.code == -1001) {
+             eTitle = TEXT_ERROR_NETWORK;
+         }else
+         {
+             eTitle = TEXT_ERROR_SERVER;
+         }
+        errorTitle = [NSString stringWithFormat:@"%@(%@)",eTitle,@(error.code)];
+    }
+    else
+    {
+        errorTitle = [NSString stringWithFormat:@"%@(%@)",title,@(error.code)];
+    }
     [MBProgressHUD zx_showText:errorTitle customIcon:nil view:view hideAfterDelay:0];
 }
 
@@ -96,6 +104,7 @@
         #endif
     }
     [MBProgressHUD hideHUDForView:view animated:YES];
+    
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     //默认白色
@@ -230,7 +239,7 @@
 
 + (nullable UIWindow *)getFrontWindow
 {
-    NSEnumerator *frontToBackWindows = [[UIApplication sharedApplication].windows reverseObjectEnumerator];
+    NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
     for (UIWindow *window in frontToBackWindows)
     {
         BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;

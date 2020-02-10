@@ -16,8 +16,8 @@
     // Initialization code
     
 //    self.backgroundColor = [UIColor greenColor];
-    self.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6_Width(14)];
-    self.imgViewLayoutWidth.constant = LCDScale_iPhone6_Width(45.f);
+    self.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(14)];
+    self.imgViewLayoutWidth.constant = LCDScale_iPhone6(45.f);
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
 }
 
@@ -32,7 +32,7 @@
     if (model.sideMarkType ==SideMarkType_number)
     {
         self.badgeLab.hidden = NO;
-         [self.badgeLab zx_topBadgeIconWithBadgeValue:[model.sideMarkValue integerValue] maginY:1.f badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6_Width(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+         [self.badgeLab zx_topBadgeIconWithBadgeValue:[model.sideMarkValue integerValue] maginY:1.f badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
         
         if ([model.sideMarkValue integerValue]>99)
         {

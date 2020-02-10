@@ -101,8 +101,8 @@ static NSString * const reuseInputTagsCell = @"Cell";
 {
     self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     self.itemHeight = ZXAddPicItemHeight;
-    self.minimumInteritemSpacing = LCDScale_iPhone6_Width(ZXMinimumInteritemSpacing) ;
-    self.minimumLineSpacing =LCDScale_iPhone6_Width(ZXMinimumLineSpacing);
+    self.minimumInteritemSpacing = LCDScale_iPhone6(ZXMinimumInteritemSpacing) ;
+    self.minimumLineSpacing =LCDScale_iPhone6(ZXMinimumLineSpacing);
     self.defaultAlertTitle = ZXDefaultAlertTitle;
     self.defaultAlertFieldTextLength = ZXDefaultAlertFieldTextLength;
     self.existInputItem = YES;//输入标签默认存在

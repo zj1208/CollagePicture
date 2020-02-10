@@ -23,8 +23,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 
@@ -120,9 +120,9 @@ static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
 {
     if (indexPath.row ==_titles.count)
     {
-        return LCDScale_iPhone6_Width(70.f);
+        return LCDScale_iPhone6(70.f);
     }
-    return LCDScale_iPhone6_Width(40.f);
+    return LCDScale_iPhone6(40.f);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

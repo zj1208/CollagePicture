@@ -9,6 +9,7 @@
 #import "ZXEmptyViewController.h"
 #import "MBProgressHUD+ZXCategory.h"
 #import "AFNetworkReachabilityManager.h"
+#import <Masonry/Masonry.h>
 
 #import "ZXWKWebViewController.h"
 
@@ -83,8 +84,8 @@ tmp;\
     [self.view addSubview:self.textLabel];
     [self.view addSubview:self.centerButton];
     
-    CGFloat btnHeight = LCDScale_iPhone6_Width(30);
-    CGFloat btnWidth = LCDScale_iPhone6_Width(120);
+    CGFloat btnHeight = LCDScale_iPhone6(30);
+    CGFloat btnWidth = LCDScale_iPhone6(120);
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -179,7 +180,7 @@ tmp;\
 {
     [super viewDidLayoutSubviews];
     
-    CGFloat btnHeight = LCDScale_iPhone6_Width(30);
+    CGFloat btnHeight = LCDScale_iPhone6(30);
     CGFloat imageWithTitleLayoutConstant = 12;
     CGFloat titleWithButtonLayoutConstant = 40;
     CGFloat imageWithButtonLayoutConstant = 30;
@@ -488,6 +489,7 @@ tmp;\
         ZXWKWebViewController *vc = [[ZXWKWebViewController alloc] init];
         [vc loadWebHTMLSringWithFileResource:@"networkErrorHelp"];
         if (self.parentViewController.navigationController) {
+            vc.hidesBottomBarWhenPushed = YES;
             [self.parentViewController.navigationController pushViewController:vc animated:NO];
         }
     }

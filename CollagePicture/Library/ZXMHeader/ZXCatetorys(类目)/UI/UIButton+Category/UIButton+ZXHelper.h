@@ -17,6 +17,7 @@
 
 // 2019.11.26  增加图片在右标题在左的布局改变方法；
 // 2019.12.09  修改bug；
+// 2020.2.02  优化；
 
 #import <UIKit/UIKit.h>
 
@@ -85,7 +86,12 @@ typedef NS_ENUM(NSInteger, ZXButtonContentType) {
  *  @return indexPath
  */
 
-- (nullable NSIndexPath *)zh_getIndexPathWithBtnInCellFromTableViewOrCollectionView:(nullable UIScrollView *)view;
+- (nullable NSIndexPath *)zx_getIndexPathWithBtnInCellFromTableViewOrCollectionView:(nullable UIScrollView *)view;
+
+
+/// 按钮禁止状态，alpha=0.5
+/// @param enabled enabled description
+- (void)zx_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled;
 
 
 /**
@@ -93,7 +99,7 @@ typedef NS_ENUM(NSInteger, ZXButtonContentType) {
  */
 - (void)zh_userSwitchWhiteAndLightGrayColorWithInteractionEnabled:(BOOL)enabled;
 
-- (void)zh_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled;
+
 
 
 /**

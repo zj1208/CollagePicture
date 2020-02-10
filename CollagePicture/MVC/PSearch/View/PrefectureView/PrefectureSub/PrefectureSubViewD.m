@@ -149,12 +149,12 @@
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
 
          make.left.mas_equalTo(self.mas_left).with.offset(10);
-         make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6_Width(12));
+         make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6(12));
     }];
     [self.descriptionLab mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.mas_equalTo(self.mas_left).with.offset(10);
-       make.top.mas_equalTo(self.nameLab.mas_bottom).with.offset(LCDScale_iPhone6_Width(3));
+       make.top.mas_equalTo(self.nameLab.mas_bottom).with.offset(LCDScale_iPhone6(3));
     }];
     
     [self.preSuffIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,9 +166,9 @@
     }];
      [self.photoImageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
           
-         make.top.mas_equalTo(self.descriptionLab.mas_bottom).with.offset(LCDScale_iPhone6_Width(6));
+         make.top.mas_equalTo(self.descriptionLab.mas_bottom).with.offset(LCDScale_iPhone6(6));
            make.left.mas_equalTo(self.mas_left).with.offset(9);
-          make.width.mas_equalTo(LCDScale_iPhone6_Width(70));
+          make.width.mas_equalTo(LCDScale_iPhone6(70));
            make.height.mas_equalTo(self.photoImageView1.mas_width).multipliedBy(1);
        }];
       
@@ -183,8 +183,8 @@
     
     [self.salePriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.mas_equalTo(self.mas_left).with.offset(LCDScale_iPhone6_Width(18));
-        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6_Width(-12));
+        make.left.mas_equalTo(self.mas_left).with.offset(LCDScale_iPhone6(18));
+        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6(-12));
     }];
     [self.originalPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -193,8 +193,8 @@
     }];
     [self.salePriceLab2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.mas_equalTo(self.photoImageView2.mas_left).with.offset(LCDScale_iPhone6_Width(8));
-        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6_Width(-12));
+        make.left.mas_equalTo(self.photoImageView2.mas_left).with.offset(LCDScale_iPhone6(8));
+        make.bottom.mas_equalTo(self.mas_bottom).with.offset(LCDScale_iPhone6(-12));
     }];
     [self.originalPriceLab2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -250,7 +250,7 @@
         [self.nameLab mas_remakeConstraints:^(MASConstraintMaker *make) {
 
              make.left.mas_equalTo(self.mas_left).with.offset(10);
-             make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6_Width(12));
+             make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6(12));
         }];
         [self.preSuffIconImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
 
@@ -266,7 +266,7 @@
         [self.preSuffIconImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
             
             make.left.mas_equalTo(self.mas_left).with.offset(10);
-            make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6_Width(16));
+            make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6(16));
             make.height.mas_equalTo(14);
             make.width.mas_lessThanOrEqualTo(40);
         }];
@@ -281,7 +281,7 @@
         [self.nameLab mas_remakeConstraints:^(MASConstraintMaker *make) {
 
              make.left.mas_equalTo(self.mas_left).with.offset(10);
-             make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6_Width(12));
+             make.top.mas_equalTo(self.mas_top).with.offset(LCDScale_iPhone6(12));
         }];
         self.preSuffIconImageView.image = nil;
     }

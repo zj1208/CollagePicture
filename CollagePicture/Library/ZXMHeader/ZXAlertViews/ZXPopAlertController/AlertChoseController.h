@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_END
     {
         self.transitonModelDelegate = [[ZXTransitionModalDelegate alloc] init];
     }
-    self.transitonModelDelegate.contentSize = CGSizeMake(LCDScale_iPhone6_Width(295), LCDScale_iPhone6_Width(407));
+    self.transitonModelDelegate.contentSize = CGSizeMake(LCDScale_iPhone6(295), LCDScale_iPhone6(407));
     
     AlertChoseController *vc = [[AlertChoseController alloc] initWithNibName:@"AlertChoseController" bundle:nil];
     vc.addTextField = YES;

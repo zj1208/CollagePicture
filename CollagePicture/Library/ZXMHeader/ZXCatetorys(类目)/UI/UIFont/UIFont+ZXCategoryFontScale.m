@@ -72,15 +72,11 @@ static NSInteger const miniScreenFontSizeSpace = 1.5;
 + (CGFloat)transSizeWithFontSize:(CGFloat)fontSize
 {
     CGFloat transFontSize = fontSize;
-    // 4.0inch的屏幕，特殊处理
+    // 4.0inch的屏幕，特殊处理，字体太小没法看；
     if ([UIScreen mainScreen].bounds.size.width == 320)
     {
-        if (fontSize <= 12.0)
-        {
-            transFontSize = fontSize;
-        }else{
-            transFontSize = fontSize - miniScreenFontSizeSpace;
-        }
+        CGFloat scale = [UIScreen mainScreen].bounds.size.width/375.f;
+        transFontSize = scale * fontSize *1.1;
     }
     // iPhone6，plus，iPhoneX系列
     else

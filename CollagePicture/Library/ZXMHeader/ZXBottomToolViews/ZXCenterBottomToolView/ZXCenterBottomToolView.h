@@ -46,7 +46,7 @@ static NSString *nibName_ZXCenterBottomToolView = @"ZXCenterBottomToolView";
         make.bottom.mas_equalTo(self.view.mas_bottom).with.offset(0);
         make.left.mas_equalTo(self.view.mas_left).with.offset(0);
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.height.mas_equalTo(LCDScale_iPhone6_Width(49.f));
+        make.height.mas_equalTo(LCDScale_iPhone6(49.f));
     }];
     [view.onlyCenterBtn setTitle:NSLocalizedString(@"发送给采购商", nil)  forState:UIControlStateNormal];
     [view.onlyCenterBtn setImage:[UIImage imageNamed:NSLocalizedString(@"发送给采购商", nil)] forState:UIControlStateNormal];

@@ -39,8 +39,8 @@ tmp;\
 })
 #endif
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 #ifndef LCDScale_5Equal6_To6plus
@@ -51,7 +51,7 @@ tmp;\
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    self.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6_Width(14)];
+    self.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(14)];
     UIImage *normal = [UIImage imageNamed:@"badge_dot_red"];
     normal =[normal resizableImageWithCapInsets:UIEdgeInsetsMake(0,normal.size.width/2, 0,normal.size.width/2)];
     [self.badgeOrderBtn setBackgroundImage:normal forState:UIControlStateNormal];
@@ -87,7 +87,7 @@ tmp;\
         self.badgeNumLab.hidden = !self.badgeImageView.hidden;
         NSString *badge = [NSString stringWithFormat:@"  %@  ",model.sideMarkValue];
 //        NSString *badge = @"8";
-        [self.badgeNumLab zh_digitalIconWithBadgeValue:[badge integerValue] maginY:3.5f badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6_Width(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+        [self.badgeNumLab zh_digitalIconWithBadgeValue:[badge integerValue] maginY:3.5f badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
 
     }
     else if (model.sideMarkType ==SideMarkType_image)

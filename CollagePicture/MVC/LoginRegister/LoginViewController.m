@@ -53,7 +53,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
     self.userNameTextField.delegate = self;
 
     [self.loginBtn zx_setBorderWithCornerRadius:LCDScale_5Equal6_To6plus(40.f)/2 borderWidth:1.f borderColor:nil];
-    [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:NO];
+    [self.loginBtn zx_changeAlphaWithCurrentUserInteractionEnabled:NO];
     [self.loginBtn addTarget:self action:@selector(loginBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.whiteBgView zx_setBorderWithCornerRadius:2.f borderWidth:1.f borderColor:[UIColor whiteColor]];
@@ -83,7 +83,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 {
     NSString *str = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameTextField.text];
     BOOL flag = str.length==11&&self.passwordTextField.text.length>3?YES:NO;
-    [self.loginBtn zh_changeAlphaWithCurrentUserInteractionEnabled:flag];
+    [self.loginBtn zx_changeAlphaWithCurrentUserInteractionEnabled:flag];
 }
 
 

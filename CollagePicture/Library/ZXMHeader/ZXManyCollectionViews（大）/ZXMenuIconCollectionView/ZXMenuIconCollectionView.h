@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger columnsCount;
 
 
-// 设置item中的Icon图标正方形等边的宽高； 一行4个item时，最大值是默认的 LCDScale_iPhone6_Width(45.f)；
+// 设置item中的Icon图标正方形等边的宽高； 一行4个item时，最大值是默认的 LCDScale_iPhone6(45.f)；
 @property (nonatomic, assign) CGFloat iconSquareSideLength;
 
 
@@ -156,7 +156,7 @@ NS_ASSUME_NONNULL_END
         menuIconCollectionView.minimumInteritemSpacing = 5;
         
         CGFloat width = [menuIconCollectionView getItemAverageWidthInTotalWidth:LCDW columnsCount:menuIconCollectionView.columnsCount sectionInset:menuIconCollectionView.sectionInset minimumInteritemSpacing:menuIconCollectionView.minimumInteritemSpacing];
-        menuIconCollectionView.itemSize = CGSizeMake(width,width-LCDScale_iPhone6_Width(20));
+        menuIconCollectionView.itemSize = CGSizeMake(width,width-LCDScale_iPhone6(20));
         
         menuIconCollectionView.placeholderImage = AppPlaceholderImage;
         _menuIconCollectionView = menuIconCollectionView;
