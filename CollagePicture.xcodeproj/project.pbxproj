@@ -86,10 +86,7 @@
 		F446A9631FCC082900C82C90 /* UIScrollView+ZXRefreshHView.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8651FCC082900C82C90 /* UIScrollView+ZXRefreshHView.m */; };
 		F446A9641FCC082900C82C90 /* UIScrollView+AssistiveTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8681FCC082900C82C90 /* UIScrollView+AssistiveTouch.m */; };
 		F446A9651FCC082900C82C90 /* ZXAssistiveTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A86A1FCC082900C82C90 /* ZXAssistiveTouch.m */; };
-		F446A9671FCC082900C82C90 /* guide_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A8711FCC082900C82C90 /* guide_3@2x.png */; };
-		F446A9681FCC082900C82C90 /* guide_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A8721FCC082900C82C90 /* guide_1@2x.png */; };
 		F446A9691FCC082900C82C90 /* ZXGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8731FCC082900C82C90 /* ZXGuideViewController.m */; };
-		F446A96A1FCC082900C82C90 /* guide_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A8741FCC082900C82C90 /* guide_2@2x.png */; };
 		F446A9701FCC082900C82C90 /* ZXPinyinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A87F1FCC082900C82C90 /* ZXPinyinConverter.m */; };
 		F446A9711FCC082900C82C90 /* ChineseToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A8801FCC082900C82C90 /* ChineseToPinyin.m */; };
 		F446A97A1FCC082900C82C90 /* arrows_up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A8941FCC082900C82C90 /* arrows_up@3x.png */; };
@@ -589,10 +586,7 @@
 		F446A86A1FCC082900C82C90 /* ZXAssistiveTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAssistiveTouch.m; sourceTree = "<group>"; };
 		F446A86B1FCC082900C82C90 /* UIScrollView+AssistiveTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+AssistiveTouch.h"; sourceTree = "<group>"; };
 		F446A8701FCC082900C82C90 /* ZXGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXGuideViewController.h; sourceTree = "<group>"; };
-		F446A8711FCC082900C82C90 /* guide_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_3@2x.png"; sourceTree = "<group>"; };
-		F446A8721FCC082900C82C90 /* guide_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_1@2x.png"; sourceTree = "<group>"; };
 		F446A8731FCC082900C82C90 /* ZXGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXGuideViewController.m; sourceTree = "<group>"; };
-		F446A8741FCC082900C82C90 /* guide_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_2@2x.png"; sourceTree = "<group>"; };
 		F446A87F1FCC082900C82C90 /* ZXPinyinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPinyinConverter.m; sourceTree = "<group>"; };
 		F446A8801FCC082900C82C90 /* ChineseToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseToPinyin.m; sourceTree = "<group>"; };
 		F446A8811FCC082900C82C90 /* ZXPinyinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPinyinConverter.h; sourceTree = "<group>"; };
@@ -1892,10 +1886,7 @@
 			isa = PBXGroup;
 			children = (
 				F446A8701FCC082900C82C90 /* ZXGuideViewController.h */,
-				F446A8711FCC082900C82C90 /* guide_3@2x.png */,
-				F446A8721FCC082900C82C90 /* guide_1@2x.png */,
 				F446A8731FCC082900C82C90 /* ZXGuideViewController.m */,
-				F446A8741FCC082900C82C90 /* guide_2@2x.png */,
 			);
 			path = ZXGuideViewController;
 			sourceTree = "<group>";
@@ -4174,7 +4165,6 @@
 				F4A151CB23D2D9850018405E /* ZXImagePickerController.bundle in Resources */,
 				F4B0DACD1FEA62CD00E1D028 /* 叉叉@2x.png in Resources */,
 				F4EB2FDA1D8FCF7300F5B70B /* albumA_style_2.plist in Resources */,
-				F446A9671FCC082900C82C90 /* guide_3@2x.png in Resources */,
 				F4EB2FCD1D8FCF7300F5B70B /* album_a2@2x.png in Resources */,
 				F446A9AB1FCC082A00C82C90 /* dot_red@3x.png in Resources */,
 				F4AE3FAE239BA4EF00DF6FE3 /* Empty.xcassets in Resources */,
@@ -4188,9 +4178,7 @@
 				F446A92F1FCC082900C82C90 /* logo.png in Resources */,
 				F4DAC4E3203032A8000428DF /* icon_vip_fill@3x.png in Resources */,
 				A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */,
-				F446A96A1FCC082900C82C90 /* guide_2@2x.png in Resources */,
 				F44DAECB1DC8D188000D9311 /* WeiboSDK.bundle in Resources */,
-				F446A9681FCC082900C82C90 /* guide_1@2x.png in Resources */,
 				F4AE3FA9239BA4EF00DF6FE3 /* networkErrorHelp_1.png in Resources */,
 				F4B0DACE1FEA62CD00E1D028 /* 叉叉@3x.png in Resources */,
 				F44E17A91FD7B6AB00383A92 /* photo_shexiang@3x.png in Resources */,
