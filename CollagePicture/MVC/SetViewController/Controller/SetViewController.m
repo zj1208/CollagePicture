@@ -205,7 +205,7 @@
 - (void)loginOut
 {
     WS(weakSelf);
-    [UIAlertController zx_presentActionSheetInViewController:self withTitle:@"通知" message:@"您确定要退出登录吗？" cancelButtonTitle:@"取消" destructiveButtonTitle:@"确认" otherButtonTitles:nil tapBlock:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+    [UIAlertController zx_presentActionSheetInViewController:self withTitle:@"" message:@"您确定要退出登录吗？" cancelButtonTitle:@"取消" destructiveButtonTitle:@"确认" otherButtonTitles:nil tapBlock:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         
         if (buttonIndex ==alertController.destructiveButtonIndex)
         {
@@ -233,7 +233,7 @@
 - (void)showCacheAlertView
 {
     WS(weakSelf);
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"通知" message:@"要清除所有缓存数据吗" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction * _Nonnull action) {
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"" message:@"要清除所有缓存数据吗" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction * _Nonnull action) {
     
         [weakSelf clearedMemoryUpdateUI];
         }];
