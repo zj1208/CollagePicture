@@ -601,7 +601,6 @@ NS_ASSUME_NONNULL_END
     BOOL flag = addPicCollectionView.isContainVideoAsset;
     if (flag && destinationIndexPath.item==0)
     {
-        NSLog(@"视频");
         return NO;
     }
     return YES;
