@@ -27,8 +27,8 @@
 #define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
 #endif
 
-#ifndef  kHEIGHT_SAFEAREA_NAVBAR
-#define  kHEIGHT_SAFEAREA_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
+#ifndef  HEIGHT_NAVBAR
+#define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
 #define  HEIGHT_STATEBAR    (IS_IPHONE_XX ? (44.f) : (20.f))
 #define  HEIGHT_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 0)
 #endif
@@ -218,7 +218,6 @@ static NSString* const SixSpaces = @"      ";
         WKUserScript *cookieScript =  [[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
         [contentController addUserScript:cookieScript];
         
-//        [contentController addScriptMessageHandler:self name:@""];
         //不能乱设置，不然布局会乱
         WKPreferences *preferences = [[WKPreferences alloc] init];
         //默认值
@@ -251,7 +250,7 @@ static NSString* const SixSpaces = @"      ";
             }
         }
         
-        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
+        WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
         wkWebView.backgroundColor = self.view.backgroundColor;
         wkWebView.allowsBackForwardNavigationGestures = YES;
         if ([wkWebView respondsToSelector:@selector(allowsLinkPreview)])
@@ -260,6 +259,7 @@ static NSString* const SixSpaces = @"      ";
         }
 
         wkWebView.navigationDelegate = self;
+        wkWebView.UIDelegate = self;
         _webView = wkWebView;
     }
     return _webView;
@@ -717,7 +717,7 @@ static NSString* const SixSpaces = @"      ";
     NSLog(@"web内容处理中断时会触发");
 }
 
-//#pragma mark - -----------UIDelegate----------
+#pragma mark - -----------UIDelegate----------
 //// 可以指定配置对象、导航动作对象、window特性。如果没有实现这个方法，不会加载链接，如果返回的是原webview会崩溃。
 //-(WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
 //{
@@ -728,13 +728,47 @@ static NSString* const SixSpaces = @"      ";
 //    return nil;
 //}
 //// webview关闭时回调
-//#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
 //- (void)webViewDidClose:(WKWebView *)webView NS_AVAILABLE(10_11, 9_0);
 //{
 //}
-//#endif
 
-#pragma mark-实例方法
+///显示一个按钮。点击后调用completionHandler回调.
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+/// 显示两个按钮，通过completionHandler回调判断用户点击的是确定还是取消按钮
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler
+{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+          completionHandler(YES);
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+          completionHandler(NO);
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+/// 显示一个带有输入框和一个确定按钮的，通过completionHandler回调用户输入的内容
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {}];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+         completionHandler(alertController.textFields.lastObject.text);
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+#pragma mark - 实例方法
 // 处理超链接；本地h5文件加载会出问题
 - (BOOL)decidePolicyForNavigationActionWithNotHttpRequest:(NSURLRequest *)request
 {

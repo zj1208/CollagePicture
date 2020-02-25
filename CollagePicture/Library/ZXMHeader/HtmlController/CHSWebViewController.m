@@ -8,6 +8,7 @@
 
 #import "CHSWebViewController.h"
 
+
 @interface CHSWebViewController ()<WKScriptMessageHandler>
 
 @end
@@ -24,6 +25,7 @@
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"goBackToNative"];
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"openLogin"];
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"openServiceTel"];
+    //商户详情
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"openMerchantDetail"];
 }
 
@@ -38,39 +40,41 @@
 {
     if ([message.name isEqualToString:@"goBackToNative"])
     {
-        [self goBackToNative];
+        [self messageActionWithGoBackToNative];
     }
     else if ([message.name caseInsensitiveCompare:@"openLogin"] == NSOrderedSame)
     {
-        [self tokenError];
+        [self messageActionWithTokenError];
     }
     else if ([message.name caseInsensitiveCompare:@"openServiceTel"] == NSOrderedSame)
     {
-        [self telPhoneWithPhoneNumber:message.body];
+        [self messageActionWithTelPhoneWithPhoneNumber:message.body];
     }
     else if ([message.name caseInsensitiveCompare:@"openMerchantDetail"] == NSOrderedSame)
     {
-        [self routerMerchantDetailWithUrl:message.body];
+        [self messageActionWithRouterMerchantDetailWithUrl:message.body];
     }
 }
 
 
-- (void)goBackToNative
+- (void)messageActionWithGoBackToNative
 {
     [self exitWebViewApp];
 }
 
-- (void)tokenError
+- (void)messageActionWithTokenError
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserTokenError object:nil];
+//    CHSLoginViewController *vc = [[CHSLoginViewController alloc] init];
+//    [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)telPhoneWithPhoneNumber:(NSString *)phone
+- (void)messageActionWithTelPhoneWithPhoneNumber:(NSString *)phone
 {
     [[UIApplication sharedApplication]zx_openURLToCallIphoneWithTel:phone];
 }
 
-- (void)routerMerchantDetailWithUrl:(NSString *)url
+- (void)messageActionWithRouterMerchantDetailWithUrl:(NSString *)url
 {
     NSString *string2 = [url stringByReplacingOccurrencesOfString:@"{token}" withString:[UserInfoUDManager getToken]];
      NSString *string3 =[string2 stringByReplacingOccurrencesOfString:@"{ttid}" withString:kAPP_Version];

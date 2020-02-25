@@ -10,6 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+///刷新商户今日新增数
+static NSString *const ScriptString_resTodayCount = @"resTodayCount()";
+
+
 @interface CHSWebViewController : ZXWKWebViewController
 
 @end

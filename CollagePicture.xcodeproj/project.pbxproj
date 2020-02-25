@@ -136,8 +136,6 @@
 		F44BD22223F1336100A866F1 /* NSAttributedString+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD22023F1336100A866F1 /* NSAttributedString+ZXCategory.m */; };
 		F44BD22A23F1339C00A866F1 /* back_imageTitle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F44BD22523F1339B00A866F1 /* back_imageTitle@2x.png */; };
 		F44BD22B23F1339C00A866F1 /* back_imageTitle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F44BD22623F1339B00A866F1 /* back_imageTitle@3x.png */; };
-		F44BD22C23F1339C00A866F1 /* CHSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD22723F1339C00A866F1 /* CHSWebViewController.m */; };
-		F44BD22D23F1339C00A866F1 /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD22823F1339C00A866F1 /* ZXWKWebViewController.m */; };
 		F44BD23023F133D000A866F1 /* ZXEmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD22E23F133D000A866F1 /* ZXEmptyViewController.m */; };
 		F44BD23423F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD23323F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.m */; };
 		F44DAEC61DC8D187000D9311 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F44DAE9B1DC8D187000D9311 /* libSocialQQ.a */; };
@@ -278,6 +276,8 @@
 		F4A151CB23D2D9850018405E /* ZXImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4A151C023D2D9850018405E /* ZXImagePickerController.bundle */; };
 		F4A151CC23D2D9850018405E /* ZXPHPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151C223D2D9850018405E /* ZXPHPhotoManager.m */; };
 		F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */; };
+		F4A3021A2405231100F750D4 /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302172405231000F750D4 /* ZXWKWebViewController.m */; };
+		F4A3021B2405231100F750D4 /* CHSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302182405231000F750D4 /* CHSWebViewController.m */; };
 		F4A34C7E2377C8720002F891 /* ZXCollectionReusableTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A34C682377C8720002F891 /* ZXCollectionReusableTitleView.m */; };
 		F4A34C7F2377C8720002F891 /* ZXCollectionReusableTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A34C692377C8720002F891 /* ZXCollectionReusableTitleView.xib */; };
 		F4A34C802377C8720002F891 /* ZXTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A34C6E2377C8720002F891 /* ZXTitleView.xib */; };
@@ -667,12 +667,8 @@
 		F44BD21E23F1333400A866F1 /* UIView+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXHelper.h"; sourceTree = "<group>"; };
 		F44BD22023F1336100A866F1 /* NSAttributedString+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ZXCategory.m"; sourceTree = "<group>"; };
 		F44BD22123F1336100A866F1 /* NSAttributedString+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+ZXCategory.h"; sourceTree = "<group>"; };
-		F44BD22323F1339B00A866F1 /* CHSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSWebViewController.h; sourceTree = "<group>"; };
 		F44BD22523F1339B00A866F1 /* back_imageTitle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_imageTitle@2x.png"; sourceTree = "<group>"; };
 		F44BD22623F1339B00A866F1 /* back_imageTitle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_imageTitle@3x.png"; sourceTree = "<group>"; };
-		F44BD22723F1339C00A866F1 /* CHSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSWebViewController.m; sourceTree = "<group>"; };
-		F44BD22823F1339C00A866F1 /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
-		F44BD22923F1339C00A866F1 /* ZXWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWKWebViewController.h; sourceTree = "<group>"; };
 		F44BD22E23F133D000A866F1 /* ZXEmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXEmptyViewController.m; sourceTree = "<group>"; };
 		F44BD22F23F133D000A866F1 /* ZXEmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXEmptyViewController.h; sourceTree = "<group>"; };
 		F44BD23223F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZXSystemBackButtonAction.h"; sourceTree = "<group>"; };
@@ -959,6 +955,10 @@
 		F4A151C323D2D9850018405E /* ZXPHPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPHPhotoManager.h; sourceTree = "<group>"; };
 		F4A158EE23D6D5A00018405E /* CHSNotOpenURLBackAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSNotOpenURLBackAppManager.h; sourceTree = "<group>"; };
 		F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSNotOpenURLBackAppManager.m; sourceTree = "<group>"; };
+		F4A302162405231000F750D4 /* ZXWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWKWebViewController.h; sourceTree = "<group>"; };
+		F4A302172405231000F750D4 /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
+		F4A302182405231000F750D4 /* CHSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSWebViewController.m; sourceTree = "<group>"; };
+		F4A302192405231100F750D4 /* CHSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSWebViewController.h; sourceTree = "<group>"; };
 		F4A34C682377C8720002F891 /* ZXCollectionReusableTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCollectionReusableTitleView.m; sourceTree = "<group>"; };
 		F4A34C692377C8720002F891 /* ZXCollectionReusableTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCollectionReusableTitleView.xib; sourceTree = "<group>"; };
 		F4A34C6A2377C8720002F891 /* ZXCollectionReusableTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionReusableTitleView.h; sourceTree = "<group>"; };
@@ -3782,11 +3782,11 @@
 		F4E60819208D78F2008C50CB /* HtmlController */ = {
 			isa = PBXGroup;
 			children = (
-				F44BD22323F1339B00A866F1 /* CHSWebViewController.h */,
-				F44BD22723F1339C00A866F1 /* CHSWebViewController.m */,
+				F4A302162405231000F750D4 /* ZXWKWebViewController.h */,
+				F4A302172405231000F750D4 /* ZXWKWebViewController.m */,
+				F4A302192405231100F750D4 /* CHSWebViewController.h */,
+				F4A302182405231000F750D4 /* CHSWebViewController.m */,
 				F44BD22423F1339B00A866F1 /* Resource */,
-				F44BD22923F1339C00A866F1 /* ZXWKWebViewController.h */,
-				F44BD22823F1339C00A866F1 /* ZXWKWebViewController.m */,
 			);
 			path = HtmlController;
 			sourceTree = "<group>";
@@ -4343,16 +4343,17 @@
 				F4A1519123D2BA410018405E /* NSObject+ZXRuntime.m in Sources */,
 				F49E19D61DF546D600676396 /* PrivacyPolicyController.m in Sources */,
 				F42F5B91217DA57700BDA5CC /* NullSafe.m in Sources */,
-				F44BD22D23F1339C00A866F1 /* ZXWKWebViewController.m in Sources */,
 				F456B73120A5A2090092A7B2 /* ZXTowBtnBottomToolView.m in Sources */,
 				F4591BD620747FB00098F671 /* ZXSegmentMenuView.m in Sources */,
 				F44BD1FA23F12FA200A866F1 /* ZXOrientationNaController.m in Sources */,
+				F4A3021A2405231100F750D4 /* ZXWKWebViewController.m in Sources */,
 				F4361D7C2109982F00A5C22F /* PageModel.m in Sources */,
 				F446A97F1FCC082900C82C90 /* ZXOverlay.m in Sources */,
 				F42E7F42215F7C2800AAD913 /* ZXPopoverPresentaionBackgroundView.m in Sources */,
 				F446A9701FCC082900C82C90 /* ZXPinyinConverter.m in Sources */,
 				F4A34C822377C8720002F891 /* ZXActionTitleView.m in Sources */,
 				F4EF35081FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m in Sources */,
+				F4A3021B2405231100F750D4 /* CHSWebViewController.m in Sources */,
 				F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */,
 				F4374B5D1E0A6C8400081502 /* LoginViewController.m in Sources */,
 				F4C9186E2004983E00D3E158 /* NSFileManager+ZXCategory.m in Sources */,
@@ -4516,7 +4517,6 @@
 				F4DF113B212E8E8A0072650A /* ZXModalKuGouDrivenInteractiveTransition.m in Sources */,
 				F49CFD361FDE5C8D009F2213 /* TAPageControl.m in Sources */,
 				F446A9891FCC082A00C82C90 /* ZXInfiniteCollectionCell.m in Sources */,
-				F44BD22C23F1339C00A866F1 /* CHSWebViewController.m in Sources */,
 				F456B75320A5A5260092A7B2 /* ZXPhoto.m in Sources */,
 				F4DF112E212E8E5C0072650A /* ZXNavKuGouPopAnimator.m in Sources */,
 				F4DF1130212E8E5C0072650A /* UINavigationController+ZXKuGouInteractivePopGestureRecognizer.m in Sources */,

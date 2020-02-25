@@ -28,6 +28,8 @@
 //  2018.7.30  iOS及以上修改webView的frame设置改为约束设置；
 //  2020.02.06  优化独立容器，针对urlString做是否需要百分比编码做判断处理；
 
+//  2020.02.25  增加WKUIDelegate，针对js调用的三种警告弹窗面板做相应处理；
+
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
