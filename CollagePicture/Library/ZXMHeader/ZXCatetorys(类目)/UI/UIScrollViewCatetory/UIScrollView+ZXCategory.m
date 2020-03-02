@@ -11,7 +11,7 @@
 @implementation UIScrollView (ZXCategory)
 
 // 只能用于tableViewCell，UICollectionViewCell点击转换；
-- (nullable NSIndexPath *)zh_getIndexPathFromTableViewOrCollectionViewWithConvertView:(nullable UIView *)subView
+- (nullable NSIndexPath *)zx_getIndexPathForRowFromConvertCellSubView:(nullable UIView *)subView
 {
     CGPoint point = subView.center;
     point = [self convertPoint:point fromView:subView.superview];

@@ -124,7 +124,6 @@
 		F44BD1FA23F12FA200A866F1 /* ZXOrientationNaController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD1F723F12FA200A866F1 /* ZXOrientationNaController.m */; };
 		F44BD1FB23F12FA200A866F1 /* ZXOrientationTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD1F923F12FA200A866F1 /* ZXOrientationTabController.m */; };
 		F44BD1FE23F12FE600A866F1 /* MBProgressHUD+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD1FC23F12FE500A866F1 /* MBProgressHUD+ZXCategory.m */; };
-		F44BD20123F1303200A866F1 /* UIButton+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20023F1303200A866F1 /* UIButton+ZXHelper.m */; };
 		F44BD20423F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20223F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m */; };
 		F44BD20723F130A400A866F1 /* UIApplication+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20523F130A400A866F1 /* UIApplication+ZXCategory.m */; };
 		F44BD20C23F130F600A866F1 /* UIViewController+ZXLoginAndAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20823F130F600A866F1 /* UIViewController+ZXLoginAndAlert.m */; };
@@ -184,8 +183,6 @@
 		F457BE3D23640DBB00B1E1B4 /* UploadTable.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BE3B23640DBA00B1E1B4 /* UploadTable.m */; };
 		F457BEA22364248100B1E1B4 /* AddProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F457BEA02364248100B1E1B4 /* AddProductModel.m */; };
 		F4591BB220747B0B0098F671 /* NSURL+ZXAppLinks.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BB020747B0A0098F671 /* NSURL+ZXAppLinks.m */; };
-		F4591BCC20747F560098F671 /* AlertChoseController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BC920747F560098F671 /* AlertChoseController.m */; };
-		F4591BCD20747F560098F671 /* AlertChoseController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4591BCA20747F560098F671 /* AlertChoseController.xib */; };
 		F4591BD620747FB00098F671 /* ZXSegmentMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4591BD120747FAF0098F671 /* ZXSegmentMenuView.m */; };
 		F461821D1D8129490015BC84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F461821C1D8129490015BC84 /* main.m */; };
 		F46182201D8129490015BC84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F461821F1D8129490015BC84 /* AppDelegate.m */; };
@@ -213,7 +210,6 @@
 		F4730CD21EA05FDC00952AF1 /* UMAnalyticsViewMarco.m in Sources */ = {isa = PBXBuildFile; fileRef = F4730CD11EA05FDC00952AF1 /* UMAnalyticsViewMarco.m */; };
 		F474B0EC21F8410700C9F9D8 /* ZXAddPicCollectionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F474B0EB21F8410700C9F9D8 /* ZXAddPicCollectionConst.m */; };
 		F47FEB31209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = F47FEB2F209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m */; };
-		F47FEB32209AA35900A67F55 /* UIScrollView+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F47FEB30209AA35900A67F55 /* UIScrollView+ZXCategory.m */; };
 		F47FEB3F209AA4AB00A67F55 /* ZXCustomNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47FEB3C209AA4AA00A67F55 /* ZXCustomNavigationBar.xib */; };
 		F48B3B612265BA6200AB0067 /* MyCenterTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F48B3B602265BA6200AB0067 /* MyCenterTableCell.m */; };
 		F48F132B1D92775700311F03 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F132A1D92775700311F03 /* Photos.framework */; };
@@ -278,6 +274,22 @@
 		F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */; };
 		F4A3021A2405231100F750D4 /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302172405231000F750D4 /* ZXWKWebViewController.m */; };
 		F4A3021B2405231100F750D4 /* CHSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302182405231000F750D4 /* CHSWebViewController.m */; };
+		F4A302212405245D00F750D4 /* UIButton+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A3021F2405245C00F750D4 /* UIButton+ZXHelper.m */; };
+		F4A3022A2405267F00F750D4 /* UIWindow+ZXHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302292405267F00F750D4 /* UIWindow+ZXHierarchy.m */; };
+		F4A3022D240526B000F750D4 /* UIScrollView+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */; };
+		F4A302362405270F00F750D4 /* NSDecimalNumber+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302342405270F00F750D4 /* NSDecimalNumber+ZXCategory.m */; };
+		F4A30248240527D400F750D4 /* AlertTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A30239240527D400F750D4 /* AlertTextFieldCell.m */; };
+		F4A30249240527D400F750D4 /* AlertTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A3023A240527D400F750D4 /* AlertTextFieldCell.xib */; };
+		F4A3024A240527D400F750D4 /* alert_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A3023E240527D400F750D4 /* alert_select@2x.png */; };
+		F4A3024B240527D400F750D4 /* alert_select@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A3023F240527D400F750D4 /* alert_select@3x.png */; };
+		F4A3024C240527D400F750D4 /* alert_unSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A30240240527D400F750D4 /* alert_unSelect@3x.png */; };
+		F4A3024D240527D400F750D4 /* alert_unSelect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A30241240527D400F750D4 /* alert_unSelect@2x.png */; };
+		F4A3024E240527D400F750D4 /* AlertChoseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A30243240527D400F750D4 /* AlertChoseTableViewCell.m */; };
+		F4A3024F240527D400F750D4 /* AlertChoseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A30244240527D400F750D4 /* AlertChoseTableViewCell.xib */; };
+		F4A30250240527D400F750D4 /* ZXAlertChoseController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A30246240527D400F750D4 /* ZXAlertChoseController.m */; };
+		F4A30251240527D400F750D4 /* ZXAlertChoseController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A30247240527D400F750D4 /* ZXAlertChoseController.xib */; };
+		F4A30257240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A30253240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.m */; };
+		F4A30258240527DD00F750D4 /* ZXAlertTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A30254240527DD00F750D4 /* ZXAlertTextController.m */; };
 		F4A34C7E2377C8720002F891 /* ZXCollectionReusableTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A34C682377C8720002F891 /* ZXCollectionReusableTitleView.m */; };
 		F4A34C7F2377C8720002F891 /* ZXCollectionReusableTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A34C692377C8720002F891 /* ZXCollectionReusableTitleView.xib */; };
 		F4A34C802377C8720002F891 /* ZXTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A34C6E2377C8720002F891 /* ZXTitleView.xib */; };
@@ -307,7 +319,6 @@
 		F4AE3FAE239BA4EF00DF6FE3 /* Empty.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4AE3FA5239BA4EE00DF6FE3 /* Empty.xcassets */; };
 		F4AE3FDB239BA72300DF6FE3 /* UIView+ZXAlignmentRectInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE3FD5239BA72300DF6FE3 /* UIView+ZXAlignmentRectInsets.m */; };
 		F4AE3FDC239BA72300DF6FE3 /* UIView+ZXChangeSize.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE3FD8239BA72300DF6FE3 /* UIView+ZXChangeSize.m */; };
-		F4AE3FED239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE3FEC239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.m */; };
 		F4AE4027239BB27200DF6FE3 /* ZXLeftFirstLevelMenuListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE401A239BB27200DF6FE3 /* ZXLeftFirstLevelMenuListView.m */; };
 		F4AE4028239BB27200DF6FE3 /* ZXLeftFirstLevelTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE401C239BB27200DF6FE3 /* ZXLeftFirstLevelTableCell.m */; };
 		F4AE4029239BB27200DF6FE3 /* ZXLeftFirstLevelTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4AE401D239BB27200DF6FE3 /* ZXLeftFirstLevelTableCell.xib */; };
@@ -320,7 +331,6 @@
 		F4AE409E23A7354800DF6FE3 /* UITextField+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE409D23A7354800DF6FE3 /* UITextField+ZXHelper.m */; };
 		F4AE40A123A7454D00DF6FE3 /* UIColor+ZXHex.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE40A023A7454D00DF6FE3 /* UIColor+ZXHex.m */; };
 		F4AE40AA23A7458000DF6FE3 /* UIControl+ZXFastClick.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE40A823A7458000DF6FE3 /* UIControl+ZXFastClick.m */; };
-		F4AE40B223A7459900DF6FE3 /* UIWindow+ZXHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE40AF23A7459900DF6FE3 /* UIWindow+ZXHierarchy.m */; };
 		F4AE40B923A745F800DF6FE3 /* UIView+ZXAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE40B823A745F700DF6FE3 /* UIView+ZXAnimation.m */; };
 		F4AE40C723A7464700DF6FE3 /* UIImage+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE40C323A7464700DF6FE3 /* UIImage+ZXHelper.m */; };
 		F4AE40CC23A7469100DF6FE3 /* UINavigationBar+ShadeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AE40CB23A7469100DF6FE3 /* UINavigationBar+ShadeColor.m */; };
@@ -647,8 +657,6 @@
 		F44BD1F923F12FA200A866F1 /* ZXOrientationTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXOrientationTabController.m; sourceTree = "<group>"; };
 		F44BD1FC23F12FE500A866F1 /* MBProgressHUD+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+ZXCategory.m"; sourceTree = "<group>"; };
 		F44BD1FD23F12FE600A866F1 /* MBProgressHUD+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+ZXCategory.h"; sourceTree = "<group>"; };
-		F44BD1FF23F1303200A866F1 /* UIButton+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ZXHelper.h"; sourceTree = "<group>"; };
-		F44BD20023F1303200A866F1 /* UIButton+ZXHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ZXHelper.m"; sourceTree = "<group>"; };
 		F44BD20223F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+ZXCategoryFontScale.m"; sourceTree = "<group>"; };
 		F44BD20323F1307B00A866F1 /* UIFont+ZXCategoryFontScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+ZXCategoryFontScale.h"; sourceTree = "<group>"; };
 		F44BD20523F130A400A866F1 /* UIApplication+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+ZXCategory.m"; sourceTree = "<group>"; };
@@ -736,16 +744,6 @@
 		F45434B41FD0E7B800416285 /* ZXImgIconsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXImgIconsCell.m; sourceTree = "<group>"; };
 		F45434B51FD0E7B800416285 /* ZXImgIconsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZXImgIconsCell.xib; sourceTree = "<group>"; };
 		F45434B71FD0E7B800416285 /* ZXImgIconsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXImgIconsCell.h; sourceTree = "<group>"; };
-		F45434F41FD0F03C00416285 /* AlertTextFieldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertTextFieldCell.m; sourceTree = "<group>"; };
-		F45434F51FD0F03C00416285 /* AlertChoseTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertChoseTableCell.h; sourceTree = "<group>"; };
-		F45434F61FD0F03C00416285 /* AlertChoseTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertChoseTableCell.xib; sourceTree = "<group>"; };
-		F45434F81FD0F03C00416285 /* AlertTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertTextFieldCell.xib; sourceTree = "<group>"; };
-		F45434FA1FD0F03C00416285 /* alert_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_select@2x.png"; sourceTree = "<group>"; };
-		F45434FB1FD0F03C00416285 /* alert_select@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_select@3x.png"; sourceTree = "<group>"; };
-		F45434FC1FD0F03C00416285 /* alert_unSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_unSelect@3x.png"; sourceTree = "<group>"; };
-		F45434FD1FD0F03C00416285 /* alert_unSelect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_unSelect@2x.png"; sourceTree = "<group>"; };
-		F45434FF1FD0F03C00416285 /* AlertChoseTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertChoseTableCell.m; sourceTree = "<group>"; };
-		F45435001FD0F03C00416285 /* AlertTextFieldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertTextFieldCell.h; sourceTree = "<group>"; };
 		F45435051FD0F03C00416285 /* pic_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_btn.png; sourceTree = "<group>"; };
 		F45435061FD0F03C00416285 /* pic_tanchuang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_tanchuang.png; sourceTree = "<group>"; };
 		F45435071FD0F03C00416285 /* pic_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_bg.png; sourceTree = "<group>"; };
@@ -780,9 +778,6 @@
 		F457BEA12364248100B1E1B4 /* AddProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductModel.h; sourceTree = "<group>"; };
 		F4591BB020747B0A0098F671 /* NSURL+ZXAppLinks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ZXAppLinks.m"; sourceTree = "<group>"; };
 		F4591BB120747B0B0098F671 /* NSURL+ZXAppLinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ZXAppLinks.h"; sourceTree = "<group>"; };
-		F4591BC920747F560098F671 /* AlertChoseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertChoseController.m; sourceTree = "<group>"; };
-		F4591BCA20747F560098F671 /* AlertChoseController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertChoseController.xib; sourceTree = "<group>"; };
-		F4591BCB20747F560098F671 /* AlertChoseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertChoseController.h; sourceTree = "<group>"; };
 		F4591BD120747FAF0098F671 /* ZXSegmentMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXSegmentMenuView.m; sourceTree = "<group>"; };
 		F4591BD320747FB00098F671 /* ZXSegmentMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXSegmentMenuView.h; sourceTree = "<group>"; };
 		F46182181D8129490015BC84 /* 美颜拼图.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "美颜拼图.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -836,9 +831,7 @@
 		F474B0EA21F8410700C9F9D8 /* ZXAddPicCollectionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAddPicCollectionConst.h; sourceTree = "<group>"; };
 		F474B0EB21F8410700C9F9D8 /* ZXAddPicCollectionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAddPicCollectionConst.m; sourceTree = "<group>"; };
 		F47FEB2D209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ZXMJRefreshing.h"; sourceTree = "<group>"; };
-		F47FEB2E209AA35900A67F55 /* UIScrollView+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ZXCategory.h"; sourceTree = "<group>"; };
 		F47FEB2F209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXMJRefreshing.m"; sourceTree = "<group>"; };
-		F47FEB30209AA35900A67F55 /* UIScrollView+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXCategory.m"; sourceTree = "<group>"; };
 		F47FEB3C209AA4AA00A67F55 /* ZXCustomNavigationBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCustomNavigationBar.xib; sourceTree = "<group>"; };
 		F481E89B1FDFB61000D115D3 /* CollagePicture.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = CollagePicture.entitlements; sourceTree = "<group>"; };
 		F48B3B5F2265BA6200AB0067 /* MyCenterTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCenterTableCell.h; sourceTree = "<group>"; };
@@ -959,6 +952,31 @@
 		F4A302172405231000F750D4 /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
 		F4A302182405231000F750D4 /* CHSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSWebViewController.m; sourceTree = "<group>"; };
 		F4A302192405231100F750D4 /* CHSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSWebViewController.h; sourceTree = "<group>"; };
+		F4A3021F2405245C00F750D4 /* UIButton+ZXHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ZXHelper.m"; sourceTree = "<group>"; };
+		F4A302202405245C00F750D4 /* UIButton+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ZXHelper.h"; sourceTree = "<group>"; };
+		F4A302282405267F00F750D4 /* UIWindow+ZXHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+ZXHierarchy.h"; sourceTree = "<group>"; };
+		F4A302292405267F00F750D4 /* UIWindow+ZXHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+ZXHierarchy.m"; sourceTree = "<group>"; };
+		F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXCategory.m"; sourceTree = "<group>"; };
+		F4A3022C240526B000F750D4 /* UIScrollView+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ZXCategory.h"; sourceTree = "<group>"; };
+		F4A302342405270F00F750D4 /* NSDecimalNumber+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+ZXCategory.m"; sourceTree = "<group>"; };
+		F4A302352405270F00F750D4 /* NSDecimalNumber+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+ZXCategory.h"; sourceTree = "<group>"; };
+		F4A30239240527D400F750D4 /* AlertTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertTextFieldCell.m; sourceTree = "<group>"; };
+		F4A3023A240527D400F750D4 /* AlertTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertTextFieldCell.xib; sourceTree = "<group>"; };
+		F4A3023B240527D400F750D4 /* AlertTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertTextFieldCell.h; sourceTree = "<group>"; };
+		F4A3023C240527D400F750D4 /* ZXAlertChoseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlertChoseController.h; sourceTree = "<group>"; };
+		F4A3023E240527D400F750D4 /* alert_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_select@2x.png"; sourceTree = "<group>"; };
+		F4A3023F240527D400F750D4 /* alert_select@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_select@3x.png"; sourceTree = "<group>"; };
+		F4A30240240527D400F750D4 /* alert_unSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_unSelect@3x.png"; sourceTree = "<group>"; };
+		F4A30241240527D400F750D4 /* alert_unSelect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_unSelect@2x.png"; sourceTree = "<group>"; };
+		F4A30243240527D400F750D4 /* AlertChoseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertChoseTableViewCell.m; sourceTree = "<group>"; };
+		F4A30244240527D400F750D4 /* AlertChoseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertChoseTableViewCell.xib; sourceTree = "<group>"; };
+		F4A30245240527D400F750D4 /* AlertChoseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertChoseTableViewCell.h; sourceTree = "<group>"; };
+		F4A30246240527D400F750D4 /* ZXAlertChoseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlertChoseController.m; sourceTree = "<group>"; };
+		F4A30247240527D400F750D4 /* ZXAlertChoseController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXAlertChoseController.xib; sourceTree = "<group>"; };
+		F4A30253240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlertTextActionGroupHeaderView.m; sourceTree = "<group>"; };
+		F4A30254240527DD00F750D4 /* ZXAlertTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlertTextController.m; sourceTree = "<group>"; };
+		F4A30255240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlertTextActionGroupHeaderView.h; sourceTree = "<group>"; };
+		F4A30256240527DD00F750D4 /* ZXAlertTextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlertTextController.h; sourceTree = "<group>"; };
 		F4A34C682377C8720002F891 /* ZXCollectionReusableTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCollectionReusableTitleView.m; sourceTree = "<group>"; };
 		F4A34C692377C8720002F891 /* ZXCollectionReusableTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCollectionReusableTitleView.xib; sourceTree = "<group>"; };
 		F4A34C6A2377C8720002F891 /* ZXCollectionReusableTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionReusableTitleView.h; sourceTree = "<group>"; };
@@ -1002,8 +1020,6 @@
 		F4AE3FD5239BA72300DF6FE3 /* UIView+ZXAlignmentRectInsets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXAlignmentRectInsets.m"; sourceTree = "<group>"; };
 		F4AE3FD7239BA72300DF6FE3 /* UIView+ZXChangeSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXChangeSize.h"; sourceTree = "<group>"; };
 		F4AE3FD8239BA72300DF6FE3 /* UIView+ZXChangeSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXChangeSize.m"; sourceTree = "<group>"; };
-		F4AE3FEB239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+ZXCategory.h"; sourceTree = "<group>"; };
-		F4AE3FEC239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+ZXCategory.m"; sourceTree = "<group>"; };
 		F4AE4018239BB27200DF6FE3 /* ZXTwoLevelMenuListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTwoLevelMenuListView.h; sourceTree = "<group>"; };
 		F4AE401A239BB27200DF6FE3 /* ZXLeftFirstLevelMenuListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLeftFirstLevelMenuListView.m; sourceTree = "<group>"; };
 		F4AE401C239BB27200DF6FE3 /* ZXLeftFirstLevelTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXLeftFirstLevelTableCell.m; sourceTree = "<group>"; };
@@ -1027,8 +1043,6 @@
 		F4AE40A023A7454D00DF6FE3 /* UIColor+ZXHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ZXHex.m"; sourceTree = "<group>"; };
 		F4AE40A723A7458000DF6FE3 /* UIControl+ZXFastClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+ZXFastClick.h"; sourceTree = "<group>"; };
 		F4AE40A823A7458000DF6FE3 /* UIControl+ZXFastClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+ZXFastClick.m"; sourceTree = "<group>"; };
-		F4AE40AC23A7459800DF6FE3 /* UIWindow+ZXHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+ZXHierarchy.h"; sourceTree = "<group>"; };
-		F4AE40AF23A7459900DF6FE3 /* UIWindow+ZXHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+ZXHierarchy.m"; sourceTree = "<group>"; };
 		F4AE40B723A745F700DF6FE3 /* UIView+ZXAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXAnimation.h"; sourceTree = "<group>"; };
 		F4AE40B823A745F700DF6FE3 /* UIView+ZXAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXAnimation.m"; sourceTree = "<group>"; };
 		F4AE40C323A7464700DF6FE3 /* UIImage+ZXHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZXHelper.m"; sourceTree = "<group>"; };
@@ -2309,8 +2323,8 @@
 		F44DBD762297ED4100739DFB /* UIWindow */ = {
 			isa = PBXGroup;
 			children = (
-				F4AE40AC23A7459800DF6FE3 /* UIWindow+ZXHierarchy.h */,
-				F4AE40AF23A7459900DF6FE3 /* UIWindow+ZXHierarchy.m */,
+				F4A302282405267F00F750D4 /* UIWindow+ZXHierarchy.h */,
+				F4A302292405267F00F750D4 /* UIWindow+ZXHierarchy.m */,
 			);
 			path = UIWindow;
 			sourceTree = "<group>";
@@ -2373,38 +2387,11 @@
 		F45434F21FD0F03C00416285 /* ZXAlertViews */ = {
 			isa = PBXGroup;
 			children = (
-				F45434F31FD0F03C00416285 /* ZXPopAlertController */,
+				F4A30252240527DD00F750D4 /* ZXAlertTextController */,
+				F4A30237240527D400F750D4 /* ZXAlertChoseController */,
 				F45435021FD0F03C00416285 /* ZXNotiAlertViewController */,
 			);
 			path = ZXAlertViews;
-			sourceTree = "<group>";
-		};
-		F45434F31FD0F03C00416285 /* ZXPopAlertController */ = {
-			isa = PBXGroup;
-			children = (
-				F4591BCB20747F560098F671 /* AlertChoseController.h */,
-				F4591BC920747F560098F671 /* AlertChoseController.m */,
-				F4591BCA20747F560098F671 /* AlertChoseController.xib */,
-				F45434F91FD0F03C00416285 /* AlertResoures */,
-				F45434F51FD0F03C00416285 /* AlertChoseTableCell.h */,
-				F45434FF1FD0F03C00416285 /* AlertChoseTableCell.m */,
-				F45434F61FD0F03C00416285 /* AlertChoseTableCell.xib */,
-				F45435001FD0F03C00416285 /* AlertTextFieldCell.h */,
-				F45434F41FD0F03C00416285 /* AlertTextFieldCell.m */,
-				F45434F81FD0F03C00416285 /* AlertTextFieldCell.xib */,
-			);
-			path = ZXPopAlertController;
-			sourceTree = "<group>";
-		};
-		F45434F91FD0F03C00416285 /* AlertResoures */ = {
-			isa = PBXGroup;
-			children = (
-				F45434FA1FD0F03C00416285 /* alert_select@2x.png */,
-				F45434FB1FD0F03C00416285 /* alert_select@3x.png */,
-				F45434FC1FD0F03C00416285 /* alert_unSelect@3x.png */,
-				F45434FD1FD0F03C00416285 /* alert_unSelect@2x.png */,
-			);
-			path = AlertResoures;
 			sourceTree = "<group>";
 		};
 		F45435021FD0F03C00416285 /* ZXNotiAlertViewController */ = {
@@ -2689,8 +2676,8 @@
 			children = (
 				F47FEB2D209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.h */,
 				F47FEB2F209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m */,
-				F47FEB2E209AA35900A67F55 /* UIScrollView+ZXCategory.h */,
-				F47FEB30209AA35900A67F55 /* UIScrollView+ZXCategory.m */,
+				F4A3022C240526B000F750D4 /* UIScrollView+ZXCategory.h */,
+				F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */,
 			);
 			path = UIScrollViewCatetory;
 			sourceTree = "<group>";
@@ -2965,8 +2952,8 @@
 		F4A1518B23D2B9910018405E /* UIButton+Category */ = {
 			isa = PBXGroup;
 			children = (
-				F44BD1FF23F1303200A866F1 /* UIButton+ZXHelper.h */,
-				F44BD20023F1303200A866F1 /* UIButton+ZXHelper.m */,
+				F4A302202405245C00F750D4 /* UIButton+ZXHelper.h */,
+				F4A3021F2405245C00F750D4 /* UIButton+ZXHelper.m */,
 			);
 			path = "UIButton+Category";
 			sourceTree = "<group>";
@@ -3036,6 +3023,61 @@
 				F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */,
 			);
 			path = CHSNotOpenURLBackAppManager;
+			sourceTree = "<group>";
+		};
+		F4A30237240527D400F750D4 /* ZXAlertChoseController */ = {
+			isa = PBXGroup;
+			children = (
+				F4A30238240527D400F750D4 /* AlertTextFieldCell */,
+				F4A3023C240527D400F750D4 /* ZXAlertChoseController.h */,
+				F4A3023D240527D400F750D4 /* AlertResoures */,
+				F4A30242240527D400F750D4 /* AlertChoseTableViewCell */,
+				F4A30246240527D400F750D4 /* ZXAlertChoseController.m */,
+				F4A30247240527D400F750D4 /* ZXAlertChoseController.xib */,
+			);
+			path = ZXAlertChoseController;
+			sourceTree = "<group>";
+		};
+		F4A30238240527D400F750D4 /* AlertTextFieldCell */ = {
+			isa = PBXGroup;
+			children = (
+				F4A30239240527D400F750D4 /* AlertTextFieldCell.m */,
+				F4A3023A240527D400F750D4 /* AlertTextFieldCell.xib */,
+				F4A3023B240527D400F750D4 /* AlertTextFieldCell.h */,
+			);
+			path = AlertTextFieldCell;
+			sourceTree = "<group>";
+		};
+		F4A3023D240527D400F750D4 /* AlertResoures */ = {
+			isa = PBXGroup;
+			children = (
+				F4A3023E240527D400F750D4 /* alert_select@2x.png */,
+				F4A3023F240527D400F750D4 /* alert_select@3x.png */,
+				F4A30240240527D400F750D4 /* alert_unSelect@3x.png */,
+				F4A30241240527D400F750D4 /* alert_unSelect@2x.png */,
+			);
+			path = AlertResoures;
+			sourceTree = "<group>";
+		};
+		F4A30242240527D400F750D4 /* AlertChoseTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F4A30243240527D400F750D4 /* AlertChoseTableViewCell.m */,
+				F4A30244240527D400F750D4 /* AlertChoseTableViewCell.xib */,
+				F4A30245240527D400F750D4 /* AlertChoseTableViewCell.h */,
+			);
+			path = AlertChoseTableViewCell;
+			sourceTree = "<group>";
+		};
+		F4A30252240527DD00F750D4 /* ZXAlertTextController */ = {
+			isa = PBXGroup;
+			children = (
+				F4A30255240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.h */,
+				F4A30253240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.m */,
+				F4A30254240527DD00F750D4 /* ZXAlertTextController.m */,
+				F4A30256240527DD00F750D4 /* ZXAlertTextController.h */,
+			);
+			path = ZXAlertTextController;
 			sourceTree = "<group>";
 		};
 		F4A34C652377C8720002F891 /* ZXReusableTitleViews */ = {
@@ -3315,8 +3357,8 @@
 		F4AE3FEA239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory */ = {
 			isa = PBXGroup;
 			children = (
-				F4AE3FEB239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.h */,
-				F4AE3FEC239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.m */,
+				F4A302352405270F00F750D4 /* NSDecimalNumber+ZXCategory.h */,
+				F4A302342405270F00F750D4 /* NSDecimalNumber+ZXCategory.m */,
 			);
 			path = "NSDecimalNumber+ZXCategory";
 			sourceTree = "<group>";
@@ -4113,9 +4155,11 @@
 				F446A95E1FCC082900C82C90 /* grayArrowLoadMore@2x.png in Resources */,
 				F44BD22A23F1339C00A866F1 /* back_imageTitle@2x.png in Resources */,
 				F4361DD621099DF400A5C22F /* ZXAddPicViewCell.xib in Resources */,
+				F4A30249240527D400F750D4 /* AlertTextFieldCell.xib in Resources */,
 				F49CFD061FDE5C65009F2213 /* AlipaySDK.bundle in Resources */,
 				F4B70B81236ADD4300C4B4AA /* SearchCollectionViewLeftHotCell.xib in Resources */,
 				F446A9AF1FCC082A00C82C90 /* zxPhoto_addImage@3x.png in Resources */,
+				F4A3024B240527D400F750D4 /* alert_select@3x.png in Resources */,
 				F49E19C81DF50C2D00676396 /* yw_1222.jpg in Resources */,
 				F4EB2FD01D8FCF7300F5B70B /* album_a5@2x.png in Resources */,
 				F44DAEC81DC8D188000D9311 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
@@ -4123,6 +4167,7 @@
 				F4E607F3208D77CF008C50CB /* icon_produce@3x.png in Resources */,
 				F42A133E1DDE14E0006F5EF6 /* Set.storyboard in Resources */,
 				F4B70B77236ADD0D00C4B4AA /* SearchCollectionViewCell.xib in Resources */,
+				F4A3024D240527D400F750D4 /* alert_unSelect@2x.png in Resources */,
 				F4DAC4E1203032A8000428DF /* badge_numBgPic@2x.png in Resources */,
 				F4A732B32074DF7600E405A8 /* ZXBadgeCollectionCell.xib in Resources */,
 				F47FEB3F209AA4AB00A67F55 /* ZXCustomNavigationBar.xib in Resources */,
@@ -4136,11 +4181,11 @@
 				F446A95D1FCC082900C82C90 /* blackArrow@2x.png in Resources */,
 				F4E607DA208D757A008C50CB /* ZXTowBtnBottomToolView.xib in Resources */,
 				F4EB2FD11D8FCF7300F5B70B /* album_a6@2x.png in Resources */,
+				F4A3024C240527D400F750D4 /* alert_unSelect@3x.png in Resources */,
 				F4EB2FD51D8FCF7300F5B70B /* albumA_style_1.plist in Resources */,
 				F4EB2FDC1D8FCF7300F5B70B /* albumA_style_4.plist in Resources */,
 				F4EB2FE31D8FCF8A00F5B70B /* image.jpg in Resources */,
 				F4A34C7F2377C8720002F891 /* ZXCollectionReusableTitleView.xib in Resources */,
-				F4591BCD20747F560098F671 /* AlertChoseController.xib in Resources */,
 				F4EB2FCC1D8FCF7300F5B70B /* album_a1@2x.png in Resources */,
 				F446A9B11FCC082A00C82C90 /* photo_delete@3x.png in Resources */,
 				F4D8087C20E082590084D024 /* ZXCenterBottomToolView.xib in Resources */,
@@ -4170,12 +4215,14 @@
 				F4AE3FAE239BA4EF00DF6FE3 /* Empty.xcassets in Resources */,
 				F44E17AA1FD7B6AB00383A92 /* photo_shexiang@2x.png in Resources */,
 				F4EB2FD91D8FCF7300F5B70B /* albumA_style_13.plist in Resources */,
+				F4A3024A240527D400F750D4 /* alert_select@2x.png in Resources */,
 				F446A97D1FCC082900C82C90 /* arrows_down@2x.png in Resources */,
 				F4EB2FD61D8FCF7300F5B70B /* albumA_style_10.plist in Resources */,
 				F446A9AC1FCC082A00C82C90 /* dot_red@2x.png in Resources */,
 				F46182261D8129490015BC84 /* Main.storyboard in Resources */,
 				F40228DA1EF293E600E3D07E /* sound.caf in Resources */,
 				F446A92F1FCC082900C82C90 /* logo.png in Resources */,
+				F4A30251240527D400F750D4 /* ZXAlertChoseController.xib in Resources */,
 				F4DAC4E3203032A8000428DF /* icon_vip_fill@3x.png in Resources */,
 				A5AA2F191F04E9CE00A49A1E /* Lottery.storyboard in Resources */,
 				F44DAECB1DC8D188000D9311 /* WeiboSDK.bundle in Resources */,
@@ -4192,6 +4239,7 @@
 				F4361D9421099B8700A5C22F /* ZXarea.plist in Resources */,
 				F446A95A1FCC082900C82C90 /* whiteArrow@2x.png in Resources */,
 				F4DAC4DE203032A8000428DF /* badge_dot_red@3x.png in Resources */,
+				F4A3024F240527D400F750D4 /* AlertChoseTableViewCell.xib in Resources */,
 				F4DAC4E0203032A8000428DF /* icon_vip_fill@2x.png in Resources */,
 				F457BACD23617C7C00B1E1B4 /* SearchCollectionReusableView.xib in Resources */,
 			);
@@ -4312,6 +4360,7 @@
 				F4361D822109982F00A5C22F /* FullTextViewController.m in Sources */,
 				F4EF350B1FF5D86300CCD088 /* PendingOperations.m in Sources */,
 				F4AE402A239BB27200DF6FE3 /* ZXTwoLevelMenuListView.m in Sources */,
+				F4A302362405270F00F750D4 /* NSDecimalNumber+ZXCategory.m in Sources */,
 				F46182291D8129490015BC84 /* CollagePicture.xcdatamodeld in Sources */,
 				F4BA075320A0699B00454095 /* ZXSegmentedPageController.m in Sources */,
 				F43E6E0420BCEAE900D2E05D /* ZXAddProPicView.m in Sources */,
@@ -4321,9 +4370,11 @@
 				F44BD20423F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m in Sources */,
 				F49CFD2D1FDE5C8D009F2213 /* XLZoomingScrollView.m in Sources */,
 				F44BD1F523F12F7900A866F1 /* ZXCheckAppItunesVersionManager.m in Sources */,
+				F4A30258240527DD00F750D4 /* ZXAlertTextController.m in Sources */,
 				F4A151A523D2D6010018405E /* UserInfoUDManager.m in Sources */,
 				F4A0FA062142154E0053B1E8 /* ZXWXBigImageDisappearAnimator.m in Sources */,
 				F469202B1FF341A60099AB9D /* ZXNoGapCellFlowLayout.m in Sources */,
+				F4A3022A2405267F00F750D4 /* UIWindow+ZXHierarchy.m in Sources */,
 				F49CFD341FDE5C8D009F2213 /* FSActionSheetItem.m in Sources */,
 				F4A151CA23D2D9850018405E /* ZXAssetCollectionCell.m in Sources */,
 				F446A9641FCC082900C82C90 /* UIScrollView+AssistiveTouch.m in Sources */,
@@ -4417,7 +4468,6 @@
 				F4C1C3C622DC4F110065C22A /* NSData+ZXCategory.m in Sources */,
 				F4A151A823D2D6830018405E /* ZXAreaPickerView.m in Sources */,
 				F40228EE1EF371E800E3D07E /* WelcomeViewController.m in Sources */,
-				F47FEB32209AA35900A67F55 /* UIScrollView+ZXCategory.m in Sources */,
 				F4D8087820E0813D0084D024 /* AliOSSUploadManager.m in Sources */,
 				F4361DE82109A29C00A5C22F /* ZXTableViewUnfoldFooterView.m in Sources */,
 				F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */,
@@ -4436,7 +4486,6 @@
 				F4361D9B21099C1900A5C22F /* ZXHorizontalPageCollectionView.m in Sources */,
 				F4AE40AA23A7458000DF6FE3 /* UIControl+ZXFastClick.m in Sources */,
 				F4BBAA44212BF70700BF10F2 /* ZXLabelsInputTagsView.m in Sources */,
-				F4AE3FED239BA90D00DF6FE3 /* NSDecimalNumber+ZXCategory.m in Sources */,
 				F4AE3FDB239BA72300DF6FE3 /* UIView+ZXAlignmentRectInsets.m in Sources */,
 				F461821D1D8129490015BC84 /* main.m in Sources */,
 				F4CB0E3C236C3962002BD670 /* PrefectureSubViewD.m in Sources */,
@@ -4451,7 +4500,6 @@
 				F4DF113D212E8E8A0072650A /* UIViewController+ZXKuGouInteractiveDismissGestureRecognizer.m in Sources */,
 				F49CFD331FDE5C8D009F2213 /* FSActionSheetCell.m in Sources */,
 				F44EC7FD225EF47C00AD4010 /* ZXMenuIconCollectionView.m in Sources */,
-				F44BD20123F1303200A866F1 /* UIButton+ZXHelper.m in Sources */,
 				F4361DD721099DF400A5C22F /* ZXAddPicViewCell.m in Sources */,
 				F4EB7062236692160073A2B7 /* SearchSuggestionViewController.m in Sources */,
 				F446A9391FCC082900C82C90 /* EqualSpaceFlowLayoutEvolve.m in Sources */,
@@ -4461,13 +4509,17 @@
 				F4BBAA5A212BFD7200BF10F2 /* CheckVersionManager.m in Sources */,
 				F4D8086E20E080130084D024 /* ZXNoMenuTextField.m in Sources */,
 				F44BD22223F1336100A866F1 /* NSAttributedString+ZXCategory.m in Sources */,
+				F4A30250240527D400F750D4 /* ZXAlertChoseController.m in Sources */,
 				F4A1519723D2D4D50018405E /* NSURL+ZXCategory.m in Sources */,
 				F4C1C3C222DC4EFF0065C22A /* NSURLComponents+ZXCategory.m in Sources */,
 				F446A9A51FCC082A00C82C90 /* GrowthDataManager.m in Sources */,
+				F4A3024E240527D400F750D4 /* AlertChoseTableViewCell.m in Sources */,
 				F4689FBD223A7BD000A3607E /* KxMenuView.m in Sources */,
 				F446A9A21FCC082A00C82C90 /* ZXProgressView.m in Sources */,
 				F41C20EB2384D20D00F895CF /* GuideShopHomeController.m in Sources */,
+				F4A302212405245D00F750D4 /* UIButton+ZXHelper.m in Sources */,
 				F4A151C723D2D9850018405E /* ZXAssetModel.m in Sources */,
+				F4A3022D240526B000F750D4 /* UIScrollView+ZXCategory.m in Sources */,
 				F44BD1FB23F12FA200A866F1 /* ZXOrientationTabController.m in Sources */,
 				F43E6E0120BCEAE900D2E05D /* ZXAddBigPicCollectionView.m in Sources */,
 				F466A96521549AC5007143A1 /* ZXModalAnimatedTranstion.m in Sources */,
@@ -4496,17 +4548,16 @@
 				F49CFD2E1FDE5C8D009F2213 /* XLPhotoBrowser.m in Sources */,
 				F46F074D2292D0E600C79566 /* ZXImagePickerVCManager.m in Sources */,
 				F4C2302923E6BEDF003A925C /* NSString+ZXCategory.m in Sources */,
-				F4591BCC20747F560098F671 /* AlertChoseController.m in Sources */,
 				F4BBAA10212BF5CC00BF10F2 /* ZXBaseAnimator.m in Sources */,
 				F4374B5A1E0A6C6900081502 /* RegisterViewController.m in Sources */,
 				F4CB0E37236C3962002BD670 /* PrefectureCollectionCellTypeA.m in Sources */,
 				F46F07462292D08500C79566 /* NSArray+ZXLog.m in Sources */,
+				F4A30248240527D400F750D4 /* AlertTextFieldCell.m in Sources */,
 				F4CBDAA2202D4A4B00FF506D /* ZXBadgeView.m in Sources */,
 				F446A92E1FCC082900C82C90 /* ShareInfo.m in Sources */,
 				F44585F822B114F500E73D30 /* ZXModalPresentaionController.m in Sources */,
 				F4DF113C212E8E8A0072650A /* ZXModalKuGouTransitionDelegate.m in Sources */,
 				F4361DD821099DF400A5C22F /* ZXAddPicBaseContentView.m in Sources */,
-				F4AE40B223A7459900DF6FE3 /* UIWindow+ZXHierarchy.m in Sources */,
 				F446A98C1FCC082A00C82C90 /* UIViewController+UMThirdLogin.m in Sources */,
 				F457BACC23617C7C00B1E1B4 /* SearchCollectionReusableView.m in Sources */,
 				F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */,
@@ -4551,6 +4602,7 @@
 				F4361E072109A67200A5C22F /* NSString+ZXHTMLString.m in Sources */,
 				F4B70B80236ADD4300C4B4AA /* SearchCollectionViewLeftHotCell.m in Sources */,
 				F4CB0E40236C3976002BD670 /* TestHomViewController.m in Sources */,
+				F4A30257240527DD00F750D4 /* ZXAlertTextActionGroupHeaderView.m in Sources */,
 				F4B0DACF1FEA62CD00E1D028 /* ZXAdvModel.m in Sources */,
 				F4AC3CB822B38F5D00B1D5BD /* ZXAudioServicesManager.m in Sources */,
 			);

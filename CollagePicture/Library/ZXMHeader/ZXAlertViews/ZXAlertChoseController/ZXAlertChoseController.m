@@ -1,14 +1,14 @@
 //
-//  AlertChoseController.m
+//  ZXAlertChoseController.m
 //  YiShangbao
 //
 //  Created by simon on 2017/9/21.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 
-#import "AlertChoseController.h"
-#import "AlertChoseTableCell.h"
-#import "AlertTextFieldCell.h"
+#import "ZXAlertChoseController.h"
+#import "AlertChoseTableViewCell/AlertChoseTableViewCell.h"
+#import "AlertTextFieldCell/AlertTextFieldCell.h"
 #import "UIScrollView+ZXCategory.h"
 
 
@@ -28,7 +28,7 @@
 #endif
 
 
-@interface AlertChoseController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
+@interface ZXAlertChoseController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
@@ -42,11 +42,7 @@
 @property (nonatomic, copy) NSString *textViewText;
 @end
 
-@implementation AlertChoseController
-
-static NSString * const reuse_Cell  = @"Cell";
-static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
-
+@implementation ZXAlertChoseController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -68,11 +64,11 @@ static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] init];
     
-    [self.tableView registerNib:[UINib nibWithNibName:nibName_AlertChoseTableCell bundle:nil] forCellReuseIdentifier:reuse_Cell];
-    [self.tableView registerNib:[UINib nibWithNibName:nibName_AlertTextFieldCell bundle:nil] forCellReuseIdentifier:reuse_TextFieldCell];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([AlertChoseTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([AlertChoseTableViewCell class])];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([AlertTextFieldCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([AlertTextFieldCell class])];
     
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -111,14 +107,14 @@ static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
 {
     if (self.addTextField)
     {
-        return _titles.count+1;
+        return self.titles.count+1;
     }
-    return _titles.count;
+    return self.titles.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==_titles.count)
+    if (self.addTextField && indexPath.row == self.titles.count)
     {
         return LCDScale_iPhone6(70.f);
     }
@@ -127,34 +123,23 @@ static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row ==_titles.count && self.addTextField)
+    if (self.addTextField && indexPath.row == self.titles.count)
     {
-        AlertTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:reuse_TextFieldCell forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        AlertTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AlertTextFieldCell class]) forIndexPath:indexPath];
         cell.textView.delegate = self;
         cell.textView.placeholder = self.textViewPlaceholder;
-        [cell.accessoryBtn addTarget:self action:@selector(accessoryBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.accessoryBtn addTarget:self action:@selector(selectBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
-    AlertChoseTableCell *cell = [tableView dequeueReusableCellWithIdentifier:reuse_Cell forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    [cell.accessoryBtn addTarget:self action:@selector(accessoryBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    if (indexPath.row<_titles.count)
+    AlertChoseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AlertChoseTableViewCell class]) forIndexPath:indexPath];
+    [cell.selectBtn addTarget:self action:@selector(selectBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    if (indexPath.row < self.titles.count)
     {
-        cell.titleLabel.text = [_titles objectAtIndex:indexPath.row];
+        cell.titleLabel.text = [self.titles objectAtIndex:indexPath.row];
     }
     return cell;
 }
 
-//- (nullable NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//}
-//- (nullable NSIndexPath *)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//}
 
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -167,58 +152,66 @@ static NSString * const reuse_TextFieldCell  = @"TextFieldCell";
     
 }
 
-- (void)accessoryBtnAction:(id)sender
+#pragma mark - Action
+
+/// 选择按钮-选中行
+- (void)selectBtnAction:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSIndexPath *indexPath = [self.tableView zh_getIndexPathFromTableViewOrCollectionViewWithConvertView:btn];
+    CGPoint point = btn.center;
+    point = [self.tableView convertPoint:point fromView:btn.superview];
+    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:point];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    
 }
 
+///取消
 - (IBAction)cancleButtonAction:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - textViewDelegate
+
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    NSIndexPath *textIndexPath = [self zh_getIndexPathFromTableViewOrCollectionView:self.tableView withConvertView:textView];
+    NSIndexPath *indexPath_textView = [self zh_getIndexPathFromTableViewOrCollectionView:self.tableView withConvertView:textView];
 
-    if (indexPath.row != textIndexPath.row)
+    if (indexPath.row != indexPath_textView.row)
     {
-        [self.tableView selectRowAtIndexPath:textIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView selectRowAtIndexPath:indexPath_textView animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    _textViewText = textView.text;
+    self.textViewText = textView.text;
 }
 
-
+#pragma mark - 确定
+///确定
 - (IBAction)doButtonAction:(id)sender {
     
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    NSIndexPath *selectIndexPath = [self.tableView indexPathForSelectedRow];
     NSString *selectContent = nil;
-    if (self.addTextField && indexPath.row ==_titles.count)
+    if (self.addTextField && selectIndexPath.row == self.titles.count)
     {
-        if ([NSString zhIsBlankString:_textViewText])
+        if ([NSString zhIsBlankString:self.textViewText])
         {
             [MBProgressHUD zx_showError:self.textViewPlaceholder toView:nil];
             return;
         }
-        selectContent = _textViewText;
+        selectContent = self.textViewText;
     }
     else
     {
-        selectContent = [_titles objectAtIndex:indexPath.row];
+        selectContent = [self.titles objectAtIndex:selectIndexPath.row];
     }
     __weak __typeof(self)weakSelf = self;
     [self dismissViewControllerAnimated:YES completion:^{
         
          if ([weakSelf.btnActionDelegate respondsToSelector:@selector(zx_alertChoseController:clickedButtonAtIndex:content:userInfo:)])
          {
-             [weakSelf.btnActionDelegate zx_alertChoseController:weakSelf clickedButtonAtIndex:indexPath.row content:selectContent userInfo:weakSelf.userInfo];
+             [weakSelf.btnActionDelegate zx_alertChoseController:weakSelf clickedButtonAtIndex:selectIndexPath.row content:selectContent userInfo:weakSelf.userInfo];
          }
     }];
 }

@@ -10,6 +10,7 @@
 //  无法用坐标换算方法；
 
 //  2018.4.24 修改注释，移动文件目录
+//  2020.2.14 修改方法名
 
 #import <UIKit/UIKit.h>
 
@@ -28,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return indexPath
  */
 
-- (nullable NSIndexPath *)zh_getIndexPathFromTableViewOrCollectionViewWithConvertView:(nullable UIView *)subView;
+- (nullable NSIndexPath *)zx_getIndexPathForRowFromConvertCellSubView:(nullable UIView *)subView;
 
 @end
 

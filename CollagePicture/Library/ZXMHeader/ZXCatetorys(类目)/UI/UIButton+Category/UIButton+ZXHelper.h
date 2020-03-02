@@ -18,6 +18,7 @@
 // 2019.11.26  增加图片在右标题在左的布局改变方法；
 // 2019.12.09  修改bug；
 // 2020.2.02  优化；
+// 2020.2.24  修改ZXButtonContentTypeImageRightTitleLeft类型的方法；
 
 #import <UIKit/UIKit.h>
 

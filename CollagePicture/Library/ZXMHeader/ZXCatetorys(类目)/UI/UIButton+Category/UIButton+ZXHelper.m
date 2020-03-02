@@ -83,38 +83,39 @@
 */
 - (void)zx_centerXRightImageAndLeftTitleWithSpace:(CGFloat)spacing
 {
-//    UIImage *currentImage = [self imageForState:UIControlStateNormal];
-//    CGSize imageSize = currentImage.size;
-//    NSString *currentTitle = [self titleForState:UIControlStateNormal];
-//    CGSize titleSize = [NSString zx_boundingSizeOfString:currentTitle WithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
-//    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
-//        CGFloat titleMaxHeight;
-//        NSLineBreakMode lineBreakMode = self.titleLabel.lineBreakMode;
-//        if (lineBreakMode == NSLineBreakByWordWrapping || lineBreakMode == NSLineBreakByCharWrapping) {
-//            titleMaxHeight = HUGE;
-//        } else {
-//            titleMaxHeight = self.titleLabel.font.pointSize;
-//        }
-//
-//        CGSize titleMaxSize = CGSizeMake(CGRectGetWidth(self.frame) - (imageSize.width + spacing), titleMaxHeight);
-//        titleSize =  [NSString zx_boundingSizeOfString:currentTitle WithSize:titleMaxSize font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
-//    }
-//    self.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width + spacing, 0, - titleSize.width);
-//    self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, 0, imageSize.width + spacing);
-//    self.backgroundColor = [UIColor redColor];
-//    CGFloat width = imageSize.width+titleSize.width+spacing;
-//
+    UIImage *currentImage = [self imageForState:UIControlStateNormal];
+    CGSize imageSize = currentImage.size;
+    NSString *currentTitle = [self titleForState:UIControlStateNormal];
+    CGSize titleSize = [NSString zx_boundingSizeOfString:currentTitle WithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+    if (!CGRectEqualToRect(self.frame, CGRectZero))
+    {
+        CGFloat titleMaxHeight;
+        NSLineBreakMode lineBreakMode = self.titleLabel.lineBreakMode;
+        if (lineBreakMode == NSLineBreakByWordWrapping || lineBreakMode == NSLineBreakByCharWrapping) {
+            titleMaxHeight = HUGE;
+        } else {
+            titleMaxHeight = self.titleLabel.font.pointSize;
+        }
+
+        CGSize titleMaxSize = CGSizeMake(CGRectGetWidth(self.frame) - (imageSize.width + spacing), titleMaxHeight);
+        titleSize =  [NSString zx_boundingSizeOfString:currentTitle WithSize:titleMaxSize font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+    }
+    self.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width + spacing, 0, - titleSize.width);
+    self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, 0, imageSize.width + spacing);
     
 // 如果当前button的frame比实际计算的小，一定要重新设置frame；
 // 不然动态改变title的时候，当前frame的size和内部控件布局无法及时改变；造成bug;
-    CGSize size = [self sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
-    if (CGRectGetWidth(self.frame)< (size.width+spacing))
-    {
-        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width+spacing,CGRectGetHeight(self.frame));
-        [self layoutIfNeeded];//必须
-    }
-    self.imageEdgeInsets = UIEdgeInsetsMake(0, CGRectGetWidth(self.titleLabel.bounds) + spacing, 0, - CGRectGetWidth(self.titleLabel.bounds));
-    self.titleEdgeInsets = UIEdgeInsetsMake(0, - CGRectGetWidth(self.imageView.bounds), 0, CGRectGetWidth(self.imageView.bounds) + spacing);
+    // 红包可用商品-不用的时候会bug
+//    CGSize size = [self sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+//    if (CGRectGetWidth(self.frame)< (size.width+spacing))
+//    {
+//        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width+spacing,CGRectGetHeight(self.frame));
+//        [self layoutIfNeeded];//必须
+//    }
+
+//这个自动计算的方案有问题，在约束+优先级设置的时候，CGRectGetWidth(self.titleLabel.bounds) == 0，导致无法调整，如：购物车tip条；
+//    self.imageEdgeInsets = UIEdgeInsetsMake(0, CGRectGetWidth(self.titleLabel.bounds) + spacing, 0, - CGRectGetWidth(self.titleLabel.bounds));
+//    self.titleEdgeInsets = UIEdgeInsetsMake(0, - CGRectGetWidth(self.imageView.bounds), 0, CGRectGetWidth(self.imageView.bounds) + spacing);
 }
 
 
