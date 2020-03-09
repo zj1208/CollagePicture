@@ -66,7 +66,7 @@ static NSString * const reuseTagsCell = @"Cell";
     self.maxItemCount = ZXMaxItemCount;
     self.apportionsItemWidthsByContent = NO;
     // 适合最多4个字的宽度
-    self.itemSameSize = CGSizeMake(82.f, 30.f);
+    self.sameItemSize = CGSizeMake(82.f, 30.f);
     self.titleFontSize = 14.f;
     self.cellSelectedStyle = NO;
     self.clipsToBounds = YES;
@@ -108,7 +108,7 @@ static NSString * const reuseTagsCell = @"Cell";
 
 
 - (NSMutableArray *)dataMArray {
-    if (_dataMArray == nil) {
+    if (!_dataMArray) {
         _dataMArray = [NSMutableArray arrayWithCapacity:0];
     }
     return _dataMArray;
@@ -169,12 +169,14 @@ static NSString * const reuseTagsCell = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     LabelCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseTagsCell forIndexPath:indexPath];
+    id item = [self.dataMArray objectAtIndex:indexPath.item];
+    [cell setData:item];
     cell.titleLab.font = [UIFont systemFontOfSize:self.titleFontSize];
-    cell.title = [self.dataMArray objectAtIndex:indexPath.item];    // Configure the cell
-    if (!self.apportionsItemWidthsByContent)
-    {
-        cell.height = self.itemSameSize.height;
-    }
+    cell.labelBackgroudColor = self.labelBackgroudColor;
+    cell.itemContentInset = self.itemContentInset;
+    cell.labelsViewBorderStyle = self.labelsViewBorderStyle;
+    cell.selectedLabelBackgroudColor = self.selectedLabelBackgroudColor;
+    cell.cellSelectedStyle = self.cellSelectedStyle;
     return cell;
 }
 
@@ -213,40 +215,27 @@ static NSString * const reuseTagsCell = @"Cell";
             }
         });
         cell.titleLab.font = [UIFont systemFontOfSize:self.titleFontSize];
-        cell.title = [self.dataMArray objectAtIndex:indexPath.item];
-        cell.height = 26.f;
+        id item = [self.dataMArray objectAtIndex:indexPath.item];
+        [cell setData:item];
+        cell.itemContentInset = self.itemContentInset;
+        cell.labelsViewBorderStyle = self.labelsViewBorderStyle;
         return [cell sizeForCellThatWidthFits:collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right];
     }
     
-    return self.itemSameSize;
+    return self.sameItemSize;
 }
 
 // 展示数据外观更改
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    为什么cell的backgoundColor设置无效?
     LabelCell *newCell = (LabelCell *)cell;
-
-    if (newCell.selected && self.cellSelectedStyle)
-    {
-        UIColor *textColor = [UIColor colorWithRed:255.f/255 green:84.f/255 blue:52.f/255 alpha:1];
-        newCell.titleLab.textColor = textColor;
-        newCell.titleLab.layer.borderColor = textColor.CGColor;
-        newCell.titleLab.backgroundColor = [UIColor colorWithRed:255.f/255 green:245.f/255 blue:241.f/255 alpha:1];
-    }
-    else
-    {
-        // 默认设置
-        newCell.titleLab.textColor = [UIColor redColor];
-        newCell.titleLab.layer.borderColor = [UIColor redColor].CGColor;
-        newCell.titleLab.backgroundColor = self.tagNormarBackgroudColor?self.tagNormarBackgroudColor:[UIColor whiteColor];
-    }
-
- 
     if ([self.delegate respondsToSelector:@selector(zx_labelsTagsView:willDisplayCell:forItemAtIndexPath:)])
     {
         [self.delegate zx_labelsTagsView:self willDisplayCell:newCell forItemAtIndexPath:indexPath];
+        return;
     }
+    id data = [self.dataMArray objectAtIndex:indexPath.item];
+    [newCell labelsTagsViewWillDisplayCellWithData:data];
 }
 
 
@@ -292,7 +281,7 @@ static NSString * const reuseTagsCell = @"Cell";
     }
 }
 
-
+#pragma mark - getCellHeightWithContentData
 //计算collectionView的总高度;前提是self.frame必须有值，不然无法计算；
 // 获取高度的地方，数据源必须重新赋值
 // 返回cell（view）重用的内存地址-独立重用view获取高度的内存地址，例如：【 ***280-***060，  ***ba0-***060 ， ***100-***060，  ***8b0-***060，  ***280-***060】,总结：cell/tableFooterView/tableHeaderView（返回view）重用原理一样，根据初始化屏幕的几个cell/tableFooterView/tableHeaderView依次重用，但是在获取cell/tableFooterView/tableHeaderView高度独立设置重用的地方永远只重用一个；
@@ -361,10 +350,6 @@ static NSString * const reuseTagsCell = @"Cell";
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:itemIndexPath];
     CGFloat height = CGRectGetMaxY(attributes.frame)+self.sectionInset.bottom;
     //    NSLog(@"%f",height);
-    if (height>50)
-    {
-        
-    }
     return ceilf(height);
 }
 

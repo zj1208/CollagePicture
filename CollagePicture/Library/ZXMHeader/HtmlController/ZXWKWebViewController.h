@@ -30,6 +30,7 @@
 
 //  2020.02.25  增加WKUIDelegate，针对js调用的三种警告弹窗面板做相应处理；
 
+//  2020.03.05  增加属性：标题颜色，标题默认颜色；增加设置标题颜色实例方法；
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
@@ -77,6 +78,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 //用于退出当前栈顶web控制器
 - (void)exitWebViewApp;
+
+
+/// 改变TitleBar的颜色
+/// @param color 色值
+- (void)setTitleColor:(UIColor *)color;
+
+/// 改变TitleBar的颜色
+/// @param color 色值
+/// @param reset 是否重置为默认颜色，默认NO
+- (void)setTitleColor:(UIColor *)color reset:(BOOL)reset;
+
+
+/// 应用于导航项和导航栏按钮项的着色颜色。
+/// @param color color
+- (void)setTintColor:(UIColor *)color;
 @end
 
 NS_ASSUME_NONNULL_END

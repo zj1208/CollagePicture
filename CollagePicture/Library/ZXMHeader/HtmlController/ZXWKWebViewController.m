@@ -55,21 +55,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 
 
-//进度条
-@property (nonatomic, strong) UIProgressView *progressView;
-
-// 导航条按钮;
-// 返回按钮
-@property (nonatomic, strong) UIBarButtonItem *backButtonItem;
-// 关闭按钮
-@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
-// 填充间距按钮
-@property (nonatomic, strong) UIBarButtonItem *negativeSpacerItem;
-// 右侧分享按钮
-@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
-
-// 空视图；
-@property (nonatomic, strong) ZXEmptyViewController *emptyViewController;
 
 //加载类型
 @property (nonatomic) WebLoadType webLoadType;
@@ -87,6 +72,32 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 //URL数组
 @property(nonatomic, strong) NSMutableArray *urlArrayM;
 
+///UI
+
+//进度条
+@property (nonatomic, strong) UIProgressView *progressView;
+
+// 导航条按钮;
+// 返回按钮
+@property (nonatomic, strong) UIBarButtonItem *backButtonItem;
+// 关闭按钮
+@property (nonatomic, strong) UIBarButtonItem *closeButtonItem;
+// 填充间距按钮
+@property (nonatomic, strong) UIBarButtonItem *negativeSpacerItem;
+// 右侧分享按钮
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
+
+// 空视图；
+@property (nonatomic, strong) ZXEmptyViewController *emptyViewController;
+
+///设置标题颜色
+@property (nonatomic, strong) UIColor *titleColor;
+///默认标题颜色
+@property (nonatomic, strong) UIColor *defaultTitleColor;
+///导航条按钮item的颜色
+@property (nonatomic, strong) UIColor *tintColor;
+///默认导航条按钮item的颜色
+@property (nonatomic, strong) UIColor *defaultTintColor;
 @end
 
 static NSString* const SixSpaces = @"      ";
@@ -200,6 +211,16 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark -初始化导航条
 - (void)setupNav
 {
+    self.defaultTitleColor = [self.navigationController.navigationBar.titleTextAttributes objectForKey:NSForegroundColorAttributeName];
+    if (!self.defaultTitleColor) {
+        self.defaultTitleColor = [UIColor blackColor];
+    }
+    UIColor *navTitleColor = self.titleColor?self.titleColor:self.defaultTitleColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:navTitleColor}];
+    
+    self.defaultTintColor = self.navigationController.navigationBar.tintColor;
+    
+    
     self.navigationItem.title = self.barTitle;
     self.navigationItem.leftBarButtonItems = @[self.backButtonItem,self.negativeSpacerItem];
 }
@@ -1038,6 +1059,20 @@ static NSString* const SixSpaces = @"      ";
 - (void)exitWebViewApp
 {
     [self customBackItemAction:nil];
+}
+
+- (void)setTitleColor:(UIColor *)color
+{
+    _titleColor = color;
+}
+- (void)setTitleColor:(UIColor *)color reset:(BOOL)reset
+{
+//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:color}];
+}
+
+- (void)setTintColor:(UIColor *)color
+{
+    _tintColor = color;
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message

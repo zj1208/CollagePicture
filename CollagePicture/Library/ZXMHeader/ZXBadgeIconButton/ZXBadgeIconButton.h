@@ -5,11 +5,13 @@
 //  Created by simon on 17/6/19.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  根据image图片大小，右上角设置badgeLabel；
+//  简介：根据image图片大小，右上角设置badgeLabel；父类必须是UIButton，不然会有问题；
+//  注意：目前待优化，无法用系统UIButton的方法设置图片；
 
-// 2018.1.23 新增 badgeLabel相对偏移；默认向image大小左偏移12，上对齐；
-// 2018.4.19 修改文字绘画选项；
+// 2018.1.23  新增 badgeLabel相对偏移；默认向image大小左偏移12，上对齐；
+// 2018.4.19  修改文字绘画选项；
 // 2019.10.29 适配Xcode11，父类一定要UIButton才能在sb上的button修改父类；
+// 2020.03.06 新增设置角标边框宽度，边框颜色；
 
 #import <UIKit/UIKit.h>
 
@@ -22,10 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-// badgeLabel相对偏移,默认CGPointMake(0, 0)，表示向image图标左偏移12,上对齐；图标显示不同，偏移量调整是不同的，所以这个值是根据图标调整的；
+/// badgeLabel相对偏移,默认CGPointMake(0, 0)，表示向image图标左偏移12,上对齐；图标显示不同，偏移量调整是不同的，所以这个值是根据图标调整的；
 @property (nonatomic, assign) CGPoint badgeLabelContentOffest;
 
-// 设置图标的静态图片
+/// 角标边框宽度
+@property (nonatomic, assign) CGFloat badgeBorderWidth;
+
+/// 角标边框颜色
+@property (nonatomic, strong) UIColor *badgeBorderColor;
+
+/// 设置图标的静态图片
 - (void)setImage:(UIImage *)image;
 
 /**
@@ -43,6 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param font 字体大小
  */
 - (void)setBadgeContentInsetY:(CGFloat)aMaginY badgeFont:(nullable UIFont *)font;
+
+
 @end
 
 

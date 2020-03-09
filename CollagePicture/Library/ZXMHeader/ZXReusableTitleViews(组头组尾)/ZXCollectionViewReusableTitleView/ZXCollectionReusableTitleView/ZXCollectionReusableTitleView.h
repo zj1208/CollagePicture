@@ -6,9 +6,14 @@
 //  Copyright © 2019 timtian. All rights reserved.
 //
 // 简介：UICollectionView的组头，纯title展示；
-//1：组头/组尾必须从【dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:】回调，不然崩溃；
-//2：必须始终返回有效的视图对象，不能返回nil;即使只需要组头，组尾也必须同时返回，不然崩溃；
+/*
+(1)组头/组尾必须从【dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:】回调，即使只需要组头，组尾也必须同时返回，不然崩溃；
+(2)必须始终返回有效的视图对象，不能返回nil;不然崩溃；
+(3)您可以通过将相应属性的hidden属性设置为YES或将属性的alpha属性设置为0来隐藏视图。要在流布局中隐藏页眉和页脚视图，还可以将这些视图的宽度和高度设置为0。
+(4)这个视图的宽度不需要我们设置，始终是colletionView的宽度；
+*/
 
+// 2020.3.04 修改注释；
 
 #import <UIKit/UIKit.h>
 

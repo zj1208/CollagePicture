@@ -12,8 +12,6 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *const nibName_ZXCenterTitleView = @"ZXCenterTitleView";
-
 
 @interface ZXCenterTitleView : UIView
 
@@ -38,7 +36,7 @@ static NSString *const nibName_ZXCenterTitleView = @"ZXCenterTitleView";
 //
 
 /*
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (section ==2)
     {
@@ -52,7 +50,7 @@ static NSString *const nibName_ZXCenterTitleView = @"ZXCenterTitleView";
         return view;
         
     }
-    return [[UIView alloc] init];
+    return nil;
 }
  
  */

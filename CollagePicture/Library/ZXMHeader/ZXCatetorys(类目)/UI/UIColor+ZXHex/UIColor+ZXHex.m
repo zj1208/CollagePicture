@@ -107,4 +107,13 @@
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
+
++ (UIColor *)zx_colorWithHex:(uint)hex alpha:(CGFloat)alpha
+{
+    int red, green, blue;
+    blue = hex & 0x0000FF;
+    green = ((hex & 0x00FF00) >> 8);
+    red = ((hex & 0xFF0000) >> 16);
+    return [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:alpha];
+}
 @end

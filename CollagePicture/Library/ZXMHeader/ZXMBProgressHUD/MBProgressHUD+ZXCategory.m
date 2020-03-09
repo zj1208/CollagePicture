@@ -13,10 +13,10 @@
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
 #endif
 
-#ifndef TEXT_ERROR_NETWORK
-#define TEXT_ERROR_NETWORK @"哎呀！网路粗问题了，请稍后再试！"
-#define TEXT_ERROR_SERVER @"哎呀！粗问题了，请稍后再试！"
-#endif
+
+static  NSString *const ERROR_NETWORK = @"哎呀！网路粗问题了，请稍后再试！";
+static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再试！";
+
 
 @implementation MBProgressHUD (ZXCategory)
 
@@ -65,15 +65,20 @@
 
 + (void)zx_showErrorContainsCodeWithTitle:(nullable NSString *)title error:(NSError *)error toView:(nullable UIView *)view
 {
+    [MBProgressHUD zx_showErrorContainsCodeWithTitle:title error:error toView:view hideAfterDelay:0];
+}
+
++ (void)zx_showErrorContainsCodeWithTitle:(nullable NSString *)title error:(NSError *)error toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay
+{
     NSString *errorTitle = nil;
-    NSString * eTitle = nil;
+    //自定义错误文本
     if(error.code<-990)
     {
+        NSString *eTitle = nil;
         if (error.code == -1005 || error.code == -1009 || error.code == -1001) {
-             eTitle = TEXT_ERROR_NETWORK;
-         }else
-         {
-             eTitle = TEXT_ERROR_SERVER;
+             eTitle = ERROR_NETWORK;
+         }else{
+             eTitle = ERROR_SERVER;
          }
         errorTitle = [NSString stringWithFormat:@"%@(%@)",eTitle,@(error.code)];
     }
@@ -81,7 +86,7 @@
     {
         errorTitle = [NSString stringWithFormat:@"%@(%@)",title,@(error.code)];
     }
-    [MBProgressHUD zx_showText:errorTitle customIcon:nil view:view hideAfterDelay:0];
+    [MBProgressHUD zx_showText:errorTitle customIcon:nil view:view hideAfterDelay:delay];
 }
 
 + (MBProgressHUD *)zx_showText:(nullable NSString *)aText customIcon:(nullable NSString *)imageName view:(nullable UIView *)view
