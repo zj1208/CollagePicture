@@ -14,11 +14,13 @@
 (2)if (button.width < imageView.width + label.width){图像正常显示，文字显示不全}
 (3)if (button.width >＝ imageView.width + label.width){图像和文字都居中显示，imageView在左，label在右，没有间距}
 */
+// 注意：zx_centerXRightImageAndLeftTitleWithSpace 方法在不设置宽度约束的时候还有问题；
 
 // 2019.11.26  增加图片在右标题在左的布局改变方法；
 // 2019.12.09  修改bug；
 // 2020.2.02  优化；
 // 2020.2.24  修改ZXButtonContentTypeImageRightTitleLeft类型的方法；
+// 2020.2.28  再次优化ZXButtonContentTypeImageRightTitleLeft类型的方法；
 
 #import <UIKit/UIKit.h>
 
@@ -67,6 +69,7 @@ typedef NS_ENUM(NSInteger, ZXButtonContentType) {
  *
  *  @param type    图片位置类型
  *  @param spacing 图片和标题之间的间隙,默认是0个间距；按钮宽度必须大于（图片＋文本）自适应的宽度；
+ *  注意：如果约束没有设置width，或者约束设置宽度比较小会出bug，暂时还没有解决方案；
  */
 - (void)zx_setImagePositionWithType:(ZXButtonContentType)type spacing:(CGFloat)spacing;
 

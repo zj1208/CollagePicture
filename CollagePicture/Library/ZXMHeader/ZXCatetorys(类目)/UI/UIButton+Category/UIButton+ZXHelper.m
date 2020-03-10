@@ -83,6 +83,14 @@
 */
 - (void)zx_centerXRightImageAndLeftTitleWithSpace:(CGFloat)spacing
 {
+// 如果当前button的frame比实际计算的小，一定要重新设置frame；
+// 不然动态改变title的时候，当前frame的size和内部控件布局无法及时改变；造成bug;
+// 红包可用商品-不用的时候会bug ;  但是即使用了，在其他场景目前依然有bug；在约束不设置宽度,或者设置宽度约束小的时候，首页：“查看更多+图标”
+    CGSize size = [self sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+    if (CGRectGetWidth(self.frame)< (size.width+spacing))
+    {
+        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width+spacing,CGRectGetHeight(self.frame));
+    }
     UIImage *currentImage = [self imageForState:UIControlStateNormal];
     CGSize imageSize = currentImage.size;
     NSString *currentTitle = [self titleForState:UIControlStateNormal];
@@ -102,18 +110,8 @@
     }
     self.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width + spacing, 0, - titleSize.width);
     self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, 0, imageSize.width + spacing);
-    
-// 如果当前button的frame比实际计算的小，一定要重新设置frame；
-// 不然动态改变title的时候，当前frame的size和内部控件布局无法及时改变；造成bug;
-    // 红包可用商品-不用的时候会bug
-//    CGSize size = [self sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
-//    if (CGRectGetWidth(self.frame)< (size.width+spacing))
-//    {
-//        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width+spacing,CGRectGetHeight(self.frame));
-//        [self layoutIfNeeded];//必须
-//    }
-
-//这个自动计算的方案有问题，在约束+优先级设置的时候，CGRectGetWidth(self.titleLabel.bounds) == 0，导致无法调整，如：购物车tip条；
+     
+//这个自动计算的方案有问题，在用约束布局,不设置控件宽度(1.包括只设置了left，right约束位置，优先级约束之后的实际宽度比较大的；2.只设置left或right约束，且不知道实际宽度)的时候，默认获取CGRectGetWidth(self.titleLabel.bounds) == 0，导致无法调整，如：购物车tip条；
 //    self.imageEdgeInsets = UIEdgeInsetsMake(0, CGRectGetWidth(self.titleLabel.bounds) + spacing, 0, - CGRectGetWidth(self.titleLabel.bounds));
 //    self.titleEdgeInsets = UIEdgeInsetsMake(0, - CGRectGetWidth(self.imageView.bounds), 0, CGRectGetWidth(self.imageView.bounds) + spacing);
 }
