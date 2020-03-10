@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 
 @interface ZXWKWebViewController ()<WKNavigationDelegate,WKUIDelegate,
- ZXEmptyViewControllerDelegate,UIGestureRecognizerDelegate,WKScriptMessageHandler>
+ ZXEmptyViewControllerDelegate,UIGestureRecognizerDelegate>
 
 
 
@@ -94,10 +94,17 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 @property (nonatomic, strong) UIColor *titleColor;
 ///默认标题颜色
 @property (nonatomic, strong) UIColor *defaultTitleColor;
+
 ///导航条按钮item的颜色
 @property (nonatomic, strong) UIColor *tintColor;
 ///默认导航条按钮item的颜色
 @property (nonatomic, strong) UIColor *defaultTintColor;
+
+///默认是否隐藏
+@property (nonatomic, assign) BOOL defaultWebNavigationBarHide;
+
+///设置状态条类型
+@property(readwrite, nonatomic) UIStatusBarStyle defaultStatusBarStyle;
 @end
 
 static NSString* const SixSpaces = @"      ";
@@ -140,15 +147,20 @@ static NSString* const SixSpaces = @"      ";
     }else{
 //        [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
     }
-    if (self.appearNavigationBarHide) {
-        [self.navigationController setNavigationBarHidden:self.appearNavigationBarHide animated:animated];
-    }
-    
     if (self.navigationController.viewControllers.count>1)
     {
        self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
     self.navigationController.navigationBar.shadowImage =[UIImage new];
+    
+    [self.navigationController setNavigationBarHidden:self.webNavigationBarHide animated:animated];
+    //不能用self.navigationBarIsHidden来获取，还没赋值结果；默认就是NO，不隐藏；
+    if (self.webNavigationBarHide)
+    {
+        return;
+    }
+    [self setNavigationBarTitleColor];
+    [self setNavigationBarTintColor];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -161,8 +173,12 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    if (self.appearNavigationBarHide) {
-        [self.navigationController setNavigationBarHidden:!self.appearNavigationBarHide animated:animated];
+    [self.navigationController setNavigationBarHidden:self.defaultWebNavigationBarHide animated:animated];
+    if (self.defaultTitleColor && !self.webNavigationBarHide) {
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:self.defaultTitleColor}];
+    }
+    if (self.defaultTintColor && !self.webNavigationBarHide) {
+        self.navigationController.navigationBar.tintColor = self.defaultTintColor;
     }
 }
 
@@ -182,6 +198,23 @@ static NSString* const SixSpaces = @"      ";
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress))];
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(title)) ];
     [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(URL)) ];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return self.statusBarStyle;
+}
+
+//2020.3.10 修改；如果导航条隐藏则置顶显示，如果有导航条则导航条下显示；
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    if (self.webNavigationBarHide) {
+        self.progressView.frame = CGRectMake(0,0, self.view.bounds.size.width, 2);
+    }else
+    {
+        self.progressView.frame = CGRectMake(0,[self.view zx_safeAreaLayoutGuideY], self.view.bounds.size.width, 2);
+    }
 }
 
 #pragma mark - UI加载
@@ -211,20 +244,46 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark -初始化导航条
 - (void)setupNav
 {
-    self.defaultTitleColor = [self.navigationController.navigationBar.titleTextAttributes objectForKey:NSForegroundColorAttributeName];
-    if (!self.defaultTitleColor) {
-        self.defaultTitleColor = [UIColor blackColor];
+    self.defaultWebNavigationBarHide = self.navigationController.navigationBar.isHidden;
+    if (self.webNavigationBarHide)
+    {
+        return;
     }
-    UIColor *navTitleColor = self.titleColor?self.titleColor:self.defaultTitleColor;
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:navTitleColor}];
-    
-    self.defaultTintColor = self.navigationController.navigationBar.tintColor;
-    
-    
+    [self setNavigationBarTitleColor];
+    [self setNavigationBarTintColor];
+
     self.navigationItem.title = self.barTitle;
     self.navigationItem.leftBarButtonItems = @[self.backButtonItem,self.negativeSpacerItem];
 }
 
+- (void)setNavigationBarTitleColor
+{
+    if (self.webNavigationBarHide)
+    {
+        return;
+    }
+    self.defaultTitleColor = [self.navigationController.navigationBar.titleTextAttributes objectForKey:NSForegroundColorAttributeName];
+    UIColor *tempTitleColor = self.defaultTitleColor;
+    if (!self.defaultTitleColor) {
+        tempTitleColor = [UIColor blackColor];
+    }
+    UIColor *navTitleColor = self.titleColor?self.titleColor:tempTitleColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:navTitleColor}];
+}
+
+- (void)setNavigationBarTintColor
+{
+    if (self.webNavigationBarHide)
+    {
+        return;
+    }
+    //默认色 蓝色；否则看外部是否有设置；
+    self.defaultTintColor = self.navigationController.navigationBar.tintColor;
+    if (self.tintColor && ![self.tintColor isEqual:self.defaultTintColor])
+    {
+        self.navigationController.navigationBar.tintColor = self.tintColor;
+    }
+}
 
 #pragma mark -初始化WebView
 
@@ -238,7 +297,7 @@ static NSString* const SixSpaces = @"      ";
         NSString *source = [NSString stringWithFormat:@"document.cookie = 'mat = %@'",[UserInfoUDManager getToken]];
         WKUserScript *cookieScript =  [[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
         [contentController addUserScript:cookieScript];
-        
+
         //不能乱设置，不然布局会乱
         WKPreferences *preferences = [[WKPreferences alloc] init];
         //默认值
@@ -290,7 +349,6 @@ static NSString* const SixSpaces = @"      ";
 {
     if (!_progressView) {
         UIProgressView *view = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleDefault];
-        view.frame = CGRectMake(0,0, self.view.bounds.size.width, 2);
         view.trackTintColor = [UIColor clearColor];
         view.progressTintColor = UIColorFromRGB_HexValue(0xFF5434);
         _progressView = view;
@@ -853,9 +911,10 @@ static NSString* const SixSpaces = @"      ";
         UIButton* backButton = [[UIButton alloc] init];
         [backButton setTitle:NSLocalizedString(@"返回", nil)  forState:UIControlStateNormal];
         [backButton setTitleColor:self.navigationController.navigationBar.tintColor forState:UIControlStateNormal];
-        [backButton setTitleColor:[self.navigationController.navigationBar.tintColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+        [backButton setTitleColor:[self.navigationController.navigationBar.tintColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
         [backButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
         [backButton setImage:backItemImage forState:UIControlStateNormal];
+        [backButton setImage:backItemImage forState:UIControlStateHighlighted];
         backButton.frame = CGRectMake(0, 0, 50, 44);
         backButton.imageEdgeInsets= UIEdgeInsetsMake(0, 0, 0,floorf(10/2));
         backButton.titleEdgeInsets= UIEdgeInsetsMake(0, floorf(10/2), 0, 0);
@@ -907,19 +966,14 @@ static NSString* const SixSpaces = @"      ";
     }
     else
     {
-        [self closeButtonItemAction:nil];
+        [self popWindow];
     }
 }
 
 
 - (void)closeButtonItemAction:(id)sender
 {
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
-    if ([self.webView isLoading])
-    {
-        [self.webView stopLoading];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
+    [self popWindow];
 }
 
 //分享
@@ -1050,6 +1104,17 @@ static NSString* const SixSpaces = @"      ";
     }
 }
 
+# pragma mark - 关闭当前页面
+- (void)popWindow
+{
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
+    if ([self.webView isLoading])
+    {
+        [self.webView stopLoading];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 # pragma mark - 刷新当前页面数据
 - (void)reloadData
 {
@@ -1058,7 +1123,7 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)exitWebViewApp
 {
-    [self customBackItemAction:nil];
+    [self popWindow];
 }
 
 - (void)setTitleColor:(UIColor *)color
@@ -1078,6 +1143,20 @@ static NSString* const SixSpaces = @"      ";
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
     
+}
+
+/// 根据用户界面风格自动选择浅色或深色的内容，只有在iOS13且有系统导航条的时候有效；
+- (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle
+{
+//    self.defaultStatusBarStyle = [self preferredStatusBarStyle];
+    if (@available(iOS 13.0, *)) {
+        if (statusBarStyle == UIStatusBarStyleDefault && self.webNavigationBarHide) {
+            statusBarStyle = UIStatusBarStyleDarkContent;
+        }
+    } else {
+        // Fallback on earlier versions
+    }
+    _statusBarStyle = statusBarStyle;
 }
 /*
  #pragma mark - Navigation

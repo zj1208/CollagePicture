@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)zx_setShowActivityIndicatorView:(BOOL)show;
 
-- (void)zx_setIndicatorStyle:(UIActivityIndicatorViewStyle)style;
+//- (void)zx_setIndicatorStyle:(UIActivityIndicatorViewStyle)style;
 
 - (BOOL)zx_showActivityIndicatorView;
 - (void)zx_addActivityIndicator;

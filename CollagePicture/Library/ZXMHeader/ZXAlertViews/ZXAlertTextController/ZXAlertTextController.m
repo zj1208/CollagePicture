@@ -11,7 +11,7 @@
 #import "ZXTextRectTextField.h"
 
 /**
-* @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#34373A--ZXRGB_HexString(0X34373A)
+* @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#333333--ZXRGB_HexString(0X333333)
 */
 #ifndef ZXRGB_HexValue
 #define ZXRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
@@ -20,6 +20,7 @@
 static NSInteger const UIAlertControllerBlocksCancelButtonIndex = 0;
 static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 
+static CGFloat containerHeight = 196;
 
 @interface ZXAlertTextAction()
 
@@ -75,11 +76,24 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
     
     // Do any additional setup after loading the view.
     [self setUI];
+    [self registerForKeyboardNotifications];
+}
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+- (void)removeObserverForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 
 - (void)dealloc
 {
-
+    [self removeObserverForKeyboardNotifications];
 }
 
 - (void)viewDidLayoutSubviews
@@ -91,89 +105,6 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 
 
 #pragma mark - setUI
-
-- (void)setUI
-{
-    //    UIAlertController
-     [self.view addSubview:self.containerView];
-     [self setView:self.containerView cornerRadius:10.f borderWidth:0 borderColor:nil];
-
-     CGFloat containerHeight = 196;
-     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-         make.left.mas_equalTo(self.view.mas_left).with.offset(38);
-         make.centerX.mas_equalTo(self.view.mas_centerX);
-         make.top.mas_equalTo(self.view.mas_top).with.offset(CGRectGetHeight(self.view.bounds)/2-containerHeight/2);
-         make.height.mas_equalTo(containerHeight);
-     }];
-     
-     [self.containerView addSubview:self.actionGroupHeaderView];
-     [self.actionGroupHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.left.mas_equalTo(self.containerView.mas_left);
-         make.centerX.mas_equalTo(self.containerView.mas_centerX);
-         make.top.mas_equalTo(self.containerView.mas_top);
-         make.height.mas_equalTo([self.actionGroupHeaderView getHeaderHeight]);
-     }];
-     self.actionGroupHeaderView.titleLabel.text = self.headTitle;
-     [self.actionGroupHeaderView creatMessageLabel:self.message];
-     self.actionGroupHeaderView.messageLabel.text = self.message;
-     
-     [self.containerView addSubview:self.textField];
-     [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
-         
-         make.left.mas_equalTo(self.containerView.mas_left).with.offset(20);
-         make.centerX.mas_equalTo(self.containerView.mas_centerX);
-         make.top.mas_equalTo(self.actionGroupHeaderView.mas_bottom).with.offset(0);
-         make.height.mas_equalTo(44);
-     }];
-     [self.textFieldMArray addObject:self.textField];
-     
-     if (self.actionMArray.count == 2 || self.actionMArray.count ==0)
-     {
-         [self addTwoAction];
-     }
-}
-
-- (void)addTwoAction
-{
-    [self.containerView addSubview:self.cancleBtn];
-    self.cancleBtn.tag = UIAlertControllerBlocksCancelButtonIndex;
-    
-    [self.containerView addSubview:self.defaultBtn];
-    self.defaultBtn.tag = UIAlertControllerBlocksFirstOtherButtonIndex;
-    
-    [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.mas_equalTo(self.textField.mas_bottom).with.offset(20);
-        make.left.mas_equalTo(self.containerView.mas_left).with.offset(25);
-        make.width.mas_equalTo(self.defaultBtn.mas_width);
-        make.height.mas_equalTo(44);
-        make.height.mas_equalTo(self.defaultBtn.mas_height);
-
-    }];
-    
-    [self.defaultBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.mas_equalTo(self.textField.mas_bottom).with.offset(20);
-        make.left.mas_equalTo(self.cancleBtn.mas_right).with.offset(20);
-        make.right.mas_equalTo(self.containerView.mas_right).with.offset(-25);
-    }];
-    
-    [self.actionMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        ZXAlertTextAction *action = (ZXAlertTextAction *)obj;
-        if (action.actionStyle == ZXAlertTextActionStyleCancel) {
-            [self.cancleBtn setTitle:action.actionTitle forState:UIControlStateNormal];
-            action.actionTag = UIAlertControllerBlocksCancelButtonIndex;
-        }
-        else
-        {
-            [self.defaultBtn setTitle:action.actionTitle forState:UIControlStateNormal];
-            action.actionTag = UIAlertControllerBlocksFirstOtherButtonIndex;
-        }
-    }];
-}
-
-
 
 - (UIView *)containerView
 {
@@ -198,9 +129,10 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 {
     if (!_textField) {
         ZXTextRectTextField *field = [[ZXTextRectTextField alloc] init];
-        field.placeholder = @"请输入";
-        field.font = [UIFont systemFontOfSize:17];
-        [self setView:field cornerRadius:10 borderWidth:1 borderColor:nil];
+        field.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:0.3 alpha:1]}];
+        field.textColor = [UIColor blackColor];
+        field.font = [UIFont systemFontOfSize:LCDScale_iPhone6(17)];
+        [self setView:field cornerRadius:LCDScale_iPhone6(10) borderWidth:1 borderColor:nil];
         field.backgroundColor =ZXRGB_HexValue(0xEDEFF0);
         field.keyboardType = UIKeyboardTypeNumberPad;
         _textField = field;
@@ -213,8 +145,8 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
     if (!_cancleBtn) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitle:@"取消" forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [btn setTitleColor:ZXRGB_HexValue(0x34373A) forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:LCDScale_iPhone6(16)];
+        [btn setTitleColor:ZXRGB_HexValue(0x333333) forState:UIControlStateNormal];
         [self setView:btn cornerRadius:5 borderWidth:0.5 borderColor:ZXRGB_HexValue(0xCCCCCC)];
         [btn addTarget:self action:@selector(cancleBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         _cancleBtn = btn;
@@ -227,15 +159,97 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
     if (!_defaultBtn) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitle:@"确定" forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:16];
+        btn.titleLabel.font = [UIFont systemFontOfSize:LCDScale_iPhone6(16)];
         [btn setTitleColor:ZXRGB_HexValue(0xFFFFFF) forState:UIControlStateNormal];
-        btn.backgroundColor = ZXRGB_HexValue(0x36B44D);
+        btn.backgroundColor = ZXRGB_HexValue(0xFF4C00);
         [self setView:btn cornerRadius:5 borderWidth:0.5 borderColor:nil];
         [btn addTarget:self action:@selector(defaultBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         _defaultBtn = btn;
     }
     return _defaultBtn;
 }
+
+
+- (void)setUI
+{
+    
+    [self.view addSubview:self.containerView];
+    [self setView:self.containerView cornerRadius:10.f borderWidth:0 borderColor:nil];
+
+    [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+         make.left.mas_equalTo(self.view.mas_left).with.offset(LCDScale_iPhone6(38));
+         make.centerX.mas_equalTo(self.view.mas_centerX);
+         make.bottom.mas_equalTo(self.view.mas_bottom).with.offset(-(CGRectGetHeight(self.view.bounds)/2-LCDScale_iPhone6(containerHeight)/2));
+         make.height.mas_equalTo(LCDScale_iPhone6(containerHeight));
+    }];
+     
+    [self.containerView addSubview:self.actionGroupHeaderView];
+    [self.actionGroupHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.left.mas_equalTo(self.containerView.mas_left);
+         make.centerX.mas_equalTo(self.containerView.mas_centerX);
+         make.top.mas_equalTo(self.containerView.mas_top);
+         make.height.mas_equalTo([self.actionGroupHeaderView getHeaderHeight]);
+    }];
+    self.actionGroupHeaderView.titleLabel.text = self.headTitle;
+    [self.actionGroupHeaderView creatMessageLabel:self.message];
+    self.actionGroupHeaderView.messageLabel.text = self.message;
+     
+    [self.containerView addSubview:self.textField];
+    [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
+         
+         make.left.mas_equalTo(self.containerView.mas_left).with.offset(LCDScale_iPhone6(20));
+         make.centerX.mas_equalTo(self.containerView.mas_centerX);
+         make.top.mas_equalTo(self.actionGroupHeaderView.mas_bottom).with.offset(0);
+         make.height.mas_equalTo(LCDScale_iPhone6(44));
+    }];
+    [self.textFieldMArray addObject:self.textField];
+     
+    if (self.actionMArray.count == 2 || self.actionMArray.count ==0)
+    {
+        [self addTwoAction];
+    }
+}
+
+- (void)addTwoAction
+{
+    [self.containerView addSubview:self.cancleBtn];
+    self.cancleBtn.tag = UIAlertControllerBlocksCancelButtonIndex;
+    
+    [self.containerView addSubview:self.defaultBtn];
+    self.defaultBtn.tag = UIAlertControllerBlocksFirstOtherButtonIndex;
+    
+    [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.mas_equalTo(self.textField.mas_bottom).with.offset(LCDScale_iPhone6(20));
+        make.left.mas_equalTo(self.containerView.mas_left).with.offset(LCDScale_iPhone6(25));
+        make.width.mas_equalTo(self.defaultBtn.mas_width);
+        make.height.mas_equalTo(LCDScale_iPhone6(44));
+        make.height.mas_equalTo(self.defaultBtn.mas_height);
+
+    }];
+    
+    [self.defaultBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.mas_equalTo(self.textField.mas_bottom).with.offset(LCDScale_iPhone6(20));
+        make.left.mas_equalTo(self.cancleBtn.mas_right).with.offset(LCDScale_iPhone6(20));
+        make.right.mas_equalTo(self.containerView.mas_right).with.offset(-LCDScale_iPhone6(25));
+    }];
+    
+    [self.actionMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        ZXAlertTextAction *action = (ZXAlertTextAction *)obj;
+        if (action.actionStyle == ZXAlertTextActionStyleCancel) {
+            [self.cancleBtn setTitle:action.actionTitle forState:UIControlStateNormal];
+            action.actionTag = UIAlertControllerBlocksCancelButtonIndex;
+        }
+        else
+        {
+            [self.defaultBtn setTitle:action.actionTitle forState:UIControlStateNormal];
+            action.actionTag = UIAlertControllerBlocksFirstOtherButtonIndex;
+        }
+    }];
+}
+
 
 //设置圆角
 - (void)setView:(UIView *)view cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor *)color
@@ -346,6 +360,46 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
     {
         [self removeFromParentViewController];
         [self.view removeFromSuperview];
+    }
+}
+
+#pragma mark -  键盘通知
+
+- (void)keyboardWillShow:(NSNotification *)noti
+{
+    CGRect rect = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat ty = rect.size.height;
+    NSTimeInterval animationDuration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    //如果键盘会遮住，就往上移动差距的距离；
+    CGFloat height = CGRectGetHeight(self.view.bounds)/2-containerHeight/2;
+    if (height < ty+20) {
+        
+        [UIView animateWithDuration:animationDuration animations:^{
+             
+           self.view.transform = CGAffineTransformMakeTranslation(0, - (ty+20-height));
+        }];
+    }
+
+}
+#pragma mark 键盘即将退出—
+- (void)keyboardWillHide:(NSNotification *)noti{
+   
+    NSDictionary *info = noti.userInfo;
+     NSTimeInterval animationDuration = [info [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:animationDuration animations:^{
+        
+         self.view.transform = CGAffineTransformIdentity; //纯代码
+    }];
+}
+
+#pragma mark - 点击整体区域
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesEnded:touches withEvent:event];
+    UIView *view = [[[touches allObjects] firstObject] view];
+    if ([view isEqual:self.view]) {
+        [self cancleBtnAction:self.cancleBtn];
     }
 }
 /*

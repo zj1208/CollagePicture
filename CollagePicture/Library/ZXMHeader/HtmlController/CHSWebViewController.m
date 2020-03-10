@@ -29,15 +29,16 @@
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"openMerchantDetail"];
 }
 
-
+///定死默认状态条内容样式
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return UIStatusBarStyleLightContent;
+    return  self.webNavigationBarHide?UIStatusBarStyleDefault:UIStatusBarStyleLightContent;;
 }
 
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
+    NSLog(@"name =%@",message.name);
     if ([message.name isEqualToString:@"goBackToNative"])
     {
         [self messageActionWithGoBackToNative];
@@ -65,8 +66,6 @@
 - (void)messageActionWithTokenError
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserTokenError object:nil];
-//    CHSLoginViewController *vc = [[CHSLoginViewController alloc] init];
-//    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)messageActionWithTelPhoneWithPhoneNumber:(NSString *)phone
@@ -81,7 +80,7 @@
      CHSWebViewController *vc = [[CHSWebViewController alloc] init];
      [vc loadWebPageWithURLString:string3];
      vc.hidesBottomBarWhenPushed = YES;
-     vc.appearNavigationBarHide = YES;
+     vc.webNavigationBarHide = YES;
      [self.navigationController pushViewController:vc animated:YES];
 }
 /*

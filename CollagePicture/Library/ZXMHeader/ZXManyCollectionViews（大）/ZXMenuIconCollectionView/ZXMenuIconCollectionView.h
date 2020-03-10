@@ -7,7 +7,7 @@
 //
 //  注释：collectionView菜单列表横向或纵向展示，每个item展示包含 主图片+图片正下方文字（可选的）+图片右上角的badge数字角标（可选的），可以计算出动态数量的item所需要的collectionView总高度；可以使用自定义Model数据数组+代理方法设置cell的UI数据，也可以使用默认ZXMunuIconModel+默认方法设置；
 //  设置图片相同的宽高后,计算得出最小的UI安全显示宽度；如果有右上角的角标，计算宽度的方法会额外增加宽度；
-//  self.menuIconCollectionView.itemSize = CGSizeMake(width,width+10);
+//  例如：self.menuIconCollectionView.itemSize = CGSizeMake(width,width+10);
 
 
 //  2018.2.11; 优化组件；
@@ -15,6 +15,7 @@
 //  2018.6.26; 增加设置icon图标大小属性；
 //  7.18 增加item最小宽度属性=图标宽度+角标预留的位置，修改最小item间距=0；
 //  2019.2.26  大修改；增加修改滚动方向属性，是否可以滚动属性；是否有角标属性；安全显示UI的cell的size；
+//  2020.3.07  方法修改，增加属性：titleLabel与image的间距属性等；XIB约束调整；
 
 #import <UIKit/UIKit.h>
 #import "ZXMenuIconCell.h"
@@ -25,51 +26,59 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXMenuIconCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
+
+/// 代理
 @property (nonatomic, weak) id<ZXMenuIconCollectionViewDelegate>delegate;
+/// 代理布局
 @property (nonatomic, weak) id<ZXMenuIconCollectionViewDelegateFlowLayout> flowLayoutDelegate;
 
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (strong, nonatomic) UICollectionViewFlowLayout *collectionFlowLayout;
+@property (nonatomic, strong) UICollectionViewFlowLayout *collectionFlowLayout;
 
 
-// 设置collectionView的sectionInset;UIEdgeInsetsMake(15, 15, 15, 15)
+/// 设置collectionView的sectionInset;UIEdgeInsetsMake(15, 15, 15, 15)
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距;默认12；// 设置self.minimumInteritemSpacing是给item宽度计算用的，实际cell设置最小依然为0.2
-
+/// item之间的间距;默认12； 这个最小间距最好小一点；
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
-// 行间距;默认12；
+/// 行间距;默认12；
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
-/**
- *  一个屏幕显示多少列；最好小于等于4列；
- */
+/// 一个屏幕显示多少列；最好小于等于4列；
 @property (nonatomic, assign) NSInteger columnsCount;
 
 
-// 设置item中的Icon图标正方形等边的宽高； 一行4个item时，最大值是默认的 LCDScale_iPhone6(45.f)；
+/// 设置item中的Icon图标正方形等边的宽高； 一行4个item时，最大值是默认的 LCDScale_iPhone6(45.f)；
 @property (nonatomic, assign) CGFloat iconSquareSideLength;
 
+/// titleLab 与imageView的间距
+@property (nonatomic, assign) CGFloat titleLabToImageViewSpace;
 
-// 设置item的宽度，高度；
+/// 设置item的宽度，高度；
+/// 注意：itemSize的width 和 minimumInteritemSpacing属性是互相矛盾的，实际中一定要减小minimumInteritemSpacing属性的值；
 @property (nonatomic, assign) CGSize itemSize;
 
 @property (nonatomic, strong, nullable) UIImage *placeholderImage;
 
-// 设置是否可以滚动
-@property(nonatomic,getter=isScrollEnabled) BOOL       scrollEnabled; 
+/// 设置是否可以滚动
+@property(nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
 
-// 设置滚动布局方向
-@property (nonatomic) UICollectionViewScrollDirection scrollDirection; // default is UICollectionViewScrollDirectionVertical
+/// 设置滚动布局方向
+@property (nonatomic, assign) UICollectionViewScrollDirection scrollDirection; // default is UICollectionViewScrollDirectionVertical
 
 
-// 自适应缩放宽度大小：计算出来后用于设置一个总宽度（比如屏幕宽度）下放几个的平均item宽度；
-// 这个宽度是基于item最小宽度的基础上设置的,因为宽度设置小了，角标有可能显示不小；
-// flag :设置是否有角标,这个值影响cell的最小安全宽度：safeBadgeMinimumItemWidth；
-// iconEqualSideLength:图片的正方形边长
-- (CGSize)getItemSafeSizeWithTotalWidth:(CGFloat)totalWidth columnsCount:(NSInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing hasBadge:(BOOL)flag iconSquareSideLength:(CGFloat)iconEqualSideLength;
+/// 获取自适应item图标+文字的最小安全宽高大小，由于有角标，必须得有安全大小size：最小安全width = 图标宽度+ 是否有角标的延长计算宽度；最小安全高度 = 2+ 图标高度+间距+titleLab高度；计算出来后用于设置itemSize属性，可以根据需求自定义增大计算出来的宽高；赋值的所有值只用于计算，不用于实际赋值；
+/// 这个宽度是基于item最小宽度（安全显示所有元素）的基础上设置的；如果宽度设置小了，角标有可能显示不下；
+/// 注意：有时候计算出来的宽度会是偏大的
+/// @param totalWidth 总宽度
+/// @param count 有几列，columnsCount属性值；
+/// @param inset sectionInset属性值；
+/// @param minimumInteritemSpacing minimumInteritemSpacing属性值；
+/// @param flag 设置是否有角标,这个值影响cell的最小安全宽度：safeBadgeMinimumItemWidth；
+/// @param iconEqualSideLength 图片的正方形边长属性值；
+- (CGSize)getItemMiniSafeSizeWithTotalWidth:(CGFloat)totalWidth columnsCount:(NSInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing hasBadge:(BOOL)flag iconSquareSideLength:(CGFloat)iconEqualSideLength titleLabToImageViewSpace:(CGFloat)space;
 
 
 
@@ -99,23 +108,24 @@ NS_ASSUME_NONNULL_BEGIN
 // 如果不实现这些协议，则会用默认的设置；
 
 @optional
-/**
- 将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置
- 
- @param cell LabelCell
- @param indexPath collectionView中的对应indexPath
- */
+
+/// 将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置
+/// @param menuIconView menuIconView description
+/// @param cell LabelCell
+/// @param indexPath collectionView中的对应indexPath
 - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView willDisplayCell:(ZXMenuIconCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath;
 
 
-// 代理方法设置cell的数据；
+
+/// 代理方法设置cell的数据；
+/// @param menuIconView menuIconView description
+/// @param cell cell description
+/// @param data data description
+/// @param indexPath indexPath description
 - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView cell:(ZXMenuIconCell *)cell forItemSetData:(id)data cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
- 自定义 点击添加cell事件回调
- 
- @param collectionView collectionView description
- @param indexPath indexPath description
+ 自定义点击cell事件回调
  */
 - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 
@@ -146,25 +156,52 @@ NS_ASSUME_NONNULL_END
     [super awakeFromNib];
     [self.contentView addSubview:self.menuIconCollectionView];
 }
+ 纯代码：
+ - (instancetype)initWithFrame:(CGRect)frame
+ {
+     self = [super initWithFrame:frame];
+     if (self)
+     {
+          [self setUI];
+     }
+     return self;
+ }
+
+ - (void)setUI
+ {
+     [self.contentView addSubview:self.menuIconCollectionView];
+     self.menuIconCollectionView.backgroundColor = [UIColor whiteColor];
+     [self.menuIconCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.edges.mas_equalTo(self.contentView);
+     }];
+     [self.menuIconCollectionView zx_setBorderWithCornerRadius:LCDScale_iPhone6(10) borderWidth:0.5 borderColor:nil];
+ }
 
 - (ZXMenuIconCollectionView *)menuIconCollectionView
 {
-    if (!_menuIconCollectionView)
-    {
-        ZXMenuIconCollectionView *menuIconCollectionView = [[ZXMenuIconCollectionView alloc]init];
-        menuIconCollectionView.columnsCount = 3;
-        menuIconCollectionView.minimumInteritemSpacing = 5;
-        
-        CGFloat width = [menuIconCollectionView getItemAverageWidthInTotalWidth:LCDW columnsCount:menuIconCollectionView.columnsCount sectionInset:menuIconCollectionView.sectionInset minimumInteritemSpacing:menuIconCollectionView.minimumInteritemSpacing];
-        menuIconCollectionView.itemSize = CGSizeMake(width,width-LCDScale_iPhone6(20));
-        
-        menuIconCollectionView.placeholderImage = AppPlaceholderImage;
-        _menuIconCollectionView = menuIconCollectionView;
+    if (!_menuIconCollectionView) {
+        ZXMenuIconCollectionView *view = [[ZXMenuIconCollectionView alloc] init];
+        view.columnsCount = 5;
+        view.minimumInteritemSpacing = LCDScale_iPhone6(16);
+        view.sectionInset = UIEdgeInsetsMake(LCDScale_iPhone6(10)-[ZXMenuIconCell getImageViewToSupViewTop], 10, LCDScale_iPhone6(10), 10);
+        view.minimumLineSpacing = LCDScale_iPhone6(10);
+        view.titleLabToImageViewSpace = LCDScale_iPhone6(4);
+        view.iconSquareSideLength = LCDScale_iPhone6(54);
+        CGSize size = [view getItemMiniSafeSizeWithTotalWidth:LCDW-20 columnsCount:view.columnsCount sectionInset:view.sectionInset minimumInteritemSpacing:view.minimumInteritemSpacing hasBadge:NO iconSquareSideLength:view.iconSquareSideLength titleLabToImageViewSpace:view.titleLabToImageViewSpace];
+        view.itemSize = size;
+        view.placeholderImage = [UIImage imageNamed:@"placeholder_loading90"];
+        view.delegate = self;
+        _menuIconCollectionView = view;
     }
     return _menuIconCollectionView;
 }
 
-
+ - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView willDisplayCell:(ZXMenuIconCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+ {
+     cell.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(12)];
+     cell.titleLab.textColor = [UIColor zx_colorWithHexString:@"#333333"];
+ }
+ 
  - (void)setData:(id)data
  {
      NSArray *dataArray = (NSArray *)data;
@@ -184,6 +221,7 @@ NS_ASSUME_NONNULL_END
      }];
      [self.menuIconCollectionView setData:mArray];
  }
+ 
 
 - (CGFloat)getCellHeightWithContentIndexPath:(NSIndexPath *)indexPath data:(id)data
 {

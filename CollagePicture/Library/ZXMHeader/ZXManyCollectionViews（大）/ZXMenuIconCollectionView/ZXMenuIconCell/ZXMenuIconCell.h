@@ -7,11 +7,10 @@
 //
 //  注释：icon图标 +底部title； icon与title之间的间距8；  title于底部边距大于等于8；
 
-//  2018.1.8
-//  修改ZXMenuIconCell实例方法；倒入MessageModel
-
+//  2018.1.8 修改ZXMenuIconCell实例方法；倒入MessageModel
 //  2018.2.11,新增默认Model模型；ZXMenuIconModel；
 //  7.18,改动xib 角标约束；
+//  2020.3.07  方法修改，增加属性：titleLabel与image的间距属性等；XIB约束调整；
 
 #import <UIKit/UIKit.h>
 #import "ZXMenuIconModel.h"
@@ -36,24 +35,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZXMenuIconCell : UICollectionViewCell
 
-// 中心图标
+/// 中心图标
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
-// 设置中心图标的 大小；默认LCDScale_iPhone6(45.f);
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgViewLayoutWidth;
 
-// 在99+的时候可以调整角标往图片里靠
+/// 在99+的时候可以调整角标往图片里靠
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labLayoutLeadingConstraint;
 
-// 标题文本;默认字体大小14，6plus自适应；
+/// 标题文本;默认字体大小14，6plus自适应；
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
-// 角标数字
+/// 角标数字
 @property (weak, nonatomic) IBOutlet UILabel *badgeLab;
 
 
-// 根据默认Model，ZXMenuIconModel设置数据；
+/// imageView正方形长度
+@property (nonatomic, assign) CGFloat imageViewSquareSideLength;
+/// titleLab 与imageView的间距
+@property (nonatomic, assign) CGFloat titleLabToImageViewSpace;
+/// imageView与cell的top间距
+@property (nonatomic, assign) CGFloat imageViewToSupViewTop;
+
+/// 根据默认Model，ZXMenuIconModel设置数据；
 - (void)setData:(id)data placeholderImage:(UIImage *)placeholderImage;
+
+/// 获取间距，只读；
++ (CGFloat)getTitleLabToImageViewSpace;
+
+/// 获取imageView与cell顶部的间距，只读；
++ (CGFloat)getImageViewToSupViewTop;
 
 @end
 

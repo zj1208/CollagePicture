@@ -10,6 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
+#endif
+
 @interface ZXAlertTextActionGroupHeaderView : UIView
 
 @property (nonatomic, strong) UILabel *titleLabel;

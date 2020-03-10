@@ -8,6 +8,7 @@
 //  简介：仿造系统类，做自定义一个警告框；待扩展；依赖约束布局类Masonary；
 
 //  2020.2.18 简化代码；
+//  2020.2.25 darkMode 修改；位置上移，以免遮挡键盘；适配屏幕尺寸；
 
 #import <UIKit/UIKit.h>
 #import "Masonry.h"
@@ -60,7 +61,7 @@ NS_ASSUME_NONNULL_END
             [weakSelf alertshowTitle:@"您确认删除该商品吗？" andMessage:nil andCancelbtn:@"取消" andSureBtn:@"确认" CancelBlock:^{
             } sureBlock:^{
 
-                [weakSelf requestReduceGoodsNum:model.skuId andIndexPath:indexPath];
+                [weakSelf requestDeleteGoodIds:@[model.skuId] withWillDeleteRows:@[indexPath]] ;
              }];
         }
         else

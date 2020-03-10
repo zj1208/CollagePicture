@@ -27,20 +27,18 @@
 //  2018.7.26  支持3DTouch预览的向上滑动事件处理-分享；
 //  2018.7.30  iOS及以上修改webView的frame设置改为约束设置；
 //  2020.02.06  优化独立容器，针对urlString做是否需要百分比编码做判断处理；
-
 //  2020.02.25  增加WKUIDelegate，针对js调用的三种警告弹窗面板做相应处理；
-
 //  2020.03.05  增加属性：标题颜色，标题默认颜色；增加设置标题颜色实例方法；
+//  2020.03.09  增加状态条样式设置；修改进度条frame；
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-
 @interface ZXWKWebViewController: UIViewController
 
-@property (nonatomic, strong) WKWebView  *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 //1.网络地址
 @property (nonatomic, copy) NSString *webUrl;
@@ -71,7 +69,8 @@ NS_ASSUME_NONNULL_BEGIN
 //5. 加载纯文本数据在webView显示
 - (void)loadLocalText:(NSString *)content NS_AVAILABLE_IOS(9_0);
 
-@property (nonatomic, assign) BOOL appearNavigationBarHide;
+/// 系统导航条是否隐藏；
+@property (nonatomic, assign) BOOL webNavigationBarHide;
 
 // 刷新最新数据
 - (void)reloadData;
@@ -93,6 +92,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 应用于导航项和导航栏按钮项的着色颜色。
 /// @param color color
 - (void)setTintColor:(UIColor *)color;
+
+/// 设置状态条样式；注意：UIStatusBarStyleDefault根据用户界面风格自动选择浅色或深色的内容，只有在iOS13且有系统导航条的时候有效；
+@property(readwrite, nonatomic) UIStatusBarStyle statusBarStyle;
+
 @end
 
 NS_ASSUME_NONNULL_END
