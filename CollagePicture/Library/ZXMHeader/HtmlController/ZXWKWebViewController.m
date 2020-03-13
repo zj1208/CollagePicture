@@ -141,12 +141,12 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewWillAppear:animated];
     
-    if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
-    {//h5调用系统相册、相机、文件系统后不resume
-
-    }else{
-//        [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
-    }
+//    if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
+//    {//h5调用系统相册、相机、文件系统后不resume
+//
+//    }else{
+////        [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
+//    }
     if (self.navigationController.viewControllers.count>1)
     {
        self.navigationController.interactivePopGestureRecognizer.delegate = self;
@@ -456,33 +456,7 @@ static NSString* const SixSpaces = @"      ";
 
 -(void)userAgent
 {
-    /*
-    UIWebView *web = [[UIWebView alloc] initWithFrame:CGRectZero];
-    NSString *oldAgent = [web stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString *newAgent = nil;
-    // microants-xx-版本号
-    NSString *customString = [NSString stringWithFormat:@"microants-%ld-%@",(long)[WYUserDefaultManager getUserTargetRoleType],APP_Version];
-    NSRange range = [oldAgent rangeOfString:@"microants"];
-    if (range.location != NSNotFound)
-    {
-        NSArray *array = [oldAgent componentsSeparatedByString:@"microants"];
-        newAgent = [NSString stringWithFormat:@"%@%@",array[0],customString];
-    }
-    else
-    {
-        newAgent = [oldAgent stringByAppendingString:customString];
-    }
-//    NSLog(@"%@",newAgent);
-    if ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
-    {
-        self.webView.customUserAgent = newAgent;
-    }
-    else
-    {
-        NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
-    }
-     */
+    
 }
 
 

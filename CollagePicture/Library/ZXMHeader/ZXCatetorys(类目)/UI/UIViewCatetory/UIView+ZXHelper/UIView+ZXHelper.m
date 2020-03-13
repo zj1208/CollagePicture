@@ -193,8 +193,6 @@
     CGPathRelease(newPath);
 }
 
-
-
 #pragma mark - getter
 
 
@@ -276,18 +274,6 @@
                 [view resignFirstResponder];
             }
         }
-    }
-}
-
-
-- (void)zx_performCallPhone:(NSString *)phone
-{
-    if (phone && phone.length>0) {
-        
-        NSURL *phoneURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",phone]];
-        UIWebView *webV= [[UIWebView alloc] initWithFrame:CGRectZero];
-        [webV loadRequest:[NSURLRequest requestWithURL:phoneURL]];
-        [self addSubview:webV];
     }
 }
 

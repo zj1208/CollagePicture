@@ -30,6 +30,7 @@
 //  2020.02.25  增加WKUIDelegate，针对js调用的三种警告弹窗面板做相应处理；
 //  2020.03.05  增加属性：标题颜色，标题默认颜色；增加设置标题颜色实例方法；
 //  2020.03.09  增加状态条样式设置；修改进度条frame；
+//  2020.03.13  暂时去除ImagePikcerController类方法，以防在没使用相机功能的App被检测到而无法上架；
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>

@@ -16,6 +16,9 @@
 
 #endif
 
+/// 注意：如果加入以下类，则必须添加隐私权限key-value；从2019年春季开始，如果应用程序的代码引用一个或多个访问敏感用户数据的api，所有提交到App Store的访问用户数据的应用程序都必须包含一个目的字符串。如果您正在使用外部库或sdk，它们可能会引用需要目的字符串的api。虽然您的应用程序可能不使用这些api，但仍然需要一个目的字符串。
+/// ZXImagePickerVCManager/ZXAuthorizationManager,还有带UIImagePickerController的类； （机器会检测UIImagePickerController，PHPhoto类）
+
 // 待解决：
 // 把所有系统库引用 都改为 @import ，优化编译；  在新项目中又不能用了；
 // QiNiuUploadRequest 耦合性太强了，需要优化；

@@ -12,6 +12,7 @@
 // 2019.11.26 添加DEBUG打印判断
 // 2020.01.02 openURL方法增加兼容
 // 2020.02.05 拨打电话方法抽离
+// 2020.03.13 去除webView loadRequest的拨打电话方法；2020.4月开始会审核不过；
 
 #import <UIKit/UIKit.h>
 
@@ -170,15 +171,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @param aClass  父视图
  */
 - (void)zx_performKeyboardDismissWithClass:(Class)aClass;
-
-
-
-/**
- 拨打电话1-webView请求的方式
-
- @param phone 电话号码
- */
-- (void)zx_performCallPhone:(NSString *)phone;
 
 
 /**
