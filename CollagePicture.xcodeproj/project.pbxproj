@@ -364,7 +364,6 @@
 		F4C16C822417E1D1000EBF4A /* ZXMenuIconCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16C7D2417E1D1000EBF4A /* ZXMenuIconCollectionView.m */; };
 		F4C16C9A2417E5DE000EBF4A /* ZXAlertTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16C962417E5DD000EBF4A /* ZXAlertTextController.m */; };
 		F4C16C9B2417E5DE000EBF4A /* ZXAlertTextActionGroupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16C982417E5DE000EBF4A /* ZXAlertTextActionGroupHeaderView.m */; };
-		F4C16CA62417E6C7000EBF4A /* CHSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16CA42417E6C7000EBF4A /* CHSWebViewController.m */; };
 		F4C1C3C222DC4EFF0065C22A /* NSURLComponents+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3C122DC4EFF0065C22A /* NSURLComponents+ZXCategory.m */; };
 		F4C1C3C622DC4F110065C22A /* NSData+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C1C3C422DC4F110065C22A /* NSData+ZXCategory.m */; };
 		F4C2302923E6BEDF003A925C /* NSString+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C2302823E6BEDE003A925C /* NSString+ZXCategory.m */; };
@@ -372,7 +371,8 @@
 		F4C2303023E6BF57003A925C /* ZXTextRectTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C2302E23E6BF56003A925C /* ZXTextRectTextField.m */; };
 		F4C257801DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */; };
 		F4C650EA241B5E6E00B1D4CF /* UIView+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C650E8241B5E6E00B1D4CF /* UIView+ZXHelper.m */; };
-		F4C650EF241B611800B1D4CF /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C650EE241B611800B1D4CF /* ZXWKWebViewController.m */; };
+		F4C650FA241BAA8100B1D4CF /* CHSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C650F8241BAA8000B1D4CF /* CHSWebViewController.m */; };
+		F4C650FB241BAA8100B1D4CF /* ZXWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C650F9241BAA8100B1D4CF /* ZXWKWebViewController.m */; };
 		F4C9186E2004983E00D3E158 /* NSFileManager+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9186D2004983E00D3E158 /* NSFileManager+ZXCategory.m */; };
 		F4CB0E37236C3962002BD670 /* PrefectureCollectionCellTypeA.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E28236C3960002BD670 /* PrefectureCollectionCellTypeA.m */; };
 		F4CB0E38236C3962002BD670 /* PrefectureCollectionCellTypeB.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E2B236C3961002BD670 /* PrefectureCollectionCellTypeB.m */; };
@@ -933,7 +933,6 @@
 		F4A151C323D2D9850018405E /* ZXPHPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPHPhotoManager.h; sourceTree = "<group>"; };
 		F4A158EE23D6D5A00018405E /* CHSNotOpenURLBackAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSNotOpenURLBackAppManager.h; sourceTree = "<group>"; };
 		F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSNotOpenURLBackAppManager.m; sourceTree = "<group>"; };
-		F4A302192405231100F750D4 /* CHSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSWebViewController.h; sourceTree = "<group>"; };
 		F4A302282405267F00F750D4 /* UIWindow+ZXHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+ZXHierarchy.h"; sourceTree = "<group>"; };
 		F4A302292405267F00F750D4 /* UIWindow+ZXHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+ZXHierarchy.m"; sourceTree = "<group>"; };
 		F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXCategory.m"; sourceTree = "<group>"; };
@@ -1104,8 +1103,6 @@
 		F4C16C962417E5DD000EBF4A /* ZXAlertTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlertTextController.m; sourceTree = "<group>"; };
 		F4C16C982417E5DE000EBF4A /* ZXAlertTextActionGroupHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlertTextActionGroupHeaderView.m; sourceTree = "<group>"; };
 		F4C16C992417E5DE000EBF4A /* ZXAlertTextActionGroupHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlertTextActionGroupHeaderView.h; sourceTree = "<group>"; };
-		F4C16CA32417E6C7000EBF4A /* ZXWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWKWebViewController.h; sourceTree = "<group>"; };
-		F4C16CA42417E6C7000EBF4A /* CHSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSWebViewController.m; sourceTree = "<group>"; };
 		F4C1C3C022DC4EFF0065C22A /* NSURLComponents+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLComponents+ZXCategory.h"; sourceTree = "<group>"; };
 		F4C1C3C122DC4EFF0065C22A /* NSURLComponents+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLComponents+ZXCategory.m"; sourceTree = "<group>"; };
 		F4C1C3C422DC4F110065C22A /* NSData+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZXCategory.m"; sourceTree = "<group>"; };
@@ -1118,7 +1115,10 @@
 		F4C2577F1DFA7C09004EE45A /* 越剧-天上掉下个林妹妹.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "越剧-天上掉下个林妹妹.mp3"; sourceTree = "<group>"; };
 		F4C650E8241B5E6E00B1D4CF /* UIView+ZXHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXHelper.m"; sourceTree = "<group>"; };
 		F4C650E9241B5E6E00B1D4CF /* UIView+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXHelper.h"; sourceTree = "<group>"; };
-		F4C650EE241B611800B1D4CF /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
+		F4C650F6241BAA8000B1D4CF /* CHSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSWebViewController.h; sourceTree = "<group>"; };
+		F4C650F7241BAA8000B1D4CF /* ZXWKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWKWebViewController.h; sourceTree = "<group>"; };
+		F4C650F8241BAA8000B1D4CF /* CHSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSWebViewController.m; sourceTree = "<group>"; };
+		F4C650F9241BAA8100B1D4CF /* ZXWKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXWKWebViewController.m; sourceTree = "<group>"; };
 		F4C9186C2004983E00D3E158 /* NSFileManager+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ZXCategory.h"; sourceTree = "<group>"; };
 		F4C9186D2004983E00D3E158 /* NSFileManager+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ZXCategory.m"; sourceTree = "<group>"; };
 		F4C918852004A8C700D3E158 /* SetDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetDataProtocol.h; sourceTree = "<group>"; };
@@ -3909,10 +3909,10 @@
 		F4E60819208D78F2008C50CB /* HtmlController */ = {
 			isa = PBXGroup;
 			children = (
-				F4A302192405231100F750D4 /* CHSWebViewController.h */,
-				F4C16CA42417E6C7000EBF4A /* CHSWebViewController.m */,
-				F4C16CA32417E6C7000EBF4A /* ZXWKWebViewController.h */,
-				F4C650EE241B611800B1D4CF /* ZXWKWebViewController.m */,
+				F4C650F6241BAA8000B1D4CF /* CHSWebViewController.h */,
+				F4C650F8241BAA8000B1D4CF /* CHSWebViewController.m */,
+				F4C650F7241BAA8000B1D4CF /* ZXWKWebViewController.h */,
+				F4C650F9241BAA8100B1D4CF /* ZXWKWebViewController.m */,
 				F44BD22423F1339B00A866F1 /* Resource */,
 			);
 			path = HtmlController;
@@ -4542,8 +4542,8 @@
 				F4361D7F2109982F00A5C22F /* BaseCollectionViewCell.m in Sources */,
 				F4C2303023E6BF57003A925C /* ZXTextRectTextField.m in Sources */,
 				F47FEB31209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m in Sources */,
+				F4C650FA241BAA8100B1D4CF /* CHSWebViewController.m in Sources */,
 				F457BAC82361772B00B1E1B4 /* SearchTitleHistoryModel.m in Sources */,
-				F4C16CA62417E6C7000EBF4A /* CHSWebViewController.m in Sources */,
 				F4C16C9B2417E5DE000EBF4A /* ZXAlertTextActionGroupHeaderView.m in Sources */,
 				F4689FBB223A7BD000A3607E /* ZXKxMenuOverlay.m in Sources */,
 				F4361D7A2109982F00A5C22F /* BaseTableViewCell.m in Sources */,
@@ -4583,7 +4583,7 @@
 				F446A9621FCC082900C82C90 /* EGORefreshTableHeaderView.m in Sources */,
 				F4361D7B2109982F00A5C22F /* BaseHttpAPI.m in Sources */,
 				F49CFD321FDE5C8D009F2213 /* FSActionSheet.m in Sources */,
-				F4C650EF241B611800B1D4CF /* ZXWKWebViewController.m in Sources */,
+				F4C650FB241BAA8100B1D4CF /* ZXWKWebViewController.m in Sources */,
 				F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */,
 				F4A151CC23D2D9850018405E /* ZXPHPhotoManager.m in Sources */,
 				F4C16C812417E1D1000EBF4A /* ZXMenuIconModel.m in Sources */,

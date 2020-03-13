@@ -110,6 +110,8 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 static NSString* const SixSpaces = @"      ";
 @implementation ZXWKWebViewController
 
+@synthesize statusBarStyle = _statusBarStyle;
+
 #pragma mark - life cycle
 
 - (instancetype)initWithBarTitle:(NSString *)aTitle{
@@ -1123,15 +1125,22 @@ static NSString* const SixSpaces = @"      ";
 - (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle
 {
 //    self.defaultStatusBarStyle = [self preferredStatusBarStyle];
+
+    statusBarStyle = statusBarStyle;
+}
+
+- (UIStatusBarStyle)statusBarStyle
+{
     if (@available(iOS 13.0, *)) {
-        if (statusBarStyle == UIStatusBarStyleDefault && self.webNavigationBarHide) {
-            statusBarStyle = UIStatusBarStyleDarkContent;
+        if (_statusBarStyle == UIStatusBarStyleDefault && self.webNavigationBarHide) {
+            _statusBarStyle = UIStatusBarStyleDarkContent;
         }
     } else {
         // Fallback on earlier versions
     }
-    _statusBarStyle = statusBarStyle;
+    return _statusBarStyle;
 }
+
 /*
  #pragma mark - Navigation
  

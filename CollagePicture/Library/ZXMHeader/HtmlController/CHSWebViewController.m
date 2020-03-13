@@ -8,7 +8,6 @@
 
 #import "CHSWebViewController.h"
 
-
 @interface CHSWebViewController ()<WKScriptMessageHandler>
 
 @end
@@ -32,7 +31,8 @@
 ///定死默认状态条内容样式
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return  self.webNavigationBarHide?UIStatusBarStyleDefault:UIStatusBarStyleLightContent;;
+    [super preferredStatusBarStyle];
+    return  self.webNavigationBarHide?self.statusBarStyle:UIStatusBarStyleLightContent;;
 }
 
 
@@ -57,7 +57,7 @@
     }
 }
 
-
+//返回
 - (void)messageActionWithGoBackToNative
 {
     [self exitWebViewApp];
