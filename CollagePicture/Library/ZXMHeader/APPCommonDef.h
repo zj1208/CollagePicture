@@ -260,8 +260,10 @@ NS_INLINE void ZX_NSLog_ClassAllPropertyAndValue(id model)
         objc_property_t property = properties [i];
         const char *propertyName = property_getName(property);
         NSString *strName = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wunused-variable"
         id getIvar = [model valueForKey:strName];
-        NSLog(@"key=%@,value=%@",strName,getIvar);
+        #pragma clang diagnostic pop
     }
     free(properties);
     NSLog(@"%u",count);

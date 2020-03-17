@@ -35,6 +35,7 @@
 
 - (void)setUI
 {
+    self.navigationItem.title = NSLocalizedString(@"设置", nil);
     self.view.backgroundColor = [UIColor zx_colorWithHexString:@"ECECEC"];
     self.tableView.separatorColor =  self.view.backgroundColor;
     self.tableView.estimatedRowHeight = 45;

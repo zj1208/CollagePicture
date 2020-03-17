@@ -230,7 +230,6 @@
 		F49E19C21DF190DA00676396 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19BF1DF190DA00676396 /* AboutViewController.m */; };
 		F49E19C81DF50C2D00676396 /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F49E19C71DF50C2D00676396 /* yw_1222.jpg */; };
 		F49E19CE1DF543DF00676396 /* ZXPrivacyPolicy.json in Resources */ = {isa = PBXBuildFile; fileRef = F49E19CD1DF543DF00676396 /* ZXPrivacyPolicy.json */; };
-		F49E19D61DF546D600676396 /* PrivacyPolicyController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19D51DF546D600676396 /* PrivacyPolicyController.m */; };
 		F49E19D91DF5472500676396 /* PrivacyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49E19D81DF5472500676396 /* PrivacyListController.m */; };
 		F4A0FA022142154E0053B1E8 /* ZXWXBigImageAppearAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A0F9F92142154E0053B1E8 /* ZXWXBigImageAppearAnimator.m */; };
 		F4A0FA032142154E0053B1E8 /* ZXPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A0F9FA2142154E0053B1E8 /* ZXPhotoBrowser.m */; };
@@ -864,8 +863,6 @@
 		F49E19BF1DF190DA00676396 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		F49E19C71DF50C2D00676396 /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yw_1222.jpg; sourceTree = "<group>"; };
 		F49E19CD1DF543DF00676396 /* ZXPrivacyPolicy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ZXPrivacyPolicy.json; sourceTree = "<group>"; };
-		F49E19D41DF546D600676396 /* PrivacyPolicyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivacyPolicyController.h; sourceTree = "<group>"; };
-		F49E19D51DF546D600676396 /* PrivacyPolicyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyPolicyController.m; sourceTree = "<group>"; };
 		F49E19D71DF5472500676396 /* PrivacyListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivacyListController.h; sourceTree = "<group>"; };
 		F49E19D81DF5472500676396 /* PrivacyListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyListController.m; sourceTree = "<group>"; };
 		F4A0F9F72142154E0053B1E8 /* ZXWXBigImageTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXWXBigImageTransitionDelegate.h; sourceTree = "<group>"; };
@@ -2800,6 +2797,7 @@
 		F49E196E1DF1875900676396 /* MVC */ = {
 			isa = PBXGroup;
 			children = (
+				F4F38B3B1EA6492C007606F9 /* TemplateMake */,
 				F41C20E82384D1F600F895CF /* StartApp */,
 				F457BABE236146B300B1E1B4 /* PSearch */,
 				F49E198B1DF1875900676396 /* SetViewController */,
@@ -2874,20 +2872,10 @@
 		F49E19D21DF546D600676396 /* PrivacyController */ = {
 			isa = PBXGroup;
 			children = (
-				F49E19D41DF546D600676396 /* PrivacyPolicyController.h */,
-				F49E19D51DF546D600676396 /* PrivacyPolicyController.m */,
-				F49E19D31DF546D600676396 /* PrivacyListController */,
-			);
-			path = PrivacyController;
-			sourceTree = "<group>";
-		};
-		F49E19D31DF546D600676396 /* PrivacyListController */ = {
-			isa = PBXGroup;
-			children = (
 				F49E19D71DF5472500676396 /* PrivacyListController.h */,
 				F49E19D81DF5472500676396 /* PrivacyListController.m */,
 			);
-			path = PrivacyListController;
+			path = PrivacyController;
 			sourceTree = "<group>";
 		};
 		F4A0F9F62142154E0053B1E8 /* ZXModal-WeChat-LookBigImageTransition */ = {
@@ -3674,6 +3662,24 @@
 			path = ZXHorizontalPageFlowLayout;
 			sourceTree = "<group>";
 		};
+		F4DE72E624207AED0051D549 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F4ACE1B01F4FDE6D006FC573 /* TemplateMake */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F4DE72E724207AF20051D549 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F4F38B3C1EA6492C007606F9 /* MakingPhotoController */,
+				F4F38B411EA6492C007606F9 /* ShareViewController */,
+				F4F38B441EA6492C007606F9 /* TemplateListController */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		F4DF1121212E8E590072650A /* Animator */ = {
 			isa = PBXGroup;
 			children = (
@@ -3858,7 +3864,6 @@
 			children = (
 				F4F38B361EA6492C007606F9 /* MyCenterController.h */,
 				F4F38B371EA6492C007606F9 /* MyCenterController.m */,
-				F4F38B3B1EA6492C007606F9 /* TemplateMake */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3866,9 +3871,8 @@
 		F4F38B3B1EA6492C007606F9 /* TemplateMake */ = {
 			isa = PBXGroup;
 			children = (
-				F4F38B3C1EA6492C007606F9 /* MakingPhotoController */,
-				F4F38B411EA6492C007606F9 /* ShareViewController */,
-				F4F38B441EA6492C007606F9 /* TemplateListController */,
+				F4DE72E724207AF20051D549 /* Controller */,
+				F4DE72E624207AED0051D549 /* View */,
 			);
 			path = TemplateMake;
 			sourceTree = "<group>";
@@ -3905,7 +3909,6 @@
 		F4F38B491EA6492C007606F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F4ACE1B01F4FDE6D006FC573 /* TemplateMake */,
 				F4F38B4A1EA6492C007606F9 /* HeaderView.h */,
 				F4F38B4B1EA6492C007606F9 /* HeaderView.m */,
 				F48B3B5F2265BA6200AB0067 /* MyCenterTableCell.h */,
@@ -4306,7 +4309,6 @@
 				F4A34C862377C8720002F891 /* ZXCenterTitleView.m in Sources */,
 				F4B70B4623695D9F00C4B4AA /* ZXTextRectTextField.m in Sources */,
 				F4A1519123D2BA410018405E /* NSObject+ZXRuntime.m in Sources */,
-				F49E19D61DF546D600676396 /* PrivacyPolicyController.m in Sources */,
 				F42F5B91217DA57700BDA5CC /* NullSafe.m in Sources */,
 				F456B73120A5A2090092A7B2 /* ZXTowBtnBottomToolView.m in Sources */,
 				F4591BD620747FB00098F671 /* ZXSegmentMenuView.m in Sources */,

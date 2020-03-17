@@ -29,7 +29,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    self.navigationItem.title = NSLocalizedString(@"版权信息", nil);
+
     self.copyrightArray = [self getCopyrightArrayFromBundleResource];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
