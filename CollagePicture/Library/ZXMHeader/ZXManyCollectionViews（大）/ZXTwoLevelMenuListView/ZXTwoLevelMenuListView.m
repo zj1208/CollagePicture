@@ -81,7 +81,7 @@ tmp;\
     self.backgroundColor = [UIColor whiteColor];
     if (CGRectEqualToRect(self.frame, CGRectZero))
     {
-        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6_Width(250.f));
+        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6(250.f));
     }
     [self addSubview:self.leftFirstLevelMenuView];
     [self addSubview:self.rightSecondLevelMenuView];

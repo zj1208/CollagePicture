@@ -278,38 +278,6 @@
 }
 
 
-- (void)zx_performCallPhone:(NSString *)phone
-{
-    if (phone && phone.length>0) {
-        
-        NSURL *phoneURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",phone]];
-        UIWebView *webV= [[UIWebView alloc] initWithFrame:CGRectZero];
-        [webV loadRequest:[NSURLRequest requestWithURL:phoneURL]];
-        [self addSubview:webV];
-    }
-}
-
-
-
-- (void)zx_performCallPhoneApplication:(NSString *)phone
-{
-    NSString *allString = [NSString stringWithFormat:@"tel:%@",phone];
-    NSURL *url =[NSURL URLWithString:allString];
-    if ([[UIApplication sharedApplication] canOpenURL:url])
-    {
-        if (@available(iOS 10.0,*)) {
-            [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
-        }
-        else
-        {
-            [[UIApplication sharedApplication] openURL:url];
-        }
-    }
-}
-
-
-
-
 - (nullable NSIndexPath *)jl_getIndexPathWithViewInCellFromTableViewOrCollectionView:(UIScrollView *)view
 {
     UIView *superview = self.superview;

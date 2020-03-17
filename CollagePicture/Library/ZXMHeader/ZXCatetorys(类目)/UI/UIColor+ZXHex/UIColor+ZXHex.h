@@ -9,6 +9,7 @@
 
 //  2019.3.28  增加新方法；
 //  2019.4.16  增加注释，增加支持iOS10的sRGB方法
+//  2020.03.03  新增方法
 
 #import <UIKit/UIKit.h>
 
@@ -17,7 +18,6 @@
 
 /**
  从十六进制字符串获取颜色；调用colorWithHexString:alpha:方法；
-
  */
 + (UIColor *)zx_colorWithHexString:(NSString *)color;
 
@@ -32,7 +32,13 @@
 + (UIColor *)zx_colorWithHexString:(NSString *)color alpha:(CGFloat)alpha;
 
 
-// 获取随机颜色
+/// 获取随机颜色
 + (UIColor *)zx_colorWithRandomColor;
 
+
+
+/// 从十六进制的字符串颜色转RGB.把＃变为0x，如果没有则加上;
+/// @param hex 0X十六进制
+/// @param alpha 透明度
++ (UIColor *)zx_colorWithHex:(uint)hex alpha:(CGFloat)alpha;
 @end

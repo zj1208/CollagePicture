@@ -84,7 +84,7 @@
     [view.leftBtn zh_setTowOfLinesStringWithLineSpace:5.f firstLineWithAttributedTitle:line1Att secondLineWithAttributedTitle:line2Att];
     
     [view.leftBtn setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.25]];
-    view.leftBtnWidthLayout.constant = LCDScale_iPhone6_Width(162);
+    view.leftBtnWidthLayout.constant = LCDScale_iPhone6(162);
     [view.leftBtn addTarget:self action:@selector(privacyBtnAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
  
  
@@ -107,7 +107,7 @@
     [view.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIImage *image = [[UIImage imageNamed:@"ic_fenleishezhi"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [view.leftBtn setImage:image forState:UIControlStateNormal];
-    view.leftBtnWidthLayout.constant = LCDScale_iPhone6_Width(170);
+    view.leftBtnWidthLayout.constant = LCDScale_iPhone6(170);
     [view.leftBtn zh_centerHorizontalImageAndTitleWithTheirSpace:10.f];
     [view.leftBtn addTarget:self action:@selector(classifyBtnAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -131,7 +131,7 @@
     [view.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     UIImage *image = [[UIImage imageNamed:@"ic_fenleishezhi"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [view.leftBtn setImage:image forState:UIControlStateNormal];
-    view.leftBtnWidthLayout.constant = LCDScale_iPhone6_Width(170);
+    view.leftBtnWidthLayout.constant = LCDScale_iPhone6(170);
     [view.leftBtn zh_centerHorizontalImageAndTitleWithTheirSpace:10.f];
     [view.leftBtn addTarget:self action:@selector(classifyBtnAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
     

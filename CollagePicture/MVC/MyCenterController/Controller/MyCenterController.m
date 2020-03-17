@@ -56,7 +56,7 @@
 
 - (void)setUI
 {
-    [APP_Delegate setApperanceForSigleNavController:self];
+    [kAPP_Delegate setApperanceForSigleNavController:self];
     
     [self addNavigationBarView];
     
@@ -276,8 +276,8 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.customNavigationBar.frame = CGRectMake(0, 0, LCDW, HEIGHT_NAVBAR);
-    self.tableViewTopLayoutConstraint.constant = HEIGHT_NAVBAR;
+    self.customNavigationBar.frame = CGRectMake(0, 0, LCDW, kHEIGHT_SAFEAREA_NAVBAR);
+    self.tableViewTopLayoutConstraint.constant = kHEIGHT_SAFEAREA_NAVBAR;
 }
 
 -(void)dealloc
@@ -472,7 +472,7 @@
     if (offsetY <= 0) {
         
         CGRect frame = self.topImageView.frame;
-        frame.size.height= HEIGHT_NAVBAR+_contentInsetTop+ ABS(offsetY);
+        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop+ ABS(offsetY);
         self.topImageView.frame = frame;
         
         [self.customNavigationBar zx_setBarBackgroundContainerAlpha:0 animated:YES];
@@ -495,7 +495,7 @@
             //            [self setNeedsStatusBarAppearanceUpdate];
         }
         CGRect frame = self.topImageView.frame;
-        frame.size.height= HEIGHT_NAVBAR+_contentInsetTop;
+        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop;
         self.topImageView.frame = frame;
     }
 }
@@ -517,6 +517,8 @@
 //    }
 }
 
+
+#pragma mark - action
 /**
  *  跳转我的个人信息页面
  *
@@ -548,14 +550,14 @@
 - (IBAction)loginInActioin:(UIButton *)sender {
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard_Login bundle:[NSBundle mainBundle]];
-    UINavigationController *loginViewController = [sb instantiateInitialViewController];
-    [self presentViewController:loginViewController animated:YES completion:nil];
+    UINavigationController *loginNav = [sb instantiateInitialViewController];
+    loginNav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:loginNav animated:YES completion:nil];
 }
 
 
 #pragma mark - 先检查通知跳转再检查更新
 //第三步：先检查推送通知跳转再检查版本更新，如果通知跳转下一页，返回来继续下一步检查更新
-
 - (void)checkAppVersionAndNotificationPush
 {
     if ([WYUserDefaultManager isOpenAppRemoteNoti])

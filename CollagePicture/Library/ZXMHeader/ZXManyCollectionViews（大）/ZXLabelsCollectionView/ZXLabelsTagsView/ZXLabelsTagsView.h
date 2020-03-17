@@ -6,7 +6,7 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 
 //  简介：标签展示；利用collectionView展示N个文字标签,支持设置collectionView的基本属性：标签之间的间距，行间距，sectionInset,同时也支持最多展示多少个标签，标签默认背景色，标签宽度是否随文字自适应，设置标签文字字体大小，设置选中索引，设置是否支持选中样式； 动态获取整个collectionView的高度；依赖第三方"EqualSpaceFlowLayoutEvolve"设置左对齐
-//  reloadData之前，必须设置collectionView的frame，不然不会回调数据源代理,也无法内部布局；
+//  注意：reloadData之前，必须设置collectionView的frame，不然不会回调数据源代理,也无法内部布局；
 //  例子 看ZXLabelsInputTagsView的
 
 //  2017.12.26 修改nibName 常量定义 改为NSStringFromClass；
@@ -15,6 +15,7 @@
 //  2018.9.11  优化ZXLabelsTagsView作为重用TableFooterView的时候，造成高度获取不准的bug；
 //  2019.1.28  增加注释
 //  2019.10.26 标签宽度小数点进1，限制标签最大宽度不超过collectionView的宽度-inset的最终宽度；
+//  2020.2.26 增加itemContentInset内容内边距，边框样式等属性，并修改逻辑；增加支持ZXLabelsTitleModel模型数据；
 
 #import <UIKit/UIKit.h>
 #import "LabelCell.h"
@@ -31,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 /**
  将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置
- 
  @param cell LabelCell
  @param indexPath collectionView中的对应indexPath
  */
@@ -73,40 +73,51 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
 
 @property (nonatomic, strong) NSMutableArray *dataMArray;
 
-// 设置collectionView的sectionInset; 默认UIEdgeInsetsMake(15, 15, 15, 15)
+/// 设置collectionView的sectionInset; 默认UIEdgeInsetsMake(15, 15, 15, 15)
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距;默认12.f
+/// item之间的间距;默认12.f
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
-// 行间距;默认12.f
+/// 行间距;默认12.f
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
-// 最多可显示的标签数量，到达这个数，就不能再输入了，输入标签也会移除; 默认10
+/// 最多可显示的标签数量，到达这个数，就不能再显示了； 默认10；
 @property (nonatomic, assign) NSInteger maxItemCount;
 
-// 设置标签的背景颜色;
-@property (nonatomic, strong) UIColor *tagNormarBackgroudColor;
+/// 设置标签的背景颜色;
+@property (nonatomic, strong) UIColor *labelBackgroudColor;
 
-// 设置cell标签宽度是否随它的内容自适应：default NO;
+/// 标签cell边框样式
+@property (nonatomic, assign) ZXLabelsViewBorderStyle labelsViewBorderStyle;
+
+/// 设置cell标签宽度是否随它的内容自适应：default NO;
 @property (nonatomic, assign) BOOL apportionsItemWidthsByContent;
 
-// item同样size的值；默认CGSizeMake(82.f, 30.f)；只有效于apportionsItemWidthsByContent = NO的时候；
-@property (nonatomic, assign) CGSize itemSameSize;
+/// 在apportionsItemWidthsByContent= YES，自适应宽度的时候，调节内容contentInset；
+@property (nonatomic, assign) UIEdgeInsets itemContentInset;
 
-// 字体大小；默认14
+/// 所有item的size值；默认CGSizeMake(82.f, 30.f)；只有效于apportionsItemWidthsByContent = NO的时候；
+@property (nonatomic, assign) CGSize sameItemSize;
+
+/// 设置字体大小；默认14
 @property (nonatomic, assign) CGFloat titleFontSize;
 
-// 设置选中某个item
+/// 设置选中某个item
 @property (nonatomic, assign) NSInteger selectedIndex;
 
-// 是否支持选中样式展现；默认NO；
+/// 是否支持选中样式展现；默认NO；
 @property (nonatomic, assign) BOOL cellSelectedStyle;
 
+/// 设置选中标签的背景颜色;
+@property (nonatomic, strong) UIColor *selectedLabelBackgroudColor;
 
+
+/// 设置原始数据
+/// @param data 数据集合
 - (void)setData:(NSArray *)data;
 
-//设置等间距对齐
+/// 设置等间距对齐
 - (void)setCollectionViewLayoutWithEqualSpaceAlign:(AlignType)collectionViewCellAlignType withItemEqualSpace:(CGFloat)equalSpace animated:(BOOL)animated;
 
 /**
@@ -126,49 +137,85 @@ typedef NS_ENUM(NSInteger,UICollectionViewFlowLayoutEqualSpaceAlign) {
  @return 高度
  */
 - (CGFloat)getDispatchOnceCellHeightWithContentData:(NSArray *)data;
+
 @end
 
 NS_ASSUME_NONNULL_END
 
 
 //////////////////－－－－－－例1－－－－－－－///////////////
-#pragma mark - 例如 显示纯展示的推荐标签数组
+#pragma mark - 显示纯展示的推荐标签数组-cell纯代码
 
 /*
 
 #import "BaseTableViewCell.h"
 #import "ZXLabelsTagsView.h"
 
-@interface AddProRecdLabelCell : BaseTableViewCell
+@interface CHSShopCartGoodCell()<ZXLabelsTagsViewDelegate>
 
-@property (weak, nonatomic) IBOutlet ZXLabelsTagsView *labelsTagsView;
+@property (nonatomic, strong) ZXLabelsTagsView *labelsTagsView;
+
+@property (nonatomic, copy) NSArray *labels;
+@property (nonatomic, strong) NSMutableArray *titleMArray;
 @end
 
  */
 
 
 /*
-#import "AddProRecdLabelCell.h"
+#import "CHSShopCartGoodCell.h"
 
-@implementation AddProRecdLabelCell
+@implementation CHSShopCartGoodCell
 
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    self.labelsTagsView.maxItemCount = 50;
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-}
-
+ -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+ {
+     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+     if (self) {
+         self.contentView.backgroundColor = [UIColor whiteColor];
+         self.selectionStyle = UITableViewCellSelectionStyleNone;
+         [self setUI];
+     }
+     return self;
+ }
+ 
+ - (ZXLabelsTagsView *)labelsTagsView
+ {
+     if (!_labelsTagsView) {
+         ZXLabelsTagsView *view = [[ZXLabelsTagsView alloc] init];
+         view.sectionInset = UIEdgeInsetsZero;
+         view.minimumInteritemSpacing = LCDScale_iPhone6(4);
+         view.titleFontSize = LCDScale_iPhone6(10);
+         view.apportionsItemWidthsByContent = YES;
+         view.itemContentInset = UIEdgeInsetsMake(LCDScale_iPhone6(2), LCDScale_iPhone6(6), LCDScale_iPhone6(2), LCDScale_iPhone6(6));
+         view.labelsViewBorderStyle = ZXLabelsViewBorderStyle_Rectangle;
+         view.delegate = self;
+         _labelsTagsView = view;
+     }
+     return _labelsTagsView;
+ }
+ 
 - (void)setData:(id)data
 {
-    [self.labelsTagsView setData:data];
+    self.labels = model.labels;
+    NSMutableArray *titleMArray = [NSMutableArray array];
+    [model.labels enumerateObjectsUsingBlock:^(CHSCommonTextColorModel *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [titleMArray addObject:obj.text];
+    }];
+    [self.labelsTagsView setData:titleMArray];
 }
 
 - (CGFloat)getCellHeightWithContentIndexPath:(NSIndexPath *)indexPath data:(id)data
 {
     return [self.labelsTagsView getCellHeightWithContentData:data];
 }
+ 
+ - (void)zx_labelsTagsView:(ZXLabelsTagsView *)labelsTagView willDisplayCell:(LabelCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+ {
+     CHSCommonTextColorModel *model = [self.labels objectAtIndex:indexPath.item];
+     UIColor *color = [UIColor zx_colorWithHexString:model.hexColor];
+     [cell zx_setBorderWithCornerRadius:3 borderWidth:0.5 borderColor:color];
+     cell.titleLab.textColor = color;
+ }
 @end
 
 */

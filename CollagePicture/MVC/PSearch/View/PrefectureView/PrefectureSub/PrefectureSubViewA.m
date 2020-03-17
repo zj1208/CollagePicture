@@ -81,7 +81,7 @@
         
         make.left.mas_equalTo(self.mas_left).with.offset(9);
         make.right.mas_equalTo(self.mas_right).with.offset(-6);
-        make.top.mas_equalTo(self.nameLab.mas_bottom).with.offset(LCDScale_iPhone6_Width(3));
+        make.top.mas_equalTo(self.nameLab.mas_bottom).with.offset(LCDScale_iPhone6(3));
     }];
      
      [self.photoImageView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -28,7 +28,7 @@
     UIView *containerView = [transitionContext containerView];
     //  containerView上已经有弹出时候添加的toView；
     //  <UIView: 0x7f86c7f4e9e0; frame = (0 0; 375 812); autoresize = W+H; gestureRecognizers = <NSArray: 0x600000e4fa20>; layer = <CALayer: 0x600000c2b100>>
-    NSLog(@"%@",containerView.subviews);
+//    NSLog(@"%@",containerView.subviews);
 
     // ToVC,在fromViewController大图的view之上加原小头像视图toViewController的view,再加黑色view盖住+过渡大图；等于一点击大图，当前控制器大图控制器就看不到了，接着构造一个和大图控制器类似的UI布局，处理被放大的过渡imageView渐渐缩小到原小图的frame；背景bgView透明度渐渐变透明；给人一种是在原大图上渐渐变成小头像的视图；
     // 最后转场结束的时候，真正的toViewController就会显示的；

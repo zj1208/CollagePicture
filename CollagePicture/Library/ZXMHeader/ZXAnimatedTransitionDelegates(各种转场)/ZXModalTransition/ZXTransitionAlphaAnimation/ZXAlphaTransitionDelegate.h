@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_END
         weakSelf.shopHomeInfoModel = [[ShopHomeInfoModel alloc] init];
         weakSelf.shopHomeInfoModel = data;
         [MBProgressHUD zx_hideHUDForView:weakSelf.view];
-        [weakSelf.emptyViewController hideEmptyViewInController:weakSelf hasLocalData:weakSelf.shopHomeInfoModel?YES:NO];
+        [weakSelf.emptyViewController zx_hideEmptyViewInContainerViewConroller];
         if (weakSelf.shopHomeInfoModel)
         {
             weakSelf.customNavigationBar.hidden = NO;
@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_END
     } failure:^(NSError *error) {
         
         [MBProgressHUD zx_hideHUDForView:weakSelf.view];
-        [weakSelf.emptyViewController addEmptyViewInController:weakSelf hasLocalData:weakSelf.shopHomeInfoModel?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.shopHomeInfoModel?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
     }];
 }
 

@@ -203,7 +203,7 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(LCDW-10, LCDScale_iPhone6_Width(160));
+    return CGSizeMake(LCDW-10, LCDScale_iPhone6(160));
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

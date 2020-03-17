@@ -9,6 +9,7 @@
 //  功能3:支持控制iPhoneX的Home指示条，一般情况只有视频全屏播放和游戏界面需要设置自动隐藏；隐藏过程是过1.5秒后的alpha动画隐藏；
 
 //  2018.7.25  新增控制iPhoneX的Home指示条；
+//  2020.02.05 修改bug,返回topViewController；
 
 #import <UIKit/UIKit.h>
 

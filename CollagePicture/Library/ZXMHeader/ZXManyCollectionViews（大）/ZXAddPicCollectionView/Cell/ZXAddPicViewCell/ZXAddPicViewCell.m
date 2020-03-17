@@ -97,7 +97,7 @@
 - (void)makeGestureRecognizersWithCanMoveItem:(BOOL)flag
 {
     NSArray *gestureRecognizers = self.gestureRecognizers;
-    NSLog(@"%@",self.gestureRecognizers);
+//    NSLog(@"%@",self.gestureRecognizers);
     if (gestureRecognizers.count >0)
     {
         [gestureRecognizers enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

@@ -91,7 +91,6 @@ NS_ASSUME_NONNULL_END
             
             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
             [ZXAudioServicesManager playSystemSoundWithOnlyAudio:soundId numberOfLoops:1 withCompletion:^{
-                NSLog(@"%@",@(soundId));
                 soundId ++;
                 dispatch_semaphore_signal(semaphore);
             }];

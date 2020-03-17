@@ -32,30 +32,63 @@
 // 重写statusBarStyle
 - (nullable UIViewController *)childViewControllerForStatusBarStyle
 {
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+        return nav.topViewController;
+    }
     return self.selectedViewController;
 }
 
 - (nullable UIViewController *)childViewControllerForStatusBarHidden
 {
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+        return nav.topViewController;
+    }
     return self.selectedViewController;
 }
 
 //方案二：
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return [self.selectedViewController preferredStatusBarStyle];
-//}
-//- (BOOL)prefersStatusBarHidden
-//{
-//    return [self.selectedViewController prefersStatusBarHidden];
-//}
-//- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
-//{
-//    return [self.selectedViewController preferredStatusBarUpdateAnimation];
-//}
-
-- (nullable UIViewController *)childViewControllerForHomeIndicatorAutoHidden
+/*
+- (UIStatusBarStyle)preferredStatusBarStyle
 {
+    UIStatusBarStyle style = UIStatusBarStyleDefault;
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+        style = [nav.topViewController preferredStatusBarStyle];
+    }else
+    {
+        style = [self.selectedViewController preferredStatusBarStyle];
+    }
+    return style;
+}
+- (BOOL)prefersStatusBarHidden
+{
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+        return [nav.topViewController prefersStatusBarHidden];
+    }
+    return [self.selectedViewController prefersStatusBarHidden];
+}
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
+{
+    UIStatusBarAnimation animation = UIStatusBarAnimationNone;
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+        animation = [nav.topViewController preferredStatusBarUpdateAnimation];
+    }else
+    {
+        animation = [self.selectedViewController preferredStatusBarUpdateAnimation];
+    }
+    return animation;
+}
+*/
+- (nullable UIViewController *)childViewControllerForHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos)
+{
+    if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.selectedViewController;
+        return nav.topViewController;
+    }
     return self.selectedViewController;
 }
 

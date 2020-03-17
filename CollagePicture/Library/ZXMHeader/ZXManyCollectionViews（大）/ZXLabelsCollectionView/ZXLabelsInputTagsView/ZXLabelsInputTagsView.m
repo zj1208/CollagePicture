@@ -101,8 +101,8 @@ static NSString * const reuseInputTagsCell = @"Cell";
 {
     self.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     self.itemHeight = ZXAddPicItemHeight;
-    self.minimumInteritemSpacing = LCDScale_iPhone6_Width(ZXMinimumInteritemSpacing) ;
-    self.minimumLineSpacing =LCDScale_iPhone6_Width(ZXMinimumLineSpacing);
+    self.minimumInteritemSpacing = LCDScale_iPhone6(ZXMinimumInteritemSpacing) ;
+    self.minimumLineSpacing =LCDScale_iPhone6(ZXMinimumLineSpacing);
     self.defaultAlertTitle = ZXDefaultAlertTitle;
     self.defaultAlertFieldTextLength = ZXDefaultAlertFieldTextLength;
     self.existInputItem = YES;//输入标签默认存在
@@ -179,11 +179,12 @@ static NSString * const reuseInputTagsCell = @"Cell";
 
     if (self.isExistInputItem && indexPath.item==self.dataMArray.count&&_dataMArray.count <self.maxItemCount)
     {
-        cell.title = self.defaultAddTagTitle;
+        [cell setData:self.defaultAddTagTitle];
     }
     else
     {
-        cell.title = [NSString stringWithFormat:@"%@ X",[self.dataMArray objectAtIndex:indexPath.item]];
+        NSString *data =  [NSString stringWithFormat:@"%@ X",[self.dataMArray objectAtIndex:indexPath.item]];
+        [cell setData:data];
     }
           // Configure the cell
     return cell;
@@ -228,13 +229,16 @@ static NSString * const reuseInputTagsCell = @"Cell";
         }
     });
     
-    if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
+    if (indexPath.item == self.dataMArray.count
+        && self.isExistInputItem
+        && self.dataMArray.count < self.maxItemCount)
     {
-        cell.title = self.defaultAddTagTitle;
+        [cell setData:self.defaultAddTagTitle];
         cell.height = self.itemHeight;
         return [cell sizeForCellThatWidthFits:collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right];
     }
-    cell.title = [NSString stringWithFormat:@"%@ X",[self.dataMArray objectAtIndex:indexPath.item]];
+    NSString *data = [NSString stringWithFormat:@"%@ X",[self.dataMArray objectAtIndex:indexPath.item]];
+    [cell setData:data];
     cell.height = self.itemHeight;
     return [cell sizeForCellThatWidthFits:collectionView.bounds.size.width-self.sectionInset.left-self.sectionInset.right];
 }
@@ -252,17 +256,23 @@ static NSString * const reuseInputTagsCell = @"Cell";
     {
         
         //默认设置
-        newCell.titleLab.textColor = self.tagTextColor;
-        newCell.layer.borderColor = self.tagBorderColor.CGColor;
-        newCell.titleLab.backgroundColor = self.tagBackgroudColor;
-        newCell.layer.cornerRadius = self.tagCornerRadius;
+        newCell.layer.borderWidth = 0.5;
 //        添加按钮设置
-        if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
+        if (indexPath.item == self.dataMArray.count
+            && self.isExistInputItem
+            && self.dataMArray.count < self.maxItemCount)
         {
             newCell.titleLab.textColor =self.addTagTextColor;
-            newCell.layer.borderColor = self.addTagBorderColor.CGColor;
             newCell.titleLab.backgroundColor = self.addTagBackgroudColor;
+            newCell.layer.borderColor = self.addTagBorderColor.CGColor;
             newCell.layer.cornerRadius = self.addTagCornerRadius;
+        }
+        else
+        {
+            newCell.titleLab.textColor = self.tagTextColor;
+            newCell.titleLab.backgroundColor = self.tagBackgroudColor;
+            newCell.layer.cornerRadius = self.tagCornerRadius;
+            newCell.layer.borderColor = self.tagBorderColor.CGColor;
         }
     }
 }
@@ -271,7 +281,9 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 添加标签
-    if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
+    if (indexPath.item == self.dataMArray.count
+        && self.isExistInputItem
+        && self.dataMArray.count < self.maxItemCount)
     {
         [self labelsInputTagsView:self commitEditingStyle:ZXLabelsInputCellEditingStyleInserting forRowAtIndexPath:indexPath];
     }
@@ -310,7 +322,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)deleteTagsWithCommitEditingStyle:(ZXLabelsInputCellEditingStyle)editingStyle didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 当存在输入标签，而且已经到最大个数
-    if (_dataMArray.count == self.maxItemCount && self.isExistInputItem)
+    if (self.dataMArray.count == self.maxItemCount && self.isExistInputItem)
     {
         [self.dataMArray removeObjectAtIndex:indexPath.item];
         [self.collectionView reloadData];

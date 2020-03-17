@@ -173,8 +173,8 @@ NS_ASSUME_NONNULL_END
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.productName.font = [UIFont systemFontOfSize:LCDScale_iPhone6_Width(13)];
-    self.priceLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6_Width(13)];
+    self.productName.font = [UIFont systemFontOfSize:LCDScale_iPhone6(13)];
+    self.priceLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(13)];
 }
 
 - (void)setData:(id)data withIndexPath:(NSIndexPath *)indexPath
@@ -225,8 +225,8 @@ NS_ASSUME_NONNULL_END
     [self.customCellCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoHomeNewLIstCollectionCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([VideoHomeNewLIstCollectionCell class])];
     
     self.customCellCollectionView.sectionInset = UIEdgeInsetsMake(0, 15, 10, 15);
-    self.customCellCollectionView.itemSize = CGSizeMake(LCDScale_iPhone6_Width(64), LCDScale_iPhone6_Width(92));
-    self.customCellCollectionView.minimumLineSpacing = (LCDW - 30 - LCDScale_iPhone6_Width(64)*4)/3;
+    self.customCellCollectionView.itemSize = CGSizeMake(LCDScale_iPhone6(64), LCDScale_iPhone6(92));
+    self.customCellCollectionView.minimumLineSpacing = (LCDW - 30 - LCDScale_iPhone6(64)*4)/3;
     self.customCellCollectionView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.customCellCollectionView.scrollEnabled = YES;
 }

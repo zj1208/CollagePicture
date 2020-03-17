@@ -8,6 +8,7 @@
 
 #import "ZXBadgeIconButton.h"
 
+
 @interface ZXBadgeIconButton ()
 
 @property (nonatomic, strong) UIImageView *iconImageView;
@@ -74,9 +75,10 @@
     self.backgroundColor = [UIColor clearColor];
     self.badgeValue = 0;
     self.badgeLabelContentOffest = CGPointMake(0, 0);
+    self.badgeBorderColor = [UIColor whiteColor];
+    self.badgeBorderWidth = 1;
     
     [self addSubview:self.iconImageView];
-    
     [self addSubview:self.badgeLab];
 }
 
@@ -95,7 +97,7 @@
         UILabel *lab = [[UILabel alloc] init];
         lab.translatesAutoresizingMaskIntoConstraints = YES;
         lab.textColor = [UIColor whiteColor];
-        lab.backgroundColor = [UIColor redColor];
+        lab.backgroundColor = [ZXBadgeIconButton colorWithHex:0XFF4C00];
         _badgeLab = lab;
     }
     return _badgeLab;
@@ -106,7 +108,7 @@
     UIColor *titleColor = aTitleColor?aTitleColor:[UIColor whiteColor];
     self.badgeLab.textColor = titleColor;
     
-    UIColor *bgColor = aBgColor?aBgColor:[UIColor redColor];
+    UIColor *bgColor = aBgColor?aBgColor:[ZXBadgeIconButton colorWithHex:0XFF4C00];
     [self.badgeLab setBackgroundColor:bgColor];
 }
 
@@ -127,7 +129,7 @@
     UIColor *titleColor = aTitleColor?aTitleColor:[UIColor whiteColor];
     self.badgeLab.textColor = titleColor;
     
-    UIColor *bgColor = aBgColor?aBgColor:[UIColor redColor];
+    UIColor *bgColor = aBgColor?aBgColor:[ZXBadgeIconButton colorWithHex:0XFF4C00];
     [self.badgeLab setBackgroundColor:bgColor];
     
     [self layoutIfNeeded];
@@ -211,9 +213,19 @@
     }
     self.badgeLab.layer.masksToBounds = YES;
     self.badgeLab.layer.cornerRadius = btnHeight/2;
-    
+    //设置圆角边距
+    self.badgeLab.layer.borderWidth = self.badgeBorderWidth;
+    if (self.badgeBorderColor) {
+        self.badgeLab.layer.borderColor = self.badgeBorderColor.CGColor;
+    }
     return CGSizeMake(btnWidth, btnHeight);
 }
 
 
++ (UIColor *)colorWithHex:(NSInteger)hexValue
+{
+    return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0
+                           green:((float)((hexValue & 0xFF00) >> 8))/255.0
+                            blue:((float)(hexValue & 0xFF))/255.0 alpha:1.0];
+}
 @end

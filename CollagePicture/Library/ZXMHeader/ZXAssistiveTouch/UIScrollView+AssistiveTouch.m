@@ -28,7 +28,6 @@ static char UIScrollViewPullToRefreshView;
 
 - (void)addAssistiveTouchTo:(UIView *)view withTarget:(id)target action:(SEL)action
 {
-    NSLog(@"%@",view);
     self.assistiveTouch =[ZXAssistiveTouch showAssistiveTouchAddedTo:view animated:YES];
     self.assistiveTouch.hidden = YES;
     if (!action)

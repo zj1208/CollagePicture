@@ -28,7 +28,7 @@
     UIView *containerView = [transitionContext containerView];
 //   如果present之前不设置self.modalPresentationStyle = UIModalPresentationCustom;就会多一个UILayoutContainerView,就是UITransitionContextFromViewKey的view;不过在回调completeTransition:完成转场之后，只剩下你添加的toView,UILayoutContainerView会被移除；
 //    <UILayoutContainerView: 0x7fcd88e321b0; frame = (0 0; 375 812); autoresize = W+H; layer = <CALayer: 0x608000438fc0>>
-    NSLog(@"%@",containerView.subviews);
+//    NSLog(@"%@",containerView.subviews);
 
     
     // ToVC,实际的展示效果最后显示；中间写动画过渡，先把结果展示隐藏，等过渡完效果再展示toView；
@@ -63,7 +63,7 @@
 //         <UIView: 0x7fcd906a70c0; frame = (0 0; 375 812); layer = <CALayer: 0x60c001232fa0>>,
 //         <UIImageView: 0x7fcd906a73e0; frame = (0 216.625; 375 378.75); opaque = NO; userInteractionEnabled = NO; layer = <CALayer: 0x60c001233040>>
 //         )
-        NSLog(@"%@",containerView.subviews);
+//        NSLog(@"%@",containerView.subviews);
 
         [self.sourceImageBackgroundWhiteView removeFromSuperview];
         [self.bgView removeFromSuperview];
@@ -74,7 +74,7 @@
 //        (
 //         <UIView: 0x7f86c7f4e9e0; frame = (0 0; 375 812); autoresize = W+H; gestureRecognizers = <NSArray: 0x600000e52e10>; layer = <CALayer: 0x600000a28d20>>
 //         )
-        NSLog(@"%@",containerView.subviews);
+//        NSLog(@"%@",containerView.subviews);
 
     }];
 }

@@ -49,11 +49,10 @@ static NSInteger const kAPPErrorCode = 5000;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         //这是oc数据格式；不是真的json
-        NSLog(@"+++++++%@",responseObject);
         NSError *parseError = nil;
         NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",str);
+//        NSLog(@"%@",str);
         
          if ([[responseObject objectForKey:@"resultCount"] integerValue] == 1)
          {
@@ -79,7 +78,7 @@ static NSInteger const kAPPErrorCode = 5000;
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        NSLog(@"%@,%@",error,@(error.code));
+//        NSLog(@"%@,%@",error,@(error.code));
         if (failure)
         {
             error = [weakSelf getErrorFromError:error];

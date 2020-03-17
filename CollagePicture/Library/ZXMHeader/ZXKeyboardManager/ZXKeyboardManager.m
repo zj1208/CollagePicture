@@ -24,8 +24,8 @@ tmp;\
 })
 #endif
 
-#ifndef  HEIGHT_NAVBAR
-#define  HEIGHT_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
+#ifndef  kHEIGHT_SAFEAREA_NAVBAR
+#define  kHEIGHT_SAFEAREA_NAVBAR      (IS_IPHONE_XX ? (44.f+44.f) : (44.f+20.f))
 #endif
 
 @interface ZXKeyboardManager ()
@@ -149,13 +149,13 @@ tmp;\
     if ([obj isKindOfClass:[UITextView class]])
     {
         CGRect activeRect = CGRectFromString(self.activedTextFieldRect);
-        if ((activeRect.origin.y + activeRect.size.height+HEIGHT_NAVBAR) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height-40))
+        if ((activeRect.origin.y + activeRect.size.height+kHEIGHT_SAFEAREA_NAVBAR) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height-40))
         {
             [UIView animateWithDuration:2.f animations:^{
                 if ([self.superView isKindOfClass:[UITableView class]] ||[self.superView isKindOfClass:[UICollectionView class]] ||[self.superView isKindOfClass:[UIScrollView class]])
                 {
                     UIScrollView*tableView = (UIScrollView *)self.superView;
-                    tableView.contentOffset = CGPointMake(0, HEIGHT_NAVBAR + activeRect.origin.y + activeRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height-40));
+                    tableView.contentOffset = CGPointMake(0, kHEIGHT_SAFEAREA_NAVBAR + activeRect.origin.y + activeRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height-40));
                 }
             }];
         }
@@ -174,13 +174,13 @@ tmp;\
     CGRect rect = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     NSTimeInterval duration = [[noti.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
     CGRect activeRect = CGRectFromString(self.activedTextFieldRect);
-    if ((activeRect.origin.y + activeRect.size.height+HEIGHT_NAVBAR) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height-40))
+    if ((activeRect.origin.y + activeRect.size.height+kHEIGHT_SAFEAREA_NAVBAR) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height-40))
     {
         [UIView animateWithDuration:duration animations:^{
             if ([self.superView isKindOfClass:[UITableView class]] ||[self.superView isKindOfClass:[UICollectionView class]] ||[self.superView isKindOfClass:[UIScrollView class]])
             {
                 UIScrollView*tableView = (UIScrollView *)self.superView;
-                tableView.contentOffset = CGPointMake(0, HEIGHT_NAVBAR + activeRect.origin.y + activeRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height-40));
+                tableView.contentOffset = CGPointMake(0, kHEIGHT_SAFEAREA_NAVBAR + activeRect.origin.y + activeRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height-40));
             }
         }];
     }

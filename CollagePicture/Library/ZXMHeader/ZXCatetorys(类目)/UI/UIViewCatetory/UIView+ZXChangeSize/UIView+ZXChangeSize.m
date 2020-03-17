@@ -111,4 +111,33 @@
     return self.frame.origin;
 }
 
+
+
+- (CGFloat)zx_safeAreaLayoutGuideY
+{
+    CGFloat originY = 0;
+    if (@available(iOS 11.0, *)) {
+        UILayoutGuide *layout = self.safeAreaLayoutGuide;
+        originY = layout.layoutFrame.origin.y;
+    }else
+    {
+        UILayoutGuide *layout = self.layoutMarginsGuide;
+        originY = layout.layoutFrame.origin.y;
+    }
+    return originY;
+}
+
+- (CGSize)zx_safeAreaLayoutGuideSize
+{
+    CGSize size = CGSizeZero;
+    if (@available(iOS 11.0, *)) {
+        UILayoutGuide *layout = self.safeAreaLayoutGuide;
+        size = layout.layoutFrame.size;
+    }else
+    {
+        UILayoutGuide *layout = self.layoutMarginsGuide;
+        size = CGSizeMake(layout.layoutFrame.size.width + 2*layout.layoutFrame.origin.x, layout.layoutFrame.size.height);
+    }
+    return size;
+}
 @end

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ZXCenterTitleHFooterView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="afw-pR-liX">
+                    <rect key="frame" x="177" y="29.5" width="60" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="btg-8h-vSW"/>
+                    </constraints>
+                    <state key="normal" title="回复">
+                        <color key="titleColor" red="0.76078431369999999" green="0.76078431369999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4L-es-tEc" userLabel="leftline">
+                    <rect key="frame" x="16" y="44.5" width="146" height="0.5"/>
+                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="750" constant="50" id="HN2-f1-eHW"/>
+                        <constraint firstAttribute="height" constant="0.5" id="eoo-rk-yVF"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yug-oW-5Dl" userLabel="rightLine">
+                    <rect key="frame" x="252" y="44.5" width="146" height="0.5"/>
+                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="esV-U1-lHs"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="yug-oW-5Dl" firstAttribute="width" secondItem="c4L-es-tEc" secondAttribute="width" id="2Ro-WG-crr"/>
+                <constraint firstItem="afw-pR-liX" firstAttribute="centerY" secondItem="c4L-es-tEc" secondAttribute="centerY" id="48Q-2I-NKq"/>
+                <constraint firstItem="yug-oW-5Dl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4Ib-qX-FP4"/>
+                <constraint firstItem="yug-oW-5Dl" firstAttribute="leading" secondItem="afw-pR-liX" secondAttribute="trailing" constant="15" id="F2b-1n-xY6"/>
+                <constraint firstItem="afw-pR-liX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="GRJ-tH-JyW"/>
+                <constraint firstItem="afw-pR-liX" firstAttribute="leading" secondItem="c4L-es-tEc" secondAttribute="trailing" constant="15" id="MPD-Ze-lfD"/>
+                <constraint firstItem="c4L-es-tEc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="QaG-4y-lhj"/>
+                <constraint firstItem="afw-pR-liX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vdK-0Y-2dj"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="centerBtn" destination="afw-pR-liX" id="B0r-pY-JBT"/>
+                <outlet property="centerBtnGreaterWidthLayout" destination="btg-8h-vSW" id="LPe-yC-4Ox"/>
+                <outlet property="leftLine" destination="c4L-es-tEc" id="hyK-HY-rhL"/>
+                <outlet property="leftLineHeightLayout" destination="eoo-rk-yVF" id="2Ui-E9-x6w"/>
+                <outlet property="leftLineToCenterBtnSpaceLayout" destination="MPD-Ze-lfD" id="EBu-al-24x"/>
+                <outlet property="lineToCenterBtnSpaceLayout" destination="F2b-1n-xY6" id="Pjn-km-yn5"/>
+                <outlet property="lineToSuperMarginLayout" destination="QaG-4y-lhj" id="cAr-yo-fNW"/>
+                <outlet property="rightLine" destination="yug-oW-5Dl" id="RCv-MO-fQK"/>
+                <outlet property="rightLineHeightLayout" destination="esV-U1-lHs" id="Jgl-9A-Dc6"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="69.977678571428569"/>
+        </view>
+    </objects>
+</document>

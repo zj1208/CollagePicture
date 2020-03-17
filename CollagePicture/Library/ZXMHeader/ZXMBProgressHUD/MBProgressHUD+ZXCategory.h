@@ -9,6 +9,8 @@
 //  2018.08.01  修改获取需要添加toast的window对象，目前debug先用，线上不用
 //  2018.8.22 添加‘加载由多张图片组成的动画’的方法
 //  2019.12.07 附加errorCode的失败提示
+//  2020.2.04  优化带errorCode的失败提示的方法
+//  2020.02.28  增加附加errorCode的错误提示的指定隐藏时间参数；
 
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -37,7 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)zx_showSuccess:(nullable NSString *)success toView:(nullable UIView *)view;
 
-// 同zx_showSuccess:toView:，增加自定义多久隐藏；
+/// 提示成功文案在view上；经过delay秒后隐藏；同zx_showSuccess:toView:，增加自定义多久隐藏；
+/// @param success 成功提示的文案
+/// @param view 所加的view层，如果传nil，默认window；
+/// @param delay 经过多久隐藏；
 + (void)zx_showSuccess:(nullable NSString *)success toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay;
 
 /**
@@ -51,11 +56,20 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)zx_showError:(nullable NSString *)error toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay;
 
 
-/// 附加errorCode的失败提示，title后面增加errorCode的提示; 2019.12.07
-/// @param title 失败提示文本的title；目前不用，被写死；
-/// @param error error
+/// 附加errorCode的错误提示，title后面增加errorCode的提示; 2019.12.07
+/// @param title 错误提示文本的title；
+/// @param error NSError对象；
 /// @param view 所加的view层，如果传nil，默认window；
-+ (void)zx_showErrorTitle:(nullable NSString *)title error:(NSError *)error toView:(UIView *)view;
++ (void)zx_showErrorContainsCodeWithTitle:(nullable NSString *)title error:(NSError *)error toView:(nullable UIView *)view;
+
+
+/// 附加errorCode的错误提示，title后面增加errorCode的提示,当error.code<-1000时候，会自定义错误文本title; 2020.02.28
+/// @param title 错误提示文本的title；
+/// @param error NSError对象；
+/// @param view 所加的view层，如果传nil，默认window；
+/// @param delay 指定多久时间后隐藏；
++ (void)zx_showErrorContainsCodeWithTitle:(nullable NSString *)title error:(NSError *)error toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay;
+
 /**
  成功和失败的基础提示方法；会自动隐藏,默认根据文本内容长度设置时间隐藏，带图片属性；
  

@@ -20,8 +20,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 
@@ -77,16 +77,17 @@ static NSString * const reuseTagsCell = @"Cell";
     self.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
     self.minimumInteritemSpacing = ZXMinimumInteritemSpacing;
     self.minimumLineSpacing = ZXMinimumLineSpacing;
-    self.itemSize = CGSizeMake(LCDScale_iPhone6_Width(ZXItemWidth), LCDScale_iPhone6_Width(ZXItemHeight));
-    self.scrollEnabled = NO;
+    self.itemSize = CGSizeMake(LCDScale_iPhone6(ZXItemWidth), LCDScale_iPhone6(ZXItemHeight));
+//    self.scrollEnabled = NO;
 
-    self.iconSquareSideLength = LCDScale_iPhone6_Width(45.f);
+    self.iconSquareSideLength = LCDScale_iPhone6(45.f);
+    self.titleLabToImageViewSpace = [ZXMenuIconCell getTitleLabToImageViewSpace];
     self.clipsToBounds = YES;
     self.clearsContextBeforeDrawing = YES;
     self.hasBadge = YES;
     [self addSubview:self.collectionView];
     self.collectionView.scrollEnabled = self.scrollEnabled;
-    self.collectionView.backgroundColor = [UIColor orangeColor];
+//    self.collectionView.backgroundColor = [UIColor orangeColor];
 }
 
 #pragma mark - layoutSubviews
@@ -99,7 +100,7 @@ static NSString * const reuseTagsCell = @"Cell";
 
 
 - (NSMutableArray *)dataMArray {
-    if (_dataMArray == nil) {
+    if (!_dataMArray) {
         _dataMArray = [NSMutableArray arrayWithCapacity:0];
     }
     return _dataMArray;
@@ -137,7 +138,7 @@ static NSString * const reuseTagsCell = @"Cell";
         {
             return self.iconSquareSideLength+33;
         }
-        return self.iconSquareSideLength+LCDScale_iPhone6_Width(40);
+        return self.iconSquareSideLength+LCDScale_iPhone6(40);
     }
     return self.iconSquareSideLength;
 }
@@ -188,11 +189,6 @@ static NSString * const reuseTagsCell = @"Cell";
 {
     ZXMenuIconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseTagsCell forIndexPath:indexPath];
 //    cell.backgroundColor = [UIColor greenColor];
-//   设置中心图标
-    if (self.iconSquareSideLength>0)
-    {
-        cell.imgViewLayoutWidth.constant = self.iconSquareSideLength;
-    }
     if (indexPath.item<self.dataMArray.count)
     {
         id data = [self.dataMArray objectAtIndex:indexPath.item];
@@ -220,6 +216,11 @@ static NSString * const reuseTagsCell = @"Cell";
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
+//    // 如果item的理论计算宽度 比 实际宽度小，则重新调整item的间距；总宽度无法获取？
+//    CGFloat itemWidth =  (totalWidth - (self.columnsCount-1)*self.minimumInteritemSpacing-self.sectionInset.left-self.sectionInset.right)/self.columnsCount;
+//    if (itemWidth < self.safeBadgeMinimumItemWidth) {
+//        self.minimumInteritemSpacing = (totalWidth - self.columnsCount* self.safeBadgeMinimumItemWidth-self.sectionInset.left-self.sectionInset.right)/(self.columnsCount-1);
+//    }
     return self.minimumLineSpacing;
 }
 
@@ -253,18 +254,28 @@ static NSString * const reuseTagsCell = @"Cell";
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    ZXMenuIconCell *iconCell = (ZXMenuIconCell *)cell;
+    // 设置中心图标
+    iconCell.imageViewSquareSideLength = self.iconSquareSideLength;
+    iconCell.titleLabToImageViewSpace = self.titleLabToImageViewSpace;
     if ([self.delegate respondsToSelector:@selector(zx_menuIconView:willDisplayCell:forItemAtIndexPath:)])
     {
-        [self.delegate zx_menuIconView:self willDisplayCell:(ZXMenuIconCell *)cell forItemAtIndexPath:indexPath];
+        [self.delegate zx_menuIconView:self willDisplayCell:iconCell forItemAtIndexPath:indexPath];
     }
 }
 
-- (CGSize)getItemSafeSizeWithTotalWidth:(CGFloat)totalWidth columnsCount:(NSInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing hasBadge:(BOOL)flag iconSquareSideLength:(CGFloat)iconEqualSideLength
+#pragma mark - 获取最小安全宽度，最小安全高度；
+
+- (CGSize)getItemMiniSafeSizeWithTotalWidth:(CGFloat)totalWidth columnsCount:(NSInteger)count sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing hasBadge:(BOOL)flag iconSquareSideLength:(CGFloat)iconEqualSideLength titleLabToImageViewSpace:(CGFloat)space
 {
     self.hasBadge = flag;
     CGFloat itemWidth =  (totalWidth - (count-1)*minimumInteritemSpacing-inset.left-inset.right)/count;
     CGFloat safeWidth =  floorf(itemWidth)<=floorf(self.safeBadgeMinimumItemWidth)?floorf(self.safeBadgeMinimumItemWidth):floorf(itemWidth);
-    CGFloat safeHeight = flag?(iconEqualSideLength + 8 + 17 +8 + 6) :(iconEqualSideLength + 8 + 17 +8);
+    // 如果item的理论计算宽度 比 实际宽度小，则重新调整item的间距；
+    if (itemWidth < self.safeBadgeMinimumItemWidth) {
+        self.minimumInteritemSpacing = (totalWidth - count* self.safeBadgeMinimumItemWidth-inset.left-inset.right)/(count-1);
+    }
+    CGFloat safeHeight = flag?([ZXMenuIconCell getImageViewToSupViewTop] +iconEqualSideLength + space + LCDScale_iPhone6(17)+ 6) :([ZXMenuIconCell getImageViewToSupViewTop]+iconEqualSideLength + space + LCDScale_iPhone6(17));
     return CGSizeMake(safeWidth, safeHeight);
 }
 

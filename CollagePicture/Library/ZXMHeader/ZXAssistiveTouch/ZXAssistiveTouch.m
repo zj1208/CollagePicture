@@ -12,7 +12,7 @@
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
 #define LCDH ([[UIScreen mainScreen] bounds].size.height)
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#define LCDScale_iphone6_Width(X)    ((X)*LCDW/375)
+#define LCDScale_iPhone6(X)    ((X)*LCDW/375)
 #endif
 
 
@@ -103,7 +103,6 @@
 //按钮事件
 -(void)choose
 {
-    NSLog(@"悬浮窗");
 }
 
 - (void)changePostion:(UIPanGestureRecognizer *)pan

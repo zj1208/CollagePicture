@@ -7,7 +7,8 @@
 //
 
 #import "PrivacyListController.h"
-#import "ZXWebViewController.h"
+#import "ZXWKWebViewController.h"
+
 @interface PrivacyListController ()
 @property (nonatomic,copy)NSArray *dataArray;
 @end
@@ -74,8 +75,8 @@
     {
         NSDictionary *modelDic = [self.dataArray objectAtIndex:indexPath.row];
         NSString *content = [modelDic objectForKey:@"content"];
-        NSString *content2 = [content stringByReplacingOccurrencesOfString:@"**" withString:APP_Name];
-        ZXWebViewController *vc = [[ZXWebViewController alloc] initWithBarTitle:[modelDic objectForKey:@"title"]];
+        NSString *content2 = [content stringByReplacingOccurrencesOfString:@"**" withString:kAPP_Name];
+        ZXWKWebViewController *vc = [[ZXWKWebViewController alloc] initWithBarTitle:[modelDic objectForKey:@"title"]];
         [vc loadLocalText:content2];
         [self.navigationController pushViewController:vc animated:YES];
     }

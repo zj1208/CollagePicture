@@ -13,6 +13,7 @@
 // 2018.1.03 新增一些方法，调节属性；
 // 2019.6.03 修改注释
 // 2019.12.06 优化代码，增加解决方案按钮及事件，点击屏幕事件，增加无网络直接判断；
+// 2020.02.06 优化代码，网络跳转修改；
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD+ZXCategory.h"
@@ -29,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
 #define LCDH ([[UIScreen mainScreen] bounds].size.height)
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
+#define LCDScale_iPhone6(X)    ((X)*LCDW/375)
 #endif
 
 @class ZXEmptyViewController;
@@ -56,7 +57,7 @@ static NSString * const ZXEmptyRequestFaileTitle = @"";
 /*
 ZXEmptyViewController的view加入到一个隐藏系统navigationBar的控制器view上时，会覆盖整个控制器view；
 调节方式如下：
-self.emptyViewController.view.frame = CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR);
+self.emptyViewController.view.frame = CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR);
  */
 
 //是否点击屏幕回调代理方法执行刷新数据
@@ -72,28 +73,40 @@ typedef NS_ENUM(NSInteger, ZXEmptyViewTouchEventType)
 
 @property (nonatomic, strong) UILabel *textLabel;
 
-// 整体内容偏移调节(textLabel,imageView,updateBtn一起调节)
+/// 整体内容偏移调节(textLabel,imageView,updateBtn一起调节)
 @property (nonatomic, assign) CGSize contentOffest;
 
-// 是否在textLabel展示error的code码
+/// 是否在textLabel展示error的code码
 @property (nonatomic, assign) BOOL showErrorCodeOnLabelText;
-// 是否在toast上展示error的code码
+
+/// 是否在toast上展示error的code码
 @property (nonatomic, assign) BOOL showErrorCodeOnToatText;
 
-// 是否在加载完成显示self的同时显示错误toast;
+/// 是否在加载完成显示self的同时显示错误toast;
 @property (nonatomic, assign) BOOL showErrorToastViewTogather;
 
 
-// 添加及移除氛围图（数据空氛围图，请求失败氛围图）："点击加载"按钮(老方法)
+///  添加及移除氛围图（数据空氛围图，请求失败氛围图）："点击加载"按钮(老方法)
+/// @param viewController <#viewController description#>
+/// @param flag <#flag description#>
+/// @param error <#error description#>
+/// @param emptyImage <#emptyImage description#>
+/// @param title <#title description#>
+/// @param hide <#hide description#>
 - (void)zx_addEmptyViewWithUpdateBtnInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide;
 
-// 添加及移除氛围图（数据空氛围图，请求失败氛围图）：“查看解决方案”按钮(2019-12-06)
+/// 添加及移除氛围图（数据空氛围图，请求失败氛围图）：“查看解决方案”按钮(2019-12-06)
+/// @param viewController <#viewController description#>
+/// @param flag <#flag description#>
+/// @param error <#error description#>
+/// @param emptyImage <#emptyImage description#>
+/// @param title <#title description#>
 - (void)zx_addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title;
 
 
 - (void)zx_showSccessWithEmptyViewInController:(UIViewController *)viewController emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title hasLocalData:(BOOL)flag;
 
-// 直接移除氛围图
+/// 直接移除氛围图
 - (void)zx_hideEmptyViewInContainerViewConroller;
 
 + (void)zx_makeToastInViewController:(UIViewController *)viewController withError:(NSError *)error;
@@ -153,7 +166,7 @@ NS_ASSUME_NONNULL_END
         
         [weakSelf.dataMArray removeAllObjects];
         [weakSelf.dataMArray addObjectsFromArray:data];
-        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:nil emptyImage:[UIImage imageNamed:@"无人接单"] emptyTitle:@"没有搜到相关订单信息" updateBtnHide:YES];
+        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:nil emptyImage:[UIImage imageNamed:@"无人接单"] emptyTitle:@"没有搜到相关订单信息"];
         [weakSelf.tableView reloadData];
         weakSelf.pageNo = 1;
         [weakSelf.tableView.mj_header endRefreshing];
@@ -164,7 +177,7 @@ NS_ASSUME_NONNULL_END
         
         [weakSelf.tableView.mj_header endRefreshing];
         
-        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle];
     }];
 }
     
@@ -218,26 +231,24 @@ NS_ASSUME_NONNULL_END
 
 //例2:model模型数据
 /*
-- (void)requestData
+- (void)setData
 {
+    [MBProgressHUD zx_showLoadingWithStatus:nil toView:self.view];
     WS(weakSelf);
-    [ProductMdoleAPI getMyShopMainInfoWithShopId:[UserInfoUDManager getShopId] Success:^(id data) {
+    [[UserModelHttpAPI shareInstance]postInfoWithSuccess:^(id  _Nullable data) {
         
-        weakSelf.shopInfoModel = nil;
-        weakSelf.shopInfoModel = [[ShopMainInfoModel alloc] init];
-        weakSelf.shopInfoModel = data;
+        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+        weakSelf.userModel = nil;
+        weakSelf.userModel = [[CHSUserModel alloc] init];
+        weakSelf.userModel = data;
         [weakSelf.emptyViewController zx_hideEmptyViewInContainerViewConroller];
-        if (weakSelf.shopInfoModel)
-        {
-            weakSelf.stausBarStyle = UIStatusBarStyleLightContent;
-            [self setNeedsStatusBarAppearanceUpdate];
-        }
-        [weakSelf.collectionView reloadData];
+        [weakSelf releadData];
         
+    } failure:^(NSError * _Nullable error) {
         
-    } failure:^(NSError *error) {
-        
-        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.shopInfoModel?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+        [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.userModel?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle];
+
     }];
 }
 */

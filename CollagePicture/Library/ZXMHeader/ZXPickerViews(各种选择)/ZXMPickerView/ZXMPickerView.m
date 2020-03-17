@@ -20,8 +20,8 @@
 #endif
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
 #endif
 
 
@@ -76,7 +76,7 @@
     
     if (CGRectEqualToRect(self.frame, CGRectZero))
     {
-        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6_Width(260.f));
+        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6(260.f));
     }
     
     [self addSubview:self.toolbar];
@@ -124,7 +124,7 @@
         leftBarButtonItem.tintColor =[UIColor blackColor];
         
         UIBarButtonItem *borderSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-        borderSpaceBarItem.width = LCDScale_iPhone6_Width(12);
+        borderSpaceBarItem.width = LCDScale_iPhone6(12);
         
         UIBarButtonItem *centerSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         
@@ -263,7 +263,7 @@
 #pragma mark - PickerViewDelegate
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return LCDScale_iPhone6_Width(48.f);
+    return LCDScale_iPhone6(48.f);
 }
 
 //-(CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component

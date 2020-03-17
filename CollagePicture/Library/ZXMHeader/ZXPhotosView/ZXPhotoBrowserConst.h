@@ -30,7 +30,7 @@ static NSString *const ZXDeleteImageName = @"zxPhoto_deleteimage";
 
 #ifndef LCDW
 #define LCDW [[UIScreen mainScreen]bounds].size.width
-#define LCDScale_iPhone6_Width(X)    X*LCDW/375
+#define LCDScale_iPhone6(X)    X*LCDW/375
 #endif
 
 #ifndef AppPlaceholderImage

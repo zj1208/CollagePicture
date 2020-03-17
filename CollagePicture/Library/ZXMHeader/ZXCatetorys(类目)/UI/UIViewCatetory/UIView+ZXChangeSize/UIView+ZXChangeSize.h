@@ -5,6 +5,7 @@
 //  Created by simon on 17/1/6.
 //  Copyright © 2017年 simon. All rights reserved.
 //
+// 2020.02.10 safeAreaLayout
 
 #import <UIKit/UIKit.h>
 
@@ -27,5 +28,15 @@
 @property (nonatomic, assign) CGFloat zx_height;
 @property (nonatomic, assign) CGSize  zx_size;
 @property (nonatomic, assign) CGPoint zx_origin;
+
+
+/// 获取view的安全区域的布局Y原点位置；
+/// 导航条透明，有tab的时候，layoutFrame = {{0, 88}, {414, 725}}
+/// 导航条不透明，有tab的时候，layoutFrame = {{0, 0}, {414, 725}}
+/// 没导航条，也没有tabController的tab时候，layoutFrame = {{0, 0}, {414, 896}}
+@property (nonatomic, readonly) CGFloat zx_safeAreaLayoutGuideY;
+
+/// 获取view的安全区域的布局size区域；
+@property (nonatomic, readonly) CGSize zx_safeAreaLayoutGuideSize;
 
 @end

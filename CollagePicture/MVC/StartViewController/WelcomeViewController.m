@@ -84,7 +84,7 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
     ZXOrientationNaController *myCenter = (ZXOrientationNaController *)[sb instantiateViewControllerWithIdentifier:SBID_MyCenterControllerNavID];
-    APP_MainWindow.rootViewController =myCenter;
+    kAPP_MainWindow.rootViewController =myCenter;
 
 
 //     UITabBarController *tb = (UITabBarController *)[sb instantiateViewControllerWithIdentifier:sTabBarControllerID];

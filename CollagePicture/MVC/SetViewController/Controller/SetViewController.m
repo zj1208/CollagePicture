@@ -25,6 +25,7 @@
 
 @implementation SetViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
@@ -32,6 +33,13 @@
     [self setUI];
     [self setData];
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - setUI
 
 - (void)setUI
 {
@@ -41,8 +49,8 @@
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.versionLab.text = [NSString stringWithFormat:@"V %@",APP_Version];
-    [self reloadVersionUI];
+    self.versionLab.text = [NSString stringWithFormat:@"V %@",kAPP_Version];
+    [self reloadCacheLabel];
     [self dynamicTitleLabelFont];
 }
 
@@ -73,7 +81,7 @@
     }
 }
 
-- (void)reloadVersionUI
+- (void)reloadCacheLabel
 {
     [[SDImageCache sharedImageCache]calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
         float tempSize = totalSize/1024.0/1024;
@@ -81,6 +89,8 @@
         self.cacheSizeLab.text =sizeStr;
     }];
 }
+
+#pragma mark -setData
 
 - (void)setData{
     
@@ -125,10 +135,6 @@
     [self dynamicTitleLabelFont];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -195,10 +201,12 @@
 }
 
 
+#pragma mark - 退出
+
 - (void)loginOut
 {
     WS(weakSelf);
-    [UIAlertController zx_presentActionSheetInViewController:self withTitle:@"通知" message:@"您确定要退出登录吗？" cancelButtonTitle:@"取消" destructiveButtonTitle:@"确认" otherButtonTitles:nil tapBlock:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+    [UIAlertController zx_presentActionSheetInViewController:self withTitle:@"" message:@"您确定要退出登录吗？" cancelButtonTitle:@"取消" destructiveButtonTitle:@"确认" otherButtonTitles:nil tapBlock:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         
         if (buttonIndex ==alertController.destructiveButtonIndex)
         {
@@ -212,6 +220,7 @@
     }];
 }
 
+#pragma mark -
 
 - (void)editInfomation
 {
@@ -225,7 +234,7 @@
 - (void)showCacheAlertView
 {
     WS(weakSelf);
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"通知" message:@"要清除所有缓存数据吗" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction * _Nonnull action) {
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"" message:@"要清除所有缓存数据吗" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction * _Nonnull action) {
     
         [weakSelf clearedMemoryUpdateUI];
         }];
@@ -238,7 +247,7 @@
     [[SDImageCache sharedImageCache]clearDiskOnCompletion:^{
         
         [MBProgressHUD zx_showSuccess:@"已清楚所有缓存" toView:nil];
-        [self reloadVersionUI];
+        [self reloadCacheLabel];
     }];
 }
 
@@ -256,7 +265,7 @@
 - (void)zxCheckVersionWithNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
 {
     WS(weakSelf);
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:kAPP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
         
         [weakSelf zx_goAppStoreWithAppId:kAPPID];
 
@@ -265,18 +274,10 @@
 
 - (void)zxCheckVersionWithNoNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
 {
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:APP_Name message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:kAPP_DisplayName message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

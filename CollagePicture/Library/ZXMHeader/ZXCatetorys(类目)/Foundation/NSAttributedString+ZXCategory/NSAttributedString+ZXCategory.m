@@ -74,13 +74,29 @@
 //}
 
 
-- (void)zx_enumerateDecimalNumberWithDotSeperateUsingBlock:(void(^)(NSRange dotPrefixStringRange))block
+- (void)zx_enumerateDecimalNumberWithDotSeperateUsingDotPrefixBlock:(void(^)(NSRange dotPrefixRange))prefixBlock dotSuffixBlock:(void(^)(NSRange dotSuffixRange))suffixBlock
 {
     if (self.length) {
          
-        NSArray <NSString *>*separatedArray = [self.string componentsSeparatedByString:@"."];
-        NSString *dotPrefixString = [separatedArray firstObject];
-        block([self.string rangeOfString:dotPrefixString]);
+        NSString *dotPrefixString = nil;
+        NSString *dotSuffixString = nil;
+        if ([self.string containsString:@"."]) {
+           
+            NSArray <NSString *>*separatedArray = [self.string componentsSeparatedByString:@"."];
+            dotPrefixString = [separatedArray firstObject];
+            dotSuffixString = [separatedArray lastObject];
+            if (suffixBlock) {
+               suffixBlock([self.string rangeOfString:dotSuffixString]);
+            }
+        }
+        else
+        {
+            dotPrefixString = self.string;
+            dotSuffixString = @"";
+        }
+        if (prefixBlock) {
+            prefixBlock([self.string rangeOfString:dotPrefixString]);
+        }
      }
 }
 

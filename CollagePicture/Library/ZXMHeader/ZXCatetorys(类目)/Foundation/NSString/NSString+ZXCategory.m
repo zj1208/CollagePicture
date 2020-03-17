@@ -320,7 +320,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 
 + (BOOL)zhIsBlankString:(nullable NSString *)string
 {
-    if (string == nil || string == NULL) {
+    if (!string || string == NULL) {
         return YES;
     }
     if ([string isKindOfClass:[NSNull class]]) {
@@ -336,7 +336,7 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 //这个是bug，不能判断nil了
 - (BOOL)zhIsBlankString
 {
-    if (self == nil || self == NULL) {
+    if (!self || self == NULL) {
         return YES;
     }
     if ([self isKindOfClass:[NSNull class]]) {
@@ -485,77 +485,6 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     NSString *md5String = [[NSString zhCreatedMD5String:str]copy];
     return md5String;
 }
-
-
-+ (nullable id)zx_getJSONSerializationObjectWithJSONData:(nullable NSData *)data
-{
-    NSError *error=nil;
-    id dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-    if (!error && data)
-    {
-        return dic;
-    }
-    return nil;
-}
-
-+ (nullable id)zx_getJSONSerializationObjectFromString:(nullable NSString *)string
-{
-    if ([NSString zhIsBlankString:string])
-    {
-        return nil;
-    }
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [NSString zx_getJSONSerializationObjectWithJSONData:data];
-}
-
-+ (nullable id)zx_getJSONSerializationObjectFromContentsOfFile:(NSString *)path
-{
-//    NSString *path = [[NSBundle mainBundle]pathForResource:@"ZXPrivacyPolicy" ofType:@"json"];
-//    NSString *str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSError *error = nil;
-    id dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-    if (error==nil && data)
-    {
-        return dic;
-    }
-    return nil;
-
-}
-
-+ (NSString *)zx_getJSONSerializationStringFromJSONObject:(nullable id)responseObject
-{
-    if ([NSJSONSerialization isValidJSONObject:responseObject])
-    {
-        NSError *error = nil;
-        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&error];
-        if (!error && data)
-        {
-            NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSString *escapeString = [NSString zx_filterEscapeCharacterWithJsonString:str];
-            return escapeString;
-        }
-    }
-    return nil;
-}
-
-//过滤转义字符
-+ (NSString *)zx_filterEscapeCharacterWithJsonString:(NSString *)str
-{
-    NSMutableString *responseString = [NSMutableString stringWithString:str];
-    NSString *character = nil;
-    for (int i = 0; i < responseString.length; i ++) {
-        character = [responseString substringWithRange:NSMakeRange(i, 1)];
-        if ([character isEqualToString:@"\\"])
-            [responseString deleteCharactersInRange:NSMakeRange(i, 1)];
-    }
-    return responseString;
-}
-
-
-
-
-
 
 
 #pragma mark-获取[from, to]之间的随机整数。

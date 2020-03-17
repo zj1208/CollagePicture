@@ -9,8 +9,8 @@
 #import "ZXAreaPickerView.h"
 #import "ZXOverlay.h"
 
-#ifndef LCDScale_iPhone6_Width
-#define LCDScale_iPhone6_Width(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
+#ifndef LCDScale_iPhone6
+#define LCDScale_iPhone6(X)    ((X)*([[UIScreen mainScreen] bounds].size.width)/375)
 #endif
 
 @interface ZXAreaPickerView ()<ZXOverlayDelegate>
@@ -121,7 +121,7 @@
 
     if (CGRectEqualToRect(self.frame, CGRectZero))
     {
-        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6_Width(260.f));
+        self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, LCDScale_iPhone6(260.f));
     }
     [self addSubview:self.toolbar];
     [self addToolBarConstraintWithItem:self.toolbar];
@@ -196,7 +196,7 @@
         leftBarButtonItem.tintColor =[UIColor blackColor];
         
         UIBarButtonItem *borderSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-        borderSpaceBarItem.width = LCDScale_iPhone6_Width(12);
+        borderSpaceBarItem.width = LCDScale_iPhone6(12);
         
         UIBarButtonItem *centerSpaceBarItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         

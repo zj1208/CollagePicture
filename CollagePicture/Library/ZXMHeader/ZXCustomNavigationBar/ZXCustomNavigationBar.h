@@ -93,8 +93,8 @@ NS_ASSUME_NONNULL_END
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.customNavigationBar.frame = CGRectMake(0, 0, LCDW, HEIGHT_NAVBAR);
-    self.tableViewTopLayoutConstraint.constant = HEIGHT_NAVBAR;
+    self.customNavigationBar.frame = CGRectMake(0, 0, LCDW, kHEIGHT_SAFEAREA_NAVBAR);
+    self.tableViewTopLayoutConstraint.constant = kHEIGHT_SAFEAREA_NAVBAR;
 }
 
 - (ZXCustomNavigationBar *)customNavigationBar{
@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_END
     if (offsetY <= 0) {
         
         CGRect frame = self.topImageView.frame;
-        frame.size.height= HEIGHT_NAVBAR+_contentInsetTop+ABS(offsetY);
+        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop+ABS(offsetY);
         self.topImageView.frame = frame;
         
         [self.customNavigationBar zx_setBarBackgroundContainerAlpha:0 animated:YES];
@@ -169,7 +169,7 @@ NS_ASSUME_NONNULL_END
             //            [self setNeedsStatusBarAppearanceUpdate];
         }
         CGRect frame = self.topImageView.frame;
-        frame.size.height= HEIGHT_NAVBAR+_contentInsetTop;
+        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop;
         self.topImageView.frame = frame;
     }
 }

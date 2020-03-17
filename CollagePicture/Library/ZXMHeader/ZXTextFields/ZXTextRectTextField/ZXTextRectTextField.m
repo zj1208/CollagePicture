@@ -21,7 +21,8 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        if (self.borderStyle != UITextBorderStyleRoundedRect) {
+        if (self.borderStyle != UITextBorderStyleRoundedRect &&
+            self.borderStyle != UITextBorderStyleBezel) {
             self.textPositionAdjustment = UIOffsetMake(8, 0);
         }
     }

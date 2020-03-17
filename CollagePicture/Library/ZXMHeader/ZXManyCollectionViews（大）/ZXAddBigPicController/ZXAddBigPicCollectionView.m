@@ -12,7 +12,7 @@
 #ifndef LCDW
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
 #define LCDH ([[UIScreen mainScreen] bounds].size.height)
-#define LCDScale_iPhone6_Width(X)    ((X)*LCDW/375)
+#define LCDScale_iPhone6(X)    ((X)*LCDW/375)
 #endif
 
 static CGFloat DeleteBtnWidth = 36.f;
@@ -84,7 +84,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     if (indexPath.section ==0)
     {
-        CGFloat width = floorf(LCDW-LCDScale_iPhone6_Width(Section1InsetMagin)*2);
+        CGFloat width = floorf(LCDW-LCDScale_iPhone6(Section1InsetMagin)*2);
         return CGSizeMake(width, width);
     }
     CGFloat picToPicWidth =(Section2PicToPicMangin-DeleteBtnWidth/2);
@@ -116,7 +116,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     if (section ==0)
     {
-        CGFloat magin =floorf(LCDScale_iPhone6_Width(Section1InsetMagin));
+        CGFloat magin =floorf(LCDScale_iPhone6(Section1InsetMagin));
         return UIEdgeInsetsMake(0, magin+DeleteBtnWidth/4, 0, magin-DeleteBtnWidth/4);
     }
     return UIEdgeInsetsMake(0, Section2InsetMagin, 0, Section2InsetMagin-DeleteBtnWidth/2);;

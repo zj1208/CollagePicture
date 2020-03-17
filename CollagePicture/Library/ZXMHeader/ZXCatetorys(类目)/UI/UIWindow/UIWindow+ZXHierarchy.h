@@ -8,7 +8,8 @@
 //  4.24 新增类目
 //  2018.8.01 增加获取键盘window，可见window的方法；
 //  2019.06.11 增加注释；
-
+//  2020.2.10 修改zx_currentViewController;
+//  2020.2.20 优化
 
 #import <UIKit/UIKit.h>
 
@@ -22,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, readonly, strong) UIViewController *zx_topMostWindowController;
 
 
-// 返回topestMostWindowController堆栈中的topViewController；
-// [[[[UIApplication sharedApplication]delegate]window] zx_currentViewController]
-// 注意：在UIAlertController事件回调中是已经dismiss后的，所以如果获取zx_currentViewController跟UIAlertController一点关系也没有；
+///  返回topestMostWindowController堆栈中的topViewController；如果是tabBarController，则返回tabBarController的选中控制器，如果当前没有选中的viewControoller，则返回tabBarController的第一个控制器；
+///  [[[[UIApplication sharedApplication]delegate]window] zx_currentViewController]
+///  注意：在UIAlertController事件回调中是已经dismiss后的，所以如果获取zx_currentViewController跟UIAlertController一点关系也没有；
 @property (nullable, nonatomic, readonly, strong) UIViewController *zx_currentViewController;
 
 
@@ -41,7 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-/// iPhoneX系列 ? (20.f+24.f) : (20.f))
+/// iPhoneX系列 ? (20.f+24.f) : (20.f)) ,
+/// 注意：在viewDidLoad中self.view.window 还是nil，需要用kAPP_MainWindow来获取；
+/// 如果状态栏隐藏，则statusBarFrame属性的值为CGRectZero。
 @property (nonatomic, assign, readonly) CGFloat zx_safeAreaStatusBarHeight;
 
 /// iPhoneX系列 ? (34) : (0))

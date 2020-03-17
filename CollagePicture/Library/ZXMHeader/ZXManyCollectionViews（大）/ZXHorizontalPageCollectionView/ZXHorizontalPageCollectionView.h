@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_END
         page.interitemSpacing = 4.f;
  
         CGFloat width = [page getItemAverageWidthInTotalWidth:LCDW columnsCount:page.columnsCount sectionInset:page.sectionInset minimumInteritemSpacing:page.interitemSpacing];
-        page.itemSize = CGSizeMake(width, width-LCDScale_iPhone6_Width(12));
+        page.itemSize = CGSizeMake(width, width-LCDScale_iPhone6(12));
         [self.contentView addSubview:page];
         
         [page mas_makeConstraints:^(MASConstraintMaker *make) {
