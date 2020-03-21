@@ -111,10 +111,11 @@ FOUNDATION_EXPORT NSInteger const kAPPErrorCode_Token;
  *  @param success        success description
  *  @param failure        failure description
  */
-- (void)postRequest:(NSString *)path parameters:(id)parameters
+- (void)postRequestWithURLString:(NSString *)path
+               parameters:(id)parameters
 constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
-           progress:(void (^)(NSProgress *uploadProgress))uploadProgress
-            success:(CompleteBlock)success failure:(ErrorBlock)failure;
+                 progress:(void (^)(NSProgress *uploadProgress))uploadProgress
+                  success:(CompleteBlock)success failure:(ErrorBlock)failure;
 @end
 
 

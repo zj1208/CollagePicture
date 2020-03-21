@@ -136,6 +136,47 @@ NS_ASSUME_NONNULL_END
 
 
 //举例1
+
+///控制器，动态获取高度
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section ==0)
+    {
+        static MessageStackViewCell *cell =  nil;
+        static dispatch_once_t onceToken;
+        
+        dispatch_once(&onceToken, ^{
+            
+            cell = [tableView dequeueReusableCellWithIdentifier:@"MessageStackViewCell"];
+        });
+        return [cell getCellHeightWithContentIndexPath:indexPath data:self.messageModel.grid];
+    }
+    return LCDScale_5Equal6_To6plus(70);
+}
+ - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView willDisplayCell:(ZXMenuIconCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+ {
+     cell.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(12)];
+     cell.titleLab.textColor = [UIColor zx_colorWithHexString:@"#333333"];
+ }
+ - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+ WS(ws);
+ if (indexPath.section == 0)
+ {
+     CHSHomeStackCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CHSHomeStackCollectionCell class]) forIndexPath:indexPath];
+     cell.menuIconCollectionView.delegate = self;
+     if (self.gridItem.count >=10)
+     {
+         NSArray *smallArray = [self.gridItem subarrayWithRange:NSMakeRange(0, 10)];
+         [cell setData:smallArray];
+     }
+     else
+     {
+         [cell setData:self.gridItem];
+     }
+     return cell;
+ }
+*/
 /*
 #import "BaseTableViewCell.h"
 #import "ZXMenuIconCollectionView.h"
@@ -195,12 +236,6 @@ NS_ASSUME_NONNULL_END
     }
     return _menuIconCollectionView;
 }
-
- - (void)zx_menuIconView:(ZXMenuIconCollectionView *)menuIconView willDisplayCell:(ZXMenuIconCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
- {
-     cell.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(12)];
-     cell.titleLab.textColor = [UIColor zx_colorWithHexString:@"#333333"];
- }
  
  - (void)setData:(id)data
  {

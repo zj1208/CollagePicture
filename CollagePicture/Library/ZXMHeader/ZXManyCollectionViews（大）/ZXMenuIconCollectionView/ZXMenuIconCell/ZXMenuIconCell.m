@@ -30,7 +30,7 @@
     // Initialization code
     
 //    self.backgroundColor = [UIColor greenColor];
-    self.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(14)];
+    self.titleLab.font = [UIFont systemFontOfSize:LCDScale_iPhone6(12)];
     self.imageViewSquareSideLength = LCDScale_iPhone6(45.f);
     self.titleLabToImageViewSpace =  LCDScale_iPhone6(8);
     self.imageViewToSupViewTop = LCDScale_iPhone6(2);

@@ -397,10 +397,11 @@ NSInteger const kAPPErrorCode_Token = 5001;
 
 
 
-- (void)postRequest:(NSString *)path parameters:(id)parameters
+- (void)postRequestWithURLString:(NSString *)path
+               parameters:(id)parameters
 constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
-           progress:(void (^)(NSProgress *uploadProgress))uploadProgress
-            success:(CompleteBlock)success failure:(ErrorBlock)failure
+                 progress:(void (^)(NSProgress *uploadProgress))uploadProgress
+                  success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameters];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
