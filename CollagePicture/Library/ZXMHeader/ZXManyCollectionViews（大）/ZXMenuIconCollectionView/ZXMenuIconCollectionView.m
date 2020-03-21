@@ -258,6 +258,12 @@ static NSString * const reuseTagsCell = @"Cell";
     // 设置中心图标
     iconCell.imageViewSquareSideLength = self.iconSquareSideLength;
     iconCell.titleLabToImageViewSpace = self.titleLabToImageViewSpace;
+    if (self.titleLabelTextColor) {
+        iconCell.titleLab.textColor = self.titleLabelTextColor;
+    }
+    if (self.titleLableFont) {
+        iconCell.titleLab.font = self.titleLableFont;
+    }
     if ([self.delegate respondsToSelector:@selector(zx_menuIconView:willDisplayCell:forItemAtIndexPath:)])
     {
         [self.delegate zx_menuIconView:self willDisplayCell:iconCell forItemAtIndexPath:indexPath];
