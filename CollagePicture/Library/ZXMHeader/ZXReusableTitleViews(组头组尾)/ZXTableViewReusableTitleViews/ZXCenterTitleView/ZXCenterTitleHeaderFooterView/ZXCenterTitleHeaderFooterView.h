@@ -1,16 +1,19 @@
 //
-//  ZXCenterTitleHFooterView.h
+//  ZXCenterTitleHeaderFooterView.h
 //  MobileCaiLocal
 //
 //  Created by 朱新明 on 2020/2/18.
 //  Copyright © 2020 com.Chs. All rights reserved.
 //
+//  简介：一个中间按钮【文字+图标】，左右各一条线的UI库组件；可以设置线条与按钮的间距，也可以设置线条与边缘的边距。默认userInteractionEnabled = NO;
+
+//  2020.3.27 修改默认不可交互；
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZXCenterTitleHFooterView : UITableViewHeaderFooterView
+@interface ZXCenterTitleHeaderFooterView : UITableViewHeaderFooterView
 
 /// 中间按钮：可以设置图标+文字
 @property (weak, nonatomic) IBOutlet UIButton *centerBtn;
@@ -53,7 +56,7 @@ NS_ASSUME_NONNULL_END
         view.separatorColor = [UIColor zx_colorWithHexString:@"#EEEEEE"];
         view.backgroundColor = [UIColor zx_colorWithHexString:@"#F5F5F5"];
         //组头-猜你喜欢
-        [view registerNib:[UINib nibWithNibName:NSStringFromClass([ZXCenterTitleHFooterView class]) bundle:nil] forHeaderFooterViewReuseIdentifier:NSStringFromClass([ZXCenterTitleHFooterView class])];
+        [view registerNib:[UINib nibWithNibName:NSStringFromClass([ZXCenterTitleHeaderFooterView class]) bundle:nil] forHeaderFooterViewReuseIdentifier:NSStringFromClass([ZXCenterTitleHeaderFooterView class])];
         _tableView = view;
     }
     return _tableView;
@@ -69,13 +72,13 @@ NS_ASSUME_NONNULL_END
 {
    if (section == 3 && self.youLikeItem.count > 0)
    {
-       ZXCenterTitleHFooterView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([ZXCenterTitleHFooterView class])];
+       ZXCenterTitleHeaderFooterView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([ZXCenterTitleHeaderFooterView class])];
        [self headerViewWithIntroduceSetDataWithHeaderView:view];
        return view;
    }
    return nil;
 }
- - (void)headerViewWithIntroduceSetDataWithHeaderView:(ZXCenterTitleHFooterView *)view
+ - (void)headerViewWithIntroduceSetDataWithHeaderView:(ZXCenterTitleHeaderFooterView *)view
  {
      [view.centerBtn setTitle:@"猜你喜欢" forState:UIControlStateNormal];
      [view.centerBtn setTitleColor:[UIColor zx_colorWithHexString:@"#333333"] forState:UIControlStateNormal];

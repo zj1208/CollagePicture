@@ -23,9 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
-//设置label与superView左对齐的约束偏移,默认constant=10;
+/// 设置label与superView左对齐的约束偏移,默认constant=10;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabLeadingLayoutConstraint;
-//设置label与superView居中对齐的约束偏移,默认constant=0;
+
+/// 设置label与superView垂直居中对齐的约束偏移,默认constant=0;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabCenterYLayoutConstraint;
 
 @end

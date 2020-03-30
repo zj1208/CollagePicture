@@ -13,6 +13,8 @@
 		F40228DA1EF293E600E3D07E /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = F40228D81EF293E600E3D07E /* sound.caf */; };
 		F40228EE1EF371E800E3D07E /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228ED1EF371E800E3D07E /* WelcomeViewController.m */; };
 		F40228F51EF37CA400E3D07E /* CopyrightController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40228F41EF37CA400E3D07E /* CopyrightController.m */; };
+		F40A1AB0242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40A1AAE242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.m */; };
+		F40A1AB1242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40A1AAF242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.xib */; };
 		F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */; };
 		F41C20EB2384D20D00F895CF /* GuideShopHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41C20E92384D20D00F895CF /* GuideShopHomeController.m */; };
 		F41E3BEA220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F41E3BE8220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m */; };
@@ -340,8 +342,6 @@
 		F4C16C292415E2AE000EBF4A /* ZXActionTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C16C0D2415E2AE000EBF4A /* ZXActionTitleView.xib */; };
 		F4C16C2A2415E2AE000EBF4A /* icon_bigLine@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C16C102415E2AE000EBF4A /* icon_bigLine@3x.png */; };
 		F4C16C2B2415E2AE000EBF4A /* icon_bigLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C16C112415E2AE000EBF4A /* icon_bigLine@2x.png */; };
-		F4C16C2C2415E2AE000EBF4A /* ZXCenterTitleHFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C16C152415E2AE000EBF4A /* ZXCenterTitleHFooterView.xib */; };
-		F4C16C2D2415E2AE000EBF4A /* ZXCenterTitleHFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16C162415E2AE000EBF4A /* ZXCenterTitleHFooterView.m */; };
 		F4C16C2E2415E2AE000EBF4A /* ZXCenterTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C16C182415E2AE000EBF4A /* ZXCenterTitleView.xib */; };
 		F4C16C2F2415E2AE000EBF4A /* ZXCenterTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16C1A2415E2AE000EBF4A /* ZXCenterTitleView.m */; };
 		F4C16C302415E2AE000EBF4A /* ZXActionAdditionalTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C16C1C2415E2AE000EBF4A /* ZXActionAdditionalTitleView.m */; };
@@ -477,6 +477,10 @@
 		F40228ED1EF371E800E3D07E /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		F40228F31EF37CA400E3D07E /* CopyrightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CopyrightController.h; sourceTree = "<group>"; };
 		F40228F41EF37CA400E3D07E /* CopyrightController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyrightController.m; sourceTree = "<group>"; };
+		F40A1AAD242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCenterTitleHeaderFooterView.h; sourceTree = "<group>"; };
+		F40A1AAE242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCenterTitleHeaderFooterView.m; sourceTree = "<group>"; };
+		F40A1AAF242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCenterTitleHeaderFooterView.xib; sourceTree = "<group>"; };
+		F40A1AB2242EF14300E66377 /* ZXCollectionReusableTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionReusableTitleView.h; sourceTree = "<group>"; };
 		F40CDF12216C3E43007CFCB4 /* ZXPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPrintPageRenderer.h; sourceTree = "<group>"; };
 		F40CDF13216C3E43007CFCB4 /* ZXPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPrintPageRenderer.m; sourceTree = "<group>"; };
 		F41C20E92384D20D00F895CF /* GuideShopHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideShopHomeController.m; sourceTree = "<group>"; };
@@ -1060,9 +1064,6 @@
 		F4C16C0E2415E2AE000EBF4A /* ZXActionTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXActionTitleView.h; sourceTree = "<group>"; };
 		F4C16C102415E2AE000EBF4A /* icon_bigLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_bigLine@3x.png"; sourceTree = "<group>"; };
 		F4C16C112415E2AE000EBF4A /* icon_bigLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_bigLine@2x.png"; sourceTree = "<group>"; };
-		F4C16C142415E2AE000EBF4A /* ZXCenterTitleHFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCenterTitleHFooterView.h; sourceTree = "<group>"; };
-		F4C16C152415E2AE000EBF4A /* ZXCenterTitleHFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCenterTitleHFooterView.xib; sourceTree = "<group>"; };
-		F4C16C162415E2AE000EBF4A /* ZXCenterTitleHFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCenterTitleHFooterView.m; sourceTree = "<group>"; };
 		F4C16C182415E2AE000EBF4A /* ZXCenterTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCenterTitleView.xib; sourceTree = "<group>"; };
 		F4C16C192415E2AE000EBF4A /* ZXCenterTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCenterTitleView.h; sourceTree = "<group>"; };
 		F4C16C1A2415E2AE000EBF4A /* ZXCenterTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCenterTitleView.m; sourceTree = "<group>"; };
@@ -1071,7 +1072,6 @@
 		F4C16C1E2415E2AE000EBF4A /* ZXActionAdditionalTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXActionAdditionalTitleView.h; sourceTree = "<group>"; };
 		F4C16C212415E2AE000EBF4A /* ZXCollectionReusableTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCollectionReusableTitleView.m; sourceTree = "<group>"; };
 		F4C16C222415E2AE000EBF4A /* ZXCollectionReusableTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCollectionReusableTitleView.xib; sourceTree = "<group>"; };
-		F4C16C232415E2AE000EBF4A /* ZXCollectionReusableTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCollectionReusableTitleView.h; sourceTree = "<group>"; };
 		F4C16C352415E33F000EBF4A /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
 		F4C16C362415E33F000EBF4A /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
 		F4C16C372415E33F000EBF4A /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
@@ -3531,20 +3531,20 @@
 		F4C16C122415E2AE000EBF4A /* ZXCenterTitleView */ = {
 			isa = PBXGroup;
 			children = (
-				F4C16C132415E2AE000EBF4A /* ZXCenterTitleHFooterView */,
+				F4C16C132415E2AE000EBF4A /* ZXCenterTitleHeaderFooterView */,
 				F4C16C172415E2AE000EBF4A /* ZXCenterTitleView */,
 			);
 			path = ZXCenterTitleView;
 			sourceTree = "<group>";
 		};
-		F4C16C132415E2AE000EBF4A /* ZXCenterTitleHFooterView */ = {
+		F4C16C132415E2AE000EBF4A /* ZXCenterTitleHeaderFooterView */ = {
 			isa = PBXGroup;
 			children = (
-				F4C16C142415E2AE000EBF4A /* ZXCenterTitleHFooterView.h */,
-				F4C16C152415E2AE000EBF4A /* ZXCenterTitleHFooterView.xib */,
-				F4C16C162415E2AE000EBF4A /* ZXCenterTitleHFooterView.m */,
+				F40A1AAD242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.h */,
+				F40A1AAE242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.m */,
+				F40A1AAF242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.xib */,
 			);
-			path = ZXCenterTitleHFooterView;
+			path = ZXCenterTitleHeaderFooterView;
 			sourceTree = "<group>";
 		};
 		F4C16C172415E2AE000EBF4A /* ZXCenterTitleView */ = {
@@ -3578,9 +3578,9 @@
 		F4C16C202415E2AE000EBF4A /* ZXCollectionReusableTitleView */ = {
 			isa = PBXGroup;
 			children = (
+				F40A1AB2242EF14300E66377 /* ZXCollectionReusableTitleView.h */,
 				F4C16C212415E2AE000EBF4A /* ZXCollectionReusableTitleView.m */,
 				F4C16C222415E2AE000EBF4A /* ZXCollectionReusableTitleView.xib */,
-				F4C16C232415E2AE000EBF4A /* ZXCollectionReusableTitleView.h */,
 			);
 			path = ZXCollectionReusableTitleView;
 			sourceTree = "<group>";
@@ -4208,6 +4208,7 @@
 				F4C16C252415E2AE000EBF4A /* ZXLeftTitleRActionHFooterView.xib in Resources */,
 				F4EB2FD21D8FCF7300F5B70B /* album_a7@2x.png in Resources */,
 				F4EB2FE01D8FCF7300F5B70B /* albumA_style_8.plist in Resources */,
+				F40A1AB1242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.xib in Resources */,
 				F4AE3FAB239BA4EF00DF6FE3 /* networkErrorHelp_3.png in Resources */,
 				F446A9591FCC082900C82C90 /* blueArrow@2x.png in Resources */,
 				F446A9B31FCC082A00C82C90 /* addImage@2x.png in Resources */,
@@ -4222,7 +4223,6 @@
 				F4AE3FAD239BA4EF00DF6FE3 /* chs_reqeustFailure@3x.png in Resources */,
 				F4EB2FCA1D8FCF7300F5B70B /* album_a12@2x.png in Resources */,
 				F4C16C312415E2AE000EBF4A /* ZXActionAdditionalTitleView.xib in Resources */,
-				F4C16C2C2415E2AE000EBF4A /* ZXCenterTitleHFooterView.xib in Resources */,
 				F4EB2FCE1D8FCF7300F5B70B /* album_a3@2x.png in Resources */,
 				F4361DE92109A29C00A5C22F /* ZXTableViewUnfoldFooterView.xib in Resources */,
 				F4B70B4823695E6800C4B4AA /* SearchStoryboard.storyboard in Resources */,
@@ -4435,6 +4435,7 @@
 				F49CFD351FDE5C8D009F2213 /* TADotView.m in Sources */,
 				F446A9821FCC082A00C82C90 /* UncaughtException.m in Sources */,
 				F46182201D8129490015BC84 /* AppDelegate.m in Sources */,
+				F40A1AB0242EF0E200E66377 /* ZXCenterTitleHeaderFooterView.m in Sources */,
 				F4D8087520E0809D0084D024 /* ZXPhotosView.m in Sources */,
 				F456B75A20A5A58D0092A7B2 /* ZXImgIcons.m in Sources */,
 				F446A9491FCC082900C82C90 /* UIImage+ZXGIF.m in Sources */,
@@ -4565,7 +4566,6 @@
 				F4361DD921099DF400A5C22F /* ZXAddPicPlaceholderCell.m in Sources */,
 				F466A96B21549ADB007143A1 /* ZXAlphaAnimatedTranstion.m in Sources */,
 				F41E3BEA220079F5008CA7CB /* ZXCollectionViewLeftAlignedLayout.m in Sources */,
-				F4C16C2D2415E2AE000EBF4A /* ZXCenterTitleHFooterView.m in Sources */,
 				F49CFD2B1FDE5C8D009F2213 /* UIView+XLExtension.m in Sources */,
 				F4CB0E39236C3962002BD670 /* PrefectureSubViewA.m in Sources */,
 				F457BE3C23640DBA00B1E1B4 /* UploadOperationModel.m in Sources */,

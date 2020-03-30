@@ -1,14 +1,14 @@
 //
-//  ZXCenterTitleHFooterView.m
+//  ZXCenterTitleHeaderFooterView.m
 //  MobileCaiLocal
 //
 //  Created by 朱新明 on 2020/2/18.
 //  Copyright © 2020 com.Chs. All rights reserved.
 //
 
-#import "ZXCenterTitleHFooterView.h"
+#import "ZXCenterTitleHeaderFooterView.h"
 
-@interface ZXCenterTitleHFooterView ()
+@interface ZXCenterTitleHeaderFooterView ()
 ///右边线条与中间内容的间距；
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineToCenterBtnSpaceLayout;
 ///左边线条与中间内容的间距；
@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightLineHeightLayout;
 @end
 
-@implementation ZXCenterTitleHFooterView
+@implementation ZXCenterTitleHeaderFooterView
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -41,6 +41,7 @@
     self.lineToCenterBtnSpaceLayout.constant = 15;
 //    self.contentView.backgroundColor = [UIColor redColor];
 //    self.centerBtn.backgroundColor =  [UIColor redColor];
+    self.userInteractionEnabled = NO;
 }
 
 - (instancetype)initWithReuseIdentifier:(nullable NSString *)reuseIdentifier
