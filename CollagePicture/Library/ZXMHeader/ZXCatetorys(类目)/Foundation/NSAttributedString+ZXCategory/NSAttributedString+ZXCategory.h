@@ -11,6 +11,7 @@
 //  2019.12.03 遍历数学数字
 //  2020.01.21 优化
 //  2020.02.07 优化遍历数字小数的方法；
+//  2020.3.23  修改遍历数字小数的方法bug。
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -55,7 +56,7 @@
 
 
 
-/// 遍历数学数字,以小数点为分割获取小数点前整数的stringRange，小数点后数字的range；例如10.55;如果小数点前置或后置searchString没有找到或为空("”),不返回{NSNotFound, 0};
+/// 遍历数学数字,以小数点为分割获取小数点前整数的stringRange，小数点后数字的range；例如10.55;如果小数点前置或后置searchString没有找到或为空("”),不返回{NSNotFound, 0}; //2020.3.23 修改bug。
 /// @param prefixBlock 小数点前置的字符串Range的block;
 /// @param suffixBlock 小数点后置的range；
 ///  例如：    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:model.todaySalesVolume];

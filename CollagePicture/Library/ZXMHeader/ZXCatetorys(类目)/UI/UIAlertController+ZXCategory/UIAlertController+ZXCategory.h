@@ -6,19 +6,20 @@
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
 //  简介：在超过2个按钮的时候，布局中cancel按钮始终在底部；destructiveButton销毁按钮始终在第一个；其余按钮在中间依次从上往下排列；
-//  UIAlertControllerStyleAlert样式：当title为字符串空时，例title=@"",message=@"***"，message字体为小字体；当title=nil，message字体为大字体；
-//  UIAlertControllerStyleActionSheet样式：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+//  UIAlertController：
+//  (1)UIAlertControllerStyleAlert样式：Title是标题，加粗字体；Message：描述语，默认常规大小字体。如果title=nil，则message会变成标题，加粗字体。
+//     如果想让message必须保持常规字体，则title使用字符串空@“”，让message保持副标题。例title=@"",message=@"***"
+//  (2)UIAlertControllerStyleActionSheet样式：如果title，message用@"",则actionSheet会添加各自的label，并且各自会占UI一个有效大小位置，但是内容是@""；
+//  (3)如果使用NSLocalizedString(nil, nil),会返回@“”;
 
 //  注意：UIAlertAction的回调：点击各种按钮后在当前UIAlertController执行dismiss完成后，且在栈区移除了UIAlertController才会回调block；
-//
-//  待优化：如果没有用NSLocalizedString传值过来，则使用NSLocalizedString(x, nil)；如果已经用了，则不使用；
+
 
 // 2018.2.12； 新增预选按钮事件 设置；
 // 2018.3.28； 优化代码；
 // 2018.4.26 , 修改国际本地化问题，去除NSLocalizedString(x, nil)；
-
 // 2019.06.11 , 优化otherButtonTitles数组只有title不是nil的情况才添加事件；
-
+// 2020.03.30   优化title，message等内容；
 
 
 #import <UIKit/UIKit.h>
@@ -54,8 +55,8 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  弹出可以设置最多2个按钮的警告框；－最常见的提示框
  
  @param viewController 从viewController当前控制器页面弹出
- @param title 警告框标题
- @param message 警告框内容
+ @param title 标题；加粗字体；
+ @param message 描述内容；默认是常规字体，如果title=nil，则message会变成标题，变成加粗字体；
  @param cancelButtonTitle 取消按钮文本，加粗；
  @param handler 取消按钮的点击事件在当前UIAlertController执行dismiss完成后才回调block；
  @param doButtonTitle 另外一个按钮文本
@@ -79,8 +80,8 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  弹出可以设置多个按钮的警告框；可以设置取消按钮，红色销毁警告按钮，另外的按钮数组；
 
  @param viewController 要弹出的控制器页面
- @param title 标题
- @param message 警告框内容
+ @param title 标题；加粗字体；
+ @param message 警告框内容；默认是常规字体，如果title=nil，则message会变成标题，变成加粗字体；
  @param cancelButtonTitle 取消按钮文本（加粗）
  @param destructiveButtonTitle 红色销毁按钮文本
  @param otherButtonTitles 另外按钮数组
@@ -100,7 +101,7 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 #pragma mark - ActionSheet
 /*
- UIAlertControllerStyleActionSheet样式：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
+ UIAlertControllerStyleActionSheet样式：如果title，message用@"",则actionSheet会添加各自的label，并且各自会占UI一个有效大小位置，但是内容是@""；如果是nil，则不会添加label控件。
  */
 
 

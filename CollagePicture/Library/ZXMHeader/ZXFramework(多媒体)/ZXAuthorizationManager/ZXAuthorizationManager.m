@@ -11,7 +11,7 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-@interface ZXAuthorizationManager ()
+@interface ZXAuthorizationManager ()<CLLocationManagerDelegate>
 
 @property (nonatomic, copy) NSString *appDisplayName;
 
@@ -173,6 +173,47 @@
     }
 }
 
+
+
++ (void)zx_requestLocationAuthorization:(void(^)(CLAuthorizationStatus status))callback
+{
+    [[self alloc]zx_requestLocationAuthorizationWithDeniedAlertViewInViewController:nil call:callback];
+}
+
+- (void)zx_requestLocationAuthorizationWithDeniedAlertViewInViewController:(nullable UIViewController *)sourceController call:(void(^)(CLAuthorizationStatus status))callback
+{
+    CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
+    if (authStatus == kCLAuthorizationStatusDenied)
+    {
+        [self presentAuthorizationStatusDeniedAlertViewInViewController:sourceController authorizationType:ZXAuthorizationType_Location];
+
+        if (callback) {
+             callback(authStatus);
+        }
+    }
+    else if (authStatus == kCLAuthorizationStatusNotDetermined)
+    {
+        CLLocationManager *manager = [[CLLocationManager alloc] init];
+        manager.delegate = self;
+        [manager requestWhenInUseAuthorization];
+    }
+    else
+    {
+        if (callback) {
+             callback(authStatus);
+         }
+    }
+}
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status API_AVAILABLE(ios(4.2), macos(10.7))
+{
+    
+}
+
+
+
+
+
+
 #pragma mark - callback
 
 - (void)executeCallback:(void (^)(ZXAuthorizationStatus))callback status:(ZXAuthorizationStatus)status {
@@ -205,6 +246,11 @@
         {
             title =[NSString stringWithFormat:@"请在iPhone的\"设置-隐私-相机\"选项中，\r允许%@访问你的手机相机",self.appDisplayName];
         }
+        else if (type == ZXAuthorizationType_Location)
+        {
+            title =[NSString stringWithFormat:@"请打开\"定位服务\"允许%@确定你的位置",self.appDisplayName];
+        }
+        
         [self presentGeneralAlertInViewController:sourceController withTitle:title message:nil cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"去设置" doHandler:^(UIAlertAction *action) {
             
 //            如果指定的URL scheme由另一个app应用程序处理，options可以使用通用链接的key。空的options字典与旧的openURL调用是相同的；
@@ -222,10 +268,7 @@
     }
 }
 
-
-
-
-
+#pragma mark - 弹框
 
 - (void)presentGeneralAlertInViewController:(UIViewController *)viewController
                                   withTitle:(nullable NSString *)title
@@ -234,22 +277,22 @@
                               doButtonTitle:(nullable NSString *)doButtonTitle
                                   doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
 {
-    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
-    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
-    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
-    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
-    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
+    if (!title && message) {
+        title = NSLocalizedString(title, nil);
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
-    
+    #if TARGET_OS_IOS || TARGET_OS_WATCH
+    #endif
     if (cancelButtonTitle.length >0)
     {
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:aCancelButtonTitle style:UIAlertActionStyleCancel handler:handler];
+        //UIAlertAction的title参数不能为nil，会奔溃；
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(cancelButtonTitle, @"Cancel") style:UIAlertActionStyleCancel handler:handler];
         [alertController addAction:cancelAction];
     }
     if (doButtonTitle.length>0)
     {
-        UIAlertAction *doAction = [UIAlertAction actionWithTitle:aDoButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
+        UIAlertAction *doAction = [UIAlertAction actionWithTitle:NSLocalizedString(doButtonTitle, @"OK") style:UIAlertActionStyleDefault handler:doHandler];
         [alertController addAction:doAction];
     }
     [viewController presentViewController:alertController animated:YES completion:nil];

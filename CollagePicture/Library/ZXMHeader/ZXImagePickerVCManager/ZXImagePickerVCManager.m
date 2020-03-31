@@ -14,6 +14,13 @@
 
 static char pickerControllerActionKey;
 
+@interface ZXImagePickerVCManager ()
+
+/// 设置picker控制器界面要显示的资源类型；
+@property (nonatomic) UIImagePickerControllerSourceType sourceType;
+
+@end
+
 @implementation ZXImagePickerVCManager
 
 
@@ -22,34 +29,172 @@ static char pickerControllerActionKey;
     self = [super init];
     if (self)
     {
-        self.allowsEditing = NO;
-        self.awayCheckAuthorization = YES;
+//        self.allowsEditing = NO;
+        self.allowsEditing = YES;
+        self.alwayCheckAuthorization = YES;
+        self.mediaTypes = @[(NSString *)kUTTypeImage];
+//        self.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+//        self.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
     }
     return self;
 }
 
-- (void)zxPresentActionSheetToImagePickerWithSourceController:(UIViewController *)sourceController
+- (void)zx_presentActionSheetToImagePickerWithSourceController:(UIViewController *)sourceController
 {
-    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
     NSString *title = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]?NSLocalizedString(@"选择", nil):nil;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:cancelAction];
 
+    __weak __typeof(&*self)weakSelf = self;
     UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"拍照", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self zxPresentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeCamera sourceController:sourceController];
+        [weakSelf zx_presentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeCamera sourceController:sourceController];
     }];
     [alertController addAction:cameraAction];
 
-    UIAlertAction *doAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"从相册选择", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    
+    UIAlertAction *albumAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"从相册选择", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-          [self zxPresentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum sourceController:sourceController];
+          [weakSelf zx_presentMoreImagePickerControllerWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum sourceController:sourceController];
     }];
-    [alertController addAction:doAction];
+    [alertController addAction:albumAction];
     [sourceController presentViewController:alertController animated:YES completion:nil];
 }
 
+
+
+
+- (void)zx_presentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController
+{
+    // 如果是camera,不需要allowsEditing
+    if (sourceType ==UIImagePickerControllerSourceTypeCamera)
+    {
+        [self presentCameraWithSourceController:sourceController];
+    }
+    //如果是相册
+    else
+    {
+        [self presentPhotosWithSourceType:sourceType sourceController:sourceController];
+    }
+}
+
+#pragma mark - 实际方法
+
+/// 弹出摄像头，相机；只有在sourceType是UIImagePickerControllerSourceTypeCamera时才可以添加camera；不然会崩溃；
+/// @param sourceController sourceController description
+- (void)presentCameraWithSourceController:(UIViewController *)sourceController
+{
+    // 判断相机资源是否有效：已经在使用中，设备不支持
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        [self presentGeneralAlertInViewController:sourceController withTitle:@"该设备不支持摄像头拍照" message:nil cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"确定" doHandler:nil];
+        return;
+    }
+    if (self.cameraDevice == UIImagePickerControllerCameraDeviceRear && ![self isAvailableRearCamera]) {
+        return;
+    }
+    if (self.cameraDevice == UIImagePickerControllerCameraDeviceFront && ![self isAvailableFrontCamera]) {
+        return;
+    }
+    self.sourceType = UIImagePickerControllerSourceTypeCamera;
+    if (self.alwayCheckAuthorization)
+    {
+        __weak __typeof(&*self)weakSelf = self;
+        [[ZXAuthorizationManager shareInstance] zx_requestCameraAuthorizationWithDeniedAlertViewInViewController:sourceController call:^(ZXAuthorizationStatus status) {
+            if (status == ZXAuthorizationStatusAuthorized)
+            {
+                [weakSelf presentCameraImagePickerControllerWithSourceController:sourceController];
+            }
+            return;
+        }];
+    }
+    else
+    {
+        [self presentCameraImagePickerControllerWithSourceController:sourceController];
+    }
+}
+
+
+/// 弹出相册
+/// @param sourceType 源类型
+/// @param sourceController sourceController description
+- (void)presentPhotosWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController
+{
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        return;
+    }
+    self.sourceType = sourceType;
+    if (self.alwayCheckAuthorization)
+    {
+        __weak __typeof(&*self)weakSelf = self;
+        [[ZXAuthorizationManager shareInstance] zx_requestPhotoLibraryAuthorizationWithDeniedAlertViewInViewController:sourceController call:^(ZXAuthorizationStatus status) {
+            
+            if (status == ZXAuthorizationStatusAuthorized)
+            {
+                [weakSelf presentCommonImagePickerControllerWithSourceController:sourceController];
+            }
+        }];
+    }
+    else
+    {
+        [self presentCommonImagePickerControllerWithSourceController:sourceController];
+    }
+}
+
+
+/// 弹出UIImagePickerController 摄像头模式方法
+- (void)presentCameraImagePickerControllerWithSourceController:(UIViewController *)sourceController
+{
+    if (self.sourceType != UIImagePickerControllerSourceTypeCamera) {
+        return;
+    }
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.mediaTypes = self.mediaTypes;
+    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    imagePicker.modalTransitionStyle = UIModalPresentationFullScreen;
+    imagePicker.allowsEditing = self.allowsEditing;
+    imagePicker.sourceType = self.sourceType;
+    imagePicker.cameraDevice = self.cameraDevice;
+    if ([imagePicker.mediaTypes containsObject:(NSString *) kUTTypeMovie]) {
+    }
+    imagePicker.videoMaximumDuration = 600;
+    imagePicker.videoQuality = UIImagePickerControllerQualityTypeHigh;
+
+    [sourceController presentViewController:imagePicker animated:YES completion:^{}];
+}
+
+/// 弹出UIImagePickerController基础方法
+- (void)presentCommonImagePickerControllerWithSourceController:(UIViewController *)sourceController
+{
+    ///没有经过验证
+    if (self.sourceType == UIImagePickerControllerSourceTypePhotoLibrary || self.sourceType == UIImagePickerControllerSourceTypeSavedPhotosAlbum) {
+        if(![UIImagePickerController isSourceTypeAvailable:self.sourceType])
+        {
+            __weak __typeof(&*self)weakSelf = self;
+            [self presentGeneralAlertInViewController:sourceController withTitle:@"还没有照片,马上去拍照一个吧" message:nil cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"确定" doHandler:^(UIAlertAction *action) {
+                [weakSelf presentCameraWithSourceController:sourceController];
+            }];
+            return;
+        }
+    }
+    if ([self.delegate respondsToSelector:@selector(zxImagePickerVCManagerWithOpenCustomAlbumList:)]) {
+        [self.delegate zxImagePickerVCManagerWithOpenCustomAlbumList:self];
+        return;
+    }
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.mediaTypes = self.mediaTypes;
+    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    imagePicker.modalTransitionStyle = UIModalPresentationFullScreen;
+    imagePicker.allowsEditing = self.allowsEditing;
+    imagePicker.sourceType = self.sourceType;
+    imagePicker.cameraDevice = self.cameraDevice;
+    [sourceController presentViewController:imagePicker animated:YES completion:^{}];
+}
+
+#pragma mark- UIAlertController弹框
 
 - (void)presentGeneralAlertInViewController:(UIViewController *)viewController
                                   withTitle:(nullable NSString *)title
@@ -58,181 +203,40 @@ static char pickerControllerActionKey;
                               doButtonTitle:(nullable NSString *)doButtonTitle
                                   doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
 {
-    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
-    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
-    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
-    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
-    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
-    
+    if (!title && message) {
+        title = NSLocalizedString(title, nil);
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     if (cancelButtonTitle.length >0)
     {
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:aCancelButtonTitle style:UIAlertActionStyleCancel handler:handler];
+        //UIAlertAction的title参数不能为nil，会奔溃；
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(cancelButtonTitle, @"Cancel") style:UIAlertActionStyleCancel handler:handler];
         [alertController addAction:cancelAction];
     }
     if (doButtonTitle.length>0)
     {
-        UIAlertAction *doAction = [UIAlertAction actionWithTitle:aDoButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
+        UIAlertAction *doAction = [UIAlertAction actionWithTitle:NSLocalizedString(doButtonTitle, @"OK") style:UIAlertActionStyleDefault handler:doHandler];
         [alertController addAction:doAction];
     }
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 
-#pragma mark - actionsheet delegate
+#pragma mark - 其它方法
 
-- (void)zxPresentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController
-{
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.mediaTypes = @[(NSString *)kUTTypeImage];
-//    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    imagePicker.modalTransitionStyle = UIModalPresentationOverCurrentContext;
-
-    // 如果是camera,不需要allowsEditing
-    if (sourceType ==UIImagePickerControllerSourceTypeCamera)
-    {
-        // 判断是否支持相机
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-        {
-            if (self.awayCheckAuthorization)
-            {
-                [[ZXAuthorizationManager shareInstance] zx_requestCameraAuthorizationWithDeniedAlertViewInViewController:sourceController call:^(ZXAuthorizationStatus status) {
-                    if (status == ZXAuthorizationStatusAuthorized)
-                    {
-                        imagePicker.allowsEditing = self.allowsEditing;
-                        // 跳转到相机或相册页面; 必须是支持摄像头，不然赋值摄像头会报错
-                        imagePicker.sourceType = sourceType;
-                        [sourceController presentViewController:imagePicker animated:YES completion:^{}];
-                    }
-                }];
-            }
-            else
-            {
-                imagePicker.allowsEditing = self.allowsEditing;
-                // 跳转到相机或相册页面; 必须是支持摄像头，不然赋值摄像头会报错
-                imagePicker.sourceType = sourceType;
-                [sourceController presentViewController:imagePicker animated:YES completion:^{}];
-            }
- 
-        }
-        else
-        {
-            //模拟器
-            [self presentGeneralAlertInViewController:sourceController withTitle:@"该设备不支持摄像头拍照" message:nil cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"确定" doHandler:nil];
-            return;
-        }
-    }
-    //如果是相册
-    else
-    {
-        if (self.awayCheckAuthorization)
-        {
-            [[ZXAuthorizationManager shareInstance] zx_requestPhotoLibraryAuthorizationWithDeniedAlertViewInViewController:sourceController call:^(ZXAuthorizationStatus status) {
-                
-                if (status == ZXAuthorizationStatusAuthorized)
-                {
-                    if (self.albumListType == PhotosAlbumListType_custom)
-                    {
-                        //          [self pushToImagePickerToController:sourceController];
-                    }
-                    else
-                    {
-                        imagePicker.allowsEditing = self.allowsEditing;
-                        imagePicker.sourceType = sourceType;
-                        [sourceController presentViewController:imagePicker animated:YES completion:^{}];
-                    }
-                }
-            }];
-        }
-        else
-        {
-            if (self.albumListType == PhotosAlbumListType_custom)
-            {
-                //          [self pushToImagePickerToController:sourceController];
-            }
-            else
-            {
-                imagePicker.allowsEditing = self.allowsEditing;
-                imagePicker.sourceType = sourceType;
-                [sourceController presentViewController:imagePicker animated:YES completion:^{}];
-            }
-        }
-
-    }
-}
-
-
-
-
-
-///// Return YES if Authorized 返回YES如果得到了授权-  相册权限
-//- (BOOL)authorizationStatusAuthorized {
-//    NSInteger status = [PHPhotoLibrary authorizationStatus];
-//    if (status == 0) {
-//        /**
-//         * 当某些情况下AuthorizationStatus == AuthorizationStatusNotDetermined时，无法弹出系统首次使用的授权alertView，系统应用设置里亦没有相册的设置，此时将无法使用，故作以下操作，弹出系统首次使用的授权alertView
-//         */
-//        [self requestAuthorizationWithCompletion:nil];
-//    }
-//
-//    return status == 3;
-//}
-//
-//- (void)requestAuthorizationWithCompletion:(void (^)(void))completion {
-//    void (^callCompletionBlock)(void) = ^(void){
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (completion) {
-//                completion();
-//            }
-//        });
-//    };
-//
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-//            callCompletionBlock();
-//        }];
-//    });
-//}
-
-/*
-- (void)pushToImagePickerToController:(UIViewController*)vc
-{
-    ImagePickerViewController *pickerVC =[[ImagePickerViewController alloc] init];
-    ZXOrientationNaController *navi =[[ZXOrientationNaController alloc] initWithRootViewController:pickerVC];
-    pickerVC.minNumberOfSelection =self.minNumberOfSelection;
-    pickerVC.maxNumberOfSelection =self.maxNumberOfSelection;
-    pickerVC.isNeedUpdate = self.isNeedUpdate;
-    pickerVC.group =nil;
-    pickerVC.delegate =self;
-    pickerVC.displayCutBtn =self.displayCutBtn;
-  
-    [vc presentViewController:navi animated:YES completion:nil];
-}
-*/
-
-///////基本不用的
 // 前面的摄像头是否可用-如果是坏了不知道能不能判断；
-- (BOOL) isFrontCameraAvailable{
-    return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
+- (BOOL) isAvailableFrontCamera{
+    BOOL isAvailable = [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
+    return isAvailable;
 }
 
 // 后面的摄像头是否可用-如果是坏了不知道能不能判断；
-- (BOOL) isRearCameraAvailable{
-    return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear];
+- (BOOL) isAvailableRearCamera{
+    
+    BOOL isAvailable = [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear];
+    return isAvailable;
 }
 
-- (BOOL)isAvailabelCamera
-{
-    if (![self isFrontCameraAvailable] && ![self isRearCameraAvailable])
-    {
-        NSLog(@"前置后置摄像头都不能用");
-//        [self presentGeneralAlertInViewController:sourceController withTitle:@"温馨提示" message:@"该设备相机摄像头不能用" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"知道了" doHandler:nil];
-        return NO;
-    }
-    return YES;
-}
 
 
 #pragma mark-imagePickerControllerDelegate
@@ -265,9 +269,9 @@ static char pickerControllerActionKey;
             }
         }
         
-        if ([self.morePickerActionDelegate respondsToSelector:@selector(zxImagePickerController:didFinishPickingMediaWithInfo:withEditedImage:)])
+        if ([self.delegate respondsToSelector:@selector(zxImagePickerController:didFinishPickingMediaWithInfo:withEditedImage:)])
         {
-            [self.morePickerActionDelegate zxImagePickerController:picker didFinishPickingMediaWithInfo:info withEditedImage:image];
+            [self.delegate zxImagePickerController:picker didFinishPickingMediaWithInfo:info withEditedImage:image];
         }
     }
 //    //保存视频,这里不对，如果已经有视频了，就不能再保存了
@@ -280,40 +284,17 @@ static char pickerControllerActionKey;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*
-//多选相册回调代理－有uploadId的时候
-- (void)imagePickerController:(ImagePickerViewController *)imagePicker didSelectAssets:(NSArray *)assets isOriginal:(BOOL)original requestData:(id)data
-{
-    
-    if ([self.morePickerActionDelegate respondsToSelector:@selector(zxImagePickerController:didSelectAssets:isOriginal:requestData:)])
-    {
-        [self.morePickerActionDelegate zxImagePickerController:imagePicker didSelectAssets:assets isOriginal:original requestData:data];
-    }
 
-}
-
-//多选相册回调代理
-- (void)imagePickerController:(ImagePickerViewController *)imagePicker didSelectAssets:(NSArray *)assets isOriginal:(BOOL)original
-{
-    if ([self.morePickerActionDelegate respondsToSelector:@selector(zxImagePickerController:didSelectAssets:isOriginal:)])
-    {
-        [self.morePickerActionDelegate zxImagePickerController:imagePicker didSelectAssets:assets isOriginal:original];
-    }
-//    NSLog(@"%@ ---%d",assets,original);
-}
-
-*/
-
-- (void)setMorePickerActionDelegate:(id<UIImagePickerControllerDelegate>)morePickerActionDelegate
+- (void)setDelegate:(id<ZXImagePickerVCManagerDelegate>)delegate
 {
     [self willChangeValueForKey:@"key"];
-    objc_setAssociatedObject(self, &pickerControllerActionKey, morePickerActionDelegate, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &pickerControllerActionKey, delegate, OBJC_ASSOCIATION_ASSIGN);
     [self didChangeValueForKey:@"key"];
 }
 
 
 
-- (id<UIImagePickerControllerDelegate>)morePickerActionDelegate
+- (id<ZXImagePickerVCManagerDelegate>)delegate
 {
     return objc_getAssociatedObject(self, &pickerControllerActionKey);
 }
@@ -346,4 +327,6 @@ static char pickerControllerActionKey;
     }
     NSLog(@"%@",videoPath);
 }
+
+
 @end

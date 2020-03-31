@@ -11,7 +11,7 @@
 
 @implementation UIApplication (ZXCategory)
 
-
+//定义状态栏区域的框架矩形。如果状态栏隐藏，则statusBarFrame属性的值为CGRectZero。
 - (CGFloat)zx_safeAreaStatusBarHeight
 {
     CGFloat statusBarHeight = 0;
@@ -22,6 +22,62 @@
         statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     }
     return statusBarHeight;
+}
+/*
+- (CGFloat)zx_safeAreaStatusBarHeight
+{
+    CGFloat statusBarHeight = 0;
+    if (@available(iOS 13.0, *)) {
+         NSSet *set = [UIApplication sharedApplication].connectedScenes;
+         UIWindowScene *scene = (UIWindowScene *)[[set allObjects] firstObject];
+         id sceneDelegate = scene.delegate;
+         if (!sceneDelegate){
+             statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+         }
+         else
+         {
+             if ([sceneDelegate respondsToSelector:@selector(setWindow:)])
+             {
+                 statusBarHeight = [sceneDelegate window].windowScene.statusBarManager.statusBarFrame.size.height;
+             }
+         }
+    }
+    else
+    {
+        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    return statusBarHeight;
+}
+*/
+- (CGFloat)zx_safeAreaBottomHeight
+{
+    CGFloat safeAreaBottomHeight = 0;
+    if (@available(iOS 13.0, *)) {
+          NSSet *set = [UIApplication sharedApplication].connectedScenes;
+          UIWindowScene *scene = (UIWindowScene *)[[set allObjects] firstObject];
+          id sceneDelegate = scene.delegate;
+          if (!sceneDelegate){
+              UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+              safeAreaBottomHeight = areaInset.bottom;
+          }
+          else
+          {
+              if ([sceneDelegate respondsToSelector:@selector(setWindow:)])
+              {
+                  safeAreaBottomHeight = [sceneDelegate window].safeAreaInsets.bottom;
+              }
+          }
+    }
+    else
+    {
+        if (@available(iOS 11.0, *)) {
+            UIEdgeInsets areaInset = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+            if (areaInset.bottom >0) {
+                safeAreaBottomHeight = areaInset.bottom;
+            }
+        }
+    }
+    return safeAreaBottomHeight;
 }
 
 - (UIWindow *)zx_mainWindow
@@ -45,10 +101,29 @@
     }else{
         window = [[[UIApplication sharedApplication] delegate] window];
     }
-    
     return window;
 }
 
+
+- (NSArray *)zx_windows
+{
+    NSArray *windows = [NSArray array];
+    if (@available(iOS 13.0,*)) {
+        NSSet *set = [UIApplication sharedApplication].connectedScenes;
+        UIWindowScene *scene = (UIWindowScene *)[[set allObjects] firstObject];
+        id sceneDelegate = scene.delegate;
+        if (!sceneDelegate){
+            windows = UIApplication.sharedApplication.windows;
+        }
+        else
+        {
+            windows = scene.windows;
+        }
+    }else{
+        windows = UIApplication.sharedApplication.windows;
+    }
+    return windows;
+}
 
 
 
@@ -85,18 +160,6 @@
 {
     NSURL *relativeURL= [NSURL URLWithString:@"mailto:"];
     NSURL *url = [NSURL URLWithString:phone relativeToURL:relativeURL];
-    if (@available(iOS 10.0,*)) {
-        [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
-    }
-    else
-    {
-        [[UIApplication sharedApplication] openURL:url];
-    }
-}
-
-- (void)zx_openURLToWifiSetting
-{
-    NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
     if (@available(iOS 10.0,*)) {
         [[UIApplication sharedApplication]openURL:url options:@{} completionHandler:nil];
     }

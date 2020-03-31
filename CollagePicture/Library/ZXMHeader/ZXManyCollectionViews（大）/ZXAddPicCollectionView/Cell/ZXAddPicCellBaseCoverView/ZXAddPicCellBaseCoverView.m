@@ -1,14 +1,14 @@
 //
-//  ZXAddPicBaseContentView.m
+//  ZXAddPicCellBaseCoverView.m
 //  YiShangbao
 //
 //  Created by simon on 2018/4/18.
 //  Copyright © 2018年 com.Microants. All rights reserved.
 //
 
-#import "ZXAddPicBaseContentView.h"
+#import "ZXAddPicCellBaseCoverView.h"
 
-@implementation ZXAddPicBaseContentView
+@implementation ZXAddPicCellBaseCoverView
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -7,6 +7,8 @@
 //
 //  2020.02.03，增加兼容iOS13Scene场景的window
 //  2020.02.05，增加一系列openURL的方法；
+//  2020.03.16，优化zx_safeAreaBottomHeight方法，iOS13的UIWindowScene造成的bug；
+//  2020.03.23，增加兼容Xcode11新建iOS13的工程获取windows；
 
 
 #import <UIKit/UIKit.h>
@@ -15,14 +17,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIApplication (ZXCategory)
 
-/// iPhoneX系列 ? (20.f+24.f) : (20.f))；兼容iOS13
+/// iPhoneX系列 ? (20.f+24.f) : (20.f))；兼容iOS13;
+/// 注意：在viewDidLoad中self.view.window 还是nil,除非用appDelegate的window的类目方法；
+//  如果状态栏隐藏，则statusBarFrame属性的值为CGRectZero。
 @property (nonatomic, assign, readonly) CGFloat zx_safeAreaStatusBarHeight;
+
+
+/// iPhoneX系列 ? (34) : (0)); 2020.3.16 优化iOS13的UIWindowScene造成的bug；
+@property (nonatomic, assign, readonly) CGFloat zx_safeAreaBottomHeight;
 
 
 /// 根据应用程序获取appDelegate的window 或SceneDelegate的window；兼容iOS13场景Scene；
 @property (nonatomic, assign, readonly) UIWindow *zx_mainWindow;
 
-
+/// 根据应用程序获取UIApplication的windows 或UIWindowScene的windows；兼容iOS13场景Scene；
+@property (nonatomic, readonly) NSArray<__kindof UIWindow *> *zx_windows;
 /**
  拨打电话-UIApplication openURL方式；
  @param phone 电话号码
@@ -47,9 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 打开当前app的系统设置页面；
 - (void)zx_openURLToAppSetting;
 
-
-/// 打开wifi设置页面
-- (void)zx_openURLToWifiSetting;
 
 /// iTunes links:打开苹果App Store中app的详情页；
 /// @param appId 每个在itunes上申请的App的唯一id

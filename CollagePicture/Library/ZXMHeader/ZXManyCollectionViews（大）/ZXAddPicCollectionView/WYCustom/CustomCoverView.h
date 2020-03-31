@@ -9,9 +9,9 @@
 
 //  5.4 优化重用问题
 
-#import "ZXAddPicBaseContentView.h"
+#import "ZXAddPicCellBaseCoverView.h"
 
-@interface CustomCoverView : ZXAddPicBaseContentView
+@interface CustomCoverView : ZXAddPicCellBaseCoverView
 
 // 底部半透明视图
 @property (nonatomic, strong) UIView *alphaBgView;

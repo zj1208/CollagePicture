@@ -86,9 +86,12 @@
             dotPrefixString = [separatedArray firstObject];
             dotSuffixString = [separatedArray lastObject];
             if (suffixBlock) {
-               suffixBlock([self.string rangeOfString:dotSuffixString]);
+                //当999.99，dotSuffixString也能在小数点前面找到的时候,会返回前面的range[0,2]
+//                [self.string rangeOfString:dotSuffixString],会造成错误；
+               suffixBlock(NSMakeRange(dotPrefixString.length+1, dotSuffixString.length));
             }
         }
+        //没有小数点后面的数字时候，后缀block不回调；
         else
         {
             dotPrefixString = self.string;

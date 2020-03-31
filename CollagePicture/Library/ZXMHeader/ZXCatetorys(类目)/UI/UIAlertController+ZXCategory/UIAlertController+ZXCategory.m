@@ -16,16 +16,6 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
 @implementation UIAlertController (ZXCategory)
 
 
-//+ (void)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
-//                                     withTitle:(nullable NSString *)title
-//                                       message:(nullable NSString *)message
-//                             cancelButtonTitle:(nullable NSString *)cancelButtonTitle cancleHandler:(void (^ __nullable)(UIAlertAction *action))handler
-//                                 doButtonTitle:(nullable NSString *)doButtonTitle
-//                                     doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
-//                           preferredActionTitle:(nullable NSString *)preferredTitle
-//{
-//    
-//}
 
 + (instancetype)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
                               withTitle:(nullable NSString *)title
@@ -34,26 +24,25 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
                           doButtonTitle:(nullable NSString *)doButtonTitle
                               doHandler:(void (^ __nullable)(UIAlertAction *action))doHandler
 {
-//    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
-//    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
-//    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
-//    NSString *aDoButtonTitle =doButtonTitle?NSLocalizedString(doButtonTitle, nil):nil;
+    // 如果key为nil, value为nil，则NSLocalizedString返回一个空字符串@"";<object returned empty description>;
+   //  Message：描述语，默认常规大小字体。如果title=nil，则message会变成标题，加粗字体。
+   //  如果想让message必须保持常规字体，则title使用字符串空@“”，让message保持副标题。
+    if (!title && message) {
+        title = NSLocalizedString(title, nil);
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    NSString *aTitle = title;
-    NSString *aMessage = message;
-    NSString *aCancelButtonTitle = cancelButtonTitle;
-    NSString *aDoButtonTitle =doButtonTitle;
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:UIAlertControllerStyleAlert];
-    
+    #if TARGET_OS_IOS || TARGET_OS_WATCH
+    #endif
     if (cancelButtonTitle.length >0)
     {
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:aCancelButtonTitle style:UIAlertActionStyleCancel handler:handler];
+        //UIAlertAction的title参数不能为nil，会奔溃；
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(cancelButtonTitle, @"Cancel") style:UIAlertActionStyleCancel handler:handler];
         [alertController addAction:cancelAction];
     }
     if (doButtonTitle.length>0)
     {
-        UIAlertAction *doAction = [UIAlertAction actionWithTitle:aDoButtonTitle style:UIAlertActionStyleDefault handler:doHandler];
+        UIAlertAction *doAction = [UIAlertAction actionWithTitle:NSLocalizedString(doButtonTitle, @"OK") style:UIAlertActionStyleDefault handler:doHandler];
         [alertController addAction:doAction];
     }
     [viewController presentViewController:alertController animated:YES completion:nil];
@@ -75,22 +64,18 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
        popoverPresentationControllerBlock:(nullable UIAlertControllerPopoverPresentationControllerBlock)popoverPresentationControllerBlock
                                  tapBlock:(nullable UIAlertControllerCompletionBlock)tapBlock
 {
-    // 注意：如果错误使用NSLocalizedString(nil, nil),UI会展示错误，title以@“”处理，顶部留空白；
-//    NSString *aTitle = title?NSLocalizedString(title, nil):nil;
-//    NSString *aMessage = message?NSLocalizedString(message, nil):nil;
-//    NSString *aCancelButtonTitle = cancelButtonTitle?NSLocalizedString(cancelButtonTitle, nil):nil;
-//    NSString *aDestructiveButtonTitle = destructiveButtonTitle?NSLocalizedString(destructiveButtonTitle, nil):nil;
+//    (1)UIAlertControllerStyleActionSheet样式：如果title，message用@"",则actionSheet会添加各自的label，并且各自会占UI一个有效大小位置，但是内容是@""；
+//  (2)如果使用NSLocalizedString(nil, nil),会返回@“”;
+    if (preferredStyle == UIAlertControllerStyleAlert) {
+        if (!title && message) {
+            title = NSLocalizedString(title, nil);
+        }
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:preferredStyle];
     
-    NSString *aTitle = title;
-    NSString *aMessage = message;
-    NSString *aCancelButtonTitle = cancelButtonTitle;
-    NSString *aDestructiveButtonTitle = destructiveButtonTitle;
-
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:aTitle message:aMessage preferredStyle:preferredStyle];
-    
-    if (aCancelButtonTitle.length>0)
+    if (cancelButtonTitle.length>0)
     {
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:aCancelButtonTitle
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle
                                                                style:UIAlertActionStyleCancel
                                                              handler:^(UIAlertAction * _Nonnull action){
                                                                     if (tapBlock)
@@ -101,9 +86,9 @@ static NSInteger const UIAlertControllerBlocksFirstOtherButtonIndex = 2;
         [alertController addAction:cancelAction];
  
     }
-    if (aDestructiveButtonTitle.length>0)
+    if (destructiveButtonTitle.length>0)
     {
-        UIAlertAction *destructionAction = [UIAlertAction actionWithTitle:aDestructiveButtonTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *destructionAction = [UIAlertAction actionWithTitle:destructiveButtonTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             if (tapBlock) {
                 tapBlock(alertController,action,UIAlertControllerBlocksDestructiveButtonIndex);
             }

@@ -227,7 +227,7 @@ tmp;\
     dispatch_async(queue, ^{
         
         @autoreleasepool {
-            [self addMorePickerController];
+            self.imagePickerVCManager.delegate = self;
         }
     });
   
@@ -301,14 +301,14 @@ tmp;\
 }
 
 #pragma mark - MorePickerController
-- (void)addMorePickerController
+
+- (ZXImagePickerVCManager *)imagePickerVCManager
 {
-    ZXImagePickerVCManager *manager = [[ZXImagePickerVCManager alloc] init];
-    self.imagePickerVCManager = manager;
-    self.imagePickerVCManager.morePickerActionDelegate = self;
-    self.imagePickerVCManager.displayCutBtn = YES;
-    self.imagePickerVCManager.maxNumberOfSelection =12;
-    self.imagePickerVCManager.minNumberOfSelection =1;
+    if (!_imagePickerVCManager) {
+        ZXImagePickerVCManager *manager = [[ZXImagePickerVCManager alloc] init];
+        _imagePickerVCManager = manager;
+    }
+    return _imagePickerVCManager;
 }
 
 #pragma mark - 加载模版图片数据
@@ -765,13 +765,13 @@ tmp;\
     self.tempEditingView = imageEditView;
     if (self.againMakingBtn.selected)
     {
-        self.imagePickerVCManager.maxNumberOfSelection = self.imageEditViewMArray.count;
+//        self.imagePickerVCManager.maxNumberOfSelection = self.imageEditViewMArray.count;
     }
     else
     {
        // self.imagePickerVCManager.maxNumberOfSelection = [self getTotalNumImageEditView];
     }
-    [self.imagePickerVCManager zxPresentActionSheetToImagePickerWithSourceController:self];
+    [self.imagePickerVCManager zx_presentActionSheetToImagePickerWithSourceController:self];
 }
 
 

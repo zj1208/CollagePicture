@@ -5,37 +5,41 @@
 //  Created by simon on 17/3/15.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 
-//  简介：N行*N列 格式的添加图片组件，最后一个是添加图片按钮；可以自定义提示view（UIButton图 + 提示UILabel）；目前为止数据源是ZXPhoto对象，才可以添加自定义的遮图；本地image对象数据源不可以；
-
-//  [3.4.0]-外部动态配置自定义遮视图contentView；ZXAddPicViewKit调用注册；
-//  [3.5.0] 1.新增长按item 拖动事件；iOS8完善，利用iOS9方法有缺陷；
+//  简介：N行*N列 格式的添加图片组件，最后一个是添加图片按钮；可以自定义提示view-ZXAddPicDefaultContentView（UIButton图 + 提示UILabel）；目前为止数据源是ZXPhoto对象，才可以添加自定义的遮图，本地image对象数据源不可以；iOS12以前添加长按事件到cell中，iOS12以后添加长按事件到collectionView上；
+//  外部可以动态配置自定义遮视图contentView；ZXAddPicViewKit调用注册；
+//  有以下特性：
 //  (1)长按添加按钮item无效，长按其它有效item返回代理方法；
 //  (2)长按有效的item，删除icon按钮全部隐藏，当前按住的item有放大效果；
 //  (3)iOS8长按cell任何位置，在移动中都会根据之前的cell中心与长按触摸位置的偏差属性，动态赋值长按移动的cell中心位置；优化长按cell，刚移动时候cell中心跳动的问题；
 //  (4)长按有效的item,设置半透明度，结束长按事件时候，恢复透明度；
-//  (5)iOS8切换item之间关闭动画，切换流畅；(6)增加很多代理回调；
-//  2.动态修改占位符添加按钮的图片；支持iOS8，iOS9；
-//  [3.6.0]-1.默认添加视图View 与 collectionView之间切换增加动画过渡效果；2.增加裁剪；3.删除item时候，在改变高度情况下调用reloadData，否则不调用，保持删除动画效果；
-//  4.过滤9宫格编辑图片组件中cell空白区域的无效长按事件，点击事件；
+//  (5)iOS8切换item之间关闭动画，切换流畅；
+//  (6)有长按item 拖动事件；但是在iOS8完善，利用iOS9方法有缺陷；
+//  (7)能动态修改占位符添加按钮的图片；
+//  (8)默认添加视图View 与 collectionView之间切换有动画过渡效果；
+//  (9)删除item时候，在改变高度情况下调用reloadData，否则不调用，保持删除动画效果；
+//  (10)过滤9宫格编辑图片组件中cell空白区域的无效长按事件，点击事件；
+//  (11)目前约束只支持最小iOS9系统；
 
-//  注意：（1）删除item时候，如果外层tableView/collectionView调用[self.tableView  reloadData]方法会让cell中的删除动画无效；
-//       （2）如果当前view是作为cell的子视图，则不要用reloadIndexPaths，reloadSections方法刷新cell，否则必须每次重新调用setData方法新赋值数据，因为会新创建一个cell2+cell2数据作为复用；不然会有莫名不好用户交互；
+
+//  注意：（1）删除item时候，如果外层tableView/collectionView调用[self.tableView  reloadData]方法会让cell中的删除动画无效；     （2）如果当前view是作为cell的子视图，则不要用reloadIndexPaths，reloadSections方法刷新cell，否则必须每次重新调用setData方法新赋值数据，因为会新创建一个cell2+cell2数据作为复用；不然会有莫名不好用户交互；
 
 //  待优化 
 //   （1）长按item时候，可以增加动画抖动效果；（2）iOS9方法遇到不能切换的需要cancle，如果遇到中间不能切换的item，造成无法越过那个item，用户使用体验非常的差；
 //   （3）self.tableView.estimatedRowHeight = 125.f;self.tableView.rowHeight = UITableViewAutomaticDimension; 当tableView使用预算高度方法后，调用[self.tableView  reloadData]会导致tableView滚动一下,让离屏幕最近的cell到屏幕起点；除非每个cell高度固定，也不用预算高度技术；
+
 //  5.03  九宫格组件优化；改为外部动态配置遮图；
 //  5.17  增加长按item移动功能；
-//  6.01  增加裁剪；
-//  6.08  过滤9宫格编辑图片组件中cell空白区域的无效长按事件，点击事件；
+//  2018.6.08  过滤9宫格编辑图片组件中cell空白区域的无效长按事件，点击事件；
 //  2019.1.23  把常量 和 宏移动到新类ZXAddPicCollectionConst中；（改动很多文件）
+//  2020.03.18 大改cell；优化代码；增加collectionView原生约束设置；增加代理方法；
 
 #import <UIKit/UIKit.h>
-#import "ZXAddPicViewCell.h"
 // 图片模型
 #import "ZXPhoto.h"
-#import "ZXAddPicCoverView.h"
+#import "ZXAddPicDefaultContentView.h"
 #import "ZXAddPicViewKit.h"
+#import "ZXAddPicViewCell.h"
+#import "ZXAddPicPlaceholderCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,7 +64,7 @@ static NSString * const ZXAddButtonImageName_AddPhoto = @"zxPhoto_addImage";
 
 @protocol ZXAddPicCollectionViewDelegate;
 
-
+UIKIT_EXTERN API_AVAILABLE(ios(9.0))
 @interface ZXAddPicCollectionView : UIView<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
 @property (nonatomic, weak) id<ZXAddPicCollectionViewDelegate>delegate;
@@ -68,29 +72,23 @@ static NSString * const ZXAddButtonImageName_AddPhoto = @"zxPhoto_addImage";
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 
-// 添加默认提示view
-@property (nonatomic, strong) ZXAddPicCoverView *addPicCoverView;
-// 是否显示默认提示view
-@property (nonatomic, assign) BOOL showAddPicCoverView;
-
-/** 所有图片的状态（默认为已发布状态） */
-@property (nonatomic, assign) ZXPhotosViewState photosState;
-
-// 可以是image数组，也可以是url地址；
+/// 可以是image数组，也可以是url地址，也可以是对象；
 @property (nonatomic, strong) NSMutableArray *dataMArray;
 
-// 本地image数组
-@property (nonatomic, strong) NSMutableArray *images;
+/// 本地image数组-目前没用到；
+//@property (nonatomic, strong) NSMutableArray *images;
 
-// 设置collectionView的sectionInset
-// 如果 使用AddPicCoverView，则collectionView边距要设置15，picView.sectionInset = UIEdgeInsetsMake(5, 15, 10, 15); 保持一致； 这是肉眼看到图片与collectionView的边距，真实右边边距 = 设置的边距-小红按钮边距10 = 15-10 =5； 下边距设置10；
+
+/// 设置collectionView的理论sectionInset；
+/// 如果使用addPicDefaultContentView，因为它的默认左边距是15，所以collectionView左边距也要设置15，picView.sectionInset = UIEdgeInsetsMake(15, 15, 10, 15); 保持一致；
+/// 上边距和右边距需要动态调整：虽然肉眼看到图片与collectionView的边距比较大；内部实际获取到的真实上/右边边距 = 设置的边距-小红按钮边距10 = 15-10 =5；
 
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
 
-// item之间的间距,忽略删除按钮; 在做一行固定显示几个item的时候，可以用于增大间距来减小item的width；
+/// item之间的理论间距，忽略删除按钮存在的真实间距; 在做一行固定显示几个item的时候，可以用于增大间距来减小item的width；
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
 
-// 行间距，忽略删除按钮
+/// 理论行间距；内部设置实际是计算减去删除按钮的；
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
 
 
@@ -99,33 +97,47 @@ static NSString * const ZXAddButtonImageName_AddPhoto = @"zxPhoto_addImage";
  */
 @property (nonatomic, assign) NSInteger columnsCount;
 
-
-// 设置是否存在动态“添加图片“按钮；
+/// 设置是否存在动态“添加图片“按钮；
 @property (nonatomic, getter=isExistInputItem) BOOL existInputItem;
 
-// 设置添加按钮的图片； 外部可以设置，默认有图片；
-@property (nonatomic, strong) UIImage *addButtonPlaceholderImage;
 
-// 最多可显示的item数量，到达这个数，就不能再加入，”添加图片“按钮也会移除
+/// 最多可显示的item数量，到达这个数，就不能再加入，”添加图片“按钮也会移除
 @property (nonatomic, assign) NSInteger maxItemCount;
 
-// 设置item的width，height，size；
+/// 设置item的width，height，size；
 @property (nonatomic, assign) CGFloat picItemWidth;
 @property (nonatomic, assign) CGFloat picItemHeight;
 @property (nonatomic, assign) CGSize picItemSize;
 
 
-// 设置是否可以移动item；默认NO； 移动item的开关；
+/** 所有图片的状态（默认为已发布状态） */
+@property (nonatomic, assign) ZXPhotosViewState photosState;
+
+
+/// 是否显示默认提示view-ZXAddPicDefaultContentView；默认YES
+@property (nonatomic, assign) BOOL showAddPicDefaultContentView;
+
+/// 添加的默认提示view对象
+@property (nonatomic, strong) ZXAddPicDefaultContentView *addPicDefaultContentView;
+
+
+/// 设置添加按钮的图片； 外部可以设置，默认有图片；
+@property (nonatomic, strong) UIImage *addButtonPlaceholderImage;
+
+
+/// 设置是否可以长按item后移动；默认NO； 移动item的开关；如果YES，则会添加长按手势；
 @property (nonatomic, assign, getter=isCanMoveItem) BOOL canMoveItem;
 
-// 是否展示删除icon按钮，一般用于动画效果处理；默认YES；
+
+
+/// 是否展示删除icon按钮，一般用于动画效果处理；默认YES；
 @property (nonatomic, assign) BOOL showDeleteIconButton;
 
 // 获取是否包含视频资源；
 @property (nonatomic, getter=isContainVideoAsset) BOOL containVideoAsset;
 
-// 获取删除item前后内容高度是否改变；经过这个判断，如果有改变则外层tableView reloadData，没改变高度不reloadData，可以优化当前collectionView删除的动画效果保留；
-// 为何有些tableView，不用加这个判断也能保留当前collectionView删除的动画效果？
+/// 获取删除item前后内容高度是否改变；经过这个判断，如果有改变则外层tableView reloadData，没改变高度不reloadData，可以优化当前collectionView删除的动画效果保留；
+/// 为何有些tableView，不用加这个判断也能保留当前collectionView删除的动画效果？
 @property (nonatomic, readonly, getter=isChangeDeleteContentHeight) BOOL changeDeleteContentHeight;
 
 
@@ -136,10 +148,13 @@ static NSString * const ZXAddButtonImageName_AddPhoto = @"zxPhoto_addImage";
 // 获取data数据中是否包含视频资源
 - (BOOL)containsVideoObject:(NSArray *)data;
 
-// 动态更新占位符cell的image
+/// 动态更新占位符cell的image
 - (void)updatePlaceholderButtonImage:(UIImage *)placeholderImage;
 
 
+
+/// 设置数据源
+/// @param data 数据源数组；
 - (void)setData:(NSArray *)data;
 
 /**
@@ -168,10 +183,18 @@ static NSString * const ZXAddButtonImageName_AddPhoto = @"zxPhoto_addImage";
 - (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)addPicCollectionView  commitEditingStyle:(ZXAddPicCellEditingStyle)editingStyle forRowAtIndexPath:(nullable NSIndexPath *)indexPath;
 
 
-// 点击已存在的图片
+/// 点击已存在的图片
 - (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray;
 
 @optional
+
+
+/// 将要展示数据的时候，自定义设置cell的显示；不影响布局的外观设置
+/// @param addPicCollectionView menuIconView description
+/// @param cell UICollectionViewCell-ZXAddPicPlaceholderCell或ZXAddPicViewCell
+/// @param indexPath collectionView中的对应indexPath
+- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)addPicCollectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath;
+
 
 //注意：长按事件正在进行的时候，不能调用collectionView的reload方法；
 
@@ -237,29 +260,45 @@ NS_ASSUME_NONNULL_END
 #pragma mark - 举例
 #pragma mark -1.UITableViewCell:HeaderPicsViewCell初始化
 
-//1.UITableViewCell:HeaderPicsViewCell初始化
-
-//@implementation HeaderPicsViewCell
 /*
+@interface HeaderPicsViewCell : BaseTableViewCell
+
+@property (nonatomic, strong) ZXAddPicCollectionView *picCollectionView;
+
+@end
+
+@implementation HeaderPicsViewCell
+
+ //xib的时候
 - (void)awakeFromNib
 {
     [super awakeFromNib];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
- 
-    [self.contentView addSubview:self.picsCollectionView];
- 
-    [self.picsCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self setUI];
+}
+ //纯代码的时候
+ - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+ {
+     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+     if (self) {
+         self.selectionStyle = UITableViewCellSelectionStyleNone;
+         [self setUI];
+     }
+     return self;
+ }
+ - (void)setUI
+ {
+    [self.contentView addSubview:self.picCollectionView];
+    [self.picCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
        make.edges.mas_equalTo(self.contentView);
     }];
-    //    已经不用了，隐藏就行
-    self.containerView.hidden = YES;
     //    如果需要自定义遮图，则用自己建立的自定义布局+contentView注册展示；
     [[ZXAddPicViewKit sharedKit]registerLayoutConfig:[CustomAddPicLayoutConfig new]];
-
 }
-- (ZXAddPicCollectionView *)picsCollectionView
+ 
+- (ZXAddPicCollectionView *)picCollectionView
 {
-    if (!_picsCollectionView)
+    if (!_picCollectionView)
     {
         ZXAddPicCollectionView *picView = [[ZXAddPicCollectionView alloc] init];
         picView.maxItemCount = 9;
@@ -270,12 +309,12 @@ NS_ASSUME_NONNULL_END
         picView.picItemHeight = picView.picItemWidth;
         picView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddAssetImageName];
         
-        picView.addPicCoverView.titleLabel.text = [NSString stringWithFormat:@"添加图片或视频\n(最多9个，视频时长不能超过10秒)"];
-        picView.addPicCoverView.titleLabLeading.constant = 23.f;
+        picView.addPicDefaultContentView.titleLabel.text = [NSString stringWithFormat:@"添加图片或视频\n(最多9个，视频时长不能超过10秒)"];
+        picView.addPicDefaultContentView.titleLabLeading.constant = 23.f;
         picView.canMoveItem = YES;
-        _picsCollectionView = picView;
+        _picCollectionView = picView;
     }
-    return _picsCollectionView;
+    return _picCollectionView;
 }
 
 
@@ -283,28 +322,31 @@ NS_ASSUME_NONNULL_END
 - (void)setData:(id)data
 {
     // 动态设置占位符按钮的图标
-    if ([self.picsCollectionView containsVideoObject:data] ||self.picsCollectionView.isContainVideoAsset)
+    if ([self.picCollectionView containsVideoObject:data] ||self.picCollectionView.isContainVideoAsset)
     {
-        self.picsCollectionView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddPhotoImageName];
+        self.picCollectionView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddPhotoImageName];
     }
     else
     {
-        self.picsCollectionView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddAssetImageName];
+        self.picCollectionView.addButtonPlaceholderImage = [UIImage imageNamed:ZXAddAssetImageName];
     }
-    [self.picsCollectionView setData:data];
+    [self.picCollectionView setData:data];
 }
 */
 
 
 #pragma mark -2.controller页面
 
-// 2.controller:
-
 /*
 #import "ZXAddPicCollectionView.h"
 #import "TZImagePickerController.h" //多图选择
 #import "XLPhotoBrowser.h" //大图浏览
 
+@interface CHSVisitSignInController ()<ZXAddPicCollectionViewDelegate>
+@end
+
+ @implementation CHSVisitSignInController
+ 
 - (void)viewDidLoad
 {
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EEEEEE"];
@@ -323,10 +365,10 @@ NS_ASSUME_NONNULL_END
      if (indexPath.section ==0)
      {
          HeaderPicsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId_headerPicsView forIndexPath:indexPath];
-         cell.picsCollectionView.delegate = self;
-         if (_photosMArray.count >0)
+         cell.picCollectionView.delegate = self;
+         if (self.photosMArray.count >0)
          {
-             [cell setData:_photosMArray];
+             [cell setData:self.photosMArray];
          }
          return cell;
      }
@@ -341,7 +383,7 @@ NS_ASSUME_NONNULL_END
         dispatch_once(&onceToken, ^{
             cell = (HeaderPicsViewCell *)[tableView dequeueReusableCellWithIdentifier:CellId_headerPicsView];
         });
-        CGFloat height = [cell.picsCollectionView getCellHeightWithContentData:_photosMArray];
+        CGFloat height = [cell.picCollectionView getCellHeightWithContentData:self.photosMArray];
         return height;
     }
 }
@@ -360,10 +402,109 @@ NS_ASSUME_NONNULL_END
     }];
 }
 */
-/*
-#pragma mark - 添加图片视频
 
-- (void)picBtnAction:(id)sender
+/////////////////////-- 点击事件，编辑事件---////////////////
+/*
+#pragma mark - ZXAddPicCollectionViewDelegate
+
+ //自定义设置cell显示
+ - (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)addPicCollectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+ {
+     if ([cell isKindOfClass:[ZXAddPicViewCell class]]) {
+         ZXAddPicViewCell *cell1 = (ZXAddPicViewCell *)cell;
+         cell1.imageViewCornerRadius = 0;
+         [cell1.deleteBtn setImage:[UIImage imageNamed:@"ic_delete"] forState:UIControlStateNormal];
+     }
+ }
+ 
+- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)addPicCollectionView commitEditingStyle:(ZXAddPicCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == ZXAddPicCellEditingStyleInsert)
+    {
+        [self picAddBtnAction];
+    }
+    else
+    {
+        //删除图片数组models的指定图片数据
+        [self.photosMArray removeObjectAtIndex:indexPath.item];
+        [self.tableView reloadData];
+    }
+}
+
+ //- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray
+ //{
+ ////    大图浏览
+ //    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:picsArray.count datasource:self];
+ //    browser.browserStyle = XLPhotoBrowserStyleCustom;
+ //    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+ //}
+ 
+- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray
+{
+    ZXPhoto *photo = [picsArray objectAtIndex:index] ;
+    if (photo.type == ZXAssetModelMediaTypeVideo)
+    {
+        CCVideoPlayerViewController *playerViewVC = [[CCVideoPlayerViewController alloc]init];
+        [playerViewVC updatePlayerWithURL:photo.original_pic];
+        [self presentViewController:playerViewVC animated:YES completion:nil];
+    }
+    else
+    {
+        
+        NSMutableArray *array = [NSMutableArray array];
+        [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            ZXPhoto *photo = (ZXPhoto *)obj;
+            if (photo.type == ZXAssetModelMediaTypePhoto)
+            {
+                [array addObject:photo];
+            }
+        }];
+        NSInteger inde = index;
+        if (array.count < picsArray.count)
+        {
+            inde = index-1;
+        }
+        //大图浏览
+        XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:inde imageCount:array.count datasource:self];
+        browser.browserStyle = XLPhotoBrowserStyleCustom;
+        browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
+    }
+    
+}
+*/
+
+//////////////////----大图浏览----///////////////
+/*
+ //#pragma mark - XLPhotoBrowserDatasource 大图浏览
+ //
+ //- (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
+ //
+ //    NSString *orginal =[[_photosMArray objectAtIndex:index]original_pic];
+ //    return [NSURL URLWithString:orginal];
+ //}
+ 
+- (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
+    
+    NSMutableArray *array = [NSMutableArray array];
+    [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        ZXPhoto *photo = (ZXPhoto *)obj;
+        if (photo.type == ZXAssetModelMediaTypePhoto)
+        {
+            [array addObject:photo];
+        }
+    }];
+    NSString *orginal =[[array objectAtIndex:index]original_pic];
+    return [NSURL URLWithString:orginal];
+}
+*/
+
+
+/*
+#pragma mark - 添加图片与视频事件
+
+- (void)picAddBtnAction
 {
     // 只允许加一个视频，如果已经有视频了，直接添加图片/拍照
     if ([self getViedoStringFormPicArray:self.photosMArray])
@@ -407,10 +548,12 @@ NS_ASSUME_NONNULL_END
         
     }];
 }
+ */
 
+/*
 #pragma mark - 添加图片
 
-- (void)picBtnAction:(id)sender
+- (void)picAddBtnAction
 {
     //初始化多选择照片
     TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initWithMaxImagesCount:(9-self.photosMArray.count) delegate:self];
@@ -475,90 +618,6 @@ NS_ASSUME_NONNULL_END
 }
 */
 
-/*
-#pragma mark - ZXAddPicCollectionViewDelegate
-
-- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)addPicCollectionView commitEditingStyle:(ZXAddPicCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == ZXAddPicCellEditingStyleInsert)
-    {
-        [self picBtnAction:nil];
-    }
-    else
-    {
-        //删除图片数组models的指定图片数据
-        [self.photosMArray removeObjectAtIndex:indexPath.item];
-        [self.tableView reloadData];
-    }
-}
-
-
-//- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray
-//{
-////    大图浏览
-//    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:index imageCount:picsArray.count datasource:self];
-//    browser.browserStyle = XLPhotoBrowserStyleCustom;
-//    browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
-//}
-
-//#pragma mark - XLPhotoBrowserDatasource
-//
-//- (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
-//
-//    NSString *orginal =[[_photosMArray objectAtIndex:index]original_pic];
-//    return [NSURL URLWithString:orginal];
-//}
-
-- (void)zx_addPicCollectionView:(ZXAddPicCollectionView *)tagsView didSelectPicItemAtIndex:(NSInteger)index didAddPics:(NSMutableArray *)picsArray
-{
-    ZXPhoto *photo = [picsArray objectAtIndex:index] ;
-    if (photo.type == ZXAssetModelMediaTypeVideo)
-    {
-        CCVideoPlayerViewController *playerViewVC = [[CCVideoPlayerViewController alloc]init];
-        [playerViewVC updatePlayerWithURL:photo.original_pic];
-        [self presentViewController:playerViewVC animated:YES completion:nil];
-    }
-    else
-    {
-        
-        NSMutableArray *array = [NSMutableArray array];
-        [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            ZXPhoto *photo = (ZXPhoto *)obj;
-            if (photo.type == ZXAssetModelMediaTypePhoto)
-            {
-                [array addObject:photo];
-            }
-        }];
-        NSInteger inde = index;
-        if (array.count < picsArray.count)
-        {
-            inde = index-1;
-        }
-        //大图浏览
-        XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithCurrentImageIndex:inde imageCount:array.count datasource:self];
-        browser.browserStyle = XLPhotoBrowserStyleCustom;
-        browser.pageControlStyle = XLPhotoBrowserPageControlStyleClassic;
-    }
-    
-}
-#pragma mark    - XLPhotoBrowserDatasource
-
-- (NSURL *)photoBrowser:(XLPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index{
-    
-    NSMutableArray *array = [NSMutableArray array];
-    [self.photosMArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        ZXPhoto *photo = (ZXPhoto *)obj;
-        if (photo.type == ZXAssetModelMediaTypePhoto)
-        {
-            [array addObject:photo];
-        }
-    }];
-    NSString *orginal =[[array objectAtIndex:index]original_pic];
-    return [NSURL URLWithString:orginal];
-}
-*/
 
 /*
 #pragma mark- 长按移动代理
@@ -584,7 +643,7 @@ NS_ASSUME_NONNULL_END
     if (flag)
     {
         ZXAddPicViewCell *cell =(ZXAddPicViewCell *) [addPicCollectionView.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-        CustomCoverView *contentView = (CustomCoverView *) cell.customContentView;
+        CustomCoverView *contentView = (CustomCoverView *) cell.customCellCoverView;
         contentView.alphaCoverView.hidden = NO;
         contentView.alphaCoverView.alpha = 0.f;
         [UIView animateWithDuration:0.2 animations:^{
@@ -592,7 +651,7 @@ NS_ASSUME_NONNULL_END
         } completion:nil];
     }
     ZXAddPicViewCell *cell1 =(ZXAddPicViewCell *) [addPicCollectionView.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:flag?1:0 inSection:0]];
-    CustomCoverView *contentView1 = (CustomCoverView *) cell1.customContentView;
+    CustomCoverView *contentView1 = (CustomCoverView *) cell1.customCellCoverView;
     contentView1.hidden = YES;
 }
 
@@ -613,7 +672,7 @@ NS_ASSUME_NONNULL_END
     if (flag)
     {
         ZXAddPicViewCell *cell =(ZXAddPicViewCell *) [addPicCollectionView.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-        CustomCoverView *contentView = (CustomCoverView *) cell.customContentView;
+        CustomCoverView *contentView = (CustomCoverView *) cell.customCellCoverView;
         [UIView animateWithDuration:0.2 animations:^{
             contentView.alphaCoverView.alpha = 0.f;
         } completion:^(BOOL finished) {
@@ -623,7 +682,7 @@ NS_ASSUME_NONNULL_END
     //    没有发生主图数据变动的时候
     ZXAddPicViewCell *cell1 =(ZXAddPicViewCell *) [addPicCollectionView.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:flag?1:0 inSection:0]];
     
-    CustomCoverView *contentView1 = (CustomCoverView *) cell1.customContentView;
+    CustomCoverView *contentView1 = (CustomCoverView *) cell1.customCellCoverView;
     contentView1.hidden = NO;
 }
 

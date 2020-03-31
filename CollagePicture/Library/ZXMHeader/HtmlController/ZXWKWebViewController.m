@@ -52,15 +52,12 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 
 @interface ZXWKWebViewController ()<WKNavigationDelegate,WKUIDelegate,
  ZXEmptyViewControllerDelegate,UIGestureRecognizerDelegate>
+{
+    @private 
+    //加载类型
+    WebLoadType webLoadType;
+}
 
-
-
-
-//加载类型
-@property (nonatomic) WebLoadType webLoadType;
-
-//1.网络地址
-@property (nonatomic, copy) NSString *URLString;
 //2.本地文件资源
 //文件名/或本地html名
 @property (nonatomic, copy) NSString *localFileName;
@@ -71,11 +68,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 @property (nonatomic, copy) NSString *localTxtFileContent;
 //URL数组
 @property(nonatomic, strong) NSMutableArray *urlArrayM;
-
-///UI
-
-//进度条
-@property (nonatomic, strong) UIProgressView *progressView;
 
 // 导航条按钮;
 // 返回按钮
@@ -90,8 +82,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 // 空视图；
 @property (nonatomic, strong) ZXEmptyViewController *emptyViewController;
 
-///设置标题颜色
-@property (nonatomic, strong) UIColor *titleColor;
 ///默认标题颜色
 @property (nonatomic, strong) UIColor *defaultTitleColor;
 
@@ -103,8 +93,6 @@ typedef NS_ENUM(NSInteger, WebLoadType) {
 ///默认是否隐藏
 @property (nonatomic, assign) BOOL defaultWebNavigationBarHide;
 
-///设置状态条类型
-@property(readwrite, nonatomic) UIStatusBarStyle defaultStatusBarStyle;
 @end
 
 static NSString* const SixSpaces = @"      ";
@@ -127,13 +115,23 @@ static NSString* const SixSpaces = @"      ";
     [super viewDidLoad];
     
     //设置userAgent-必须第一
-    [self userAgent];
     
     //搭建UI
-    [self buildUI];
+    //    self.view.backgroundColor = UIColorFromRGB_HexValue(0xF3F3F3);
+    self.view.backgroundColor = [UIColor whiteColor];
+    //设置导航条
+    [self zxwkSetupNav];
+
+    //添加WKWebView；
+    [self.view addSubview:self.webView];
     
-    //初始化数据
-    [self setData];
+    //添加进度条
+    [self.view addSubview:self.progressView];
+     
+    [self addConstraint:self.webView toSuperviewItem:self.view];
+    
+    //添加监听
+    [self zxWkAddObserver];
     
     //根据不同业务加载数据
     [self webViewRequestLoadType];
@@ -143,12 +141,6 @@ static NSString* const SixSpaces = @"      ";
 {
     [super viewWillAppear:animated];
     
-//    if (self.presentedViewController && ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] || [self.presentedViewController isKindOfClass:[UIDocumentPickerViewController class]]))
-//    {//h5调用系统相册、相机、文件系统后不resume
-//
-//    }else{
-////        [self resume];//h5内路由跳转原生后，返回回来的时候，通知H5刷新页面
-//    }
     if (self.navigationController.viewControllers.count>1)
     {
        self.navigationController.interactivePopGestureRecognizer.delegate = self;
@@ -176,6 +168,7 @@ static NSString* const SixSpaces = @"      ";
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.navigationController setNavigationBarHidden:self.defaultWebNavigationBarHide animated:animated];
+    //可以选择不恢复成上一页的效果；下一页或许就和上一页不同呢；
     if (self.defaultTitleColor && !self.webNavigationBarHide) {
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:self.defaultTitleColor}];
     }
@@ -215,45 +208,33 @@ static NSString* const SixSpaces = @"      ";
         self.progressView.frame = CGRectMake(0,0, self.view.bounds.size.width, 2);
     }else
     {
-        self.progressView.frame = CGRectMake(0,[self.view zx_safeAreaLayoutGuideY], self.view.bounds.size.width, 2);
+        self.progressView.frame = CGRectMake(0,[self safeAreaLayoutGuideY], self.view.bounds.size.width, 2);
     }
 }
 
-#pragma mark - UI加载
--(void)buildUI
+- (CGFloat)safeAreaLayoutGuideY
 {
-//    self.view.backgroundColor = UIColorFromRGB_HexValue(0xF3F3F3);
-    self.view.backgroundColor = [UIColor whiteColor];
-    //设置导航条
-    [self setupNav];
-
-    //添加WKWebView；
-    [self.view addSubview:self.webView];
-    
-    //添加进度条
-    [self.view addSubview:self.progressView];
-       
-    if ([[UIDevice currentDevice] systemVersion].floatValue <9.f)
+    CGFloat originY = 0;
+    if (@available(iOS 11.0, *)) {
+        UILayoutGuide *layout = self.view.safeAreaLayoutGuide;
+        originY = layout.layoutFrame.origin.y;
+    }else
     {
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        UILayoutGuide *layout = self.view.layoutMarginsGuide;
+        originY = layout.layoutFrame.origin.y;
     }
-    else
-    {
-        [self addConstraint:self.webView toSuperviewItem:self.view];
-    }
+    return originY;
 }
+#pragma mark - UI加载
 
 #pragma mark -初始化导航条
-- (void)setupNav
+- (void)zxwkSetupNav
 {
     self.defaultWebNavigationBarHide = self.navigationController.navigationBar.isHidden;
     if (self.webNavigationBarHide)
     {
         return;
     }
-    [self setNavigationBarTitleColor];
-    [self setNavigationBarTintColor];
-
     self.navigationItem.title = self.barTitle;
     self.navigationItem.leftBarButtonItems = @[self.backButtonItem,self.negativeSpacerItem];
 }
@@ -295,11 +276,6 @@ static NSString* const SixSpaces = @"      ";
     {
         WKUserContentController *contentController = [[WKUserContentController alloc] init];
         
-        // 注入一个cookie用户脚本；
-        NSString *source = [NSString stringWithFormat:@"document.cookie = 'mat = %@'",[UserInfoUDManager getToken]];
-        WKUserScript *cookieScript =  [[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
-        [contentController addUserScript:cookieScript];
-
         //不能乱设置，不然布局会乱
         WKPreferences *preferences = [[WKPreferences alloc] init];
         //默认值
@@ -310,13 +286,9 @@ static NSString* const SixSpaces = @"      ";
         configuration.userContentController = contentController ;
         configuration.preferences = preferences;
         configuration.allowsInlineMediaPlayback = YES;
-        //ios9以上
-        if ([configuration respondsToSelector:@selector(allowsPictureInPictureMediaPlayback)])
+        if (@available(iOS 9.0, *))
         {
             configuration.allowsPictureInPictureMediaPlayback = YES;
-        }
-        if ([configuration respondsToSelector:@selector(allowsAirPlayForMediaPlayback)])
-        {
             configuration.allowsAirPlayForMediaPlayback  = YES;
         }
         if (@available(iOS 10.0, *)) {
@@ -335,11 +307,10 @@ static NSString* const SixSpaces = @"      ";
         WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR-HEIGHT_TABBAR_SAFE) configuration:configuration]; //设置frame来调整，用wkWebView.scrollView.contentInset会引起H5底部参考点出错
         wkWebView.backgroundColor = self.view.backgroundColor;
         wkWebView.allowsBackForwardNavigationGestures = YES;
-        if ([wkWebView respondsToSelector:@selector(allowsLinkPreview)])
+        if (@available(iOS 9.0, *))
         {
             wkWebView.allowsLinkPreview = YES;
         }
-
         wkWebView.navigationDelegate = self;
         wkWebView.UIDelegate = self;
         _webView = wkWebView;
@@ -375,7 +346,7 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark - 添加KVO观察者
 
 // kvo监听，获得页面title和加载进度值;
-- (void)addObserver
+- (void)zxWkAddObserver
 {
     [self.webView addObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) options:NSKeyValueObservingOptionNew context:NULL];
     [self.webView addObserver:self forKeyPath:NSStringFromSelector(@selector(title)) options:NSKeyValueObservingOptionNew context:NULL];
@@ -437,14 +408,6 @@ static NSString* const SixSpaces = @"      ";
 
 #pragma mark - initData初始化数据
 
-//初始化数据
-- (void)setData
-{
-    [self addObserver];
-
-    self.urlArrayM = [NSMutableArray array];
-}
-
 - (NSMutableArray *)urlArrayM
 {
     if (!_urlArrayM)
@@ -454,19 +417,12 @@ static NSString* const SixSpaces = @"      ";
     return _urlArrayM;
 }
 
-#pragma mark - 设置user-agent
-
--(void)userAgent
-{
-    
-}
-
 
 #pragma mark - 加载各种不同数据;响应不同加载：真正请求数据
 
 - (void)webViewRequestLoadType
 {
-    switch (self.webLoadType)
+    switch (webLoadType)
     {
         case WebLoadType_URLString:
             [self loadRequestWebPageWithURLString];
@@ -490,7 +446,7 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)loadRequestWebPageWithURLString
 {
-    NSString *urlString = self.URLString;
+    NSString *urlString = self.webURLString;
     NSURL *url = nil;
     url = [NSURL URLWithString:urlString];
     if (!url) {
@@ -572,10 +528,7 @@ static NSString* const SixSpaces = @"      ";
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
     NSURL *url = [NSURL fileURLWithPath:path];
     NSData *data = [NSData dataWithContentsOfFile:path];
-    if ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
-    {
-        [self.webView loadData:data MIMEType:mimeType characterEncodingName:@"UTF-8" baseURL:url];
-    }
+    [self.webView loadData:data MIMEType:mimeType characterEncodingName:@"UTF-8" baseURL:url];
 }
 
 
@@ -588,10 +541,7 @@ static NSString* const SixSpaces = @"      ";
         NSData *data = [content dataUsingEncoding:NSUTF8StringEncoding];
         NSURL *url = [NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]];
         
-        if ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
-        {
-            [self.webView loadData:data MIMEType:@"text/plain" characterEncodingName:@"UTF-8" baseURL:url];
-        }
+        [self.webView loadData:data MIMEType:@"text/plain" characterEncodingName:@"UTF-8" baseURL:url];
     }
 }
 
@@ -618,15 +568,17 @@ static NSString* const SixSpaces = @"      ";
 #pragma mark WKNavigationDelegate
 
 
-// 1 在发送请求之前，决定是否请求; itunes跳转,超链接跳转，h5本地文件加载；需要重新测试？
+// 1 在发送请求之前，决定是否请求; （0）用户触发点击了一个链接；超链接;跳转其它app的schem。（1）用户提交了一个表单；（2）用户触击“back-forward”列表的item前进或back；（3）用户触击重新加载； （4）用户重复提交表单；（-1）默认加载页面，包括空白页；执行一个新的url地址的时候. 注意：当前webView必须在当前栈区顶部展示的才能渲染回调；即所有action只有在viewWillAppear的时候执行才有效；
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-    NSLog(@"1.在发送请求之前，决定是否请求跳转:%@",navigationAction.request);
-//    NSURLRequest *request = navigationAction.request;
-    //跳转别的应用如系统浏览器
-    // 对于跨域，需要手动跳转
+    NSLog(@"1.在发送请求之前，决定是否请求跳转:%@",navigationAction);
+//    #ifdef DEBUG
+//    [MBProgressHUD zx_showError:[NSString stringWithFormat:@"1.在发送请求之前，决定是否请求跳转,navigationType=%@",@(navigationAction.navigationType)] toView:self.view];
+//     #else
+//     #endif
+    // 对于跨域，跳转别的应用如苹果系统浏览器safiar，需要手动跳转，
     if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
-        
+
         if (@available(iOS 10.0, *)) {
             [[UIApplication sharedApplication] openURL:navigationAction.request.URL options:@{} completionHandler:nil];
         } else {
@@ -635,18 +587,12 @@ static NSString* const SixSpaces = @"      ";
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
-//    // 超链接
-//    if ([self decidePolicyForNavigationActionWithNotHttpRequest:request])
-//    {
-//        decisionHandler(WKNavigationActionPolicyCancel);
-//        return;
-//    }
-//    // itunes跳转
-//    else if ([self decidePolicyForNavigationActionWithGoItunesRequest:request])
-//    {
-//        decisionHandler(WKNavigationActionPolicyCancel);
-//        return;
-//    }
+    // itunes跳转
+    else if ([self decidePolicyForNavigationActionWithGoItunesRequest:navigationAction.request.URL])
+    {
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
@@ -658,16 +604,25 @@ static NSString* const SixSpaces = @"      ";
 }
 
 // 3 在收到服务器响应后，决定导航响应策略是否加载； 即使请求头有cookie，响应为何无cookie?
+/// 2020.3.19 如果请求返回的是403、404时，webView不认为这是请求失败，不会调用失败的代理方法。进而显示会出问题，必须在此拦截处理掉；
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
     [self updateNavigationItems];
     NSLog(@"3.在收到响应后，决定是否加载");
     //能读取到，但是没有存入NSHTTPCookieStorage
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-//    NSString *cookieString =  [[ZXHTTPCookieManager sharedInstance]cookieStringWithResponse:response];
     [[ZXHTTPCookieManager sharedInstance]handleResponseHeaderFields:response.allHeaderFields forURL:response.URL];
 
-    decisionHandler(WKNavigationResponsePolicyAllow);
+//    #ifdef DEBUG
+//    [MBProgressHUD zx_showError:[NSString stringWithFormat:@"3.在收到服务器响应后statusCode =%@",@(response.statusCode)] toView:nil];
+//     #else
+//     #endif
+   //处理WKWebView返回403、404 ； 如果404返回，继续会空白页；
+    if (response.statusCode == 200) {
+        decisionHandler (WKNavigationResponsePolicyAllow);
+    }else {
+        decisionHandler(WKNavigationResponsePolicyCancel);
+    }
 }
 
 // 4 当内容开始返回时调用
@@ -680,7 +635,6 @@ static NSString* const SixSpaces = @"      ";
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
     NSLog(@"5.页面加载完成之后调用");
-//    NSLog(@"userScript =%@",webView.configuration.userContentController.userScripts);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self updateNavigationItems];
     [self.urlArrayM removeAllObjects];
@@ -691,20 +645,17 @@ static NSString* const SixSpaces = @"      ";
         });
     }
     [self.emptyViewController zx_hideEmptyViewInContainerViewConroller];
-    
-    // 真机连数据线有； 不连数据线没有；该方法无法获取到 httponly 的cookie
-    [webView evaluateJavaScript:[NSString stringWithFormat:@"document.cookie"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-        if (response != 0) {
-            NSLog(@"\n\n\n\n\n\n document.cookie=%@,error=%@",response,error);
-        }
-    }];
+
 }
 
-// 6 页面加载失败时调用
+// 6 页面加载失败时调用;/2020.3.19 如果请求返回的是403、404时，webView不认为这是请求失败，不会调用此代理方法。进而显示出问题；
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
     NSLog(@"6.页面加载失败时调用：%@",error);
-  
+//    #ifdef DEBUG
+//    [MBProgressHUD zx_showError:[NSString stringWithFormat:@"页面加载失败时调用：%@",error] toView:nil];
+//    #else
+//    #endif
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     if ([error code] == NSURLErrorCancelled)
     {
@@ -742,11 +693,6 @@ static NSString* const SixSpaces = @"      ";
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
 {
     NSLog(@"需要证书认证");
-//    if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
-//    {
-//        NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
-//        completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
-//    }
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
     {
         if ([challenge previousFailureCount] == 0)
@@ -839,18 +785,18 @@ static NSString* const SixSpaces = @"      ";
     return NO;
 }
 //  itunes跳转
-- (BOOL)decidePolicyForNavigationActionWithGoItunesRequest:(NSURLRequest *)request
+- (BOOL)decidePolicyForNavigationActionWithGoItunesRequest:(NSURL *)requestURL
 {
-    NSString *urlString = [[request URL] absoluteString];
+    NSString *urlString = requestURL.absoluteString;
     urlString = [urlString stringByRemovingPercentEncoding];//解析url
     
     if ([urlString hasPrefix:@"https://itunes.apple.com"])
     {
         if (@available(iOS 10.0, *)) {
-            [[UIApplication sharedApplication] openURL:request.URL options:@{} completionHandler:^(BOOL success) {
+            [[UIApplication sharedApplication] openURL:requestURL options:@{} completionHandler:^(BOOL success) {
             }];
         } else {
-            [[UIApplication sharedApplication] openURL:request.URL];
+            [[UIApplication sharedApplication] openURL:requestURL];
         }
         if ([self.webView canGoBack])
         {   // 返回时空白页问题
@@ -974,29 +920,29 @@ static NSString* const SixSpaces = @"      ";
 //加载纯外部链接网页
 -(void)loadWebPageWithURLString:(NSString *)urlString
 {
-    self.webLoadType = WebLoadType_URLString;
+    webLoadType = WebLoadType_URLString;
     if (!urlString)
     {
         return;
     }
+    self.webURLString = urlString;
     //音乐；
 //  self.URLString = @"http://183280454.scene.eqxiu.com/s/3a1oDSh8?eqrcode=1&from=groupmessage&isappinstalled=0";
 //    self.URLString = @"http://mp.weixin.qq.com/s/Q1pVsi3w9b98k8gm_WwbjQ";
-    self.URLString = urlString;
 //    self.URLString = @"http://taobao.com";
 //    self.URLString = @"https://faertu.m.tmall.com/shop/shop_auction_search.htm?spm=a222m.7628550.1998338745.1&sort=default";
 }
 
-- (void)setWebUrl:(NSString *)webUrl
+- (void)setWebURLString:(NSString *)webURLString
 {
-    self.URLString = webUrl;
+    _webURLString = webURLString;
 }
 #pragma mark - 加载本地网页
 
 - (void)loadWebHTMLSringWithFileResource:(NSString *)name
 {
     self.localFileName = name;
-    self.webLoadType = WebLoadType_LocalHTMLFile;
+    webLoadType = WebLoadType_LocalHTMLFile;
 }
 
 #pragma mark - 加载本地文件数据
@@ -1012,7 +958,7 @@ static NSString* const SixSpaces = @"      ";
     self.localFileName = name;
     self.localFileType = ext;
     self.localFileMimeType = mimeType;
-    self.webLoadType = WebLoadType_LocalFile;
+    webLoadType = WebLoadType_LocalFile;
 }
 
 #pragma mark - 加载本地txt文件的text文本
@@ -1020,7 +966,7 @@ static NSString* const SixSpaces = @"      ";
 - (void)loadLocalText:(NSString *)content
 {
     self.localTxtFileContent = content;
-    self.webLoadType = WebLoadType_LocalFileContent;
+    webLoadType = WebLoadType_LocalFileContent;
 }
 
 #pragma mark - UIPreviewActionItem
@@ -1029,7 +975,7 @@ static NSString* const SixSpaces = @"      ";
 {
     UIPreviewAction *itemShare = [UIPreviewAction actionWithTitle:NSLocalizedString(@"分享", nil) style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"previewActionShare" object:nil userInfo:@{@"title":self.navigationItem.title,@"url":self.URLString}];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"previewActionShare" object:nil userInfo:@{@"title":self.navigationItem.title,@"url":self.webURLString}];
     }];
     return @[itemShare];
 }
@@ -1092,9 +1038,14 @@ static NSString* const SixSpaces = @"      ";
 }
 
 # pragma mark - 刷新当前页面数据
-- (void)reloadData
+- (nullable WKNavigation *)reloadData
 {
-    [self.webView reload];
+   return [self.webView reload];
+}
+
+- (nullable WKNavigation *)reloadFromOrigin
+{
+    return [self.webView reloadFromOrigin];
 }
 
 - (void)exitWebViewApp
@@ -1104,7 +1055,7 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)setTitleColor:(UIColor *)color
 {
-    _titleColor = color;
+    self.titleColor = color;
 }
 - (void)setTitleColor:(UIColor *)color reset:(BOOL)reset
 {
@@ -1113,20 +1064,14 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)setTintColor:(UIColor *)color
 {
-    _tintColor = color;
+    self.tintColor = color;
 }
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
-{
-    
-}
 
 /// 根据用户界面风格自动选择浅色或深色的内容，只有在iOS13且有系统导航条的时候有效；
 - (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle
 {
-//    self.defaultStatusBarStyle = [self preferredStatusBarStyle];
-
-    statusBarStyle = statusBarStyle;
+    _statusBarStyle = statusBarStyle;
 }
 
 - (UIStatusBarStyle)statusBarStyle

@@ -351,6 +351,10 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 
 + (NSString *)zhFilterSpecialCharactersInString:(NSString *)str
 {
+    if (!str)
+    {
+        return nil;
+    }
     NSMutableString *trimmedString =[[NSMutableString alloc] initWithString:str];
     NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"~`!@#$%^&*():,./;[]{}-_|+=?<>"];
     for (int i = 0; i<trimmedString.length; i++)

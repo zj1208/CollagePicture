@@ -8,23 +8,19 @@
 
 #import "ZXAddPicCollectionView.h"
 #import "UIView+ZXChangeSize.h"
-#import "UIImageView+WebCache.h"
-#import "SDImageCache.h"
-#import <Photos/Photos.h>
-#import "ZXAddPicPlaceholderCell.h"
+
 #import "ZXAddPicCollectionConst.h"
+#import <Photos/Photos.h>
 
 static NSString * const reuseCell = @"Cell";
 static NSString * const reusePlaceholderCell = @"placeholderCell";
 
-// SYSTEMVERSION以上用iOS9移动方法，以下用iOS8可以用的通用方法；
-static CGFloat SYSTEMVERSION = 12.0;
 
 @interface ZXAddPicCollectionView ()<ZXAddPicViewCellDelegate,UIGestureRecognizerDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
-@property (nonatomic, strong) ZXAddPicPlaceholderCell *placeholderCell;
+//@property (nonatomic, strong) ZXAddPicPlaceholderCell *placeholderCell;
 
 //编辑-删除item前后的内容高度；
 @property (nonatomic, assign) CGFloat beforeDeleteContentHight;
@@ -88,8 +84,8 @@ static CGFloat SYSTEMVERSION = 12.0;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-   self.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-    self.addPicCoverView.frame = self.bounds;
+//    self.collectionView.frame = CGRectMake(0, 0, self., [UIScreen mainScreen].bounds.size.height);
+    self.addPicDefaultContentView.frame = self.bounds;
 }
 
 
@@ -110,12 +106,84 @@ static CGFloat SYSTEMVERSION = 12.0;
     
     [self addSubview:self.collectionView];
     self.clipsToBounds = YES;
-    self.showAddPicCoverView = YES;
+    self.showAddPicDefaultContentView = YES;
     self.canMoveItem = NO;
 //    collectionView没有编辑模式
     self.showDeleteIconButton = YES;
 
+    [self addCustomConstraintWithItem:self.collectionView];
 }
+
+- (void)addCustomConstraintWithItem:(UIView *)item
+{
+    item.translatesAutoresizingMaskIntoConstraints = NO;
+    if (@available(iOS 11.0, *))         {
+        UILayoutGuide *layoutGuide_superView = self.safeAreaLayoutGuide;
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:0];
+        NSLayoutConstraint *constraint_bottom = [item.bottomAnchor constraintEqualToAnchor:layoutGuide_superView.bottomAnchor constant:0];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:0];
+        NSLayoutConstraint *constraint_centerX = [item.centerXAnchor constraintEqualToAnchor:layoutGuide_superView.centerXAnchor];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_bottom,constraint_leading,constraint_centerX]];
+    }
+    //    -layoutMargins从视图边界的边缘返回一组insets，它表示布局内容的默认间距。对于视图层次结构的其它子视图，默认的margins在每个边缘都是8 points，{8，8，8，8}。
+    //    left/leading：view的左边内边距8，即x被增大了，你要设置就应该在之前的基础下-8，才能同等边距；同理右边；
+    else if ([[UIDevice currentDevice].systemVersion floatValue]>=9.0)
+    {
+        UILayoutGuide *layoutGuide_superView = self.layoutMarginsGuide;
+        NSLayoutConstraint *constraint_top = [item.topAnchor constraintEqualToAnchor:layoutGuide_superView.topAnchor constant:-8];
+        NSLayoutConstraint *constraint_bottom = [item.bottomAnchor constraintEqualToAnchor:layoutGuide_superView.bottomAnchor constant:8];
+        NSLayoutConstraint *constraint_leading = [item.leadingAnchor constraintEqualToAnchor:layoutGuide_superView.leadingAnchor constant:-8];
+        NSLayoutConstraint *constraint_trailing = [item.trailingAnchor constraintEqualToAnchor:layoutGuide_superView.trailingAnchor constant:8];
+        [NSLayoutConstraint activateConstraints:@[constraint_top,constraint_bottom,constraint_leading,constraint_trailing]];
+    }
+}
+
+#pragma mark - UI
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView)
+    {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.sectionInset = self.sectionInset;
+        self.collectionFlowLayout = flowLayout;
+        
+        UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
+        collection.backgroundColor = [UIColor whiteColor];
+        collection.delegate = self;
+        collection.dataSource = self;
+        
+        [collection registerNib:[UINib nibWithNibName:NSStringFromClass([ZXAddPicViewCell class]) bundle:nil] forCellWithReuseIdentifier:reuseCell];
+        [collection registerClass:[ZXAddPicPlaceholderCell class] forCellWithReuseIdentifier:reusePlaceholderCell];
+        collection.scrollEnabled = NO;
+        collection.hidden = YES;
+        _collectionView = collection;
+    }
+    return _collectionView;
+}
+
+- (ZXAddPicDefaultContentView *)addPicDefaultContentView
+{
+    if (!_addPicDefaultContentView)
+    {
+        ZXAddPicDefaultContentView *coverView = [ZXAddPicDefaultContentView viewFromNib];
+        [coverView.addButton addTarget:self action:@selector(defaultContentViewAddBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        _addPicDefaultContentView = coverView;
+    }
+    return _addPicDefaultContentView;
+}
+
+- (UIGestureRecognizer *)longPressGesture
+{
+    if (!_longPressGesture)
+    {
+        UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
+        gesture.delegate = self;
+        _longPressGesture = gesture;
+    }
+    return  _longPressGesture;
+}
+
 
 #pragma mark - 初始化数据
 
@@ -138,124 +206,9 @@ static CGFloat SYSTEMVERSION = 12.0;
 }
 
 
-#pragma mark - UI
-
-- (UICollectionView *)collectionView
-{
-    if (!_collectionView)
-    {
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.sectionInset = self.sectionInset;
-        self.collectionFlowLayout = flowLayout;
-        
-        UICollectionView *collection = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
-        collection.backgroundColor = [UIColor whiteColor];
-        collection.delegate = self;
-        collection.dataSource = self;
-        
-        [collection registerNib:[UINib nibWithNibName:nib_ZXAddPicViewCell bundle:nil] forCellWithReuseIdentifier:reuseCell];
-        [collection registerClass:[ZXAddPicPlaceholderCell class] forCellWithReuseIdentifier:reusePlaceholderCell];
-        collection.scrollEnabled = NO;
-        
-        _collectionView = collection;
-    }
-    return _collectionView;
-}
-
-- (ZXAddPicCoverView *)addPicCoverView
-{
-    if (!_addPicCoverView)
-    {
-        ZXAddPicCoverView *coverView = [ZXAddPicCoverView viewFromNib];
-        [coverView.addButton addTarget:self action:@selector(coverAddBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        _addPicCoverView = coverView;
-    }
-    return _addPicCoverView;
-}
-
-- (UIGestureRecognizer *)longPressGesture
-{
-    if (!_longPressGesture)
-    {
-        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
-        longPressGesture.delegate = self;
-        _longPressGesture = longPressGesture;
-    }
-    return  _longPressGesture;
-}
-
-
 #pragma mark - setter方法
 
-- (void)setShowAddPicCoverView:(BOOL)showAddPicCoverView
-{
-    if (showAddPicCoverView != _showAddPicCoverView)
-    {
-        _showAddPicCoverView = showAddPicCoverView;
-        
-        // 12.05 新增提示view；
-        if (!showAddPicCoverView && [self.addPicCoverView isDescendantOfView:self])
-        {
-//            没有经过测试；删除的同时并行执行alpha =0；
-            [UIView performSystemAnimation:UISystemAnimationDelete onViews:@[self.addPicCoverView] options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                
-                self.addPicCoverView.alpha =0;
-
-            } completion:nil];
-//            [self.addPicCoverView removeFromSuperview];
-        }
-        else if(showAddPicCoverView && ![self.addPicCoverView isDescendantOfView:self])
-        {
-            
-            [self addSubview:self.addPicCoverView];
-        }
-    }
-}
-
-
-
-- (void)setCanMoveItem:(BOOL)canMoveItem
-{
-    if (canMoveItem == _canMoveItem)
-    {
-        return;
-    }
-    _canMoveItem = canMoveItem;
-    
-    if ([Device_SYSTEMVERSION floatValue]>=SYSTEMVERSION)
-    {
-        if (_canMoveItem)
-        {
-            if (![self.collectionView.gestureRecognizers containsObject:self.longPressGesture])
-            {
-                [self.collectionView addGestureRecognizer:self.longPressGesture];
-            }
-        }
-        else
-        {
-            if ([self.collectionView.gestureRecognizers containsObject:self.longPressGesture])
-            {
-                [self.collectionView removeGestureRecognizer:self.longPressGesture];
-            }
-        }
-    }
-}
-
-
-- (void)setAddButtonPlaceholderImage:(UIImage *)addButtonPlaceholderImage
-{
-    if (addButtonPlaceholderImage != _addButtonPlaceholderImage)
-    {
-        _addButtonPlaceholderImage = addButtonPlaceholderImage;
-        if (self.addPicCoverView)
-        {
-            [self.addPicCoverView.addButton setImage:addButtonPlaceholderImage forState:UIControlStateNormal];
-        }
-    }
-}
-
-
-// 重写行间距，item宽度，item之间间距；
+// 重写item之间的间距：根据理论设置的item间距-删除按钮的延伸width；
 
 - (void)setMinimumInteritemSpacing:(CGFloat)minimumInteritemSpacing
 {
@@ -306,11 +259,82 @@ static CGFloat SYSTEMVERSION = 12.0;
     if (!UIEdgeInsetsEqualToEdgeInsets(sectionInset, _sectionInset))
     {
         CGFloat right = sectionInset.right-ZXPicItemLayoutRight>0?sectionInset.right-ZXPicItemLayoutRight:0;
-        _sectionInset = UIEdgeInsetsMake(sectionInset.top, sectionInset.left, sectionInset.bottom, right);
+        
+        CGFloat top = sectionInset.top-ZXPicItemLayoutTop>0?sectionInset.top-ZXPicItemLayoutTop:0;
+
+        _sectionInset = UIEdgeInsetsMake(top, sectionInset.left, sectionInset.bottom, right);
         self.collectionFlowLayout.sectionInset = _sectionInset;
     }
 }
 
+
+#pragma mark-设置是否显示默认提示内容view；
+- (void)setShowAddPicDefaultContentView:(BOOL)showAddPicDefaultContentView
+{
+    if (showAddPicDefaultContentView != _showAddPicDefaultContentView)
+    {
+        _showAddPicDefaultContentView = showAddPicDefaultContentView;
+        
+        // 12.05 新增提示view；
+        if (!showAddPicDefaultContentView && [self.addPicDefaultContentView isDescendantOfView:self])
+        {
+//            没有经过测试；删除的同时并行执行alpha =0；
+            [UIView performSystemAnimation:UISystemAnimationDelete onViews:@[self.addPicDefaultContentView] options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                
+                self.addPicDefaultContentView.alpha =0;
+                
+            } completion:^(BOOL finished) {
+                 self.collectionView.hidden = NO;
+            }];
+        }
+        else if(showAddPicDefaultContentView && ![self.addPicDefaultContentView isDescendantOfView:self])
+        {
+            [self addSubview:self.addPicDefaultContentView];
+            self.collectionView.hidden =YES;
+        }
+    }
+}
+
+
+#pragma mark-设置item是否可以长按后移动；
+- (void)setCanMoveItem:(BOOL)canMoveItem
+{
+    if (canMoveItem == _canMoveItem)
+    {
+        return;
+    }
+    _canMoveItem = canMoveItem;
+    if ([[UIDevice currentDevice] systemVersion].floatValue >= ZXAddPicCollectionView_SYSTEMVERSION)
+    {
+        if (canMoveItem)
+        {
+            if (![self.collectionView.gestureRecognizers containsObject:self.longPressGesture])
+            {
+                [self.collectionView addGestureRecognizer:self.longPressGesture];
+            }
+        }
+        else
+        {
+            if ([self.collectionView.gestureRecognizers containsObject:self.longPressGesture])
+            {
+                [self.collectionView removeGestureRecognizer:self.longPressGesture];
+            }
+        }
+    }
+}
+
+#pragma mark-设置添加按钮的图片； 外部可以设置，默认有图片；
+- (void)setAddButtonPlaceholderImage:(UIImage *)addButtonPlaceholderImage
+{
+    if (addButtonPlaceholderImage != _addButtonPlaceholderImage)
+    {
+        _addButtonPlaceholderImage = addButtonPlaceholderImage;
+        if (self.addPicDefaultContentView)
+        {
+            [self.addPicDefaultContentView.addButton setImage:addButtonPlaceholderImage forState:UIControlStateNormal];
+        }
+    }
+}
 
 #pragma mark - get方法
 
@@ -374,23 +398,22 @@ static CGFloat SYSTEMVERSION = 12.0;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    NSInteger count = [self getNumberOfItemsInSection:self.dataMArray];
+    NSInteger count = [self getMaxNumberOfItemsInSection:self.dataMArray];
     return count;
 }
 
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"indexPath=%ld",indexPath.item);
     //添加图片按钮Cell 重用；
-    if (self.isExistInputItem && indexPath.item == self.dataMArray.count && _dataMArray.count <self.maxItemCount)
+    if (self.isExistInputItem && indexPath.item == self.dataMArray.count && self.dataMArray.count <self.maxItemCount)
     {
         ZXAddPicPlaceholderCell *placeholderCell = (ZXAddPicPlaceholderCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reusePlaceholderCell forIndexPath:indexPath];
         if (self.addButtonPlaceholderImage)
         {
             placeholderCell.imageView.image =self.addButtonPlaceholderImage;
         }
-        self.placeholderCell = placeholderCell;
+//        self.placeholderCell = placeholderCell;
         return placeholderCell;
     }
     //因为cell右上角放删除按钮，所以左右上下各增加10个距离；
@@ -399,37 +422,18 @@ static CGFloat SYSTEMVERSION = 12.0;
     [cell.deleteBtn addTarget:self action:@selector(deleteAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.deleteBtn.hidden = !self.showDeleteIconButton;
     cell.delegate = self;
-    cell.longPress.delegate = self;
-    [cell makeGestureRecognizersWithCanMoveItem:self.canMoveItem];
+    cell.longPressGesture.delegate = self;
+    [cell setLongPressGestureRecognizersWithCanMoveItem:self.canMoveItem];
 //    [self addGestureRecognizerOnCell:cell];
-
-    id obj = [_dataMArray objectAtIndex:indexPath.item];
-    if ([obj isKindOfClass:[UIImage class]])
-    {
-        cell.imageView.image = (UIImage *)obj;
-    }
-    else if ([obj isKindOfClass:[ZXPhoto class]])
-    {
-        ZXPhoto *photo = (ZXPhoto *)obj;
-        if (photo.type == ZXAssetModelMediaTypePhoto ||photo.type == ZXAssetModelMediaTypeCustom)
-        {
-            NSURL *url = [NSURL URLWithString:photo.thumbnail_pic];
-            [cell.imageView sd_setImageWithURL:url placeholderImage:AppPlaceholderImage];
-        }
-        else if (photo.type == ZXAssetModelMediaTypeVideo)
-        {
-            NSURL *url = [NSURL URLWithString:photo.videoURLString];
-            [self setImageView:cell.imageView withURL:url placeholderImage:AppPlaceholderImage];
-        }
-        [cell setData:photo indexPath:indexPath isContainVideo:self.isContainVideoAsset];
-
-    }
-    // Configure the cell
+    id data = [self.dataMArray objectAtIndex:indexPath.item];
+    [cell setData:data indexPath:indexPath isContainVideo:self.isContainVideoAsset];
     return cell;
 }
 
+
+
 /*
-// 改为cell中添加手势
+// 改为cell中添加手势,此方法无效；
 // 每个cell添加手势
 - (void)addGestureRecognizerOnCell:(ZXAddPicViewCell *)cell
 {
@@ -453,7 +457,6 @@ static CGFloat SYSTEMVERSION = 12.0;
             longPressGesture.delegate = self;
             [cell addGestureRecognizer:longPressGesture];
         }
-//        NSLog(@"%@",cell.gestureRecognizers);
     }
 }
 */
@@ -463,42 +466,7 @@ static CGFloat SYSTEMVERSION = 12.0;
 //ZXAddPicViewCell *cell2 = [collectionView dequeueReusableCellWithReuseIdentifier:identity forIndexPath:indexPath];
 
 
-// 视频缩略图
-- (void)setImageView:(UIImageView *)imageView withURL:(NSURL *)videoURL placeholderImage:(UIImage *)placeholderImage
-{
-    imageView.image = placeholderImage;
-    UIImage *cacheImage = [[SDImageCache sharedImageCache]imageFromCacheForKey:videoURL.absoluteString];
-    if (cacheImage)
-    {
-        [imageView setImage:cacheImage];
-    }
-    else
-    {
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-        dispatch_async(queue, ^{
-            
-            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
-            AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-            gen.appliesPreferredTrackTransform = YES;
-            CMTime time = CMTimeMakeWithSeconds(0.0, 60);
-            NSError *error = nil;
-            CMTime actualTime;
-            CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-            UIImage *thumbImg = [[UIImage alloc] initWithCGImage:image];
-            
-            [[SDImageCache sharedImageCache] storeImage:thumbImg forKey:videoURL.absoluteString completion:nil];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [imageView setImage:thumbImg];
-            });
-        });
-    }
-    //获取视频时间
-//    CMTime time2 = [asset duration];
-//    int seconds = ceil(time2.value/time2.timescale);
-//    NSLog(@"%d",seconds);
-}
+
 
 // 当开始移动，调用[self.collectionView beginInteractiveMovementForItemAtIndexPath:beganSelectIndexPath];方法时候，会先回调这个代理，等回调后，再处理内部程序；
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(9_0)
@@ -540,7 +508,7 @@ static CGFloat SYSTEMVERSION = 12.0;
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return self.minimumInteritemSpacing-ZXPicItemLayoutRight;
+    return self.minimumInteritemSpacing;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
@@ -555,7 +523,7 @@ static CGFloat SYSTEMVERSION = 12.0;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(_picItemWidth+ZXPicItemLayoutRight, _picItemHeight+ZXPicItemLayoutTop);
+    return CGSizeMake(self.picItemWidth+ZXPicItemLayoutRight, self.picItemHeight+ZXPicItemLayoutTop);
 }
 
 
@@ -564,7 +532,7 @@ static CGFloat SYSTEMVERSION = 12.0;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //“添加图片”按钮事件
-    if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&_dataMArray.count <self.maxItemCount)
+    if (indexPath.item ==self.dataMArray.count &&self.isExistInputItem &&self.dataMArray.count <self.maxItemCount)
     {
         [self addPicCollectionView:self commitEditingStyle:ZXAddPicCellEditingStyleInsert forRowAtIndexPath:indexPath];
     }
@@ -578,6 +546,13 @@ static CGFloat SYSTEMVERSION = 12.0;
     }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(zx_addPicCollectionView:willDisplayCell:forItemAtIndexPath:)]) {
+        [self.delegate zx_addPicCollectionView:self willDisplayCell:cell forItemAtIndexPath:indexPath];
+    }
+}
+
 
 #pragma mark - 过滤点击cell空白区域事件
 
@@ -587,7 +562,6 @@ static CGFloat SYSTEMVERSION = 12.0;
 }
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-//    NSLog(@"point =%@",NSStringFromCGPoint(point));
     NSIndexPath *selectIndexPath = [self.collectionView indexPathForItemAtPoint:point];
     if (selectIndexPath)
     {
@@ -617,14 +591,22 @@ static CGFloat SYSTEMVERSION = 12.0;
 }
 
 #pragma mark - 编辑模式:长按事件  iOS9以下 和 iOS9以上
-- (void)zxLongPressAction:(UILongPressGestureRecognizer *)longPress
-{
-    [self longPressAction:longPress];
-}
 
+/// collectionView的手势执行ZXAddPicCollectionView_SYSTEMVERSION版本及以上的方法；
 - (void)longPressAction:(UILongPressGestureRecognizer *)longPress
 {
-    if ([Device_SYSTEMVERSION floatValue] >=SYSTEMVERSION)
+    [self longPressCommonAction:longPress];
+}
+
+/// cell的手势执行ZXAddPicCollectionView_SYSTEMVERSION版本以下的方法；
+- (void)zxAddPicViewCellDelegateWithLongPressAction:(UILongPressGestureRecognizer *)longPress
+{
+    [self longPressCommonAction:longPress];
+}
+
+- (void)longPressCommonAction:(UILongPressGestureRecognizer *)longPress
+{
+    if ([Device_SYSTEMVERSION floatValue] >= ZXAddPicCollectionView_SYSTEMVERSION)
     {
         [self longPressActionIOS9:longPress];
     }
@@ -639,7 +621,7 @@ static CGFloat SYSTEMVERSION = 12.0;
 {
     ZXAddPicViewCell *cell = (ZXAddPicViewCell *) longPress.view;
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-    _isChangeMoveItem = NO;
+    self.isChangeMoveItem = NO;
     [self.collectionView bringSubviewToFront:cell];
 
     switch (longPress.state)
@@ -744,7 +726,7 @@ static CGFloat SYSTEMVERSION = 12.0;
             NSIndexPath *beganSelectIndexPath = [self.collectionView indexPathForItemAtPoint:point];
             if (![self zx_shouldBegainLongPress:beganSelectIndexPath])
             {
-                _shouldBegainLongPress = NO;
+                self.shouldBegainLongPress = NO;
                 return;
             }
             BOOL flag = [self.collectionView beginInteractiveMovementForItemAtIndexPath:beganSelectIndexPath];
@@ -752,15 +734,15 @@ static CGFloat SYSTEMVERSION = 12.0;
             {
                 [self zx_begainLongPressDoAction:beganSelectIndexPath];
             }
-            _shouldBegainLongPress = YES;;
-            _sourceIndexPath = beganSelectIndexPath;
-            _destinationIndexPath = beganSelectIndexPath;
+            self.shouldBegainLongPress = YES;;
+            self.sourceIndexPath = beganSelectIndexPath;
+            self.destinationIndexPath = beganSelectIndexPath;
 
 //            NSLog(@"begain长按");
             break;}
         case UIGestureRecognizerStateChanged:
         {
-            if (_shouldBegainLongPress)
+            if (self.shouldBegainLongPress)
             {
                 NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
                 // began有效的item，移动到无效indexPath的item，或 indexPath ==null时候，不能cancle，因为item之间间隔也是null，会造成移动不了的结果； 自己就是特殊item，也可以设置cancle；
@@ -781,7 +763,7 @@ static CGFloat SYSTEMVERSION = 12.0;
         case UIGestureRecognizerStateEnded:
         {
 //          调用endInteractiveMovement时，会重新主线程回调cell数据元代理方法,还会reload当前结束点的IndexPath； 如果移动到indexPath =nil，无效位置，或移动位置回到原始位置，结束indexPath = 原始indexPath，不会回调代理方法； 如果移动到不能移动的位置,但发生改变了，目标indexPath需要去代理方法获取；不能用[self.collectionView indexPathForItemAtPoint:point]获取；
-            if (_shouldBegainLongPress)
+            if (self.shouldBegainLongPress)
             {
                 NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
 //                当没有移动有效item的时候； 这里会执行嘛？
@@ -839,8 +821,8 @@ static CGFloat SYSTEMVERSION = 12.0;
 - (void)zx_begainLongPressDoAction:(NSIndexPath *)beganSelectIndexPath
 {
     ZXAddPicViewCell  *beganSelectCell = (ZXAddPicViewCell *)[self.collectionView cellForItemAtIndexPath:beganSelectIndexPath];
-    _beganSelectCell = beganSelectCell;
-    _beganSelectCell.contentView.alpha =0.8;
+    self.beganSelectCell = beganSelectCell;
+    self.beganSelectCell.contentView.alpha =0.8;
 
     [self zx_showDeleteIconButton:NO];
 
@@ -869,7 +851,6 @@ static CGFloat SYSTEMVERSION = 12.0;
             }
         }];
     }
- 
 }
 
 
@@ -878,7 +859,6 @@ static CGFloat SYSTEMVERSION = 12.0;
 - (BOOL)zx_shouldCanMoveToIndexPath:(NSIndexPath *)indexPath
 {
     //  NO：允许移动到无效indexPath，但不能交换数据，最后反弹回有效indexPath；
-    
     if (!indexPath)
     {
         return NO;
@@ -890,8 +870,7 @@ static CGFloat SYSTEMVERSION = 12.0;
     else if ([self.delegate respondsToSelector:@selector(zx_addPicCollectionView:itemAtIndexPath:canMoveToIndexPath:)])
     {
         //   长按事件回调；可以处理哪个indexPath的item；
-        
-        BOOL should = [self.delegate zx_addPicCollectionView:self itemAtIndexPath:_sourceIndexPath canMoveToIndexPath:indexPath];
+        BOOL should = [self.delegate zx_addPicCollectionView:self itemAtIndexPath:self.sourceIndexPath canMoveToIndexPath:indexPath];
         if (!should)
         {
             return NO;
@@ -969,7 +948,7 @@ static CGFloat SYSTEMVERSION = 12.0;
 
 #pragma mark - 添加，删除item 编辑事件
 
-- (void)coverAddBtnAction:(UIButton *)sender
+- (void)defaultContentViewAddBtnAction:(UIButton *)sender
 {
      [self addPicCollectionView:self commitEditingStyle:ZXAddPicCellEditingStyleInsert forRowAtIndexPath:nil];
 }
@@ -1005,9 +984,9 @@ static CGFloat SYSTEMVERSION = 12.0;
             [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
             self.afterDeleteContentHight = [self getCurrentContentHeight];
             // 12.05转换提示view最上层显示
-            if ([self.addPicCoverView isDescendantOfView:self] && self.dataMArray.count ==0)
+            if ([self.addPicDefaultContentView isDescendantOfView:self] && self.dataMArray.count ==0)
             {
-                [UIView transitionFromView:self.collectionView toView:self.addPicCoverView duration:0.3 options:UIViewAnimationOptionShowHideTransitionViews|UIViewAnimationOptionTransitionCrossDissolve completion:nil];
+                [UIView transitionFromView:self.collectionView toView:self.addPicDefaultContentView duration:0.3 options:UIViewAnimationOptionShowHideTransitionViews|UIViewAnimationOptionTransitionCrossDissolve completion:nil];
             }
         }
         self.containVideoAsset = [self containsVideoObject:self.dataMArray];
@@ -1046,7 +1025,7 @@ static CGFloat SYSTEMVERSION = 12.0;
     }
     else
     {        
-        NSInteger count = [self getNumberOfItemsInSection:data];
+        NSInteger count = [self getMaxNumberOfItemsInSection:data];
         NSInteger rows = [self getRowsWithDataCount:count];
         //计算高度
         CGFloat height = rows * (self.picItemHeight+ZXPicItemLayoutTop) + (rows - 1) * self.minimumLineSpacing +self.sectionInset.top+self.sectionInset.bottom;
@@ -1054,8 +1033,8 @@ static CGFloat SYSTEMVERSION = 12.0;
     }
 }
 #pragma mark - 计算方法
-// 获取总
-- (NSInteger)getNumberOfItemsInSection:(NSArray *)data
+// 获取Item总个数
+- (NSInteger)getMaxNumberOfItemsInSection:(NSArray *)data
 {
     NSInteger count = 0;
     if (self.isExistInputItem)
@@ -1109,9 +1088,9 @@ static CGFloat SYSTEMVERSION = 12.0;
     
     [self.dataMArray addObjectsFromArray:data];
     //12.05 新增提示view；转换view的最上层显示；
-    if ([self.addPicCoverView isDescendantOfView:self] && self.dataMArray.count>0)
+    if ([self.addPicDefaultContentView isDescendantOfView:self] && self.dataMArray.count>0)
     {
-        [UIView transitionFromView:self.addPicCoverView toView:self.collectionView duration:0.2 options:UIViewAnimationOptionShowHideTransitionViews|UIViewAnimationOptionTransitionCrossDissolve completion:nil];
+        [UIView transitionFromView:self.addPicDefaultContentView toView:self.collectionView duration:0.2 options:UIViewAnimationOptionShowHideTransitionViews|UIViewAnimationOptionTransitionCrossDissolve completion:nil];
     }
     [self.collectionView reloadData];
     self.containVideoAsset = [self containsVideoObject:data];
@@ -1121,10 +1100,11 @@ static CGFloat SYSTEMVERSION = 12.0;
 - (void)updatePlaceholderButtonImage:(UIImage *)placeholderImage
 {
     self.addButtonPlaceholderImage = placeholderImage;
-    if (self.placeholderCell)
-    {
-        self.placeholderCell.imageView.image = self.addButtonPlaceholderImage;
-    }
+    [self.collectionView reloadData];
+//    if (self.placeholderCell)
+//    {
+//        self.placeholderCell.imageView.image = self.addButtonPlaceholderImage;
+//    }
 }
 
 

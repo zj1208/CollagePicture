@@ -17,17 +17,29 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        imageView.contentMode =UIViewContentModeScaleAspectFill;
-        [self setView:imageView cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
-        imageView.image =  [UIImage imageNamed:AppPlaceholderAddButtonImageName];
-        [self.contentView addSubview:imageView];
-        self.imageView = imageView;
-        [self addConstraint:imageView toItem:self.contentView];
-        
-//        self.contentView.backgroundColor = [UIColor orangeColor];
+        [self configUI];
     }
     return self;
+}
+
+- (void)configUI
+{
+    [self.contentView addSubview:self.imageView];
+    [self addConstraint:self.imageView toItem:self.contentView];
+//        self.contentView.backgroundColor = [UIColor orangeColor];
+}
+
+- (UIImageView *)imageView
+{
+    if (!_imageView) {
+       
+        UIImageView *view = [[UIImageView alloc] init];
+        view.contentMode =UIViewContentModeScaleAspectFill;
+//        [self setView:view cornerRadius:5.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xE8E8E8)];
+        view.image =  [UIImage imageNamed:AppPlaceholderAddButtonImageName];
+        _imageView = view;
+    }
+    return _imageView;
 }
 
 - (void)addConstraint:(UIView *)item toItem:(UIView *)superView

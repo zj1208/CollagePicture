@@ -64,6 +64,7 @@ static NSString * const kTopViewController_OrientationRight = @"MakingPhotoContr
     }
 }
 
+#pragma mark - iOS 13的SDK系统都不会回调；
 // 方案一：
 // 重写statusBarStyle
 - (nullable UIViewController *)childViewControllerForStatusBarStyle
@@ -77,19 +78,19 @@ static NSString * const kTopViewController_OrientationRight = @"MakingPhotoContr
 }
 
 //方案二：
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    UIViewController* topVC = self.topViewController;
-//    return [topVC preferredStatusBarStyle];
-//}
-//- (BOOL)prefersStatusBarHidden
-//{
-//    return [self.topViewController prefersStatusBarHidden];
-//}
-//- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
-//{
-//    return [self.topViewController preferredStatusBarUpdateAnimation];
-//}
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    UIViewController* topVC = self.topViewController;
+    return [topVC preferredStatusBarStyle];
+}
+- (BOOL)prefersStatusBarHidden
+{
+    return [self.topViewController prefersStatusBarHidden];
+}
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
+{
+    return [self.topViewController preferredStatusBarUpdateAnimation];
+}
 
 
 - (nullable UIViewController *)childViewControllerForHomeIndicatorAutoHidden API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos)

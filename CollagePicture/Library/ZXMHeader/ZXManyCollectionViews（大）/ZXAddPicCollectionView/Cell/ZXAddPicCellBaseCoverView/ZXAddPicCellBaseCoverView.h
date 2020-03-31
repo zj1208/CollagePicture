@@ -1,5 +1,5 @@
 //
-//  ZXAddPicBaseContentView.h
+//  ZXAddPicCellBaseCoverView.h
 //  YiShangbao
 //
 //  Created by simon on 2018/4/18.
@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZXAddPicBaseContentView : UIView
+@interface ZXAddPicCellBaseCoverView : UIView
 
 
 - (instancetype)initContentView;

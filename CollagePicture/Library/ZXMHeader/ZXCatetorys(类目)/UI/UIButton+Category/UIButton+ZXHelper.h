@@ -98,6 +98,10 @@ typedef NS_ENUM(NSInteger, ZXButtonContentType) {
 - (void)zx_changeAlphaWithCurrentUserInteractionEnabled:(BOOL)enabled;
 
 
+
+- (void)zx_changeEnableWithCurrentUserInteractionEnabled:(BOOL)enabled enableTitleColor:(UIColor *)color1 enableBgColor:(UIColor *)color2 noableTitleColor:(UIColor *)color3 noableBgColor:(UIColor *)color4;
+
+
 /**
  * @brief  灰掉禁止按钮-以白灰2种颜色切换;
  */

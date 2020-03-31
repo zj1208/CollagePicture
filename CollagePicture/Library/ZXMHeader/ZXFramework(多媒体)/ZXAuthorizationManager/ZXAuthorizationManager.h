@@ -11,11 +11,12 @@
 //  2019.9.07  增加检查用户通知权限；没有实际测试；
 //  2020.1.02  优化openURL方法
 //  2020.1.18  去除黄色警告-使用@available判断版本
+//  2020.3.31  优化
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @import Photos;
-
+@import CoreLocation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, ZXAuthorizationType) {
     ZXAuthorizationType_PhotoLibrary,        // 相册
     ZXAuthorizationType_AVCaptureCamera,     // 相机
-
+    ZXAuthorizationType_Location,     // 定位
 };
 
 // 授权状态
@@ -92,6 +93,16 @@ typedef NS_ENUM(NSUInteger, ZXAuthorizationStatus){
  @param sourceController 原控制器，如果需要默认提示则一定要这个值；
  */
 - (void)zx_requestCameraAuthorizationWithDeniedAlertViewInViewController:(nullable UIViewController *)sourceController call:(void(^)(ZXAuthorizationStatus status))callback;
+
+
+
+
+/// 检查定位服务授权，“定位服务”使用GPS，蓝牙，和众包Wi－Fi热点以及信号塔位置来确定您的大致方位。具体的定位方式不需要开发者考虑，iPhone会根据不同场景选择不同定位方式。
+/// @param callback callback description
++ (void)zx_requestLocationAuthorization:(void(^)(CLAuthorizationStatus status))callback;
+
+
+- (void)zx_requestLocationAuthorizationWithDeniedAlertViewInViewController:(nullable UIViewController *)sourceController call:(void(^)(CLAuthorizationStatus status))callback;
 
 @end
 

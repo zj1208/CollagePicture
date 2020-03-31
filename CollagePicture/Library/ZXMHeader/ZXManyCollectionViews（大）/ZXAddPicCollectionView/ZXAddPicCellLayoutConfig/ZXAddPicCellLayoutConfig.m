@@ -18,7 +18,7 @@
 
 - (NSString *)cellContent:(ZXPhoto *)model
 {
-    return @"ZXAddPicBaseContentView";
+    return @"ZXAddPicCellBaseCoverView";
 //    id<ZXAddPicCellLayoutConfigSource>config =self;
 //    NSString *cellContent = [config cellContent:model];
 //    return cellContent.length ? cellContent : @"UnknowContentView";

@@ -158,6 +158,22 @@
 }
 
 
+- (void)zx_changeEnableWithCurrentUserInteractionEnabled:(BOOL)enabled enableTitleColor:(UIColor *)color1 enableBgColor:(UIColor *)color2 noableTitleColor:(UIColor *)color3 noableBgColor:(UIColor *)color4
+{
+    self.userInteractionEnabled = enabled;
+    if (enabled)
+    {
+        [self setTitleColor:color1 forState:UIControlStateNormal];
+        [self setBackgroundColor:color2];
+    }
+    else
+    {
+        [self setTitleColor:color3 forState:UIControlStateNormal];
+        [self setBackgroundColor:color4];
+    }
+}
+
+
 
 - (void)zh_userInteractionEnabled:(BOOL)enabled switchEnableTitleColor:(UIColor *)color1 enableBgColor:(UIColor *)color2
 {
