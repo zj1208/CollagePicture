@@ -5,7 +5,7 @@
 //  Created by simon on 16/4/19.
 //  Copyright © 2016年 simon. All rights reserved.
 //
-//  简介：UIKit类的相册，相机调用的管理类，支持image和movie资源访问，支持权限检查及提示，当没有权限的时候会自动弹出默认引导提示;UIImagePickerController支持DarkMode模式；
+//  简介：UIKit类的相册，相机调用的管理类，支持image和movie资源访问，支持权限检查及提示，当没有权限的时候会自动弹出默认引导提示;UIImagePickerController支持DarkMode模式；(1)支持照片修正。
 //  注意：
 //  （1）当我们使用UIImagePickerController的时候，如果它的页面是英文的，解决方案：Project-->Info-->Localizations 添加 Chinese; （2）如果加入了这个类，则必须添加隐私权限key-value；从2019年春季开始，如果应用程序的代码引用一个或多个访问敏感用户数据的api，所有提交到AppStore的访问用户数据的应用程序都必须包含一个目的字符串。如果您正在使用外部库或sdk，它们可能会引用需要目的字符串的api。虽然您的应用程序可能不使用这些api，但仍然需要一个目的字符串。
 //  必须在info.plist文件中添加隐私权限提示key-value；
@@ -20,7 +20,7 @@
 
 //  2018.3.28； 优化代码；
 //  2019.4.18 增加权限检查及提示的管理器；
-//  2020.3.31 优化代码，增加属性控制；
+//  2020.3.31 优化代码，增加属性控制；增加image图片修正；
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
