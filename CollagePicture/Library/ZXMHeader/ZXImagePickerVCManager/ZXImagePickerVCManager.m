@@ -29,8 +29,8 @@ static char pickerControllerActionKey;
     self = [super init];
     if (self)
     {
-//        self.allowsEditing = NO;
-        self.allowsEditing = YES;
+        self.allowsEditing = NO;
+//        self.allowsEditing = YES;
         self.alwayCheckAuthorization = YES;
         self.mediaTypes = @[(NSString *)kUTTypeImage];
 //        self.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
@@ -67,7 +67,7 @@ static char pickerControllerActionKey;
 
 - (void)zx_presentMoreImagePickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType sourceController:(UIViewController *)sourceController
 {
-    // 如果是camera,不需要allowsEditing
+    // 如果是camera
     if (sourceType ==UIImagePickerControllerSourceTypeCamera)
     {
         [self presentCameraWithSourceController:sourceController];
@@ -144,6 +144,7 @@ static char pickerControllerActionKey;
 
 
 /// 弹出UIImagePickerController 摄像头模式方法
+/// 当图像选取器的源类型被设置为UIImagePickerControllerSourceTypeCamera以外的值时调用camera有关属性，会抛出一个NSInvalidArgumentException异常。
 - (void)presentCameraImagePickerControllerWithSourceController:(UIViewController *)sourceController
 {
     if (self.sourceType != UIImagePickerControllerSourceTypeCamera) {
@@ -153,7 +154,7 @@ static char pickerControllerActionKey;
     imagePicker.delegate = self;
     imagePicker.mediaTypes = self.mediaTypes;
     imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    imagePicker.modalTransitionStyle = UIModalPresentationFullScreen;
+    imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;
     imagePicker.allowsEditing = self.allowsEditing;
     imagePicker.sourceType = self.sourceType;
     imagePicker.cameraDevice = self.cameraDevice;
@@ -165,7 +166,7 @@ static char pickerControllerActionKey;
     [sourceController presentViewController:imagePicker animated:YES completion:^{}];
 }
 
-/// 弹出UIImagePickerController基础方法
+/// 弹出UIImagePickerController相册方法
 - (void)presentCommonImagePickerControllerWithSourceController:(UIViewController *)sourceController
 {
     ///没有经过验证
@@ -179,7 +180,7 @@ static char pickerControllerActionKey;
             return;
         }
     }
-    if ([self.delegate respondsToSelector:@selector(zxImagePickerVCManagerWithOpenCustomAlbumList:)]) {
+    if ([self.delegate respondsToSelector:@selector(zxImagePickerVCManagerWithOpenCustomAlbumList:)] && self.albumListType == ZXPhotosAlbumListType_custom) {
         [self.delegate zxImagePickerVCManagerWithOpenCustomAlbumList:self];
         return;
     }
@@ -187,10 +188,9 @@ static char pickerControllerActionKey;
     imagePicker.delegate = self;
     imagePicker.mediaTypes = self.mediaTypes;
     imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    imagePicker.modalTransitionStyle = UIModalPresentationFullScreen;
+    imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;
     imagePicker.allowsEditing = self.allowsEditing;
     imagePicker.sourceType = self.sourceType;
-    imagePicker.cameraDevice = self.cameraDevice;
     [sourceController presentViewController:imagePicker animated:YES completion:^{}];
 }
 
@@ -238,42 +238,50 @@ static char pickerControllerActionKey;
 }
 
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    UIFont *tiFont = [UIFont systemFontOfSize:17];
+    UIColor *color = [UIColor blackColor];
+    [navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:color,NSFontAttributeName:tiFont}];
+//    navigationController.navigationBar.barStyle = UIBarStyleBlack;
+}
 
 #pragma mark-imagePickerControllerDelegate
 
+// 如果想之后立刻调用UIVideoEditor,animated不能是YES。最好的还是dismiss结束后在调用editor。不懂？
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    // 如果想之后立刻调用UIVideoEditor,animated不能是YES。最好的还是dismiss结束后在调用editor。
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-
+///假如拍照的照片image.imageOrientation:UIImageOrientationRight；上传到其它系统显示会有问题；
+///使用编辑属性后，UIImagePickerControllerEditedImage，方向始终变为UIImageOrientationUp；上传到其它系统显示不会有问题；
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    NSString *type =[info objectForKey:UIImagePickerControllerMediaType ];
+    NSString *type =[info objectForKey:UIImagePickerControllerMediaType];
     //如果返回回来的是照片
     if ([type isEqualToString:(NSString *)kUTTypeImage])
-    {
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        //如果是camera的照片,save original photos到photosAlbum
-        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-        {
-            //一定要有存照片权限提示，不然会崩溃；
-            UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-        }
-        else
-        {
-            if (picker.allowsEditing)
-            {
-                image = [info objectForKey:UIImagePickerControllerEditedImage];
-            }
-        }
-        
-        if ([self.delegate respondsToSelector:@selector(zxImagePickerController:didFinishPickingMediaWithInfo:withEditedImage:)])
-        {
-            [self.delegate zxImagePickerController:picker didFinishPickingMediaWithInfo:info withEditedImage:image];
-        }
-    }
+     {
+         UIImage *image = nil;
+         if (picker.allowsEditing)
+         {
+             image = [info objectForKey:UIImagePickerControllerEditedImage];
+         }else
+         {
+             image = [info objectForKey:UIImagePickerControllerOriginalImage];
+         }
+         //如果是camera的照片,save original photos到photosAlbum
+         if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+         {
+             //第一次会触发存照片权限提示，如果不允许，则以后不会再提示；plist必须加入存照片的权限key，否则会崩溃；
+             UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+         }
+         if ([self.delegate respondsToSelector:@selector(zxImagePickerController:didFinishPickingMediaWithInfo:withEditedImage:)])
+         {
+             [self.delegate zxImagePickerController:picker didFinishPickingMediaWithInfo:info withEditedImage:image];
+         }
+     }
 //    //保存视频,这里不对，如果已经有视频了，就不能再保存了
 //    if ([type isEqualToString:(NSString *)kUTTypeMovie])
 //    {
@@ -299,18 +307,17 @@ static char pickerControllerActionKey;
     return objc_getAssociatedObject(self, &pickerControllerActionKey);
 }
 
-
+//始终在主线程执行，自己IMP实现;
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(id)info
 {
     NSLog(@"D＝%@,%@",[NSThread currentThread], [NSThread currentThread].name);
-    
     if(error)
     {
-        NSLog(@"savefailed:%@",error.localizedDescription);
+        NSLog(@"imageSaveFailed:%@",error.localizedDescription);
     }
     else
     {
-        NSLog(@"savesuccess");
+        NSLog(@"imageSaveSuccess");
     }
 }
 

@@ -5,7 +5,7 @@
 //  Created by simon on 2019/11/19.
 //  Copyright © 2019 com.Chs. All rights reserved.
 //
-
+//  2020.1.20 优化代码；
 
 #import <UIKit/UIKit.h>
 
@@ -74,16 +74,35 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zx_navigationBar_barItemColor:(nullable UIColor *)tintColor;
 
 
-#pragma mark - 统一全局设置UINavigationBar背景及标题属性
+
+- (void)zx_navigationBar_titleColor:(nullable UIColor *)aColor
+                                     titleFont:(UIFont *)aFont;
+
+/// 给当前导航条设置背景及阴影；
+/// @param bagImgName 背景图名
+/// @param aShadowName 阴影图名
+/// @param backgoundColor 背景颜色
+- (void)zx_navigationBar_backgroundImageName:(nullable NSString *)bagImgName
+                             ShadowImageName:(nullable NSString *)aShadowName
+                           orBackgroundColor:(nullable UIColor *)backgoundColor;
+
+#pragma mark - 统一全局设置UINavigationBar背景及标题属性--尽量不要用
+
+
+/// set appearance With all navigationBar's 标题
+/// @param aColor title的颜色
+/// @param aFont title的font
++ (void)zx_navigationBar_appearance_titleColor:(nullable UIColor *)aColor
+                                     titleFont:(UIFont *)aFont;
+
 /**
- * @brief set appearance With all navigationBar's background and 标题
+ * @brief set appearance With all navigationBar's background
  appearance方法不适用于 多个模块不同主题色的ui设计； 当遇到不同的时候，只能每个navigationController独立设置；
+ * 注意：设置navigationBar背景色用navigationBarTintColor 时候，默认情况下会与真实实际颜色有所不同；因为navigationBar默认Translucent = YES,会改变；
  */
 + (void)zx_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
                                        ShadowImageName:(nullable NSString *)aShadowName
-                                     orBackgroundColor:(nullable UIColor *)backgoundColor
-                                            titleColor:(nullable UIColor *)aColor
-                                             titleFont:(UIFont *)aFont;
+                                     orBackgroundColor:(nullable UIColor *)backgoundColor;
 
 
 #pragma mark - 设置UINavigationBar返回按钮的背景图／文字偏移

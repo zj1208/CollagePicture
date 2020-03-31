@@ -67,14 +67,14 @@ typedef NS_ENUM(NSUInteger, ZXAuthorizationStatus){
 + (void)zx_requestUserNotificationAuthorization:(void(^)(ZXAuthorizationStatus status))callback;
 
 /**
- 检查相册授权及回调
+ 检查照片授权及回调
 
  @param callback 回调block
  */
 + (void)zx_requestPhotoLibraryAuthorization:(void(^)(ZXAuthorizationStatus status))callback;
 
 /**
- 检查相册授权及回调，当权限是被拒绝的时候会有默认AlertController提示指引
+ 检查照片授权及回调，当权限是被拒绝的时候会有默认AlertController提示指引
 
  @param sourceController 原控制器，如果需要默认提示则一定要这个值；
  */
@@ -82,13 +82,14 @@ typedef NS_ENUM(NSUInteger, ZXAuthorizationStatus){
 
 
 /**
- 检查摄像头授权及回调
+ 检查摄像头/相机 授权及回调
  
  @param callback 回调block
  */
 + (void)zx_requestCameraAuthorization:(void(^)(ZXAuthorizationStatus status))callback;
+
 /**
- 检查摄像头授权及提示指引;当权限是被拒绝的时候会有默认AlertController提示指引;
+ 检查摄像头/相机授权及提示指引;当权限是被拒绝的时候会有默认AlertController提示指引;
 
  @param sourceController 原控制器，如果需要默认提示则一定要这个值；
  */

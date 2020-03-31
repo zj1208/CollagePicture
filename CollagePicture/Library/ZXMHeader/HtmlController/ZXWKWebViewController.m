@@ -1055,7 +1055,7 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)setTitleColor:(UIColor *)color
 {
-    self.titleColor = color;
+    _titleColor = color;
 }
 - (void)setTitleColor:(UIColor *)color reset:(BOOL)reset
 {
@@ -1064,7 +1064,7 @@ static NSString* const SixSpaces = @"      ";
 
 - (void)setTintColor:(UIColor *)color
 {
-    self.tintColor = color;
+    _tintColor = color;
 }
 
 

@@ -33,7 +33,6 @@
 
 - (void)zx_navigationBar_removeShadowImage
 {
-//    self.navigationBar.shadowImage = nil;
     self.navigationBar.shadowImage = [UIImage new];
 }
 
@@ -121,25 +120,55 @@
     
 }
 
+- (void)zx_navigationBar_titleColor:(nullable UIColor *)aColor
+                                     titleFont:(UIFont *)aFont
+{
+    UIFont *tiFont = aFont?aFont:[UIFont systemFontOfSize:17];
+    UIColor *color = aColor?aColor:[UIColor whiteColor];
+    //设置中间title标题文本;
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:color,NSFontAttributeName:tiFont}];
+}
+
+- (void)zx_navigationBar_backgroundImageName:(nullable NSString *)bagImgName
+                                       ShadowImageName:(nullable NSString *)aShadowName
+                                     orBackgroundColor:(nullable UIColor *)backgoundColor
+{
+    if (bagImgName)//背景图片如果有透明效果，那么显示导航的时候也会有透明效果的；默认是毛玻璃效果
+    {
+        UIImage *navBgImg  =[UIImage imageNamed:bagImgName];
+        [self.navigationBar setBackgroundImage:navBgImg forBarPosition:UIBarPositionTop barMetrics:UIBarMetricsDefault];
+    }
+    if (!bagImgName && backgoundColor)
+    {
+        [self.navigationBar setBarTintColor:backgoundColor];
+    }
+    if (aShadowName)
+    {
+        UIImage *navLineImg = [UIImage imageNamed:aShadowName];
+        self.navigationBar.shadowImage =navLineImg;
+    }
+}
+
 
 
 #pragma mark-设定所有导航条背景
-+ (void)zx_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
-                                       ShadowImageName:(nullable NSString *)aShadowName
-                                     orBackgroundColor:(nullable UIColor *)backgoundColor
-                                            titleColor:(nullable UIColor *)aColor
-                                             titleFont:(UIFont *)aFont
 
-
++ (void)zx_navigationBar_appearance_titleColor:(nullable UIColor *)aColor
+                                     titleFont:(UIFont *)aFont
 {
-    //tintColor不支持UIAppearance;你可以在Interface Builder中全局设置tint color-global Tint;navigationBar的tintColor－文字和按钮
-    
-    UIFont *tiFont = aFont ?aFont:[UIFont systemFontOfSize:17];
-    
+    UIFont *tiFont = aFont?aFont:[UIFont systemFontOfSize:17];
     UIColor *color = aColor?aColor:[UIColor whiteColor];
     //设置中间title标题文本;
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:color,NSFontAttributeName:tiFont}];
-    
+}
+
+
+
+
++ (void)zx_navigationBar_appearance_backgroundImageName:(nullable NSString *)bagImgName
+                                       ShadowImageName:(nullable NSString *)aShadowName
+                                     orBackgroundColor:(nullable UIColor *)backgoundColor
+{
     if (bagImgName)//背景图片如果有透明效果，那么显示导航的时候也会有透明效果的；默认是毛玻璃效果
     {
         UIImage *navBgImg  =[UIImage imageNamed:bagImgName];
@@ -154,14 +183,7 @@
     }
     if (!bagImgName &&backgoundColor)
     {
-        if (__IPHONE_7_0)
-        {
-            [[UINavigationBar appearance]setBarTintColor:backgoundColor];
-        }
-        else
-        {
-            //ios6,是导航栏的颜色
-        }
+        [[UINavigationBar appearance]setBarTintColor:backgoundColor];
     }
     if (aShadowName)
     {
