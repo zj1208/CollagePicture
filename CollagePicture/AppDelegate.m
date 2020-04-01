@@ -173,18 +173,19 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 
 - (void)setApperanceForAllController
 {
-    [UINavigationController zx_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor] titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
-    
+    [UINavigationController zx_navigationBar_appearance_backgroundImageName:nil ShadowImageName:nil orBackgroundColor:[UIColor whiteColor]];
+
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateNormal];
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16.f]} forState:UIControlStateHighlighted];
     [UINavigationController zx_navigationBar_UIBarButtonItem_appearance_systemBack_noTitle];
     [[UIButton appearance]setExclusiveTouch:YES];
 }
 
-- (void)setApperanceForSigleNavController:(UIViewController *)viewController
+- (void)setApperanceForSigleNavController:(UINavigationController *)navigationController
 {
-    [viewController.navigationController zx_navigationBar_allBackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
-    [viewController.navigationController zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+    [navigationController zx_navigationBar_allBackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [navigationController zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+    [navigationController zx_navigationBar_titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
 }
 
 #pragma mark-JPush

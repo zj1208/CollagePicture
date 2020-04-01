@@ -1,14 +1,15 @@
+# Uncomment the next line to define a global platform for your project
+
 platform:ios,9.0
+
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
 #忽略警告
 inhibit_all_warnings!
 #使用动态库，不用静态库加载，优化APP体积
 use_frameworks!
-#source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git'
-#source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecsMirror.git'
 
 target "CollagePicture" do
-
-#source 'https://github.com/CocoaPods/Specs.git'
 
 #通用标准库
 pod 'AFNetworking' , '3.2.1'

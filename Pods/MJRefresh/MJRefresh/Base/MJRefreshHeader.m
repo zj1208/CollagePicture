@@ -48,25 +48,36 @@
     self.mj_y = - self.mj_h - self.ignoredScrollViewContentInsetTop;
 }
 
+- (void)resetInset {
+    if (@available(iOS 11.0, *)) {
+    } else {
+        // 如果 iOS 10 及以下系统在刷新时, push 新的 VC, 等待刷新完成后回来, 会导致顶部 Insets.top 异常, 不能 resetInset, 检查一下这种特殊情况
+        if (!self.window) { return; }
+    }
+    
+    // sectionheader停留解决
+    CGFloat insetT = - self.scrollView.mj_offsetY > _scrollViewOriginalInset.top ? - self.scrollView.mj_offsetY : _scrollViewOriginalInset.top;
+    insetT = insetT > self.mj_h + _scrollViewOriginalInset.top ? self.mj_h + _scrollViewOriginalInset.top : insetT;
+    self.insetTDelta = _scrollViewOriginalInset.top - insetT;
+    // 避免 CollectionView 在使用根据 Autolayout 和 内容自动伸缩 Cell, 刷新时导致的 Layout 异常渲染问题
+    if (self.scrollView.mj_insetT != insetT) {
+        self.scrollView.mj_insetT = insetT;
+    }
+}
+
+
 - (void)scrollViewContentOffsetDidChange:(NSDictionary *)change
 {
     [super scrollViewContentOffsetDidChange:change];
     
     // 在刷新的refreshing状态
     if (self.state == MJRefreshStateRefreshing) {
-//        if (self.window == nil) return;
-        
-        // sectionheader停留解决
-        CGFloat insetT = - self.scrollView.mj_offsetY > _scrollViewOriginalInset.top ? - self.scrollView.mj_offsetY : _scrollViewOriginalInset.top;
-        insetT = insetT > self.mj_h + _scrollViewOriginalInset.top ? self.mj_h + _scrollViewOriginalInset.top : insetT;
-        self.scrollView.mj_insetT = insetT;
-        
-        self.insetTDelta = _scrollViewOriginalInset.top - insetT;
+        [self resetInset];
         return;
     }
     
     // 跳转到下一个控制器时，contentInset可能会变
-     _scrollViewOriginalInset = self.scrollView.mj_inset;
+    _scrollViewOriginalInset = self.scrollView.mj_inset;
     
     // 当前的contentOffset
     CGFloat offsetY = self.scrollView.mj_offsetY;
@@ -114,6 +125,9 @@
         [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
             self.scrollView.mj_insetT += self.insetTDelta;
             
+            if (self.endRefreshingAnimateCompletionBlock) {
+                self.endRefreshingAnimateCompletionBlock();
+            }
             // 自动调整透明度
             if (self.isAutomaticallyChangeAlpha) self.alpha = 0.0;
         } completion:^(BOOL finished) {
@@ -124,19 +138,21 @@
             }
         }];
     } else if (state == MJRefreshStateRefreshing) {
-         dispatch_async(dispatch_get_main_queue(), ^{
+        MJRefreshDispatchAsyncOnMainQueue({
             [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-                CGFloat top = self.scrollViewOriginalInset.top + self.mj_h;
-                // 增加滚动区域top
-                self.scrollView.mj_insetT = top;
-                // 设置滚动位置
-                CGPoint offset = self.scrollView.contentOffset;
-                offset.y = -top;
-                [self.scrollView setContentOffset:offset animated:NO];
+                if (self.scrollView.panGestureRecognizer.state != UIGestureRecognizerStateCancelled) {
+                    CGFloat top = self.scrollViewOriginalInset.top + self.mj_h;
+                    // 增加滚动区域top
+                    self.scrollView.mj_insetT = top;
+                    // 设置滚动位置
+                    CGPoint offset = self.scrollView.contentOffset;
+                    offset.y = -top;
+                    [self.scrollView setContentOffset:offset animated:NO];
+                }
             } completion:^(BOOL finished) {
                 [self executeRefreshingCallback];
             }];
-         });
+        })
     }
 }
 
@@ -145,4 +161,11 @@
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:self.lastUpdatedTimeKey];
 }
+
+- (void)setIgnoredScrollViewContentInsetTop:(CGFloat)ignoredScrollViewContentInsetTop {
+    _ignoredScrollViewContentInsetTop = ignoredScrollViewContentInsetTop;
+    
+    self.mj_y = - self.mj_h - _ignoredScrollViewContentInsetTop;
+}
+
 @end

@@ -1,22 +1,22 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
   - AFNetworking-Synchronous (1.1.0):
     - AFNetworking-Synchronous/3.x (= 1.1.0)
   - AFNetworking-Synchronous/3.x (1.1.0):
     - AFNetworking (~> 3.0)
-  - AFNetworking/NSURLSession (3.1.0):
+  - AFNetworking/NSURLSession (3.2.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
   - AliyunOSSiOS (2.6.5)
   - BmobSDK (2.1.7)
@@ -29,10 +29,10 @@ PODS:
   - Mantle/extobjc (2.1.0)
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
-  - MJRefresh (3.1.15.1)
-  - SDWebImage (5.0.6):
-    - SDWebImage/Core (= 5.0.6)
-  - SDWebImage/Core (5.0.6)
+  - MJRefresh (3.2.2)
+  - SDWebImage (5.4.2):
+    - SDWebImage/Core (= 5.4.2)
+  - SDWebImage/Core (5.4.2)
   - SVPullToRefresh (0.4.1)
   - THSegmentedPager (1.1.3):
     - HMSegmentedControl (~> 1.5.2)
@@ -41,30 +41,40 @@ PODS:
   - UMCAnalytics (6.0.5):
     - UMCCommon
   - UMCCommon (2.1.1)
+  - UMCCommonLog (1.0.0)
+  - UMCPush (3.2.4):
+    - UMCCommon
   - WebViewJavascriptBridge (6.0.2)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.1.0)
+  - AFNetworking (= 3.2.1)
   - AFNetworking-Synchronous (~> 1.1.0)
   - AliyunOSSiOS (~> 2.6.3)
   - BmobSDK
   - FMDB (~> 2.6.2)
   - HMSegmentedControl (~> 1.5.4)
-  - Mantle (~> 2.1.0)
-  - Masonry (~> 1.1.0)
+  - Mantle (= 2.1.0)
+  - Masonry (= 1.1.0)
   - MBProgressHUD (= 1.1.0)
-  - MJRefresh (~> 3.1.14)
-  - SDWebImage (~> 5.0.6)
+  - MJRefresh (= 3.2.2)
+  - SDWebImage (= 5.4.2)
   - SVPullToRefresh (~> 0.4.1)
   - THSegmentedPager (~> 1.1.3)
   - TMCache (~> 2.1.0)
   - TZImagePickerController (~> 1.9.3)
   - UMCAnalytics (= 6.0.5)
+  - UMCCommonLog
+  - UMCPush (= 3.2.4)
   - WebViewJavascriptBridge (~> 6.0.2)
 
 SPEC REPOS:
-  trunk:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - AFNetworking
+    - MJRefresh
+    - SDWebImage
+    - UMCCommonLog
+    - UMCPush
+  trunk:
     - AFNetworking-Synchronous
     - AliyunOSSiOS
     - BmobSDK
@@ -73,8 +83,6 @@ SPEC REPOS:
     - Mantle
     - Masonry
     - MBProgressHUD
-    - MJRefresh
-    - SDWebImage
     - SVPullToRefresh
     - THSegmentedPager
     - TMCache
@@ -84,7 +92,7 @@ SPEC REPOS:
     - WebViewJavascriptBridge
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   AFNetworking-Synchronous: 61b98fb931b114b0da2b243957ea533e2954c2a2
   AliyunOSSiOS: 6d7f1f6aae0176095d147a88d60b23bbef93e0b7
   BmobSDK: 23cbfbde2a7cfaeb0c8a946953a266fe5211e7f6
@@ -93,16 +101,18 @@ SPEC CHECKSUMS:
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  MJRefresh: 5f8552bc25ca8751c010f621c1098dbdaacbccd6
-  SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
+  MJRefresh: 72a46ecaa2a0feaf48fc5198dff95f25f8bb27c6
+  SDWebImage: 4ca2dc4eefae4224bea8f504251cda485a363745
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   THSegmentedPager: 9d4fb2acc78d77246caf1e71d2e878bf5977b904
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
   TZImagePickerController: 276dc7c0cc70da9ee354046474b405d87ef81c89
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
+  UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
+  UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   WebViewJavascriptBridge: 791ee0e26d1bf15efe5fb7fb9666a71a19b89d77
 
-PODFILE CHECKSUM: 028472d13e846c3ed3e6e6cf33e246c5bd5a9af2
+PODFILE CHECKSUM: d51898712d199e44d92388884ca23e42e9fc081c
 
 COCOAPODS: 1.8.4

@@ -2424,8 +2424,8 @@
 				F49E19A71DF1876B00676396 /* Marcoes */,
 				F4EB2FAB1D8FCF3D00F5B70B /* Resources */,
 				F46182841D813BCB0015BC84 /* Library */,
-				F461821E1D8129490015BC84 /* AppDelegate.h */,
 				F46182271D8129490015BC84 /* CollagePicture.xcdatamodeld */,
+				F461821E1D8129490015BC84 /* AppDelegate.h */,
 				F461821F1D8129490015BC84 /* AppDelegate.m */,
 				F46182241D8129490015BC84 /* Main.storyboard */,
 				F481E89B1FDFB61000D115D3 /* CollagePicture.entitlements */,
@@ -4093,6 +4093,7 @@
 				F46182151D8129490015BC84 /* Frameworks */,
 				F46182161D8129490015BC84 /* Resources */,
 				423E2BBF0C801821F79F95A1 /* [CP] Embed Pods Frameworks */,
+				A5893CDD9189404DE10CFF20 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4396,6 +4397,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5893CDD9189404DE10CFF20 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-resources.sh",
+				"${PODS_ROOT}/UMCCommonLog/UMCommonLog/UMCommonLog.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UMCommonLog.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D534ECBAA26975C5E49D3A56 /* [CP] Check Pods Manifest.lock */ = {
@@ -4905,8 +4924,8 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M48557B98W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

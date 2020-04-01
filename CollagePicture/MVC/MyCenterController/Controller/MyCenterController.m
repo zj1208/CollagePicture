@@ -56,12 +56,12 @@
 
 - (void)setUI
 {
-    [kAPP_Delegate setApperanceForSigleNavController:self];
+    [kAPP_Delegate setApperanceForSigleNavController:self.navigationController];
     
     [self addNavigationBarView];
     
     [self setHeaderView];
-    UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
+//    UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];

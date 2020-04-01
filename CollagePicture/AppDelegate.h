@@ -21,6 +21,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 //设置导航条
-- (void)setApperanceForSigleNavController:(UIViewController *)viewController;
+- (void)setApperanceForSigleNavController:(UINavigationController *)viewController;
 @end
 
