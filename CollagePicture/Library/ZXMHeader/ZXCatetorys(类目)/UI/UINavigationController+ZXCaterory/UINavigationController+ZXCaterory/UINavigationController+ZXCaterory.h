@@ -6,6 +6,7 @@
 //  Copyright © 2019 com.Chs. All rights reserved.
 //
 //  2020.1.20 优化代码；
+//  2020.3.31 优化
 
 #import <UIKit/UIKit.h>
 
@@ -18,8 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, readonly, strong) UIViewController *zx_rootViewController;
 
 
-/// 进化系统的popToViewController: animated:方法；Pops视图控制器，直到指定的视图控制器位于导航堆栈的顶部。
-/// @param childViewControllerClass 子控制器的类名
+/// 改写系统的popToViewController: animated:方法；Pops视图控制器，直到查找到第一个指定的视图控制器位于导航堆栈的顶部。
+/// @param childViewControllerClass 子控制器的类名，只会查找第一个做pop处理；
 /// @param animated animated description
 //  这个数组包含从堆栈中popped的所有视图控制器。
 - (nullable NSArray<__kindof UIViewController *> *)zx_popToViewControllerClass:(nullable Class)childViewControllerClass animated:(BOOL)animated;

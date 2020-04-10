@@ -25,6 +25,7 @@
         if ([obj isKindOfClass:childViewControllerClass])
         {
            array = [[self popToViewController:obj animated:animated] copy];
+           *stop = YES;
         }
     }];
     return array;

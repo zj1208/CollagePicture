@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_END
 }
 - (void)applicationNoOpenURLActive:(id)notification
 {
+    if (![self.navigationController.topViewController isEqual:self]) {
+        return;
+    }
     if (self.isAuthRequesting) {
 
         [MBProgressHUD zx_hideHUDForView:self.view];

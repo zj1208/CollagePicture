@@ -14,6 +14,7 @@
 // 2019.6.03 修改注释
 // 2019.12.06 优化代码，增加解决方案按钮及事件，点击屏幕事件，增加无网络直接判断；
 // 2020.02.06 优化代码，网络跳转修改；
+// 2020.04.08 优化代码;
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD+ZXCategory.h"
@@ -57,14 +58,26 @@ static NSString * const ZXEmptyRequestFaileTitle = @"";
 /*
 ZXEmptyViewController的view加入到一个隐藏系统navigationBar的控制器view上时，会覆盖整个控制器view；
 调节方式如下：
-self.emptyViewController.view.frame = CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR);
+self.emptyViewController.view.frame = CGRectMake(0, HEIGHT_NAVBAR, LCDW, LCDH-HEIGHT_NAVBAR);
  */
 
 //是否点击屏幕回调代理方法执行刷新数据
 typedef NS_ENUM(NSInteger, ZXEmptyViewTouchEventType)
 {
+    /// 默认不支持点击空白区域点击回调
     ZXEmptyViewTouchEventTypeNoUpdate = 0,
     ZXEmptyViewTouchEventTypeUpdate = 1,
+};
+
+///按钮点击事件类型
+typedef NS_ENUM(NSInteger, ZXEmptyViewButtonActionType)
+{
+    ///重新加载
+    ZXEmptyViewButtonActionType_ReRequest = 0,
+    ///解决方案
+    ZXEmptyViewButtonActionType_ErrorSolution = 1,
+    ///自定义
+    ZXEmptyViewButtonActionType_Custom = 2,
 };
 
 @interface ZXEmptyViewController : UIViewController
@@ -73,6 +86,10 @@ typedef NS_ENUM(NSInteger, ZXEmptyViewTouchEventType)
 
 @property (nonatomic, strong) UILabel *textLabel;
 
+@property (nonatomic, strong) UIButton *centerButton;
+@property (nonatomic, assign) ZXEmptyViewButtonActionType buttonActionType;
+
+
 /// 整体内容偏移调节(textLabel,imageView,updateBtn一起调节)
 @property (nonatomic, assign) CGSize contentOffest;
 
@@ -80,20 +97,72 @@ typedef NS_ENUM(NSInteger, ZXEmptyViewTouchEventType)
 @property (nonatomic, assign) BOOL showErrorCodeOnLabelText;
 
 /// 是否在toast上展示error的code码
-@property (nonatomic, assign) BOOL showErrorCodeOnToatText;
+@property (nonatomic, assign) BOOL showErrorCodeOnToastText;
 
 /// 是否在加载完成显示self的同时显示错误toast;
-@property (nonatomic, assign) BOOL showErrorToastViewTogather;
+@property (nonatomic, assign) BOOL showEmptyViewWithErrorToast;
+
+/// 在空数据氛围图的时候（不是error错误视图），是否隐藏按钮；默认隐藏
+@property (nonatomic, assign) BOOL emptyViewCenterButtonHide;
+
+/// 是否点击错误视图事件回调；默认YES；
+@property (nonatomic, assign) BOOL touchErrorViewIsAction;
+
+//-------------------------- Button 相关 --------------------------//
+/**
+ 按钮字体, 大小default is 14.f
+ */
+@property (nonatomic, strong) UIFont  *actionBtnFont;
+/**
+ 按钮的高度, default is 30.f
+ */
+@property (nonatomic, assign) CGFloat  actionBtnHeight;
+
+/**
+ 按钮的宽度, default is 120.f
+ */
+@property (nonatomic, assign) CGFloat  actionBtnWidth;
 
 
-///  添加及移除氛围图（数据空氛围图，请求失败氛围图）："点击加载"按钮(老方法)
+/// 按钮宽带是否自动适配
+@property (nonatomic, assign) BOOL  actionBtnWidthAutomic;
+
+/**
+ 按钮的圆角大小, default is 0
+ */
+@property (nonatomic, assign) CGFloat  actionBtnCornerRadius;
+/**
+ 按钮边框border的宽度, default is 0
+ */
+@property (nonatomic, assign) CGFloat  actionBtnBorderWidth;
+/**
+ 按钮边框颜色
+ */
+@property (nonatomic, strong) UIColor  *actionBtnBorderColor;
+/**
+ 按钮文字颜色
+ */
+@property (nonatomic, strong) UIColor  *actionBtnTitleColor;
+/**
+ 按钮背景颜色
+ */
+@property (nonatomic, strong) UIColor  *actionBtnBackGroundColor;
+
+/**
+ 按钮 与 (标题或图片) 之间的间距, default is 30.
+ */
+@property (nonatomic, assign) CGFloat  actionBtnMargin;
+
+
+
+///  添加及移除氛围图（数据空氛围图，请求失败氛围图）：
 /// @param viewController <#viewController description#>
 /// @param flag <#flag description#>
 /// @param error <#error description#>
 /// @param emptyImage <#emptyImage description#>
 /// @param title <#title description#>
 /// @param hide <#hide description#>
-- (void)zx_addEmptyViewWithUpdateBtnInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide;
+- (void)zx_addEmptyViewWithUpdateBtnInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title centerButtonHide:(BOOL)hide;
 
 /// 添加及移除氛围图（数据空氛围图，请求失败氛围图）：“查看解决方案”按钮(2019-12-06)
 /// @param viewController <#viewController description#>
@@ -103,8 +172,6 @@ typedef NS_ENUM(NSInteger, ZXEmptyViewTouchEventType)
 /// @param title <#title description#>
 - (void)zx_addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title;
 
-
-- (void)zx_showSccessWithEmptyViewInController:(UIViewController *)viewController emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title hasLocalData:(BOOL)flag;
 
 /// 直接移除氛围图
 - (void)zx_hideEmptyViewInContainerViewConroller;

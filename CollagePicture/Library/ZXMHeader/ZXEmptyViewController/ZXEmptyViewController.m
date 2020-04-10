@@ -9,8 +9,8 @@
 #import "ZXEmptyViewController.h"
 #import "MBProgressHUD+ZXCategory.h"
 #import "AFNetworkReachabilityManager.h"
-#import <Masonry/Masonry.h>
-
+//#import <Masonry/Masonry.h>
+#import "Masonry.h"
 #import "ZXWKWebViewController.h"
 
 // 注意： beginAppearanceTransition: /endAppearanceTransition 方法没必要写，自定义显示回调机制的时候才使用，系统默认也会回调viewWillAppear等方法的
@@ -48,15 +48,41 @@ tmp;\
 @interface ZXEmptyViewController ()
 @property (nonatomic, strong) UIImageView *imageView;
 
-@property (nonatomic, strong) UIButton *centerButton;
 
 @property (nonatomic, assign) ZXEmptyViewTouchEventType touchEventType;
+
+/// 是否隐藏中间按钮；默认YES
+@property (nonatomic, assign) BOOL centerButtonHide;
 
 @end
 
 @implementation ZXEmptyViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initData];
+    }
+    return self;
+}
+#pragma mark -
+- (void)initData
+{
+    self.showErrorCodeOnLabelText = NO;
+    self.showErrorCodeOnToastText = YES;
+    self.showEmptyViewWithErrorToast = YES;
+    self.touchErrorViewIsAction = YES;
+    self.emptyViewCenterButtonHide = YES;
+    self.actionBtnFont = [UIFont systemFontOfSize:14];
+    
+    self.actionBtnHeight = LCDScale_iPhone6(30);
+    self.actionBtnWidth = LCDScale_iPhone6(120);
+    self.actionBtnWidthAutomic = YES;
+    self.actionBtnMargin = 30;
+}
 
+///调用当前控制器的frame之后就会回调这里;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -65,7 +91,6 @@ tmp;\
     //设置默认frame
     self.view.frame =CGRectMake(0, kHEIGHT_SAFEAREA_NAVBAR, LCDW, LCDH-kHEIGHT_SAFEAREA_NAVBAR);
     [self setUI];
-    [self setData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -84,8 +109,8 @@ tmp;\
     [self.view addSubview:self.textLabel];
     [self.view addSubview:self.centerButton];
     
-    CGFloat btnHeight = LCDScale_iPhone6(30);
-    CGFloat btnWidth = LCDScale_iPhone6(120);
+    CGFloat btnHeight = self.actionBtnHeight;
+    CGFloat btnWidth = self.actionBtnWidth;
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -103,7 +128,7 @@ tmp;\
     
     [self.centerButton mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.top.mas_equalTo(self.textLabel.mas_bottom).offset(40);
+        make.top.mas_equalTo(self.textLabel.mas_bottom).offset(self.actionBtnMargin);
         make.width.mas_equalTo(btnWidth);
         make.height.mas_equalTo(btnHeight);
         make.centerX.mas_equalTo(self.view.mas_centerX);
@@ -129,7 +154,7 @@ tmp;\
         UILabel *lab = [[UILabel alloc] init];
         lab.numberOfLines = 0;
         lab.textAlignment = NSTextAlignmentCenter;
-        lab.textColor = UIColorFromRGB_HexValue(0x34373A);
+        lab.textColor = UIColorFromRGB_HexValue(0x333333);
         lab.font = [UIFont systemFontOfSize:14];
         _textLabel = lab;
     }
@@ -161,12 +186,62 @@ tmp;\
     view.layer.borderColor =color?[color CGColor]:[UIColor clearColor].CGColor;
 }
 
-#pragma mark -
-- (void)setData
+
+- (void)setUpSubviews
 {
-    self.showErrorCodeOnLabelText = NO;
-    self.showErrorCodeOnToatText = YES;
-    self.showErrorToastViewTogather = YES;
+    if ([self.centerButton.currentTitle isEqualToString:@"点击加载"]) {
+    
+        self.actionBtnHeight = LCDScale_iPhone6(30);
+        self.actionBtnWidth = LCDScale_iPhone6(120);
+        self.actionBtnWidthAutomic = YES;
+        self.actionBtnTitleColor = UIColorFromRGB_HexValue(0x666666);
+        self.actionBtnCornerRadius = 15;
+        self.actionBtnBorderColor = UIColorFromRGB_HexValue(0xCCCCCC);
+        self.actionBtnFont = [UIFont systemFontOfSize:14];
+        self.actionBtnMargin = 30;
+    }
+    else if ([self.centerButton.currentTitle isEqualToString:@"查看解决方案"])
+    {
+        self.actionBtnHeight = LCDScale_iPhone6(30);
+        self.actionBtnWidth = LCDScale_iPhone6(120);
+        self.actionBtnWidthAutomic = YES;
+        self.actionBtnTitleColor = [UIColor colorWithWhite:0.3 alpha:1];
+        self.actionBtnBorderColor = [UIColor colorWithWhite:0.8 alpha:1];
+        self.actionBtnCornerRadius = 5;
+        self.actionBtnFont = [UIFont systemFontOfSize:14];
+        self.actionBtnMargin = 30;
+    }
+}
+
+
+- (void)setActionBtnTitleColor:(UIColor *)actionBtnTitleColor
+{
+    _actionBtnTitleColor = actionBtnTitleColor;
+    [self.centerButton setTitleColor:actionBtnTitleColor forState:UIControlStateNormal];
+}
+
+- (void)setActionBtnFont:(UIFont *)actionBtnFont
+{
+    _actionBtnFont = actionBtnFont;
+    self.centerButton.titleLabel.font = actionBtnFont;
+}
+
+- (void)setActionBtnCornerRadius:(CGFloat)actionBtnCornerRadius
+{
+    _actionBtnCornerRadius = actionBtnCornerRadius;
+    self.centerButton.layer.cornerRadius = actionBtnCornerRadius;
+}
+
+- (void)setActionBtnBackGroundColor:(UIColor *)actionBtnBackGroundColor
+{
+    _actionBtnBackGroundColor = actionBtnBackGroundColor;
+    self.centerButton.backgroundColor = actionBtnBackGroundColor;
+}
+
+- (void)setActionBtnBorderColor:(UIColor *)actionBtnBorderColor
+{
+    _actionBtnBorderColor = actionBtnBorderColor;
+    self.centerButton.layer.borderColor = actionBtnBorderColor.CGColor;
 }
 
 
@@ -175,24 +250,23 @@ tmp;\
     _contentOffest = contentOffest;
 }
 
-
+/// 调整imageView，button按钮的位置和大小；
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     
-    CGFloat btnHeight = LCDScale_iPhone6(30);
-    CGFloat imageWithTitleLayoutConstant = 12;
-    CGFloat titleWithButtonLayoutConstant = 40;
-    CGFloat imageWithButtonLayoutConstant = 30;
+    CGFloat btnHeight = self.actionBtnHeight;
+    CGFloat titleLabTopToImageConstant = 12;
+    CGFloat buttonTopToTitleLabConstant = self.actionBtnMargin;
+    CGFloat buttonTopToImageConstant = self.actionBtnMargin;
     
-
-    //   imageView调整
-    
+    // imageView调整
     [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
         
         make.size.mas_equalTo(self.imageView.image.size);
     }];
-    
+    /// 确立imageView的中心点
+    /// 有提示语
     if (self.textLabel.text.length>0 )
     {
         CGRect titleLabRect = [self.textLabel.text boundingRectWithSize:CGSizeMake(LCDW-24, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
@@ -201,12 +275,12 @@ tmp;\
         //有点击加载按钮；
         if (!self.centerButton.hidden)
         {
-            otherContentHeight = imageWithTitleLayoutConstant+titleLabRect.size.height+titleWithButtonLayoutConstant+btnHeight;
+            otherContentHeight = titleLabTopToImageConstant+titleLabRect.size.height + buttonTopToTitleLabConstant + btnHeight;
         }
         //无点击加载按钮
         else
         {
-            otherContentHeight = imageWithTitleLayoutConstant+titleLabRect.size.height;
+            otherContentHeight = titleLabTopToImageConstant+titleLabRect.size.height;
         }
         
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -217,7 +291,7 @@ tmp;\
     //无提示语，有加载按钮；
     else if (self.textLabel.text.length==0 && !self.centerButton.hidden)
     {
-        CGFloat otherContentHeight =imageWithTitleLayoutConstant+ titleWithButtonLayoutConstant+btnHeight;
+        CGFloat otherContentHeight = titleLabTopToImageConstant + buttonTopToTitleLabConstant + btnHeight;
         [self.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
             
             make.centerY.mas_equalTo (self.view.mas_centerY).offset(-otherContentHeight/2-64+self.contentOffest.height);
@@ -234,18 +308,24 @@ tmp;\
 
     
     // centerButton调整
+    
     if (!self.centerButton.hidden)
     {
         //宽度
         CGRect titleLabRect = [self.centerButton.currentTitle boundingRectWithSize:CGSizeMake(LCDW-24, MAXFLOAT) options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.centerButton.titleLabel.font} context:nil];
         //偏移
-        CGFloat centerButtonToTitleLabelOffest = titleWithButtonLayoutConstant;
+        CGFloat centerButtonToTitleLabelOffest = buttonTopToTitleLabConstant;
         if (self.textLabel.text.length==0) {
-            centerButtonToTitleLabelOffest = imageWithButtonLayoutConstant-imageWithTitleLayoutConstant;
+            centerButtonToTitleLabelOffest = buttonTopToImageConstant - titleLabTopToImageConstant;
         }
         [self.centerButton mas_updateConstraints:^(MASConstraintMaker *make) {
 
-            make.width.mas_equalTo(titleLabRect.size.width + btnHeight);
+            if (self.actionBtnWidthAutomic) {
+                make.width.mas_equalTo(titleLabRect.size.width + btnHeight);
+            }else
+            {
+                make.width.mas_equalTo(self.actionBtnWidth);
+            }
             make.top.mas_equalTo(self.textLabel.mas_bottom).offset(centerButtonToTitleLabelOffest);
         }];
     }
@@ -254,48 +334,39 @@ tmp;\
 
 #pragma mark -
 
-- (void)zx_addEmptyViewWithUpdateBtnInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide
+- (void)zx_addEmptyViewWithUpdateBtnInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title centerButtonHide:(BOOL)hide
 {
-    [self addEmptyViewInController:viewController hasLocalData:flag error:error image:emptyImage title:title centerButtonHide:hide];
-}
-
-
-
-- (void)zx_addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title
-{
-    BOOL hide = YES;
-    if (error)
-    {
-        if (error.code == -1005 || error.code == -1009 || error.code == -1001) {
-            hide = NO;
-        }
-        self.touchEventType = ZXEmptyViewTouchEventTypeUpdate;
+    if (error) {
+          self.touchEventType = self.touchErrorViewIsAction ? ZXEmptyViewTouchEventTypeUpdate :
+                  ZXEmptyViewTouchEventTypeNoUpdate;
     }else
     {
         self.touchEventType = ZXEmptyViewTouchEventTypeNoUpdate;
     }
-
-    [self.centerButton setTitle:@"查看解决方案" forState:UIControlStateNormal];
-    [self.centerButton setTitleColor:UIColorFromRGB_HexValue(0x595E66) forState:UIControlStateNormal];
-    [self setView:self.centerButton cornerRadius:15.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xCCCCCC)];
     [self addEmptyViewInController:viewController hasLocalData:flag error:error image:emptyImage title:title centerButtonHide:hide];
 }
 
-// 网络问题-“查看解决方案”按钮，服务器问题--"点击加载"按钮
-- (void)zx_addEmptyView2InController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title
+// 网络问题-“查看解决方案”按钮，服务器问题--"点击加载"按钮-
+- (void)zx_addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title
 {
-    if (error) {
-        if (error.code == -1005 || error.code == -1009 || error.code == -1001) {
-            [self addErrorViewWithSolutionButtonInController:viewController hasLocalData:flag error:error errorImage:emptyImage errorTitle:title centerButtonHide:NO];
-        }else
-        {
-            [self addErrorViewWithUpdateButtonInController:viewController hasLocalData:flag error:error errorImage:emptyImage errorTitle:title centerButtonHide:NO];
-        }
-    }else
+    if (error)
     {
-        [self addEmptyViewWithNOButtonInController:viewController hasLocalData:flag error:error emptyImage:emptyImage emptyTitle:title centerButtonHide:YES];
+        if (error.code == -1005 || error.code == -1009 || error.code == -1001)
+        {
+            [self setErrorViewWithSolutionButtonInController];
+        }
+        else
+        {
+            [self setErrorViewWithUpdateButtonInController];
+        }
     }
+    else
+    {
+        [self setEmptyViewInController];
+    }
+    [self addEmptyViewInController:viewController hasLocalData:flag error:error image:emptyImage title:title centerButtonHide:self.centerButtonHide];
 }
+
 
 #pragma mark 最终方法
 - (void)addEmptyViewInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error image:(nullable UIImage *)image title:(nullable NSString *)title centerButtonHide:(BOOL)hide
@@ -314,18 +385,15 @@ tmp;\
             [self zx_hideEmptyViewInContainerViewConroller];
         }
     }
-    //->请求错误或成功或空数据
+    //->请求错误或成功或空数据;本地还没有数据;
     else
     {
-        if (![viewController.childViewControllers containsObject:self])
-        {
-            [self zx_addChildViewControllerInController:viewController];
-        }
+        [self zx_addChildViewControllerInController:viewController];
         self.imageView.image = image;
         self.textLabel.text = [self zx_finallyTextLabelTitle:title withError:error];
         self.centerButton.hidden = hide;
         //加在当前viewController上
-        if (error)
+        if (error && self.showEmptyViewWithErrorToast)
         {
             [self zx_makeToastInViewController:self withError:error];
         }
@@ -335,70 +403,75 @@ tmp;\
 
 
 
-
+/*
 #pragma mark-
 // 函数一：请求失败的时候调用；先失败-添加；二次失败-添加；先成功有数据后失败-不添加，toast提示
-- (void)zx_showErrorWithEmptyViewInController:(UIViewController *)viewController error:(nullable NSError *)error errorImage:(nullable UIImage *)errorImage errorTitle:(nullable NSString *)title updateBtnHide:(BOOL)hide hasLocalData:(BOOL)flag
+- (void)zx_showErrorWithErrorViewInController:(UIViewController *)viewController error:(nullable NSError *)error errorImage:(nullable UIImage *)errorImage errorTitle:(nullable NSString *)title buttonHide:(BOOL)hide hasLocalData:(BOOL)flag
 {
-    if (flag) {
-        //toast提示
+    if (flag && error)
+    {
+        //加在已显示页面上；
+        [self zx_makeToastInViewController:viewController withError:error];
         return;
     }
-    if (![viewController.childViewControllers containsObject:self])
-    {
-        [self zx_addChildViewControllerInController:viewController];
-    }
+    [self zx_addChildViewControllerInController:viewController];
     self.textLabel.text = [self zx_finallyTextLabelTitle:title withError:error];
     self.centerButton.hidden = hide;
     self.imageView.image = errorImage;
 }
 
-// 函数三：请求成功的时候添加空视图；先失败后成功-添加；先成功且没数据显示-添加； 先成功且有数据显示情况下-不执行；
-- (void)zx_showSccessWithEmptyViewInController:(UIViewController *)viewController emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title hasLocalData:(BOOL)flag
+// 函数三：请求返回添加空数据氛围视图；先失败后成功-添加；先成功且没数据显示-添加； 先成功且有数据显示情况下-不执行；
+- (void)zx_showEmptyWithEmptyViewInController:(UIViewController *)viewController imageStr:(nullable NSString *)emptyImageStr emptyTitle:(nullable NSString *)title hasLocalData:(BOOL)flag
 {
     if (flag) {
         return;
     }
     self.touchEventType = ZXEmptyViewTouchEventTypeNoUpdate;
-    if (![viewController.childViewControllers containsObject:self])
-    {
-        [self zx_addChildViewControllerInController:viewController];
-    }
+    [self zx_addChildViewControllerInController:viewController];
     self.textLabel.text = [self zx_finallyTextLabelTitle:title withError:nil];
-    self.centerButton.hidden = YES;
-    self.imageView.image = emptyImage;
+    self.centerButton.hidden = self.emptyViewCenterButtonHide;;
+    self.imageView.image = [UIImage imageNamed:emptyImageStr];
 }
-
+*/
 #pragma mark-
 
-// 无按钮 空氛围视图
-- (void)addEmptyViewWithNOButtonInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error emptyImage:(nullable UIImage *)emptyImage emptyTitle:(nullable NSString *)title centerButtonHide:(BOOL)hide
+// 空数据氛围视图,按钮有可能出现或不出现；
+- (void)setEmptyViewInController
 {
     self.touchEventType = ZXEmptyViewTouchEventTypeNoUpdate;
-    [self addEmptyViewInController:viewController hasLocalData:flag error:error image:emptyImage title:title centerButtonHide:hide];
-}
-// error-重新请求按钮
-- (void)addErrorViewWithUpdateButtonInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error errorImage:(nullable UIImage *)image errorTitle:(nullable NSString *)title centerButtonHide:(BOOL)hide
-{
-    self.touchEventType = ZXEmptyViewTouchEventTypeNoUpdate;
-    [self addEmptyViewInController:viewController hasLocalData:flag error:error image:image title:title centerButtonHide:hide];
-}
-// error-解决方案按钮
-- (void)addErrorViewWithSolutionButtonInController:(UIViewController *)viewController hasLocalData:(BOOL)flag error:(nullable NSError *)error errorImage:(nullable UIImage *)image errorTitle:(nullable NSString *)title centerButtonHide:(BOOL)hide
-{
-    self.touchEventType = ZXEmptyViewTouchEventTypeUpdate;
-    [self.centerButton setTitle:@"查看解决方案" forState:UIControlStateNormal];
-    [self.centerButton setTitleColor:UIColorFromRGB_HexValue(0x595E66) forState:UIControlStateNormal];
-    [self setView:self.centerButton cornerRadius:15.f borderWidth:0.5f borderColor:UIColorFromRGB_HexValue(0xCCCCCC)];
-    
-    [self addEmptyViewInController:viewController hasLocalData:flag error:error image:image title:title centerButtonHide:hide];
+    self.centerButtonHide = self.emptyViewCenterButtonHide;
+    self.buttonActionType = ZXEmptyViewButtonActionType_Custom;
 }
 
+// error-解决方案按钮。
+- (void)setErrorViewWithSolutionButtonInController
+{
+    self.centerButtonHide = NO;
+    self.touchEventType = ZXEmptyViewTouchEventTypeUpdate;
+    [self.centerButton setTitle:@"查看解决方案" forState:UIControlStateNormal];
+    [self setUpSubviews];
+    self.buttonActionType = ZXEmptyViewButtonActionType_ErrorSolution;
+}
+
+// error-重新请求按钮是否展示；点击错误视图是否事件回调；
+- (void)setErrorViewWithUpdateButtonInController
+{
+    self.centerButtonHide = self.touchErrorViewIsAction;
+    self.touchEventType = self.touchErrorViewIsAction ? ZXEmptyViewTouchEventTypeUpdate :
+    ZXEmptyViewTouchEventTypeNoUpdate;
+    [self.centerButton setTitle:@"点击加载" forState:UIControlStateNormal];
+    [self setUpSubviews];
+    self.buttonActionType = ZXEmptyViewButtonActionType_ReRequest;
+}
 
 #pragma mark - add添加
 
 - (void)zx_addChildViewControllerInController:(UIViewController *)viewController
 {
+    if ([viewController.childViewControllers containsObject:self])
+    {
+        return;
+    }
     [viewController addChildViewController:self];
     [viewController.view addSubview:self.view];
     self.view.alpha = 0;
@@ -420,7 +493,7 @@ tmp;\
 // 获取最终的提示文本；
 - (NSString *)zx_finallyTextLabelTitle:(NSString *)title withError:(NSError *)error
 {
-    if (error && self.showErrorCodeOnLabelText)
+    if (title.length>0 && error && self.showErrorCodeOnLabelText)
     {
         NSString *titleWithErrorCode = [NSString stringWithFormat:@"%@(%@)",title,@(error.code)];
         return titleWithErrorCode;
@@ -430,7 +503,7 @@ tmp;\
 
 - (NSString *)zx_finallyToastTitle:(NSString *)title withError:(NSError *)error
 {
-    if (error && self.showErrorCodeOnToatText)
+    if (error && self.showErrorCodeOnToastText)
     {
         NSString *titleWithErrorCode = [NSString stringWithFormat:@"%@(%@)",title,@(error.code)];
         return titleWithErrorCode;
@@ -479,19 +552,22 @@ tmp;\
 
 - (void)updateNewData:(UIButton *)sender
 {
-    if ([sender.currentTitle isEqualToString:@"点击加载"]) {
-        
-        [self updateNewDataAction];
-    }
-    else if ([sender.currentTitle isEqualToString:@"查看解决方案"])
+    if (self.buttonActionType == ZXEmptyViewButtonActionType_ErrorSolution)
     {
-
         ZXWKWebViewController *vc = [[ZXWKWebViewController alloc] init];
         [vc loadWebHTMLSringWithFileResource:@"networkErrorHelp"];
         if (self.parentViewController.navigationController) {
             vc.hidesBottomBarWhenPushed = YES;
             [self.parentViewController.navigationController pushViewController:vc animated:NO];
         }
+    }
+    else if (self.buttonActionType == ZXEmptyViewButtonActionType_ReRequest)
+    {
+         [self btnAndEventActionWithNetworkReachable];
+    }
+    else
+    {
+        [self btnAndEventAction];
     }
 }
 
@@ -506,9 +582,10 @@ tmp;\
     if ([view isEqual:self.view]) {
         if (self.touchEventType == ZXEmptyViewTouchEventTypeUpdate) {
             
-            if ([self canPerformAction:@selector(updateNewDataAction) withSender:self]) {
+            if ([self canPerformAction:@selector(btnAndEventActionWithNetworkReachable) withSender:self]) {
                 
-                [self updateNewDataAction];
+                self.buttonActionType = ZXEmptyViewButtonActionType_ReRequest;
+                [self btnAndEventActionWithNetworkReachable];
             }
         }
     }
@@ -517,7 +594,7 @@ tmp;\
 
 #pragma mark - action
 
-- (void)updateNewDataAction
+- (void)btnAndEventActionWithNetworkReachable
 {
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     if (![[AFNetworkReachabilityManager sharedManager]isReachable]) {
@@ -527,11 +604,16 @@ tmp;\
         return;
     }
     [self zx_hideEmptyViewInContainerViewConroller];
+    [self btnAndEventAction];
+    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+}
+
+- (void)btnAndEventAction
+{
     if ([self.delegate respondsToSelector:@selector(zxEmptyViewUpdateAction)])
     {
         [self.delegate zxEmptyViewUpdateAction];
     }
-    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
 }
 
 #pragma mark -
