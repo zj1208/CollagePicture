@@ -97,7 +97,7 @@ static NSString * const reuseIdentifier = @"Cell";
         if (error)
         {
             [weakSelf.collectionView.mj_header endRefreshing];
-            [weakSelf.emptyViewController zx_addEmptyViewWithUpdateBtnInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle updateBtnHide:NO];
+            [weakSelf.emptyViewController zx_addEmptyViewInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:error emptyImage:ZXEmptyRequestFaileImage emptyTitle:ZXEmptyRequestFaileTitle];
         }
         //主线程
         else
@@ -106,7 +106,7 @@ static NSString * const reuseIdentifier = @"Cell";
             [weakSelf.dataMArray addObjectsFromArray:array];
             NSLog(@"bmobArray:%@",array);
             
-            [weakSelf.emptyViewController zx_addEmptyViewWithUpdateBtnInController:weakSelf hasLocalData:weakSelf.dataMArray.count>0?YES:NO error:nil emptyImage:[UIImage imageNamed:@"粉丝"] emptyTitle:@"粉丝多了以后好处可多了！\n 你可以拿给别人炫耀有这么多粉丝啊，\n去分享你的名片让别人关注即可成为你的粉丝" updateBtnHide:YES];
+            [weakSelf.emptyViewController zx_hideEmptyViewInContainerViewConroller];
             [weakSelf.collectionView reloadData];
             
             weakSelf.pageNo = 1;
