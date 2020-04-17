@@ -5,7 +5,7 @@
 //  Created by simon on 2017/10/23.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
-//  注释：icon图标 +底部title； icon与title之间的间距8；  title于底部边距大于等于8；
+//  注释：icon图标 +底部title； icon与title之间的间距默认是8；title于底部边距大于等于0；
 
 //  2018.1.8 修改ZXMenuIconCell实例方法；倒入MessageModel
 //  2018.2.11,新增默认Model模型；ZXMenuIconModel；
@@ -42,29 +42,33 @@ NS_ASSUME_NONNULL_BEGIN
 /// 在99+的时候可以调整角标往图片里靠
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labLayoutLeadingConstraint;
 
-/// 标题文本;默认字体大小14，6plus自适应；
+/// 标题文本;默认字体大小12，且自适应屏幕；
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
-/// 角标数字
+/// 角标数字Label
 @property (weak, nonatomic) IBOutlet UILabel *badgeLab;
 
 
-/// imageView正方形长度
-@property (nonatomic, assign) CGFloat imageViewSquareSideLength;
-/// titleLab 与imageView的间距
-@property (nonatomic, assign) CGFloat titleLabToImageViewSpace;
-/// imageView与cell的top间距
+/// imageView顶部与cell的top顶部的约束间距；默认2
 @property (nonatomic, assign) CGFloat imageViewToSupViewTop;
+/// imageView正方形长度约束；默认45；
+@property (nonatomic, assign) CGFloat imageViewSquareSideLength;
+/// titleLab的top与imageView的bottom之间的间距；默认8；
+@property (nonatomic, assign) CGFloat titleLabToImageViewSpace;
+/// titleLab的底部与cell之间的间距；默认0；
+@property (nonatomic, assign) CGFloat titleLabBottomToSupViewSpace;
 
 /// 根据默认Model，ZXMenuIconModel设置数据；
 - (void)setData:(id)data placeholderImage:(UIImage *)placeholderImage;
 
-/// 获取间距，只读；
-+ (CGFloat)getTitleLabToImageViewSpace;
+/// 获取titleLab与imageView之间的间距，默认8；只读；
++ (CGFloat)getTitleLabToImageViewDefaultSpace;
 
-/// 获取imageView与cell顶部的间距，只读；
-+ (CGFloat)getImageViewToSupViewTop;
+/// 获取imageView与cell顶部之间的间距，默认2;只读；
++ (CGFloat)getImageViewToSupViewDefaultTop;
 
+/// 获取titleLabel与cell底部之间的间距，默认0；只读；
++ (CGFloat)getTitleLabToSupViewDefaultBottom;
 @end
 
 NS_ASSUME_NONNULL_END

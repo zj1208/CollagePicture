@@ -16,6 +16,7 @@
 //  7.18 增加item最小宽度属性=图标宽度+角标预留的位置，修改最小item间距=0；
 //  2019.2.26  大修改；增加修改滚动方向属性，是否可以滚动属性；是否有角标属性；安全显示UI的cell的size；
 //  2020.3.07  方法修改，增加属性：titleLabel与image的间距属性等；XIB约束调整；
+//  2020.4.17 增加UI间距有关的属性；
 
 #import <UIKit/UIKit.h>
 #import "ZXMenuIconCell.h"
@@ -49,23 +50,29 @@ NS_ASSUME_NONNULL_BEGIN
 /// 一个屏幕显示多少列；最好小于等于4列；
 @property (nonatomic, assign) NSInteger columnsCount;
 
-
-/// 设置item中的Icon图标正方形等边的宽高； 一行4个item时，最大值是默认的 LCDScale_iPhone6(45.f)；
-@property (nonatomic, assign) CGFloat iconSquareSideLength;
-
-/// titleLab 与imageView的间距
-@property (nonatomic, assign) CGFloat titleLabToImageViewSpace;
-
 /// 设置item的宽度，高度；
 /// 注意：itemSize的width 和 minimumInteritemSpacing属性是互相矛盾的，实际中一定要减小minimumInteritemSpacing属性的值；
 @property (nonatomic, assign) CGSize itemSize;
 
 @property (nonatomic, strong, nullable) UIImage *placeholderImage;
 
+
+/// 设置图标、titleLable的UI约束 及 外观
+
+/// 设置item中的Icon图标正方形等边的宽高；默认45； 一行4个item时，最大值是默认的 LCDScale_iPhone6(45.f)；
+@property (nonatomic, assign) CGFloat iconSquareSideLength;
+/// imageView顶部与cell的top顶部的约束间距；默认2
+@property (nonatomic, assign) CGFloat imageViewToSupViewTop;
+/// titleLab的top与imageView的bottom之间的间距；默认8；
+@property (nonatomic, assign) CGFloat titleLabToImageViewSpace;
+/// titleLab的底部与cell之间的间距；默认0；
+@property (nonatomic, assign) CGFloat titleLabBottomToSupViewSpace;
+
 /// 设置Cell的titleLabel的文字颜色
 @property (nonatomic, strong, nullable) UIColor *titleLabelTextColor;
 /// 设置Cell的titleLabel的文字字体大小
 @property (nonatomic, strong, nullable) UIFont *titleLableFont;
+
 
 /// 设置是否可以滚动
 @property(nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;

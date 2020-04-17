@@ -81,7 +81,9 @@ static NSString * const reuseTagsCell = @"Cell";
 //    self.scrollEnabled = NO;
 
     self.iconSquareSideLength = LCDScale_iPhone6(45.f);
-    self.titleLabToImageViewSpace = [ZXMenuIconCell getTitleLabToImageViewSpace];
+    self.titleLabToImageViewSpace = [ZXMenuIconCell getTitleLabToImageViewDefaultSpace];
+    self.imageViewToSupViewTop = [ZXMenuIconCell getImageViewToSupViewDefaultTop];
+    self.titleLabBottomToSupViewSpace = [ZXMenuIconCell getTitleLabToSupViewDefaultBottom];
     self.clipsToBounds = YES;
     self.clearsContextBeforeDrawing = YES;
     self.hasBadge = YES;
@@ -258,6 +260,8 @@ static NSString * const reuseTagsCell = @"Cell";
     // 设置中心图标
     iconCell.imageViewSquareSideLength = self.iconSquareSideLength;
     iconCell.titleLabToImageViewSpace = self.titleLabToImageViewSpace;
+    iconCell.imageViewToSupViewTop = self.imageViewToSupViewTop;
+    iconCell.titleLabBottomToSupViewSpace = self.titleLabBottomToSupViewSpace;
     if (self.titleLabelTextColor) {
         iconCell.titleLab.textColor = self.titleLabelTextColor;
     }
@@ -281,7 +285,7 @@ static NSString * const reuseTagsCell = @"Cell";
     if (itemWidth < self.safeBadgeMinimumItemWidth) {
         self.minimumInteritemSpacing = (totalWidth - count* self.safeBadgeMinimumItemWidth-inset.left-inset.right)/(count-1);
     }
-    CGFloat safeHeight = flag?([ZXMenuIconCell getImageViewToSupViewTop] +iconEqualSideLength + space + LCDScale_iPhone6(17)+ 6) :([ZXMenuIconCell getImageViewToSupViewTop]+iconEqualSideLength + space + LCDScale_iPhone6(17));
+    CGFloat safeHeight = flag?([ZXMenuIconCell getImageViewToSupViewDefaultTop] + iconEqualSideLength + space + LCDScale_iPhone6(17) + [ZXMenuIconCell getTitleLabToSupViewDefaultBottom]) :([ZXMenuIconCell getImageViewToSupViewDefaultTop] + iconEqualSideLength + space + LCDScale_iPhone6(17) + [ZXMenuIconCell getTitleLabToSupViewDefaultBottom]);
     return CGSizeMake(safeWidth, safeHeight);
 }
 

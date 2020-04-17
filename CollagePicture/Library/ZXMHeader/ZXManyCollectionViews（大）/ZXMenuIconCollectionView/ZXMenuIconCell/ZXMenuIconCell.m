@@ -15,11 +15,14 @@
 /// 设置中心图标的 大小；默认LCDScale_iPhone6(45.f);
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imgViewLayoutWidth;
 
-/// imageView与cell的top间距
+/// imageView与cell的top间距；
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewToSupViewTopLayout;
-/// TitleLabel与imageView的间距
+
+/// TitleLabel与imageView的间距；
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabToImageViewSpaceLayout;
 
+/// titleLable的底部与cell底部之间的间距；
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabBottomToSuperViewLayout;
 
 @end
 
@@ -35,6 +38,13 @@
     self.titleLabToImageViewSpace =  LCDScale_iPhone6(8);
     self.imageViewToSupViewTop = LCDScale_iPhone6(2);
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.titleLabBottomToSupViewSpace = 0;
+}
+
+- (void)setImageViewToSupViewTop:(CGFloat)imageViewToSupViewTop
+{
+    _imageViewToSupViewTop = imageViewToSupViewTop;
+    self.imageViewToSupViewTopLayout.constant = imageViewToSupViewTop;
 }
 
 - (void)setImageViewSquareSideLength:(CGFloat)imageViewSquareSideLength
@@ -49,10 +59,10 @@
     self.titleLabToImageViewSpaceLayout.constant = titleLabToImageViewSpace;
 }
 
-- (void)setImageViewToSupViewTop:(CGFloat)imageViewToSupViewTop
+- (void)setTitleLabBottomToSupViewSpace:(CGFloat)titleLabBottomToSupViewSpace
 {
-    _imageViewToSupViewTop = imageViewToSupViewTop;
-    self.imageViewToSupViewTopLayout.constant = imageViewToSupViewTop;
+    _titleLabBottomToSupViewSpace = titleLabBottomToSupViewSpace;
+    self.titleLabBottomToSuperViewLayout.constant = titleLabBottomToSupViewSpace;
 }
 
  // Configure the cell
@@ -66,7 +76,7 @@
     if (model.sideMarkType ==SideMarkType_number)
     {
         self.badgeLab.hidden = NO;
-         [self.badgeLab zx_topBadgeIconWithBadgeValue:[model.sideMarkValue integerValue] maginY:1.f badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
+        [self.badgeLab zx_topBadgeIconWithBadgeValue:[model.sideMarkValue integerValue] maginY:1.f badgeFont:[UIFont systemFontOfSize:LCDScale_iPhone6(12)] titleColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
         
         if ([model.sideMarkValue integerValue]>99)
         {
@@ -84,15 +94,27 @@
 }
 
 
-+ (CGFloat)getTitleLabToImageViewSpace
++ (CGFloat)getTitleLabToImageViewDefaultSpace
 {
     ZXMenuIconCell *cell = [ZXMenuIconCell zx_viewFromNib];
     return cell.titleLabToImageViewSpace;
 }
 
-+ (CGFloat)getImageViewToSupViewTop
++ (CGFloat)getImageViewToSupViewDefaultTop
 {
     ZXMenuIconCell *cell = [ZXMenuIconCell zx_viewFromNib];
     return cell.imageViewToSupViewTop;
+}
+
++ (CGFloat)getTitleLabToSupViewDefaultBottom
+{
+    ZXMenuIconCell *cell = [ZXMenuIconCell zx_viewFromNib];
+    return cell.titleLabBottomToSupViewSpace;
+}
+
++ (id)zx_viewFromNib
+{
+    NSArray *arr =[[NSBundle mainBundle] loadNibNamed:[[self class] description] owner:self options:nil];
+    return [arr firstObject];
 }
 @end
