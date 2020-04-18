@@ -3420,7 +3420,7 @@
 				F4C16C072415E2AE000EBF4A /* ZXTitleView */,
 				F4C16C0B2415E2AE000EBF4A /* ZXActionTitleView */,
 				F4C16C0F2415E2AE000EBF4A /* Resource */,
-				F4C16C122415E2AE000EBF4A /* ZXCenterTitleView */,
+				F4C16C122415E2AE000EBF4A /* ZXCenterTitleHeaderFooterView */,
 				F4C16C1B2415E2AE000EBF4A /* ZXActionAdditionalTitleView */,
 			);
 			path = ZXTableViewReusableTitleViews;
@@ -3465,13 +3465,13 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		F4C16C122415E2AE000EBF4A /* ZXCenterTitleView */ = {
+		F4C16C122415E2AE000EBF4A /* ZXCenterTitleHeaderFooterView */ = {
 			isa = PBXGroup;
 			children = (
 				F4C16C132415E2AE000EBF4A /* ZXCenterTitleHeaderFooterView */,
 				F4C16C172415E2AE000EBF4A /* ZXCenterTitleView */,
 			);
-			path = ZXCenterTitleView;
+			path = ZXCenterTitleHeaderFooterView;
 			sourceTree = "<group>";
 		};
 		F4C16C132415E2AE000EBF4A /* ZXCenterTitleHeaderFooterView */ = {
