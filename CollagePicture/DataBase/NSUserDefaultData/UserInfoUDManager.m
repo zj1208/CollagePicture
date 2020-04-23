@@ -9,8 +9,8 @@
 #import "UserInfoUDManager.h"
 #import <WebKit/WebKit.h>
 
-NSString *const kNotificationUserLoginIn = @"kNotificationUserLoginIn";
-NSString *const kNotificationUserLoginOut =@"kNotificationUserLoginOut";
+NSString *const kNotificationUserLogin = @"kNotificationUserLogin";
+NSString *const kNotificationUserLogout = @"kNotificationUserLogout";
 NSNotificationName const kNotificationUpdateUserInfo = @"kNotificationUpdateUserInfo";
 NSNotificationName const kNotificationUserTokenError = @"kNotificationUserTokenError";
 
@@ -224,7 +224,7 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
     
     [UserInfoUDManager removeData];
     [UserInfoUDManager removeUserData];
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLoginOut object:self];    
+    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLogout object:self];
 }
 
 
@@ -238,7 +238,7 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 
 + (void)loginIn
 {
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLoginIn object:self];
+    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLogin object:self];
 }
 
 

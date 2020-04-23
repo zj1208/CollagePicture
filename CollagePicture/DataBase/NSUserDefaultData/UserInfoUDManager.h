@@ -14,8 +14,8 @@
 #import <objc/runtime.h>
 #import "TMCache.h"
 
-FOUNDATION_EXPORT NSString *const kNotificationUserLoginIn;
-FOUNDATION_EXPORT NSString *const kNotificationUserLoginOut;
+FOUNDATION_EXPORT NSString *const kNotificationUserLogin;
+FOUNDATION_EXPORT NSString *const kNotificationUserLogout;
 FOUNDATION_EXPORT NSNotificationName const kNotificationUpdateUserInfo;
 FOUNDATION_EXPORT NSNotificationName const kNotificationUserTokenError;
 

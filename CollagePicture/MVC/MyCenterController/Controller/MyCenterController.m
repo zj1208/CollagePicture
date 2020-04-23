@@ -138,8 +138,8 @@
 
 - (void)setUpData
 {
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:kNotificationUserLoginIn object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginOut:) name:kNotificationUserLoginOut object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginNotification:) name:kNotificationUserLogin object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutNotification:) name:kNotificationUserLogout object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contentSizeChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
 }
@@ -298,14 +298,14 @@
 
 #pragma mark - 登陆
 //登陆的时候需要重新刷新数据；
-- (void)loginIn:(id)notification
+- (void)loginNotification:(id)notification
 {
     [self setPersonalInfomation];
 }
 
 #pragma mark - 退出
 
-- (void)loginOut:(id)notification
+- (void)logoutNotification:(id)notification
 {
     [self removePersonalInfomation];
 }
