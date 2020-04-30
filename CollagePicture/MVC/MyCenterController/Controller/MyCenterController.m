@@ -220,7 +220,7 @@
 //    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64-20+ _contentInsetTop, 0, 0, 0);
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.view insertSubview:self.topImageView belowSubview:self.tableView];
-//    _topImageView.hidden = YES;
+//   self.topImageView.hidden = YES;
 }
 
 
@@ -258,7 +258,8 @@
     NSDictionary *dic0 =@{@"type":@"makeTemplate",@"title":@"照片拼图",@"imageName":@"m_iconAlbum"};
     NSDictionary *dic1 = @{@"type":@"search",@"title":@"搜索",@"imageName":@"m_iconGrowth"};
     NSDictionary *dic2 = @{@"type":@"prefecture",@"title":@"首页专区",@"imageName":@"m_iconCloud"};
-    self.listTitleArr = @[dic0,dic1,dic2];
+    NSDictionary *dic3 = @{@"type":@"amap",@"title":@"地图配送任务",@"imageName":@"m_iconCloud"};
+    self.listTitleArr = @[dic0,dic1,dic2,dic3];
 }
 
 - (void)addNotification
@@ -413,7 +414,7 @@
 - (void)zx_advModalController:(ZXAdvModalController *)controller advItem:(ZXAdvModel *)advModel
 {
 //    [MobClick event:kUM_c_indexbanner];
-    NSString *advid = [NSString stringWithFormat:@"%@",advModel.advId];
+//    NSString *advid = [NSString stringWithFormat:@"%@",advModel.advId];
 //    [self requestClickAdvWithAreaId:@2006 advId:advid];
     //业务逻辑的跳转
 //    [[WYUtility dataUtil]cheackAdvURLToControllerWithSoureController:self.navigationController advUrlString:advModel.url];
@@ -564,6 +565,10 @@
     else if ([type isEqualToString:@"prefecture"])
     {
         [self pushPrefectureVc];
+    }
+    else if ([type isEqualToString:@"amap"])
+    {
+        
     }
 }
 

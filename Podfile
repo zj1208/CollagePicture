@@ -12,29 +12,28 @@ use_frameworks!
 target "CollagePicture" do
 
 #通用标准库
+
 pod 'AFNetworking' , '3.2.1'
-pod 'SDWebImage','5.4.2'
+pod 'SDWebImage','5.6.1'
 pod 'AFNetworking-Synchronous', '~> 1.1.0'
 #pod 'SDWebImage/GIF'
 #可选 使用WebP
 #pod 'SDWebImage/WebP’
-pod 'MBProgressHUD', '1.1.0'
-
-#工具
+pod 'MBProgressHUD', '1.2.0'
 pod 'Masonry', '1.1.0'
-pod 'WebViewJavascriptBridge', '~> 6.0.2'
-#pod 'AvoidCrash', '~> 2.3.0-beta'
-
+pod 'Mantle', '2.1.0'
+#刷新
+pod 'MJRefresh', '3.2.2'
 #本地存储
 pod 'FMDB', '~> 2.6.2'
 pod 'TMCache', '~> 2.1.0'
 
-#model
- pod 'Mantle', '2.1.0'
 
-#刷新
+#工具
+pod 'WebViewJavascriptBridge', '~> 6.0.2'
+#pod 'AvoidCrash', '~> 2.3.0-beta'
+
 pod 'SVPullToRefresh', '~> 0.4.1'
- pod 'MJRefresh', '3.2.2'
 
 #第三方平台
 #'~> 1.6.9'－2.1.7
@@ -50,6 +49,11 @@ pod 'AliyunOSSiOS', '~> 2.6.3'
  #友盟推送-自动依赖UMCCommon2.1.1
  pod 'UMCPush','3.2.4'
 
+# 高德地图
+# pod 'AMapLocation', '2.6.5'
+ pod 'AMap2DMap', '5.6.1'
+ 
+ 
 # U-Share SDK UI模块（分享面板，建议添加）
 #pod 'UMengUShare/UI'
 ## 集成新浪微博
