@@ -37,7 +37,6 @@ static NSString *const SBID_GuideShopHomeController  =@"GuideShopHomeController"
 
 #pragma mark - 设置
 
-static NSString *SBID_SetControllerID = @"SetViewControllerID";
 //照片制作首页
 
 static NSString *SBID_MyCenterControllerNavID = @"MyCenterControllerNavID";

@@ -149,6 +149,7 @@
 		F44DB7E4245A6ED900403CC9 /* UIButton+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F44DB7E2245A6ED900403CC9 /* UIButton+ZXHelper.m */; };
 		F44DB7E7245A6EFC00403CC9 /* NSAttributedString+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F44DB7E6245A6EFC00403CC9 /* NSAttributedString+ZXCategory.m */; };
 		F44DB7F3245A70DA00403CC9 /* ZXOpenMapsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44DB7F1245A70DA00403CC9 /* ZXOpenMapsManager.m */; };
+		F44DB800245A7A1300403CC9 /* UserInfoUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44DB7FF245A7A1300403CC9 /* UserInfoUDManager.m */; };
 		F44DBD442297D14A00739DFB /* ZXCustomCellCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F44DBD3E2297D14A00739DFB /* ZXCustomCellCollectionView.m */; };
 		F44DBD452297D14A00739DFB /* ZXCustomCollectionBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F44DBD412297D14A00739DFB /* ZXCustomCollectionBaseCell.m */; };
 		F456B73120A5A2090092A7B2 /* ZXTowBtnBottomToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = F456B72F20A5A2080092A7B2 /* ZXTowBtnBottomToolView.m */; };
@@ -238,7 +239,6 @@
 		F4A1519D23D2D57A0018405E /* UIImage+ZXCIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519C23D2D57A0018405E /* UIImage+ZXCIImage.m */; };
 		F4A151A023D2D5B30018405E /* ZXKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A1519F23D2D5B30018405E /* ZXKeyboardManager.m */; };
 		F4A151A223D2D5DC0018405E /* ZXHTTPCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151A123D2D5DC0018405E /* ZXHTTPCookieManager.m */; };
-		F4A151A523D2D6010018405E /* UserInfoUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151A423D2D6010018405E /* UserInfoUDManager.m */; };
 		F4A151A823D2D6830018405E /* ZXAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151A723D2D6830018405E /* ZXAreaPickerView.m */; };
 		F4A151AB23D2D6AC0018405E /* ZXMPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151A923D2D6AC0018405E /* ZXMPickerView.m */; };
 		F4A151AE23D2D7690018405E /* ZXBadgeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151AD23D2D7690018405E /* ZXBadgeCollectionCell.m */; };
@@ -363,7 +363,7 @@
 		F4CB0E3B236C3962002BD670 /* PrefectureSubViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E31236C3961002BD670 /* PrefectureSubViewC.m */; };
 		F4CB0E3C236C3962002BD670 /* PrefectureSubViewD.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E34236C3961002BD670 /* PrefectureSubViewD.m */; };
 		F4CB0E3D236C3962002BD670 /* PrefectureCollectionCellTypeC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E35236C3961002BD670 /* PrefectureCollectionCellTypeC.m */; };
-		F4CB0E40236C3976002BD670 /* TestHomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E3E236C3976002BD670 /* TestHomViewController.m */; };
+		F4CB0E40236C3976002BD670 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E3E236C3976002BD670 /* HomeViewController.m */; };
 		F4CB0E47236C3A50002BD670 /* HomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0E46236C3A50002BD670 /* HomeModel.m */; };
 		F4CBDAA2202D4A4B00FF506D /* ZXBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CBDAA0202D4A4B00FF506D /* ZXBadgeView.m */; };
 		F4D8086E20E080130084D024 /* ZXNoMenuTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D8086920E080130084D024 /* ZXNoMenuTextField.m */; };
@@ -656,7 +656,6 @@
 		F44BD22623F1339B00A866F1 /* back_imageTitle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_imageTitle@3x.png"; sourceTree = "<group>"; };
 		F44BD23223F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZXSystemBackButtonAction.h"; sourceTree = "<group>"; };
 		F44BD23323F1345400A866F1 /* UIViewController+ZXSystemBackButtonAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZXSystemBackButtonAction.m"; sourceTree = "<group>"; };
-		F44BD5CC23F13A0600A866F1 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F44DAE9B1DC8D187000D9311 /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
 		F44DAE9C1DC8D187000D9311 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		F44DAE9D1DC8D187000D9311 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
@@ -707,6 +706,9 @@
 		F44DB7E6245A6EFC00403CC9 /* NSAttributedString+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ZXCategory.m"; sourceTree = "<group>"; };
 		F44DB7F1245A70DA00403CC9 /* ZXOpenMapsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXOpenMapsManager.m; sourceTree = "<group>"; };
 		F44DB7F2245A70DA00403CC9 /* ZXOpenMapsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXOpenMapsManager.h; sourceTree = "<group>"; };
+		F44DB7F7245A778C00403CC9 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
+		F44DB7FE245A7A1300403CC9 /* UserInfoUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoUDManager.h; sourceTree = "<group>"; };
+		F44DB7FF245A7A1300403CC9 /* UserInfoUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoUDManager.m; sourceTree = "<group>"; };
 		F44DBD3E2297D14A00739DFB /* ZXCustomCellCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCustomCellCollectionView.m; sourceTree = "<group>"; };
 		F44DBD3F2297D14A00739DFB /* ZXCustomCellCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCustomCellCollectionView.h; sourceTree = "<group>"; };
 		F44DBD412297D14A00739DFB /* ZXCustomCollectionBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCustomCollectionBaseCell.m; sourceTree = "<group>"; };
@@ -887,8 +889,6 @@
 		F4A1519E23D2D5B30018405E /* ZXKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXKeyboardManager.h; sourceTree = "<group>"; };
 		F4A1519F23D2D5B30018405E /* ZXKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXKeyboardManager.m; sourceTree = "<group>"; };
 		F4A151A123D2D5DC0018405E /* ZXHTTPCookieManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXHTTPCookieManager.m; sourceTree = "<group>"; };
-		F4A151A323D2D6010018405E /* UserInfoUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoUDManager.h; sourceTree = "<group>"; };
-		F4A151A423D2D6010018405E /* UserInfoUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoUDManager.m; sourceTree = "<group>"; };
 		F4A151A623D2D6820018405E /* ZXAreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAreaPickerView.h; sourceTree = "<group>"; };
 		F4A151A723D2D6830018405E /* ZXAreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAreaPickerView.m; sourceTree = "<group>"; };
 		F4A151A923D2D6AC0018405E /* ZXMPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMPickerView.m; sourceTree = "<group>"; };
@@ -1100,8 +1100,8 @@
 		F4CB0E34236C3961002BD670 /* PrefectureSubViewD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefectureSubViewD.m; sourceTree = "<group>"; };
 		F4CB0E35236C3961002BD670 /* PrefectureCollectionCellTypeC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefectureCollectionCellTypeC.m; sourceTree = "<group>"; };
 		F4CB0E36236C3962002BD670 /* PrefectureCollectionCellTypeA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefectureCollectionCellTypeA.h; sourceTree = "<group>"; };
-		F4CB0E3E236C3976002BD670 /* TestHomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestHomViewController.m; sourceTree = "<group>"; };
-		F4CB0E3F236C3976002BD670 /* TestHomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHomViewController.h; sourceTree = "<group>"; };
+		F4CB0E3E236C3976002BD670 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		F4CB0E3F236C3976002BD670 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		F4CB0E45236C3A50002BD670 /* HomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeModel.h; sourceTree = "<group>"; };
 		F4CB0E46236C3A50002BD670 /* HomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeModel.m; sourceTree = "<group>"; };
 		F4CBDAA0202D4A4B00FF506D /* ZXBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXBadgeView.m; sourceTree = "<group>"; };
@@ -1575,7 +1575,7 @@
 				F446A8B31FCC082900C82C90 /* ZXSimpleLyricView.m */,
 				F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */,
 				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
-				F44BD5CC23F13A0600A866F1 /* APPCommonDef.h */,
+				F44DB7F7245A778C00403CC9 /* APPCommonDef.h */,
 				F4A158C323D57A780018405E /* ZXLocalNotification */,
 				F446A8981FCC082900C82C90 /* KxMenu */,
 				F446A8B91FCC082900C82C90 /* ADCustomTableView */,
@@ -2214,6 +2214,35 @@
 			path = ZXOpenMapsManager;
 			sourceTree = "<group>";
 		};
+		F44DB7F4245A73DC00403CC9 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				F44DB7F5245A740000403CC9 /* Home */,
+				F457BABE236146B300B1E1B4 /* PSearch */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		F44DB7F5245A740000403CC9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F4CB0E3F236C3976002BD670 /* HomeViewController.h */,
+				F4CB0E3E236C3976002BD670 /* HomeViewController.m */,
+				F457BAEA2362C77200B1E1B4 /* View */,
+				F4CB0E44236C3A50002BD670 /* Model */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		F44DB7F6245A744200403CC9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F457BAEB2362C77C00B1E1B4 /* PSearchHome */,
+				F457BAF22362FF6000B1E1B4 /* PSearchResults */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F44DBD3D2297D14A00739DFB /* ZXCustomCellCollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2331,16 +2360,14 @@
 		F457BABE236146B300B1E1B4 /* PSearch */ = {
 			isa = PBXGroup;
 			children = (
+				F44DB7F6245A744200403CC9 /* View */,
 				F457BAC52361771C00B1E1B4 /* Models */,
-				F457BAEA2362C77200B1E1B4 /* View */,
 				F457BABF236146ED00B1E1B4 /* SearchViewController.h */,
 				F457BAC0236146ED00B1E1B4 /* SearchViewController.m */,
 				F4EB7061236692160073A2B7 /* SearchSuggestionViewController.h */,
 				F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */,
 				F4EB705E236692030073A2B7 /* SearchResultsController.h */,
 				F4EB705D236692030073A2B7 /* SearchResultsController.m */,
-				F4CB0E3F236C3976002BD670 /* TestHomViewController.h */,
-				F4CB0E3E236C3976002BD670 /* TestHomViewController.m */,
 			);
 			path = PSearch;
 			sourceTree = "<group>";
@@ -2348,7 +2375,6 @@
 		F457BAC52361771C00B1E1B4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F4CB0E44236C3A50002BD670 /* HomeModel */,
 				F457BAE02361BF3100B1E1B4 /* SearchTitleModel.h */,
 				F457BAE12361BF3200B1E1B4 /* SearchTitleModel.m */,
 				F457BAC62361772B00B1E1B4 /* SearchTitleHistoryModel.h */,
@@ -2361,8 +2387,6 @@
 			isa = PBXGroup;
 			children = (
 				F4B70B5B236A8D5000C4B4AA /* PrefectureView */,
-				F457BAF22362FF6000B1E1B4 /* PSearchResults */,
-				F457BAEB2362C77C00B1E1B4 /* PSearchHome */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2550,8 +2574,8 @@
 		F4730CD31EA064A200952AF1 /* NSUserDefaultData */ = {
 			isa = PBXGroup;
 			children = (
-				F4A151A323D2D6010018405E /* UserInfoUDManager.h */,
-				F4A151A423D2D6010018405E /* UserInfoUDManager.m */,
+				F44DB7FE245A7A1300403CC9 /* UserInfoUDManager.h */,
+				F44DB7FF245A7A1300403CC9 /* UserInfoUDManager.m */,
 			);
 			path = NSUserDefaultData;
 			sourceTree = "<group>";
@@ -2739,9 +2763,9 @@
 		F49E196E1DF1875900676396 /* MVC */ = {
 			isa = PBXGroup;
 			children = (
+				F44DB7F4245A73DC00403CC9 /* Demo */,
 				F4F38B3B1EA6492C007606F9 /* TemplateMake */,
 				F41C20E82384D1F600F895CF /* StartApp */,
-				F457BABE236146B300B1E1B4 /* PSearch */,
 				F49E198B1DF1875900676396 /* SetViewController */,
 				F40228EB1EF371E800E3D07E /* StartViewController */,
 				F4F38B321EA6492C007606F9 /* MyCenterController */,
@@ -3693,13 +3717,13 @@
 			path = PrefectureSub;
 			sourceTree = "<group>";
 		};
-		F4CB0E44236C3A50002BD670 /* HomeModel */ = {
+		F4CB0E44236C3A50002BD670 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				F4CB0E45236C3A50002BD670 /* HomeModel.h */,
 				F4CB0E46236C3A50002BD670 /* HomeModel.m */,
 			);
-			path = HomeModel;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		F4D8086720E080130084D024 /* ZXTextFields */ = {
@@ -4503,7 +4527,6 @@
 				F44BD20423F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m in Sources */,
 				F49CFD2D1FDE5C8D009F2213 /* XLZoomingScrollView.m in Sources */,
 				F44BD1F523F12F7900A866F1 /* ZXCheckAppItunesVersionManager.m in Sources */,
-				F4A151A523D2D6010018405E /* UserInfoUDManager.m in Sources */,
 				F4E7E1C52431C146007A281A /* ZXAddPicPlaceholderCell.m in Sources */,
 				F4A0FA062142154E0053B1E8 /* ZXWXBigImageDisappearAnimator.m in Sources */,
 				F4E7E1A02431C091007A281A /* ZXOrientationTabController.m in Sources */,
@@ -4564,6 +4587,7 @@
 				F4C16C2F2415E2AE000EBF4A /* ZXCenterTitleView.m in Sources */,
 				F44BD20C23F130F600A866F1 /* UIViewController+ZXLoginAndAlert.m in Sources */,
 				F4C16C802417E1D1000EBF4A /* UILabel+ZXTopBadgeIcon.m in Sources */,
+				F44DB800245A7A1300403CC9 /* UserInfoUDManager.m in Sources */,
 				F44BD21923F1313700A866F1 /* UITabBarController+ZXCategory.m in Sources */,
 				F4AC3CC422BCB9FA00B1D5BD /* ZXPushKitAVNotification.m in Sources */,
 				F457BEA22364248100B1E1B4 /* AddProductModel.m in Sources */,
@@ -4735,7 +4759,7 @@
 				F466A96C21549ADB007143A1 /* ZXAlphaTransitionDelegate.m in Sources */,
 				F4361E072109A67200A5C22F /* NSString+ZXHTMLString.m in Sources */,
 				F4B70B80236ADD4300C4B4AA /* SearchCollectionViewLeftHotCell.m in Sources */,
-				F4CB0E40236C3976002BD670 /* TestHomViewController.m in Sources */,
+				F4CB0E40236C3976002BD670 /* HomeViewController.m in Sources */,
 				F4B0DACF1FEA62CD00E1D028 /* ZXAdvModel.m in Sources */,
 				F4AC3CB822B38F5D00B1D5BD /* ZXAudioServicesManager.m in Sources */,
 			);

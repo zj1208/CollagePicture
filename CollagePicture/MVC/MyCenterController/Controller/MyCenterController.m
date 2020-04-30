@@ -6,9 +6,9 @@
 //  Copyright © 2016年 simon. All rights reserved.
 //
 #import "MyCenterController.h"
-#import "MakingPhotoController.h"
+
+
 #import "ZXOrientationNaController.h"
-#import "AppDelegate.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 #import <UserNotifications/UserNotifications.h>
@@ -20,6 +20,9 @@
 #import "CheckVersionManager.h"
 
 #import "ZXCustomNavigationBar.h"
+#import "SetViewController.h"
+#import "MakingPhotoController.h"
+
 @interface MyCenterController ()<ZXAdvModalControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) ZXCustomNavigationBar *customNavigationBar;
@@ -31,8 +34,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopLayoutConstraint;
 
 
-//广告弹窗
+///广告弹窗
 @property (nonatomic, strong) ZXAlphaTransitionDelegate *transitonModelDelegate;
+
+@property (nonatomic, copy) NSArray *listTitleArr;
 
 @end
 
@@ -43,144 +48,8 @@
     [super viewDidLoad];
 
     [self setUI];
-    [self setUpData];
-    [self requestMyInfomation];
-    
-    [self zx_testData];
-    
-//    //观察者对象
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserInfo:) name:kNotificationUpdateUserInfo object:nil];
+    [self setData];
 }
-
-#pragma mark - UI
-
-- (void)setUI
-{
-    [kAPP_Delegate setApperanceForSigleNavController:self.navigationController];
-    
-    [self addNavigationBarView];
-    
-    [self setHeaderView];
-//    UIGestureRecognizer *rg  =self.navigationController.interactivePopGestureRecognizer;
-    self.tableView.estimatedRowHeight = 45;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    
-    [self addScaleImageView];
-    
-//    [self lauchFirstNewFunction];
-}
-
-- (void)setHeaderView
-{
-    self.nameBtn.hidden = YES;
-    self.signatureLab.text = @"未填写";
-    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-    self.signatureLab.font = font;
-    self.signatureLab.adjustsFontForContentSizeCategory = YES;
-    [self.headBtn zx_setBorderWithCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
-    [self.headBtn zh_setButtonImageViewScaleAspectFill];
-    
-//    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeholdPhoto"]];
-}
-//前提是collectionView的背景要透明
-- (void)addScaleImageView
-{
-    _contentInsetTop = 0;
-//    self.tableView.contentInset = UIEdgeInsetsMake(64-20, 0, 0, 0);
-//    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64-20+ _contentInsetTop, 0, 0, 0);
-    self.tableView.backgroundColor = [UIColor clearColor];
-    [self.view insertSubview:self.topImageView belowSubview:self.tableView];
-//    _topImageView.hidden = YES;
-}
-
-- (UIImageView *)topImageView
-{
-    if (!_topImageView)
-    {
-        _topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDW*100.f/375.0)];
-        _topImageView.backgroundColor = UIColorFromRGB_HexValue(0xED7C34);
-    }
-    return _topImageView;
-}
-
-
-- (ZXCustomNavigationBar *)customNavigationBar{
-    if(!_customNavigationBar)
-    {
-        ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar zx_viewFromNib];
-        [navigationBar zx_setBarBackgroundColor:UIColorFromRGB_HexValue(0xED7C34)];
-//        navigationBar.hidden = YES;
-        _customNavigationBar = navigationBar;
-    }
-    return _customNavigationBar;
-}
-
-- (void)addNavigationBarView
-{
-//    _stausBarStyle =UIStatusBarStyleDefault;
-    [self.view addSubview:self.customNavigationBar];
-    [self.customNavigationBar.rightBarButton1 setImage:[UIImage imageNamed:@"icon_shezhi"] forState:UIControlStateNormal];
-    [self.customNavigationBar.rightBarButton1 addTarget:self action:@selector(setterButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-#pragma mark - 设置
-
-- (void)setterButtonAction:(id)sender
-{
-//    [self zx_pushStoryboardViewControllerWithStoryboardName:storyboard_Set identifier:SBID_SetControllerID withData:nil];
-    Class cls = NSClassFromString(@"SearchViewController");
-    id obj = [[cls alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:obj];
-//     nav.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (void)setUpData
-{
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginNotification:) name:kNotificationUserLogin object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutNotification:) name:kNotificationUserLogout object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contentSizeChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
-}
-
-- (void)contentSizeChange:(id)sender
-{
-    [self.tableView reloadData];
-}
-- (void)zx_testData
-{
-    static NSInteger num = 1;
-    NSInteger (^getFull)(NSInteger var) = ^(NSInteger var){
-        num = 3;
-        return num +var;
-    };
-    // Try changing the non-local variable (it won't change the block)
-    num = 2;
-    NSLog(@"%ld",(long)getFull(3));
-    
-}
-#pragma mark - 新功能引导
-
-//第一步
-- (void)lauchFirstNewFunction
-{
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFunctionGuideOfNextStep:) name:@"NewFunctionGuide_ShopHomeV1_Dismiss" object:nil];
-    if (![WYUserDefaultManager getNewNewFunctionGuide_ShopHomeV1])
-    {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        GuideShopHomeController *vc = [sb instantiateViewControllerWithIdentifier:SBID_GuideShopHomeController];
-        [self.navigationController addChildViewController:vc];
-        [self.navigationController.view addSubview:vc.view];
-    }
-}
-
-- (void)newFunctionGuideOfNextStep:(id)noti
-{
-    [self checkAppVersionAndNotificationPush];
-}
-
-#pragma mark -
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -296,265 +165,151 @@
     return UIStatusBarStyleLightContent;
 }
 
-#pragma mark - 登陆
-//登陆的时候需要重新刷新数据；
-- (void)loginNotification:(id)notification
+
+#pragma mark - UI
+
+- (void)setUI
 {
-    [self setPersonalInfomation];
+    [self setApperanceForSigleNavController:self.navigationController];
+    
+    [self addNavigationBarView];
+
+    [self setHeaderView];
+
+    
+    self.tableView.estimatedRowHeight = 45;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    
+    [self addScaleImageView];
+    
+//    [self lauchFirstNewFunction];
 }
 
-#pragma mark - 退出
-
-- (void)logoutNotification:(id)notification
+- (void)setApperanceForSigleNavController:(UINavigationController *)navigationController
 {
-    [self removePersonalInfomation];
+    [navigationController zx_navigationBar_allBackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
+    [navigationController zx_navigationBar_barItemColor:UIColorFromRGB_HexValue(0x222222)];
+    [navigationController zx_navigationBar_titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
 }
 
-- (void)removePersonalInfomation
+- (void)addNavigationBarView
 {
-    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeholdPhoto"]];
+//    _stausBarStyle =UIStatusBarStyleDefault;
+    [self.view addSubview:self.customNavigationBar];
+    [self.customNavigationBar.rightBarButton1 setImage:[UIImage imageNamed:@"icon_shezhi"] forState:UIControlStateNormal];
+    [self.customNavigationBar.rightBarButton1 addTarget:self action:@selector(setterButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setHeaderView
+{
     self.nameBtn.hidden = YES;
-    self.loginInBtn.hidden = !self.nameBtn.hidden;
-    self.signatureLab.text = NSLocalizedString(@"未填写", nil);
+    self.signatureLab.text = @"未填写";
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    self.signatureLab.font = font;
+    self.signatureLab.adjustsFontForContentSizeCategory = YES;
+    [self.headBtn zx_setBorderWithCornerRadius:32 borderWidth:1 borderColor:[UIColor clearColor]];
+    [self.headBtn zh_setButtonImageViewScaleAspectFill];
 }
 
-- (void)setPersonalInfomation
+//前提是collectionView的背景要透明
+- (void)addScaleImageView
 {
-    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:AppPlaceholderImage_Head];
-
-    self.nameBtn.hidden = NO;
-    self.loginInBtn.hidden = !self.nameBtn.hidden;
-    
-    //可以用bmob的，也可以用自己封装的UserInfoUDManager
-    BmobUser *bUser = [BmobUser currentUser];
-    [self.nameBtn setTitle:bUser.username forState:UIControlStateNormal];
-    
-//    NSString *st = [NSString stringWithFormat:@"签名: %@",self.userCenterModel.sign];
-//    NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:st];
-//    [attributed setAttributes:@{NSForegroundColorAttributeName:AppColor} range:NSMakeRange(0, 3)];
-//    self.signatureLab.attributedText = attributed;
-
+    self.contentInsetTop = 0;
+//    self.tableView.contentInset = UIEdgeInsetsMake(64-20, 0, 0, 0);
+//    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64-20+ _contentInsetTop, 0, 0, 0);
+    self.tableView.backgroundColor = [UIColor clearColor];
+    [self.view insertSubview:self.topImageView belowSubview:self.tableView];
+//    _topImageView.hidden = YES;
 }
 
 
-
-
-/**
- *  请求我的信息
- */
-- (void)requestMyInfomation
-{
-//    [self zhHUD_showHUDAddedTo:self.view labelText:@"正在加载..."];
-//    WS(weakSelf);
-//    [[[AppAPIHelper shareInstance] getUserModelAPI]getMyInfomation:^(id data) {
-//        
-//        [UserInfoUDManager setUserData:data];
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        
-//    } error:^(NSError *error) {
-//        
-//        [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
-//    }];
-}
-
-
-
-- (void)updateUserInfo:(id)notification
-{
-//    UserModel *model= [UserInfoUDManager getUserData];
-//    
-//    NSString *title = nil;
-//    if (model.userName.length==0 ||!model.userName)
-//    {
-//        title = [model.phone stringValue];
-//    }
-//    else
-//    {
-//        title = model.userName;
-//    }
-//    [self.nameBtn setTitle:title forState:UIControlStateNormal];
-//    [self.nameBtn updateConstraints];
-//
-//    if (model.autograph.length==0 ||!model.autograph)
-//    {
-//        self.signatureLab.text = @"无签名，不显示，有签名，再显示!";
-//    }
-//    else
-//    {
-//        self.signatureLab.text =model.autograph ;
-//    }
-//    
-//    [self.headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:model.headURL] forState:UIControlStateNormal placeholderImage:AppPlaceholderHeadImage];
-}
-
-
-
-
-
-#pragma mark - Table view data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return LCDScale_5Equal6_To6plus(10);
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return tableView.rowHeight;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     UITableViewCell*cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-//    cell.imageView.image = [UIImage imageNamed:@"m_iconAlbum"];
-//    cell.textLabel.text = @"美颜拼图";
-    // Configure the cell...
-    return cell;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    [self performSegueWithIdentifier:@"TemplateListController" sender:nil];
-}
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-#pragma mark - UISCrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //注意,默认偏移为0
-    CGFloat offsetY = scrollView.contentOffset.y + scrollView.contentInset.top;
-//    NSLog(@"%f,%f,%f",scrollView.contentOffset.y,scrollView.contentInset.top,offsetY);
-//    往下拉，topImageView放大
-    if (offsetY <= 0) {
-        
-        CGRect frame = self.topImageView.frame;
-        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop+ ABS(offsetY);
-        self.topImageView.frame = frame;
-        
-        [self.customNavigationBar zx_setBarBackgroundContainerAlpha:0 animated:YES];
-    }
-    else
+- (ZXCustomNavigationBar *)customNavigationBar{
+    if(!_customNavigationBar)
     {
-        CGFloat alpha = (offsetY>0 && offsetY<=64)? offsetY/64:1.f;
-        [self.customNavigationBar zx_setBarBackgroundContainerAlpha:alpha animated:YES];
+        ZXCustomNavigationBar *navigationBar = [ZXCustomNavigationBar zx_viewFromNib];
+        [navigationBar zx_setBarBackgroundColor:UIColorFromRGB_HexValue(0xED7C34)];
+//        navigationBar.hidden = YES;
+        _customNavigationBar = navigationBar;
+    }
+    return _customNavigationBar;
+}
+
+- (UIImageView *)topImageView
+{
+    if (!_topImageView)
+    {
+        UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, LCDW, LCDW*100.f/375.0)];
+        view.backgroundColor = UIColorFromRGB_HexValue(0xED7C34);
+        _topImageView = view;
+    }
+    return _topImageView;
+}
+
+#pragma mark-
+
+- (void)setData
+{
+    [self addNotification];
+    [self requestMyInfomation];
+
+    [self zx_testData];
+    
+    NSDictionary *dic0 =@{@"type":@"makeTemplate",@"title":@"照片拼图",@"imageName":@"m_iconAlbum"};
+    NSDictionary *dic1 = @{@"type":@"search",@"title":@"搜索",@"imageName":@"m_iconGrowth"};
+    NSDictionary *dic2 = @{@"type":@"prefecture",@"title":@"首页专区",@"imageName":@"m_iconCloud"};
+    self.listTitleArr = @[dic0,dic1,dic2];
+}
+
+- (void)addNotification
+{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginNotification:) name:kNotificationUserLogin object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutNotification:) name:kNotificationUserLogout object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserInfo:) name:kNotificationUpdateUserInfo object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contentSizeChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+}
+
+- (void)zx_testData
+{
+    static NSInteger num = 1;
+    NSInteger (^getFull)(NSInteger var) = ^(NSInteger var){
+        num = 3;
+        return num +var;
+    };
+    // Try changing the non-local variable (it won't change the block)
+    num = 2;
+    NSLog(@"%ld",(long)getFull(3));
+    
+}
+
+- (NSArray *)listTitleArr
+{
+    if (!_listTitleArr) {
+        _listTitleArr = [NSArray array];
         
-        if (alpha >0.5)
-        {
-            self.customNavigationBar.title = NSLocalizedString(@"我的", nil);
-            //            _stausBarStyle = UIStatusBarStyleDefault;
-            //            [self setNeedsStatusBarAppearanceUpdate];
-        }
-        else
-        {
-            self.customNavigationBar.title = nil;
-            //            _stausBarStyle = UIStatusBarStyleLightContent;
-            //            [self setNeedsStatusBarAppearanceUpdate];
-        }
-        CGRect frame = self.topImageView.frame;
-        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop;
-        self.topImageView.frame = frame;
+    }
+    return _listTitleArr;
+}
+
+#pragma mark - 新功能引导
+
+//第一步
+- (void)lauchFirstNewFunction
+{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newFunctionGuideOfNextStep:) name:@"NewFunctionGuide_ShopHomeV1_Dismiss" object:nil];
+    if (![WYUserDefaultManager getNewNewFunctionGuide_ShopHomeV1])
+    {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        GuideShopHomeController *vc = [sb instantiateViewControllerWithIdentifier:SBID_GuideShopHomeController];
+        [self.navigationController addChildViewController:vc];
+        [self.navigationController.view addSubview:vc.view];
     }
 }
 
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)newFunctionGuideOfNextStep:(id)noti
 {
-//    UIViewController *vc = segue.destinationViewController;
-    
-//    if ([vc isKindOfClass:[MakingPhotoController class]])
-//    {
-//        [vc setValue:@(13) forKey:@"pageCount"];
-//        [vc setValue:@"测试创建相册" forKey:@"albumTitle"];
-//        [vc setValue:@(1) forKey:@"albumId"];
-//        [vc setValue:@(129) forKey:@"price"];
-//        
-//    }
+    [self checkAppVersionAndNotificationPush];
 }
-
-
-#pragma mark - action
-/**
- *  跳转我的个人信息页面
- *
- *  @param sender sender description
- */
-- (IBAction)pushMyInfomation:(UIButton *)sender
-{
-    id controller = [[NSClassFromString(@"MineViewController") alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-
-
-/**
- *  跳转消息列表页面
- *
- *  @param sender sender description
- */
-
--(void)pushMessageAction:(UIButton *)sender
-{
-//    self.tabBarController.tabBar.hidden = YES;
-//    [self.messageBtn setImage:[UIImage imageNamed:@"m_iconMessage"] forState:UIControlStateNormal];
-//    MessageViewController *controller = [[NSClassFromString(@"MessageViewController") alloc] init];
-//    controller.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (IBAction)loginInActioin:(UIButton *)sender {
-    
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard_Login bundle:[NSBundle mainBundle]];
-    UINavigationController *loginNav = [sb instantiateInitialViewController];
-    loginNav.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:loginNav animated:YES completion:nil];
-}
-
 
 #pragma mark - 先检查通知跳转再检查更新
 //第三步：先检查推送通知跳转再检查版本更新，如果通知跳转下一页，返回来继续下一步检查更新
@@ -706,6 +461,285 @@
             }
         }];
     }
+}
+
+
+#pragma mark- 请求我的信息
+
+- (void)requestMyInfomation
+{
+//    [self zhHUD_showHUDAddedTo:self.view labelText:@"正在加载..."];
+//    WS(weakSelf);
+//    [[[AppAPIHelper shareInstance] getUserModelAPI]getMyInfomation:^(id data) {
+//        
+//        [UserInfoUDManager setUserData:data];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        
+//    } error:^(NSError *error) {
+//        
+//        [weakSelf zhHUD_showErrorWithStatus:[error localizedDescription]];
+//    }];
+}
+
+
+
+- (void)updateUserInfo:(id)notification
+{
+//    UserModel *model= [UserInfoUDManager getUserData];
+//    
+//    NSString *title = nil;
+//    if (model.userName.length==0 ||!model.userName)
+//    {
+//        title = [model.phone stringValue];
+//    }
+//    else
+//    {
+//        title = model.userName;
+//    }
+//    [self.nameBtn setTitle:title forState:UIControlStateNormal];
+//    [self.nameBtn updateConstraints];
+//
+//    if (model.autograph.length==0 ||!model.autograph)
+//    {
+//        self.signatureLab.text = @"无签名，不显示，有签名，再显示!";
+//    }
+//    else
+//    {
+//        self.signatureLab.text =model.autograph ;
+//    }
+//    
+//    [self.headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:model.headURL] forState:UIControlStateNormal placeholderImage:AppPlaceholderHeadImage];
+}
+
+
+
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.listTitleArr.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return LCDScale_iPhone6(10);
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return tableView.rowHeight;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell*cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+
+    NSDictionary *dic = [self.listTitleArr objectAtIndex:indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:[dic objectForKey:@"imageName"]];
+    cell.textLabel.text = [dic objectForKey:@"title"];
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    NSDictionary *dic = [self.listTitleArr objectAtIndex:indexPath.row];
+    NSString *type = [dic objectForKey:@"type"];
+    if ([type isEqualToString:@"makeTemplate"])
+    {
+        [self performSegueWithIdentifier:@"TemplateListController" sender:nil];
+    }
+    else if ([type isEqualToString:@"search"])
+    {
+        [self pushSearchVc];
+    }
+    else if ([type isEqualToString:@"prefecture"])
+    {
+        [self pushPrefectureVc];
+    }
+}
+
+#pragma mark-
+
+- (void)pushSearchVc
+{
+    Class cls = NSClassFromString(@"SearchViewController");
+    id obj = [[cls alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:obj];
+     nav.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)pushPrefectureVc
+{
+    Class cls = NSClassFromString(@"HomeViewController");
+    id obj = [[cls alloc]init];
+    [self.navigationController pushViewController:obj animated:YES];
+}
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
+
+/*
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
+
+/*
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
+#pragma mark - UISCrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //注意,默认偏移为0
+    CGFloat offsetY = scrollView.contentOffset.y + scrollView.contentInset.top;
+//    NSLog(@"%f,%f,%f",scrollView.contentOffset.y,scrollView.contentInset.top,offsetY);
+//    往下拉，topImageView放大
+    if (offsetY <= 0) {
+        
+        CGRect frame = self.topImageView.frame;
+        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop+ ABS(offsetY);
+        self.topImageView.frame = frame;
+        
+        [self.customNavigationBar zx_setBarBackgroundContainerAlpha:0 animated:YES];
+    }
+    else
+    {
+        CGFloat alpha = (offsetY>0 && offsetY<=64)? offsetY/64:1.f;
+        [self.customNavigationBar zx_setBarBackgroundContainerAlpha:alpha animated:YES];
+        
+        if (alpha >0.5)
+        {
+            self.customNavigationBar.title = NSLocalizedString(@"我的", nil);
+            //            _stausBarStyle = UIStatusBarStyleDefault;
+            //            [self setNeedsStatusBarAppearanceUpdate];
+        }
+        else
+        {
+            self.customNavigationBar.title = nil;
+            //            _stausBarStyle = UIStatusBarStyleLightContent;
+            //            [self setNeedsStatusBarAppearanceUpdate];
+        }
+        CGRect frame = self.topImageView.frame;
+        frame.size.height= kHEIGHT_SAFEAREA_NAVBAR+_contentInsetTop;
+        self.topImageView.frame = frame;
+    }
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+//    UIViewController *vc = segue.destinationViewController;
+}
+
+
+#pragma mark - action
+
+///跳转我的个人信息页面
+- (IBAction)pushMyInfomation:(UIButton *)sender
+{
+    id controller = [[NSClassFromString(@"MineViewController") alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+
+- (IBAction)loginInActioin:(UIButton *)sender {
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard_Login bundle:[NSBundle mainBundle]];
+    UINavigationController *loginNav = [sb instantiateInitialViewController];
+    loginNav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:loginNav animated:YES completion:nil];
+}
+
+
+- (void)setterButtonAction:(id)sender
+{
+    [self.navigationController zx_pushStoryboardViewControllerWithStoryboardName:storyboard_Set identifier:NSStringFromClass([SetViewController class]) withData:nil];
+}
+
+- (void)pushMessageAction:(UIButton *)sender
+{
+
+}
+
+
+#pragma mark - Action-通知
+
+- (void)contentSizeChange:(id)sender
+{
+    [self.tableView reloadData];
+}
+
+#pragma mark -登陆
+//登陆的时候需要重新刷新数据；
+- (void)loginNotification:(id)notification
+{
+    [self setPersonalInfomation];
+}
+
+#pragma mark - 退出
+
+- (void)logoutNotification:(id)notification
+{
+    [self removePersonalInfomation];
+}
+
+- (void)removePersonalInfomation
+{
+    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"placeholdPhoto"]];
+    self.nameBtn.hidden = YES;
+    self.loginInBtn.hidden = !self.nameBtn.hidden;
+    self.signatureLab.text = NSLocalizedString(@"未填写", nil);
+}
+
+- (void)setPersonalInfomation
+{
+    [self.headBtn sd_setImageWithURL:nil forState:UIControlStateNormal placeholderImage:AppPlaceholderImage_Head];
+
+    self.nameBtn.hidden = NO;
+    self.loginInBtn.hidden = !self.nameBtn.hidden;
+    
+    //可以用bmob的，也可以用自己封装的UserInfoUDManager
+    BmobUser *bUser = [BmobUser currentUser];
+    [self.nameBtn setTitle:bUser.username forState:UIControlStateNormal];
+    
+//    NSString *st = [NSString stringWithFormat:@"签名: %@",self.userCenterModel.sign];
+//    NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:st];
+//    [attributed setAttributes:@{NSForegroundColorAttributeName:AppColor} range:NSMakeRange(0, 3)];
+//    self.signatureLab.attributedText = attributed;
+
 }
 
 @end

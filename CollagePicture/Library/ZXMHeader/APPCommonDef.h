@@ -294,7 +294,7 @@ NS_INLINE void ZX_NSLog_ClassAllPropertyAndValue(id model)
         #pragma clang diagnostic pop
     }
     free(properties);
-    NSLog(@"%u",count);
+//    NSLog(@"%u",count);
 }
 
 #pragma mark - 打印一个class的所有方法列表(包括没有声明的私有方法)
@@ -311,11 +311,11 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
         // 这2句等同于NSStringFromSelector(name1);
         const char *selName= sel_getName(name1);
         NSString *strName = [NSString stringWithCString:selName encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",strName);
+//        DLog(@"%@",strName);
         
     }
     free(methods);
-    NSLog(@"%u",count);//包括很多私有方法;
+//    DLog(@"%u",count);//包括很多私有方法;
 }
 
 //定义block使用的weak引用
@@ -338,7 +338,7 @@ NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
 #define UIColorFromRGBA(R,G,B,A)  [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 #endif
 /**
- * @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#34373A--ZX_RGBHexString(0X34373A)
+ * @brief 16进制的字符串颜色转RGB.把＃变为0x，如果没有则加上。 eg:#333333--ZX_RGBHexString(0X333333)
  */
 #ifndef UIColorFromRGB_HexValue
 #define UIColorFromRGB_HexValue(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:1.f]
