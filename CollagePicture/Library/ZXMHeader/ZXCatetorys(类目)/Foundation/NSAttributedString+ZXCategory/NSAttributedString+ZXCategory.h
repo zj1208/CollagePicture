@@ -12,6 +12,7 @@
 //  2020.01.21 优化
 //  2020.02.07 优化遍历数字小数的方法；
 //  2020.3.23  修改遍历数字小数的方法bug。
+//  2020.4.28  优化方法
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -40,17 +41,21 @@
 - (void)zx_enumerateRangeOfString:(NSString *)searchString usingBlock:(void(^)(NSRange searchStringRange,NSUInteger idx, BOOL *stop))block;
 
 
-/*
-在富文本字符串中添加删除线（）；
+/// 初始化富文本字符串并添加删除线；
+/// @param str 字符串
++ (NSAttributedString *)zx_strikethroughTypeSingleWithString:(NSString *)str;
 
-*/
-+ (NSAttributedString *)zx_addStrikethroughCenterWithString:(NSString *)str;
 
-/*
- 在富文本字符串中给指定文本添加删除线，设置删除线颜色；
- 
- */
-- (NSAttributedString *)zx_addStrikethroughCenterWithCenterlineString:(NSString *)centerlineString centerLineColor:(UIColor *)color;
+/// 在富文本字符串中给指定range文本添加删除线，并设置删除线颜色；
+/// @param range 删除线的range范围
+/// @param color 删除线颜色
+- (NSAttributedString *)zx_addStrikethroughTypeSingleWithRange:(NSRange)range strikethroughColor:(UIColor *)color;
+
+
+/// 初始化富文本字符串并添加下划线；
+/// @param str 字符串
++ (NSAttributedString *)zx_underlineStyleWithString:(NSString *)str;
+
 
 //- (void)addForegroundColor:(UIColor *)color range:(NSRange)range;
 

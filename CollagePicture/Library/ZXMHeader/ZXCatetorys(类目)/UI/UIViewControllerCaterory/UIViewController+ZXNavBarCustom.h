@@ -101,16 +101,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)zx_navigationBar_BackgroundAlpah:(CGFloat)alpha navigationBar:(UINavigationBar *)navigationBar;
 
-
-// lingh add
-- (void)linNavigationBar_Right_Button:(NSString *)title action:(SEL)action;
-
-
-
-
-
-
-
 @end
 
 NS_ASSUME_NONNULL_END

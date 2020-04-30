@@ -40,23 +40,6 @@
     self.navigationItem.leftBarButtonItem = backBar;
 }
 
-
-//- (NSArray *)zx_navigationItem_leftOrRightItemReducedSpaceToMagin:(CGFloat)magin withItems:(NSArray *)barButtonItems
-//{
-//    由于iOS11把barButtonItem添加在_UIButtonBarStackView上；
-//    if (@available(iOS 11.0, *))
-//    {
-//        return barButtonItems;
-//    }
-//    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
-//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-//                                       target:nil action:nil];
-//    negativeSpacer.width = magin;
-//    NSMutableArray *mArray = [NSMutableArray arrayWithArray:barButtonItems];
-//    [mArray insertObject:negativeSpacer atIndex:0];
-//    return (NSArray *)mArray;
-//}
-
 /**
  * @brief 自定义模态页面barButtonItem按钮，也是为了适应ios6和ios7兼容；默认自动加载了点击事件，加载dismissViewController；
  * @param flag ：YES＝ leftBarItem； NO＝ rightBarItem
@@ -160,36 +143,4 @@
     [self zx_navigationBar_BackgroundAlpah:alpha navigationBar:self.navigationController.navigationBar];
 
 }
-
-
-
-
-
-
-
-// lingh add
-- (void)linNavigationBar_Right_Button:(NSString *)title action:(SEL)action
-{
-    UIButton *btnRight = [[UIButton alloc] initWithFrame:CGRectMake(10.0, 100.0, 62.0, 29.0)];
-    [btnRight setBackgroundColor:[UIColor whiteColor]];
-    UIColor *color = [UIColor colorWithRed:254.0 / 255 green:144.0 / 255 blue:0.0 alpha:1.0];
-    [btnRight setTitleColor:color  forState:UIControlStateNormal];
-    [btnRight setTitle:title forState:UIControlStateNormal];
-    btnRight.layer.masksToBounds = YES;
-    btnRight.layer.cornerRadius = 6;
-    [btnRight addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:btnRight];
-    self.navigationItem.rightBarButtonItem = barItem;
-}
-
-
-
-
-
-
-
-
-
-
-
 @end

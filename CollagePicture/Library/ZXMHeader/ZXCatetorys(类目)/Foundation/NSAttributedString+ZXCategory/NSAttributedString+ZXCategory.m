@@ -45,33 +45,35 @@
     }
 }
 
-+ (NSAttributedString *)zx_addStrikethroughCenterWithString:(NSString *)str
++ (NSAttributedString *)zx_strikethroughTypeSingleWithString:(NSString *)str
 {
     NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
     NSAttributedString *attStr = [[NSAttributedString alloc]initWithString:str attributes:attribtDic];
     return attStr;
 }
 
-- (NSAttributedString *)zx_addStrikethroughCenterWithCenterlineString:(NSString *)centerlineString centerLineColor:(UIColor *)color
+- (NSAttributedString *)zx_addStrikethroughTypeSingleWithRange:(NSRange)range strikethroughColor:(UIColor *)color 
 {
     NSMutableAttributedString *attMString = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-    if (centerlineString)
+    
+    if(range.location > self.length || range.length > self.length - range.location)
     {
-         NSRange itemRange = [self.string rangeOfString:centerlineString];
-         [attMString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:itemRange];
-         if (color)
-         {
-             [attMString addAttribute:NSStrikethroughColorAttributeName value:color range:itemRange];
-         }
-     }
+        [NSException raise:NSRangeException format:@"out of range"];
+    }
+    [attMString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
+    if (color)
+    {
+        [attMString addAttribute:NSStrikethroughColorAttributeName value:color range:range];
+    }
     return attMString;
 }
-//- (NSAttributedString *)addForegroundColor:(UIColor *)color range:(NSRange)range
-//{
-//    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-//    [attString addAttribute:NSForegroundColorAttributeName value:color range:range];
-//    return attString;
-//}
+
++ (NSAttributedString *)zx_underlineStyleWithString:(NSString *)str
+{
+    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
+    NSAttributedString *attStr = [[NSAttributedString alloc]initWithString:str attributes:attribtDic];
+    return attStr;
+}
 
 
 - (void)zx_enumerateDecimalNumberWithDotSeperateUsingDotPrefixBlock:(void(^)(NSRange dotPrefixRange))prefixBlock dotSuffixBlock:(void(^)(NSRange dotSuffixRange))suffixBlock

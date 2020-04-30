@@ -10,37 +10,55 @@
 
 @implementation UIButton (ZXHelper)
 
-- (void)zx_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize
+- (void)zx_centerVerticalImageAndTitleDefault
 {
     const int DEFAULT_SPACING =6.0f;
-    [self zx_centerVerticalImageAndTitleWithSpace:DEFAULT_SPACING titleFontOfSize:fontSize];
+    [self zx_centerVerticalImageAndTitleWithSpace:DEFAULT_SPACING];
 }
 
-- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize
+- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing
 {
-    self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
+    if (CGRectIsEmpty(self.bounds)) {
+        return;
+    }
+    CGSize layoutSize = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
-    //    这个一定要是image 和 title ／sizeToThat 下的最小尺寸；如果你设置btn的width比较小，这里的self.imageView和self.titleLabel就会被压缩变小；因为高度只能取到最大的高度，所以没法取；
+//    这个一定要是image 和 title ／sizeToThat 下的最小尺寸；
+//    如果你设置btn的width比较小，这里的self.imageView和self.titleLabel就会被压缩变小；所以假定设定最大的宽高来计算;
     CGSize size = [self sizeThatFits:CGSizeMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
-    CGFloat tenmpt  = CGRectGetWidth(self.frame);
-    if (CGRectGetWidth(self.frame)<size.width)
+    //原始设置的宽度
+    CGFloat originalWidth  = CGRectGetWidth(self.frame);
+    //设置要显示的最小宽度，为了调整inset，必须设置一个大的width;
+    if (CGRectGetWidth(self.frame) < size.width || CGRectGetWidth(self.frame) < layoutSize.width)
     {
-        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), size.width,CGRectGetHeight(self.frame));
+        CGRect rect = self.frame;
+        rect.size.width = size.width;
+        self.frame = rect;
     }
     CGSize imageSize = self.imageView.frame.size;
     CGSize titleSize = self.titleLabel.frame.size;
     CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
     
-    if (CGRectGetHeight(self.frame)<totalHeight)
+    //修改高度-frame及真实约束
+    if (CGRectGetHeight(self.frame) < totalHeight)
     {
-        self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), CGRectGetWidth(self.frame),totalHeight);
+        CGRect rect = self.frame;
+        rect.size.height = totalHeight;
+        self.frame = rect;
+        NSLayoutConstraint *constraint_height = [self.heightAnchor constraintEqualToConstant:totalHeight];
+        constraint_height.active = YES;
     }
-    
     self.imageEdgeInsets = UIEdgeInsetsMake(- (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
     self.titleEdgeInsets = UIEdgeInsetsMake(0.0, - imageSize.width, - (totalHeight - titleSize.height),0.0);
     
-    //    如果设置所要求的btnframe的width是固定的比较小，可以先设置中间，然后再设置回原来的width；
-    self.frame = CGRectMake(CGRectGetMinX(self.frame),CGRectGetMinY(self.frame), tenmpt,CGRectGetHeight(self.frame));
+    // 如果外部设置了固定的width且比自适应的小，则在最后重新设置回来；
+    if (CGRectGetWidth(self.frame) != originalWidth)
+    {
+        CGRect rect = self.frame;
+        rect.size.width = originalWidth;
+        self.frame = rect;
+    }
+    // 在layoutSubview执行完后，会回调约束方法 改变回原始设置的width/height,或原始自适应的宽高；
 }
 
 

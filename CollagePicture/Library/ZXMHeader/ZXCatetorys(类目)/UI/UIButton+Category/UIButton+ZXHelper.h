@@ -21,6 +21,7 @@
 // 2020.2.02  优化；
 // 2020.2.24  修改ZXButtonContentTypeImageRightTitleLeft类型的方法；
 // 2020.2.28  再次优化ZXButtonContentTypeImageRightTitleLeft类型的方法；
+// 2020.4.28 优化zx_centerVerticalImageAndTitleWithSpace 上下居中的方法；
 
 #import <UIKit/UIKit.h>
 
@@ -45,20 +46,18 @@ typedef NS_ENUM(NSInteger, ZXButtonContentType) {
 */
 
 /**
- * @brief 调用zhuCenterImageAndTitle:titleFontOfSize; 默认图文间隔大小是6;
- * @param fontSize  字体大小，根据字体大小会有相应改变高度；
+ * @brief 调用zx_centerVerticalImageAndTitleWithSpace; 默认图文间隔大小是6;
  */
 
-- (void)zx_centerVerticalImageAndTitle_titleFontOfSize:(CGFloat)fontSize;
+- (void)zx_centerVerticalImageAndTitleDefault;
 
 
 /**
  * @brief 在本地数据情况下使用，使得image和title上下居中；
  * @param spacing   image和title之间的间隔大小；
- * @param fontSize  字体大小，根据字体大小会有相应改变高度；
  */
 
-- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing titleFontOfSize:(CGFloat)fontSize;
+- (void)zx_centerVerticalImageAndTitleWithSpace:(float)spacing;
 
 
 /**
