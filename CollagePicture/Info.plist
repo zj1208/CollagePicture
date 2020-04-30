@@ -82,6 +82,8 @@
 		<string>mqzoneopensdkapi</string>
 		<string>mqqbrowser</string>
 		<string>mttbrowser</string>
+		<string>iosamap</string>
+		<string>baidumap</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -91,9 +93,15 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>访问相机</string>
+	<string>用于拍摄图片以供上传资料；</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>您的位置将被用来检测您是否在服务范围内并导航</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>若不允许，你将无法在页面中拍摄及上传视频；</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>若不允许，你将无法在App中保存照片；</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>访问相册</string>
+	<string>若不允许，你将无法在App中发送及保存照片；</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

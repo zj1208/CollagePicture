@@ -13,6 +13,7 @@
 // 2020.01.02 openURL方法增加兼容
 // 2020.02.05 拨打电话方法抽离
 // 2020.03.13 去除webView loadRequest的拨打电话方法；2020.4月开始会审核不过；
+// 2020.04.28 优化
 
 #import <UIKit/UIKit.h>
 
@@ -26,11 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 注意：设置masksToBounds，主要是为了应用到layer有contents内容-image的情况，比如imageView渲染image图像，UIButton渲染image图像的情况，做image的遮罩处理；普通view不设置也能正常设置圆角渲染;
 
-
-/**
- 即将弃用
- */
-//- (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor;
 
 /**
  * @brief 设置UIView的边框bound为圆角，将mask遮罩应用到边界为止；边框颜色默认是黑色的；
@@ -59,6 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)zx_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor maskedCorners:(CACornerMask) maskedCorners API_AVAILABLE(macos(10.13), ios(11.0), watchos(4.0), tvos(11.0));
 
+
+/**
+在设置阴影的同时，设置圆角；不能用于imageView有image，或者layer有content的情况，imageView渲染image图像设置的时候mask遮罩效果没有；
+
+@param radius 圆角度数;
+@param borderColor 边框颜色
+*/
+- (void)zx_setBorderWithShadowWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor;
 
 /**
  设置UIView的边框及圆角,支持设置图层4个角中哪几个角接收cornerRadius属性; 利用显示边框及透明layer+maskLayer技术；
@@ -90,30 +94,15 @@ NS_ASSUME_NONNULL_BEGIN
  设置添加阴影；
  注意：如果masksToBounds设置为YES,则阴影效果消失；
 
- @param shadowColor color 一般默认都是黑色
- @param opacity 设置图层阴影不透明度；系统默认0,无阴影；
+ @param shadowColor color 阴影颜色，一般默认都是黑色
+ @param opacity 设置图层阴影不透明度；系统默认0,无阴影；如果设置1，则阴影不透明完全展示；
  @param offset 设置图层阴影偏移量；系统默认（0,-3） 如果offset是CGSizeMake(0, 0)，则4周都有阴影
- @param shadowRadius 设置图层阴影圆角；系统默认3.0；
+ @param shadowRadius 设置阴影模糊半径shadowRadius；可以理解为阴影的宽度；系统默认3.0；
  
  The advantage of using this method is that 不用导入QuartzCore框架头；
  这不会添加阴影路径，当接收方的边界发生变化，并且在设置初始帧之后，可以调用updateShadowPathToBounds添加。
  */
 - (void)zx_setShadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius;
-
-
-/**
- 同时设置阴影和圆角；不能用于imageView有image，或者layer有content的情况，imageView渲染image图像设置的时候mask遮罩效果没有；
-
- @param radius 拐角圆角度数;
- @param width 线条宽度；
- @param borderColor 边框颜色
- @param shadowColor 阴影颜色，一般默认都是黑色
- @param opacity 设置图层阴影不透明度；系统默认0,无阴影；如果要阴影不透明展示，则设置1；
- @param offset 设置图层阴影偏移量；系统默认（0,-3） 如果offset是CGSizeMake(0, 0)，则4周都有阴影
- @param shadowRadius 设置阴影模糊半径shadowRadius；可以理解为阴影的宽度；系统默认3.0；
- 例如： [self.cardContainerView zx_setShadowAndCornerRadius:12.f borderWidth:0 borderColor:nil shadowColor:[UIColor blackColor] shadowOpacity:1 shadowOffset:CGSizeMake(0, 0) shadowRadius:5.f];
- */
-- (void)zx_setShadowAndCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor shadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius;
 
 
 /**

@@ -34,15 +34,6 @@
 //}
 
 
-//设置圆角
-- (void)zx_setCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor
-{
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = radius;
-    self.layer.borderWidth = borderWidth;
-    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
-}
-
 - (void)zx_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor
 {
     self.layer.masksToBounds = YES;
@@ -51,6 +42,13 @@
     self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
 
+- (void)zx_setBorderWithShadowWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor
+{
+    self.layer.masksToBounds = NO;
+    self.layer.cornerRadius = radius;
+    self.layer.borderWidth = borderWidth;
+    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
+}
 
 
 - (void)zx_setBorderWithCornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor maskedCorners:(CACornerMask) maskedCorners
@@ -124,25 +122,13 @@
     // cannot have masking
     self.layer.masksToBounds = NO;
     
-    self.layer.shadowOpacity=opacity;
-    self.layer.shadowOffset=offset;
-    self.layer.shadowRadius = shadowRadius;
-    
-    self.layer.borderColor =shadowColor?[shadowColor CGColor]:[UIColor clearColor].CGColor;
-}
-
-
-- (void)zx_setShadowAndCornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(nullable UIColor *)borderColor shadowColor:(nullable UIColor *)shadowColor shadowOpacity:(CGFloat)opacity shadowOffset:(CGSize)offset shadowRadius:(CGFloat)shadowRadius
-{
     self.layer.shadowColor=shadowColor?shadowColor.CGColor:[UIColor blackColor].CGColor;
     self.layer.shadowOpacity=opacity;
     self.layer.shadowOffset=offset;
     self.layer.shadowRadius = shadowRadius;
-    
-    self.layer.cornerRadius = radius;
-    self.layer.borderWidth = width;
-    self.layer.borderColor =borderColor?[borderColor CGColor]:[UIColor clearColor].CGColor;
 }
+
+
 
 - (void)zx_setBorderWithTop:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right borderColor:(UIColor *)color borderWidth:(CGFloat)width
 {

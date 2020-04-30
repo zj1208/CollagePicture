@@ -37,6 +37,7 @@
 ///广告弹窗
 @property (nonatomic, strong) ZXAlphaTransitionDelegate *transitonModelDelegate;
 
+/// 列表数据
 @property (nonatomic, copy) NSArray *listTitleArr;
 
 @end
@@ -171,21 +172,19 @@
 - (void)setUI
 {
     [self setApperanceForSigleNavController:self.navigationController];
-    
-    [self addNavigationBarView];
-
+    [self addCustomNavigationBarView];
     [self setHeaderView];
 
-    
     self.tableView.estimatedRowHeight = 45;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
-    
+    //添加背景放大imageView
     [self addScaleImageView];
     
 //    [self lauchFirstNewFunction];
 }
 
+/// 系统导航条通用设置
 - (void)setApperanceForSigleNavController:(UINavigationController *)navigationController
 {
     [navigationController zx_navigationBar_allBackIndicatorImage:@"back_onlyImage" isOriginalImage:YES];
@@ -193,7 +192,8 @@
     [navigationController zx_navigationBar_titleColor:UIColorFromRGB_HexValue(0x222222) titleFont:[UIFont boldSystemFontOfSize:17.f]];
 }
 
-- (void)addNavigationBarView
+/// 添加自定义导航条
+- (void)addCustomNavigationBarView
 {
 //    _stausBarStyle =UIStatusBarStyleDefault;
     [self.view addSubview:self.customNavigationBar];
@@ -212,7 +212,7 @@
     [self.headBtn zh_setButtonImageViewScaleAspectFill];
 }
 
-//前提是collectionView的背景要透明
+///添加背景放大imageView，前提是collectionView的背景要透明
 - (void)addScaleImageView
 {
     self.contentInsetTop = 0;
@@ -568,7 +568,7 @@
     }
     else if ([type isEqualToString:@"amap"])
     {
-        
+        [self pushAMapTask];
     }
 }
 
@@ -588,6 +588,14 @@
     Class cls = NSClassFromString(@"HomeViewController");
     id obj = [[cls alloc]init];
     [self.navigationController pushViewController:obj animated:YES];
+}
+
+- (void)pushAMapTask
+{
+    Class class = NSClassFromString(@"CHSDistributionTaskController");
+    UIViewController *vc = [class new];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /*
  // Override to support conditional editing of the table view.

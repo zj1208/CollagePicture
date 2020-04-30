@@ -90,7 +90,7 @@ static NSString * const reuseIdentifier = @"Cell";
     WS(weakSelf);
     BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
     //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
-    bquery1.limit = kHTTP_minPageSize;
+    bquery1.limit = 5;
     [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         //回调都是在主线程
         NSLog(@"%@",[NSThread currentThread]);
@@ -114,7 +114,7 @@ static NSString * const reuseIdentifier = @"Cell";
             [weakSelf.collectionView.mj_footer endRefreshing];
             
             
-            [weakSelf footerWithRefreshingMorePage:weakSelf.dataMArray.count/kHTTP_minPageSize == 1 ?YES:NO];
+            [weakSelf footerWithRefreshingMorePage:weakSelf.dataMArray.count/5 == 1 ?YES:NO];
         }
     }];
 }
@@ -147,8 +147,8 @@ static NSString * const reuseIdentifier = @"Cell";
     WS(weakSelf);
     BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"templateList"];
     //        BmobQuery *bquery1 = [BmobQuery queryWithClassName:@"mall_banner"];
-    bquery1.limit = kHTTP_minPageSize;
-    bquery1.skip = kHTTP_minPageSize*self.pageNo;
+    bquery1.limit = 5;
+    bquery1.skip = 5*self.pageNo;
     [bquery1 findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
         
         NSLog(@"%@",[NSThread currentThread]);
@@ -165,7 +165,7 @@ static NSString * const reuseIdentifier = @"Cell";
             [weakSelf.collectionView.mj_footer endRefreshing];
             
             weakSelf.pageNo ++;
-            if ([array count]<kHTTP_minPageSize)
+            if ([array count]<5)
             {
                 [weakSelf.collectionView.mj_footer endRefreshingWithNoMoreData];
             }

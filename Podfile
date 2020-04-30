@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-
+# pod outdated
 platform:ios,9.0
 
 source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
@@ -30,15 +30,14 @@ pod 'TMCache', '~> 2.1.0'
 
 
 #工具
-pod 'WebViewJavascriptBridge', '~> 6.0.2'
+pod 'WebViewJavascriptBridge', '6.0.3'
 #pod 'AvoidCrash', '~> 2.3.0-beta'
 
 pod 'SVPullToRefresh', '~> 0.4.1'
 
 #第三方平台
-#'~> 1.6.9'－2.1.7
 pod 'BmobSDK'
-pod 'AliyunOSSiOS', '~> 2.6.3'
+pod 'AliyunOSSiOS'
 
 #友盟开发阶段进行调试SDK及相关功能使用，可在发布 App 前移除
  pod 'UMCCommonLog'
@@ -50,7 +49,7 @@ pod 'AliyunOSSiOS', '~> 2.6.3'
  pod 'UMCPush','3.2.4'
 
 # 高德地图
-# pod 'AMapLocation', '2.6.5'
+ pod 'AMapLocation', '2.6.5'
  pod 'AMap2DMap', '5.6.1'
  
  
@@ -70,8 +69,8 @@ pod 'AliyunOSSiOS', '~> 2.6.3'
 
 
 #第三方UI库
-pod 'TZImagePickerController', '~>1.9.3'
-pod 'HMSegmentedControl', '~> 1.5.4'
+pod 'TZImagePickerController', '3.3.1'
+pod 'HMSegmentedControl', '1.5.5'
 pod 'THSegmentedPager', '~> 1.1.3'
 
 end

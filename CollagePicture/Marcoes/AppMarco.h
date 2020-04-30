@@ -12,7 +12,7 @@
 #import "NotificationMarco.h"
 #import "UMAnalyticsViewMarco.h"
 #import "AppFoundation.h"
-//11111111
+
 
 
 #pragma mark - 美颜拼图AppleID
@@ -21,30 +21,19 @@
 #pragma mark - JPush
 
 static NSString *kJPushAppKey = @"87245d848bf02bbd239b59af";
-static NSInteger kHTTP_minPageSize = 5;
+
 
 #pragma mark- 比盟
 
 //思春堂
 //static NSString *kBMOB_APPID =  @"85f8f27eba2da26d5076df7114dae422"
-
 //美颜拼图
 
 static NSString *kBMOB_APPID =  @"69c52eeb7424886debae08af8dad3e2f";
-#pragma mark - 颜色
 
-////主题色-绿色
-//#define AppGlobalTintColor  UIColorFromRGB(12.,212.,186.)
-//
-////主题色2:灰色
-//#define AppSecondGlobalTintColor UIColorFromRGB(128.f,128.f,128.f)
-////页面背景色，底色－
-//#define AppBgColor  UIColorFromRGB(213.,228.,229.)
-////主文字颜色
-//#define AppMainTitleColor UIColorFromRGB(50.,50.,50.)
-////标识文字颜色
-//#define AppMarkTitleColor UIColorFromRGB(128.f,128.f,128.f)
-//
+#pragma mark -高德地图
+///高德地图appKey,跟bundleId绑定
+static NSString *kAPPKEY_AMAP = @"de7668d4649f6e19bea78c0f86dab187";
 
 #pragma mark - 占位图以及头像头
 
