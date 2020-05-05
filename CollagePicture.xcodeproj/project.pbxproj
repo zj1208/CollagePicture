@@ -1580,6 +1580,7 @@
 		F446A7BC1FCC082900C82C90 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
+				F474652724611A01000D5B5A /* ZXMJRefreshing */,
 				F44DB7F0245A70DA00403CC9 /* ZXOpenMapsManager */,
 				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4A158ED23D6D5A00018405E /* CHSNotOpenURLBackAppManager */,
@@ -2707,11 +2708,18 @@
 			path = WYUserDefaultManager;
 			sourceTree = "<group>";
 		};
-		F47FEB2C209AA35900A67F55 /* UIScrollViewCatetory */ = {
+		F474652724611A01000D5B5A /* ZXMJRefreshing */ = {
 			isa = PBXGroup;
 			children = (
 				F47FEB2D209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.h */,
 				F47FEB2F209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m */,
+			);
+			path = ZXMJRefreshing;
+			sourceTree = "<group>";
+		};
+		F47FEB2C209AA35900A67F55 /* UIScrollViewCatetory */ = {
+			isa = PBXGroup;
+			children = (
 				F4A3022C240526B000F750D4 /* UIScrollView+ZXCategory.h */,
 				F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */,
 			);

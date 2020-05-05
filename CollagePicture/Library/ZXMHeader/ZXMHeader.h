@@ -9,8 +9,6 @@
 #ifndef ShiChunTang_ZhuHeader_h
 #define ShiChunTang_ZhuHeader_h
 
-#import <objc/runtime.h>
-#import "UserInfoUDManager.h"
 #import "ZXCatetories.h"
 #import "APPCommonDef.h"
 

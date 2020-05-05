@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+ZXHelper.h"
-#import "MBProgressHUD+ZXCategory.h"
+//#import "MBProgressHUD+ZXCategory.h"
 
 
 //iTunesLink 链接－－iTunesLink＋appID，ios6以后有直接跳转appStore的item应用Controller页面
@@ -95,21 +95,21 @@
     //用近距离传感器来判断是否是真机
     if (device.isProximityMonitoringEnabled && skStore)
     {
-        [MBProgressHUD zx_showLoadingWithStatus:@"正在载入" toView:self.view];
+//        [MBProgressHUD zx_showLoadingWithStatus:@"正在载入" toView:self.view];
         __weak __typeof(self)weakSelf = self;
         
         SKStoreProductViewController *skStoreProductVC = [[SKStoreProductViewController alloc] init];
         skStoreProductVC.delegate = self;
         [skStoreProductVC loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:appId} completionBlock:^(BOOL result, NSError *error) {
             
-            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+//            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
             if (result)
             {
                 [weakSelf presentViewController:skStoreProductVC animated:YES completion:nil];
             }
             if (error)
             {
-                [MBProgressHUD zx_showError:[error localizedDescription] toView:self.view];
+//                [MBProgressHUD zx_showError:[error localizedDescription] toView:self.view];
             }
         }];
         

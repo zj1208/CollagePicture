@@ -15,7 +15,21 @@
 
 - (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(nullable NSDictionary *)data
 {
-    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
+    if (!name)
+    {
+        assert(name);
+        return ;
+    }
+    NSURL *resoureUrl = [[NSBundle mainBundle] URLForResource:name withExtension:@"storyboardc"];
+    NSError  *error = nil;
+    if ([resoureUrl checkResourceIsReachableAndReturnError:&error]==NO)
+    {
+        NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: NSLocalizedStringFromTable(@"File URL not reachable.", @"", nil)};
+        error = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSURLErrorBadURL userInfo:userInfo];
+        return;
+    }
+    UIStoryboard *sb=[UIStoryboard  storyboardWithName:name bundle:[NSBundle mainBundle]];
+    UIViewController *controller = [sb instantiateViewControllerWithIdentifier:storyboardId];
     if (controller)
     {
         if (data)
@@ -33,7 +47,21 @@
 
 - (void)zx_pushStoryboardViewControllerWithStoryboardName:(NSString *)name identifier:(nullable NSString *)storyboardId withData:(NSDictionary *)data toController:(void(^ __nullable)(UIViewController *vc))toControllerBlock
 {
-    UIViewController *controller = [self zx_getControllerWithStoryboardName:name controllerWithIdentifier:storyboardId];
+    if (!name)
+    {
+        assert(name);
+        return ;
+    }
+    NSURL *resoureUrl = [[NSBundle mainBundle] URLForResource:name withExtension:@"storyboardc"];
+    NSError  *error = nil;
+    if ([resoureUrl checkResourceIsReachableAndReturnError:&error]==NO)
+    {
+        NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: NSLocalizedStringFromTable(@"File URL not reachable.", @"", nil)};
+        error = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSURLErrorBadURL userInfo:userInfo];
+        return;
+    }
+    UIStoryboard *sb=[UIStoryboard  storyboardWithName:name bundle:[NSBundle mainBundle]];
+    UIViewController *controller = [sb instantiateViewControllerWithIdentifier:storyboardId];
     if (toControllerBlock)
     {
         toControllerBlock(controller);

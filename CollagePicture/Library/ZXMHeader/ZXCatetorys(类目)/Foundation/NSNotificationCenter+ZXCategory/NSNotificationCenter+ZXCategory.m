@@ -7,6 +7,7 @@
 //
 
 #import "NSNotificationCenter+ZXCategory.h"
+#import <objc/runtime.h>
 
 @implementation NSNotificationCenter (ZXCategory)
 

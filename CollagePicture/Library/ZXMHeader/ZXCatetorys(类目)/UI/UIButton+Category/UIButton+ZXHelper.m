@@ -7,6 +7,7 @@
 //
 
 #import "UIButton+ZXHelper.h"
+#import "NSString+ZXCategory.h"
 
 @implementation UIButton (ZXHelper)
 

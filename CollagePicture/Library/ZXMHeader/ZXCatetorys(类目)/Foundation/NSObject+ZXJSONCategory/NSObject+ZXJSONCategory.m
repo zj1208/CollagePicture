@@ -25,7 +25,13 @@
 
 + (nullable id)zx_getJSONSerializationObjectFromString:(nullable NSString *)string
 {
-    if ([NSString zhIsBlankString:string])
+    if (!string || string == NULL) {
+        return nil;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
     {
         return nil;
     }
