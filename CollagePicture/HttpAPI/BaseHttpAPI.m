@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "UserInfoUDManager.h"
 #import "WYUserDefaultManager.h"
-#import "AFHTTPSessionManager+Synchronous.h"
+//#import "AFHTTPSessionManager+Synchronous.h"
 #import <WebKit/WebKit.h>
 #import "ZXHTTPCookieManager.h"
 
@@ -63,7 +63,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 //    manager.requestSerializer.HTTPShouldHandleCookies = NO;
 
     WS(weakSelf);
-    [manager POST:@"/m" parameters:postDictionary progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:@"/m" parameters:postDictionary headers:nil progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -110,7 +110,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 
 //    NSLog(@"%@",manager.requestSerializer.HTTPRequestHeaders);
     WS(weakSelf);
-    [manager GET:@"/m" parameters:postDictionary progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:@"/m" parameters:postDictionary headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -403,6 +403,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
                  progress:(void (^)(NSProgress *uploadProgress))uploadProgress
                   success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
+    
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameters];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
     //    用于添加更多参数
@@ -416,7 +417,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
     manager.requestSerializer.timeoutInterval =10.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     WS(weakSelf);
-    [manager POST:@"/m" parameters:postDictionary constructingBodyWithBlock:block progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:@"/m" parameters:postDictionary headers:nil constructingBodyWithBlock:block progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [weakSelf requestSuccessDealWithResponseObeject:responseObject success:success failure:failure];
         
@@ -460,6 +461,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
 
 -(void)synchronouslyGetRequest:(NSString *)path parameters:(NSDictionary *)parameter success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
+    /*
     NSMutableDictionary *postDictionary = [NSMutableDictionary dictionaryWithDictionary:parameter];
     postDictionary =[self addRequestPostData:postDictionary apiName:path];
     NSURL *baseURL = [self baseURL];
@@ -486,6 +488,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
         }
 
     }];
+     */
 }
 
 @end

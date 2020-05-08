@@ -33,7 +33,7 @@ static NSString *kBMOB_APPID =  @"69c52eeb7424886debae08af8dad3e2f";
 
 #pragma mark -高德地图
 ///高德地图appKey,跟bundleId绑定
-static NSString *kAPPKEY_AMAP = @"de7668d4649f6e19bea78c0f86dab187";
+static NSString *kAppKey_AMAP = @"de7668d4649f6e19bea78c0f86dab187";
 
 #pragma mark - 占位图以及头像头
 

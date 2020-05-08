@@ -129,8 +129,10 @@
     [btn setTitle:@"列表模式" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor zx_colorWithHexString:@"#307DF4"] forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont zx_systemFontOfScaleSize:16];
-    [btn setImage:[UIImage imageNamed:@"我的-未选中"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"map_switch"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(switchViewAction:) forControlEvents:UIControlEventTouchUpInside];
+    [btn zx_setImagePositionWithType:ZXButtonContentTypeImageLeftTitleRight spacing:5];
+    btn.backgroundColor = [UIColor zx_colorWithHex:0xF2F2F2 alpha:1];
     return btn;
 }
 
@@ -382,7 +384,7 @@
 
 - (void)switchViewAction:(UIButton *)sender
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)mapViewBtnAction:(UIButton *)sender

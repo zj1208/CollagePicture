@@ -45,46 +45,52 @@ static NSInteger const kAPPErrorCode = 5000;
     NSDictionary *dic = @{@"id":appId};
     
     __weak __typeof(&*self)weakSelf = self;
-    [manager GET:@"lookup" parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager GET:@"lookup" parameters:dic headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //这是oc数据格式；不是真的json
-        NSError *parseError = nil;
-        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
-        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",str);
         
-         if ([[responseObject objectForKey:@"resultCount"] integerValue] == 1)
-         {
-             if (success)
-             {
-                 NSArray *results = [responseObject objectForKey:@"results"];
-                 if (results)
-                 {
-                     NSDictionary *di = [results firstObject];
-                     
-                     success([di objectForKey:@"version"]);
-                 }
-             }
-         }
-        else
-        {
-            if (failure)
-            {
-                NSError *error= [weakSelf customErrorWithObject:@"已经是最新版本了" errorCode:kAPPErrorCode userInfoErrorCode:nil];
-                failure(error);
-            }
-        }
-
+        [weakSelf requestSuccessDealWithResponseObeject:responseObject success:success failure:failure];
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-//        NSLog(@"%@,%@",error,@(error.code));
+        NSLog(@"%@,%@",error,@(error.code));
         if (failure)
         {
             error = [weakSelf getErrorFromError:error];
             failure(error);
         }
     }];
+}
+
+- (void)requestSuccessDealWithResponseObeject:(id)responseObject success:(CompleteBlock)success failure:(ErrorBlock)failure
+{
+    //这是json数据格式的字典；
+    NSError *parseError = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",str);
+    
+     if ([[responseObject objectForKey:@"resultCount"] integerValue] == 1)
+     {
+         if (success)
+         {
+             NSArray *results = [responseObject objectForKey:@"results"];
+             if (results)
+             {
+                 NSDictionary *di = [results firstObject];
+                 
+                 success([di objectForKey:@"version"]);
+             }
+         }
+     }
+    else
+    {
+        if (failure)
+        {
+            NSError *error= [self customErrorWithObject:@"已经是最新版本了" errorCode:kAPPErrorCode userInfoErrorCode:nil];
+            failure(error);
+        }
+    }
 }
 
 - (NSError *)getErrorFromError:(NSError *)error
@@ -176,19 +182,21 @@ static NSInteger const kAPPErrorCode = 5000;
 }
 
 
--(void)checkVersionUpdateWithAppId:(NSString *)appId controller:(UIViewController *)controller
+-(void)checkVersionUpdateWithAppId:(NSString *)appId success:(void(^)(BOOL needUpdate))success failure:(void(^)(NSError *error))failure
 {
-    [MBProgressHUD zx_showLoadingWithStatus:@"正在检查版本更新" toView:nil];
     __weak __typeof(&*self)weakSelf = self;
     [[ZXCheckAppItunesVersionManager shareInstance]checkVersionSuccessWithAppId:appId success:^(id data) {
         
-        [MBProgressHUD zx_hideHUDForView:nil];
         weakSelf.itunesVersion = data;
-        [weakSelf versionCompare];
+        if (success) {
+            BOOL newVersion = [weakSelf isNewWithVersionCompare];
+            success(newVersion);
+        }
         
     } failure:^(NSError *error) {
-        
-        [MBProgressHUD zx_showError:[error localizedDescription] toView:nil];
+        if (failure) {
+            failure(error);
+        }
     }];
 
 }
@@ -196,23 +204,14 @@ static NSInteger const kAPPErrorCode = 5000;
 #pragma mark-Version比较
 
 
--(void)versionCompare
+- (BOOL)isNewWithVersionCompare
 {
     NSString * version =  [[NSBundle mainBundle]objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     if ([self.itunesVersion compare:version options:NSNumericSearch] ==NSOrderedDescending)
     {
-        if ([self.delegate respondsToSelector:@selector(zxCheckVersionWithNewVersion:)])
-        {
-            [self.delegate zxCheckVersionWithNewVersion:self];
-        }
+        return YES;
     }
-    else
-    {
-        if ([self.delegate respondsToSelector:@selector(zxCheckVersionWithNoNewVersion:)])
-        {
-            [self.delegate zxCheckVersionWithNoNewVersion:self];
-        }
-    }
+    return NO;
 }
 
 @end

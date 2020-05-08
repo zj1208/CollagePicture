@@ -45,7 +45,6 @@
 #import "UINavigationController+ZXStoryboard.h"
 
 #import "UIScrollView+ZXCategory.h"
-#import "UIScrollView+ZXMJRefreshing.h"
 #import "UISearchBar+ZXCategory.h"//2019.11新增
 #import "UITextField+ZXHelper.h"
 

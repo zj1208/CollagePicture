@@ -9,6 +9,7 @@
 /// 配置白名单 由于iOS的限制，iOS系统在9之后的版本中，如果开发者的app希望调起高德/baidu地图，必须在自己app的设置中配置白名单。配置方法： 1、找到您的Info.plist文件 2、在文件中添加key：LSApplicationQueriesSchemes，类型是Array，如果曾经添加过，无需再次添加。 3、Array中依次添加item，类型为String，值为iosamap,baidumap。
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

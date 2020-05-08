@@ -8,6 +8,7 @@
 //  2018.3.26 修改固定路径为类目获取；
 //  2018.5.10 优化代码
 //  2020.1.21 优化代码
+//  2020.5.6  优化代码，使用AFnetworking 4.0.0
 
 #import "AFNetworking.h"
 
@@ -17,40 +18,25 @@ typedef void (^CompleteBlock)(id data);
 typedef void (^ErrorBlock)(NSError* error);
 
 
-@class ZXCheckAppItunesVersionManager;
-
-@protocol CheckVersionDelegate <NSObject>
-
-
-/**
- *  @brief 已经是最新版本
- *
- */
-- (void)zxCheckVersionWithNoNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI;
-
-/**
- *  @brief 有新版本，回调更新提示
- */
-- (void)zxCheckVersionWithNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI;
-
-@end
-
 
 @interface ZXCheckAppItunesVersionManager : NSObject
 
 @property (nonatomic, assign) NSString *itunesVersion;
 
-@property (nonatomic, weak) id<CheckVersionDelegate>delegate;
 
 + (instancetype)shareInstance;
 
-//检查itunes版本数据－请求
+// 请求数据检查itunes版本数据
 - (void)checkVersionSuccessWithAppId:(NSString *)appId success:(CompleteBlock)success failure:(ErrorBlock)failure;
 
 - (nullable NSString *)getAppVersionFromItunesWithAppId:(NSString *)appId;
 
-//检查版本更新－包括请求业务
-- (void)checkVersionUpdateWithAppId:(NSString *)appId controller:(UIViewController *)controller;
+/// 检查版本更新
+/// @param appId appId
+/// @param success 检查成功回调，是否需要更新
+/// @param failure 请求检查失败
+-(void)checkVersionUpdateWithAppId:(NSString *)appId success:(void(^)(BOOL needUpdate))success failure:(void(^)(NSError *error))failure;
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -64,4 +50,23 @@ NS_ASSUME_NONNULL_END
  "description":"产品简介：\u2028关于爱与幸福的产品，由于孩子远游，与父母相隔千里，而父母对于孩子的记忆会淡化，对于孩子的孩子无法及时获取信息，我们想要让幸福的记忆永存，让所有的爱能同步。\n\n【妈妈钟爱理由】   宝宝照片随时整理，每年制作；\n【情侣钟爱理由】   天天秀恩爱，年年做相册；\n【小资钟爱理由】   我的资生活，我的故事集；", "bundleId":"com.ANdian.loveBaby", "trackName":"拉薇宝贝", "trackId":1082092069, "releaseDate":"2016-02-15T21:18:43Z", "primaryGenreName":"Utilities", "currentVersionReleaseDate":"2016-09-22T03:21:21Z", "isVppDeviceBasedLicensingEnabled":true, "formattedPrice":"Free", "releaseNotes":"1、影楼微网站功能，可以参与影楼活动、购买套系\n2、影楼云盘，随时查看影楼相关照片\n3、上传照片优化，减少等待时间\n4、部分崩溃问题优化。", "sellerName":"Hangzhou AnDian technology Co., Ltd", "primaryGenreId":6002, "genreIds":["6002"]}]
  }
 
+*/
+/*
+-(void)checkVersionUpdate
+{
+    WS(weakSelf);
+    ZXCheckAppItunesVersionManager *checkVersion = [ZXCheckAppItunesVersionManager shareInstance];
+    [checkVersion checkVersionUpdateWithAppId:kAPPID success:^(BOOL needUpdate) {
+        
+        [UIAlertController zx_presentGeneralAlertInViewController:weakSelf withTitle:kAPP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
+            
+            [weakSelf zx_goAppStoreWithAppId:kAPPID];
+
+        }];
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+        [UIAlertController zx_presentGeneralAlertInViewController:weakSelf withTitle:kAPP_DisplayName message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
+    }];
+}
 */

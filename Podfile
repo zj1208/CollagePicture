@@ -2,7 +2,7 @@
 # pod outdated
 platform:ios,9.0
 
-source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+#source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 #source 'https://github.com/CocoaPods/Specs.git'
 #忽略警告
 inhibit_all_warnings!
@@ -13,19 +13,19 @@ target "CollagePicture" do
 
 #通用标准库
 
-pod 'AFNetworking' , '3.2.1'
+pod 'AFNetworking' , '4.0.0'
 pod 'SDWebImage','5.6.1'
-pod 'AFNetworking-Synchronous', '~> 1.1.0'
+#pod 'AFNetworking-Synchronous', '~> 1.1.0'
 #pod 'SDWebImage/GIF'
 #可选 使用WebP
 #pod 'SDWebImage/WebP’
 pod 'MBProgressHUD', '1.2.0'
 pod 'Masonry', '1.1.0'
-pod 'Mantle', '2.1.0'
+pod 'Mantle', '2.1.1'
 #刷新
 pod 'MJRefresh', '3.2.2'
 #本地存储
-pod 'FMDB', '~> 2.6.2'
+pod 'FMDB', '~> 2.7.5'
 pod 'TMCache', '~> 2.1.0'
 
 
@@ -69,8 +69,8 @@ pod 'AliyunOSSiOS'
 
 
 #第三方UI库
-pod 'TZImagePickerController', '3.3.1'
-pod 'HMSegmentedControl', '1.5.5'
+pod 'TZImagePickerController', '~> 3.3.1'
+pod 'HMSegmentedControl', '~> 1.5.5'
 pod 'THSegmentedPager', '~> 1.1.3'
 
 end

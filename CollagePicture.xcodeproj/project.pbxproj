@@ -115,7 +115,6 @@
 		F446A9AB1FCC082A00C82C90 /* dot_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A9031FCC082900C82C90 /* dot_red@3x.png */; };
 		F446A9AC1FCC082A00C82C90 /* dot_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F446A9041FCC082900C82C90 /* dot_red@2x.png */; };
 		F446A9AE1FCC082A00C82C90 /* ZXPhotoBrowserConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F446A9071FCC082900C82C90 /* ZXPhotoBrowserConst.m */; };
-		F44BD1F523F12F7900A866F1 /* ZXCheckAppItunesVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD1F423F12F7800A866F1 /* ZXCheckAppItunesVersionManager.m */; };
 		F44BD20423F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20223F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m */; };
 		F44BD20C23F130F600A866F1 /* UIViewController+ZXLoginAndAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20823F130F600A866F1 /* UIViewController+ZXLoginAndAlert.m */; };
 		F44BD21123F1311400A866F1 /* UIViewController+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F44BD20F23F1311400A866F1 /* UIViewController+ZXHelper.m */; };
@@ -461,6 +460,9 @@
 		F4EB2FE31D8FCF8A00F5B70B /* image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F4EB2FE21D8FCF8A00F5B70B /* image.jpg */; };
 		F4EB705F236692040073A2B7 /* SearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB705D236692030073A2B7 /* SearchResultsController.m */; };
 		F4EB7062236692160073A2B7 /* SearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */; };
+		F4EEB2C42462E27C009BC184 /* map_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EEB2C22462E27B009BC184 /* map_switch@2x.png */; };
+		F4EEB2C52462E27C009BC184 /* map_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EEB2C32462E27B009BC184 /* map_switch@3x.png */; };
+		F4EEB2CB2462E363009BC184 /* ZXCheckAppItunesVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EEB2C92462E362009BC184 /* ZXCheckAppItunesVersionManager.m */; };
 		F4EF35081FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF35061FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m */; };
 		F4EF350B1FF5D86300CCD088 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF35091FF5D86300CCD088 /* PendingOperations.m */; };
 		F4F38B4C1EA6492C007606F9 /* MyCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F38B371EA6492C007606F9 /* MyCenterController.m */; };
@@ -663,8 +665,6 @@
 		F446A9041FCC082900C82C90 /* dot_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot_red@2x.png"; sourceTree = "<group>"; };
 		F446A9071FCC082900C82C90 /* ZXPhotoBrowserConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPhotoBrowserConst.m; sourceTree = "<group>"; };
 		F446A9131FCC082900C82C90 /* ZXPhotoBrowserConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPhotoBrowserConst.h; sourceTree = "<group>"; };
-		F44BD1F323F12F7800A866F1 /* ZXCheckAppItunesVersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCheckAppItunesVersionManager.h; sourceTree = "<group>"; };
-		F44BD1F423F12F7800A866F1 /* ZXCheckAppItunesVersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCheckAppItunesVersionManager.m; sourceTree = "<group>"; };
 		F44BD20223F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+ZXCategoryFontScale.m"; sourceTree = "<group>"; };
 		F44BD20323F1307B00A866F1 /* UIFont+ZXCategoryFontScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+ZXCategoryFontScale.h"; sourceTree = "<group>"; };
 		F44BD20823F130F600A866F1 /* UIViewController+ZXLoginAndAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZXLoginAndAlert.m"; sourceTree = "<group>"; };
@@ -1258,6 +1258,10 @@
 		F4EB705E236692030073A2B7 /* SearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsController.h; sourceTree = "<group>"; };
 		F4EB7060236692160073A2B7 /* SearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSuggestionViewController.m; sourceTree = "<group>"; };
 		F4EB7061236692160073A2B7 /* SearchSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSuggestionViewController.h; sourceTree = "<group>"; };
+		F4EEB2C22462E27B009BC184 /* map_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_switch@2x.png"; sourceTree = "<group>"; };
+		F4EEB2C32462E27B009BC184 /* map_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_switch@3x.png"; sourceTree = "<group>"; };
+		F4EEB2C92462E362009BC184 /* ZXCheckAppItunesVersionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCheckAppItunesVersionManager.m; sourceTree = "<group>"; };
+		F4EEB2CA2462E363009BC184 /* ZXCheckAppItunesVersionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCheckAppItunesVersionManager.h; sourceTree = "<group>"; };
 		F4EF35041FF5D7EB00CCD088 /* AliOSSPicInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliOSSPicInfoRequest.h; sourceTree = "<group>"; };
 		F4EF35061FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliOSSPicInfoRequest.m; sourceTree = "<group>"; };
 		F4EF35091FF5D86300CCD088 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
@@ -2327,6 +2331,8 @@
 		F44DB808245AA58F00403CC9 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				F4EEB2C22462E27B009BC184 /* map_switch@2x.png */,
+				F4EEB2C32462E27B009BC184 /* map_switch@3x.png */,
 				F44DB809245AA58F00403CC9 /* map_icon@3x.png */,
 				F44DB80A245AA58F00403CC9 /* map_icon@2x.png */,
 				F44DB80B245AA58F00403CC9 /* map_noFinish@3x.png */,
@@ -3054,8 +3060,8 @@
 		F4A158C423D57AAD0018405E /* ZXCheckAppItunesVersionManager */ = {
 			isa = PBXGroup;
 			children = (
-				F44BD1F323F12F7800A866F1 /* ZXCheckAppItunesVersionManager.h */,
-				F44BD1F423F12F7800A866F1 /* ZXCheckAppItunesVersionManager.m */,
+				F4EEB2CA2462E363009BC184 /* ZXCheckAppItunesVersionManager.h */,
+				F4EEB2C92462E362009BC184 /* ZXCheckAppItunesVersionManager.m */,
 			);
 			path = ZXCheckAppItunesVersionManager;
 			sourceTree = "<group>";
@@ -4482,6 +4488,7 @@
 				F4E7E1CB2431C146007A281A /* ZXAddPicDefaultContentView.xib in Resources */,
 				F4EB2FD91D8FCF7300F5B70B /* albumA_style_13.plist in Resources */,
 				F44DB82A245AA59000403CC9 /* map_restore@3x.png in Resources */,
+				F4EEB2C52462E27C009BC184 /* map_switch@3x.png in Resources */,
 				F4A3024A240527D400F750D4 /* alert_select@2x.png in Resources */,
 				F446A97D1FCC082900C82C90 /* arrows_down@2x.png in Resources */,
 				F4EB2FD61D8FCF7300F5B70B /* albumA_style_10.plist in Resources */,
@@ -4499,6 +4506,7 @@
 				F446A97B1FCC082900C82C90 /* arrows_up@2x.png in Resources */,
 				F4AE3FAA239BA4EF00DF6FE3 /* networkErrorHelp_2.png in Resources */,
 				F446A95B1FCC082900C82C90 /* blueArrowLoadMore@2x.png in Resources */,
+				F4EEB2C42462E27C009BC184 /* map_switch@2x.png in Resources */,
 				F4E7E1C32431C146007A281A /* ZXAddPicViewCell.xib in Resources */,
 				F44DB824245AA58F00403CC9 /* map_finish@2x.png in Resources */,
 				F44DB828245AA59000403CC9 /* map_tast_icon@2x.png in Resources */,
@@ -4541,7 +4549,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CollagePicture/Pods-CollagePicture-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking-Synchronous/AFNetworking_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/AliyunOSSiOS/AliyunOSSiOS.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/HMSegmentedControl/HMSegmentedControl.framework",
@@ -4559,7 +4566,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking_Synchronous.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunOSSiOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HMSegmentedControl.framework",
@@ -4663,12 +4669,12 @@
 				F4E7E1972431BFD6007A281A /* UIApplication+ZXCategory.m in Sources */,
 				F44BD20423F1307B00A866F1 /* UIFont+ZXCategoryFontScale.m in Sources */,
 				F49CFD2D1FDE5C8D009F2213 /* XLZoomingScrollView.m in Sources */,
-				F44BD1F523F12F7900A866F1 /* ZXCheckAppItunesVersionManager.m in Sources */,
 				F4E7E1C52431C146007A281A /* ZXAddPicPlaceholderCell.m in Sources */,
 				F4A0FA062142154E0053B1E8 /* ZXWXBigImageDisappearAnimator.m in Sources */,
 				F4E7E1A02431C091007A281A /* ZXOrientationTabController.m in Sources */,
 				F469202B1FF341A60099AB9D /* ZXNoGapCellFlowLayout.m in Sources */,
 				F44DB7F3245A70DA00403CC9 /* ZXOpenMapsManager.m in Sources */,
+				F4EEB2CB2462E363009BC184 /* ZXCheckAppItunesVersionManager.m in Sources */,
 				F4A3022A2405267F00F750D4 /* UIWindow+ZXHierarchy.m in Sources */,
 				F49CFD341FDE5C8D009F2213 /* FSActionSheetItem.m in Sources */,
 				F4A151CA23D2D9850018405E /* ZXAssetCollectionCell.m in Sources */,

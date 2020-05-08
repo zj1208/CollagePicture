@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
     //处理点击推送通知
     [self takeLaunchRemoteNoti:launchOptions];
     
-    [AMapServices sharedServices].apiKey = kAPPKEY_AMAP;
+    [AMapServices sharedServices].apiKey = kAppKey_AMAP;
 
     //存储异常处理
     InstallUncaughtExceptionHandlers();

@@ -12,7 +12,7 @@
 #import "ZXCheckAppItunesVersionManager.h"
 #import "ZXImagePickerController.h"
 
-@interface SetViewController ()<CheckVersionDelegate,UIActionSheetDelegate,ZXImagePickerControllerDelegate>
+@interface SetViewController ()<UIActionSheetDelegate,ZXImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *accountTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *changePassWordTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *aboutTitleLab;
@@ -257,25 +257,22 @@
 
 -(void)checkVersionUpdate
 {
-    ZXCheckAppItunesVersionManager *checkVersion = [ZXCheckAppItunesVersionManager shareInstance];
-    checkVersion.delegate = self;
-    [checkVersion checkVersionUpdateWithAppId:kAPPID controller:self];
-}
-
-- (void)zxCheckVersionWithNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
-{
     WS(weakSelf);
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:kAPP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
+    ZXCheckAppItunesVersionManager *checkVersion = [ZXCheckAppItunesVersionManager shareInstance];
+    [checkVersion checkVersionUpdateWithAppId:kAPPID success:^(BOOL needUpdate) {
         
-        [weakSelf zx_goAppStoreWithAppId:kAPPID];
+        [UIAlertController zx_presentGeneralAlertInViewController:weakSelf withTitle:kAPP_Name message:@"有新版本，是否升级？" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"升级" doHandler:^(UIAlertAction * _Nonnull action) {
+            
+            [weakSelf zx_goAppStoreWithAppId:kAPPID];
 
+        }];
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+        [UIAlertController zx_presentGeneralAlertInViewController:weakSelf withTitle:kAPP_DisplayName message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
     }];
 }
 
-- (void)zxCheckVersionWithNoNewVersion:(ZXCheckAppItunesVersionManager *)versionAPI
-{
-    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:kAPP_DisplayName message:@"现在已经是最新版本了" cancelButtonTitle:nil cancleHandler:nil doButtonTitle:@"好的" doHandler:nil];
-}
 
 
 
