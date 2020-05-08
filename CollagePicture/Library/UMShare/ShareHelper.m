@@ -7,8 +7,6 @@
 //
 
 #import "ShareHelper.h"
-#import "UMSocialUIManager.h"
-
 
 static NSString *appIconUrl = @"http://is3.mzstatic.com/image/thumb/Purple49/" \
 "v4/ca/5a/0c/ca5a0c17-42e9-380d-d014-3deec3185fda/source/512x512bb.jpg";
@@ -212,7 +210,7 @@ static NSString *appIconUrl = @"http://is3.mzstatic.com/image/thumb/Purple49/" \
     
 }
 */
-
+/*
 - (void)share:(ShareInfo *)shareInfo SheetView:(UIViewController *)controller
 {
     WS(weakSelf);
@@ -345,4 +343,5 @@ static NSString *appIconUrl = @"http://is3.mzstatic.com/image/thumb/Purple49/" \
         }
     }];
 }
+ */
 @end

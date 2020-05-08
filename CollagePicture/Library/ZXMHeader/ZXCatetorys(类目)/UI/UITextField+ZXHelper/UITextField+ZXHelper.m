@@ -114,7 +114,10 @@
     NSArray *arrayOfAllMatches = [regex matchesInString:url options:0 range:NSMakeRange(0,[url length])];
     for (NSTextCheckingResult *match in arrayOfAllMatches)
     {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "substringForMatch"
         NSString* substringForMatch = [url substringWithRange:match.range];
+        #pragma clang diagnostic pop
         return YES;
     }
     

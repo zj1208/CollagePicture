@@ -1,19 +1,20 @@
 PODS:
-  - AFNetworking (4.0.1):
-    - AFNetworking/NSURLSession (= 4.0.1)
-    - AFNetworking/Reachability (= 4.0.1)
-    - AFNetworking/Security (= 4.0.1)
-    - AFNetworking/Serialization (= 4.0.1)
-    - AFNetworking/UIKit (= 4.0.1)
-  - AFNetworking/NSURLSession (4.0.1):
+  - AFNetworking (4.0.0):
+    - AFNetworking/NSURLSession (= 4.0.0)
+    - AFNetworking/Reachability (= 4.0.0)
+    - AFNetworking/Security (= 4.0.0)
+    - AFNetworking/Serialization (= 4.0.0)
+    - AFNetworking/UIKit (= 4.0.0)
+  - AFNetworking/NSURLSession (4.0.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (4.0.1)
-  - AFNetworking/Security (4.0.1)
-  - AFNetworking/Serialization (4.0.1)
-  - AFNetworking/UIKit (4.0.1):
+  - AFNetworking/Reachability (4.0.0)
+  - AFNetworking/Security (4.0.0)
+  - AFNetworking/Serialization (4.0.0)
+  - AFNetworking/UIKit (4.0.0):
     - AFNetworking/NSURLSession
+  - AlipaySDK-iOS (15.6.8)
   - AliyunOSSiOS (2.6.5)
   - AMap2DMap (5.6.1):
     - AMapFoundation (~> 1.4)
@@ -45,10 +46,18 @@ PODS:
   - UMCCommonLog (1.0.0)
   - UMCPush (3.2.4):
     - UMCCommon
+  - UMengUShare/Core (6.4.8.2):
+    - UMengUShare/Network
+  - UMengUShare/Network (6.4.8.2)
+  - UMengUShare/Social/ReducedWeChat (6.4.8.2):
+    - UMengUShare/Core
+  - UMengUShare/UI (6.4.8.2):
+    - UMengUShare/Core
   - WebViewJavascriptBridge (6.0.3)
 
 DEPENDENCIES:
-  - AFNetworking (= 4.0.1)
+  - AFNetworking (= 4.0.0)
+  - AlipaySDK-iOS (= 15.6.8)
   - AliyunOSSiOS
   - AMap2DMap (= 5.6.1)
   - AMapLocation (= 2.6.5)
@@ -67,11 +76,14 @@ DEPENDENCIES:
   - UMCAnalytics (= 6.0.5)
   - UMCCommonLog
   - UMCPush (= 3.2.4)
+  - UMengUShare/Social/ReducedWeChat
+  - UMengUShare/UI
   - WebViewJavascriptBridge (= 6.0.3)
 
 SPEC REPOS:
   https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - AFNetworking
+    - AlipaySDK-iOS
     - AMap2DMap
     - AMapFoundation
     - AMapLocation
@@ -84,6 +96,7 @@ SPEC REPOS:
     - TZImagePickerController
     - UMCCommonLog
     - UMCPush
+    - UMengUShare
     - WebViewJavascriptBridge
   trunk:
     - AliyunOSSiOS
@@ -96,7 +109,8 @@ SPEC REPOS:
     - UMCCommon
 
 SPEC CHECKSUMS:
-  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  AFNetworking: d9fdf484a3c723ec3c558a41cc5754c7e845ee77
+  AlipaySDK-iOS: 703a55774a37f412410ab04af96c011b91ec58cb
   AliyunOSSiOS: 6d7f1f6aae0176095d147a88d60b23bbef93e0b7
   AMap2DMap: cac76bc057de18a1641f34df6b50bf5bc6b23571
   AMapFoundation: 9ed923193b357ebb30a073e9fe255d3c24054d5a
@@ -117,8 +131,9 @@ SPEC CHECKSUMS:
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
   UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
+  UMengUShare: 370d180101e13ee0227ae657ab119ba97243d2b3
   WebViewJavascriptBridge: 7f5bc4d3581e672e8f32bd0f812d54bc69bb8e29
 
-PODFILE CHECKSUM: 68ae6d3ae2a0284c68a283d195664c2abd613eba
+PODFILE CHECKSUM: bf3935065985fcf84fe50489df08c5bbe5b32fac
 
 COCOAPODS: 1.9.1

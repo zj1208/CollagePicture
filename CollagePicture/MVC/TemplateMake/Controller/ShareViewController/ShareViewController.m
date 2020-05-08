@@ -110,8 +110,6 @@ static NSString * const reuseIdentifier = @"Cell";
     info.title = nil;
     info.url = nil; //
     info.ico = self.shareImage;
-    [[ShareHelper sharedInstance]share:info SheetView:self];
-    
-
+//    [[ShareHelper sharedInstance]share:info SheetView:self];
 }
 @end

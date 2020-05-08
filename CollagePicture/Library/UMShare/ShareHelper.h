@@ -30,7 +30,7 @@ static NSString *kSina_AppSecret =@"b496454d3f86f3b7d33b3fb25bcd6fdd";
 @interface ShareHelper : NSObject
 
 + (instancetype)sharedInstance;
-
+/*
 - (void)initUmengSocial;
 
 - (void)initUmengSocial6;
@@ -40,7 +40,7 @@ static NSString *kSina_AppSecret =@"b496454d3f86f3b7d33b3fb25bcd6fdd";
 //友盟自定义分享
 - (void)yzxShare:(ShareInfo *)shareInfo SheetView:(UIViewController *)controller andButton:(UIButton *)sender;
 
-
+*/
 @end
 
 

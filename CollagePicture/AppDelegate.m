@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 //    [self registerUserNotification]; //自己测试用的；
     
     //初始化友盟分享
-    [[ShareHelper sharedInstance] initUmengSocial6];
+//    [[ShareHelper sharedInstance] initUmengSocial6];
     
     /**
      *  增加bmob初始化
@@ -482,7 +482,7 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 }
 
 //iOS10 在非激活模式，用户响应推送通知栏的 打开应用，关闭通知，响应用户通知事件，都会回调这个代理方法；这个代理方法必须在applicationDidFinishLaunching:启动完成之前设置好；
-- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     
     completionHandler();  // 系统要求执行这个方法
 
@@ -534,25 +534,12 @@ NSString * const kNotificationActionTwoIdent = @"ACTION_TWO";
 
 #pragma mark - 第三方应用回调
 
-//一般这个方法早已弃用，可以不写
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return  [self customAppByCallbackHandleOpenURL:url];
-}
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation
-{
-    return  [self customAppByCallbackHandleOpenURL:url];
-}
-
-#ifdef __IPHONE_9_0
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
     return  [self customAppByCallbackHandleOpenURL:url];
- 
 }
 
-#endif
 //第三方app回调本app
 - (BOOL)customAppByCallbackHandleOpenURL:(NSURL *)url
 {

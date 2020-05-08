@@ -2,7 +2,7 @@
 # pod outdated
 platform:ios,9.0
 
-#source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 #source 'https://github.com/CocoaPods/Specs.git'
 #忽略警告
 inhibit_all_warnings!
@@ -37,7 +37,9 @@ pod 'SVPullToRefresh', '~> 0.4.1'
 
 #第三方平台
 pod 'BmobSDK'
+
 pod 'AliyunOSSiOS'
+pod 'AlipaySDK-iOS', '15.6.8'
 
 #友盟开发阶段进行调试SDK及相关功能使用，可在发布 App 前移除
  pod 'UMCCommonLog'
@@ -52,20 +54,14 @@ pod 'AliyunOSSiOS'
  pod 'AMapLocation', '2.6.5'
  pod 'AMap2DMap', '5.6.1'
  
- 
-# U-Share SDK UI模块（分享面板，建议添加）
-#pod 'UMengUShare/UI'
-## 集成新浪微博
-#pod 'UMengUShare/Social/Sina'
-## 集成微信
-#pod 'UMengUShare/Social/WeChat'
-## 集成QQ
-#pod 'UMengUShare/Social/QQ'
-#数据
+ # U-Share SDK UI模块（分享面板，建议添加）
+  pod ‘UMengUShare/UI’
+ # 集成微信(精简版0.2M)
+  pod ‘UMengUShare/Social/ReducedWeChat'
+  
 
 #微信SDK UMShare已经有了，如果需要则删除本地的
-#pod 'WechatOpenSDK'
-#pod 'YWFeedbackFMWK', '~> 2.0.3.1'
+#  pod 'WechatOpenSDK'
 
 
 #第三方UI库

@@ -18,18 +18,18 @@
 
 @implementation ZXOpenMapsManager
 
-+ (instancetype)sharedInstance
-{
-    static id instance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (!instance) {
-            
-            instance = [self new];
-        }
-    });
-    return instance;
-}
+//+ (instancetype)sharedInstance
+//{
+//    static id instance = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        if (!instance) {
+//
+//            instance = [self new];
+//        }
+//    });
+//    return instance;
+//}
 
 - (NSArray <NSDictionary*> *)getSupportMapItemSchemes
 {
@@ -39,6 +39,7 @@
 
 - (void)getSupportMapItemSchemesFinishBlock:(nullable void(^)(NSArray <NSDictionary *> *items,NSArray *titles))finish
 {
+    [self.mapItems removeAllObjects];
     //判断是否安装高德map
     NSURL *amap_scheme = [NSURL URLWithString:@"iosamap://"];
     if ([[UIApplication sharedApplication] canOpenURL:amap_scheme]) {
@@ -151,6 +152,14 @@
     }
 }
 
++ (UIAlertController *)showActionSheetInViewController:(UIViewController *)viewController
+withLatitude:(double)lat
+   longitude:(double)lon
+  tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock
+{
+    ZXOpenMapsManager *manager = [[ZXOpenMapsManager alloc] init];
+    return [manager showActionSheetInViewController:viewController withLatitude:lat longitude:lon tapBlock:tapBlock];
+}
 
 - (UIAlertController *)showActionSheetInViewController:(UIViewController *)viewController
                                withLatitude:(double)lat

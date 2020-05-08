@@ -410,8 +410,7 @@
     NSNumber *lat = [dic objectForKey:@"lat"];
     NSNumber *lon = [dic objectForKey:@"log"];
     
-    ZXOpenMapsManager *manager = [ZXOpenMapsManager sharedInstance];
-    [manager showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
+    [ZXOpenMapsManager showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
 }
 
 - (void)doBtnAction:(UIButton *)sender

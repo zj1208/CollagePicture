@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlipaySDK-iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>AliyunOSSiOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -110,6 +115,11 @@
 			<false/>
 		</dict>
 		<key>UMCPush.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UMengUShare.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
