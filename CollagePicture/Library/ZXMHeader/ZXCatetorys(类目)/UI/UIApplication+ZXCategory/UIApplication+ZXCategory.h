@@ -7,9 +7,9 @@
 //
 //  2020.02.03，增加兼容iOS13Scene场景的window
 //  2020.02.05，增加一系列openURL的方法；
-//  2020.03.16，优化zx_safeAreaBottomHeight方法，iOS13的UIWindowScene造成的bug；
+//  2020.03.16，优化zx_safeAreaLayoutNormalBottom方法，iOS13的UIWindowScene造成的bug；
 //  2020.03.23，增加兼容Xcode11新建iOS13的工程获取windows；
-
+//  2020.5.12
 
 #import <UIKit/UIKit.h>
 
@@ -17,15 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIApplication (ZXCategory)
 
-/// iPhoneX系列 ? (20.f+24.f) : (20.f))；兼容iOS13;
+/// 常规情况下：statusBar.Height = 20，iPhoneX系列 ? (statusBarHeight+24.f) : (statusBarHeight))；兼容iOS13;注意：在有定位，电话等顶部提示蓝条情况，statusBar.Height会变大;
 /// 注意：在viewDidLoad中self.view.window 还是nil,除非用appDelegate的window的类目方法；
-//  如果状态栏隐藏，则statusBarFrame属性的值为CGRectZero。
+/// 如果状态栏隐藏，则statusBarFrame属性的值为CGRectZero。
 @property (nonatomic, assign, readonly) CGFloat zx_safeAreaStatusBarHeight;
 
 
 /// iPhoneX系列 ? (34) : (0)); 2020.3.16 优化iOS13的UIWindowScene造成的bug；
-@property (nonatomic, assign, readonly) CGFloat zx_safeAreaBottomHeight;
-
+@property (nonatomic, assign, readonly) CGFloat zx_safeAreaLayoutNormalBottom;
 
 /// 根据应用程序获取appDelegate的window 或SceneDelegate的window；兼容iOS13场景Scene；
 @property (nonatomic, assign, readonly) UIWindow *zx_mainWindow;

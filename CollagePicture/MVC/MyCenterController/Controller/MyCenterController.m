@@ -136,6 +136,8 @@
 //    {
 //        [self checkAppVersionAndNotificationPush];
 //    }
+    CGFloat fl = self.view.zx_safeAreaLayoutGuideY;
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated

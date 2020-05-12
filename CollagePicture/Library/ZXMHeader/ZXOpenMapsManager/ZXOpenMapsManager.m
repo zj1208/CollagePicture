@@ -152,7 +152,7 @@
     }
 }
 
-+ (UIAlertController *)showActionSheetInViewController:(UIViewController *)viewController
++ (UIAlertController *)zx_showActionSheetInViewController:(UIViewController *)viewController
 withLatitude:(double)lat
    longitude:(double)lon
   tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock
@@ -219,4 +219,15 @@ withLatitude:(double)lat
 }
 
 
+// 百度地图BD09LL经纬度转换为高德（GCJ02）经纬度
++ (CLLocationCoordinate2D)zx_getGaoDeCoordinateByBaiDuCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    return CLLocationCoordinate2DMake(coordinate.latitude - 0.006, coordinate.longitude - 0.0065);
+}
+
+// 高德地图火星坐标系（GCJ02）经纬度转换为百度BD09LL经纬度
++ (CLLocationCoordinate2D)zx_getBD09CoordinateByGaoDeCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    return CLLocationCoordinate2DMake(coordinate.latitude + 0.006, coordinate.longitude + 0.0065);
+}
 @end

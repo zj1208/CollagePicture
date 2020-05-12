@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) CGFloat zx_safeAreaStatusBarHeight;
 
 /// iPhoneX系列 ? (34) : (0))
-@property (nonatomic, assign, readonly) CGFloat zx_safeAreaBottomHeight;
+@property (nonatomic, assign, readonly) CGFloat zx_safeAreaLayoutNormalBottom;
 
 @end
 

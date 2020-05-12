@@ -49,7 +49,7 @@
     return statusBarHeight;
 }
 */
-- (CGFloat)zx_safeAreaBottomHeight
+- (CGFloat)zx_safeAreaLayoutNormalBottom
 {
     CGFloat safeAreaBottomHeight = 0;
     if (@available(iOS 13.0, *)) {

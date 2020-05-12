@@ -9,9 +9,11 @@
 /// 配置白名单 由于iOS的限制，iOS系统在9之后的版本中，如果开发者的app希望调起高德/baidu地图，必须在自己app的设置中配置白名单。配置方法： 1、找到您的Info.plist文件 2、在文件中添加key：LSApplicationQueriesSchemes，类型是Array，如果曾经添加过，无需再次添加。 3、Array中依次添加item，类型为String，值为iosamap,baidumap。
 
 //  2020.5.07 修改bug，优化;
+// 2020.5.11 增加经纬度转换；
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -74,7 +76,7 @@ typedef NS_ENUM(NSUInteger, ZXMapType) {
 /// @param lat 使用火星坐标系的经纬度；
 /// @param lon 使用火星坐标系的经纬度；
 /// @param tapBlock 额外点击回调；
-+ (UIAlertController *)showActionSheetInViewController:(UIViewController *)viewController
++ (UIAlertController *)zx_showActionSheetInViewController:(UIViewController *)viewController
                                           withLatitude:(double)lat
                                              longitude:(double)lon
                                               tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock;
@@ -89,6 +91,13 @@ typedef NS_ENUM(NSUInteger, ZXMapType) {
                                withLatitude:(double)lat
                                   longitude:(double)lon
                                    tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock;
+
+/// 百度地图BD09LL经纬度转换为高德（GCJ02）经纬度
++ (CLLocationCoordinate2D)zx_getGaoDeCoordinateByBaiDuCoordinate:(CLLocationCoordinate2D)coordinate;
+
+/// 高德地图火星坐标系（GCJ02）经纬度转换为百度BD09LL经纬度
++ (CLLocationCoordinate2D)zx_getBD09CoordinateByGaoDeCoordinate:(CLLocationCoordinate2D)coordinate;
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -111,12 +120,12 @@ NS_ASSUME_NONNULL_END
         NSNumber *lon = model.longitude;
         CLLocationCoordinate2D bd09Coordinate =  CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue);
         CLLocationCoordinate2D cj02Coordinate = AMapCoordinateConvert(bd09Coordinate, AMapCoordinateTypeBaidu);
-        [ZXOpenMapsManager showActionSheetInViewController:self withLatitude:cj02Coordinate.latitude longitude:cj02Coordinate.longitude tapBlock:nil];
+        [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:cj02Coordinate.latitude longitude:cj02Coordinate.longitude tapBlock:nil];
     }else
     {
         NSNumber *lat = model.amap_latitude;
         NSNumber *lon = model.amap_longitude;
-        [ZXOpenMapsManager showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
+        [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
     }
 }
 */

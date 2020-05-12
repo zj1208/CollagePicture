@@ -92,7 +92,7 @@
     [self.itemView mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-[UIApplication sharedApplication].zx_safeAreaBottomHeight-LCDScale_iPhone6(20));
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-[UIApplication sharedApplication].zx_safeAreaLayoutNormalBottom-LCDScale_iPhone6(20));
         make.height.mas_equalTo(LCDScale_iPhone6(267));
         make.left.mas_equalTo(self.view.mas_left).offset(LCDScale_iPhone6(63));
     }];
@@ -410,7 +410,7 @@
     NSNumber *lat = [dic objectForKey:@"lat"];
     NSNumber *lon = [dic objectForKey:@"log"];
     
-    [ZXOpenMapsManager showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
+    [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
 }
 
 - (void)doBtnAction:(UIButton *)sender

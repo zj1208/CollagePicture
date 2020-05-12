@@ -106,7 +106,7 @@ while循环就是循环结构的一种，当事先不知道循环该执行多少
     return statusBarHeight;
 }
 
-- (CGFloat)zx_safeAreaBottomHeight
+- (CGFloat)zx_safeAreaLayoutNormalBottom
 {
     CGFloat tmp = 0;
     if (@available(iOS 11.0, *)) {
