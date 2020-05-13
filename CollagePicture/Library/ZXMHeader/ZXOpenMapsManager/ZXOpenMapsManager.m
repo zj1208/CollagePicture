@@ -18,18 +18,90 @@
 
 @implementation ZXOpenMapsManager
 
-//+ (instancetype)sharedInstance
-//{
-//    static id instance = nil;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        if (!instance) {
-//
-//            instance = [self new];
-//        }
-//    });
-//    return instance;
-//}
+- (NSMutableArray *)titles
+{
+    if (!_titles) {
+        _titles = [NSMutableArray array];
+    }
+    return _titles;
+}
+
+- (NSMutableArray *)mapItems
+{
+    if (!_mapItems) {
+        _mapItems = [NSMutableArray array];
+    }
+    return _mapItems;
+}
+
+
++ (UIAlertController *)zx_showActionSheetInViewController:(UIViewController *)viewController
+withLatitude:(double)lat
+   longitude:(double)lon
+     poiName:(nullable NSString *)poiName
+    tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock
+{
+    ZXOpenMapsManager *manager = [[ZXOpenMapsManager alloc] init];
+    return [manager showActionSheetInViewController:viewController withLatitude:lat longitude:lon poiName:poiName tapBlock:tapBlock];
+}
+
+- (UIAlertController *)showActionSheetInViewController:(UIViewController *)viewController
+                               withLatitude:(double)lat
+                                  longitude:(double)lon
+                                    poiName:(nullable NSString *)poiName
+                                 tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock
+{
+    NSArray *items = [self getSupportMapItemSchemes];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    NSString *cancelButtonTitle = @"取消";
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action){
+                                                                if (tapBlock)
+                                                                {
+                                                                    tapBlock(alertController,action,-1);
+                                                                }
+                                                         }];
+    [alertController addAction:cancelAction];
+
+    if (self.titles.count>0)
+    {
+        for(NSUInteger i=0; i<self.titles.count;i++)
+        {
+            NSString *otherButtonTitle = self.titles[i];
+            if (otherButtonTitle.length >0) {
+                UIAlertAction *otherAction = [UIAlertAction actionWithTitle:otherButtonTitle
+                                                                      style:UIAlertActionStyleDefault
+                                                                    handler:^(UIAlertAction *action){
+                    
+                    NSDictionary *dic = [items objectAtIndex:i];
+                    ZXMapType type = [[dic objectForKey:@"mapType"] integerValue];
+                    if (type == ZXMapTypeAMap)
+                    {
+                        [self zx_openSchemeURLToAMapClientForNavigationWithLatitude:lat longitude:lon poiName:poiName openFailure:nil];
+                    }
+                    else if (type == ZXMapTypeApple)
+                    {
+                        [self zx_openSchemeURLToAppleMapsForNavigationWithLatitude:lat longitude:lon poiName:poiName];
+                    }
+                    else if (type == ZXMapTypeBaidu)
+                    {
+                        [self zx_openSchemeURLToBaiduMapClientForNavigationWithLatitude:lat longitude:lon poiName:poiName openFailure:nil];
+                    }
+                                                                        if (tapBlock) {
+                                                                            tapBlock(alertController, action,i);
+                                                                        }
+                                                                    }];
+                [alertController addAction:otherAction];
+            }
+        }
+    }
+    [viewController presentViewController:alertController animated:YES completion:nil];
+    return alertController;
+}
+
 
 - (NSArray <NSDictionary*> *)getSupportMapItemSchemes
 {
@@ -65,23 +137,19 @@
     }
 }
 
-- (NSMutableArray *)titles
-{
-    if (!_titles) {
-        _titles = [NSMutableArray array];
-    }
-    return _titles;
-}
 
-- (NSMutableArray *)mapItems
-{
-    if (!_mapItems) {
-        _mapItems = [NSMutableArray array];
-    }
-    return _mapItems;
-}
-
-- (void)zx_openSchemeURLToAMapClientForNavigationWithLatitude:(double)lat longitude:(double)lon openFailure:(void(^)(NSString *tostTitle))failure
+/*
+高德地图导航：输入终点，以用户当前位置为起点开始路线导航，提示用户每段行驶路线以到达目的地。支持版本V5.0.0 起。
+url解析：字段-名称-是否必填
+navi -服务类型- 是
+sourceApplication -第三方调用应用名称,DisplayName -是
+poiname -POI名称 -否
+poiid -对应sourceApplication的POIID -否
+lat -纬度 -是
+lon -经度 -是
+dev -是否偏移(0:lat和lon是已经加密后的,不需要国测加密;1:需要国测加密) 是 /坐标系：0:GCJ－02，1:WGS－84
+ */
+- (void)zx_openSchemeURLToAMapClientForNavigationWithLatitude:(double)lat longitude:(double)lon poiName:(nullable NSString *)poiName openFailure:(void(^)(NSString *tostTitle))failure
 {
     NSURL *scheme = [NSURL URLWithString:@"iosamap://"];
     BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:scheme];
@@ -109,7 +177,14 @@
      }
 }
 
-- (void)zx_openSchemeURLToBaiduMapClientForNavigationWithLatitude:(double)lat longitude:(double)lon openFailure:(void(^)(NSString *tostTitle))failure
+/// BaiduMap路线规划
+/// origin:起点名称或经纬度，或者可同时提供名称和经纬度，此时经纬度优先级高，将作为导航依据，名称只负责展示。必选；
+/// destination:终点名称或经纬度，或者可同时提供名称和经纬度，此时经纬度优先级高，将作为导航依据，名称只负责展示。必选；
+/// name最后传值，不然地图上目的地只会展示“地图上的点”,也看不到建筑物名字，不友好；只是简单的显示指定的位置，不会去执行位置搜索；
+/// mode:导航模式，固定为transit、driving、navigation、walking，riding分别表示公交、驾车、导航、步行和骑行.必选；
+/// coord_type:坐标类型，必选参数。
+/// src:表示来源，用于统计.必选.必选参数，格式为：ios.companyName.appName 不传此参数，不保证服务.
+- (void)zx_openSchemeURLToBaiduMapClientForNavigationWithLatitude:(double)lat longitude:(double)lon poiName:(nullable NSString *)poiName openFailure:(nullable void(^)(NSString *tostTitle))failure
 {
     NSURL *scheme = [NSURL URLWithString:@"baidumap://"];
     BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:scheme];
@@ -119,7 +194,7 @@
         }
         return;
     }
-    NSString *stringURL =[NSString stringWithFormat:@"baidumap://map/direction?origin={{我的位置}}&destination=latlng:%f,%f|name=11&mode=driving&coord_type=gcj02",lat,lon];
+    NSString *stringURL =[NSString stringWithFormat:@"baidumap://map/direction?origin={{我的位置}}&destination=latlng:%f,%f|name:%@&mode=driving&coord_type=gcj02&src=%@",lat,lon,poiName,[[NSBundle mainBundle]bundleIdentifier]];
     if (@available(iOS 9.0,*)) {
         stringURL = [stringURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     }
@@ -135,10 +210,14 @@
          [[UIApplication sharedApplication] openURL:url];
      }
 }
-
-- (void)zx_openSchemeURLToAppleMapsForNavigationWithLatitude:(double)lat longitude:(double)lon
+/// 获取Apple地图路线，导航方向；
+/// sadder: 起点，如果你不指定saddrd的值,起点是"here";非必须；
+/// dirflg:指定交通类型;非必须；
+/// daddr: 终点，目的地址作为目标点方向。如果你没有传终点，则弹出界面让你输入终点，不然无法查询到路线； 必须；
+/// address:一个地理位置。只是简单的显示指定的位置，不会去执行位置搜索；
+- (void)zx_openSchemeURLToAppleMapsForNavigationWithLatitude:(double)lat longitude:(double)lon poiName:(nullable NSString *)poiName
 {
-    NSString *stringURL = [NSString stringWithFormat:@"http://maps.apple.com/?&daddr=%f,%f",lat,lon];
+    NSString *stringURL = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%f,%f&dirflg=r&address=%@",lat,lon,poiName];
     if (@available(iOS 9.0,*)) {
         stringURL = [stringURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     }
@@ -150,72 +229,6 @@
     {
         [[UIApplication sharedApplication] openURL:url];
     }
-}
-
-+ (UIAlertController *)zx_showActionSheetInViewController:(UIViewController *)viewController
-withLatitude:(double)lat
-   longitude:(double)lon
-  tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock
-{
-    ZXOpenMapsManager *manager = [[ZXOpenMapsManager alloc] init];
-    return [manager showActionSheetInViewController:viewController withLatitude:lat longitude:lon tapBlock:tapBlock];
-}
-
-- (UIAlertController *)showActionSheetInViewController:(UIViewController *)viewController
-                               withLatitude:(double)lat
-                                  longitude:(double)lon
-                                 tapBlock:(nullable void (^)(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex))tapBlock
-{
-    NSArray *items = [self getSupportMapItemSchemes];
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    NSString *cancelButtonTitle = @"取消";
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action){
-                                                                if (tapBlock)
-                                                                {
-                                                                    tapBlock(alertController,action,-1);
-                                                                }
-                                                         }];
-    [alertController addAction:cancelAction];
-
-    if (self.titles.count>0)
-    {
-        for(NSUInteger i=0; i<self.titles.count;i++)
-        {
-            NSString *otherButtonTitle = self.titles[i];
-            if (otherButtonTitle.length >0) {
-                UIAlertAction *otherAction = [UIAlertAction actionWithTitle:otherButtonTitle
-                                                                      style:UIAlertActionStyleDefault
-                                                                    handler:^(UIAlertAction *action){
-                    
-                    NSDictionary *dic = [items objectAtIndex:i];
-                    ZXMapType type = [[dic objectForKey:@"mapType"] integerValue];
-                    if (type == ZXMapTypeAMap) {
-                        
-                        [self zx_openSchemeURLToAMapClientForNavigationWithLatitude:lat longitude:lon openFailure:nil];
-                    }
-                    else if (type == ZXMapTypeApple)
-                    {
-                        [self zx_openSchemeURLToAppleMapsForNavigationWithLatitude:lat longitude:lon];
-                    }else if (type == ZXMapTypeBaidu)
-                    {
-                        [self zx_openSchemeURLToBaiduMapClientForNavigationWithLatitude:lat longitude:lon openFailure:nil];
-                    }
-                                                                        if (tapBlock) {
-                                                                            tapBlock(alertController, action,i);
-                                                                        }
-                                                                    }];
-                [alertController addAction:otherAction];
-            }
-        }
-    }
-    [viewController presentViewController:alertController animated:YES completion:nil];
-
-    return alertController;
-
 }
 
 

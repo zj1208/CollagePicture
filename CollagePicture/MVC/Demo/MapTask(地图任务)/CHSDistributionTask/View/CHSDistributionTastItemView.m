@@ -43,11 +43,12 @@
         make.width.height.mas_equalTo(LCDScale_iPhone6(48));
     }];
     
-    [self addSubview:self.shopIdLabel];
+    [self.photoImageView addSubview:self.shopIdLabel];
     [self.shopIdLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.photoImageView.mas_left);
         make.centerX.mas_equalTo(self.photoImageView.mas_centerX);
         make.bottom.mas_equalTo(self.photoImageView.mas_bottom);
+        make.height.mas_equalTo(LCDScale_iPhone6(15));
     }];
     
     [self addSubview:self.mapBtn];
@@ -144,6 +145,8 @@
         make.bottom.mas_equalTo(self.mas_bottom).offset(-LCDScale_iPhone6(15));
         make.centerY.mas_equalTo(self.doBtn.mas_centerY);
     }];
+    
+    [self addGestureRecognizer:[self tapGesture]];
 }
 
 - (UIImageView *)photoImageView
@@ -165,6 +168,7 @@
         lab.font = [UIFont zx_systemFontOfScaleSize:9];
         lab.textColor = [UIColor whiteColor];
         lab.textAlignment = NSTextAlignmentCenter;
+        lab.backgroundColor = [UIColor colorWithWhite:0 alpha:0.65];
 #ifdef DEBUG
         lab.text = @"122333";
 #endif
@@ -327,13 +331,28 @@
     [self.callBtn zx_centerVerticalImageAndTitleWithSpace:5];
 }
 
+- (UITapGestureRecognizer *)tapGesture
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizerAction:)];
+    return tapGesture;
+}
+
+- (void)tapRecognizerAction:(UITapGestureRecognizer *)gesture
+{
+    if (self.itemClickBlock) {
+        self.itemClickBlock();
+    }
+}
 
 - (void)setData:(id)data
 {
     BOOL flag = NO;
     self.doBtn.userInteractionEnabled =flag;
-    self.alpha = flag?1:0.4;
-    self.tastLab.text = flag?@"已完成":@"待配送";
+    self.doBtn.alpha = flag?1:0.4;
+    NSString *title = flag ? @"确认送达":@"已完成";
+    NSAttributedString *att = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont zx_systemFontOfScaleSize:16]}];
+    [self.doBtn setAttributedTitle:att forState:UIControlStateNormal];
+    self.tastLab.text = flag ? @"待配送" : @"已完成";
     self.tastDetaiBtn.hidden = flag;
 }
 @end

@@ -14,7 +14,7 @@
 
 #import "CHSDistributionTastItemView.h"
 #import "ZXOpenMapsManager.h"
-
+#import "ZXAuthorizationManager.h"
 
 @interface CHSDistributionTaskController ()<AMapLocationManagerDelegate,MAMapViewDelegate>
 
@@ -31,6 +31,7 @@
 
 @property (nonatomic, assign) NSInteger currentIndex;
 
+@property (nonatomic, strong) NSMutableArray *dataMArray;
 @end
 
 @implementation CHSDistributionTaskController
@@ -40,11 +41,6 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = NSLocalizedString(@"配送任务", nil);
-    self.locationArray = @[@{@"lat":@(30.192529),@"log":@(120.189805),@"status":@(1),@"selected":@(1)},
-                           @{@"lat":@(30.192529+0.01),@"log":@(120.189805+0.01),@"status":@(1),@"selected":@(0)},
-    @{@"lat":@(30.192529+0.02),@"log":@(120.189805+0.02),@"status":@(1),@"selected":@(0)},
-    @{@"lat":@(30.192529+0.03),@"log":@(120.189805+0.03),@"status":@(2),@"selected":@(0)},
-    @{@"lat":@(30.192529+0.006),@"log":@(120.189805+0.06),@"status":@(2),@"selected":@(0)}];
     [self setUI];
 }
 
@@ -59,13 +55,13 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController.navigationBar setBarTintColor:[UIColor zx_colorWithHexString:@"#FFFFFF"]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor zx_colorWithHexString:@"#333333"]}];
-//    [self.locationManager startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [self.locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -115,10 +111,10 @@
     UIImage *image = self.mapViewBtn.currentImage;
     [self.mapViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
 
+        make.bottom.mas_equalTo(self.itemView.mas_top).with.offset(-10);
         make.height.mas_equalTo(image.size.height);
         make.width.mas_equalTo(image.size.width);
-        make.right.mas_equalTo(self.mapView.mas_right).offset(0);
-        make.bottom.mas_equalTo(self.mapView.mas_bottom).offset(-LCDScale_iPhone6(267+5));
+        make.right.mas_equalTo(self.mapView.mas_right).offset(-7);
     }];
 }
 
@@ -144,6 +140,10 @@
         [view.mapBtn addTarget:self action:@selector(mapBtnOpenAction:) forControlEvents:UIControlEventTouchUpInside];
         [view.doBtn addTarget:self action:@selector(doBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [view.tastDetaiBtn addTarget:self action:@selector(tastDetaiBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        WS(weakSelf);
+        view.itemClickBlock = ^{
+            [weakSelf itemViewAction];
+        };
         _itemView = view;
     }
     return _itemView;
@@ -154,37 +154,9 @@
 {
     [AMapServices sharedServices].enableHTTPS = YES;
     [self.view addSubview:self.mapView];
-    [self addAnnotation];
-    [self.mapView addAnnotations:self.annotations];
-
-    [self.mapView selectAnnotation:[self.annotations firstObject] animated:YES];
-    self.currentIndex = 1;
 }
 
 
-//自定义标注,需要实现 <Delegate> 协议中的 mapView:viewForAnnotation:回调函数，设置标注样式。
-- (void)addAnnotation
-{
-    for (NSDictionary *dic in self.locationArray) {
-        MAPointAnnotation* annotation = [[MAPointAnnotation alloc]init];
-        NSNumber *lat = [dic objectForKey:@"lat"];
-        NSNumber *log = [dic objectForKey:@"log"];
-        annotation.coordinate = CLLocationCoordinate2DMake(lat.doubleValue, log.doubleValue);
-        //设置标注的标题
-        annotation.title = nil;
-        //副标题
-        annotation.subtitle = nil;
-        [self.annotations addObject:annotation];
-    }
-}
-
-- (NSMutableArray *)annotations
-{
-    if (!_annotations) {
-        _annotations = [NSMutableArray array];
-    }
-    return _annotations;;
-}
 
 
 - (UIButton *)mapViewBtn
@@ -249,6 +221,23 @@
     return _rightItemBtn;
 }
 
+#pragma mark - setData
+- (NSMutableArray *)annotations
+{
+    if (!_annotations) {
+        _annotations = [NSMutableArray array];
+    }
+    return _annotations;;
+}
+
+- (NSMutableArray *)dataMArray
+{
+    if (!_dataMArray) {
+        _dataMArray = [NSMutableArray array];
+    }
+    return _dataMArray;
+}
+
 
 #pragma mark - MAMapViewDelegate
 // 实现 <MAMapViewDelegate> 协议中的 mapView:viewForAnnotation:回调函数，设置标注样式。
@@ -277,21 +266,16 @@
     }
     NSInteger index = [self.annotations indexOfObject:annotation];
     NSDictionary *dic = [self.locationArray objectAtIndex:index];
-    NSNumber *lat = [dic objectForKey:@"lat"];
-    NSNumber *log = [dic objectForKey:@"log"];
     NSNumber *status = [dic objectForKey:@"status"];
-    if (annotation.coordinate.latitude == lat.doubleValue && annotation.coordinate.longitude == log.doubleValue)
-    {
-         if ([status integerValue] == 1) {
-             UIImage *image = [UIImage imageNamed:@"map_noFinish"];
-             annotationView.image = image;
-             annotationView.centerOffset = CGPointMake(0, -image.size.height/2);
-         }
-         if ([status integerValue] == 2) {
-             UIImage *image = [UIImage imageNamed:@"map_finish"];
-             annotationView.image = image;
-             annotationView.centerOffset = CGPointMake(0, -image.size.height/2);
-         }
+    if ([status integerValue] == 1) {
+        UIImage *image = [UIImage imageNamed:@"map_noFinish"];
+        annotationView.image = image;
+        annotationView.centerOffset = CGPointMake(0, -image.size.height/2);
+    }
+    if ([status integerValue] == 2) {
+        UIImage *image = [UIImage imageNamed:@"map_finish"];
+        annotationView.image = image;
+        annotationView.centerOffset = CGPointMake(0, -image.size.height/2);
     }
 }
 
@@ -375,7 +359,7 @@
 }
 - (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [MBProgressHUD zx_showError:error.localizedDescription toView:self.view];
+//    [MBProgressHUD zx_showError:error.localizedDescription toView:self.view];
     NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
 }
 
@@ -401,21 +385,37 @@
 
 - (void)callBtnAction:(UIButton *)sender
 {
+    if (self.annotations.count <= self.currentIndex) {
+        return;
+    }
     [[UIApplication sharedApplication]zx_openURLToCallIphoneWithTel:@"18268681208"];
 }
 
 - (void)mapBtnOpenAction:(UIButton *)sender
 {
+    if (self.annotations.count <= self.currentIndex) {
+        return;
+    }
     NSDictionary *dic = [self.locationArray objectAtIndex:self.currentIndex];
     NSNumber *lat = [dic objectForKey:@"lat"];
     NSNumber *lon = [dic objectForKey:@"log"];
     
-    [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue tapBlock:nil];
+    [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue poiName:nil tapBlock:nil];
 }
 
 - (void)doBtnAction:(UIButton *)sender
 {
-    
+    WS(weakSelf);
+    [UIAlertController zx_presentGeneralAlertInViewController:self withTitle:@"提示" message:@"是否已按门店商品数量完成妥投，如有缺漏，请联系客服处理哦～" cancelButtonTitle:@"取消" cancleHandler:nil doButtonTitle:@"确认" doHandler:^(UIAlertAction * _Nonnull action) {
+        
+        [[ZXAuthorizationManager shareInstance]zx_requestLocationAuthorizationWithDeniedAlertViewInViewController:weakSelf call:^(CLAuthorizationStatus status) {
+
+            if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways)
+            {
+//                 [weakSelf requestFinishedTask];
+            }
+        }];
+    }];
 }
 
 - (void)tastDetaiBtnAction:(UIButton *)sender
@@ -423,7 +423,12 @@
     
 }
 
-
+- (void)itemViewAction
+{
+    if (self.dataMArray.count <= self.currentIndex) {
+        return;
+    }
+}
 #pragma mark - 左右按钮
 
 - (void)leftItemBtnAction:(UIButton *)sender
@@ -440,6 +445,7 @@
         self.currentIndex --;
     }
     [self selectAnnotationAtIndex:self.currentIndex];
+    [self.itemView setData:[self.dataMArray objectAtIndex:self.currentIndex]];
 }
 
 - (void)rightItemBtnAction:(UIButton *)sender
@@ -454,6 +460,123 @@
         self.currentIndex ++;
     }
     [self selectAnnotationAtIndex:self.currentIndex];
+    [self.itemView setData:[self.dataMArray objectAtIndex:self.currentIndex]];
+}
+
+
+#pragma mark - Request
+
+#pragma mark-请求任务列表
+- (void)requestData
+{
+    [self hideSubviews:YES];
+//    [MBProgressHUD zx_showLoadingWithStatus:nil toView:self.view];
+//    WS(weakSelf);
+//    [[CHSTastModelHttpAPI shareInstance]postTastListWithExpressDate:self.expressDate routeSystemId:self.routeSystemId status:self.status success:^(id  _Nullable data) {
+//
+//        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+//        [weakSelf.dataMArray addObjectsFromArray:data];
+//
+//
+//
+//    } failure:^(NSError * _Nullable error) {
+//
+//        [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
+//    }];
+    self.locationArray = @[@{@"lat":@(30.192529),@"log":@(120.189805),@"status":@(1)},
+                           @{@"lat":@(30.192529+0.01),@"log":@(120.189805+0.01),@"status":@(1)},
+    @{@"lat":@(30.192529+0.02),@"log":@(120.189805+0.02),@"status":@(1)},
+    @{@"lat":@(30.192529+0.03),@"log":@(120.189805+0.03),@"status":@(2)},
+                           @{@"lat":@(30.192529+0.006),@"log":@(120.189805+0.06),@"status":@(2)}];
+    [self reloadData];
+}
+
+- (void)hideSubviews:(BOOL)hidden
+{
+    [self.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        obj.hidden = hidden;
+    }];
+}
+
+//自定义标注,需要实现 <Delegate> 协议中的 mapView:viewForAnnotation:回调函数，设置标注样式。
+- (void)addAnnotation
+{
+//    for (CHSTastListModel *model in self.dataMArray) {
+//
+//        MAPointAnnotation* annotation = [[MAPointAnnotation alloc]init];
+//        if (!model.amap_latitude && !model.amap_longitude) {
+//
+//            NSNumber *lat = model.latitude;
+//            NSNumber *lon = model.longitude;
+//            CLLocationCoordinate2D bd09Coordinate =  CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue);
+//            CLLocationCoordinate2D cj02Coordinate = AMapCoordinateConvert(bd09Coordinate, AMapCoordinateTypeBaidu);
+//            annotation.coordinate = cj02Coordinate;
+//
+//        }else
+//        {
+//            NSNumber *lat = model.amap_latitude;
+//            NSNumber *lon = model.amap_longitude;
+//            annotation.coordinate = CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue);
+//        }
+//        //设置标注的标题
+//        annotation.title = nil;
+//        //副标题
+//        annotation.subtitle = nil;
+//        [self.annotations addObject:annotation];
+//    }
+    for (NSDictionary *dic in self.locationArray) {
+         MAPointAnnotation* annotation = [[MAPointAnnotation alloc]init];
+         NSNumber *lat = [dic objectForKey:@"lat"];
+         NSNumber *log = [dic objectForKey:@"log"];
+         annotation.coordinate = CLLocationCoordinate2DMake(lat.doubleValue, log.doubleValue);
+         //设置标注的标题
+         annotation.title = nil;
+         //副标题
+         annotation.subtitle = nil;
+         [self.annotations addObject:annotation];
+     }
+}
+
+- (void)reloadData
+{
+    if (self.dataMArray.count>0) {
+        [self hideSubviews:NO];
+        [self addAnnotation];
+        [self.mapView addAnnotations:self.annotations];
+
+        [self.mapView selectAnnotation:[self.annotations firstObject] animated:YES];
+        self.currentIndex = 0;
+        
+        [self.itemView setData:[self.dataMArray objectAtIndex:self.currentIndex]];
+        if (self.dataMArray.count == 1) {
+            self.leftItemBtn.hidden = YES;
+            self.rightItemBtn.hidden = YES;
+        }
+    }
+}
+
+
+#pragma mark-确认
+
+- (void)requestFinishedTask
+{
+    [MBProgressHUD zx_showLoadingWithStatus:nil toView:self.view];
+//    CHSTastListModel *model = [self.dataMArray objectAtIndex:self.currentIndex];
+//    WS(weakSelf);
+//    CLLocationCoordinate2D coordinate =  self.mapView.userLocation.location.coordinate;
+//    CLLocationCoordinate2D bd09Coordinate =  [ZXOpenMapsManager zx_getBD09CoordinateByGaoDeCoordinate:coordinate];
+//    [[CHSTastModelHttpAPI shareInstance]postTastFinishWithShopId:[model.shopId stringValue] orderIds:model.orderIds routeSystemId:[model.routeSystemId stringValue] longitude:[NSNumber numberWithDouble:bd09Coordinate.longitude] latitude:[NSNumber numberWithDouble:bd09Coordinate.latitude] amap_longitude:[NSNumber numberWithDouble:coordinate.longitude] amap_latitude:[NSNumber numberWithDouble:coordinate.latitude] success:^(id  _Nullable data) {
+//
+//        [MBProgressHUD zx_hideHUDForView:weakSelf.view];
+//        model.status = @(2);
+//        [weakSelf.itemView setData:model];
+//        [[MainViewController sharedInstance]updateTaskList];
+//
+//    } failure:^(NSError * _Nullable error) {
+//        [MBProgressHUD zx_showError:error.localizedDescription toView:weakSelf.view];
+//    }];
+     [MBProgressHUD zx_hideHUDForView:self.view];
 }
 /*
 #pragma mark - Navigation

@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 //电话联系
 @property (nonatomic, strong) UIButton *callBtn;
 
+@property (nonatomic, copy) void(^itemClickBlock)(void);
+
 - (void)setData:(id)data;
 
 @end
