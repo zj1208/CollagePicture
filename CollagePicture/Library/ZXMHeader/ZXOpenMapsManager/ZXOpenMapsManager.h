@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, ZXMapType) {
     ZXMapTypeAMap = 0, //高德，坐标系类型是AMap
-    ZXMapTypeBaidu = 1,//百度，坐标系类型是baidu的；
+    ZXMapTypeBaidu = 1,//百度，坐标系类型默认是baidu的；
     ZXMapTypeApple = 2,//苹果，坐标系类型是AMap
 };
 

@@ -346,7 +346,10 @@
 
 - (void)setData:(id)data
 {
-    BOOL flag = NO;
+    BOOL flag = YES;
+    if ([data isKindOfClass:[NSDictionary class]]) {
+        flag = [data[@"status"]integerValue] == 1 ?YES:NO;
+    }
     self.doBtn.userInteractionEnabled =flag;
     self.doBtn.alpha = flag?1:0.4;
     NSString *title = flag ? @"确认送达":@"已完成";

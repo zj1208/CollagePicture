@@ -42,6 +42,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = NSLocalizedString(@"配送任务", nil);
     [self setUI];
+    [self requestData];
 }
 
 - (void)dealloc
@@ -381,14 +382,15 @@
 }
 
 
-#pragma mark- cellAction
+#pragma mark- ItemViewAction
 
 - (void)callBtnAction:(UIButton *)sender
 {
     if (self.annotations.count <= self.currentIndex) {
         return;
     }
-    [[UIApplication sharedApplication]zx_openURLToCallIphoneWithTel:@"18268681208"];
+    NSDictionary *dic = [self.locationArray objectAtIndex:self.currentIndex];
+    [[UIApplication sharedApplication]zx_openURLToCallIphoneWithTel:dic[@"phone"]];
 }
 
 - (void)mapBtnOpenAction:(UIButton *)sender
@@ -399,8 +401,9 @@
     NSDictionary *dic = [self.locationArray objectAtIndex:self.currentIndex];
     NSNumber *lat = [dic objectForKey:@"lat"];
     NSNumber *lon = [dic objectForKey:@"log"];
-    
-    [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue poiName:nil tapBlock:nil];
+    NSString *address = [dic objectForKey:@"address"];
+
+    [ZXOpenMapsManager zx_showActionSheetInViewController:self withLatitude:lat.doubleValue longitude:lon.doubleValue poiName:address tapBlock:nil];
 }
 
 - (void)doBtnAction:(UIButton *)sender
@@ -425,7 +428,7 @@
 
 - (void)itemViewAction
 {
-    if (self.dataMArray.count <= self.currentIndex) {
+    if (self.locationArray.count <= self.currentIndex) {
         return;
     }
 }
@@ -445,7 +448,7 @@
         self.currentIndex --;
     }
     [self selectAnnotationAtIndex:self.currentIndex];
-    [self.itemView setData:[self.dataMArray objectAtIndex:self.currentIndex]];
+    [self.itemView setData:[self.locationArray objectAtIndex:self.currentIndex]];
 }
 
 - (void)rightItemBtnAction:(UIButton *)sender
@@ -460,7 +463,7 @@
         self.currentIndex ++;
     }
     [self selectAnnotationAtIndex:self.currentIndex];
-    [self.itemView setData:[self.dataMArray objectAtIndex:self.currentIndex]];
+    [self.itemView setData:[self.locationArray objectAtIndex:self.currentIndex]];
 }
 
 
@@ -483,11 +486,11 @@
 //
 //        [MBProgressHUD zx_showError:[error localizedDescription] toView:weakSelf.view];
 //    }];
-    self.locationArray = @[@{@"lat":@(30.192529),@"log":@(120.189805),@"status":@(1)},
-                           @{@"lat":@(30.192529+0.01),@"log":@(120.189805+0.01),@"status":@(1)},
-    @{@"lat":@(30.192529+0.02),@"log":@(120.189805+0.02),@"status":@(1)},
-    @{@"lat":@(30.192529+0.03),@"log":@(120.189805+0.03),@"status":@(2)},
-                           @{@"lat":@(30.192529+0.006),@"log":@(120.189805+0.06),@"status":@(2)}];
+    self.locationArray = @[@{@"lat":@(30.192529),@"log":@(120.189805),@"status":@(1),@"phone":@"18268681208",@"address":@"杭州印"},
+                           @{@"lat":@(30.192529+0.01),@"log":@(120.189805+0.01),@"status":@(1),@"phone":@"18268681208",@"address":@"杭州印"},
+    @{@"lat":@(30.192529+0.02),@"log":@(120.189805+0.02),@"status":@(1),@"phone":@"18268681208",@"address":@"杭州印"},
+    @{@"lat":@(30.192529+0.03),@"log":@(120.189805+0.03),@"status":@(2),@"phone":@"18268681208",@"address":@"杭州印"},
+                           @{@"lat":@(30.192529+0.006),@"log":@(120.189805+0.06),@"status":@(2),@"phone":@"18268681208",@"address":@"杭州印"}];
     [self reloadData];
 }
 
@@ -540,7 +543,7 @@
 
 - (void)reloadData
 {
-    if (self.dataMArray.count>0) {
+    if (self.locationArray.count>0) {
         [self hideSubviews:NO];
         [self addAnnotation];
         [self.mapView addAnnotations:self.annotations];
@@ -548,8 +551,8 @@
         [self.mapView selectAnnotation:[self.annotations firstObject] animated:YES];
         self.currentIndex = 0;
         
-        [self.itemView setData:[self.dataMArray objectAtIndex:self.currentIndex]];
-        if (self.dataMArray.count == 1) {
+        [self.itemView setData:[self.locationArray objectAtIndex:self.currentIndex]];
+        if (self.locationArray.count == 1) {
             self.leftItemBtn.hidden = YES;
             self.rightItemBtn.hidden = YES;
         }

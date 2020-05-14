@@ -182,7 +182,7 @@ dev -是否偏移(0:lat和lon是已经加密后的,不需要国测加密;1:需�
 /// destination:终点名称或经纬度，或者可同时提供名称和经纬度，此时经纬度优先级高，将作为导航依据，名称只负责展示。必选；
 /// name最后传值，不然地图上目的地只会展示“地图上的点”,也看不到建筑物名字，不友好；只是简单的显示指定的位置，不会去执行位置搜索；
 /// mode:导航模式，固定为transit、driving、navigation、walking，riding分别表示公交、驾车、导航、步行和骑行.必选；
-/// coord_type:坐标类型，必选参数。
+/// coord_type:坐标类型，虽然默认是baidu的，但可以设置修改其它类型。必选参数。
 /// src:表示来源，用于统计.必选.必选参数，格式为：ios.companyName.appName 不传此参数，不保证服务.
 - (void)zx_openSchemeURLToBaiduMapClientForNavigationWithLatitude:(double)lat longitude:(double)lon poiName:(nullable NSString *)poiName openFailure:(nullable void(^)(NSString *tostTitle))failure
 {
