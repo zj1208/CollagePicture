@@ -177,8 +177,6 @@
         AMapLocationManager *manager = [[AMapLocationManager alloc] init];
         manager.delegate = self;
         manager.locatingWithReGeocode = YES;
-        manager.pausesLocationUpdatesAutomatically = YES;
-        manager.allowsBackgroundLocationUpdates = NO;
 //        manager.distanceFilter = 200;
         _locationManager = manager;
     }
@@ -351,16 +349,16 @@
     {
         return;
     }
-    DLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
+    NSLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
     if (reGeocode)
     {
-        DLog(@"reGeocode:%@", reGeocode);
+        NSLog(@"reGeocode:%@", reGeocode);
     }
 }
 - (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error
 {
 //    [MBProgressHUD zx_showError:error.localizedDescription toView:self.view];
-    DLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+    NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
 }
 
 #pragma mark - Action

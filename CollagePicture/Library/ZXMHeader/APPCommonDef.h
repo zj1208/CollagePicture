@@ -7,6 +7,7 @@
 //
 // 2018.3.7 新增宏定义：适配iphoneX
 // 2020.1.20 IS_IPHONE_XX老方法用safeAreaInsets判断已不准，在iOS13支持scene新建立工程下；
+// 2020.5.14 忽略黄色警告，替换NSLog；
 
 //宏定义的参数，就是一个字符串替换；所以参数一定要带括号；
 #ifndef UI_APPCommonDef_h
@@ -96,10 +97,6 @@
 #define kITUNESLINK @"http://itunes.apple.com/cn/app/id"
 #endif
 
-//检查版本更新请求数据用的
-#ifndef kITUNESURL
-#define kITUNESURL @"http://itunes.apple.com"
-#endif
 
 /*********************************************************************************/
 //(375,667) (414,)
@@ -248,18 +245,18 @@ iPhoneX : {20, 0, 0, 0}
 
 //////NSLog返回更多信息。
 #ifdef DEBUG
-#define DLog(format, ...)  do{ printf("\n <%s : %d行> %s \n %s \n",\
+#define NSLog(format, ...)  do{ printf("\n <%s : %d行> %s \n %s \n",\
 [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__,[[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]); \
 } while (0)
 #else
-#define DLog(...)
+#define NSLog(...)
 #endif
 
-//#ifndef __OPTIMIZE__
-//#define NSLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
-//
-//#endif
-
+#ifdef DEBUG
+#define NSLogDebug(format, ...) printf("%s\n",[[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+#else
+#define NSLogDebug(...)
+#endif
 
 // 根据url和dictionary 参数 打印httpURL请求地址
 #ifndef ZX_Log_HTTPURL
@@ -273,7 +270,7 @@ NSString *para = [NSString stringWithFormat:@"%@=%@",key,[dic objectForKey:key]]
 }];\
 NSString *p = [array componentsJoinedByString:@"&"];\
 NSString *urlString = [string stringByAppendingString:p];\
-NSLog(@"%@",urlString);
+NSLogDebug(@"%@",urlString);
 #endif
 
 #pragma mark - 打印一个对象model的所有属性key和他的value
@@ -294,7 +291,7 @@ NS_INLINE void ZX_Log_ClassAllPropertyAndValue(id model)
         #pragma clang diagnostic pop
     }
     free(properties);
-//    NSLog(@"%u",count);
+    NSLogDebug(@"%u",count);
 }
 
 #pragma mark - 打印一个class的所有方法列表(包括没有声明的私有方法)
@@ -310,11 +307,14 @@ NS_INLINE void ZX_Log_ClassMethodListName(id object)
 //        IMP imp = class_getMethodImplementation(cla, name1);
         // 这2句等同于NSStringFromSelector(name1);
         const char *selName= sel_getName(name1);
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wunused-variable"
         NSString *strName = [NSString stringWithCString:selName encoding:NSUTF8StringEncoding];
-//        DLog(@"%@",strName);
+        NSLogDebug(@"%@",strName);
+        #pragma clang diagnostic pop
     }
     free(methods);
-//    DLog(@"%u",count);//包括很多私有方法;
+    NSLogDebug(@"%u",count);//包括很多私有方法;
 }
 
 
@@ -322,9 +322,6 @@ NS_INLINE void ZX_Log_ClassMethodListName(id object)
 #ifndef WS
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 #endif
-
-//用来读取应用程序的文件，比如图片等
-#define ZX_ContentFile(aFileName,aFileType) [[NSBundle mainBundle]pathForResource:aFileName ofType:aFileType]
 
 
 #pragma mark - UIColor utility
@@ -347,46 +344,6 @@ NS_INLINE void ZX_Log_ClassMethodListName(id object)
 #ifndef UIColorFromRGBA_HexValue
 #define UIColorFromRGBA_HexValue(rgbValue,A) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbValue & 0xFF))/255.0f alpha:A]
 #endif
-
-
-
-
-
-
-
-
-
-
-//系统api更新，有一些DEPRECATED了，需要适配
-#pragma mark - IOS7，IOS8Compatible
-
-#pragma mark-NSString(UIStringDrawing)
-
-/*
- Single line, no wrapping. Truncation based on the NSLineBreakMode.
- //根据字体大小获取CGSize,只针对一行,没有折行；用参数NSLineBreakMode来截断；
- */
-
-//无限长宽度；
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
-#define ZX_TEXTSIZE(text, font) [text length] > 0 ? [text sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
-#else
-#define ZX_TEXTSIZE(text, font) [text length] > 0 ? [text sizeWithFont:font] : CGSizeZero;
-#endif
-
-
-
-
-//根据文字，一个最大Size尺寸，字体大小，换行模式 来获取最适合的CGSize
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
-#define ZX_TEXTSIZE_MULTILINE(text, font, maxSize, mode) [text length] > 0 ? [text \
-boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin \
-attributes:@{NSFontAttributeName:font} context:nil].size : CGSizeZero;
-#else
-#define ZX_TEXTSIZE_MULTILINE(text, font, maxSize, mode) [text length] > 0 ? [text \
-sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
-#endif
-
 
 
 #endif

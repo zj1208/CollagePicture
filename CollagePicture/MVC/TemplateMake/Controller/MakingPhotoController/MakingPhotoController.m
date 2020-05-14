@@ -322,7 +322,8 @@ tmp;\
         @autoreleasepool {
             
             NSString *templateName = [NSString stringWithFormat:@"album_a%@@2x",type];
-            UIImage *image = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(templateName, @"png")];
+            NSString *path = [[NSBundle mainBundle]pathForResource:templateName ofType:@"png"];
+            UIImage *image = [[UIImage alloc]initWithContentsOfFile:path];
             NSLog(@"%@",NSStringFromCGSize(self.maskLayer.frame.size));
             image = [UIImage zx_scaleImage:image toSize:CGSizeMake(self.maskLayer.frame.size.width*1.5, self.maskLayer.frame.size.height*1.5)];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -623,8 +624,9 @@ tmp;\
         }
     }];
     
-    NSString *path = [[NSString alloc] initWithFormat:@"album_a%@@2x",self.templateType];
-    UIImage *bigImage = [[UIImage alloc]initWithContentsOfFile:ZX_ContentFile(path, @"png")];
+    NSString *resource = [[NSString alloc] initWithFormat:@"album_a%@@2x",self.templateType];
+    NSString *path = [[NSBundle mainBundle]pathForResource:resource ofType:@"png"];
+    UIImage *bigImage = [[UIImage alloc]initWithContentsOfFile:path];
     
     UIImage *saveImg = [self addImageArray:subImageMArray toImage:bigImage];
     self.shareImage = [UIImage zx_scaleImage:saveImg toSize:self.maskLayer.frame.size];

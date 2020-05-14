@@ -657,7 +657,6 @@
 		F44DB7E3245A6ED900403CC9 /* UIButton+ZXHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ZXHelper.h"; sourceTree = "<group>"; };
 		F44DB7E5245A6EFC00403CC9 /* NSAttributedString+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+ZXCategory.h"; sourceTree = "<group>"; };
 		F44DB7E6245A6EFC00403CC9 /* NSAttributedString+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ZXCategory.m"; sourceTree = "<group>"; };
-		F44DB7F7245A778C00403CC9 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F44DB7FE245A7A1300403CC9 /* UserInfoUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoUDManager.h; sourceTree = "<group>"; };
 		F44DB7FF245A7A1300403CC9 /* UserInfoUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoUDManager.m; sourceTree = "<group>"; };
 		F44DB803245AA58F00403CC9 /* CHSDistributionTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSDistributionTaskController.m; sourceTree = "<group>"; };
@@ -783,6 +782,7 @@
 		F46E960F246BE3B800534F74 /* ZXOpenMapsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXOpenMapsManager.m; sourceTree = "<group>"; };
 		F46E9611246BE59300534F74 /* map_restore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_restore@2x.png"; sourceTree = "<group>"; };
 		F46E9612246BE59400534F74 /* map_restore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_restore@3x.png"; sourceTree = "<group>"; };
+		F46E9620246D43A800534F74 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F46F07442292D08400C79566 /* NSArray+ZXLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ZXLog.m"; sourceTree = "<group>"; };
 		F46F07452292D08500C79566 /* NSArray+ZXLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ZXLog.h"; sourceTree = "<group>"; };
 		F4730CD01EA05FDC00952AF1 /* UMAnalyticsViewMarco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAnalyticsViewMarco.h; sourceTree = "<group>"; };
@@ -1530,7 +1530,7 @@
 				F446A8B31FCC082900C82C90 /* ZXSimpleLyricView.m */,
 				F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */,
 				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
-				F44DB7F7245A778C00403CC9 /* APPCommonDef.h */,
+				F46E9620246D43A800534F74 /* APPCommonDef.h */,
 				F4A158C323D57A780018405E /* ZXLocalNotification */,
 				F446A8981FCC082900C82C90 /* KxMenu */,
 				F446A8B91FCC082900C82C90 /* ADCustomTableView */,
@@ -4860,21 +4860,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M48557B98W;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/UMSocialSDK",
-					"$(PROJECT_DIR)/CollagePicture/Library/OneSDK",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = CollagePicture/Marcoes/PrefixHeader.pch;
 				INFOPLIST_FILE = CollagePicture/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/Sina",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/CollagePicture/Library/JPush",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxm.collagePicture;
@@ -4899,21 +4891,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M48557B98W;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/UMSocialSDK",
-					"$(PROJECT_DIR)/CollagePicture/Library/OneSDK",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = CollagePicture/Marcoes/PrefixHeader.pch;
 				INFOPLIST_FILE = CollagePicture/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/QQ",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/Sina",
-					"$(PROJECT_DIR)/CollagePicture/Library/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/CollagePicture/Library/JPush",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zxm.collagePicture;
