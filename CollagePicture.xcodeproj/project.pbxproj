@@ -782,7 +782,7 @@
 		F46E960F246BE3B800534F74 /* ZXOpenMapsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXOpenMapsManager.m; sourceTree = "<group>"; };
 		F46E9611246BE59300534F74 /* map_restore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_restore@2x.png"; sourceTree = "<group>"; };
 		F46E9612246BE59400534F74 /* map_restore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_restore@3x.png"; sourceTree = "<group>"; };
-		F46E9620246D43A800534F74 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
+		F46E9623246D468B00534F74 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
 		F46F07442292D08400C79566 /* NSArray+ZXLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ZXLog.m"; sourceTree = "<group>"; };
 		F46F07452292D08500C79566 /* NSArray+ZXLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ZXLog.h"; sourceTree = "<group>"; };
 		F4730CD01EA05FDC00952AF1 /* UMAnalyticsViewMarco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAnalyticsViewMarco.h; sourceTree = "<group>"; };
@@ -1486,6 +1486,7 @@
 		F446A7BC1FCC082900C82C90 /* ZXMHeader */ = {
 			isa = PBXGroup;
 			children = (
+				F46E9623246D468B00534F74 /* APPCommonDef.h */,
 				F44DB7F0245A70DA00403CC9 /* ZXOpenMapsManager */,
 				F4E60819208D78F2008C50CB /* HtmlController */,
 				F4A158ED23D6D5A00018405E /* CHSNotOpenURLBackAppManager */,
@@ -1530,7 +1531,6 @@
 				F446A8B31FCC082900C82C90 /* ZXSimpleLyricView.m */,
 				F446A7EE1FCC082900C82C90 /* ZXSimpleLyricView.h */,
 				F446A8ED1FCC082900C82C90 /* ZXMHeader.h */,
-				F46E9620246D43A800534F74 /* APPCommonDef.h */,
 				F4A158C323D57A780018405E /* ZXLocalNotification */,
 				F446A8981FCC082900C82C90 /* KxMenu */,
 				F446A8B91FCC082900C82C90 /* ADCustomTableView */,

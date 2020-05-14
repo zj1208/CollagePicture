@@ -51,7 +51,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
     NSURL *baseURL = [self baseURL];
 
     //    用于添加更多参数
-    ZX_Log_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
+    ZX_LogDebug_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
 //        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
 //    AFJSONResponseSerializer *response =[AFJSONResponseSerializer serializer];
@@ -96,7 +96,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 
    NSURL *baseURL = [self baseURL];
     //    用于添加更多参数
-    ZX_Log_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
+    ZX_LogDebug_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
 //    AFJSONResponseSerializer *response =[AFJSONResponseSerializer serializer];
@@ -409,7 +409,7 @@ constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
     //    用于添加更多参数
    NSURL *baseURL = [self baseURL];
     //    用于添加更多参数
-    ZX_Log_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
+    ZX_LogDebug_HTTPURL(baseURL.absoluteString, @"/m", postDictionary);
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     

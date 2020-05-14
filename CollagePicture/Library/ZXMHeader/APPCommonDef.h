@@ -259,8 +259,8 @@ iPhoneX : {20, 0, 0, 0}
 #endif
 
 // 根据url和dictionary 参数 打印httpURL请求地址
-#ifndef ZX_Log_HTTPURL
-#define ZX_Log_HTTPURL(hostURL,path, parameterDic) \
+#ifndef ZX_LogDebug_HTTPURL
+#define ZX_LogDebug_HTTPURL(hostURL,path, parameterDic) \
 NSString *string = [NSString stringWithFormat:@"%@%@?", hostURL, path];\
 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:parameterDic];\
 NSMutableArray *array = [NSMutableArray array];\
@@ -275,7 +275,7 @@ NSLogDebug(@"%@",urlString);
 
 #pragma mark - 打印一个对象model的所有属性key和他的value
 
-NS_INLINE void ZX_Log_ClassAllPropertyAndValue(id model)
+NS_INLINE void ZX_LogDebug_ClassAllPropertyAndValue(id model)
 {
     u_int count;
     Class cla = object_isClass(model)?model:[model class];
@@ -296,7 +296,7 @@ NS_INLINE void ZX_Log_ClassAllPropertyAndValue(id model)
 
 #pragma mark - 打印一个class的所有方法列表(包括没有声明的私有方法)
 
-NS_INLINE void ZX_Log_ClassMethodListName(id object)
+NS_INLINE void ZX_LogDebug_ClassMethodListName(id object)
 {
     u_int count;
     Class cla = object_isClass(object)?object:object_getClass(object);
