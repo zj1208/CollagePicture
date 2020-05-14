@@ -137,7 +137,7 @@
 //        [self checkAppVersionAndNotificationPush];
 //    }
     CGFloat fl = self.view.zx_safeAreaLayoutGuideY;
-
+    DLog(@"%@",@(fl));
 }
 
 - (void)viewDidDisappear:(BOOL)animated

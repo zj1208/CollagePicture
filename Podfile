@@ -42,7 +42,7 @@ pod 'AliyunOSSiOS'
 pod 'AlipaySDK-iOS', '15.6.8'
 
 #友盟开发阶段进行调试SDK及相关功能使用，可在发布 App 前移除
- pod 'UMCCommonLog'
+# pod 'UMCCommonLog'
 
 #友盟统计-自动依赖UMCCommon2.1.1
  pod 'UMCAnalytics','6.0.5'

@@ -142,18 +142,6 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 {
     //token错误
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tokenError:) name:kNotificationUserTokenError object:nil];
-    
-//    //先去获取一下im信息
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginInRepeatRequest:) name:kNotificationUserLoginIn object:nil];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginIn:) name:Noti_tryAgainGetNimAccout object:nil];
-//    //监听自动登录
-//    [[[NIMSDK sharedSDK]loginManager]addDelegate:self];;
-    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginOut:) name:kNotificationUserLoginOut object:nil];
-    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeDomain:) name:kNotificationUserChangeDomain object:nil];
-    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(postDataToHost:) name:Noti_PostDataToHost object:nil];
 }
 
 #pragma mark- token错误
@@ -196,20 +184,20 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 //初始化APNs代码
 - (void)addJPushAPNS
 {
-    if (@available(iOS 10.0,*))
-    {
-        JPUSHRegisterEntity *entity = [[JPUSHRegisterEntity alloc] init];
-        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionSound|UNAuthorizationOptionBadge;
-        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-    }
-    else if(@available(iOS 8.0,*))
-    {
-        //可以添加自定义categories
-        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                          UIUserNotificationTypeSound |
-                                                          UIUserNotificationTypeAlert)
-                                              categories:nil];
-    }
+//    if (@available(iOS 10.0,*))
+//    {
+//        JPUSHRegisterEntity *entity = [[JPUSHRegisterEntity alloc] init];
+//        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionSound|UNAuthorizationOptionBadge;
+//        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+//    }
+//    else if(@available(iOS 8.0,*))
+//    {
+//        //可以添加自定义categories
+//        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+//                                                          UIUserNotificationTypeSound |
+//                                                          UIUserNotificationTypeAlert)
+//                                              categories:nil];
+//    }
 }
 
 - (void)takeLaunchRemoteNoti:(NSDictionary *)launchOptions
@@ -221,23 +209,22 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
     // init Push
     // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
-    [JPUSHService setupWithOption:launchOptions appKey:kJPushAppKey channel:@"App Store" apsForProduction:isProduction advertisingIdentifier:nil];
-    
-    [JPUSHService setTags:[NSSet setWithObject:@"test"] alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
-        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags, iAlias);
-        
-    }];
+//    [JPUSHService setupWithOption:launchOptions appKey:kJPushAppKey channel:@"App Store" apsForProduction:isProduction advertisingIdentifier:nil];
+//    
+//    [JPUSHService setTags:[NSSet setWithObject:@"test"] alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+//        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags, iAlias);
+//        
+//    }];
 }
 #pragma mark -友盟统计
 -(void)addUMengAnalytics
 {
     [UMConfigure initWithAppkey:kUMAppKey channel:@"App Store"];
-    #ifdef DEBUG
-//            [[UMSocialManager defaultManager] openLog:YES];
-        [UMConfigure setLogEnabled:YES];
-    #else
-        [UMConfigure setLogEnabled:NO];
-    #endif
+//    #ifdef DEBUG
+//        [UMConfigure setLogEnabled:YES];
+//    #else
+//        [UMConfigure setLogEnabled:NO];
+//    #endif
 }
 
 //自己测试用的；

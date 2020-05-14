@@ -247,13 +247,13 @@ iPhoneX : {20, 0, 0, 0}
 #pragma mark - NSLog utility 打印
 
 //////NSLog返回更多信息。
-//#ifdef DEBUG
-//#define NSLog(format, ...)  do{ printf("\n <%s : %d行> %s \n %s \n",\
-//[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__,[[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]); \
-//} while (0)
-//#else
-//#define NSLog(format, ...)
-//#endif
+#ifdef DEBUG
+#define DLog(format, ...)  do{ printf("\n <%s : %d行> %s \n %s \n",\
+[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __FUNCTION__,[[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]); \
+} while (0)
+#else
+#define DLog(...)
+#endif
 
 //#ifndef __OPTIMIZE__
 //#define NSLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
@@ -262,8 +262,8 @@ iPhoneX : {20, 0, 0, 0}
 
 
 // 根据url和dictionary 参数 打印httpURL请求地址
-#ifndef ZX_NSLog_HTTPURL
-#define ZX_NSLog_HTTPURL(hostURL,path, parameterDic) \
+#ifndef ZX_Log_HTTPURL
+#define ZX_Log_HTTPURL(hostURL,path, parameterDic) \
 NSString *string = [NSString stringWithFormat:@"%@%@?", hostURL, path];\
 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:parameterDic];\
 NSMutableArray *array = [NSMutableArray array];\
@@ -278,7 +278,7 @@ NSLog(@"%@",urlString);
 
 #pragma mark - 打印一个对象model的所有属性key和他的value
 
-NS_INLINE void ZX_NSLog_ClassAllPropertyAndValue(id model)
+NS_INLINE void ZX_Log_ClassAllPropertyAndValue(id model)
 {
     u_int count;
     Class cla = object_isClass(model)?model:[model class];
@@ -299,7 +299,7 @@ NS_INLINE void ZX_NSLog_ClassAllPropertyAndValue(id model)
 
 #pragma mark - 打印一个class的所有方法列表(包括没有声明的私有方法)
 
-NS_INLINE void ZX_NSLog_ClassMethodListName(id object)
+NS_INLINE void ZX_Log_ClassMethodListName(id object)
 {
     u_int count;
     Class cla = object_isClass(object)?object:object_getClass(object);

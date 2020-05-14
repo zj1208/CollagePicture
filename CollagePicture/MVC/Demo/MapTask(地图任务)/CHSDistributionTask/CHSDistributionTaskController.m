@@ -122,14 +122,13 @@
 - (UIButton *)rightBarButton
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 101, 32);
+    btn.frame = CGRectMake(0, 0, 90, 32);
     [btn setTitle:@"列表模式" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor zx_colorWithHexString:@"#307DF4"] forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont zx_systemFontOfScaleSize:16];
     [btn setImage:[UIImage imageNamed:@"map_switch"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(switchViewAction:) forControlEvents:UIControlEventTouchUpInside];
     [btn zx_setImagePositionWithType:ZXButtonContentTypeImageLeftTitleRight spacing:5];
-    btn.backgroundColor = [UIColor zx_colorWithHex:0xF2F2F2 alpha:1];
     return btn;
 }
 
@@ -352,16 +351,16 @@
     {
         return;
     }
-    NSLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
+    DLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
     if (reGeocode)
     {
-        NSLog(@"reGeocode:%@", reGeocode);
+        DLog(@"reGeocode:%@", reGeocode);
     }
 }
 - (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error
 {
 //    [MBProgressHUD zx_showError:error.localizedDescription toView:self.view];
-    NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+    DLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
 }
 
 #pragma mark - Action

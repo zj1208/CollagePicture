@@ -43,7 +43,6 @@ PODS:
   - UMCAnalytics (6.0.5):
     - UMCCommon
   - UMCCommon (2.1.1)
-  - UMCCommonLog (1.0.0)
   - UMCPush (3.2.4):
     - UMCCommon
   - UMengUShare/Core (6.4.8.2):
@@ -74,7 +73,6 @@ DEPENDENCIES:
   - TMCache (~> 2.1.0)
   - TZImagePickerController (~> 3.3.1)
   - UMCAnalytics (= 6.0.5)
-  - UMCCommonLog
   - UMCPush (= 3.2.4)
   - UMengUShare/Social/ReducedWeChat
   - UMengUShare/UI
@@ -94,7 +92,6 @@ SPEC REPOS:
     - MJRefresh
     - SDWebImage
     - TZImagePickerController
-    - UMCCommonLog
     - UMCPush
     - UMengUShare
     - WebViewJavascriptBridge
@@ -129,11 +126,10 @@ SPEC CHECKSUMS:
   TZImagePickerController: 99f03b64145a8c92c55b9b1b931410967d9be4cb
   UMCAnalytics: 045be2cd1ec05aa95ad62405a850757f932e2d59
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
-  UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMengUShare: 370d180101e13ee0227ae657ab119ba97243d2b3
   WebViewJavascriptBridge: 7f5bc4d3581e672e8f32bd0f812d54bc69bb8e29
 
-PODFILE CHECKSUM: bf3935065985fcf84fe50489df08c5bbe5b32fac
+PODFILE CHECKSUM: 3619ccd242fe30191a5deabb1b82390a38b58a6f
 
 COCOAPODS: 1.9.1

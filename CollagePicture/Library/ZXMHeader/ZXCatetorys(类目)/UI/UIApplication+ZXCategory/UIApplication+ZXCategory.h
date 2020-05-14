@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIApplication (ZXCategory)
 
-/// 常规情况下：statusBar.Height =iPhoneX系列 ? (44.f): 20；兼容iOS13;注意：在有定位，电话等顶部提示蓝条情况，statusBar.Height会变大;
+/// 常规情况下：statusBar.Height =iPhoneX系列 ? (44.f): 20；兼容iOS13;
+/// 注意：在有后台定位，电话等情况，状态条只是变为红色，蓝色，绿色背景，顶部状态条区域中间会有服务提示，但依然是同一个状态条高度；
 /// 注意：在viewDidLoad中self.view.window 还是nil,除非用appDelegate的window的类目方法；
 /// 如果状态栏隐藏，则statusBarFrame属性的值为CGRectZero。
 @property (nonatomic, assign, readonly) CGFloat zx_safeAreaStatusBarHeight;
