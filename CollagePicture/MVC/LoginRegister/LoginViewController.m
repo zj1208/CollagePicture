@@ -20,6 +20,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgViewLayoutHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginBtnLayoutHeight;
 
+@property (nonatomic, strong) id localeChangeObserver;
+
 @end
 
 @implementation LoginViewController
@@ -41,6 +43,10 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
     self.loginBtnLayoutHeight.constant = LCDScale_5Equal6_To6plus(40.f);
 }
 
+- (void)dealloc
+{
+   [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 #pragma mark - setUI
 
@@ -75,7 +81,24 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 
 - (void)setData
 {
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(signInBtnChangeAlpha:) name:UITextFieldTextDidChangeNotification object:nil];
+
+    __weak typeof(self) weakSelf = self;
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    self.localeChangeObserver = [center addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+
+        [weakSelf signInBtnChangeAlpha:note];
+    }];
+    
+    
+    // block对局部变量的引用：center使用weak，所以block对局部变量center是弱引用； block块对局部变量token是强引用；
+    // 通知中心对观察者的引用：center默认是强引用观察者对象的，由于center使用了__weak，所以通知中心只是弱引用token
+//    NSNotificationCenter * __weak center1 = [NSNotificationCenter defaultCenter];
+//    id __block token1 = [center1 addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+//
+//        [self signInBtnChangeAlpha:note];
+//        [center1 removeObserver:token1];
+//        token1 = nil;
+//    }];
 }
 
 
@@ -106,10 +129,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-   [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
+
 
 #pragma mark - action
 //移除第一响应事件

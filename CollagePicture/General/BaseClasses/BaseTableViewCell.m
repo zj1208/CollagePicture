@@ -38,7 +38,6 @@
 }
 - (CGFloat)getCellHeightWithContentData:(id)data{
     return 0.f;
-    
 }
 
 
