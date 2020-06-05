@@ -7,7 +7,7 @@
 //
 
 
-#import "NSArray+ZXLog.h"
+#import "NSArrayDictionary+ZXLog.h"
 
 @implementation NSArray (ZXLog)
 
@@ -22,9 +22,14 @@
     
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
    
-        [strM appendFormat:@"\t%@,\n", obj];
+        if (idx == self.count -1) {
+            [strM appendFormat:@"\t%@\n", obj];
+        }else
+        {
+            [strM appendFormat:@"\t%@,\n", obj];
+        }
     }];
-    
+
     [strM appendString:@")"];
     return strM;
 }

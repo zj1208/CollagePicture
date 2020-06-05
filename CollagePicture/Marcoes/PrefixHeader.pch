@@ -26,4 +26,8 @@
 #import "UIImageView+WebCache.h"
 
 #import "WYUserDefaultManager.h"
+
+//友盟统计
+#import <UMAnalytics/MobClick.h>
+
 #endif

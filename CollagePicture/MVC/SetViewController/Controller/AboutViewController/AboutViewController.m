@@ -61,16 +61,19 @@ static NSString * const kFeedbackAppSecret = @"bf08c742e1baba2c11df06219282a2a3"
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row ==3)
-    {
-        [self performSegueWithIdentifier:segue_copyrightController sender:self];
-    }
-    else if (indexPath.row ==1)
+
+    if (indexPath.row ==1)
     {
     }
     else if (indexPath.row ==2)
     {
-         [self performSegueWithIdentifier:segue_PrivacyListController sender:self];
+        [MobClick event:@"privacyAgreement" label:@"美颜拼图"];
+        [self performSegueWithIdentifier:segue_PrivacyListController sender:self];
+    }
+    else if (indexPath.row ==3)
+    {
+        [MobClick event:@"copyright" attributes:@{@"version":kAPP_Version}];
+        [self performSegueWithIdentifier:segue_copyrightController sender:self];
     }
 }
 /*

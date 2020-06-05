@@ -24,7 +24,6 @@
 
 #import <AMapFoundationKit/AMapFoundationKit.h>
 
-
 // app从什么激活的
 typedef NS_ENUM(NSInteger, AppActiveFromType)
 {
@@ -71,8 +70,10 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
      *  增加bmob初始化
      */
     [Bmob registerWithAppKey:kBMOB_APPID];
+    
     //初始化友盟统计
     [self addUMengAnalytics];
+    
     
     //初始化注册通知
     [self addJPushAPNS];
@@ -225,6 +226,8 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 //    #else
 //        [UMConfigure setLogEnabled:NO];
 //    #endif
+//    设置为自动采集页面
+    [MobClick setAutoPageEnabled:YES];
 }
 
 //自己测试用的；

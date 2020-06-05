@@ -137,8 +137,11 @@
 //    {
 //        [self checkAppVersionAndNotificationPush];
 //    }
-    CGFloat fl = self.view.zx_safeAreaLayoutGuideY;
-    NSLog(@"%@",@(fl));
+    NSArray *arr = @[@"1",@"2",@"3"];
+//    NSLog(@"%@",arr);
+    
+//    NSLog(@"%@",arr.description);
+    NSLog(@"%@",arr);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
