@@ -20,7 +20,7 @@
 // 2018.4.26 , 修改国际本地化问题，去除NSLocalizedString(x, nil)；
 // 2019.06.11 , 优化otherButtonTitles数组只有title不是nil的情况才添加事件；
 // 2020.03.30   优化title，message等内容；
-
+// 2020.06.06   优化文字颜色，字体等注释；
 
 #import <UIKit/UIKit.h>
 
@@ -52,14 +52,14 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
  */
 
 /**
- 弹出可以设置最多2个按钮的警告框；－最常见的提示框
+ 弹出可以设置最多2个按钮的警告框；－最常见的提示框，蓝色按钮字体；
  
  @param viewController 从viewController当前控制器页面弹出
- @param title 标题；加粗字体；
- @param message 描述内容；默认是常规字体，如果title=nil，则message会变成标题，变成加粗字体；
- @param cancelButtonTitle 取消按钮文本，加粗；
+ @param title 标题；黑色，加粗字体；
+ @param message 描述内容；默认是黑色，常规字体，如果title=nil，则message会变成标题，变成加粗字体；
+ @param cancelButtonTitle 取消按钮文本，蓝色，加粗；
  @param handler 取消按钮的点击事件在当前UIAlertController执行dismiss完成后才回调block；
- @param doButtonTitle 另外一个按钮文本
+ @param doButtonTitle 另外一个按钮文本；蓝色，常规字体；
  @param doHandler 另外一个按钮的点击事件回调；默认取消事件－dismiss；
  */
 + (instancetype)zx_presentGeneralAlertInViewController:(UIViewController *)viewController
@@ -77,14 +77,14 @@ typedef void (^UIAlertControllerCompletionBlock) (UIAlertController * _Nonnull a
 
 
 /**
- 弹出可以设置多个按钮的警告框；可以设置取消按钮，红色销毁警告按钮，另外的按钮数组；
+ 弹出可以设置多个按钮的警告框；可以设置蓝色取消按钮，红色销毁警告按钮，另外的常规蓝色按钮数组；
 
  @param viewController 要弹出的控制器页面
- @param title 标题；加粗字体；
- @param message 警告框内容；默认是常规字体，如果title=nil，则message会变成标题，变成加粗字体；
- @param cancelButtonTitle 取消按钮文本（加粗）
- @param destructiveButtonTitle 红色销毁按钮文本
- @param otherButtonTitles 另外按钮数组
+ @param title 标题；黑色，加粗字体；
+ @param message 描述内容；默认是黑色，常规字体，如果title=nil，则message会变成标题，变成加粗字体；
+ @param cancelButtonTitle 取消按钮文本，蓝色，加粗；
+ @param destructiveButtonTitle 红色销毁按钮文本,红色，常规字体；主要用于删除，清空等事件的时候；
+ @param otherButtonTitles 另外按钮数组；蓝色，常规字体；
  @param tapBlock 点击各种按钮后在当前UIAlertController执行dismiss完成后才回调block；根据index索引来指定点击了哪个按钮：cancelButton＝0，destructiveButton＝1，otherButton＝2+；
  @return 返回AlertController
  */
