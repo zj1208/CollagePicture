@@ -186,9 +186,7 @@
 		F46920281FF341970099AB9D /* ZXWaterfallFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F46920261FF341970099AB9D /* ZXWaterfallFlowLayout.m */; };
 		F469202B1FF341A60099AB9D /* ZXNoGapCellFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F46920291FF341A60099AB9D /* ZXNoGapCellFlowLayout.m */; };
 		F46E95F5246ACF2400534F74 /* UIApplication+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F46E95F3246ACF2400534F74 /* UIApplication+ZXCategory.m */; };
-		F46E95FB246ACFD600534F74 /* UIView+ZXChangeSize.m in Sources */ = {isa = PBXBuildFile; fileRef = F46E95FA246ACFD500534F74 /* UIView+ZXChangeSize.m */; };
 		F46E960A246AD40500534F74 /* UIWindow+ZXHierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = F46E9609246AD40500534F74 /* UIWindow+ZXHierarchy.m */; };
-		F46E9610246BE3B800534F74 /* ZXOpenMapsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F46E960F246BE3B800534F74 /* ZXOpenMapsManager.m */; };
 		F46E9613246BE59400534F74 /* map_restore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46E9611246BE59300534F74 /* map_restore@2x.png */; };
 		F46E9614246BE59400534F74 /* map_restore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46E9612246BE59400534F74 /* map_restore@3x.png */; };
 		F4730CD21EA05FDC00952AF1 /* UMAnalyticsViewMarco.m in Sources */ = {isa = PBXBuildFile; fileRef = F4730CD11EA05FDC00952AF1 /* UMAnalyticsViewMarco.m */; };
@@ -268,6 +266,8 @@
 		F4A78BE620245C5700AB6651 /* ZXNotiAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A78BE520245C5600AB6651 /* ZXNotiAlertViewController.m */; };
 		F4A846FC22546803009E1592 /* ZXCustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A846FB22546802009E1592 /* ZXCustomNavigationBar.m */; };
 		F4A94BEC248B45340009D03C /* UIAlertController+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A94BEA248B45340009D03C /* UIAlertController+ZXCategory.m */; };
+		F4A94BFE248B75B50009D03C /* ZXOpenMapsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A94BFD248B75B50009D03C /* ZXOpenMapsManager.m */; };
+		F4A94C07248B783E0009D03C /* UIView+ZXChangeSize.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A94C06248B783E0009D03C /* UIView+ZXChangeSize.m */; };
 		F4AC3CB822B38F5D00B1D5BD /* ZXAudioServicesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC3CB722B38F5D00B1D5BD /* ZXAudioServicesManager.m */; };
 		F4AC3CC422BCB9FA00B1D5BD /* ZXPushKitAVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC3CC322BCB9FA00B1D5BD /* ZXPushKitAVNotification.m */; };
 		F4ACE1B31F4FDE6D006FC573 /* TemplateListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ACE1B21F4FDE6D006FC573 /* TemplateListCell.m */; };
@@ -773,12 +773,8 @@
 		F469202A1FF341A60099AB9D /* ZXNoGapCellFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXNoGapCellFlowLayout.h; sourceTree = "<group>"; };
 		F46E95F3246ACF2400534F74 /* UIApplication+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+ZXCategory.m"; sourceTree = "<group>"; };
 		F46E95F4246ACF2400534F74 /* UIApplication+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+ZXCategory.h"; sourceTree = "<group>"; };
-		F46E95F9246ACFD500534F74 /* UIView+ZXChangeSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXChangeSize.h"; sourceTree = "<group>"; };
-		F46E95FA246ACFD500534F74 /* UIView+ZXChangeSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXChangeSize.m"; sourceTree = "<group>"; };
 		F46E9608246AD40400534F74 /* UIWindow+ZXHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+ZXHierarchy.h"; sourceTree = "<group>"; };
 		F46E9609246AD40500534F74 /* UIWindow+ZXHierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+ZXHierarchy.m"; sourceTree = "<group>"; };
-		F46E960E246BE3B800534F74 /* ZXOpenMapsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXOpenMapsManager.h; sourceTree = "<group>"; };
-		F46E960F246BE3B800534F74 /* ZXOpenMapsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXOpenMapsManager.m; sourceTree = "<group>"; };
 		F46E9611246BE59300534F74 /* map_restore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_restore@2x.png"; sourceTree = "<group>"; };
 		F46E9612246BE59400534F74 /* map_restore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_restore@3x.png"; sourceTree = "<group>"; };
 		F46E9623246D468B00534F74 /* APPCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPCommonDef.h; sourceTree = "<group>"; };
@@ -923,6 +919,10 @@
 		F4A846FB22546802009E1592 /* ZXCustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCustomNavigationBar.m; sourceTree = "<group>"; };
 		F4A94BEA248B45340009D03C /* UIAlertController+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+ZXCategory.m"; sourceTree = "<group>"; };
 		F4A94BEB248B45340009D03C /* UIAlertController+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+ZXCategory.h"; sourceTree = "<group>"; };
+		F4A94BFC248B75B50009D03C /* ZXOpenMapsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXOpenMapsManager.h; sourceTree = "<group>"; };
+		F4A94BFD248B75B50009D03C /* ZXOpenMapsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXOpenMapsManager.m; sourceTree = "<group>"; };
+		F4A94C05248B783D0009D03C /* UIView+ZXChangeSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZXChangeSize.h"; sourceTree = "<group>"; };
+		F4A94C06248B783E0009D03C /* UIView+ZXChangeSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZXChangeSize.m"; sourceTree = "<group>"; };
 		F4AC3CB622B38F5D00B1D5BD /* ZXAudioServicesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAudioServicesManager.h; sourceTree = "<group>"; };
 		F4AC3CB722B38F5D00B1D5BD /* ZXAudioServicesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAudioServicesManager.m; sourceTree = "<group>"; };
 		F4AC3CC222BCB9FA00B1D5BD /* ZXPushKitAVNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPushKitAVNotification.h; sourceTree = "<group>"; };
@@ -1648,7 +1648,7 @@
 				F44DBD762297ED4100739DFB /* UIWindow */,
 				F44DBD752297ED1800739DFB /* UIFont */,
 				F47FEB2C209AA35900A67F55 /* UIScrollViewCatetory */,
-				F446A81B1FCC082900C82C90 /* UIViewCatetory */,
+				F446A81B1FCC082900C82C90 /* UIView+ZXCatetory */,
 				F446A8241FCC082900C82C90 /* UIViewControllerCaterory */,
 				F446A8351FCC082900C82C90 /* UIImage+Catetory */,
 				F4AE40C923A7469100DF6FE3 /* UINavigationBar+ShadeColor */,
@@ -1658,7 +1658,7 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		F446A81B1FCC082900C82C90 /* UIViewCatetory */ = {
+		F446A81B1FCC082900C82C90 /* UIView+ZXCatetory */ = {
 			isa = PBXGroup;
 			children = (
 				F4AE3FD3239BA72300DF6FE3 /* UIView+ZXAlignmentRectInsets */,
@@ -1666,7 +1666,7 @@
 				F4AE3FD6239BA72300DF6FE3 /* UIView+ZXChangeSize */,
 				F4AE3FCD239BA72200DF6FE3 /* UIView+ZXHelper */,
 			);
-			path = UIViewCatetory;
+			path = "UIView+ZXCatetory";
 			sourceTree = "<group>";
 		};
 		F446A8241FCC082900C82C90 /* UIViewControllerCaterory */ = {
@@ -2057,8 +2057,8 @@
 		F44DB7F0245A70DA00403CC9 /* ZXOpenMapsManager */ = {
 			isa = PBXGroup;
 			children = (
-				F46E960E246BE3B800534F74 /* ZXOpenMapsManager.h */,
-				F46E960F246BE3B800534F74 /* ZXOpenMapsManager.m */,
+				F4A94BFC248B75B50009D03C /* ZXOpenMapsManager.h */,
+				F4A94BFD248B75B50009D03C /* ZXOpenMapsManager.m */,
 			);
 			path = ZXOpenMapsManager;
 			sourceTree = "<group>";
@@ -3081,8 +3081,8 @@
 		F4AE3FD6239BA72300DF6FE3 /* UIView+ZXChangeSize */ = {
 			isa = PBXGroup;
 			children = (
-				F46E95F9246ACFD500534F74 /* UIView+ZXChangeSize.h */,
-				F46E95FA246ACFD500534F74 /* UIView+ZXChangeSize.m */,
+				F4A94C05248B783D0009D03C /* UIView+ZXChangeSize.h */,
+				F4A94C06248B783E0009D03C /* UIView+ZXChangeSize.m */,
 			);
 			path = "UIView+ZXChangeSize";
 			sourceTree = "<group>";
@@ -4474,6 +4474,7 @@
 				F4E7E1A02431C091007A281A /* ZXOrientationTabController.m in Sources */,
 				F469202B1FF341A60099AB9D /* ZXNoGapCellFlowLayout.m in Sources */,
 				F4EEB2CB2462E363009BC184 /* ZXCheckAppItunesVersionManager.m in Sources */,
+				F4A94BFE248B75B50009D03C /* ZXOpenMapsManager.m in Sources */,
 				F49CFD341FDE5C8D009F2213 /* FSActionSheetItem.m in Sources */,
 				F4A151CA23D2D9850018405E /* ZXAssetCollectionCell.m in Sources */,
 				F44DB835245AA7D600403CC9 /* UIView+ZXHelper.m in Sources */,
@@ -4595,6 +4596,7 @@
 				F4361D7B2109982F00A5C22F /* BaseHttpAPI.m in Sources */,
 				F49CFD321FDE5C8D009F2213 /* FSActionSheet.m in Sources */,
 				F40CDF14216C3E43007CFCB4 /* ZXPrintPageRenderer.m in Sources */,
+				F4A94C07248B783E0009D03C /* UIView+ZXChangeSize.m in Sources */,
 				F4A151CC23D2D9850018405E /* ZXPHPhotoManager.m in Sources */,
 				F4C16C812417E1D1000EBF4A /* ZXMenuIconModel.m in Sources */,
 				F4AE4028239BB27200DF6FE3 /* ZXLeftFirstLevelTableCell.m in Sources */,
@@ -4614,7 +4616,6 @@
 				F4A1519723D2D4D50018405E /* NSURL+ZXCategory.m in Sources */,
 				F4C1C3C222DC4EFF0065C22A /* NSURLComponents+ZXCategory.m in Sources */,
 				F446A9A51FCC082A00C82C90 /* GrowthDataManager.m in Sources */,
-				F46E9610246BE3B800534F74 /* ZXOpenMapsManager.m in Sources */,
 				F4A3024E240527D400F750D4 /* AlertChoseTableViewCell.m in Sources */,
 				F4689FBD223A7BD000A3607E /* KxMenuView.m in Sources */,
 				F446A9A21FCC082A00C82C90 /* ZXProgressView.m in Sources */,
@@ -4653,7 +4654,6 @@
 				F4CBDAA2202D4A4B00FF506D /* ZXBadgeView.m in Sources */,
 				F4C16C452415E340000EBF4A /* LabelCell.m in Sources */,
 				F446A92E1FCC082900C82C90 /* ShareInfo.m in Sources */,
-				F46E95FB246ACFD600534F74 /* UIView+ZXChangeSize.m in Sources */,
 				F44585F822B114F500E73D30 /* ZXModalPresentaionController.m in Sources */,
 				F4DF113C212E8E8A0072650A /* ZXModalKuGouTransitionDelegate.m in Sources */,
 				F4C16C9A2417E5DE000EBF4A /* ZXAlertTextController.m in Sources */,

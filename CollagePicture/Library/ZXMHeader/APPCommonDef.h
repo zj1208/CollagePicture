@@ -211,15 +211,6 @@ iPhoneX : {20, 0, 0, 0}
 #define  kHEIGHT_SAFEAREA_NormalBottom      (IS_IPHONE_XX ? 34.f: 0)
 #endif
 
-
- 
-
-#pragma mark - 设置view某个尺寸改变后的frame
-//单独设置view的frame里的高度，其他的值保持不变
-#define ZX_FRAME_Y(view,y) CGRectMake(CGRectGetMinX(view.frame),y, CGRectGetWidth(view.frame),CGRectGetHeight(view.frame))
-#define ZX_FRAME_H(view,h) CGRectMake(CGRectGetMinX(view.frame),CGRectGetMinY(view.frame), CGRectGetWidth(view.frame),h)
-#define ZX_FRAME_W(view,w) CGRectMake(CGRectGetMinX(view.frame),CGRectGetMinY(view.frame), w,CGRectGetHeight(view.frame))
-
 //*********************************************************************************
 
 

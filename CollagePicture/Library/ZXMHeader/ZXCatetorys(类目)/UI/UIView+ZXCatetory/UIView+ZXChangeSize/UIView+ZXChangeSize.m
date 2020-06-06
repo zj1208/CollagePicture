@@ -49,10 +49,9 @@
 
 - (void)setZx_y:(CGFloat)zx_y
 {
-//    CGRect frame = self.frame;
-//    frame.origin.y = zx_y;
-//    self.frame = frame;
-    self.frame = ZX_FRAME_Y(self, zx_y);
+    CGRect frame = self.frame;
+    frame.origin.y = zx_y;
+    self.frame = frame;
 }
 
 - (CGFloat)zx_y
@@ -75,10 +74,9 @@
 
 - (void)setZx_height:(CGFloat)zx_height
 {
-//    CGRect frame = self.frame;
-//    frame.size.height = zx_height;
-//    self.frame = frame;
-    self.frame = ZX_FRAME_H(self, zx_height);
+    CGRect frame = self.frame;
+    frame.size.height = zx_height;
+    self.frame = frame;
 }
 
 - (CGFloat)zx_height
@@ -88,12 +86,11 @@
 
 - (void)setZx_width:(CGFloat)zx_width
 {
-//    CGRect frame = self.frame;
-//    frame.size.width = zx_width;
-//    self.frame = frame;
-    self.frame = ZX_FRAME_W(self, zx_width);
-    
+    CGRect frame = self.frame;
+    frame.size.width = zx_width;
+    self.frame = frame;
 }
+
 - (CGFloat)zx_width
 {
     return self.frame.size.width;
@@ -111,6 +108,9 @@
     return self.frame.origin;
 }
 
+
+
+#pragma mark - safeAreaLayoutGuide
 
 
 - (CGFloat)zx_safeAreaLayoutGuideY
