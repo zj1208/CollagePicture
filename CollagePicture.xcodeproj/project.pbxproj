@@ -173,6 +173,7 @@
 		F46182391D8129490015BC84 /* CollagePictureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F46182381D8129490015BC84 /* CollagePictureTests.m */; };
 		F46182441D8129490015BC84 /* CollagePictureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F46182431D8129490015BC84 /* CollagePictureUITests.m */; };
 		F4648BB11DEC293C009C1620 /* newWelcome.gif in Resources */ = {isa = PBXBuildFile; fileRef = F4648BB01DEC293C009C1620 /* newWelcome.gif */; };
+		F4665C92248FAA3900C5F816 /* CHSNotOpenURLBackAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4665C90248FAA3800C5F816 /* CHSNotOpenURLBackAppManager.m */; };
 		F466A96521549AC5007143A1 /* ZXModalAnimatedTranstion.m in Sources */ = {isa = PBXBuildFile; fileRef = F466A96121549AC4007143A1 /* ZXModalAnimatedTranstion.m */; };
 		F466A96621549AC5007143A1 /* ZXModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F466A96321549AC4007143A1 /* ZXModalTransitionDelegate.m */; };
 		F466A96B21549ADB007143A1 /* ZXAlphaAnimatedTranstion.m in Sources */ = {isa = PBXBuildFile; fileRef = F466A96921549ADA007143A1 /* ZXAlphaAnimatedTranstion.m */; };
@@ -248,7 +249,6 @@
 		F4A151CA23D2D9850018405E /* ZXAssetCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151BD23D2D9840018405E /* ZXAssetCollectionCell.m */; };
 		F4A151CB23D2D9850018405E /* ZXImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4A151C023D2D9850018405E /* ZXImagePickerController.bundle */; };
 		F4A151CC23D2D9850018405E /* ZXPHPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A151C223D2D9850018405E /* ZXPHPhotoManager.m */; };
-		F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */; };
 		F4A3022D240526B000F750D4 /* UIScrollView+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */; };
 		F4A302362405270F00F750D4 /* NSDecimalNumber+ZXCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A302342405270F00F750D4 /* NSDecimalNumber+ZXCategory.m */; };
 		F4A30248240527D400F750D4 /* AlertTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A30239240527D400F750D4 /* AlertTextFieldCell.m */; };
@@ -745,6 +745,8 @@
 		F46182431D8129490015BC84 /* CollagePictureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollagePictureUITests.m; sourceTree = "<group>"; };
 		F46182451D8129490015BC84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4648BB01DEC293C009C1620 /* newWelcome.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = newWelcome.gif; sourceTree = "<group>"; };
+		F4665C90248FAA3800C5F816 /* CHSNotOpenURLBackAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSNotOpenURLBackAppManager.m; sourceTree = "<group>"; };
+		F4665C91248FAA3900C5F816 /* CHSNotOpenURLBackAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSNotOpenURLBackAppManager.h; sourceTree = "<group>"; };
 		F466A96121549AC4007143A1 /* ZXModalAnimatedTranstion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXModalAnimatedTranstion.m; sourceTree = "<group>"; };
 		F466A96221549AC4007143A1 /* ZXModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXModalTransitionDelegate.h; sourceTree = "<group>"; };
 		F466A96321549AC4007143A1 /* ZXModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXModalTransitionDelegate.m; sourceTree = "<group>"; };
@@ -788,7 +790,6 @@
 		F481E89B1FDFB61000D115D3 /* CollagePicture.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = CollagePicture.entitlements; sourceTree = "<group>"; };
 		F48A09A82440123C007DC309 /* UINavigationController+ZXCaterory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ZXCaterory.h"; sourceTree = "<group>"; };
 		F48A09A92440123C007DC309 /* UINavigationController+ZXCaterory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ZXCaterory.m"; sourceTree = "<group>"; };
-		F48A09AF24401290007DC309 /* CHSNotOpenURLBackAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHSNotOpenURLBackAppManager.h; sourceTree = "<group>"; };
 		F48A09B0244012C1007DC309 /* ZXEmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXEmptyViewController.m; sourceTree = "<group>"; };
 		F48A09B1244012C1007DC309 /* ZXEmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXEmptyViewController.h; sourceTree = "<group>"; };
 		F48B3B5F2265BA6200AB0067 /* MyCenterTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCenterTableCell.h; sourceTree = "<group>"; };
@@ -892,7 +893,6 @@
 		F4A151C023D2D9850018405E /* ZXImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZXImagePickerController.bundle; sourceTree = "<group>"; };
 		F4A151C223D2D9850018405E /* ZXPHPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPHPhotoManager.m; sourceTree = "<group>"; };
 		F4A151C323D2D9850018405E /* ZXPHPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPHPhotoManager.h; sourceTree = "<group>"; };
-		F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHSNotOpenURLBackAppManager.m; sourceTree = "<group>"; };
 		F4A3022B240526AF00F750D4 /* UIScrollView+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXCategory.m"; sourceTree = "<group>"; };
 		F4A3022C240526B000F750D4 /* UIScrollView+ZXCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ZXCategory.h"; sourceTree = "<group>"; };
 		F4A302342405270F00F750D4 /* NSDecimalNumber+ZXCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+ZXCategory.m"; sourceTree = "<group>"; };
@@ -2853,8 +2853,8 @@
 		F4A158ED23D6D5A00018405E /* CHSNotOpenURLBackAppManager */ = {
 			isa = PBXGroup;
 			children = (
-				F48A09AF24401290007DC309 /* CHSNotOpenURLBackAppManager.h */,
-				F4A158EF23D6D5A00018405E /* CHSNotOpenURLBackAppManager.m */,
+				F4665C91248FAA3900C5F816 /* CHSNotOpenURLBackAppManager.h */,
+				F4665C90248FAA3800C5F816 /* CHSNotOpenURLBackAppManager.m */,
 			);
 			path = CHSNotOpenURLBackAppManager;
 			sourceTree = "<group>";
@@ -4500,7 +4500,6 @@
 				F4EF35081FF5D7EB00CCD088 /* AliOSSPicInfoRequest.m in Sources */,
 				F44DB83B245AB8C900403CC9 /* CHSDistributionTastItemView.m in Sources */,
 				F4E7E1C22431C146007A281A /* ZXAddPicCellBaseCoverView.m in Sources */,
-				F4A158F023D6D5A00018405E /* CHSNotOpenURLBackAppManager.m in Sources */,
 				F4374B5D1E0A6C8400081502 /* LoginViewController.m in Sources */,
 				F4C9186E2004983E00D3E158 /* NSFileManager+ZXCategory.m in Sources */,
 				F446A9851FCC082A00C82C90 /* InfiniteScrollView.m in Sources */,
@@ -4588,6 +4587,7 @@
 				F49E19BC1DF190A000676396 /* SetViewController.m in Sources */,
 				F4361D9B21099C1900A5C22F /* ZXHorizontalPageCollectionView.m in Sources */,
 				F4AE40AA23A7458000DF6FE3 /* UIControl+ZXFastClick.m in Sources */,
+				F4665C92248FAA3900C5F816 /* CHSNotOpenURLBackAppManager.m in Sources */,
 				F4AE3FDB239BA72300DF6FE3 /* UIView+ZXAlignmentRectInsets.m in Sources */,
 				F461821D1D8129490015BC84 /* main.m in Sources */,
 				F4CB0E3C236C3962002BD670 /* PrefectureSubViewD.m in Sources */,

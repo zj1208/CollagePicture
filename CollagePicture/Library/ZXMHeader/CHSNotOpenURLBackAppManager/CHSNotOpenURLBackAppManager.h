@@ -5,7 +5,9 @@
 //  Created by simon on 2019/12/30.
 //  Copyright © 2019 com.Chs. All rights reserved.
 //
-//  简介：监听在已经didFinishLanuch启动显示的app，非openURL方式返回显示app前台的时候发送一个通知；
+//  简介：监听在已经didFinishLanuch启动显示的app，非openURL，非通用链接方式返回显示app前台的时候发送一个通知；使用通用链接切换返回App的时候也属于正常返回，比如微信正常切换返回。
+
+// 2020.06.09  增加通用链接返回的代理方法 作为正常app切换返回的交换；
 
 #import <Foundation/Foundation.h>
 
@@ -18,7 +20,7 @@ FOUNDATION_EXPORT NSNotificationName const CHSApplicationNoOpenURLActiveNotifica
 
 /*
  除了启动应用程序，还有其它方式重新打开应用程序；
- 在openURL返回激活的application生命周期：从后台->先进入前台->激活->openURL回调；
+ 在openURL返回激活的application生命周期：从后台->先进入前台->openURL回调->激活；
  非openURL进入前台的application生命周期：从后台->进入前台->激活；
 */
 @property (nonatomic) BOOL isOpenURLApplicationBack;//是否app由第三方openURL方式进入前台返回

@@ -17,14 +17,24 @@ NSNotificationName const CHSApplicationNoOpenURLActiveNotification = @"ZXApplica
 + (void)load
 {
     Class myClass = NSClassFromString(@"AppDelegate");
+    
+//    openURL方式
     Method originalMethod = class_getInstanceMethod(myClass, @selector(application:openURL:options:));
     
-    Method swizzledMethod2 = class_getInstanceMethod([self class], @selector(zxApplication:openURL:options:));
-    class_addMethod(myClass, method_getName(swizzledMethod2), method_getImplementation(swizzledMethod2), method_getTypeEncoding(swizzledMethod2));
+    Method swizzledMethod = class_getInstanceMethod([self class], @selector(zx_application:openURL:options:));
+    class_addMethod(myClass, method_getName(swizzledMethod), method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
     
+    Method swizzledMethod2 = class_getInstanceMethod(myClass, @selector(zx_application:openURL:options:));
+    method_exchangeImplementations(originalMethod, swizzledMethod2);
     
-    Method swizzledMethod = class_getInstanceMethod(myClass, @selector(zxApplication:openURL:options:));
-    method_exchangeImplementations(originalMethod, swizzledMethod);
+//    通用链接方式
+//    Method originalMethod_n = class_getInstanceMethod(myClass, @selector(application:continueUserActivity:restorationHandler:));
+//    
+//    Method swizzledMethod_n = class_getInstanceMethod([self class], @selector(zx_application:continueUserActivity:restorationHandler:));
+//    class_addMethod(myClass, method_getName(swizzledMethod_n), method_getImplementation(swizzledMethod_n), method_getTypeEncoding(swizzledMethod_n));
+//    
+//    Method swizzledMethod2_n = class_getInstanceMethod(myClass, @selector(zx_application:continueUserActivity:restorationHandler:));
+//    method_exchangeImplementations(originalMethod_n, swizzledMethod2_n);
 }
 
 - (void)dealloc
@@ -52,13 +62,18 @@ NSNotificationName const CHSApplicationNoOpenURLActiveNotification = @"ZXApplica
 }
 
 
-- (BOOL)zxApplication:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+- (BOOL)zx_application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
 //    DLog(@"zxApplication: openURL: options:");
      [CHSNotOpenURLBackAppManager sharedInstance].isOpenURLApplicationBack = YES;
-    return [self zxApplication:app openURL:url options:options];
+    return [self zx_application:app openURL:url options:options];
 }
 
+//- (BOOL)zx_application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler{
+//
+//    [CHSNotOpenURLBackAppManager sharedInstance].isOpenURLApplicationBack = YES;
+//    return [self zx_application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+//}
 
 - (void)applicationWillEnterForeground:(id)notification
 {
