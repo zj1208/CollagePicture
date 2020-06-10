@@ -14,17 +14,6 @@
 #pragma mark - 颜色转换 IOS中十六进制的颜色转换为UIColor
 
 /**
- the hex color spec for aquamarine is #7FFFD4, or rgb(127,255,212), so we can use the following code
- 
- import AppKit
- 
- let redPercentage = CGFloat(0x7F)/255
- let greenPercentage = CGFloat(0xFF)/255
- let bluePercentage = CGFloat(0xD4)/255
- 
- let aquamarineColor = NSColor(red: redPercentage, green: greenPercentage, blue: bluePercentage, alpha: 1.0)
- 
-
  @param color color description
  @param alpha 透明度
  @return UIColor对象
@@ -38,8 +27,7 @@
     {
         return [UIColor clearColor];
     }
-    // strip 0X if it appears
-    //如果是0x开头的，那么截取字符串，字符串从索引为2的位置开始，一直到末尾
+    //如果是0X开头的，那么截取字符串，字符串从索引为2的位置开始，一直到末尾
     if ([cString hasPrefix:@"0X"])
     {
         cString = [cString substringFromIndex:2];
@@ -76,10 +64,6 @@
     CGFloat red = (float)r / 255.0f ;
     CGFloat green = (float)g / 255.0f;
     CGFloat blue = (float)b / 255.0f;
-    if (@available(iOS 10.0, *))
-    {
-        return [UIColor colorWithDisplayP3Red:red green:green blue:blue alpha:alpha];
-    }
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
@@ -90,6 +74,60 @@
 }
 
 
++ (UIColor *)zx_colorWithDisplayP3HexString:(NSString *)color RGBHexString:(NSString *)color2 alpha:(CGFloat)alpha
+{
+    //删除字符串中的空格
+    NSString *cString;
+    if (@available(iOS 10.0, *)) {
+         
+         cString = [[color stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+     }else
+     {
+         cString = [[color2 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+     }
+    // String should be 6 or 8 characters
+    if ([cString length] < 6)
+    {
+        return [UIColor clearColor];
+    }
+    //如果是0X开头的，那么截取字符串，字符串从索引为2的位置开始，一直到末尾
+    if ([cString hasPrefix:@"0X"])
+    {
+        cString = [cString substringFromIndex:2];
+    }
+    //如果是#开头的，那么截取字符串，字符串从索引为1的位置开始，一直到末尾
+    if ([cString hasPrefix:@"#"])
+    {
+        cString = [cString substringFromIndex:1];
+    }
+    if ([cString length] != 6)
+    {
+        return [UIColor clearColor];
+    }
+    
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    CGFloat red = (float)r / 255.0f ;
+    CGFloat green = (float)g / 255.0f;
+    CGFloat blue = (float)b / 255.0f;
+    if (@available(iOS 10.0, *)) {
+        
+        return [UIColor colorWithDisplayP3Red:red green:green blue:blue alpha:alpha];
+    }
+    return[UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
 
 + (UIColor *)zx_colorWithRandomColor
 {

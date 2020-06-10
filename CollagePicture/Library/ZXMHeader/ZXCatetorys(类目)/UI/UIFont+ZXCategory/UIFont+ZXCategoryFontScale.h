@@ -10,6 +10,7 @@
 
 //  2019.10.31  增加2个类方法；
 //  2020.2.06 针对320屏幕的字体大小做调整，改为原大小的0.93倍，不是0.85倍；
+//  2020.6.10 增加zx_boldSystemFontOfSizeScale方法；
 
 #import <UIKit/UIKit.h>
 
@@ -27,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param fontSize fontSize description
 /// @param weight weight description
 + (UIFont *)zx_systemFontOfScaleSize:(CGFloat)fontSize weight:(UIFontWeight)weight API_AVAILABLE(ios(8.2));
+
++ (UIFont *)zx_boldSystemFontOfSizeScale:(CGFloat)fontSize;
 /**
  根据原字体大小换算返回适配屏幕大小的新字体UIFont对象；
  字体大小经过transSizeWithFontSize：换算；

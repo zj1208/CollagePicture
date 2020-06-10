@@ -57,6 +57,12 @@ static NSInteger const miniScreenFontSizeSpace = 1.5;
     return [UIFont systemFontOfSize:transFontSize];
 }
 
++ (UIFont *)zx_boldSystemFontOfSizeScale:(CGFloat)fontSize
+{
+    CGFloat transFontSize = [UIFont transSizeWithFontSize:fontSize];
+    return [UIFont boldSystemFontOfSize:transFontSize];
+}
+
 + (UIFont *)zx_systemFontOfScaleSize:(CGFloat)fontSize weight:(UIFontWeight)weight
 {
     CGFloat transFontSize = [UIFont transSizeWithFontSize:fontSize];
