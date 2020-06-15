@@ -11,7 +11,7 @@
 @implementation NSArray (ZXCategory)
 
 
-- (NSArray *)where:(BOOL(^)(id obj))myBlock
+- (NSArray *)zx_where:(BOOL(^)(id obj))myBlock
 {
     if (!self) {
         return nil;
@@ -29,7 +29,7 @@
     return arr;
 }
 
-- (BOOL)every:(BOOL(^)(id obj))myBlock
+- (BOOL)zx_every:(BOOL(^)(id obj))myBlock
 {
     if (!self || self.count == 0) {
         return NO;
@@ -44,7 +44,7 @@
 }
 
 
-- (BOOL)any:(BOOL(^)(id obj))myBlock
+- (BOOL)zx_any:(BOOL(^)(id obj))myBlock
 {
     if (!self || self.count == 0) {
         return NO;
@@ -56,5 +56,14 @@
         }
     }
     return NO;
+}
+
+
+- (BOOL)zx_isEmpty
+{
+    if (self != nil && ![self isKindOfClass:[NSNull class]] && self.count != 0){
+        return NO;
+    }
+    return YES;
 }
 @end

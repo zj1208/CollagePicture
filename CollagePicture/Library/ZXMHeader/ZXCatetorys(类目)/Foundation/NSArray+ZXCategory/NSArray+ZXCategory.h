@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 循环遍历集合，返回满足函数条件的组成的新集合；返回一个新的惰性 [Iterable]，其中包含所有满足谓词[test]的元素。
 /// @param myBlock <#myBlock description#>
-- (NSArray *)where:(BOOL(^)(id obj))myBlock;
+- (NSArray *)zx_where:(BOOL(^)(id obj))myBlock;
 
 
 /*
@@ -25,13 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
 //检查是否每个item被选中，即是否被全部选中
 - (BOOL)getIsSelectedAllGoods
 {
-    BOOL flag = [self.shopCartModel.list every:^BOOL(CHSShopCartModel_ListModel *  _Nonnull obj) {
+    BOOL flag = [self.shopCartModel.list zx_every:^BOOL(CHSShopCartModel_ListModel *  _Nonnull obj) {
         return obj.isSelected;
     }];
     return flag;
 }
  */
-- (BOOL)every:(BOOL(^)(id obj))myBlock;
+- (BOOL)zx_every:(BOOL(^)(id obj))myBlock;
 
 
 
@@ -41,15 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
  ///检查是否any一个有选中的；
  - (BOOL)getIsAnySelectedFromAllGoods
  {
-     BOOL flag = [self.shopCartModel.list any:^BOOL(CHSShopCartModel_ListModel *  _Nonnull obj) {
+     BOOL flag = [self.shopCartModel.list zx_any:^BOOL(CHSShopCartModel_ListModel *  _Nonnull obj) {
          return obj.isSelected;
      }];
      return flag;
  }
  */
-- (BOOL)any:(BOOL(^)(id obj))myBlock;
+- (BOOL)zx_any:(BOOL(^)(id obj))myBlock;
 
 
+
+/// 是否为空
+- (BOOL)zx_isEmpty;
 
 @end
 
