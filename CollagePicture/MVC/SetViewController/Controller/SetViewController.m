@@ -12,6 +12,8 @@
 #import "ZXCheckAppItunesVersionManager.h"
 #import "ZXImagePickerController.h"
 
+int a = 2;
+
 @interface SetViewController ()<UIActionSheetDelegate,ZXImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *accountTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *changePassWordTitleLab;
@@ -26,12 +28,21 @@
 @implementation SetViewController
 
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
     [self setUI];
     [self setData];
+    NSLog(@"a =%d",a);
+}
+int b =3;
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSLog(@"a = %d,b = %d",a,b);
 }
 
 - (void)dealloc

@@ -195,6 +195,7 @@
 		F4735191247B97CF009BBAB0 /* UIDevice+ZXHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4735190247B97CE009BBAB0 /* UIDevice+ZXHelper.m */; };
 		F47FEB31209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = F47FEB2F209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m */; };
 		F47FEB3F209AA4AB00A67F55 /* ZXCustomNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47FEB3C209AA4AA00A67F55 /* ZXCustomNavigationBar.xib */; };
+		F4888F5E24A6EE670068355C /* NSObject+ZXKeyValueCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = F4888F5D24A6EE670068355C /* NSObject+ZXKeyValueCoding.m */; };
 		F48A09AA2440123C007DC309 /* UINavigationController+ZXCaterory.m in Sources */ = {isa = PBXBuildFile; fileRef = F48A09A92440123C007DC309 /* UINavigationController+ZXCaterory.m */; };
 		F48A09B2244012C1007DC309 /* ZXEmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F48A09B0244012C1007DC309 /* ZXEmptyViewController.m */; };
 		F48B3B612265BA6200AB0067 /* MyCenterTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F48B3B602265BA6200AB0067 /* MyCenterTableCell.m */; };
@@ -790,6 +791,8 @@
 		F47FEB2F209AA35900A67F55 /* UIScrollView+ZXMJRefreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ZXMJRefreshing.m"; sourceTree = "<group>"; };
 		F47FEB3C209AA4AA00A67F55 /* ZXCustomNavigationBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZXCustomNavigationBar.xib; sourceTree = "<group>"; };
 		F481E89B1FDFB61000D115D3 /* CollagePicture.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = CollagePicture.entitlements; sourceTree = "<group>"; };
+		F4888F5C24A6EE670068355C /* NSObject+ZXKeyValueCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZXKeyValueCoding.h"; sourceTree = "<group>"; };
+		F4888F5D24A6EE670068355C /* NSObject+ZXKeyValueCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZXKeyValueCoding.m"; sourceTree = "<group>"; };
 		F48A09A82440123C007DC309 /* UINavigationController+ZXCaterory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ZXCaterory.h"; sourceTree = "<group>"; };
 		F48A09A92440123C007DC309 /* UINavigationController+ZXCaterory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ZXCaterory.m"; sourceTree = "<group>"; };
 		F48A09B0244012C1007DC309 /* ZXEmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXEmptyViewController.m; sourceTree = "<group>"; };
@@ -1699,6 +1702,8 @@
 		F446A83F1FCC082900C82C90 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				F4888F5C24A6EE670068355C /* NSObject+ZXKeyValueCoding.h */,
+				F4888F5D24A6EE670068355C /* NSObject+ZXKeyValueCoding.m */,
 				F4BC5EF8248A309E003748EC /* NSArrayDictionary+ZXLog */,
 				F4BC5EF4248A3098003748EC /* NSArray+ZXCategory */,
 				F4C2302A23E6BEF7003A925C /* NSObject+ZXJSONCategory */,
@@ -4562,6 +4567,7 @@
 				F4DAC4DD203032A8000428DF /* BadgeMarkItemModel.m in Sources */,
 				F4CB0E3B236C3962002BD670 /* PrefectureSubViewC.m in Sources */,
 				F4BC5EFB248A309E003748EC /* NSArrayDictionary+ZXLog.m in Sources */,
+				F4888F5E24A6EE670068355C /* NSObject+ZXKeyValueCoding.m in Sources */,
 				F4A1519D23D2D57A0018405E /* UIImage+ZXCIImage.m in Sources */,
 				F4E7E1DD24335E2E007A281A /* ZXAuthorizationManager.m in Sources */,
 				F4ACE1B61F4FE093006FC573 /* WYUserDefaultManager.m in Sources */,

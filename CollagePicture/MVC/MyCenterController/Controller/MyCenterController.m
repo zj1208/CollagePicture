@@ -48,16 +48,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self setUI];
     [self setData];
+    extern int a;
+    extern int b;
+
+    NSLog(@"%d,%d",a,b);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-
     if (self.presentedViewController)
     {
         return;
@@ -705,6 +707,8 @@
 
 - (void)setterButtonAction:(id)sender
 {
+    
+//    SetViewController *setVC = [self.navigationController zx_getControllerWithStoryboardName:storyboard_Set controllerWithIdentifier:NSStringFromClass([SetViewController class])];
     [self.navigationController zx_pushStoryboardViewControllerWithStoryboardName:storyboard_Set identifier:NSStringFromClass([SetViewController class]) withData:nil];
 }
 
