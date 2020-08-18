@@ -17,7 +17,7 @@ static NSInteger const kAPPErrorCode = 5000;
 
 //检查版本更新请求数据用的
 #ifndef kITUNESURL
-#define kITUNESURL @"http://itunes.apple.com"
+#define kITUNESURL @"https://itunes.apple.com"
 #endif
 
 @implementation ZXCheckAppItunesVersionManager
@@ -33,7 +33,8 @@ static NSInteger const kAPPErrorCode = 5000;
     return sharedHelper;
 }
 
-
+//1、用 "https://itunes.apple.com/lookup?id=" 获取版本号，会出现延迟或请求回来的版本号不稳定还有就是与刚刚发布的版本号对不上。 这个是连接国外的服务器，所以会有延迟。 解决：使用 "https://itunes.apple.com/cn/lookup?id=" 路径。
+//    2、如果上架的时候只选中国，而且又用"https://itunes.apple.com/lookup?id=" 获取版本号，那么 resultCount 就为 0，获取不到版本数据。解决方法同上。
 - (void)checkVersionSuccessWithAppId:(NSString *)appId success:(CompleteBlock)success failure:(ErrorBlock)failure
 {
     NSURL *baseURL = [NSURL URLWithString:kITUNESURL];
@@ -45,7 +46,7 @@ static NSInteger const kAPPErrorCode = 5000;
     NSDictionary *dic = @{@"id":appId};
     
     __weak __typeof(&*self)weakSelf = self;
-    [manager GET:@"lookup" parameters:dic headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:@"cn/lookup" parameters:dic headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -60,6 +61,7 @@ static NSInteger const kAPPErrorCode = 5000;
             failure(error);
         }
     }];
+    
 }
 
 - (void)requestSuccessDealWithResponseObeject:(id)responseObject success:(CompleteBlock)success failure:(ErrorBlock)failure

@@ -54,6 +54,15 @@
     extern int b;
 
     NSLog(@"%d,%d",a,b);
+    
+//    NSDictionary *dic =   [NSDictionary dictionaryWithObject:@"1" forKey:@"key"];
+//
+//    NSArray *arr = [NSArray arrayWithObjects:dic,@"2", nil];
+   
+//    id value1 = [arr objectAtIndex:0];
+//    NSLog(@"%@,%p",value1,value1);
+
+//
 }
 
 - (void)viewWillAppear:(BOOL)animated

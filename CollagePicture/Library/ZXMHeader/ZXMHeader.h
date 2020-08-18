@@ -35,5 +35,6 @@
 // 已解决一大堆耦合性问题，还有很多组件？
 
 
+// ZXCheckAppItunesVersionManager  修改路径 7.15
 
 

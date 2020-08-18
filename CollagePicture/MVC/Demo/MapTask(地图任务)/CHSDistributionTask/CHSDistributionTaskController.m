@@ -253,6 +253,7 @@
         [self setCellDataWithAnnotationView:annotationView viewForAnnotation:annotation];
         return annotationView;
     }
+    //比如自己定位点：MAUserLocation
     return nil;
 }
 
@@ -332,12 +333,19 @@
     }];
 }
 
-//在加载完之后回调；添加手势之后,只有第一次会执行；
+//添加手势之后,只有第一次会执行；选择自己定位的点MAUserLocation会一直回调；
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
 {
-    MAPointAnnotation *annotation = view.annotation;
-    NSInteger index = [self.annotations indexOfObject:annotation];
-    [self selectAnnotationAtIndex:index];
+    id <MAAnnotation> annotation =view.annotation;
+    //自己加的标注点
+    if ([annotation isKindOfClass:[MAPointAnnotation class]])
+    {
+        if (![self.annotations containsObject:view.annotation]) {
+            return;
+        }
+        NSInteger index = [self.annotations indexOfObject:annotation];
+        [self selectAnnotationAtIndex:index];
+    }
 }
 
 
