@@ -61,7 +61,7 @@
     return [emailTest evaluateWithObject:email];
 }
 
-
+//这个手机号验证已经不符合最新的发展了,目前还有很多额外的号码段，所以最好放开，不要验证；
 + (BOOL)zx_validatePhoneNumber:(nullable NSString *)phone
 {
     NSString *regexExp = @"^1[3|4|5|7|8][0-9]\\d{8}$";
@@ -70,7 +70,7 @@
 }
 
 + (BOOL)zx_validatePassword:(NSString *)pass
-{ 
+{
     NSString *regexExp = @"^[A-Za-z0-9]+$";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexExp];
     return [emailTest evaluateWithObject:pass];
@@ -114,10 +114,7 @@
     NSArray *arrayOfAllMatches = [regex matchesInString:url options:0 range:NSMakeRange(0,[url length])];
     for (NSTextCheckingResult *match in arrayOfAllMatches)
     {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "substringForMatch"
         NSString* substringForMatch = [url substringWithRange:match.range];
-        #pragma clang diagnostic pop
         return YES;
     }
     
@@ -277,7 +274,7 @@ shouldChangeCharactersInRange:(NSRange)range
 
 
 /** //有问题:出来的时候,慢一点; 不能同步
- *	@brief	自定义数字键盘,在数字键盘添加完成按钮; 先遍历windows获取键盘所在的window,然后在windows遍历view获得view(UIInputSetContainerView,frame是整个windows大小)
+ *    @brief    自定义数字键盘,在数字键盘添加完成按钮; 先遍历windows获取键盘所在的window,然后在windows遍历view获得view(UIInputSetContainerView,frame是整个windows大小)
  */
 
 - (void)zx_keyboardToAddFinishButton

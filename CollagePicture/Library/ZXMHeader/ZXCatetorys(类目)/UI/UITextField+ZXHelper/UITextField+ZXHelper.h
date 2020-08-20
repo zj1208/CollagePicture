@@ -5,8 +5,8 @@
 //  Created by xielei on 15/12/20.
 //  Copyright © 2015年 sina. All rights reserved.
 //
-// 2017.12.27
-// 限制小数，前几位后几位，优化；
+// 2017.12.27 限制小数，前几位后几位，优化；
+// 2020.8.20 增加验证手机号有效方法的注释，推荐不使用；
 
 #import <UIKit/UIKit.h>
 
@@ -19,34 +19,47 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark-(只能多排除一些错误可能性,不能全部排除)
 /**
- *	@brief	通过区分字符串 验证 邮箱的合法性;
- *	@param  email  邮箱;
- *	@return	YES／NO
+ *    @brief    通过区分字符串 验证 邮箱的合法性;
+ *    @param  email  邮箱;
+ *    @return    YES／NO
  */
 + (BOOL)zx_validateEmail:(nullable NSString *)email;
 
 
 /**
- *	@brief	利用正则表达式验证 邮箱的合法性
- *	@param  email    邮箱
- *	@return	YES／NO
+ *    @brief    利用正则表达式验证 邮箱的合法性
+ *    @param  email    邮箱
+ *    @return    YES／NO
  */
 + (BOOL)zx_validateEmail2:(nullable NSString *)email;
 
 
 /**
- *	@brief	利用正则表达式验证 手机号合法性
- *	@param  phone    手机号字符串
- *	@return	YES／NO
+ *    @brief    利用正则表达式验证 手机号合法性
+ *    @param  phone    手机号字符串
+ *    @return    YES／NO
+ *  注意：这个手机号验证已经不符合最新的发展了,目前还有很多额外的号码段，所以最好放开，不要验证，即将废弃；
+ *  #pragma mark - 例如：请求验证码
+ - (void)requestSmsCodeBtnAction:(UIButton *)sender {
+     
+     NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.loginContainerView.phoneTextField.text];
+
+     if (![UITextField zx_validatePhoneNumber:phoneNumber])
+     {
+         [MBProgressHUD zx_showError:@"请您输入正确的手机号码" toView:nil];
+         return;
+     }
+     [self requestSMSCode];
+ }
  */
 
 + (BOOL)zx_validatePhoneNumber:(nullable NSString *)phone;
 
 
 /**
- *	@brief	利用正则表达式验证 密码合法性,判断是否有数字或字母的密码
- *	@param  pass  密码
- *	@return	YES／NO  -NO-@"请使用数字或字母的密码"
+ *    @brief    利用正则表达式验证 密码合法性,判断是否有数字或字母的密码
+ *    @param  pass  密码
+ *    @return    YES／NO  -NO-@"请使用数字或字母的密码"
  */
 
 + (BOOL)zx_validatePassword:(NSString *)pass;
@@ -103,7 +116,7 @@ shouldChangeCharactersInRange:(NSRange)range
 
 
 /** //有问题:出来的时候,慢一点;  退出键盘的时候,也延迟移除;不能同步
- *	@brief	自定义数字键盘,在数字键盘添加完成按钮;
+ *    @brief    自定义数字键盘,在数字键盘添加完成按钮;
  */
 - (void)zx_keyboardToAddFinishButton;
 
