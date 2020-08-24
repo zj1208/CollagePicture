@@ -33,14 +33,14 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     NSDateFormatter *dateFor = [[NSDateFormatter alloc] init];
     dateFor.dateFormat =@"MM月-dd日";
     NSString *dateStr = [dateFor stringFromDate:[NSDate date]];
-    [UserDefault setObject:dateStr forKey:WYToday];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:dateStr forKey:WYToday];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
 + (NSString *)getSavedAppLanchedDay
 {
-    return [UserDefault objectForKey:WYToday];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:WYToday];
 }
 
 + (void)addTodayAppLanchAdvTimes
@@ -53,29 +53,29 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     {
         if (![beforStr isEqualToString:currentDateStr])
         {
-            [UserDefault removeObjectForKey:WYToday];
-            [UserDefault setObject:@(1) forKey:WYTimes];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:WYToday];
+            [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:WYTimes];
         }
         else
         {
            NSNumber *times = [self getTodayAppLanchAdvTimes];
-           [UserDefault setObject:@([times integerValue]+1) forKey:WYTimes];
+           [[NSUserDefaults standardUserDefaults] setObject:@([times integerValue]+1) forKey:WYTimes];
         }
     }
     else
     {
         [self setSavedAppLanchedDay];
-        [UserDefault setObject:@(1) forKey:WYTimes];
+        [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:WYTimes];
     }
 
   
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (id)getTodayAppLanchAdvTimes
 {
     
-    return [UserDefault objectForKey:WYTimes];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:WYTimes];
 }
 
 + (BOOL)isCanLanchAdvWithMaxTimes:(NSNumber *)maxTimes
@@ -109,7 +109,7 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     dateFor.dateFormat =@"MM-dd";
     NSString *dateStr = [dateFor stringFromDate:[NSDate date]];
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[UserDefault objectForKey:advIdString]];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:advIdString]];
     //判断有没有想要数据
     if (dic.allKeys.count != 2){
         [dic setValue:@(0) forKey:@"count"];
@@ -125,7 +125,7 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     //判断有没有超过次数
     if (count.integerValue < maxTimes.integerValue){
         [dic setValue:@(count.integerValue + 1) forKey:@"count"];
-        [UserDefault setObject:dic forKey:advIdString];
+        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:advIdString];
         return YES;
     }
 
@@ -139,14 +139,14 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     NSDateFormatter *dateFor = [[NSDateFormatter alloc] init];
     dateFor.dateFormat =@"MM月-dd日";
     NSString *dateStr = [dateFor stringFromDate:[NSDate date]];
-    [UserDefault setObject:dateStr forKey:WYToday];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:dateStr forKey:WYToday];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
 
 + (NSString *)bgetSavedAppLanchedDay
 {
-    return [UserDefault objectForKey:WYToday];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:WYToday];
 }
 
 + (void)baddTodayAppLanchAdvTimes
@@ -159,29 +159,29 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     {
         if (![beforStr isEqualToString:currentDateStr])
         {
-            [UserDefault removeObjectForKey:WYToday];
-            [UserDefault setObject:@(1) forKey:WYTimes];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:WYToday];
+            [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:WYTimes];
         }
         else
         {
             NSNumber *times = [self bgetTodayAppLanchAdvTimes];
-            [UserDefault setObject:@([times integerValue]+1) forKey:WYTimes];
+            [[NSUserDefaults standardUserDefaults] setObject:@([times integerValue]+1) forKey:WYTimes];
         }
     }
     else
     {
         [self bsetSavedAppLanchedDay];
-        [UserDefault setObject:@(1) forKey:WYTimes];
+        [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:WYTimes];
     }
     
     
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (id)bgetTodayAppLanchAdvTimes
 {
     
-    return [UserDefault objectForKey:WYTimes];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:WYTimes];
 }
 
 + (BOOL)bisCanLanchAdvWithMaxTimes:(NSNumber *)maxTimes
@@ -210,9 +210,9 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 {
 //    id object = [UserDefault objectForKey:@"LastPresentAlertDate"];
 //    NSLog(@"%@",object);
-    if ([UserDefault objectForKey:@"LastPresentAlertDate"])
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"LastPresentAlertDate"])
     {
-        NSDate *lastDate = [UserDefault objectForKey:@"LastPresentAlertDate"];
+        NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"LastPresentAlertDate"];
         NSDate *nowDate = [NSDate date];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         unsigned int unitFlags = NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitMinute;
@@ -220,8 +220,8 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
         if (comps.day >interval||comps.month>0)
 //        if (comps.day >interval||comps.month>0 ||comps.minute>=0)
         {
-            [UserDefault setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
-            [UserDefault synchronize];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             return YES;
         }
         return NO;
@@ -229,8 +229,8 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
     }
     else
     {
-        [UserDefault setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
-        [UserDefault synchronize];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastPresentAlertDate"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     return YES;
 }
@@ -241,30 +241,30 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 
 + (void)setMyAppUserNotificationOpenType:(UDAuthorizationStatus)type
 {
-    [UserDefault setInteger:type forKey:ud_userNotificationType];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setInteger:type forKey:ud_userNotificationType];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSInteger)getMyAppUserNotificationOpenType
 {
-    return [UserDefault integerForKey:ud_userNotificationType];
+    return [[NSUserDefaults standardUserDefaults] integerForKey:ud_userNotificationType];
 }
 
 #pragma mark -
 
 + (void)setDidFinishLaunchRemoteNoti:(NSString *)url
 {
-    [UserDefault setObject:url forKey:@"remoteUrl"];
+    [[NSUserDefaults standardUserDefaults] setObject:url forKey:@"remoteUrl"];
 }
 
 + (NSString *)getDidFinishLaunchRemoteNoti
 {
-   return [UserDefault objectForKey:@"remoteUrl"];
+   return [[NSUserDefaults standardUserDefaults] objectForKey:@"remoteUrl"];
 }
 
 + (void)removeDidFinishLaunchRemoteNoti
 {
-    [UserDefault removeObjectForKey:@"remoteUrl"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"remoteUrl"];
 }
 
 + (BOOL)isOpenAppRemoteNoti
@@ -282,49 +282,49 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 
 + (void)setkAPP_BaseURL:(NSString *)baseURL
 {
-    [UserDefault setObject:baseURL forKey:kbaseUrl];
+    [[NSUserDefaults standardUserDefaults] setObject:baseURL forKey:kbaseUrl];
 }
 + (NSString *)getkAPP_BaseURL
 {
-    return [UserDefault objectForKey:kbaseUrl];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kbaseUrl];
 }
 
 + (void)setkAPP_H5URL:(NSString *)h5URL
 {
-    [UserDefault setObject:h5URL forKey:kh5URL];
+    [[NSUserDefaults standardUserDefaults] setObject:h5URL forKey:kh5URL];
 }
 + (NSString *)getkAPP_H5URL
 {
-    return [UserDefault objectForKey:kh5URL];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kh5URL];
 }
 
 + (void)setkURL_WXAPPID:(NSString *)wxAppID
 {
-    [UserDefault setObject:wxAppID forKey:kWxAppId];
+    [[NSUserDefaults standardUserDefaults] setObject:wxAppID forKey:kWxAppId];
 }
 
 + (NSString *)getkURL_WXAPPID
 {
-    return [UserDefault objectForKey:kWxAppId];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kWxAppId];
 }
 
 
 + (void)setkCookieDomain:(NSString *)cookieDomain
 {
-    [UserDefault setObject:cookieDomain forKey:@"cookieDomain"];
+    [[NSUserDefaults standardUserDefaults] setObject:cookieDomain forKey:@"cookieDomain"];
 }
 + (NSString *)getkCookieDomain
 {
-    return [UserDefault objectForKey:@"cookieDomain"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"cookieDomain"];
 }
 
 + (void)setOpenChangeDomain:(BOOL)isOpen
 {
-    [UserDefault setBool:isOpen forKey:@"changeDomain"];
+    [[NSUserDefaults standardUserDefaults] setBool:isOpen forKey:@"changeDomain"];
 }
 + (BOOL)getOpenChangeDomain
 {
-    return [UserDefault boolForKey:@"changeDomain"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"changeDomain"];
 }
 
 
@@ -338,113 +338,113 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 }
 + (void)setNimAccid:(NSString *)key
 {
-    [UserDefault setObject:key forKey:@"accid"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"accid"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
 
 }
 + (NSString *)getNimAccid
 {
-    return [UserDefault objectForKey:@"accid"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"accid"];
 }
 
 + (void)setNimPWD:(NSString *)key
 {
-    [UserDefault setObject:key forKey:@"nimPwd"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"nimPwd"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 + (NSString *)getNimPWD
 {
-    return [UserDefault objectForKey:@"nimPwd"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"nimPwd"];
  
 }
 
 
 + (void)setNiMMyInfoUrl:(NSString *)key
 {
-    [UserDefault setObject:key forKey:@"nimMyInfo"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"nimMyInfo"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (NSString *)getNiMMyInfoUrl
 {
-    return [UserDefault objectForKey:@"nimMyInfo"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"nimMyInfo"];
 }
 
 + (void)setUserTargetRoleType:(NSInteger)key{
-    [UserDefault setInteger:key forKey:@"TargetRoleType"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setInteger:key forKey:@"TargetRoleType"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (WYTargetRoleType)getUserTargetRoleType{
    
-    return [UserDefault integerForKey:@"TargetRoleType"];
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"TargetRoleType"];
 }
 
 + (void)setChangeUserTargetRoleSource:(NSInteger)key
 {
-    [UserDefault setInteger:key forKey:@"TargetRoleSource"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setInteger:key forKey:@"TargetRoleSource"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
  
 }
 + (NSInteger)getChangeUserTargetRoleSource
 {
-    return [UserDefault integerForKey:@"TargetRoleSource"];
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"TargetRoleSource"];
 }
 
 
 #pragma mark - 功能引导
 + (void)setNewFunctionGuide_Trade
 {
-    [UserDefault setBool:YES forKey:ud_NewFunctionGuide_Trade];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ud_NewFunctionGuide_Trade];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (BOOL)getNewFunctionGuide_Trade
 {
-    return [UserDefault boolForKey:ud_NewFunctionGuide_Trade];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ud_NewFunctionGuide_Trade];
 }
 
 +(void)setTouchTradeSet
 {
-    [UserDefault setBool:YES forKey:ud_TouchTradeSet];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ud_TouchTradeSet];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (BOOL)getTouchTradeSet
 {
-    return [UserDefault boolForKey:ud_TouchTradeSet];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ud_TouchTradeSet];
 }
 
 + (void)setNewFunctionGuide_ShopHomeV1
 {
-    [UserDefault setBool:YES forKey:@"ud_NewFunctionGuide_ShopHome_V1"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ud_NewFunctionGuide_ShopHome_V1"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (BOOL)getNewNewFunctionGuide_ShopHomeV1
 {
-    return [UserDefault boolForKey:@"ud_NewFunctionGuide_ShopHome_V1"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ud_NewFunctionGuide_ShopHome_V1"];
 }
 
 + (void)setNewFunctionGuide_MineV1
 {
-    [UserDefault setBool:YES forKey:@"ud_NewFunctionGuide_Mine_V1"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ud_NewFunctionGuide_Mine_V1"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (BOOL)getNewNewFunctionGuide_MineV1
 {
-    return [UserDefault boolForKey:@"ud_NewFunctionGuide_Mine_V1"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ud_NewFunctionGuide_Mine_V1"];
 }
 
 // 商户端-上传产品-引导上传产品图片
 + (void)setNewFunctionGuide_AddProPicV1
 {
-    [UserDefault setBool:YES forKey:@"ud_NewFunctionGuide_AddProPic_V1"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ud_NewFunctionGuide_AddProPic_V1"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (BOOL)getNewFunctionGuide_AddProPicV1
 {
-    return [UserDefault boolForKey:@"ud_NewFunctionGuide_AddProPic_V1"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ud_NewFunctionGuide_AddProPic_V1"];
 }
 
 
@@ -452,54 +452,54 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 //设置卖家开屏图地址
 + (void)setOpenAPPSellerAdvURL:(NSString *)url
 {
-    [UserDefault setObject:url forKey:ud_OpenAPPSellerAdvURL];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:url forKey:ud_OpenAPPSellerAdvURL];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSString *)getOpenAPPSellerAdvURL
 {
-    return [UserDefault objectForKey:ud_OpenAPPSellerAdvURL];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:ud_OpenAPPSellerAdvURL];
 }
 
 + (void)removeOpenAPPSellerAdvURL
 {
-    [UserDefault removeObjectForKey:ud_OpenAPPSellerAdvURL];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:ud_OpenAPPSellerAdvURL];
 }
 
 //设置买家开屏图地址
 + (void)setOpenAPPPurchaserAdvURL:(NSString *)url
 {
-    [UserDefault setObject:url forKey:ud_OpenAPPPurchaserAdvURL];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:url forKey:ud_OpenAPPPurchaserAdvURL];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSString *)getOpenAPPPurchaserAdvURL
 {
-    return [UserDefault objectForKey:ud_OpenAPPPurchaserAdvURL];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:ud_OpenAPPPurchaserAdvURL];
 }
 
 + (void)removeOpenAPPPurchaserAdvURL
 {
-    [UserDefault removeObjectForKey:ud_OpenAPPPurchaserAdvURL];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:ud_OpenAPPPurchaserAdvURL];
 }
 
 + (void)setMakeBillPreviewSet
 {
-    [UserDefault setBool:YES forKey:ud_MakeBillPreview_Set];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ud_MakeBillPreview_Set];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (BOOL)getMakeBilglPreviewSet
 {
-    return [UserDefault boolForKey:ud_MakeBillPreview_Set];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ud_MakeBillPreview_Set];
 }
 + (void)setMakeBillPreviewPrintf;
 {
-    [UserDefault setBool:YES forKey:ud_MakeBillPreview_Printf];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ud_MakeBillPreview_Printf];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 + (BOOL)getMakeBilglPreviewPrintf
 {
-    return [UserDefault boolForKey:ud_MakeBillPreview_Printf];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ud_MakeBillPreview_Printf];
 }
 @end
 

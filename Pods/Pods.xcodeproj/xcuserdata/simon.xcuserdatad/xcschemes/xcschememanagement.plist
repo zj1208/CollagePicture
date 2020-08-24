@@ -99,11 +99,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>UMCAnalytics.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>UMCCommon.xcscheme</key>
 		<dict>
 			<key>isShown</key>

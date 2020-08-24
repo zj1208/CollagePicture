@@ -221,11 +221,11 @@ typedef NS_ENUM(NSInteger, AppActiveFromType)
 -(void)addUMengAnalytics
 {
     [UMConfigure initWithAppkey:kUMAppKey channel:@"App Store"];
-//    #ifdef DEBUG
-//        [UMConfigure setLogEnabled:YES];
-//    #else
-//        [UMConfigure setLogEnabled:NO];
-//    #endif
+    #ifdef DEBUG
+        [UMConfigure setLogEnabled:YES];
+    #else
+        [UMConfigure setLogEnabled:NO];
+    #endif
 //    设置为自动采集页面
     [MobClick setAutoPageEnabled:YES];
 }

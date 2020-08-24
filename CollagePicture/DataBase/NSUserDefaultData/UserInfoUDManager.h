@@ -1,14 +1,17 @@
 //
 //  UserInfoUDManager.h
-//  
+//
 //
 //  Created by simon on 15/6/17.
 //  Copyright (c) 2015年 sina. All rights reserved.
 //
-// 2017.12.22
-// 增加WK的cookie容器清理； 修改wkWebView的清理缓存不包括cookie
+//  简介：一个管理用户有关的本地数据简单管理器；待优化更方便的方法；
+
+// 2017.12.22 增加WK的cookie容器清理； 修改wkWebView的清理缓存不包括cookie
 // 2018.4.02；优化代码；
 // 2019.12.31 修改通知定义的参数类型
+// 2020.5.07 优化代码
+// 2020.8.20 修改常量
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
@@ -20,21 +23,22 @@ FOUNDATION_EXPORT NSNotificationName const kNotificationUpdateUserInfo;
 FOUNDATION_EXPORT NSNotificationName const kNotificationUserTokenError;
 
 
-//用户有关的相对应数据
-#define UserDefault  [NSUserDefaults standardUserDefaults]
-
-
-
 #define ISLOGIN         [UserInfoUDManager isLogin]
 #define USER_TOKEN      [UserInfoUDManager getToken]
 #define USER_ID         [UserInfoUDManager getUserId]
-#define USER_NICKNAME   [UserInfoUDManager getNickname]
 
-//个推定义
-static NSString *const  ud_GTClientId = @"clientId";
+///用户token
+static NSString *const ud_token = @"ud_token";
+///用户id
+static NSString *const ud_uId = @"ud_uId";
+///app版本号
+static NSString *const ud_saveVersion = @"ud_saveVersion";
+///商铺id
+static NSString *const ud_shopId = @"ud_shopId";
+//第三方推送id定义
+static NSString *const ud_clientId = @"clientId";
 //苹果注册的设备token
-static NSString *const  ud_deviceToken = @"deviceToken";
-
+static NSString *const ud_deviceToken = @"deviceToken";
 
 @interface UserInfoUDManager : NSObject
 
@@ -43,17 +47,6 @@ static NSString *const  ud_deviceToken = @"deviceToken";
 
 + (void)setUserId:(NSString *)uid;
 + (NSString *)getUserId;
-
-
-
-/**
- *  传输层加密用的appKey
- *
- *  @param appKey 服务器取得
- */
-+ (void)setAppKey:(NSString *)appKey;
-
-+(NSString *)getAppKey;
 
 
 
@@ -145,8 +138,8 @@ static NSString *const  ud_deviceToken = @"deviceToken";
 
 #pragma mark - 登录／退出
 
-+ (void)loginOut;
-+ (void)loginIn;
++ (void)logout;
++ (void)login;
 //可以区分不同api，处理不同业务用不同方式，比如聊天API的token错误不需要重新登录，自己服务器API的token错误需要重新登录；
 + (void)reLoginingWithTokenErrorAPI:(NSString *)api;
 

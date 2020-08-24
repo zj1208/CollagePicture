@@ -327,7 +327,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
             userModel.phone = user.mobilePhoneNumber ;
             userModel.username = user.username;
             [UserInfoUDManager setUserData:userModel];
-            [UserInfoUDManager loginIn];
+            [UserInfoUDManager login];
 
             [MBProgressHUD zx_showSuccess:@"注册成功" toView:nil];
             

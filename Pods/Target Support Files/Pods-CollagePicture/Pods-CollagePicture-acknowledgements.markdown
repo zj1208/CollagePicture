@@ -522,11 +522,6 @@ SOFTWARE.
 
 
 
-## UMCAnalytics
-
-Copyright 2011 - 2019 umeng.com. All rights reserved.
-
-
 ## UMCCommon
 
 Copyright 2011 - 2019 umeng.com. All rights reserved.

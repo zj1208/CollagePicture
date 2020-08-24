@@ -203,7 +203,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
             userModel.phone = user.mobilePhoneNumber;
             userModel.username = user.username;
             [UserInfoUDManager setUserData:userModel];
-            [UserInfoUDManager loginIn];
+            [UserInfoUDManager login];
             [UserInfoUDManager setUserId:user.objectId];
             [MBProgressHUD zx_hideHUDForView:nil];
             [weakSelf dismissViewControllerAnimated:YES completion:nil];

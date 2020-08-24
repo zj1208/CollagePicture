@@ -1,6 +1,6 @@
 //
 //  UserInfoUDManager.m
-//  
+//
 //
 //  Created by simon on 15/6/17.
 //  Copyright (c) 2015年 sina. All rights reserved.
@@ -15,23 +15,13 @@ NSNotificationName const kNotificationUpdateUserInfo = @"kNotificationUpdateUser
 NSNotificationName const kNotificationUserTokenError = @"kNotificationUserTokenError";
 
 
-static NSString *const ud_saveVersion = @"ud_saveVersion";
 
 static NSString *const ud_saveLoginInputPhone_develop = @"ud_saveLoginInputPhone_develop";
 static NSString *const ud_saveLoginInputPhone_test = @"ud_saveLoginInputPhone_test";
 static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_online";
 
+
 @implementation UserInfoUDManager
-
-#define UID            @"uid"
-#define Appkey         @"BabyAppkey"
-#define Token          @"token"
-
-
-
-
-
-
 
 
 + (bool)isLogin
@@ -46,98 +36,33 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 }
 
 
-
 + (void)setUserId:(NSString *)uid
 {
-    [UserDefault setObject:uid forKey:UID];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:uid forKey:ud_uId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
-
-
 
 + (NSString *)getUserId {
-    return [UserDefault stringForKey:UID];
+    return [[NSUserDefaults standardUserDefaults] stringForKey:ud_uId];
 }
+
+
+
 
 + (void)setToken:(NSString *)token
 {
-    [UserDefault setObject:token forKey:Token];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:ud_token];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
-+(NSString *)getToken
++ (NSString *)getToken
 {
-    return [UserDefault objectForKey:Token];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:ud_token];
 }
 
 
-+ (void)setAppKey:(NSString *)appKey
-{
-    [UserDefault setObject:appKey forKey:Appkey];
-}
 
-+ (NSString *)getAppKey
-{
-    return [UserDefault objectForKey:Appkey];
-}
-
-
-+ (void)removeData
-{
-    [UserDefault removeObjectForKey:UID];
-    [UserDefault  synchronize];
-    [UserDefault removeObjectForKey:Token];
-    [UserDefault  synchronize];
-    [UserDefault removeObjectForKey:Appkey];
-    [UserDefault  synchronize];
-    [UserDefault removeObjectForKey:@"shopId"];
-    [UserDefault  synchronize];
-    [UserInfoUDManager cleanCookies];
-}
-
-
-// 本地cookie一定要清理，退出后传给服务端cookie，会造成服务器取出来签名bug；
-+ (void)cleanCookies
-{
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    NSArray *cookieArray = [NSArray arrayWithArray:[cookieStorage cookies]];
-    if (cookieArray.count>0)
-    {
-        for (id obj in cookieArray) {
-            [cookieStorage deleteCookie:obj];
-        }
-    }
-// getAllCookies:不能使用，即使上面方法没有，使用下面方法也会崩溃；刚登录的时候使用getAllCookies:也会崩溃
-//    不会崩溃？
-//    if (@available(iOS 11.0, *))
-//    {
-//        WKHTTPCookieStore *cookieStore = [WKWebsiteDataStore defaultDataStore].httpCookieStore;
-//        NSLog(@"%@",cookieStore);
-//        [cookieStore getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
-//
-//            NSLog(@"%@",cookies);
-//            [cookies enumerateObjectsUsingBlock:^(NSHTTPCookie * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//                [cookieStore deleteCookie:obj completionHandler:nil];
-//            }];
-//
-//        }];
-//    }
- }
-
-+ (void)cleanWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
-{
-    if ([[UIDevice currentDevice] systemVersion].floatValue >=9.f)
-    {
-        NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
-        //移除cookie，不删除WK的本地cookie
-        NSMutableSet *mSet = [NSMutableSet setWithSet:websieteDataTypes];
-        [mSet removeObject:WKWebsiteDataTypeCookies];
-        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
-        [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes:mSet modifiedSince:dateFrom completionHandler:completionHandler];
-    }
-}
 #pragma mark-自己用的方法
 
 /**
@@ -152,7 +77,7 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
         objc_property_t property = properties [i];
         const char *propertyName = property_getName(property);
         NSString *strName = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
-        [UserDefault removeObjectForKey:strName];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:strName];
     }
     free(properties);
 }
@@ -171,7 +96,7 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
         const char *propertyName = property_getName(property);
         NSString *strName = [NSString stringWithCString:propertyName encoding:NSUTF8StringEncoding];
         id getIvar = [model valueForKey:strName];
-        [UserDefault setObject:getIvar forKey:strName];
+        [[NSUserDefaults standardUserDefaults] setObject:getIvar forKey:strName];
         
     }
     free(properties);
@@ -216,48 +141,15 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 }
 
 
-
-
-#pragma mark -登录／退出
-
-+ (void)loginOut {
-    
-    [UserInfoUDManager removeData];
-    [UserInfoUDManager removeUserData];
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLogout object:self];
-}
-
-
-+ (void)reLoginingWithTokenErrorAPI:(NSString *)api
-{
-    [UserInfoUDManager removeData];
-    [UserInfoUDManager removeUserData];
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserTokenError object:self userInfo:@{@"api":api}];
-
-}
-
-+ (void)loginIn
-{
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLogin object:self];
-}
-
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
-
-
-
 + (void)setShopId:(id)shopId
 {
-    [UserDefault setObject:shopId forKey:@"shopId"];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:shopId forKey:ud_shopId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (id)getShopId
 {
-   return  [UserDefault objectForKey:@"shopId"];
+   return [[NSUserDefaults standardUserDefaults] objectForKey:@"shopId"];
 }
 
 + (BOOL)isOpenShop
@@ -274,25 +166,25 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 
 + (void)setRemoteNotiDeviceToken:(id)deviceToken
 {
-    [UserDefault setObject:deviceToken forKey:ud_deviceToken];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:ud_deviceToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (id)getRemoteNotiDeviceToken
 {
-    return [UserDefault objectForKey:ud_deviceToken];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:ud_deviceToken];
 }
 
 
 + (void)setClientId:(id)clientId
 {
-    [UserDefault setObject:clientId forKey:ud_GTClientId];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:ud_clientId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
  
 }
 + (id)getClientId
 {
-    return [UserDefault objectForKey:ud_GTClientId];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:ud_clientId];
 }
 
 
@@ -301,13 +193,13 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 
 + (void)setSaveVersion:(NSString *)version
 {
-    [UserDefault setObject:version forKey:ud_saveVersion];
-    [UserDefault synchronize];
+    [[NSUserDefaults standardUserDefaults] setObject:version forKey:ud_saveVersion];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (id)getSaveVersion
 {
-    return [UserDefault objectForKey:ud_saveVersion];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:ud_saveVersion];
 }
 
 //#pragma mark - 本地记录用户历史输入电话号码、国家区号
@@ -367,4 +259,88 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 //    return arr;
 //}
 
+
+#pragma mark -登录／退出
+
++ (void)logout {
+    
+    [UserInfoUDManager removeData];
+    [UserInfoUDManager removeUserData];
+    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLogout object:self];
+}
+
+
++ (void)reLoginingWithTokenErrorAPI:(NSString *)api
+{
+    [UserInfoUDManager removeData];
+    [UserInfoUDManager removeUserData];
+    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserTokenError object:self userInfo:@{@"api":api}];
+
+}
+
++ (void)login
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserLogin object:self];
+}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+
++ (void)removeData
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:ud_uId];
+    [[NSUserDefaults standardUserDefaults]  synchronize];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:ud_token];
+    [[NSUserDefaults standardUserDefaults]  synchronize];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:ud_shopId];
+    [[NSUserDefaults standardUserDefaults]  synchronize];
+    [UserInfoUDManager cleanCookies];
+}
+
+
+// 本地cookie一定要清理，退出后传给服务端cookie，会造成服务器取出来签名bug；
++ (void)cleanCookies
+{
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *cookieArray = [NSArray arrayWithArray:[cookieStorage cookies]];
+    if (cookieArray.count>0)
+    {
+        for (id obj in cookieArray) {
+            [cookieStorage deleteCookie:obj];
+        }
+    }
+// getAllCookies:不能使用，即使上面方法没有，使用下面方法也会崩溃；刚登录的时候使用getAllCookies:也会崩溃
+//    不会崩溃？
+//    if (@available(iOS 11.0, *))
+//    {
+//        WKHTTPCookieStore *cookieStore = [WKWebsiteDataStore defaultDataStore].httpCookieStore;
+//        NSLog(@"%@",cookieStore);
+//        [cookieStore getAllCookies:^(NSArray<NSHTTPCookie *> * _Nonnull cookies) {
+//
+//            NSLog(@"%@",cookies);
+//            [cookies enumerateObjectsUsingBlock:^(NSHTTPCookie * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//                [cookieStore deleteCookie:obj completionHandler:nil];
+//            }];
+//
+//        }];
+//    }
+ }
+
++ (void)cleanWebsiteDataWithCompletionHandler:(void (^)(void))completionHandler
+{
+    if ([[UIDevice currentDevice] systemVersion].floatValue >=9.f)
+    {
+        NSSet *websieteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+        //移除cookie，不删除WK的本地cookie
+        NSMutableSet *mSet = [NSMutableSet setWithSet:websieteDataTypes];
+        [mSet removeObject:WKWebsiteDataTypeCookies];
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes:mSet modifiedSince:dateFrom completionHandler:completionHandler];
+    }
+}
 @end

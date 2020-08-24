@@ -222,7 +222,7 @@ int b =3;
         if (buttonIndex ==alertController.destructiveButtonIndex)
         {
             [MBProgressHUD zx_showLoadingWithStatus:@"正在退出" toView:nil];
-            [UserInfoUDManager loginOut];
+            [UserInfoUDManager logout];
             [BmobUser logout];
             [MBProgressHUD zx_hideHUDForView:nil];
             [weakSelf.tableView reloadData];

@@ -27,7 +27,5 @@
 
 #import "WYUserDefaultManager.h"
 
-//友盟统计
-#import <UMAnalytics/MobClick.h>
-
+#import <UMCommon/MobClick.h>
 #endif
