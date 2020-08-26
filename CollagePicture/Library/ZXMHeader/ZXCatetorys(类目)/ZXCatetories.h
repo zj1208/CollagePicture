@@ -37,6 +37,7 @@
 #import "UIImage+ZXGIF.h"
 #import "UIImage+ZXHelper.h"
 #import "UIImage+ZXCIImage.h"
+#import "UIImage+ZXCompression.h"
 
 #import "UILabel+ZXCategory.h"
 #import "UINavigationBar+ShadeColor.h"

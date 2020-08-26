@@ -186,7 +186,7 @@ NSInteger const kAPPErrorCode_Token = 5001;
 //            [alert show];
             NSError * error = [self customErrorWithObject:@"您的登录已失效，请重新登录！" errorCode:kAPPErrorCode_Token userInfoErrorCode:nil];
             //可以区分不同api，处理不同业务
-            [UserInfoUDManager reLoginingWithTokenErrorAPI:[meta objectForKey:@"api"]];
+            [UserInfoUDManager postTokenErrorNotificationWithUserInfo:nil];
             if (failure)
             {
                 failure(error);

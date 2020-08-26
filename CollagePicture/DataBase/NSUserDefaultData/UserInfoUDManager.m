@@ -270,12 +270,11 @@ static NSString *const ud_saveLoginInputPhone_online = @"ud_saveLoginInputPhone_
 }
 
 
-+ (void)reLoginingWithTokenErrorAPI:(NSString *)api
++ (void)postTokenErrorNotificationWithUserInfo:(NSDictionary *)userInfo
 {
     [UserInfoUDManager removeData];
     [UserInfoUDManager removeUserData];
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserTokenError object:self userInfo:@{@"api":api}];
-
+    [[NSNotificationCenter defaultCenter]postNotificationName:kNotificationUserTokenError object:self userInfo:userInfo];
 }
 
 + (void)login

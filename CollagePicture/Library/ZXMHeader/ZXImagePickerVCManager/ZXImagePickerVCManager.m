@@ -271,6 +271,13 @@ static char pickerControllerActionKey;
          {
              image = [info objectForKey:UIImagePickerControllerOriginalImage];
          }
+//         NSDictionary *metadataInfo = [info objectForKey:UIImagePickerControllerMediaMetadata];
+//         DLog(@"%@",metadataInfo);
+//         NSData *jpegData = UIImageJPEGRepresentation(image, 1);
+//         NSData *pngData = UIImagePNGRepresentation(image);
+//         int fixelW = (int)image.size.width;
+//         int fixelH = (int)image.size.height;
+//         DLog(@"iOS image data size before compressed:jpeg == %f MB,png == %f MB, image == %@ ,imageOrientation=%@,size:w=%d,h=%d",jpegData.length/1024.0/1024.0,pngData.length/1024.0/1024.0, image,@(image.imageOrientation),fixelW,fixelH);
          //如果是camera的照片,save original photos到photosAlbum
          if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
          {
@@ -279,6 +286,7 @@ static char pickerControllerActionKey;
          }
          if ([self.delegate respondsToSelector:@selector(zxImagePickerController:didFinishPickingMediaWithInfo:withEditedImage:)])
          {
+//             UIImage *fixImage = image;
              UIImage *fixImage = [self fixOrientation:image];
              [self.delegate zxImagePickerController:picker didFinishPickingMediaWithInfo:info withEditedImage:fixImage];
          }
@@ -337,7 +345,9 @@ static char pickerControllerActionKey;
 }
 
 
-/// 修正图片转向
+/// 修正图片转向属性imageOrientation，其它不变；--为什么要转，在iOS上设备展示没问题的呢，好奇怪，大部分是UIImageOrientationRight方向的,？
+//转向前：<UIImage:0x283a2a760 anonymous {3024, 4032}> ,imageOrientation=3
+//转向后：<UIImage:0x283a2a760 anonymous {3024, 4032}> ,imageOrientation=0
 - (UIImage *)fixOrientation:(UIImage *)aImage {
 //    if (!self.shouldFixOrientation) return aImage;
     
@@ -417,3 +427,17 @@ static char pickerControllerActionKey;
 }
 
 @end
+
+//
+//拍照存储的照片：
+//jpeg == 5.948195 MB,png == 20.700935 MB, image == <UIImage:0x282c63b10 anonymous {3024, 4032}> ,imageOrientation=3
+//横向：jpeg == 4.671441 MB,png == 12.607887 MB, image == <UIImage:0x282c6cea0 anonymous {4032, 3024}> ,imageOrientation=0
+
+//网络图片：
+//jpeg == 2.469869 MB,png == 11.081782 MB, image == <UIImage:0x282c60990 anonymous {2600, 3900}> ,imageOrientation=0
+
+//截屏照片：
+//jpeg == 0.407666 MB,png == 0.493250 MB, image == <UIImage:0x282c7d050 anonymous {750, 1334}> ,imageOrientation=0
+
+//拍照：
+//jpeg == 4.699715 MB,png == 16.767288 MB, image == <UIImage:0x282c786c0 anonymous {3024, 4032}> ,imageOrientation=3

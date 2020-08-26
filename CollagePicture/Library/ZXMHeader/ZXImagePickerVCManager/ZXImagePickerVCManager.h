@@ -18,9 +18,11 @@
 //  key4: Privacy - Microphone Usage Description 相机拍视频权限
 // （3）如果需要显示中文字，则必须在Localized里添加支持Chinese简体中文;
 
+
 //  2018.3.28； 优化代码；
 //  2019.4.18 增加权限检查及提示的管理器；
 //  2020.3.31 优化代码，增加属性控制；增加image图片修正；
+//  8.26 研究原照片大小及记录
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
