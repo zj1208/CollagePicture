@@ -107,7 +107,7 @@
 
 - (NSArray *)zx_windows
 {
-    NSArray *windows = [NSArray array];
+    NSArray *windows = nil;
     if (@available(iOS 13.0,*)) {
         NSSet *set = [UIApplication sharedApplication].connectedScenes;
         UIWindowScene *scene = (UIWindowScene *)[[set allObjects] firstObject];

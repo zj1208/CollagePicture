@@ -271,6 +271,11 @@ static char pickerControllerActionKey;
          {
              image = [info objectForKey:UIImagePickerControllerOriginalImage];
          }
+         //解决在拍照后出现异常，回调image是nil的处理；
+         if (!image) {
+             [picker dismissViewControllerAnimated:YES completion:nil];
+             return;
+         }
 //         NSDictionary *metadataInfo = [info objectForKey:UIImagePickerControllerMediaMetadata];
 //         DLog(@"%@",metadataInfo);
 //         NSData *jpegData = UIImageJPEGRepresentation(image, 1);
@@ -427,6 +432,15 @@ static char pickerControllerActionKey;
 }
 
 @end
+
+/*
+ 打开闪光灯，然后拍照，拍照的时候同时锁屏。 解锁屏幕后看到相机已经进入预览界面，不过界面是完全的黑色:
+ 报错如下：
+ 2020-08-27 15:48:07.533159+0800 菜划算销售端[348:7413] [hcln] HapticClient.mm:352:-[HapticClient finish:]: Player was not running - bailing with error Error Domain=com.apple.CoreHaptics Code=-4805 "(null)" for client 0x100015c
+ 2020-08-27 15:48:07.534625+0800 菜划算销售端[348:7413] [Feedback] core haptics engine finished for <_UIFeedbackCoreHapticsIgnoreCaptureHapticsOnlyEngine: 0x2838d6060> with error: Error Domain=com.apple.CoreHaptics Code=-4805 "(null)"
+ 2020-08-27 15:48:08.020081+0800 菜划算销售端[348:8710] [Camera] Attempting to generate BGRA thumbnail data of format 5003 with an invalid surface.
+ */
+
 
 //
 //拍照存储的照片：

@@ -5,12 +5,15 @@
 //  Created by simon on 17/6/22.
 //  Copyright © 2017年 com.Microants. All rights reserved.
 //
+//  简介：支持iOS13 SDK的UIWindowScene；
+
 //  2018.4.12  优化延长时间的bug；
 //  2018.08.01  修改获取需要添加toast的window对象，目前debug先用，线上不用
 //  2018.8.22 添加‘加载由多张图片组成的动画’的方法
 //  2019.12.07 附加errorCode的失败提示
 //  2020.2.04  优化带errorCode的失败提示的方法
 //  2020.02.28  增加附加errorCode的错误提示的指定隐藏时间参数；
+//  2020.3.20 为了兼容iOS13 SDK的UIWindowScene，修改获取windows方法；待验证；
 
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -56,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)zx_showError:(nullable NSString *)error toView:(nullable UIView *)view hideAfterDelay:(NSTimeInterval)delay;
 
 
-/// 附加errorCode的错误提示，title后面增加errorCode的提示; 2019.12.07
+/// 附加errorCode的错误提示，title后面增加errorCode的提示; 2019.12.07，chs业务需求；
 /// @param title 错误提示文本的title；
 /// @param error NSError对象；
 /// @param view 所加的view层，如果传nil，默认window；

@@ -25,11 +25,7 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
 {
     if (!view)
     {
-#ifdef DEBUG
-        view = [MBProgressHUD getFrontWindow];
-#else
-        view = [[UIApplication sharedApplication].windows lastObject];
-#endif
+        view = [MBProgressHUD getCurrentWindow];
     }
     MBProgressHUD *hud = [MBProgressHUD HUDForView:view];
     if (!hud)
@@ -82,6 +78,11 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
          }
         errorTitle = [NSString stringWithFormat:@"%@(%@)",eTitle,@(error.code)];
     }
+    //添加购物车时候有关的code码-菜划算进货绑定业务
+    else if (error.code == 4403 || error.code == 7010 || error.code == 4027 || error.code == 4244 || error.code == 4032 || error.code == 4035 || error.code == 4034 || error.code ==4033 || error.code == 4021)
+    {
+        errorTitle = title;
+    }
     else
     {
         errorTitle = [NSString stringWithFormat:@"%@(%@)",title,@(error.code)];
@@ -98,15 +99,7 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
 {
     if (!view)
     {
-        #ifdef DEBUG
-        view = [MBProgressHUD getFrontWindow];
-        #else
-        view = [[UIApplication sharedApplication].windows lastObject];
-        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
-        {
-            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
-        }
-        #endif
+        view = [MBProgressHUD getCurrentWindow];
     }
     [MBProgressHUD hideHUDForView:view animated:YES];
     
@@ -158,15 +151,7 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
 {
     if (!view)
     {
-#ifdef DEBUG
-        view = [MBProgressHUD getFrontWindow];
-#else
-        view = [[UIApplication sharedApplication].windows lastObject];
-        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
-        {
-            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
-        }
-#endif
+        view = [MBProgressHUD getCurrentWindow];
     }
     UIImage *image = [UIImage zx_animatedGIFNamed:gifName];
     UIImageView *gifView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,image.size.width/2, image.size.height/2)];
@@ -194,17 +179,8 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
 + (void)zx_showGifWithGifName:(NSString *)gifName Text:(nullable NSString *)aText time:(CGFloat)time toView:(nullable UIView *)view{
     if (!view)
     {
-#ifdef DEBUG
-        view = [MBProgressHUD getFrontWindow];
-#else
-        view = [[UIApplication sharedApplication].windows lastObject];
-        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
-        {
-            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
-        }
-#endif
+        view = [MBProgressHUD getCurrentWindow];
     }
-    
     UIImage *image = [UIImage zx_animatedGIFNamed:gifName];
     UIImageView *gifView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,image.size.width/2, image.size.height/2)];
     gifView.image = image;
@@ -233,18 +209,52 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
 {
     if (!view)
     {
-        #ifdef DEBUG
-        view = [MBProgressHUD getFrontWindow];
-        #else
-        view = [[UIApplication sharedApplication].windows lastObject];
-        #endif
+        view = [MBProgressHUD getCurrentWindow];
     }
    return [MBProgressHUD hideHUDForView:view animated:NO];
 }
 
+
++ (nullable UIWindow *)getCurrentWindow
+{
+    UIWindow *view  = nil;
+    view = [self getFrontWindow];
+//    #ifdef DEBUG
+//    view = [self getFrontWindow];
+//    #else
+//    view = [[UIApplication sharedApplication].windows lastObject];
+//    if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
+//    {
+//        view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
+//    }
+//    #endif
+    return view;
+}
+
++ (NSArray *)getWindows
+{
+    NSArray *windows = nil;
+    if (@available(iOS 13.0,*)) {
+        NSSet *set = [UIApplication sharedApplication].connectedScenes;
+        UIWindowScene *scene = (UIWindowScene *)[[set allObjects] firstObject];
+        id sceneDelegate = scene.delegate;
+        if (!sceneDelegate){
+            windows = UIApplication.sharedApplication.windows;
+        }
+        else
+        {
+            windows = scene.windows;
+        }
+    }else{
+        windows = UIApplication.sharedApplication.windows;
+    }
+    
+    return windows;
+}
+
 + (nullable UIWindow *)getFrontWindow
 {
-    NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
+    NSEnumerator *frontToBackWindows = [[self getWindows] reverseObjectEnumerator];
     for (UIWindow *window in frontToBackWindows)
     {
         BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
@@ -265,15 +275,7 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
 {
     if (!view)
     {
-#ifdef DEBUG
-        view = [MBProgressHUD getFrontWindow];
-#else
-        view = [[UIApplication sharedApplication].windows lastObject];
-        if ([view isKindOfClass:NSClassFromString(@"_UIInteractiveHighlightEffectWindow")])
-        {
-            view = [[UIApplication sharedApplication].windows objectAtIndex:[UIApplication sharedApplication].windows.count-2];
-        }
-#endif
+        view = [MBProgressHUD getCurrentWindow];
     }
     
     NSMutableArray *arrayM = [NSMutableArray array];
@@ -284,7 +286,6 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
             [arrayM addObject:image];
         }
     }
-    
     UIImage *image = arrayM.firstObject;
     UIImageView *gifView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0,image.size.width/2, image.size.height/2)];
     gifView.animationImages = arrayM;
@@ -297,8 +298,6 @@ static  NSString *const ERROR_SERVER  = @"哎呀！粗问题了，请稍后再�
     {
         hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     }
-    //    hud.bezelView.backgroundColor = [UIColor clearColor];
-    //    hud.backgroundView.backgroundColor =[UIColor clearColor];
     hud.square = NO;
     hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
     hud.bezelView.color = [UIColor clearColor];

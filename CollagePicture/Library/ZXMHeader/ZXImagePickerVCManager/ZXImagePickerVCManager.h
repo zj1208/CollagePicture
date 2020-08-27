@@ -23,6 +23,7 @@
 //  2019.4.18 增加权限检查及提示的管理器；
 //  2020.3.31 优化代码，增加属性控制；增加image图片修正；
 //  8.26 研究原照片大小及记录
+//  8.27 解决在拍照后出现异常，回调image是nil的处理；
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

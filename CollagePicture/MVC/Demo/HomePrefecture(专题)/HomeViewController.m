@@ -18,7 +18,7 @@ static NSString * const reuse_CellA = @"CellA";
 static NSString * const reuse_CellB = @"CellB";
 static NSString * const reuse_CellC = @"CellC";
 
-@interface HomeViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+@interface HomeViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,PrefectureCollectionCellDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -93,16 +93,19 @@ static NSString * const reuse_CellC = @"CellC";
 {
     if (indexPath.section == 1) {
         PrefectureCollectionCellTypeB *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuse_CellB forIndexPath:indexPath];
+        cell.delegate = self;
         [cell setData:nil];
         return cell;
     }
     if (indexPath.section == 2) {
         PrefectureCollectionCellTypeC *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuse_CellC forIndexPath:indexPath];
+        cell.delegate = self;
         [cell setData:nil];
         return cell;
     }
     PrefectureCollectionCellTypeA *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuse_CellA forIndexPath:indexPath];
     [cell setData:nil];
+    cell.delegate = self;
     return cell;
 }
 
@@ -110,6 +113,9 @@ static NSString * const reuse_CellC = @"CellC";
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
+    if (section == 0) {
+        return UIEdgeInsetsMake(10, 10, 10, 10);
+    }
     return UIEdgeInsetsMake(0, 10, 10, 10);
 }
 
@@ -138,6 +144,15 @@ static NSString * const reuse_CellC = @"CellC";
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+#pragma mark - PrefectureCollectionCellDelegate
+
+- (void)zx_prefectureCollectionCell:(BaseCollectionViewCell *)collectionViewCell didSelectItem:(HomePrefectureModelSubBanner *)bannerModel
+{
+
+}
+
 /*
 #pragma mark - Navigation
 

@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *line_horizontal;
 
-@property (nonatomic, weak)id<PrefectureCollectionCellDelegate>delegate;
+@property (nonatomic, weak) id<PrefectureCollectionCellDelegate>delegate;
 @property (nonatomic, strong) HomePrefectureModel *homeModel;
 @end
 
