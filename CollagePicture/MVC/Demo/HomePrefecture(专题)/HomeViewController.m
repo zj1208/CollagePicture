@@ -150,7 +150,7 @@ static NSString * const reuse_CellC = @"CellC";
 
 - (void)zx_prefectureCollectionCell:(BaseCollectionViewCell *)collectionViewCell didSelectItem:(HomePrefectureModelSubBanner *)bannerModel
 {
-
+    NSLogDebug(@"点击++++++");
 }
 
 /*

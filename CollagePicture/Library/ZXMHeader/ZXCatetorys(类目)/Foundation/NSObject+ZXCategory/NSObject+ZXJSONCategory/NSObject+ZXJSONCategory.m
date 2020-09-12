@@ -82,7 +82,50 @@
     if ([NSJSONSerialization isValidJSONObject:responseObject])
     {
         NSError *error = nil;
-        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&error];
+    
+        if (@available(iOS 13.0, *)) {
+            NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingWithoutEscapingSlashes error:&error];
+             if (!error && data!=nil)
+             {
+                 NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 return str;
+             }
+            return nil;
+        }else{
+            NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingFragmentsAllowed error:&error];
+             if (!error && data!=nil)
+             {
+                 NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 NSString *escapeString = [NSString zx_filterEscapeCharacterWithJsonString:str];
+                 return escapeString;
+             }
+        }
+    }
+    return nil;
+}
+
+
++ (NSString *)zx_getJSONSerializationStringFromJSONObject:(nullable id)responseObject options:(NSJSONWritingOptions)opt
+{
+    if ([NSJSONSerialization isValidJSONObject:responseObject])
+    {
+        NSError *error = nil;
+        if (@available(iOS 13.0, *)) {
+            //经过过滤转译符号的NSData
+            if (opt == NSJSONWritingWithoutEscapingSlashes) {
+                
+                NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:opt error:&error];
+                 if (!error && data!=nil)
+                 {
+                     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                     return str;
+                 }
+                return nil;
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:opt error:&error];
         if (!error && data!=nil)
         {
             NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
