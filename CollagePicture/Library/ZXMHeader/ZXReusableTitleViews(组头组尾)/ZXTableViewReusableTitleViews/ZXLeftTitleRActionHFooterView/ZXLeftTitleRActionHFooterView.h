@@ -5,6 +5,7 @@
 //  Created by 朱新明 on 2020/2/18.
 //  Copyright © 2020 com.Chs. All rights reserved.
 //
+//  2020.11.24 优化
 
 #import <UIKit/UIKit.h>
 
@@ -21,11 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 ///底线
 @property (weak, nonatomic) IBOutlet UIView *bottomLine;
 
-///设置左边距
-@property (nonatomic, assign) CGFloat leftTitleBtnToSuperLeft;
+///设置左边按钮-左边距
+@property (nonatomic, assign) CGFloat leftTitleBtnMarginLeft;
+///设置左边按钮-上边距
+@property (nonatomic, assign) CGFloat leftTitleBtnMarginTop;
 
-///设置右间距
-@property (nonatomic, assign) CGFloat rightTitleBtnToSuperRight;
+///设置右边按钮-右间距
+@property (nonatomic, assign) CGFloat rightTitleBtnMarginRight;
+
 
 @end
 

@@ -99,16 +99,27 @@
 
 
 /*********************************************************************************/
-//(375,667) (414,)
+
 #pragma mark
-#pragma mark-屏幕尺寸
+#pragma mark-屏幕尺寸-7个尺寸类型，10个像素类型。
 /***************************
  获取屏幕信息（尺寸，宽，高），bounds 就是屏幕的全部区域：例：
- iPhone4:{{0, 0},{320，480}}
- iPhone5:{{0, 0},{320，568}}
- iPhone6:{{0, 0},{375,667}}
- plus: {{0, 0}, {414,736}}
-iPhoneX:{{0, 0}, {414, 896}}
+ iPhone4:           {320，480}
+ iPhone5:           {320，568}
+ iPhone6:           {375, 667}   750x1334像素 4.7英寸
+ iPhone6 Plus:      {414, 736}  1080x1920像素 5.5英寸
+ iPhoneX:           {414, 896}  1125x2436像素
+ iPhoneXs:          {414, 896}  1125x2436像素 5.8英寸
+ iPhone Xs Max:     {414, 896}  1242x2688像素 6.5英寸
+ iPhone Xr:         {414, 896}   828x1792像素 6.1英寸
+ iPhone 11:         {414, 896}   828x1792像素 6.1英寸
+ iPhone 11 Pro:     {414, 896}  1125x2436像素 5.8英寸
+ iPhone 11 Pro Max: {414, 896}  1242x2688像素 6.5英寸
+ iPhone SE 2:       {375, 667}   750x1334像素 4.7英寸
+ iPhone 12:         {390, 844}  1170x2532像素1080P高清 6.1英寸
+ iPhone 12 mini:    {375, 812}  1080x2340像素>1080P高清 6.1英寸
+ iPhone 12 Pro:     {390, 844}  1170x2532像素1080P高清 6.1英寸
+ iPhone 12 Pro Max: {428, 926}  1284x2778像素1080P高清 6.7英寸
  ****************************/
 #ifndef LCDW
 #define LCDW ([[UIScreen mainScreen] bounds].size.width)
@@ -136,7 +147,7 @@ iPhoneX:{{0, 0}, {414, 896}}
 #define LCDScale_5Equal6_To6plus(X) ((IS_IPHONE_6P || IS_IPHONE_XX)? ((X)*SCREEN_MIN_LENGTH/375) : (X))
 #endif
 
-#pragma mark - 判断是什么设备
+#pragma mark - 判断是什么设备（不适合再用，设备会越来越多）
 
 #ifndef IS_IPHONE_4_OR_LESS
 
@@ -210,6 +221,7 @@ iPhoneX : {20, 0, 0, 0}
 #ifndef  kHEIGHT_SAFEAREA_NormalBottom
 #define  kHEIGHT_SAFEAREA_NormalBottom      (IS_IPHONE_XX ? 34.f: 0)
 #endif
+
 
 //*********************************************************************************
 

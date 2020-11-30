@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  #pragma mark - 例如：请求验证码
  - (void)requestSmsCodeBtnAction:(UIButton *)sender {
      
-     NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.loginContainerView.phoneTextField.text];
+     NSString *phoneNumber = [NSString zx_filterStringWithWhitespaceAndLine:self.loginContainerView.phoneTextField.text];
 
      if (![UITextField zx_validatePhoneNumber:phoneNumber])
      {

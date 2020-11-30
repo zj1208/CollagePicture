@@ -195,7 +195,7 @@
     NSString *selectContent = nil;
     if (self.addTextField && selectIndexPath.row == self.titles.count)
     {
-        if ([NSString zhIsBlankString:self.textViewText])
+        if ([ZXAlertChoseController isBlankString:self.textViewText])
         {
             [MBProgressHUD zx_showError:self.textViewPlaceholder toView:nil];
             return;
@@ -235,6 +235,21 @@
         return indexPath;
     }
     return nil;
+}
+
++ (BOOL)isBlankString:(nullable NSString *)string{
+   
+    if (!string || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
+    {
+        return YES;
+    }
+    return NO;
 }
 
 @end

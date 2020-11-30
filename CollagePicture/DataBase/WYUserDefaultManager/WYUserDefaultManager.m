@@ -270,7 +270,7 @@ NSString *const kNotificationUserChangeDomain = @"kNotificationUserChangeDomain"
 + (BOOL)isOpenAppRemoteNoti
 {
     NSString *noti = [self getDidFinishLaunchRemoteNoti];
-    if ([NSString zhIsBlankString:noti])
+    if ([NSString zx_isBlankString:noti])
     {
         return NO;
     }

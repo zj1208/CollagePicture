@@ -328,8 +328,8 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 // 点击搜索按钮-根据searchBar的text搜索-跳转到搜索详情2
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSString *text = [NSString zhFilterInputTextWithWittespaceAndLine:searchBar.text];
-    if ([NSString zhIsBlankString:text]) {
+    NSString *text = [NSString zx_filterStringWithWhitespaceAndLine:searchBar.text];
+    if ([NSString zx_isBlankString:text]) {
         return ;
     }
 
@@ -342,8 +342,8 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSString *text = [NSString zhFilterInputTextWithWittespaceAndLine:searchText];
-    if ([NSString zhIsBlankString:text]) {
+    NSString *text = [NSString zx_filterStringWithWhitespaceAndLine:searchText];
+    if ([NSString zx_isBlankString:text]) {
         self.suggestionController.view.hidden = YES;
         return;
     }
@@ -408,25 +408,25 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     }
     SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:indexPath.section-1];
     SearchTitleModelSub *titleModelSub = [titleModel.worlds objectAtIndex:indexPath.item];
-    if (![NSString zhIsBlankString:titleModelSub.preIcon]) {
+    if (![NSString zx_isBlankString:titleModelSub.preIcon]) {
         
         SearchCollectionViewLeftHotCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LeftHotCell" forIndexPath:indexPath];
         cell.titleLab.text = titleModelSub.name;
-        cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
+        cell.contentView.backgroundColor =[NSString zx_isBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
         cell.hotIconImageView.image = [UIImage imageNamed:@"m_cleanCache"];
         return cell;
     }
-    else if (![NSString zhIsBlankString:titleModelSub.suffIcon])
+    else if (![NSString zx_isBlankString:titleModelSub.suffIcon])
     {
         SearchCollectionViewHotCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HotCell" forIndexPath:indexPath];
         cell.titleLab.text = titleModelSub.name;
-        cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
+        cell.contentView.backgroundColor =[NSString zx_isBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
         cell.hotIconImageView.image = [UIImage imageNamed:@"m_cleanCache"];
         return cell;
     }
     SearchCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.titleLab.text = titleModelSub.name;
-    cell.contentView.backgroundColor =[NSString zhIsBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
+    cell.contentView.backgroundColor =[NSString zx_isBlankString:titleModelSub.bgColor]? [UIColor zx_colorWithHexString:@"F5F6F7"]: [UIColor zx_colorWithHexString:titleModelSub.bgColor];
     return cell;
 }
 
@@ -515,7 +515,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
     }
     SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:indexPath.section-1];
     SearchTitleModelSub *titleModelSub = [titleModel.worlds objectAtIndex:indexPath.item];
-    if (![NSString zhIsBlankString:titleModelSub.preIcon] || ![NSString zhIsBlankString:titleModelSub.suffIcon]) {
+    if (![NSString zx_isBlankString:titleModelSub.preIcon] || ![NSString zx_isBlankString:titleModelSub.suffIcon]) {
          
            static SearchCollectionViewHotCell *cell =  nil;
            static dispatch_once_t onceToken1;
@@ -558,7 +558,7 @@ static NSString * const reuse_FooterViewIdentifier = @"Footer";
         SearchTitleModel *titleModel = [self.dataMArray objectAtIndex:indexPath.section-1];
         SearchTitleModelSub *titleModelSub = [titleModel.worlds objectAtIndex:indexPath.item];
         [self addHistoryDataToArrayWithObject:titleModelSub.name];
-        if (![NSString zhIsBlankString:titleModelSub.appUrl]) {
+        if (![NSString zx_isBlankString:titleModelSub.appUrl]) {
               
             HomeViewController *vc = [[HomeViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];

@@ -169,7 +169,7 @@ static NSInteger const kAPPErrorCode = 5000;
 
 - (nullable id)getJSONSerializationObjectFromString:(nullable NSString *)string
 {
-    if ([NSString zhIsBlankString:string])
+    if ([ZXCheckAppItunesVersionManager isBlankString:string])
     {
         return nil;
     }
@@ -183,6 +183,20 @@ static NSInteger const kAPPErrorCode = 5000;
     return nil;
 }
 
++ (BOOL)isBlankString:(nullable NSString *)string{
+   
+    if (!string || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
+    {
+        return YES;
+    }
+    return NO;
+}
 
 -(void)checkVersionUpdateWithAppId:(NSString *)appId success:(void(^)(BOOL needUpdate))success failure:(void(^)(NSError *error))failure
 {

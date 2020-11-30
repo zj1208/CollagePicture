@@ -104,7 +104,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 
 - (void)signInBtnChangeAlpha:(NSNotification *)notification
 {
-    NSString *str = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameTextField.text];
+    NSString *str = [NSString zx_filterStringWithWhitespaceAndLine:self.userNameTextField.text];
     BOOL flag = str.length==11&&self.passwordTextField.text.length>3?YES:NO;
     [self.loginBtn zx_changeAlphaWithCurrentUserInteractionEnabled:flag];
 }
@@ -163,8 +163,8 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
 
 - (void)validatePhoneAndPassword
 {
-    NSString *userName = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameTextField.text];
-    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:self.passwordTextField.text];;
+    NSString *userName = [NSString zx_filterStringWithWhitespaceAndLine:self.userNameTextField.text];
+    NSString *password = [NSString zx_filterStringWithWhitespaceAndLine:self.passwordTextField.text];;
     if (![UITextField zx_validatePhoneNumber:userName])
     {
       [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
@@ -201,7 +201,7 @@ static NSInteger const PHONE_MAXLENGTH  = 11;
             UserModel *userModel = [[UserModel alloc] init];
             userModel.userId = @([user.objectId integerValue]);
             userModel.phone = user.mobilePhoneNumber;
-            userModel.username = user.username;
+            userModel.userName = user.username;
             [UserInfoUDManager setUserData:userModel];
             [UserInfoUDManager login];
             [UserInfoUDManager setUserId:user.objectId];

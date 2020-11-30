@@ -11,10 +11,14 @@
 @interface ZXLeftTitleRActionHFooterView ()
 
 ///设置左边button左边间距
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTitleBtnToSuperLeftLayout;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTitleBtnMarginLeftLayout;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTitleBtnMarginTopLayout;
 
 ///设置右边button右间距
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightTitleBtnToSuperRightLayout;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightTitleBtnMarginRightLayout;
+
+
 @end
 
 @implementation ZXLeftTitleRActionHFooterView
@@ -30,7 +34,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    self.contentView.backgroundColor = [UIColor whiteColor];
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     self.leftTitleBtn.titleLabel.font = [UIFont systemFontOfSize:14* screenWidth/375];
     self.rightTitleBtn.titleLabel.font = [UIFont systemFontOfSize:14* screenWidth/375];
@@ -39,23 +42,35 @@
     [self.rightTitleBtn setTitleColor:color forState:UIControlStateNormal];
 }
 
-- (instancetype)initWithReuseIdentifier:(nullable NSString *)reuseIdentifier
-{
-    self = [super initWithReuseIdentifier:reuseIdentifier];
+
+- (instancetype)initWithCoder:(NSCoder *)coder{
+    
+    self = [super initWithCoder:coder];
     if (self) {
     }
     return self;
 }
 
-- (void)setLeftTitleBtnToSuperLeft:(CGFloat)leftTitleBtnToSuperLeft
+
+
+
+- (void)setLeftTitleBtnMarginLeft:(CGFloat)leftTitleBtnMarginLeft
 {
-    _leftTitleBtnToSuperLeft= leftTitleBtnToSuperLeft;
-    self.leftTitleBtnToSuperLeftLayout.constant = leftTitleBtnToSuperLeft;
+    _leftTitleBtnMarginLeft = leftTitleBtnMarginLeft;
+    self.leftTitleBtnMarginLeftLayout.constant = leftTitleBtnMarginLeft;
 }
 
-- (void)setRightTitleBtnToSuperRight:(CGFloat)rightTitleBtnToSuperRight
+
+- (void)setLeftTitleBtnMarginTop:(CGFloat)leftTitleBtnMarginTop
 {
-    _rightTitleBtnToSuperRight = rightTitleBtnToSuperRight;
-    self.rightTitleBtnToSuperRightLayout.constant = rightTitleBtnToSuperRight;
+    _leftTitleBtnMarginTop = leftTitleBtnMarginTop;
+    self.leftTitleBtnMarginTopLayout.constant = leftTitleBtnMarginTop;
+}
+
+
+- (void)setRightTitleBtnMarginRight:(CGFloat)rightTitleBtnMarginRight
+{
+    _rightTitleBtnMarginRight = rightTitleBtnMarginRight;
+    self.rightTitleBtnMarginRightLayout.constant = rightTitleBtnMarginRight;
 }
 @end

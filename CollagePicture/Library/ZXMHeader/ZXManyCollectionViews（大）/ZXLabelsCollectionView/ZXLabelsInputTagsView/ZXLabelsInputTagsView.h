@@ -264,7 +264,7 @@ static NSString *const reuse_editTagsCell = @"editTagsCell";
     TMDiskManager *manager = [[TMDiskManager alloc] initWithObjectKey:TMDiskAddProcutKey];
     self.diskManager = manager;
     AddProductModel *model = (AddProductModel *)[self.diskManager getData];
-    if (![NSString zhIsBlankString:model.labels])
+    if (![NSString zx_isBlankString:model.labels])
     {
          NSArray *labelsArray = [model.labels componentsSeparatedByString:@","];
          if (labelsArray.count>0)
@@ -590,7 +590,7 @@ static NSString *editTagsCell = @"editTagsCell";
     self.diskManager = manager;
     ShopManagerInfoModel *model = (ShopManagerInfoModel *)[self.diskManager getData];
     
-    if (![NSString zhIsBlankString:model.mainBrand])
+    if (![NSString zx_isBlankString:model.mainBrand])
     {
         NSArray *labelsArray = [model.mainBrand componentsSeparatedByString:@","];
         if (labelsArray.count>0)

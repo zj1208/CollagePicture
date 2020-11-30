@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_END
     WS(weakSelf);
     ZXAlertTextAction *action2 = [ZXAlertTextAction actionWithTitle:@"确定" style:ZXAlertTextActionStyleDefault handler:^(ZXAlertTextAction * _Nonnull action) {
         UITextField *textField = [SELF.textFields firstObject];
-        if ([NSString zhIsBlankString:textField.text]) {
+        if ([NSString zx_isBlankString:textField.text]) {
             return ;
         }
         NSIndexPath *indexPath = [weakSelf.tableView zx_getIndexPathForRowFromConvertCellSubView:sender];
@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_END
         }
         else
         {
-            NSString *text = [NSString zhFilterInputTextWithWittespaceAndLine:textField.text];
+            NSString *text = [NSString zx_filterStringWithWhitespaceAndLine:textField.text];
             [weakSelf dismissAlertViewWithSkuId:model.skuId indexPath:indexPath inputText:text];
         }
 

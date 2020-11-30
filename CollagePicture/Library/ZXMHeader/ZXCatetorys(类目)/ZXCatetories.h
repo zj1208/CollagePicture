@@ -33,6 +33,7 @@
 #import "UIColor+ZXHex.h"
 #import "UIControl+ZXFastClick.h"
 #import "UIDevice+ZXHelper.h"
+#import "UIDevice+ZXDeviceName.h"
 #import "UIFont+ZXCategoryFontScale.h"
 #import "UIImage+ZXGIF.h"
 #import "UIImage+ZXHelper.h"

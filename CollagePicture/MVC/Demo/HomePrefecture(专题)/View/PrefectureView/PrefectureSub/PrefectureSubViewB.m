@@ -139,9 +139,9 @@
 {
     HomePrefectureModelSubBanner *model = (HomePrefectureModelSubBanner *)data;
     self.nameLab.text = @"产地直达";
-    self.nameLab.textColor = [NSString zhIsBlankString:model.nameColor]?UIColorFromRGB_HexValue(0x34373A):[UIColor zx_colorWithHexString:model.nameColor];
+    self.nameLab.textColor = [NSString zx_isBlankString:model.nameColor]?UIColorFromRGB_HexValue(0x34373A):[UIColor zx_colorWithHexString:model.nameColor];
     self.descriptionLab.text = @"人气好货推荐";
-    self.descriptionLab.textColor = [NSString zhIsBlankString:model.descriptionColor]?UIColorFromRGB_HexValue(0x93989E):[UIColor zx_colorWithHexString:model.descriptionColor];
+    self.descriptionLab.textColor = [NSString zx_isBlankString:model.descriptionColor]?UIColorFromRGB_HexValue(0x93989E):[UIColor zx_colorWithHexString:model.descriptionColor];
     
     [self.bigBgImageView sd_setImageWithURL:[NSURL URLWithString:model.backgroundPhoto] placeholderImage:nil];
 

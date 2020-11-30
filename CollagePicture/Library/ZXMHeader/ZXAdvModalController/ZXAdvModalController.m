@@ -48,8 +48,9 @@
 //    [self.view bringSubviewToFront: self.dismissBtn];
 //    
     
-    NSURL *url = [NSURL ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
+//    NSURL *url = [NSURL zx_ossImageWithResizeType:OSSImageResizeType_w600_hX relativeToImgPath:self.advModel.pic];
 //    NSURL *url = [NSURL URLWithString:@"http://macdn.microants.cn/2/sh/eb738b0ea44830fba171707d3481a7eb1530582553695.jpg"];
+    NSURL *url = [NSURL URLWithString:self.advModel.pic];
     [self.advPicBtn sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
 //        self.effectView.effect = nil;

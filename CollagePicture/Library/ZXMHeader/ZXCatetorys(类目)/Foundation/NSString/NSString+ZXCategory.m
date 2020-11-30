@@ -288,113 +288,17 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 }
 
 
-+ (NSString *)zhHexStringFromString:(NSString *)string;
-{
-    
-    NSString *hexString =[[NSString alloc] initWithFormat:@"%1lx",(long)[string integerValue]];
-    return hexString;
-}
-
-
-+ (NSInteger)zhGetZhonWenLengthOfBytes:(NSString *)str
-{
-    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    return  [str lengthOfBytesUsingEncoding:enc];
-}
 
 
 
-+ (NSString *)zhFilterInputTextWithWittespaceAndLine:(NSString *)str
-{
-    NSCharacterSet *whitespaceLine = [NSCharacterSet  whitespaceAndNewlineCharacterSet];
-    NSRange spaceRange = [str rangeOfCharacterFromSet:whitespaceLine];
-    if (spaceRange.location != NSNotFound)
-    {
-        str = [str stringByTrimmingCharactersInSet:whitespaceLine];
-    }
-
-    return str;
-}
 
 
 
-+ (BOOL)zhIsBlankString:(nullable NSString *)string
-{
-    if (!string || string == NULL) {
-        return YES;
-    }
-    if ([string isKindOfClass:[NSNull class]]) {
-        return YES;
-    }
-    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
-    {
-        return YES;
-    }
-    return NO;
-}
-
-//这个是bug，不能判断nil了
-- (BOOL)zhIsBlankString
-{
-    if (!self || self == NULL) {
-        return YES;
-    }
-    if ([self isKindOfClass:[NSNull class]]) {
-        return YES;
-    }
-    if ([[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
-        return YES;
-    }
-    return NO;
-}
-
-
-+ (NSString *)zhFilterSpecialCharactersInString:(NSString *)str
-{
-    if (!str)
-    {
-        return nil;
-    }
-    NSMutableString *trimmedString =[[NSMutableString alloc] initWithString:str];
-    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"~`!@#$%^&*():,./;[]{}-_|+=?<>"];
-    for (int i = 0; i<trimmedString.length; i++)
-    {
-        NSRange range = [trimmedString rangeOfCharacterFromSet:set];
-        if ((range.location != NSNotFound))
-        {
-            [trimmedString deleteCharactersInRange:NSMakeRange(range.location, range.length)];
-        }
-    }
-    return trimmedString;
-}
 
 
 
-//主要用在音乐歌词搜索
-+ (NSString *)zhFilterLyricString:(NSString *)str;
-{
-    //去除过滤两端空格和换行符
-    NSString * str1 = [[NSString zhFilterInputTextWithWittespaceAndLine:str]copy];
-    
-    //去掉字符串中的空格
-    NSString * str2 = [[str1 stringByReplacingOccurrencesOfString:@" " withString:@""]copy];
-    
-    //去除过滤特殊字符，stringByTrimingCharactersInSet方法只能过滤两端。
-    str2 = [NSString zhFilterSpecialCharactersInString:str2];
-    
-    //转换成小写
-    str2 = [str2 lowercaseString];
-    
-    return str2;
-}
 
 
-+ (BOOL)zhIsIntScan:(nullable NSString *)string
-{
-    NSScanner* scan = [NSScanner scannerWithString:string];
-    int val;
-    return[scan scanInt:&val] && [scan isAtEnd];
-}
 
 
 
@@ -510,6 +414,112 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return floorf(itemWidth);
 }
 
+
+
+
+
++ (NSString *)zx_hexStringWithString:(NSString *)string
+{
+    
+    NSString *hexString =[[NSString alloc] initWithFormat:@"%1lx",(long)[string integerValue]];
+    return hexString;
+}
+
+
++ (NSInteger)zx_getBytesLengthWithZhonWen:(NSString *)str{
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    return  [str lengthOfBytesUsingEncoding:enc];
+}
+
++ (BOOL)zx_isIntScan:(nullable NSString *)string{
+    NSScanner* scan = [NSScanner scannerWithString:string];
+    int val;
+    return[scan scanInt:&val] && [scan isAtEnd];
+}
+
+
++ (BOOL)zx_isBlankString:(nullable NSString *)string{
+   
+    if (!string || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
+    {
+        return YES;
+    }
+    return NO;
+}
+
+//这个是bug，不能判断nil了
+- (BOOL)zx_isBlankString
+{
+    if (!self || self == NULL) {
+        return YES;
+    }
+    if ([self isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        return YES;
+    }
+    return NO;
+}
+
+
++ (NSString *)zx_filterStringWithWhitespaceAndLine:(NSString *)str{
+   
+    NSCharacterSet *whitespaceLine = [NSCharacterSet  whitespaceAndNewlineCharacterSet];
+    NSRange spaceRange = [str rangeOfCharacterFromSet:whitespaceLine];
+    if (spaceRange.location != NSNotFound)
+    {
+        str = [str stringByTrimmingCharactersInSet:whitespaceLine];
+    }
+
+    return str;
+}
+
+
++ (NSString *)zx_filterSpecialCharactersInString:(NSString *)str
+{
+    if (!str)
+    {
+        return nil;
+    }
+    NSMutableString *trimmedString =[[NSMutableString alloc] initWithString:str];
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"~`!@#$%^&*():,./;[]{}-_|+=?<>"];
+    for (int i = 0; i<trimmedString.length; i++)
+    {
+        NSRange range = [trimmedString rangeOfCharacterFromSet:set];
+        if ((range.location != NSNotFound))
+        {
+            [trimmedString deleteCharactersInRange:NSMakeRange(range.location, range.length)];
+        }
+    }
+    return trimmedString;
+}
+
+
+
+//主要用在音乐歌词搜索
++ (NSString *)zx_filterLyricString:(NSString *)str
+{
+    //去除过滤两端空格和换行符
+    NSString * str1 = [NSString zx_filterStringWithWhitespaceAndLine:str];
+    
+    //去掉字符串中的空格
+    NSString * str2 = [str1 stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    //去除过滤特殊字符，stringByTrimingCharactersInSet方法只能过滤两端。
+    str2 = [NSString zx_filterSpecialCharactersInString:str2];
+    
+    //转换成小写
+    str2 = [str2 lowercaseString];
+    
+    return str2;
+}
 
 
 @end

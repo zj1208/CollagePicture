@@ -27,7 +27,7 @@
 //}
 
 
-+ (NSURL *)ossImageWithResizeType:(OSSImageResizeType)resizeType relativeToImgPath:(id)baseURL
++ (NSURL *)zx_ossImageWithResizeType:(OSSImageResizeType)resizeType relativeToImgPath:(id)baseURL
 {
     NSString *baseString = nil;
     if ([baseURL isKindOfClass:[NSURL class]])

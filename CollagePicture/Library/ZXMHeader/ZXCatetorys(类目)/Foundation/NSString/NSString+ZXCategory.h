@@ -131,80 +131,8 @@ NS_ASSUME_NONNULL_BEGIN
  @return 转换后的时间
  */
 + (NSString *)zhDate_showTime:(NSTimeInterval) msglastTime showDetail:(BOOL)showDetail;
-/**
- *  @brief 转换10进制字符串为16进制格式的字符串;
- *
- *  @param string 10进制字符串
- *
- *  @return 16进制字符串
- */
-
-+ (NSString *)zhHexStringFromString:(NSString *)string;
 
 
-
-/**
- *  @brief 获取支持中文编码的字节数,系统NSString默认是UTF16编码,是不支持中文的,计算字符串长度和字节数都不太准;
- *
- *  @param str   字符串
- *
- *  @return 字符串的字节数
- */
-
-+ (NSInteger)zhGetZhonWenLengthOfBytes:(NSString *)str;
-
-
-/**
- *  @brief 过滤输入的字符串2端的空格和换行符
- *
- *  @param str  原字符串
- *
- *  @return 过滤2端的空格和换行符后的字符串
- */
-
-+ (NSString *)zhFilterInputTextWithWittespaceAndLine:(NSString *)str;
-
-
-
-/**
- 判断字符串是否为NULL，nil,字符串空
-
- @param string string description
- @return return value description
- */
-+ (BOOL)zhIsBlankString:(nullable NSString *)string;
-
-
-/**
- *  @brief 过滤字符串中的特殊字符
- *
- *  @param str  原字符串
- *
- *  @return 过滤字符串中的特殊字符之后的字符串
- */
-
-+ (NSString *)zhFilterSpecialCharactersInString:(NSString *)str;
-
-
-/**
- *  @brief 过滤歌词中特殊字符串-去掉字符串中的空格，过滤两端空格和换行符，过滤特殊字符，转换成小写
- *
- *  @param  str 歌词
- *
- *  @return  过滤之后的歌词
- */
-+ (NSString *)zhFilterLyricString:(NSString *)str;
-
-
-/**
- *  @brief 判断string是否是整数/即是否是纯数字
- *
- *  @param  string  原字符串
- *
- *  @return  YES／NO @"您的密码过于简单，请使用数字+字母的组合"
- */
-
-+ (BOOL)zhIsIntScan:(nullable NSString *)string;
 
 
 /**
@@ -288,6 +216,89 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (CGFloat)zhGetItemAverageWidthInTotalWidth:(CGFloat)totalWidth columnsCount:(NSUInteger)columnsCount sectionInset:(UIEdgeInsets)inset minimumInteritemSpacing:(CGFloat)minimumInteritemSpacing;
 
+
+
+
+
+
+/**
+ *  @brief 转换10进制字符串为16进制格式的字符串;
+ *
+ *  @param string 10进制字符串
+ *
+ *  @return 16进制字符串
+ */
+
++ (NSString *)zx_hexStringWithString:(NSString *)string;
+
+
+
+/**
+ *  @brief 获取支持中文编码的字节数,系统NSString默认是UTF16编码,是不支持中文的,计算字符串长度和字节数都不太准;
+ *
+ *  @param str   字符串
+ *
+ *  @return 字符串的字节数
+ */
+
++ (NSInteger)zx_getBytesLengthWithZhonWen:(NSString *)str;
+
+
+
+
+/**
+ *  @brief 判断string是否是整数/即是否是纯数字
+ *
+ *  @param  string  原字符串
+ *
+ *  @return  YES／NO @"您的密码过于简单，请使用数字+字母的组合"
+ */
+
++ (BOOL)zx_isIntScan:(nullable NSString *)string;
+
+
+
+/**
+ 判断字符串是否为NULL，nil,字符串空
+
+ @param string string description
+ @return return value description
+ */
++ (BOOL)zx_isBlankString:(nullable NSString *)string;
+
+
+
+/**
+ *  @brief 过滤输入的字符串2端的空格和换行符
+ *
+ *  @param str  原字符串
+ *
+ *  @return 过滤2端的空格和换行符后的字符串
+ */
+
++ (NSString *)zx_filterStringWithWhitespaceAndLine:(NSString *)str;
+
+
+
+/**
+ *  @brief 过滤字符串中的特殊字符:@"~`!@#$%^&*():,./;[]{}-_|+=?<>"
+ *
+ *  @param str  原字符串
+ *
+ *  @return 过滤字符串中的特殊字符之后的字符串
+ */
+
++ (NSString *)zx_filterSpecialCharactersInString:(NSString *)str;
+
+
+/**
+ *  @brief 过滤歌词中特殊字符串-去掉字符串中的空格，过滤两端空格和换行符，过滤特殊字符，转换成小写
+ *
+ *  @param  str 歌词
+ *
+ *  @return  过滤之后的歌词
+ */
++ (NSString *)zx_filterLyricString:(NSString *)str;
 
 
 

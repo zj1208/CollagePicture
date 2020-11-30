@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, OSSImageResizeType) {
  @param baseURL 可以传URL对象，也可以传NSString对象；
  @return 返回URL
  */
-+ (NSURL *)ossImageWithResizeType:(OSSImageResizeType)resizeType relativeToImgPath:(id)baseURL;
++ (NSURL *)zx_ossImageWithResizeType:(OSSImageResizeType)resizeType relativeToImgPath:(id)baseURL;
 @end
 
 NS_ASSUME_NONNULL_END

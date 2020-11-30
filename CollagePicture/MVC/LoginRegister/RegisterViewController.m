@@ -152,7 +152,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 
 - (void)requestSmsCodeBtnAction:(UIButton *)sender {
     
-    NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    NSString *phoneNumber = [NSString zx_filterStringWithWhitespaceAndLine:self.userNameField.text];
 
     if (![UITextField zx_validatePhoneNumber:phoneNumber])
     {
@@ -172,7 +172,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
     [self.view endEditing:NO];
     [MBProgressHUD zx_showLoadingWithStatus:nil toView:self.view];
 
-    NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    NSString *phoneNumber = [NSString zx_filterStringWithWhitespaceAndLine:self.userNameField.text];
 
     WS(weakSelf) ;
     BmobQuery *query = [BmobQuery queryForUser];
@@ -206,7 +206,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 
 - (void)requestSMSCode
 {
-    NSString *phoneNumber = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
+    NSString *phoneNumber = [NSString zx_filterStringWithWhitespaceAndLine:self.userNameField.text];
     //我暂时没有自定义模版，用系统短信
     WS(weakSelf);
     [BmobSMS requestSMSCodeInBackgroundWithPhoneNumber:phoneNumber andTemplate:nil resultBlock:^(int number, NSError *error) {
@@ -275,13 +275,13 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 
 - (void)validatePhoneAndPassword
 {
-    NSString *mobilePhoneNumer = [NSString zhFilterInputTextWithWittespaceAndLine:self.userNameField.text];
-    NSString *password = [NSString zhFilterInputTextWithWittespaceAndLine:self.passwordField.text];;
+    NSString *mobilePhoneNumer = [NSString zx_filterStringWithWhitespaceAndLine:self.userNameField.text];
+    NSString *password = [NSString zx_filterStringWithWhitespaceAndLine:self.passwordField.text];;
     if (![UITextField zx_validatePhoneNumber:mobilePhoneNumer])
     {
         [MBProgressHUD zx_showError:@"您输入的手机号码错误，请核实后重新输入" toView:self.view];
     }
-    else if ([NSString zhFilterInputTextWithWittespaceAndLine:self.verificationCodeField.text].length==0)
+    else if ([NSString zx_filterStringWithWhitespaceAndLine:self.verificationCodeField.text].length==0)
     {
         [MBProgressHUD zx_showError:@"请输入验证码" toView:self.view];
     }
@@ -325,7 +325,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
             UserModel *userModel = [[UserModel alloc] init];
             userModel.userId = @([user.objectId integerValue]);
             userModel.phone = user.mobilePhoneNumber ;
-            userModel.username = user.username;
+            userModel.userName = user.username;
             [UserInfoUDManager setUserData:userModel];
             [UserInfoUDManager login];
 

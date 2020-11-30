@@ -6,6 +6,11 @@
 //  Copyright © 2016年 simon. All rights reserved.
 //
 
+//动态字体：系统默认tableViewCell的label会自动改变字体大小和UI大小布局；UIAlertController会自动改变字体大小和UI大小布局；
+//注意：UITableViewCell一定要用纯代码创建，除非storyboard中tableViewCell不用系统自带的Label，自己新拖建立，不然系统的label会出现bug，不显示的问题； 目前找不到解决办法，可能是SDK的原因，所以storyboard中tableViewCell只能使用custom，或者系统tableViewCell在纯代码中创建；
+//如果使用系统的tableViewCell，则高度也会改变；tableViewCell使用custom，且布局约束符合自动布局上下约束到边界，高度才不会乱改变，一定要符合预估高度的准则；
+
+
 #import "SetViewController.h"
 #import <SDWebImage/SDWebImage.h>
 
@@ -15,6 +20,7 @@
 int a = 2;
 
 @interface SetViewController ()<UIActionSheetDelegate,ZXImagePickerControllerDelegate>
+//修改动态字体大小的
 @property (weak, nonatomic) IBOutlet UILabel *accountTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *changePassWordTitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *aboutTitleLab;
@@ -185,9 +191,10 @@ int b =3;
     {
         switch (indexPath.row)
         {
-            case 0:;break;
+            case 0: break;
             case 1: [self zx_goAppStoreWithAppId:kAPPID]; break;
             case 2: [self checkVersionUpdate]; break;
+            case 3: 
             default:
                 break;
         }

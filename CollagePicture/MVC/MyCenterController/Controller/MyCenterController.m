@@ -23,6 +23,8 @@
 #import "SetViewController.h"
 #import "MakingPhotoController.h"
 
+#import "UserModel.h"
+
 @interface MyCenterController ()<ZXAdvModalControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) ZXCustomNavigationBar *customNavigationBar;
@@ -40,14 +42,48 @@
 /// 列表数据
 @property (nonatomic, copy) NSArray *listTitleArr;
 
+@property (nonatomic, assign) NSString *userName;
 
 @end
 
 @implementation MyCenterController
 
+- (instancetype)initWithCoder:(NSCoder *)coder{
+    
+    self = [super initWithCoder:coder];
+    if (self) {
+    }
+    return self;
+}
+
+- (id)init{
+    self = [super init];
+    return self;
+}
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    UserModel *model= [UserInfoUDManager getUserData];
+    self.userName = model.userName;
+    
+    self.userName = @"12";
+
+    
     [self setUI];
     [self setData];
     extern int a;
@@ -62,7 +98,6 @@
 //    id value1 = [arr objectAtIndex:0];
 //    NSLog(@"%@,%p",value1,value1);
 
-//
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -193,7 +228,7 @@
     [self setHeaderView];
 
     self.tableView.estimatedRowHeight = 45;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.rowHeight = LCDScale_iPhone6(45);
     self.tableView.tableFooterView = [[UIView alloc] init];
     //添加背景放大imageView
     [self addScaleImageView];
@@ -563,6 +598,7 @@
     NSDictionary *dic = [self.listTitleArr objectAtIndex:indexPath.row];
     cell.imageView.image = [UIImage imageNamed:[dic objectForKey:@"imageName"]];
     cell.textLabel.text = [dic objectForKey:@"title"];
+    cell.textLabel.font = [UIFont zx_systemFontOfScaleSize:17];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -700,8 +736,8 @@
 ///跳转我的个人信息页面
 - (IBAction)pushMyInfomation:(UIButton *)sender
 {
-    id controller = [[NSClassFromString(@"MineViewController") alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
+//    id controller = [[NSClassFromString(@"MineViewController") alloc] init];
+//    [self.navigationController pushViewController:controller animated:YES];
 }
 
 

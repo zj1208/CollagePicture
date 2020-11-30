@@ -366,7 +366,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
     UIAlertAction *otherAction = [UIAlertAction actionWithTitle:otherButtonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *textField = [alertController.textFields firstObject];
-        if (![ZXLabelsInputTagsView zhIsBlankString:textField.text])
+        if (![ZXLabelsInputTagsView zx_isBlankString:textField.text])
         {
             BOOL should  = YES;
             if ([self.delegate respondsToSelector:@selector(zx_shuoldAddTagTitleWithLabelsInputTagsView:tagTitle:)])
@@ -398,7 +398,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
 - (void)textFieldTextDidChangeNotification:(NSNotification *)notification
 {
      UITextField *textField = notification.object;
-    self.textAlertAction.enabled = ![ZXLabelsInputTagsView zhIsBlankString:textField.text];
+    self.textAlertAction.enabled = ![ZXLabelsInputTagsView zx_isBlankString:textField.text];
     if ([self.delegate respondsToSelector:@selector(zx_labelsInputTagsView:textFieldTextDidChangeNotification:)])
     {
         [self.delegate zx_labelsInputTagsView:self textFieldTextDidChangeNotification:notification];
@@ -489,7 +489,7 @@ static NSString * const reuseInputTagsCell = @"Cell";
     }
 }
 
-+ (BOOL)zhIsBlankString:(NSString *)string
++ (BOOL)zx_isBlankString:(NSString *)string
 {
     if (string == nil || string == NULL) {
         return YES;

@@ -16,7 +16,7 @@
 /**
  *  昵称
  */
-@property(nonatomic, copy) NSString *username;
+@property(nonatomic, copy) NSString *userName;
 /**
  *  头像url
  */

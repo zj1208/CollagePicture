@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_END
     
     AddProductModel *model = (AddProductModel *)[self.diskManager getData];
     
-    if (![NSString zhIsBlankString:model.spec])
+    if (![NSString zx_isBlankString:model.spec])
     {
         NSArray *labelsArray = [model.spec componentsSeparatedByString:@","];
         if (labelsArray.count>0)

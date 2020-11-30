@@ -413,7 +413,7 @@
         }
         NSRange range_i = NSMakeRange(imageP_i.length-13, 13);
         NSString* subthr_i = [imageP_i substringWithRange:range_i];
-        if (![NSString zhIsIntScan:subthr_i]) {//非存数字
+        if (![NSString zx_isIntScan:subthr_i]) {//非存数字
             return array;
         }
         long long int integer_i = subthr_i.longLongValue;
@@ -428,7 +428,7 @@
             }
             NSRange range_j = NSMakeRange(imageP_j.length-13, 13);
             NSString* subthr_j = [imageP_j substringWithRange:range_j];
-            if (![NSString zhIsIntScan:subthr_j]) {
+            if (![NSString zx_isIntScan:subthr_j]) {
                 return array;
             }
             long long int integer_j = subthr_j.longLongValue;
@@ -454,7 +454,7 @@
         }
         NSRange range_i = NSMakeRange(imageP_i.length-13, 13);
         NSString* subthr_i = [imageP_i substringWithRange:range_i];
-        if (![NSString zhIsIntScan:subthr_i]) {//非存数字
+        if (![NSString zx_isIntScan:subthr_i]) {//非存数字
             return array;
         }
         long long int integer_i = subthr_i.longLongValue;
@@ -469,7 +469,7 @@
             }
             NSRange range_j = NSMakeRange(imageP_j.length-13, 13);
             NSString* subthr_j = [imageP_j substringWithRange:range_j];
-            if (![NSString zhIsIntScan:subthr_j]) {
+            if (![NSString zx_isIntScan:subthr_j]) {
                 return array;
             }
             long long int integer_j = subthr_j.longLongValue;
@@ -493,7 +493,7 @@
         }
         NSRange range_i = NSMakeRange(imageP_i.length-13, 13);
         NSString* subthr_i = [imageP_i substringWithRange:range_i];
-        if (![NSString zhIsIntScan:subthr_i]) {//非存数字
+        if (![NSString zx_isIntScan:subthr_i]) {//非存数字
             return array;
         }
         long long int integer_i = subthr_i.longLongValue;
@@ -506,7 +506,7 @@
             }
             NSRange range_j = NSMakeRange(imageP_j.length-13, 13);
             NSString* subthr_j = [imageP_j substringWithRange:range_j];
-            if (![NSString zhIsIntScan:subthr_j]) {
+            if (![NSString zx_isIntScan:subthr_j]) {
                 return array;
             }
             long long int integer_j = subthr_j.longLongValue;

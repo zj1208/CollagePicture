@@ -9,14 +9,10 @@
 //  2019.3.20  增加设备大体类型model方法
 //  2020.02.04  注释
 //  2020.5.25  更新获取设备名方法最新设备。
+//  2020.11.21 更新iPhone12 期的各种设备名；
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, ZXDeviceModelType) {
-    ZXDeviceModelType_iPad,
-    ZXDeviceModelType_iPhone,
-    ZXDeviceModelType_iPodTouch,
-};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,17 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)zx_getIDFAUUIDString;
 
 
-
-/// 获取设备具体类型名称；
-- (NSString *)zx_getDeviceName;
-
-
-/**
- 获取设备大体类型-model：iPad，iPhone，iPod touch
- 例如：使用AlertController-actionSheet样式弹出的时候，在iPad上需要不同设置处理；
- @return 设备类型
- */
-- (ZXDeviceModelType)zx_getDeviceModelType;
 
 
 /// 获取mac地址
@@ -146,3 +131,6 @@ NSLog(@"电池当前状态-->%ld", batteryState);
 NSString *appVerion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 NSLog(@"app版本号-->%@", appVerion);
 */
+
+
+

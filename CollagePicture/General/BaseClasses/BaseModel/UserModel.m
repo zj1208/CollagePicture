@@ -14,7 +14,7 @@
 {
     return @{
              @"userId" : @"userid",
-             @"username" : @"username",
+             @"userName" : @"username",
              @"sex" : @"sex",
              @"phone":@"phone",
              @"headURL":@"headIcon",
