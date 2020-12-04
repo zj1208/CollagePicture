@@ -48,17 +48,15 @@
     return identifier;
 }
 
+// 注意：模拟器上的SDK，2个宏都支持；真机上的SDK没有TARGET_OS_SIMULATOR宏。
+// 所以可以用这套判断机制：是否有这个宏来判断机器类型。固定方式；
 - (NSString *)zx_getIDFAUUIDString
 {
-//    NSBundle *adSupportBundle = [NSBundle bundleWithPath:@"/System/Library/Frameworks/AdSupport.framework"];
-//    if (![adSupportBundle isLoaded])
-//    {
-//        return @"模拟器";
-//    }
-#if TARGET_IPHONE_SIMULATOR 
-    // iphonex模拟器 66A9243D-A0EF-4BB3-8DBC-2632E09DE21B
+// Generated code will run under a simulator
+#if TARGET_OS_SIMULATOR
     return @"模拟器";
     
+// Generated code for firmware, devices, or simulator
 #elif TARGET_OS_IPHONE
     
     ASIdentifierManager *manager = [ASIdentifierManager sharedManager];
