@@ -7,7 +7,6 @@
 //
 
 #import "UIButton+ZXHelper.h"
-#import "NSString+ZXCategory.h"
 
 @implementation UIButton (ZXHelper)
 
@@ -113,7 +112,17 @@
     UIImage *currentImage = [self imageForState:UIControlStateNormal];
     CGSize imageSize = currentImage.size;
     NSString *currentTitle = [self titleForState:UIControlStateNormal];
-    CGSize titleSize = [NSString zx_boundingSizeOfString:currentTitle WithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+    
+    NSMutableDictionary *attrMDic = [NSMutableDictionary new];
+    [attrMDic setObject:self.titleLabel.font forKey:NSFontAttributeName];
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+     style.lineBreakMode = self.titleLabel.lineBreakMode;
+    [attrMDic setObject:style forKey:NSParagraphStyleAttributeName];
+    
+    CGSize titleSize = [currentTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
+                              options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                           attributes:attrMDic
+                              context:nil].size;
     if (!CGRectEqualToRect(self.frame, CGRectZero))
     {
         CGFloat titleMaxHeight;
@@ -125,7 +134,10 @@
         }
 
         CGSize titleMaxSize = CGSizeMake(CGRectGetWidth(self.frame) - (imageSize.width + spacing), titleMaxHeight);
-        titleSize =  [NSString zx_boundingSizeOfString:currentTitle WithSize:titleMaxSize font:self.titleLabel.font mode:self.titleLabel.lineBreakMode];
+        titleSize = [currentTitle boundingRectWithSize:titleMaxSize
+                                  options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                               attributes:attrMDic
+                                  context:nil].size;
     }
     self.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width + spacing, 0, - titleSize.width);
     self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, 0, imageSize.width + spacing);

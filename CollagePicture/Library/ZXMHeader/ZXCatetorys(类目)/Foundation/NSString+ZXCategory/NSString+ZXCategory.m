@@ -335,47 +335,9 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
     return [hash lowercaseString];
 }
 
-- (NSInteger)zhGetNumLinesWithBoundingRectWithSize:(CGSize)size titleFont:(UIFont *)font
-{
-    CGFloat textH = [self boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin| NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size.height;
-    CGFloat lineHeight = font.lineHeight;
-    NSInteger  lineCount = textH / lineHeight;
-    return lineCount;
-}
 
 
-+ (CGSize)zx_boundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font mode:(NSLineBreakMode)lineBreakMode
-{
-    if (CGSizeEqualToSize(size, CGSizeZero))
-    {
-        size = CGSizeMake(MAXFLOAT, MAXFLOAT);
-    }
-    if (!font) {
-        font = [UIFont systemFontOfSize:12];
-    }
-    NSMutableDictionary *attrMDic = [NSMutableDictionary new];
-    [attrMDic setObject:font forKey:NSFontAttributeName];
-    if (lineBreakMode != NSLineBreakByWordWrapping) {
-        NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-         style.lineBreakMode = lineBreakMode;
-        [attrMDic setObject:style forKey:NSParagraphStyleAttributeName];
-    }
-    CGSize textSize = [text boundingRectWithSize:size
-                              options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                           attributes:attrMDic
-                              context:nil].size;
-    return textSize;
-}
 
-+ (void)zhDrawTextInContext:(CGContextRef)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font
-{
-    NSMutableParagraphStyle *priceParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    priceParagraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    priceParagraphStyle.alignment = NSTextAlignmentLeft;
-    
-    [text drawInRect:rect
-      withAttributes:@{NSParagraphStyleAttributeName : priceParagraphStyle, NSFontAttributeName : font}];
-}
 
 
 + (NSString *)zhCreatMD5StringWithDict:(NSDictionary *)dict sortKeyArray:(NSArray *)sortKeys
@@ -522,4 +484,48 @@ static double OnedayTimeIntervalValue = 24*60*60;  //一天的秒数
 }
 
 
+
++ (CGSize)zx_boundingSizeOfString:(NSString *)text withSize:(CGSize)size font:(UIFont *)font mode:(NSLineBreakMode)lineBreakMode
+{
+    if (CGSizeEqualToSize(size, CGSizeZero))
+    {
+        size = CGSizeMake(MAXFLOAT, MAXFLOAT);
+    }
+    if (!font) {
+        font = [UIFont systemFontOfSize:12];
+    }
+    NSMutableDictionary *attrMDic = [NSMutableDictionary new];
+    [attrMDic setObject:font forKey:NSFontAttributeName];
+    if (lineBreakMode != NSLineBreakByWordWrapping) {
+        NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+         style.lineBreakMode = lineBreakMode;
+        [attrMDic setObject:style forKey:NSParagraphStyleAttributeName];
+    }
+    CGSize textSize = [text boundingRectWithSize:size
+                              options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                           attributes:attrMDic
+                              context:nil].size;
+    return textSize;
+}
+
++ (void)zx_drawTextInContext:(CGContextRef)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font
+{
+    NSMutableParagraphStyle *priceParagraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    priceParagraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    priceParagraphStyle.alignment = NSTextAlignmentLeft;
+    
+    [text drawInRect:rect
+      withAttributes:@{NSParagraphStyleAttributeName : priceParagraphStyle, NSFontAttributeName : font}];
+}
+
+- (NSInteger)zx_numberLinesWithBoundSize:(CGSize)size titleFont:(UIFont *)font
+{
+    NSMutableDictionary *attrMDic = [NSMutableDictionary new];
+    [attrMDic setObject:font forKey:NSFontAttributeName];
+    
+    CGFloat textH = [self boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin| NSStringDrawingUsesFontLeading attributes:attrMDic context:nil].size.height;
+    CGFloat lineHeight = font.lineHeight;
+    NSInteger  lineCount = textH / lineHeight;
+    return lineCount;
+}
 @end

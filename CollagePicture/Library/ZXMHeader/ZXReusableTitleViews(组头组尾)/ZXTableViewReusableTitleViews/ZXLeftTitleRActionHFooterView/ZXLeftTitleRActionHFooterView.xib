@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,6 +55,7 @@
                 <outlet property="leftTitleBtn" destination="Fld-PV-2ql" id="RPI-Ir-6rx"/>
                 <outlet property="leftTitleBtnMarginLeftLayout" destination="dqa-rO-nMn" id="nxY-mv-kIY"/>
                 <outlet property="leftTitleBtnMarginTopLayout" destination="cwS-tG-r7M" id="oi0-B3-pcW"/>
+                <outlet property="leftTitleBtnToLineEdgeBottomLayout" destination="Py0-IU-6rV" id="aFb-MI-zZ3"/>
                 <outlet property="rightTitleBtn" destination="cg2-Jm-AmX" id="eM4-Pe-afi"/>
                 <outlet property="rightTitleBtnMarginRightLayout" destination="Goa-Zt-SCl" id="oFD-YT-wRP"/>
             </connections>

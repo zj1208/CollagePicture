@@ -8,6 +8,7 @@
 // 2018.3.7 新增宏定义：适配iphoneX
 // 2020.1.20 IS_IPHONE_XX老方法用safeAreaInsets判断已不准，在iOS13支持scene新建立工程下；
 // 2020.5.14 忽略黄色警告，替换NSLog；
+// 2020.11.24 增加注释
 
 //宏定义的参数，就是一个字符串替换；所以参数一定要带括号；
 #ifndef UI_APPCommonDef_h
@@ -138,7 +139,7 @@
 
 //设置iphone6尺寸比例/竖屏,UI所有设备等比例缩放
 #ifndef LCDScale_iPhone6
-#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375)
+#define LCDScale_iPhone6(X)    ((X)*SCREEN_MIN_LENGTH/375.f)
 #endif
 
 //iphone5,6 一样，6plus放大，用于间距，字体大小，文本控件高度；
@@ -157,23 +158,34 @@
 #define IS_IPHONE_6P (SCREEN_MIN_LENGTH == 414.0)
 #endif
 
-//判断iPhoneX，Xs（iPhoneX，iPhoneXs）
+
 #ifndef IS_IPHONE_X
 #define IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size): NO)
 #endif
 
-//判断iPhoneXr
 #ifndef IS_IPHONE_Xr
 #define IS_IPHONE_Xr ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size): NO)
 #endif
-//判断iPhoneXsMax
-#ifndef IS_IPHONE_Xs_Max
-#define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size): NO)
+
+#ifndef IS_IPHONE_Xs_MAX
+#define IS_IPHONE_Xs_MAX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size): NO)
+#endif
+
+#ifndef IS_IPHONE_12
+#define IS_IPHONE_12 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1170, 2532), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+
+#ifndef IS_IPHONE_12_MINI
+#define IS_IPHONE_12_MINI ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1080, 2340), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
+
+#ifndef IS_IPHONE_12_PRO_MAX
+#define IS_IPHONE_12_PRO_MAX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1284, 2778), [[UIScreen mainScreen] currentMode].size) : NO)
 #endif
 
 //判断iPhoneX所有系列
 #ifndef IS_IPHONE_XX
-#define IS_IPHONE_XX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_Max)
+#define IS_IPHONE_XX (IS_IPHONE_X || IS_IPHONE_Xr || IS_IPHONE_Xs_MAX || IS_IPHONE_12 || IS_IPHONE_12_MINI || IS_IPHONE_12_PRO_MAX)
 #endif
 
 /*
@@ -218,8 +230,8 @@ iPhoneX : {20, 0, 0, 0}
 #define  kHEIGHT_SAFEAREA_TABBAR      (IS_IPHONE_XX ? (34.f+49.f) : 49.f)
 #endif
 
-#ifndef  kHEIGHT_SAFEAREA_NormalBottom
-#define  kHEIGHT_SAFEAREA_NormalBottom      (IS_IPHONE_XX ? 34.f: 0)
+#ifndef  kHEIGHT_SAFEAREA_NORMALBOTTOM
+#define  kHEIGHT_SAFEAREA_NORMALBOTTOM      (IS_IPHONE_XX ? 34.f: 0)
 #endif
 
 
@@ -350,5 +362,6 @@ NS_INLINE void ZX_LogDebug_ClassMethodListName(id object)
 
 
 #endif
+
 
 

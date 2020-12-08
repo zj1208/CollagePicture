@@ -7,7 +7,7 @@
 //
 //  简介：
 /**
-默认情况下，imageEdgeInsets和titleEdgeInsets都是UIEdgeInsetsZero
+UIButton的image和title调整。默认情况下，imageEdgeInsets和titleEdgeInsets都是UIEdgeInsetsZero
 ，且imageView和titleLable之间没有间距。以宽度为例，
  
 (1)if (button.width小于imageView上image的width){图像会被压缩，文字不显示}
@@ -22,6 +22,7 @@
 // 2020.2.24  修改ZXButtonContentTypeImageRightTitleLeft类型的方法；
 // 2020.2.28  再次优化ZXButtonContentTypeImageRightTitleLeft类型的方法；
 // 2020.4.28 优化zx_centerVerticalImageAndTitleWithSpace 上下居中的方法；
+// 2020.12.05 去除耦合性
 
 #import <UIKit/UIKit.h>
 

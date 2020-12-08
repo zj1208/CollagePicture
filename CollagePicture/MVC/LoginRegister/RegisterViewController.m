@@ -44,7 +44,7 @@ static NSInteger const VERFICODE_MAXLENGTH  = 6;
 - (void)setUI
 {
     self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-kHEIGHT_SAFEAREA_NAVBAR-kHEIGHT_SAFEAREA_NormalBottom);
+    self.tableView.tableHeaderView.frame = ZX_FRAME_H(self.tableHeaderView, LCDH-kHEIGHT_SAFEAREA_NAVBAR-kHEIGHT_SAFEAREA_NORMALBOTTOM);
     self.userNameField.delegate = self;
     self.verificationCodeField.delegate = self;
     

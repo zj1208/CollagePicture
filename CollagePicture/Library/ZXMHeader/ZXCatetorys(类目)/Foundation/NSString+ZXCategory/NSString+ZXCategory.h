@@ -155,36 +155,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- 获取文本占几行空间；
-
- @param size 有效范围内；
- @param font 字体大小
- @return 几行
- */
-- (NSInteger)zhGetNumLinesWithBoundingRectWithSize:(CGSize)size titleFont:(UIFont *)font;
-
-
-#pragma mark - Drawing
-/**
- 获取文字所需要的尺寸
-
- @param text 文字内容
- @param size 显示尺寸范围
- @param font 字体大小
- @return size
- */
-+ (CGSize)zx_boundingSizeOfString:(NSString *)text WithSize:(CGSize)size font:(UIFont *)font mode:(NSLineBreakMode)lineBreakMode;
-/**
- 直接绘制文本到某个rect
-
- @param ctx 上下文
- @param text 文本
- @param rect rect
- @param font font
- */
-+ (void)zhDrawTextInContext:(CGContextRef)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font;
-
-/**
  key1=value1&key2=value2 组成的有序字符串 MD5加密
 
  @param dict 无序字典
@@ -300,6 +270,40 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)zx_filterLyricString:(NSString *)str;
 
+
+
+
+#pragma mark - Drawing
+
+
+/**
+ 获取文字所需要的尺寸
+
+ @param text 文字内容
+ @param size 显示尺寸范围
+ @param font 字体大小
+ @return size
+ */
++ (CGSize)zx_boundingSizeOfString:(NSString *)text withSize:(CGSize)size font:(UIFont *)font mode:(NSLineBreakMode)lineBreakMode;
+/**
+ 直接绘制文本到某个rect
+
+ @param ctx 上下文
+ @param text 文本
+ @param rect rect
+ @param font font
+ */
++ (void)zx_drawTextInContext:(CGContextRef)ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font;
+
+
+/**
+ 获取文本占几行空间；
+
+ @param size 有效范围内；
+ @param font 字体大小
+ @return 几行
+ */
+- (NSInteger)zx_numberLinesWithBoundSize:(CGSize)size titleFont:(UIFont *)font;
 
 
 

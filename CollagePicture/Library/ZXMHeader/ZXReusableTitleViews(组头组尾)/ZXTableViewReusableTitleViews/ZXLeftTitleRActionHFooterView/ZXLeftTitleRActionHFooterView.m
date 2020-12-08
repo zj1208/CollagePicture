@@ -18,6 +18,7 @@
 ///设置右边button右间距
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightTitleBtnMarginRightLayout;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftTitleBtnToLineEdgeBottomLayout;
 
 @end
 
@@ -30,7 +31,6 @@
     // Drawing code
 }
 */
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -67,6 +67,12 @@
     self.leftTitleBtnMarginTopLayout.constant = leftTitleBtnMarginTop;
 }
 
+
+- (void)setLeftTitleBtnToLineEdgeBottom:(CGFloat)leftTitleBtnToLineEdgeBottom
+{
+    _leftTitleBtnToLineEdgeBottom = leftTitleBtnToLineEdgeBottom;
+    self.leftTitleBtnToLineEdgeBottomLayout.constant = leftTitleBtnToLineEdgeBottom;
+}
 
 - (void)setRightTitleBtnMarginRight:(CGFloat)rightTitleBtnMarginRight
 {
